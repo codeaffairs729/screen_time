@@ -3,7 +3,7 @@ import { ReactNode } from "react";
 const DefaultLayout = ({ children }: { children: ReactNode }) => {
   return (
     <>
-      <div>Nav</div>
+      <div className="bg-gray-500 text-white">Navv</div>
       {children}
     </>
   );

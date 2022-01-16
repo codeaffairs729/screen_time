@@ -1,14 +1,18 @@
 import DefaultLayout from "../../components/layouts/default";
+import ResultTable from "./components/result_table";
+import Sidebar from "./components/sidebar";
 
-const SearchPage = ()=>{
+const SearchPage = () => {
   return (
     <DefaultLayout>
-    <div>
-      content
-    </div>
-
+      <div className="flex">
+        <Sidebar className="w-24" />
+        <div className="w-full">
+          <ResultTable />
+        </div>
+      </div>
     </DefaultLayout>
   );
-}
+};
 
 export default SearchPage;
