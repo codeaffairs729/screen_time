@@ -1,4 +1,6 @@
-import { ReactNode } from "react";
+import Dataset from "models/dataset.model";
+import { ReactNode, useContext } from "react";
+import { SearchVMContext } from "../search.vm";
 
 const data = [
   {
@@ -62,31 +64,38 @@ const data = [
   },
 ];
 const TableBody = () => {
+  const vm = useContext(SearchVMContext);
+
+  console.log('vm.isLoading', vm.isLoading, vm);
+  
+  if (vm.isLoading) {
+    return <div>Loading...</div>;
+  }
   return (
     <>
-      {data.map((rowData, i) => (
-        <Row key={i} data={rowData} />
+      {vm.datasets?.map((dataset, i) => (
+        <Row key={i} dataset={dataset} />
       ))}
     </>
   );
 };
 
-const Row = ({ data }: { data: { [key: string]: any } }) => {
-  console.log('data', data, data?.dataset?.name);
-  
+const Row = ({ dataset }: { dataset: Dataset }) => {
+  console.log("dataset", dataset);
+
   return (
     <>
       <Cell>
         <div>
-          <h4>{data?.dataset?.name}</h4>
-          <p>{data?.dataset?.description}</p>
+          <h4 className="font-semibold text-sm">{dataset.detail.name}</h4>
+          <p className="text-xs text-gray-800">{dataset.detail.description}</p>
         </div>
       </Cell>
-      <Cell>popularity stars</Cell>
-      <Cell>quality stars</Cell>
-      <Cell>last updated</Cell>
-      <Cell>last downloaded</Cell>
-      <Cell>Favourites</Cell>
+      <Cell>{dataset.detail.popularity}</Cell>
+      <Cell>{dataset.detail.dataQuality}</Cell>
+      <Cell>{dataset.detail.lastUpdate}</Cell>
+      <Cell>{dataset.detail.lastDownloaded}</Cell>
+      <Cell>{JSON.stringify(dataset.detail.isFavourited)}</Cell>
     </>
   );
 };
