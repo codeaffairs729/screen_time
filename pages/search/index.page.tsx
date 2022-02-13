@@ -19,9 +19,9 @@ const SearchPage = () => {
       <SearchVMContext.Provider value={vm}>
         <div className="flex">
           <Sidebar className="w-24" />
-          <div className="w-full">
+          {/* <div className="w-full"> */}
             <ResultTable />
-          </div>
+          {/* </div> */}
         </div>
       </SearchVMContext.Provider>
     </DefaultLayout>

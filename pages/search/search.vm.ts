@@ -19,7 +19,6 @@ const SearchVM = () => {
           Dataset.fromJsonList(res?.[0]?.["user_search"]?.[0]?.["results"])
         )
   );
-  console.log("datasets", datasets);
 
   return { datasets, error, isLoading: !datasets && !error };
 

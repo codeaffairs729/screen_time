@@ -5,7 +5,7 @@ const ResultTable = () => {
   // 2fr repeat(5, minmax(200px, 1fr))
   return (
     <div className=" overflow-x-auto">
-      <div className="grid [grid-template-columns:2fr_repeat(5,120px)]">
+      <div className="grid gap-px [grid-template-columns:2fr_repeat(5,120px)]">
         <TableHeader />
         <TableBody />
       </div>

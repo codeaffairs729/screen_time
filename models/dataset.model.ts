@@ -10,7 +10,7 @@ class Dataset {
     id: number;
     detail: DatasetDetail;
     owner: DatasetOwner;
-    urls: string[];
+    urls: DatasetUrl[];
   }) {
     this.id = id;
     this.detail = detail;
@@ -21,7 +21,7 @@ class Dataset {
   id: number;
   detail: DatasetDetail;
   owner: DatasetOwner;
-  urls: string[];
+  urls: DatasetUrl[];
 
   static fromJson(json: { [key: string]: any }) {
     // if (!json) return null;
@@ -40,7 +40,7 @@ class Dataset {
         hostName: json["dataset"]["hostName"],
         name: json["dataset"]["name"],
         description: json["dataset"]["description"],
-        lastUpdate: json["dataset"]["lastupdate"],
+        lastUpdate: DateTime.fromISO(json["dataset"]["lastupdate"]),
         // license: json["dataset"]["licence"],
         license: {
           type: json["dataset"]["licence"]["type"],
@@ -73,7 +73,13 @@ class Dataset {
         },
         relatedOrganizations: json["owner"]["relatedOrganizations"],
       },
-      urls: json["urls"],
+      urls: json["urls"].map((url: { [key: string]: any }) => ({
+        type: url["type"],
+        format: url["format"],
+        version: url["version"],
+        sizemb: url["sizemb"],
+        url: url["url"],
+      })),
     });
   }
 
@@ -123,6 +129,14 @@ export type DatasetOwner = {
     twitter: string;
   };
   relatedOrganizations: string[];
+};
+
+export type DatasetUrl = {
+  type: string;
+  format: string;
+  version: string;
+  sizemb: string;
+  url: string;
 };
 
 export default Dataset;
