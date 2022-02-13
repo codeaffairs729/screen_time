@@ -3,19 +3,27 @@ import Link from "next/link";
 import { ReactNode } from "react";
 import ProfileDropdown from "./profile_dropdown";
 
-const Nav = ({ content }: { content?: ReactNode }) => {
+const Nav = ({
+  content,
+  showLogo = true,
+}: {
+  content?: ReactNode;
+  showLogo?: boolean;
+}) => {
   return (
-    <nav className="flex">
-      <Link href="/">
-        <a className="block max-w-[200px] p-2.5">
-          <Image
-            src="/images/logo_notagline.png"
-            width="1000"
-            height="250"
-            alt="Dtechtive logo"
-          />
-        </a>
-      </Link>
+    <nav className="flex p-2">
+      {showLogo && (
+        <Link href="/">
+          <a className="block max-w-[200px] p-2.5">
+            <Image
+              src="/images/logo_notagline.png"
+              width="1000"
+              height="250"
+              alt="Dtechtive logo"
+            />
+          </a>
+        </Link>
+      )}
       <div>{content}</div>
       <div className="ml-auto flex items-center">
         <NavItem label="Home" link="/" />

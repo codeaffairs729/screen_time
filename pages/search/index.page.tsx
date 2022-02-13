@@ -1,5 +1,3 @@
-import { useState } from "react";
-import useSWR from "swr";
 import DefaultLayout from "../../components/layouts/default";
 import ResultTable from "./components/result_table";
 import Sidebar from "./components/sidebar";

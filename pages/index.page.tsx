@@ -1,9 +1,3 @@
-const HomePage = ()=>{
-  return (
-    <div>
-      Home
-    </div>
-  )
-}
+import HomePage from "./home/index.page";
 
 export default HomePage;
