@@ -6,11 +6,11 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        vibani: {
-          brand: "#FBFE27",
-          black: "#000000",
-          "light-white": "#E9F1F7",
-          "dark-white": "#D2E2EF",
+        dtech: {
+          "primary-light": "#09c6f9",
+          "primary-dark": "#045DE9",
+          "secondary-light": "#6E72FC",
+          "secondary-dark": "#ADIDEB",
         },
       },
       maxWidth: {
