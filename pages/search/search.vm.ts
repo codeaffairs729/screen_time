@@ -14,7 +14,7 @@ const SearchVM = () => {
   }, [router.query]);
 
   const { data: datasets, error } = useSWR(
-    `${process.env.NEXT_PUBLIC_DTECHTIVE_API_ROOT}/v2/dataset?searchterm=health`,
+    `${process.env.NEXT_PUBLIC_API_ROOT}/v2/dataset?searchterm=health`,
     (url) =>
       fetch(url)
         .then((res) => res.json())
