@@ -44,8 +44,6 @@ const MenuItem = ({
   label: string;
   link: string;
 }) => {
-  // console.log('active', active);
-
   return (
     <Menu.Item>
       <Link href={link}>

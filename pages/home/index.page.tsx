@@ -18,9 +18,13 @@ const HomePage = () => {
           />
           <div className="mt-6 max-w-xl mx-auto">
             <DatasetSearchInput
-              onClickOption={(option) =>
-                router.push({ pathname: "/search", query: { q: option.value } })
-              }
+              onChange={(option) => {
+                if (!option) return;
+                router.push({
+                  pathname: "/search",
+                  query: { q: option.value },
+                });
+              }}
             />
           </div>
         </div>

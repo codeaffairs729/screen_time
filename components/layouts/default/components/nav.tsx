@@ -24,7 +24,8 @@ const Nav = ({
           </a>
         </Link>
       )}
-      <div>{content}</div>
+      {content}
+      {/* <div>{content}</div> */}
       <div className="ml-auto flex items-center">
         <NavItem label="Home" link="/" />
         <NavItem label="API" link="/" />
