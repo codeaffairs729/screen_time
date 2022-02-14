@@ -1,0 +1,19 @@
+default:
+  image: google/cloud-sdk:alpine
+  before_script:
+    - gcloud config set project epsilon1-dev
+    - gcloud auth activate-service-account --key-file $GCP_SERVICE_CREDS
+    - chmod +x ./gitlab_setup_env.sh
+
+build:
+  stage: build
+  script:
+    - ./gitlab_setup_env.sh
+    - ls -lah
+    - cat .env
+    - gcloud builds submit . --tag gcr.io/epsilon1-dev/dashboard-webclient
+
+deploy:
+  stage: deploy
+  script:
+    - gcloud run deploy dashboard-webclient --image gcr.io/epsilon1-dev/dashboard-webclient --platform managed --region us-central1 --allow-unauthenticated
