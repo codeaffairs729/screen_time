@@ -11,7 +11,7 @@ const Nav = ({
   showLogo?: boolean;
 }) => {
   return (
-    <nav className="flex p-2">
+    <nav className="flex p-2 h-[var(--nav-height)] items-center">
       {showLogo && (
         <Link href="/">
           <a className="block max-w-[200px] p-2.5">
@@ -29,8 +29,8 @@ const Nav = ({
       <div className="ml-auto flex items-center">
         <NavItem label="Home" link="/" />
         <NavItem label="API" link="/" />
-        <NavItem label="Sign Up" link="/" />
-        <NavItem label="Login" link="/" />
+        <NavItem label="Sign Up" link="/signup" />
+        <NavItem label="Login" link="/signin" />
         <ProfileDropdown />
       </div>
     </nav>

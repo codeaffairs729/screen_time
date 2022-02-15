@@ -10,7 +10,7 @@ module.exports = {
           "primary-light": "#09c6f9",
           "primary-dark": "#045DE9",
           "secondary-light": "#6E72FC",
-          "secondary-dark": "#ADIDEB",
+          "secondary-dark": "#AD1DEB",
         },
       },
       maxWidth: {
