@@ -4,6 +4,7 @@ import TextField from "components/UI/form/text_field";
 import InfoIcon from "components/UI/icons/info_icon";
 import Image from "next/image";
 import Link from "next/link";
+import FormRow from "./components/form_row";
 import { format } from "path/posix";
 import SigninVM from "./signin.vm";
 
@@ -15,21 +16,13 @@ const SigninPage = () => {
       <div className="h-[calc(100vh-var(--nav-height))] flex flex-col justify-between">
         <div className="text-center">
           <h1 className="font-semibold text-lg mb-2 mt-8">Login</h1>
-          <span>
+          <span className="inline-flex space-x-1">
             <i>Continue as a guest?</i>{" "}
-            <Image
-              src="/images/icons/info.svg"
-              width="15px"
-              height="15px"
-              alt="Info"
-            />
+            <InfoIcon title="Continue using the website without loggin in" />
           </span>
         </div>
-        <div className="grow -mt-8 flex flex-col items-center justify-center">
-          <div className="flex items-center mb-3">
-            <span className="mr-4 pl-2 w-32 py-2 text-sm font-semibold text-gray-800 bg-gray-200">
-              Email
-            </span>
+        <div className="grow flex flex-col items-center justify-center pb-8">
+          <FormRow label="Email">
             <TextField
               className="w-60"
               formControl={{
@@ -40,22 +33,19 @@ const SigninPage = () => {
               placeholder="Email"
               type="email"
             />
-          </div>
-          <div className="flex items-center mb-1">
-            <span className="mr-4 pl-2 w-32 py-2 text-sm font-semibold text-gray-800 bg-gray-200">
-              Password
-            </span>
+          </FormRow>
+          <FormRow label="Password">
             <TextField
               className="w-60"
               formControl={{
                 control: vm.form.control,
-                name: "email",
+                name: "password",
                 rules: {},
               }}
               placeholder="Password"
               type="password"
             />
-          </div>
+          </FormRow>
           <Link href="/">
             <a className="flex items-center ml-16">
               <i className="mr-1 text-sm underline">Forgot your password?</i>{" "}
