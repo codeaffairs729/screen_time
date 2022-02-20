@@ -28,7 +28,7 @@ const SigninPage = () => {
               formControl={{
                 control: vm.form.control,
                 name: "email",
-                rules: {},
+                rules: { required: "Email is required" },
               }}
               placeholder="Email"
               type="email"
@@ -40,7 +40,7 @@ const SigninPage = () => {
               formControl={{
                 control: vm.form.control,
                 name: "password",
-                rules: {},
+                rules: { required: "Password is required" },
               }}
               placeholder="Password"
               type="password"
@@ -54,7 +54,11 @@ const SigninPage = () => {
           </Link>
           <div className="flex space-x-4 mt-12">
             <PrimaryBtn className="min-w-[150px]" label="Sign Up" />
-            <PrimaryBtn className="min-w-[150px]" label="Login" />
+            <PrimaryBtn
+              className="min-w-[150px]"
+              label="Login"
+              onClick={vm.form.handleSubmit(vm.performLogin)}
+            />
           </div>
         </div>
         <div className="text-center pb-4">
