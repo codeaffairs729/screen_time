@@ -12,6 +12,6 @@ export type Action = {
 };
 
 export type AuthState = {
-  user: User;
-  token: string;
+  user: User | null;
+  token: string | null;
 };

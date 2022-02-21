@@ -4,7 +4,7 @@ import {
   LOGOUT,
   UPDATE_TOKEN,
   UPDATE_USER,
-} from "./auth.types";
+} from "./auth.type";
 
 export const initialState: AuthState = {
   user: null,

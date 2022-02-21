@@ -1,5 +1,5 @@
 import User from "models/user.model";
-import { UPDATE_TOKEN, UPDATE_USER, LOGOUT, Action } from "./auth.types";
+import { UPDATE_TOKEN, UPDATE_USER, LOGOUT, Action } from "./auth.type";
 
 export const updateToken = (token: string): Action => {
   return {
@@ -18,13 +18,6 @@ export const updateUser = (user: User): Action => {
 export const logoutUser = (): Action => {
   return {
     type: LOGOUT,
-    payload: {},
-  };
-};
-
-export const incrementCounter = (): Action => {
-  return {
-    type: "INCREMENT_COUNT",
     payload: {},
   };
 };

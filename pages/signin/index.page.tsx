@@ -7,9 +7,14 @@ import Link from "next/link";
 import FormRow from "./components/form_row";
 import { format } from "path/posix";
 import SigninVM from "./signin.vm";
+import { useDispatch, useSelector } from "react-redux";
+// import { incrementCounter } from "store/counter/action";
+import { RootState } from "store";
 
 const SigninPage = () => {
   const vm = SigninVM();
+  const token = useSelector((state: RootState) => state.auth.token);
+  const dispatch = useDispatch();
 
   return (
     <DefaultLayout>
@@ -17,7 +22,7 @@ const SigninPage = () => {
         <div className="text-center">
           <h1 className="font-semibold text-lg mb-2 mt-8">Login</h1>
           <span className="inline-flex space-x-1">
-            <i>Continue as a guest?</i>{" "}
+            <i>Continue as a guest?</i> {token}
             <InfoIcon title="Continue using the website without loggin in" />
           </span>
         </div>

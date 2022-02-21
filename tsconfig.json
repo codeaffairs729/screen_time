@@ -17,5 +17,9 @@
     "baseUrl": "."
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
+  "files": [
+    "./node_modules/redux-persist/types/integration/react.d.ts",
+    "./node_modules/redux-persist/types/storage/index.d.ts"
+  ]
 }
