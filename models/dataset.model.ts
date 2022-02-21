@@ -31,7 +31,7 @@ class Dataset {
       topics = topics.replace(/'/g, '"');
       topics = JSON.parse(topics);
     }
-    topics = topics.join(", ");
+    // topics = topics.join(", ");
     return new Dataset({
       id: Number(json["id"]),
       detail: {

@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url(./scrollbar.css);
+
 :root {
   --nav-height: 87px; /* height of the navbar */
 }
