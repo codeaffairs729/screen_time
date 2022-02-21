@@ -11,7 +11,7 @@ const SearchPage = () => {
     <DefaultLayout
       navContent={
         <DatasetSearchInput
-          className="max-w-xs w-full pt-4 px-4"
+          className="max-w-xs w-full ml-4"
           onChange={vm.onSearchChange}
         />
       }
@@ -19,9 +19,7 @@ const SearchPage = () => {
       <SearchVMContext.Provider value={vm}>
         <div className="flex">
           <Sidebar className="w-40 shrink-0" />
-          {/* <div className="w-full"> */}
           <ResultTable />
-          {/* </div> */}
         </div>
       </SearchVMContext.Provider>
     </DefaultLayout>

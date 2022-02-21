@@ -3,6 +3,7 @@ import { useContext } from "react";
 import FilterCheckboxField from "./filter_checkbox_field";
 import FilterSection from "./filter_section";
 import Loader from "components/UI/loader";
+import { useForm } from "react-hook-form";
 
 const TopicFilter = () => {
   const vm = useContext(SearchVMContext);
@@ -12,10 +13,18 @@ const TopicFilter = () => {
       return a;
     }, new Set<string>()) ?? new Set<string>();
 
+    const {register, watch} = useForm();
+    // console.log('watch()', watch());
+    // const watchAll = watch();
+    // console.log('watchAll', watchAll);
+
+    
+
+
   return (
     <FilterSection label="Topics">
       {Array.from(topics)?.map((t, i) => (
-        <FilterCheckboxField key={i} label={t} />
+        <FilterCheckboxField register={register(`topic_${i}`)} key={i} label={t} />
       ))}
       {vm.isLoading && (
         <div className="h-20 flex items-center justify-center">

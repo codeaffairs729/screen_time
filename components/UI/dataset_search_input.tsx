@@ -3,6 +3,7 @@ import debounce from "debounce-promise";
 import useSWR from "swr";
 import clsx from "clsx";
 import { SingleValue } from "react-select";
+import { useState } from "react";
 
 export type SearchOption = { value: any; label: string };
 
@@ -29,7 +30,7 @@ const DatasetSearchInput = ({
     return options;
   });
 
-  const Option = ({ data, innerProps, isDisabled }: any) => {
+  const Option = ({ data, innerProps }: any) => {
     return (
       // <button onClick={() => onClickOption(props.data)} className="w-full">
       <div
@@ -41,6 +42,7 @@ const DatasetSearchInput = ({
       // </button>
     );
   };
+  const [input, setInput] = useState("");
 
   return (
     <div className={clsx(className)}>
@@ -52,6 +54,25 @@ const DatasetSearchInput = ({
         placeholder="Search..."
         instanceId="product-search"
         onChange={onChange}
+        inputValue={input}
+        onInputChange={(value, action) => {
+          // only set the input when the action that caused the
+          // change equals to "input-change" and ignore the other
+          // ones like: "set-value", "input-blur", and "menu-close"
+          if (action.action === "input-change") setInput(value); // <---
+        }}
+        onKeyDown={(e) => {
+          console.log("input", input);
+
+          if (e.key === "Enter") {
+            e.preventDefault();
+            e.stopPropagation();
+            onChange({
+              label: "User input",
+              value: input,
+            });
+          }
+        }}
       />
     </div>
   );

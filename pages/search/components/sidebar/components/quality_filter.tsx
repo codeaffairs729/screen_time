@@ -14,11 +14,10 @@ const QualityFilter = () => {
 };
 
 const StarRow = ({ stars }: { stars: number }) => {
-  console.log("stars", stars);
 
   return (
     <div className="flex items-center justify-start">
-      <FilterCheckboxField className="mr-1" />
+      <FilterCheckboxField className="mr-1 mb-0" />
       {/* {[...Array(stars).map((_,i)=>(<Image
         src={`/images/icons/star/${type}_star.svg`}
         width="14px"
