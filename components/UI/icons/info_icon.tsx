@@ -11,7 +11,7 @@ const InfoIcon = ({
 }) => {
   return (
     <span
-      className={clsx("inline-flex items-center justify-center", className)}
+      className={clsx("inline-flex items-center justify-center align-middle", className)}
     >
       <Image
         data-tip={title}
