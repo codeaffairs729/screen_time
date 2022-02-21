@@ -87,7 +87,7 @@ const Row = ({ dataset }: { dataset: Dataset }) => {
 
   return (
     <>
-      <Cell>
+      <Cell className="min-w-[350px]">
         <div>
           <h4 className="font-semibold text-sm">{dataset.detail.name}</h4>
           <p className="text-xs text-gray-800">{dataset.detail.description}</p>
@@ -117,7 +117,7 @@ const Row = ({ dataset }: { dataset: Dataset }) => {
 };
 
 const Cell = ({ children, className="" }: { children: ReactNode, className?: string }) => {
-  return <div className={clsx("outline outline-1 outline-gray-500", className)}>{children}</div>;
+  return <div className={clsx("outline outline-1 outline-gray-300 px-2 py-1", className)}>{children}</div>;
 };
 
 const DatasetDownload = ({ label, url }: { label: string; url: string }) => {
