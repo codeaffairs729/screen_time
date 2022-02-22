@@ -1,7 +1,9 @@
 import DefaultLayout from "components/layouts/default";
-import DetailTabs from "./components/detail_tabs";
 import SummarySection from "./components/summary_section";
 import DatasetDetailVM, { DatasetDetailVMContext } from "./dataset_detail.vm";
+import { Tab } from "@headlessui/react";
+import SummaryStatistics from "./components/summary_statitics";
+import TabHeader from "./components/tab_header";
 
 const DatasetDetailPage = () => {
   const vm = DatasetDetailVM();
@@ -20,7 +22,21 @@ const DatasetDetailPage = () => {
             <SummarySection />
           </div>
           <div className="w-2/3">
-            <DetailTabs />
+            {/* <DetailTabs /> */}
+            <Tab.Group>
+              <Tab.List className="flex justify-between border-b-2 border-gray-400">
+                <TabHeader>Summary Statistics</TabHeader>
+                <TabHeader>Feedback</TabHeader>
+                <TabHeader>You may also like</TabHeader>
+              </Tab.List>
+              <Tab.Panels>
+                <Tab.Panel>
+                  <SummaryStatistics />
+                </Tab.Panel>
+                <Tab.Panel>Content 2</Tab.Panel>
+                <Tab.Panel>Content 3</Tab.Panel>
+              </Tab.Panels>
+            </Tab.Group>
           </div>
         </div>
       </DatasetDetailVMContext.Provider>
