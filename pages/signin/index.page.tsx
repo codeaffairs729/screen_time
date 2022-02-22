@@ -1,3 +1,4 @@
+import withAuth from "common/HOCs/with_auth";
 import DefaultLayout from "components/layouts/default";
 import PrimaryBtn from "components/UI/form/primary_btn";
 import TextField from "components/UI/form/text_field";
@@ -72,4 +73,4 @@ const SigninPage = () => {
   );
 };
 
-export default SigninPage;
+export default withAuth(SigninPage);

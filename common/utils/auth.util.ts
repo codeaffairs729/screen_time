@@ -3,15 +3,16 @@ import { initializeStore } from "store";
 import { getCookieFromServer } from "./cookie.util";
 import { AUTH_TOKEN } from "../constants/cookie.key";
 import config from "next.config";
+import { NextPageContext } from "next";
 
 /**
  * Redirect user depending on whether client side or server side
  */
-const redirectUser = (ctx, location): void => {
+const redirectUser = (ctx: NextPageContext, location: string): void => {
   location = config["basePath"] ? `${config["basePath"]}${location}` : location;
   if (ctx.req) {
-    ctx.res.writeHead(302, { Location: location });
-    ctx.res.end();
+    ctx?.res?.writeHead(302, { Location: location });
+    ctx?.res?.end();
   } else {
     Router.push(location);
   }
@@ -20,18 +21,18 @@ const redirectUser = (ctx, location): void => {
 /**
  * Check if user is authenticated
  */
-const isAuthenticated = (ctx): boolean => {
+const isAuthenticated = (ctx: NextPageContext): boolean => {
   const isBrowser = typeof window !== "undefined";
 
   const store = initializeStore();
-  let token: string;
+  let token: string | undefined;
 
   // 1. If browser check in redux store for token
   if (isBrowser) {
     token = store.getState().auth.token;
   }
   // 2. If server check cookkie for token
-  else if (ctx.req.headers.cookie) {
+  else if (ctx?.req?.headers.cookie) {
     token = getCookieFromServer(AUTH_TOKEN, ctx.req);
   }
   // 3. Check if token is valid
@@ -46,16 +47,16 @@ const isAuthenticated = (ctx): boolean => {
 /**
  * Redirect user depending on whether user is logged in or not
  */
-const checkAuthentication = (ctx): void => {
+const checkAuthentication = (ctx: NextPageContext): void => {
   const userIsAuthenticated = isAuthenticated(ctx);
 
   // If user is authenticated and user is on register or login page then
   // redirect back to home
-  console.log("ctx.pathname", ctx.resolvedUrl, userIsAuthenticated);
+  console.log("ctx.pathname", ctx?.pathname, userIsAuthenticated);
 
-  if (ctx.resolvedUrl === "/signin" || ctx.resolvedUrl === "/signup") {
+  if (ctx.pathname === "/signin" || ctx.pathname === "/signup") {
     if (userIsAuthenticated) {
-      redirectUser(ctx, "/dashboard/map");
+      redirectUser(ctx, "/");
     } else {
       return;
     }

@@ -1,3 +1,4 @@
+import { IncomingMessage } from 'http';
 import Cookies from 'js-cookie';
 
 /**
@@ -5,17 +6,17 @@ import Cookies from 'js-cookie';
  *
  * @returns {String} - Authorization token
  */
-export const getCookieFromServer = (key, req) => {
+export const getCookieFromServer = (key: string, req: IncomingMessage | undefined) => {
   const isBrowser = typeof window !== 'undefined';
   if (isBrowser) {
     return undefined;
   }
   // Split cookie header to separate cookies
-  const rawCookies = req.headers.cookie
-    .split(';')
-    .filter((e) => e.trim().startsWith(`${key}=`));
+  const rawCookies = req?.headers?.cookie
+    ?.split(';')
+    ?.filter((e) => e.trim().startsWith(`${key}=`));
 
-  if (!rawCookies.length) {
+  if (!rawCookies?.length) {
     return undefined;
   }
   const cookie = rawCookies[0].trim().split('=')[1];
@@ -25,14 +26,14 @@ export const getCookieFromServer = (key, req) => {
 /**
  * Set cookie
  */
-export const saveCookie = (key, value): void => {
+export const saveCookie = (key: string, value: string): void => {
   Cookies.set(key, value);
 };
 
 /**
  * Delete a cookie
  */
-export const deleteCookie = (key): void => {
+export const deleteCookie = (key: string): void => {
   Cookies.remove(key);
 };
 
