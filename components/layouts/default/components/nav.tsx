@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ReactNode } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "store";
 import ProfileDropdown from "./profile_dropdown";
 
 const Nav = ({
@@ -10,6 +12,8 @@ const Nav = ({
   content?: ReactNode;
   showLogo?: boolean;
 }) => {
+  const user = useSelector((state: RootState) => state.auth.user);
+  
   return (
     <nav className="flex p-2 h-[var(--nav-height)] items-center">
       {showLogo && (
@@ -25,12 +29,11 @@ const Nav = ({
         </Link>
       )}
       {content}
-      {/* <div>{content}</div> */}
       <div className="ml-auto flex items-center">
         <NavItem label="Home" link="/" />
         <NavItem label="API" link="/" />
-        <NavItem label="Sign Up" link="/signup" />
-        <NavItem label="Login" link="/signin" />
+        {!user && <NavItem label="Sign Up" link="/signup" />}
+        {!user && <NavItem label="Login" link="/signin" />}
         <ProfileDropdown />
       </div>
     </nav>

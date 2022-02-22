@@ -2,19 +2,12 @@ import DefaultLayout from "components/layouts/default";
 import PrimaryBtn from "components/UI/form/primary_btn";
 import TextField from "components/UI/form/text_field";
 import InfoIcon from "components/UI/icons/info_icon";
-import Image from "next/image";
 import Link from "next/link";
 import FormRow from "./components/form_row";
-import { format } from "path/posix";
 import SigninVM from "./signin.vm";
-import { useDispatch, useSelector } from "react-redux";
-// import { incrementCounter } from "store/counter/action";
-import { RootState } from "store";
 
 const SigninPage = () => {
   const vm = SigninVM();
-  const token = useSelector((state: RootState) => state.auth.token);
-  const dispatch = useDispatch();
 
   return (
     <DefaultLayout>

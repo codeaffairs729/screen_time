@@ -3,6 +3,7 @@ import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
 import { Fragment } from "react";
+import AuthService from "services/auth.service";
 
 const ProfileDropdown = () => {
   return (
@@ -28,7 +29,7 @@ const ProfileDropdown = () => {
           <MenuItem label="Jane Doe" link="/profile" />
           <MenuItem label="My Profile" link="/profile" />
           <MenuItem label="My Favourites" link="/profile" />
-          <MenuItem label="Log out" link="/profile" />
+          <MenuItem label="Log out" onClick={AuthService.logout} />
         </Menu.Items>
       </Transition>
     </Menu>
@@ -36,28 +37,50 @@ const ProfileDropdown = () => {
 };
 
 const MenuItem = ({
-  // active,
   label,
   link,
-}: {
-  // active: boolean;
-  label: string;
-  link: string;
-}) => {
-  return (
-    <Menu.Item>
-      <Link href={link}>
-        <a
+  onClick,
+}:
+  | {
+      label: string;
+      link: string;
+      onClick?: () => void;
+    }
+  | {
+      label: string;
+      link?: string;
+      onClick: () => void;
+    }) => {
+  if (onClick) {
+    return (
+      <Menu.Item>
+        <button
           className={clsx(
             "hover:text-dtech-primary-dark block px-2.5 py-2 text-sm font-semibold text-gray-500"
           )}
+          onClick={onClick}
         >
           {label}
-          {/* {JSON.stringify(active)} */}
-        </a>
-      </Link>
-    </Menu.Item>
-  );
+        </button>
+      </Menu.Item>
+    );
+  }
+  if (link) {
+    return (
+      <Menu.Item>
+        <Link href={link}>
+          <a
+            className={clsx(
+              "hover:text-dtech-primary-dark block px-2.5 py-2 text-sm font-semibold text-gray-500"
+            )}
+          >
+            {label}
+          </a>
+        </Link>
+      </Menu.Item>
+    );
+  }
+  return null;
 };
 
 export default ProfileDropdown;
