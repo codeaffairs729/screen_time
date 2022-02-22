@@ -8,22 +8,22 @@ export enum UserType {
 class User {
   constructor({
     email,
-    user_type,
+    userType,
     organisation,
     updatedAt,
-    created_at,
+    createdAt,
   }: {
     email: string;
-    user_type: UserType;
+    userType: UserType;
     organisation: string;
     updatedAt: DateTime;
-    created_at: DateTime;
+    createdAt: DateTime;
   }) {
     this.email = email;
-    this.user_type = user_type;
+    this.user_type = userType;
     this.organisation = organisation;
     this.updatedAt = updatedAt;
-    this.created_at = created_at;
+    this.created_at = createdAt;
   }
 
   email: string;
@@ -31,6 +31,16 @@ class User {
   organisation: string;
   updatedAt: DateTime;
   created_at: DateTime;
+
+  static fromJson(json: { [key: string]: any }) {
+    return new User({
+      email: json["email"],
+      userType: json["user_type"],
+      organisation: json["organisation"],
+      updatedAt: json["updated_at"],
+      createdAt: json["created_at"],
+    });
+  }
 }
 
 export default User;

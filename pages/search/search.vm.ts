@@ -1,6 +1,7 @@
 import { SearchOption } from "components/UI/dataset_search_input";
 import { useRouter } from "next/router";
 import { createContext, useEffect } from "react";
+import toast from "react-hot-toast";
 import { SingleValue } from "react-select";
 import useSWR from "swr";
 import Dataset from "../../models/dataset.model";
@@ -25,12 +26,12 @@ const SearchVM = () => {
       fetch(url)
         .then((res) => res.json())
         .then((res) =>
-          Dataset.fromJsonList(
-            res?.[0]?.["user_search"]?.[0]?.["results"].slice(0, 10)
-          )
+          Dataset.fromJsonList(res[0]["user_search"][0]["results"].slice(0, 10))
         )
   );
-
+  if (error) {
+    toast.error("Something went wrong while fetching search results");
+  }
   return { datasets, error, isLoading: !datasets && !error, onSearchChange };
 };
 

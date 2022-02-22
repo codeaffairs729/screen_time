@@ -22,7 +22,7 @@ const SigninPage = () => {
         <div className="text-center">
           <h1 className="font-semibold text-lg mb-2 mt-8">Login</h1>
           <span className="inline-flex space-x-1">
-            <i>Continue as a guest?</i> {token}
+            <i>Continue as a guest?</i>
             <InfoIcon title="Continue using the website without loggin in" />
           </span>
         </div>
@@ -62,6 +62,7 @@ const SigninPage = () => {
             <PrimaryBtn
               className="min-w-[150px]"
               label="Login"
+              isLoading={vm.isSigningIn}
               onClick={vm.form.handleSubmit(vm.performLogin)}
             />
           </div>
