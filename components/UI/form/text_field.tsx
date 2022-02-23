@@ -33,7 +33,7 @@ const TextField = ({
         <textarea
           // type="text"
           placeholder={placeholder}
-          className="block px-3 py-2 w-full text-sm appearance-none bg-transparent rounded-lg border-2 border-dtech-secondary-light outline-dtech-secondary-dark"
+          className="block px-3 py-2 w-full text-sm appearance-none bg-transparent rounded-lg border-2 border-dtech-secondary-light outline-dtech-secondary-dark disabled:border-gray-300 disabled:bg-gray-50"
           rows={rows}
           {...register}
           disabled={disabled}
@@ -42,7 +42,7 @@ const TextField = ({
         <input
           type={type}
           placeholder={placeholder}
-          className="block px-3 py-2 w-full text-sm appearance-none bg-transparent rounded-lg border-2 border-dtech-secondary-light outline-dtech-secondary-dark placeholder:text-gray-500 placeholder:text-sm placeholder:font-bold"
+          className="block px-3 py-2 w-full text-sm appearance-none bg-transparent rounded-lg border-2 border-dtech-secondary-light outline-dtech-secondary-dark placeholder:text-gray-500 placeholder:text-sm placeholder:font-bold disabled:border-gray-300 disabled:bg-gray-50"
           {...register}
           disabled={disabled}
         />

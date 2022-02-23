@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
+import ReactTooltip from "react-tooltip";
 import { RootState } from "store";
 
 const FeedbackForm = () => {
@@ -44,7 +45,7 @@ const FeedbackForm = () => {
           isDisabled={!user}
         />
       </div>
-      <div>
+      <div data-tip={!user ? "Please login to submit feedback" : null}>
         <TextField
           type="textarea"
           disabled={!user}
@@ -55,6 +56,7 @@ const FeedbackForm = () => {
           }}
         />
       </div>
+      <ReactTooltip uuid="dtechtive-feedbackform-tooltip" />
     </div>
   );
 };
