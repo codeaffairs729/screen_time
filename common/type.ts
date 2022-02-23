@@ -9,4 +9,5 @@ export interface FieldProps {
   };
   className?: string;
   placeholder?: string;
+  disabled?: boolean;
 }

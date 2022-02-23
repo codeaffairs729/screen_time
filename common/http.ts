@@ -3,6 +3,7 @@ import Router from "next/router";
 
 import { Non200ResponseError } from "common/exceptions";
 import log from "common/logger";
+import { initializeStore } from "store";
 // import AuthService from "services/auth.service";
 // import { initializeStore } from 'store';
 // import AuthService from './services/auth.service';
@@ -58,11 +59,11 @@ function buildHeaders(extraHeaders = {}, isPostForm = false) {
     delete headers["Content-Type"];
   }
   // Redux store is only available on the browser
-  // const store = initializeStore();
-  // let authToken = store.getState().auth.token;
-  // if (authToken) {
-  //   headers['Authorization'] = `Bearer ${authToken}`;
-  // }
+  const store = initializeStore();
+  let authToken = store.getState().auth.token;
+  if (authToken) {
+    headers['Authorization'] = `Bearer ${authToken}`;
+  }
   return headers;
 }
 

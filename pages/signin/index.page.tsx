@@ -52,9 +52,9 @@ const SigninPage = () => {
             </a>
           </Link>
           <div className="flex space-x-4 mt-12">
-            <PrimaryBtn className="min-w-[150px]" label="Sign Up" />
+            <PrimaryBtn className="bg-dtech-primary-dark min-w-[150px]" label="Sign Up" />
             <PrimaryBtn
-              className="min-w-[150px]"
+              className="bg-dtech-primary-dark min-w-[150px]"
               label="Login"
               isLoading={vm.isSigningIn}
               onClick={vm.form.handleSubmit(vm.performLogin)}

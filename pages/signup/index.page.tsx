@@ -104,7 +104,7 @@ const SigninPage = () => {
             />
           </FormRow>
           <div className="flex space-x-4 mt-2">
-            <PrimaryBtn className="min-w-[150px]" label="Get started now" />
+            <PrimaryBtn className="bg-dtech-primary-dark min-w-[150px]" label="Get started now" />
           </div>
         </div>
         <div className="text-center pb-4">

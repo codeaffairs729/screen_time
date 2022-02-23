@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import Favourite from "components/UI/favourite";
+import Favourite from "components/UI/buttons/favourite";
 import StarRating from "components/UI/star_rating";
 import { DateTime } from "luxon";
 import Dataset from "models/dataset.model";

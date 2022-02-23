@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 
-const Loader = ({ className = '', sizeClass = 'h-6 w-6' }) => {
+const Loader = ({ className = '', sizeClass = 'h-5 w-5' }) => {
   return (
     <svg
       className={clsx(

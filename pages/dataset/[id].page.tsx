@@ -4,6 +4,7 @@ import DatasetDetailVM, { DatasetDetailVMContext } from "./dataset_detail.vm";
 import { Tab } from "@headlessui/react";
 import SummaryStatistics from "./components/summary_statitics";
 import TabHeader from "./components/tab_header";
+import FeedbackSection from "./components/feedback_section";
 
 const DatasetDetailPage = () => {
   const vm = DatasetDetailVM();
@@ -33,7 +34,9 @@ const DatasetDetailPage = () => {
                 <Tab.Panel>
                   <SummaryStatistics />
                 </Tab.Panel>
-                <Tab.Panel>Content 2</Tab.Panel>
+                <Tab.Panel>
+                  <FeedbackSection />
+                </Tab.Panel>
                 <Tab.Panel>Content 3</Tab.Panel>
               </Tab.Panels>
             </Tab.Group>

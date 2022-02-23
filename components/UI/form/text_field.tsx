@@ -12,6 +12,7 @@ const TextField = ({
   placeholder,
   type = "text",
   className = "",
+  disabled = false,
   rows = 3,
   formControl,
 }: TextFieldProps) => {
@@ -35,6 +36,7 @@ const TextField = ({
           className="block px-3 py-2 w-full text-sm appearance-none bg-transparent rounded-lg border-2 border-dtech-secondary-light outline-dtech-secondary-dark"
           rows={rows}
           {...register}
+          disabled={disabled}
         />
       ) : (
         <input
@@ -42,6 +44,7 @@ const TextField = ({
           placeholder={placeholder}
           className="block px-3 py-2 w-full text-sm appearance-none bg-transparent rounded-lg border-2 border-dtech-secondary-light outline-dtech-secondary-dark placeholder:text-gray-500 placeholder:text-sm placeholder:font-bold"
           {...register}
+          disabled={disabled}
         />
       )}
       {/* <label className="absolute top-0 text-gray-700 p-3 duration-300 origin-0 pointer-events-none">

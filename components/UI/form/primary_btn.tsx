@@ -6,7 +6,7 @@ const PrimaryBtn = ({
   onClick,
   isLoading = false,
   isDisabled = false,
-  className = "",
+  className = "bg-dtech-primary-dark",
 }: {
   label: string;
   onClick?: () => void;
@@ -20,7 +20,7 @@ const PrimaryBtn = ({
       onClick={onClick}
       disabled={isDisabled}
       className={clsx(
-        "bg-dtech-primary-dark text-sm font-medium text-white w-full rounded px-3 py-1 flex justify-center",
+        "text-sm font-medium text-white w-full rounded px-3 py-1 flex justify-center",
         className
       )}
     >

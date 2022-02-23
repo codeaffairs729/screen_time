@@ -16,7 +16,10 @@ const SigninVM = () => {
     useHttpCall();
 
   const performLogin = (data: any) =>
-    executePerformLogin(() => Http.post(`/v1/users/signin`, data), {onSuccess: (res)=>AuthService.signin(User.fromJson(res['user']), res['user'], '/')})
+    executePerformLogin(() => Http.post(`/v1/users/signin`, data), {
+      onSuccess: (res) =>
+        AuthService.signin(User.fromJson(res["user"]), res["token"], "/"),
+    });
 
   // const {data, error} = useSWR(`${process.env.NEXT_PUBLIC_DASHBOARD_API_ROOT}/v1/users/signin`, (url: string)=>Http.post(url))
   // const performLogin = async (data: any) => {

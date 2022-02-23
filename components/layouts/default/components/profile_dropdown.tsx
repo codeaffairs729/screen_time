@@ -29,7 +29,7 @@ const ProfileDropdown = () => {
           <MenuItem label="Jane Doe" link="/profile" />
           <MenuItem label="My Profile" link="/profile" />
           <MenuItem label="My Favourites" link="/profile" />
-          <MenuItem label="Log out" onClick={AuthService.logout} />
+          <MenuItem label="Log out" onClick={() => AuthService.logout()} />
         </Menu.Items>
       </Transition>
     </Menu>
