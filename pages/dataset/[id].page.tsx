@@ -22,7 +22,7 @@ const DatasetDetailPage = () => {
           <div className="w-1/3">
             <SummarySection />
           </div>
-          <div className="w-2/3">
+          <div className="w-2/3 border">
             {/* <DetailTabs /> */}
             <Tab.Group>
               <Tab.List className="flex justify-between border-b-2 border-gray-400">

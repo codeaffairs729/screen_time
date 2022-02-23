@@ -14,7 +14,7 @@ const SummarySection = () => {
 
   return (
     <div className="border p-2">
-      <div>Dataset</div>
+      <div className="p-3 -m-2 mb-0 border-b-2 border-gray-400 text-sm font-semibold">Dataset</div>
       <h4 className="text-sm font-medium">{vm.dataset?.detail.name}</h4>
       <DatasetDownload urls={vm.dataset?.urls} />
       <div className="text-xs font-medium">Summary</div>
