@@ -16,8 +16,8 @@ const SigninPage = () => {
         <div className="text-center">
           <h1 className="font-semibold text-lg mb-2 mt-8">Login</h1>
           <span className="inline-flex space-x-1">
-            <i>Continue as a guest?</i> {process.env.NEXT_PUBLIC_DASHBOARD_API_ROOT}{process.env.NEXT_PUBLIC_API_ROOT}
-            <InfoIcon title="Continue using the website without loggin in" />
+            <i>Continue as a guest?</i>
+            <InfoIcon title="Continue using the website without logging in" />
           </span>
         </div>
         <div className="grow flex flex-col items-center justify-center pb-8">

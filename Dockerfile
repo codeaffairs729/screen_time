@@ -3,6 +3,8 @@ FROM node:14.19.0-alpine AS deps
 # Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
+RUN pwd
+RUN ls -lah
 COPY package.json package-lock.json ./
 RUN npm i -g npm@8.3.1
 RUN npm install
@@ -38,7 +40,8 @@ RUN adduser --system --uid 1001 nextjs
 
 # You only need to copy next.config.js if you are NOT using the default configuration
 COPY --from=builder /app/next.config.js ./
-COPY --from=builder /app/.env ./
+# COPY --from=builder /app/.env ./
+COPY ./.env  /
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/package.json ./package.json
 
