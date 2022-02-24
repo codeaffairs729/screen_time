@@ -20,7 +20,7 @@ const SummaryStatistics = () => {
 
   return (
     <div className="flex divide-x-2 pt-2">
-      <div className="w-full px-3 pt-1.5">
+      <div className="w-full px-3 pt-1">
         <LabelledRow
           label="Likes"
           tooltip="Number of users who have liked this dataset / proportion of likes in all user feedback"
@@ -40,7 +40,7 @@ const SummaryStatistics = () => {
           {capitalize(dataset.detail.sentiment)}
         </LabelledRow>
       </div>
-      <div className="w-full px-3 pt-1.5">
+      <div className="w-full px-3 pt-1">
         <LabelledRow
           label="Viewed"
           tooltip="Number of times users have looked at the detailed view of this dataset"

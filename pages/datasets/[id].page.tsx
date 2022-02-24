@@ -5,18 +5,23 @@ import { Tab } from "@headlessui/react";
 import SummaryStatistics from "./components/summary_statitics";
 import TabHeader from "./components/tab_header";
 import FeedbackSection from "./components/feedback_section";
+import { NextPageContext } from "next";
+import Http from "common/http";
+import Dataset from "models/dataset.model";
+import ErrorAlert from "components/UI/alerts/error_alert";
 
-const DatasetDetailPage = () => {
-  const vm = DatasetDetailVM();
+const DatasetDetailPage = ({ dataset }: { dataset: Dataset | undefined }) => {
+  if (!dataset) {
+    return (
+      <DefaultLayout>
+        <ErrorAlert className="max-w-xl mx-auto" message="Something went wrong while fetching dataset data. Please try again later." />
+      </DefaultLayout>
+    );
+  }
+  const vm = DatasetDetailVM(dataset);
+
   return (
     <DefaultLayout>
-      {/* <SearchVMContext.Provider value={vm}>
-      <div className="flex">
-        <Sidebar className="w-40 shrink-0" />
-        <ResultTable />
-      </div>
-    </SearchVMContext.Provider> */}
-
       <DatasetDetailVMContext.Provider value={vm}>
         <div className="flex">
           <div className="w-1/3">
@@ -45,6 +50,21 @@ const DatasetDetailPage = () => {
       </DatasetDetailVMContext.Provider>
     </DefaultLayout>
   );
+};
+
+DatasetDetailPage.getInitialProps = async ({ query }: NextPageContext) => {
+  try {
+    const datasetId = query["id"];
+    const datasetData = await Http.get(`/v3/datasets/${datasetId}`, {
+      baseUrl: process.env.NEXT_PUBLIC_API_ROOT,
+    });
+    const dataset = Dataset.fromJson(
+      datasetData[0]["user_search"][0]["results"][0]
+    );
+    return { dataset };
+  } catch (error) {
+    return { dataset: undefined };
+  }
 };
 
 export default DatasetDetailPage;

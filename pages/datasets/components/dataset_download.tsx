@@ -6,13 +6,13 @@ const DatasetDownload = ({ urls }: { urls: DatasetUrl[] }) => {
   return (
     <>
       {urls.length > 0 && (
-        <div className="flex">
+        <div className="">
           <span className="text-xs font-semibold mr-1">Data:</span>
           <div>
             {urls.map((url, i) => (
               <DatasetDownloadItem
                 key={i}
-                label={`${url.format}`}
+                label={`${url.format}, ${url.sizemb}`}
                 url={url.url}
               />
             ))}
@@ -33,14 +33,14 @@ const DatasetDownloadItem = ({
   const newUrl = url?.replace(/["']/g, "");
 
   return (
-    <a href={newUrl} className="flex" download>
+    <a href={newUrl} className="flex space-x-1" download>
       <Image
         src="/images/icons/folder.svg"
         width="20px"
         height="20px"
         alt="folder icon"
       />
-      <span className="text-xs font-medium">{label}</span>
+      <span className="text-xs font-medium underline">{label}</span>
     </a>
   );
 };

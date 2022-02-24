@@ -3,7 +3,8 @@ import debounce from "debounce-promise";
 import useSWR from "swr";
 import clsx from "clsx";
 import { SingleValue } from "react-select";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 export type SearchOption = { value: any; label: string };
 
@@ -32,16 +33,23 @@ const DatasetSearchInput = ({
 
   const Option = ({ data, innerProps }: any) => {
     return (
-      // <button onClick={() => onClickOption(props.data)} className="w-full">
       <div
         {...innerProps}
         className="hover:bg-dtech-secondary-light hover:text-gray-100 hover:no-underline text-gray-800 block w-full text-sm text-left px-2.5 py-2"
       >
         {data.label}
       </div>
-      // </button>
     );
   };
+
+  const {
+    query: { q },
+  } = useRouter();
+  useEffect(() => {
+    if (q) {
+      setInput(q as string);
+    }
+  }, [q]);
   const [input, setInput] = useState("");
 
   return (
