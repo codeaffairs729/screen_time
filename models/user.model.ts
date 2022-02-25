@@ -37,8 +37,8 @@ class User {
       email: json["email"],
       userType: json["user_type"],
       organisation: json["organisation"],
-      updatedAt: json["updated_at"],
-      createdAt: json["created_at"],
+      updatedAt: DateTime.fromISO(json["updated_at"]),
+      createdAt: DateTime.fromISO(json["created_at"]),
     });
   }
 }

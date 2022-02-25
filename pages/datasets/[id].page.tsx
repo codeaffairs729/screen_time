@@ -32,7 +32,6 @@ const DatasetDetailPage = ({ dataset }: { dataset: Dataset | undefined }) => {
             <SummarySection />
           </div>
           <div className="w-2/3 border">
-            {/* <DetailTabs /> */}
             <Tab.Group>
               <Tab.List className="flex justify-between border-b-2 border-gray-400">
                 <TabHeader>Summary Statistics</TabHeader>

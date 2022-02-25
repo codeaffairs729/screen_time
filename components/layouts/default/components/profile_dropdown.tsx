@@ -3,12 +3,16 @@ import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
 import { Fragment } from "react";
+import { useSelector } from "react-redux";
 import AuthService from "services/auth.service";
+import { RootState } from "store";
 
 const ProfileDropdown = () => {
+  const user = useSelector((state: RootState) => state.auth.user);
+
   return (
     <Menu as="div" className="relative inline-block text-left">
-      <Menu.Button aria-label="profile dropdown button text-red-500">
+      <Menu.Button aria-label="profile dropdown button" className="w-10">
         <Image
           src="/images/icons/profile/guest_Icon.svg"
           width="40"
@@ -26,10 +30,23 @@ const ProfileDropdown = () => {
         leaveTo="transform opacity-0 scale-95"
       >
         <Menu.Items className="absolute z-30 right-0 w-56 origin-top-right bg-white shadow-lg overflow-hidden border border-dtech-secondary-light">
-          <MenuItem label="Jane Doe" link="/profile" />
-          <MenuItem label="My Profile" link="/profile" />
-          <MenuItem label="My Favourites" link="/profile" />
-          <MenuItem label="Log out" onClick={() => AuthService.logout()} />
+          {user && (
+            <>
+              <MenuItem label="My Profile" link="/profile" />
+              <MenuItem label="Log out" onClick={() => AuthService.logout()} />
+            </>
+          )}
+          {!user && (
+            <>
+              <span className="text-sm font-medium mx-2 mt-2 -mb-2 block">Hi,</span>
+              <span className="text-xs text-gray-600 mx-2">
+                Log in or Create a new account
+              </span>
+              <br />
+              <MenuItem label="Sign In" link="/signin" />
+              <MenuItem label="Sign Up" link="/signup" />
+            </>
+          )}
         </Menu.Items>
       </Transition>
     </Menu>
