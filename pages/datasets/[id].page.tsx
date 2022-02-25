@@ -9,12 +9,16 @@ import { NextPageContext } from "next";
 import Http from "common/http";
 import Dataset from "models/dataset.model";
 import ErrorAlert from "components/UI/alerts/error_alert";
+import MayAlsoLike from "./components/may_also_like";
 
 const DatasetDetailPage = ({ dataset }: { dataset: Dataset | undefined }) => {
   if (!dataset) {
     return (
       <DefaultLayout>
-        <ErrorAlert className="max-w-xl mx-auto" message="Something went wrong while fetching dataset data. Please try again later." />
+        <ErrorAlert
+          className="max-w-xl mx-auto"
+          message="Something went wrong while fetching dataset data. Please try again later."
+        />
       </DefaultLayout>
     );
   }
@@ -35,14 +39,16 @@ const DatasetDetailPage = ({ dataset }: { dataset: Dataset | undefined }) => {
                 <TabHeader>Feedback</TabHeader>
                 <TabHeader>You may also like</TabHeader>
               </Tab.List>
-              <Tab.Panels>
-                <Tab.Panel>
+              <Tab.Panels className="h-[calc(100%-var(--dataset-detail-tab-header-height))] w-full flex">
+                <Tab.Panel className="w-full">
                   <SummaryStatistics />
                 </Tab.Panel>
-                <Tab.Panel>
+                <Tab.Panel className="w-full">
                   <FeedbackSection />
                 </Tab.Panel>
-                <Tab.Panel>Content 3</Tab.Panel>
+                <Tab.Panel className="w-full">
+                  <MayAlsoLike />
+                </Tab.Panel>
               </Tab.Panels>
             </Tab.Group>
           </div>

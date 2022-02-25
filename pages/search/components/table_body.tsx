@@ -1,5 +1,6 @@
 import clsx from "clsx";
-import DatasetDownload from "./dataset_download";
+import DatasetDownload from "components/dataset/dataset_download";
+// import DatasetDownload from "./1dataset_download";
 import Favourite from "components/UI/buttons/favourite";
 import StarRating from "components/UI/star_rating";
 import { DateTime } from "luxon";
@@ -75,21 +76,5 @@ const Cell = ({
     </div>
   );
 };
-
-// const DatasetDownload = ({ label, url }: { label: string; url: string }) => {
-//   const newUrl = url?.replace(/["']/g, "");
-
-//   return (
-//     <a href={newUrl} className="flex" download>
-//       <Image
-//         src="/images/icons/folder.svg"
-//         width="20px"
-//         height="20px"
-//         alt="folder icon"
-//       />
-//       <span className="text-xs font-medium">{label}</span>
-//     </a>
-//   );
-// };
 
 export default TableBody;

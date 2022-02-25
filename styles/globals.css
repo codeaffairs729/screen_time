@@ -6,4 +6,5 @@
 
 :root {
   --nav-height: 87px; /* height of the navbar */
+  --dataset-detail-tab-header-height: 46px; /* height of the tab header on the dataset detail page */
 }

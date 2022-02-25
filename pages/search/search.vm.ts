@@ -21,7 +21,7 @@ const SearchVM = () => {
   };
 
   const { data: datasets, error } = useSWR(
-    `${process.env.NEXT_PUBLIC_API_ROOT}/v2/dataset?searchterm=${q}`,
+    `${process.env.NEXT_PUBLIC_API_ROOT}/v3/datasets?searchquery=${q}&pagesize=20&pagenum=1`,
     (url: string) =>
       fetch(url)
         .then((res) => res.json())
