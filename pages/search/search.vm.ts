@@ -1,16 +1,50 @@
 import { SearchOption } from "components/UI/dataset_search_input";
 import { useRouter } from "next/router";
-import { createContext, useEffect } from "react";
+import { createContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { SingleValue } from "react-select";
 import useSWR from "swr";
 import Dataset from "../../models/dataset.model";
+
+export type Filter = {
+  file_type?: string[];
+  owner?: string[];
+  license?: string[];
+  quality?: string[];
+};
 
 const SearchVM = () => {
   const router = useRouter();
   const {
     query: { q },
   } = router;
+
+  const [activeFilter, setActiveFilter] = useState<Filter>({});
+  const [queryParams, setQueryParams] = useState<string>("");
+
+  useEffect(() => {
+    const getQueryParam = (key: keyof Filter): string => {
+      console.log("activeFilter", activeFilter);
+      if (
+        key &&
+        activeFilter[key] &&
+        (activeFilter[key] as Array<string>).length > 0
+      ) {
+        const paramValues = activeFilter[key] ?? [];
+        return paramValues
+          .map((v) => `${encodeURIComponent(key)}=${encodeURIComponent(v)}`)
+          .join("&");
+      }
+      return "";
+    };
+    let cQueryParams = Object.keys(activeFilter)
+      .map((k) => getQueryParam(k as keyof Filter))
+      .filter((qp) => qp)
+      .join("&");
+      console.log('cQueryParams', cQueryParams);
+      
+    setQueryParams(cQueryParams ? `&${cQueryParams}` : "");
+  }, [activeFilter]);
 
   /**
    * Fired when the term on the search input on the search page is changed
@@ -21,7 +55,7 @@ const SearchVM = () => {
   };
 
   const { data: datasets, error } = useSWR(
-    `${process.env.NEXT_PUBLIC_API_ROOT}/v3/datasets?searchquery=${q}&pagesize=20&pagenum=1`,
+    `${process.env.NEXT_PUBLIC_API_ROOT}/v3/datasets?searchquery=${q}&pagesize=20&pagenum=1${queryParams}`,
     (url: string) =>
       fetch(url)
         .then((res) => res.json())
@@ -32,13 +66,23 @@ const SearchVM = () => {
   if (error) {
     toast.error("Something went wrong while fetching search results");
   }
-  return { datasets, error, isLoading: !datasets && !error, onSearchChange };
+  return {
+    datasets,
+    error,
+    isLoading: !datasets && !error,
+    onSearchChange,
+    setActiveFilter,
+  };
 };
 
-export const SearchVMContext = createContext<{
+interface ISearchVMContext {
   datasets: Dataset[] | undefined;
   error: any;
   isLoading: boolean;
-}>({ datasets: undefined, error: null, isLoading: false });
+  onSearchChange: Function;
+  setActiveFilter: Function;
+}
+
+export const SearchVMContext = createContext({} as ISearchVMContext);
 
 export default SearchVM;

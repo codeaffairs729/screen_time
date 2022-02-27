@@ -1,5 +1,7 @@
 import { useState } from "react";
 import log from "loglevel";
+import { Filter } from "pages/search/search.vm";
+import { useForm, useWatch } from "react-hook-form";
 const { useEffect } = require("react");
 
 export const useScript = (url: string) => {
@@ -60,4 +62,29 @@ export const useHttpCall = <T>(initial: any = null) => {
     data,
     execute,
   };
+};
+
+export const useWatchFilter = ({
+  setActiveFilter,
+  // newState,
+  name,
+}: {
+  setActiveFilter: Function;
+  // newState: { [key: string]: any };
+  name: string;
+}) => {
+  const { register, control } = useForm();
+  // const vm = useContext(SearchVMContext);
+  const newState = useWatch({
+    control,
+    name,
+    defaultValue: [],
+  });
+  useEffect(() => {
+    setActiveFilter((state: Filter) => ({
+      ...state,
+      [name]: newState,
+    }));
+  }, [newState]);
+  return { register, control };
 };

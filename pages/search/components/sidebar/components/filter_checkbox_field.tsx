@@ -8,9 +8,11 @@ import {
 const FilterCheckboxField = ({
   label,
   register,
+  value,
   className = "",
 }: {
   label?: string;
+  value?: any;
   register?: UseFormRegisterReturn;
   className?: string;
 }) => {
@@ -20,7 +22,7 @@ const FilterCheckboxField = ({
         type="checkbox"
         {...register}
         className="text-dtech-primary-light focus:ring-0 rounded-sm border-dtech-primary-light"
-        value={label}
+        value={value}
       />
       {label && (
         <span className="ml-2 font-medium text-xs text-gray-700">{label}</span>

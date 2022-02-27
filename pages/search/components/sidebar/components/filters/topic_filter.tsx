@@ -1,9 +1,10 @@
 import { SearchVMContext } from "pages/search/search.vm";
 import { useContext } from "react";
-import FilterCheckboxField from "./filter_checkbox_field";
-import FilterSection from "./filter_section";
+import FilterCheckboxField from "../filter_checkbox_field";
+import FilterSection from "../filter_section";
 import Loader from "components/UI/loader";
 import { useForm } from "react-hook-form";
+import { useWatchFilter } from "common/hooks";
 
 const TopicFilter = () => {
   const vm = useContext(SearchVMContext);
@@ -13,18 +14,20 @@ const TopicFilter = () => {
       return a;
     }, new Set<string>()) ?? new Set<string>();
 
-    const {register, watch} = useForm();
-    // console.log('watch()', watch());
-    // const watchAll = watch();
-    // console.log('watchAll', watchAll);
-
-    
-
+  const { register } = useWatchFilter({
+    setActiveFilter: vm.setActiveFilter,
+    name: "topic",
+  });
 
   return (
     <FilterSection label="Topics">
       {Array.from(topics)?.map((t, i) => (
-        <FilterCheckboxField register={register(`topic_${i}`)} key={i} label={t} />
+        <FilterCheckboxField
+          register={register(`topic`)}
+          key={i}
+          label={t}
+          value={t}
+        />
       ))}
       {vm.isLoading && (
         <div className="h-20 flex items-center justify-center">
@@ -34,6 +37,5 @@ const TopicFilter = () => {
     </FilterSection>
   );
 };
-
 
 export default TopicFilter;
