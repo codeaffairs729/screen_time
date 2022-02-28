@@ -4,10 +4,12 @@ import PrimaryBtn from "components/UI/form/primary_btn";
 import TextField from "components/UI/form/text_field";
 import InfoIcon from "components/UI/icons/info_icon";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import FormRow from "./components/form_row";
 import SigninVM from "./signin.vm";
 
 const SigninPage = () => {
+  const router = useRouter();
   const vm = SigninVM();
 
   return (
@@ -52,7 +54,11 @@ const SigninPage = () => {
             </a>
           </Link>
           <div className="flex space-x-4 mt-12">
-            <PrimaryBtn className="bg-dtech-primary-dark min-w-[150px]" label="Sign Up" />
+            <PrimaryBtn
+              className="bg-dtech-primary-dark min-w-[150px]"
+              label="Sign Up"
+              onClick={() => router.push("/signup")}
+            />
             <PrimaryBtn
               className="bg-dtech-primary-dark min-w-[150px]"
               label="Login"

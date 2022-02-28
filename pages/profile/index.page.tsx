@@ -32,7 +32,7 @@ const ProfilePage = () => {
           <div className="w-full flex flex-col justify-center md:w-3/4 ml-auto">
             <div className="flex items-center mb-3">
               <h3 className="font-medium mr-10 text-lg text-gray-700">
-                {user.email}
+                {user.name ?? user.email}
               </h3>
               <PrimaryBtn
                 label="Change profile picture"

@@ -43,7 +43,7 @@ const Nav = ({
 const NavItem = ({ label, link }: { label: string; link: string }) => {
   return (
     <Link href={link}>
-      <a className="font-semibold text-sm text-gray-600 m-3 hover:text-dtech-secondary-dark">{label}</a>
+      <a className="font-semibold text-sm text-gray-600 m-3 hover:text-dtech-secondary-dark whitespace-nowrap">{label}</a>
     </Link>
   );
 };
