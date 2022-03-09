@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import DatasetDownload from "components/dataset/dataset_download";
 // import DatasetDownload from "./1dataset_download";
-import Favourite from "components/UI/buttons/favourite";
+import Favourite from "components/UI/buttons/favourite_btn";
 import StarRating from "components/UI/star_rating";
 import { DateTime } from "luxon";
 import Dataset from "models/dataset.model";

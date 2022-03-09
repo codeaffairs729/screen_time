@@ -6,7 +6,8 @@ import { DateTime } from "luxon";
 import Image from "next/image";
 import { useSelector } from "react-redux";
 import { RootState } from "store";
-import DataOwnerSection from "./components/data_owner_section";
+import SummaryStatisticsSection from "./components/summary_statistics_section";
+import FavouritesSection from "./components/favourites_section";
 import HeaderValue from "./components/header_value";
 import TabbedSection from "./components/tabbed_section/tabbed_section";
 
@@ -57,8 +58,8 @@ const ProfilePage = () => {
           </div>
         </div>
         <div className="md:flex">
-          <DataOwnerSection className="md:w-3/12" />
-          <TabbedSection />
+          <SummaryStatisticsSection className="md:w-3/12" />
+          <FavouritesSection/>
         </div>
       </div>
     </DefaultLayout>
