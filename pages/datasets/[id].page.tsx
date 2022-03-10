@@ -11,6 +11,7 @@ import Dataset from "models/dataset.model";
 import ErrorAlert from "components/UI/alerts/error_alert";
 import MayAlsoLike from "./components/may_also_like";
 import BackBtn from "components/UI/buttons/back_btn";
+import log from "common/logger";
 
 const DatasetDetailPage = ({ dataset }: { dataset: Dataset | undefined }) => {
   if (!dataset) {

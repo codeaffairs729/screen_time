@@ -34,8 +34,8 @@ const SummaryStatistics = () => {
           {dataset.detail.favourites}
         </LabelledRow>
         <LabelledRow
-          label="Added to favourites"
-          tooltip="Number of users who have added this dataset to their favourites list"
+          label="Feedback Sentiment"
+          tooltip="Feedback Sentiment"
         >
           {capitalize(dataset.detail.sentiment)}
         </LabelledRow>
