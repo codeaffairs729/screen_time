@@ -31,6 +31,7 @@ import { useStore } from "store";
 import "styles/globals.css";
 import { AppProps } from "next/app";
 import { Toaster } from "react-hot-toast";
+import Loader from "components/UI/loader";
 
 function DtechtiveApp({ Component, pageProps }: AppProps) {
   const store = useStore(pageProps.initialReduxState);
@@ -51,7 +52,14 @@ function DtechtiveApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <Provider store={store}>
-        <PersistGate loading={<div>loading</div>} persistor={persistor}>
+        <PersistGate
+          loading={
+            <div className="w-screen h-screen flex items-center justify-center">
+              <Loader />
+            </div>
+          }
+          persistor={persistor}
+        >
           <Component {...pageProps} />
           <Toaster position="bottom-center" reverseOrder={false} />
         </PersistGate>

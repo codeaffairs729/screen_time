@@ -9,7 +9,6 @@ import { RootState } from "store";
 import SummaryStatisticsSection from "./components/summary_statistics_section";
 import FavouritesSection from "./components/favourites_section/favourites_section";
 import HeaderValue from "./components/header_value";
-import TabbedSection from "./components/tabbed_section/tabbed_section";
 
 const ProfilePage = () => {
   const user = useSelector((state: RootState) => state.auth.user);

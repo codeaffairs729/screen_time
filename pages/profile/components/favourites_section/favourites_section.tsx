@@ -60,7 +60,7 @@ const FavouritesSection = () => {
           
         </div>
       </div>
-      <div className="w-full max-h-[max(300px,calc(100vh-var(--nav-height)-255px))] overflow-y-auto ml-2">
+      <div className="w-full max-h-[max(400px,calc(100vh-var(--nav-height)-295px))] overflow-y-auto ml-2">
         {favouriteDatasets?.map((dataset, i) => (
           <FavouriteDatasetItem key={i} dataset={dataset} />
         ))}
