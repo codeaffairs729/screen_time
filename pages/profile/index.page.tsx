@@ -7,7 +7,7 @@ import Image from "next/image";
 import { useSelector } from "react-redux";
 import { RootState } from "store";
 import SummaryStatisticsSection from "./components/summary_statistics_section";
-import FavouritesSection from "./components/favourites_section";
+import FavouritesSection from "./components/favourites_section/favourites_section";
 import HeaderValue from "./components/header_value";
 import TabbedSection from "./components/tabbed_section/tabbed_section";
 
@@ -47,7 +47,12 @@ const ProfilePage = () => {
             />
             <HeaderValue
               header="Role"
-              value={user.user_type}
+              value={user.userType}
+              className="mb-2"
+            />
+            <HeaderValue
+              header="Data Owner"
+              value={user.isDataOwner?"Yes":"No"}
               className="mb-2"
             />
             <HeaderValue

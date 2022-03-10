@@ -10,6 +10,7 @@ class User {
     name,
     email,
     userType,
+    isDataOwner,
     organisation,
     updatedAt,
     createdAt,
@@ -17,13 +18,15 @@ class User {
     name: string;
     email: string;
     userType: UserType;
+    isDataOwner: Boolean;
     organisation: string;
     updatedAt: DateTime;
     createdAt: DateTime;
   }) {
     this.name = name;
     this.email = email;
-    this.user_type = userType;
+    this.userType = userType;
+    this.isDataOwner = isDataOwner;
     this.organisation = organisation;
     this.updatedAt = updatedAt;
     this.created_at = createdAt;
@@ -31,7 +34,8 @@ class User {
 
   name: string;
   email: string;
-  user_type: UserType;
+  userType: UserType;
+  isDataOwner: Boolean;
   organisation: string;
   updatedAt: DateTime;
   created_at: DateTime;
@@ -41,6 +45,7 @@ class User {
       name: json["name"],
       email: json["email"],
       userType: json["user_type"],
+      isDataOwner: json["is_data_owner"],
       organisation: json["organisation"],
       updatedAt: DateTime.fromISO(json["updated_at"]),
       createdAt: DateTime.fromISO(json["created_at"]),

@@ -2,11 +2,13 @@ import Image from "next/image";
 import Loader from "../loader";
 
 const FavouriteBtn = ({
+  className="",
   isFavourited = false,
   isDisabled = false,
   isLoading = false,
   onClick,
 }: {
+  className?: string;
   isFavourited: boolean;
   isDisabled?: boolean;
   isLoading?: boolean;
@@ -24,12 +26,12 @@ const FavouriteBtn = ({
           src={`/images/icons/favourite/${
             isFavourited ? "favourited" : "not_favourited"
           }.svg`}
-          width="40px"
-          height="40px"
+          width="25px"
+          height="25px"
           alt="favourite"
         />
       ) : (
-        <Loader />
+        <Loader className="m-0.5" />
       )}
     </button>
   );
