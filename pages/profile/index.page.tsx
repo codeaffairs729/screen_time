@@ -9,11 +9,13 @@ import { RootState } from "store";
 import SummaryStatisticsSection from "./components/summary_statistics_section";
 import FavouritesSection from "./components/favourites_section/favourites_section";
 import HeaderValue from "./components/header_value";
+import { Role } from "models/user.model";
+import { startCase } from "lodash-es";
 
 const ProfilePage = () => {
   const user = useSelector((state: RootState) => state.auth.user);
   if (!user) {
-    return <ErrorAlert message="Please login to continue" />;
+    return <ErrorAlert className="m-2" message="Please login to continue" />;
   }
 
   return (
@@ -46,12 +48,14 @@ const ProfilePage = () => {
             />
             <HeaderValue
               header="Role"
-              value={user.userType}
+              value={
+                user.role == Role.Other ? user.roleOther : startCase(user.role)
+              }
               className="mb-2"
             />
             <HeaderValue
               header="Data Owner"
-              value={user.isDataOwner?"Yes":"No"}
+              value={user.isDataOwner ? "Yes" : "No"}
               className="mb-2"
             />
             <HeaderValue
@@ -63,7 +67,7 @@ const ProfilePage = () => {
         </div>
         <div className="md:flex">
           <SummaryStatisticsSection className="md:w-3/12" />
-          <FavouritesSection/>
+          <FavouritesSection />
         </div>
       </div>
     </DefaultLayout>

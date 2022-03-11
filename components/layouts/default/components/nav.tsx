@@ -13,7 +13,7 @@ const Nav = ({
   showLogo?: boolean;
 }) => {
   const user = useSelector((state: RootState) => state.auth.user);
-  
+
   return (
     <nav className="flex p-2 h-[var(--nav-height)] items-center">
       {showLogo && (
@@ -31,7 +31,11 @@ const Nav = ({
       {content}
       <div className="ml-auto flex items-center">
         <NavItem label="Home" link="/" />
-        <NavItem label="API" link="/" />
+        <NavItem
+          label="API"
+          link="https://api.dtective.dtime.ai/docs"
+          openInNewTab={true}
+        />
         {!user && <NavItem label="Sign Up" link="/signup" />}
         {!user && <NavItem label="Login" link="/signin" />}
         <ProfileDropdown />
@@ -40,10 +44,23 @@ const Nav = ({
   );
 };
 
-const NavItem = ({ label, link }: { label: string; link: string }) => {
+const NavItem = ({
+  label,
+  link,
+  openInNewTab = false,
+}: {
+  label: string;
+  link: string;
+  openInNewTab?: boolean;
+}) => {
   return (
     <Link href={link}>
-      <a className="font-semibold text-sm text-gray-600 m-3 hover:text-dtech-secondary-dark whitespace-nowrap">{label}</a>
+      <a
+        target={openInNewTab ? "_blank" : "_self"}
+        className="font-semibold text-sm text-gray-600 m-3 hover:text-dtech-secondary-dark whitespace-nowrap"
+      >
+        {label}
+      </a>
     </Link>
   );
 };

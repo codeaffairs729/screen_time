@@ -14,7 +14,6 @@ import { initializeStore } from "store";
 async function parseHttpResponse(response: Response) {
   if (!response.ok) {
     let error;
-    const errorResponse = response.json();
     if (response.status === 401 ) {
       // AuthService.logout();
       error = new Non200ResponseError("Please login to continue", {

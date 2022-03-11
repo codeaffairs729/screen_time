@@ -1,15 +1,23 @@
 import { DateTime } from "luxon";
 
-export enum UserType {
-  user = "user",
-  owner = "owner",
+export enum Role {
+  "Data Enthusiast" = "data_enthusiast",
+  "Data Analyst" = "data_analyst",
+  "Data Scientist" = "data_scientist",
+  "Business Analyst" = "business_analyst",
+  "Researcher" = "researcher",
+  "Policy Expert" = "policy_expert",
+  "Entrepreneur" = "entrepreneur",
+  "Developer" = "developer",
+  "Other" = "other",
 }
 
 class User {
   constructor({
     name,
     email,
-    userType,
+    role,
+    roleOther,
     isDataOwner,
     organisation,
     updatedAt,
@@ -17,7 +25,8 @@ class User {
   }: {
     name: string;
     email: string;
-    userType: UserType;
+    roleOther: Role;
+    role: Role;
     isDataOwner: Boolean;
     organisation: string;
     updatedAt: DateTime;
@@ -25,7 +34,8 @@ class User {
   }) {
     this.name = name;
     this.email = email;
-    this.userType = userType;
+    this.role = role;
+    this.roleOther = roleOther;
     this.isDataOwner = isDataOwner;
     this.organisation = organisation;
     this.updatedAt = updatedAt;
@@ -34,7 +44,8 @@ class User {
 
   name: string;
   email: string;
-  userType: UserType;
+  role: Role;
+  roleOther: string;
   isDataOwner: Boolean;
   organisation: string;
   updatedAt: DateTime;
@@ -44,7 +55,8 @@ class User {
     return new User({
       name: json["name"],
       email: json["email"],
-      userType: json["user_type"],
+      role: json["role"],
+      roleOther: json["role_other"],
       isDataOwner: json["is_data_owner"],
       organisation: json["organisation"],
       updatedAt: DateTime.fromISO(json["updated_at"]),
