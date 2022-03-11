@@ -2,7 +2,9 @@ import { SearchOption } from "components/UI/dataset_search_input";
 import { useRouter } from "next/router";
 import { createContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { useDispatch } from "react-redux";
 import { SingleValue } from "react-select";
+import { updateCache } from "store/cache/cache.action";
 import useSWR from "swr";
 import Dataset from "../../models/dataset.model";
 
@@ -18,6 +20,8 @@ const SearchVM = () => {
   const {
     query: { q },
   } = router;
+
+  const dispatch = useDispatch();
 
   const [activeFilter, setActiveFilter] = useState<Filter>({});
   const [queryParams, setQueryParams] = useState<string>("");
@@ -49,6 +53,7 @@ const SearchVM = () => {
    */
   const onSearchChange = (option: SingleValue<SearchOption>) => {
     if (!option) return;
+    dispatch(updateCache("last-search-query", option.value));
     router.push({ pathname: "/search", query: { q: option.value } });
   };
 

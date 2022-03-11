@@ -17,10 +17,12 @@ const SigninPage = () => {
       <div className="h-[calc(100vh-var(--nav-height))] flex flex-col justify-between">
         <div className="text-center">
           <h1 className="font-semibold text-lg mb-2 mt-8">Login</h1>
-          <span className="inline-flex space-x-1">
-            <i>Continue as a guest?</i>
-            <InfoIcon title="Continue using the website without logging in" />
-          </span>
+          <Link href={`/search${vm.lastSearchQueryUrl}`}>
+            <a className="inline-flex space-x-1">
+              <i className="mr-1 text-sm underline">Continue as a guest?</i>{" "}
+              <InfoIcon title="Continue using the website without logging in" />
+            </a>
+          </Link>
         </div>
         <div className="grow flex flex-col items-center justify-center pb-8">
           <FormRow label="Email">
