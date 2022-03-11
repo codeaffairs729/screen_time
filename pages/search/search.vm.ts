@@ -1,5 +1,3 @@
-import { useHttpCall } from "common/hooks";
-import Http from "common/http";
 import { SearchOption } from "components/UI/dataset_search_input";
 import { useRouter } from "next/router";
 import { createContext, useEffect, useState } from "react";
@@ -66,9 +64,10 @@ const SearchVM = () => {
         .then((res) =>
           Dataset.fromJsonList(res[0]["user_search"][0]["results"].slice(0, 10))
         )
-        .catch((e) =>
-          toast.error("Something went wrong while fetching search results")
-        )
+        .catch((e) => {
+          toast.error("Something went wrong while fetching search results");
+          throw e;
+        })
   );
 
   return {
@@ -81,7 +80,7 @@ const SearchVM = () => {
 };
 
 interface ISearchVMContext {
-  datasets: Dataset[] | undefined;
+  datasets: Dataset[] | undefined | void;
   error: any;
   isLoading: boolean;
   onSearchChange: Function;

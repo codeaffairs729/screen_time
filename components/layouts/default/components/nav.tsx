@@ -33,7 +33,7 @@ const Nav = ({
         <NavItem label="Home" link="/" />
         <NavItem
           label="API"
-          link="https://api.dtective.dtime.ai/docs"
+          link="https://api.dtechtive.dtime.ai/docs"
           openInNewTab={true}
         />
         {!user && <NavItem label="Sign Up" link="/signup" />}
