@@ -70,7 +70,7 @@ const SigninPage = () => {
           </div>
         </div>
         <div className="text-center pb-4">
-          <Link href="/">
+          <Link href="/data-privacy-policy">
             <a className="text-sm underline text-gray-600">
               Data privacy policy
             </a>

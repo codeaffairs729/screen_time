@@ -18,7 +18,7 @@ const SigninPage = () => {
         <div className="text-center mt-8 mb-4">
           <h1 className="font-semibold text-lg">Sign up</h1>
           <span className="inline-flex space-x-1">
-            <i>Why should you create an account?</i>{" "}
+            <i className="mr-1 text-sm underline">Why should you create an account?</i>{" "}
             <InfoIcon
               className="ml-1"
               title="Register a new account to access more features"
@@ -153,7 +153,7 @@ const SigninPage = () => {
           </div>
         </div>
         <div className="text-center pb-4">
-          <Link href="/">
+          <Link href="/data-privacy-policy">
             <a className="text-sm underline text-gray-600">
               Data privacy policy
             </a>
