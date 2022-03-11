@@ -2,6 +2,9 @@ import { useState } from "react";
 import log from "loglevel";
 import { Filter } from "pages/search/search.vm";
 import { useForm, useWatch } from "react-hook-form";
+import Dataset from "models/dataset.model";
+import Http from "./http";
+import toast from "react-hot-toast";
 const { useEffect } = require("react");
 
 export const useScript = (url: string) => {
@@ -87,4 +90,34 @@ export const useWatchFilter = ({
     }));
   }, [newState]);
   return { register, control };
+};
+
+/**
+ * Favourite a dataset
+ */
+export const useFavouriteDataset = (dataset: Dataset) => {
+  const [isFavourited, setIsFavourited] = useState(dataset.detail.isFavourited);
+  const { execute: executeHandleFavourite, isLoading: isHandlingFavourite } =
+    useHttpCall();
+  const handleFavourite = () =>
+    executeHandleFavourite(
+      async () => {
+        if (!isFavourited) {
+          const res = await Http.put(`/v1/datasets/${dataset.id}/favourite`);
+          setIsFavourited(true);
+        } else {
+          const res = await Http.delete(`/v1/datasets/${dataset.id}/favourite`);
+          setIsFavourited(false);
+        }
+      },
+      {
+        onError: (res) => toast.error("Something went wrong while favouriting"),
+      }
+    );
+  return {
+    isFavourited,
+    setIsFavourited,
+    isHandlingFavourite,
+    handleFavourite,
+  };
 };

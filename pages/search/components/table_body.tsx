@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import { useFavouriteDataset } from "common/hooks";
 import DatasetDownload from "components/dataset/dataset_download";
 // import DatasetDownload from "./1dataset_download";
 import Favourite from "components/UI/buttons/favourite_btn";
@@ -26,6 +27,9 @@ const TableBody = () => {
 };
 
 const Row = ({ dataset }: { dataset: Dataset }) => {
+  const { isFavourited, handleFavourite, isHandlingFavourite } =
+    useFavouriteDataset(dataset);
+
   return (
     <>
       <Cell className="min-w-[350px]">
@@ -52,7 +56,12 @@ const Row = ({ dataset }: { dataset: Dataset }) => {
       </Cell>
       <Cell>{dataset.detail.lastDownloaded}</Cell>
       <Cell className="text-center pt-1">
-        <Favourite isFavourited={dataset.detail.isFavourited} />
+        <Favourite
+          isLoading={isHandlingFavourite}
+          className="mx-auto"
+          isFavourited={isFavourited}
+          onClick={handleFavourite}
+        />
       </Cell>
     </>
   );

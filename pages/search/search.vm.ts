@@ -1,3 +1,5 @@
+import { useHttpCall } from "common/hooks";
+import Http from "common/http";
 import { SearchOption } from "components/UI/dataset_search_input";
 import { useRouter } from "next/router";
 import { createContext, useEffect, useState } from "react";
@@ -24,7 +26,6 @@ const SearchVM = () => {
 
   useEffect(() => {
     const getQueryParam = (key: keyof Filter): string => {
-      console.log("activeFilter", activeFilter);
       if (
         key &&
         activeFilter[key] &&
@@ -41,8 +42,7 @@ const SearchVM = () => {
       .map((k) => getQueryParam(k as keyof Filter))
       .filter((qp) => qp)
       .join("&");
-      console.log('cQueryParams', cQueryParams);
-      
+
     setQueryParams(cQueryParams ? `&${cQueryParams}` : "");
   }, [activeFilter]);
 
@@ -54,6 +54,10 @@ const SearchVM = () => {
     router.push({ pathname: "/search", query: { q: option.value } });
   };
 
+  /**
+   * Get search results
+   * TODO: convert searchquery, pagenum and pagesize to
+   */
   const { data: datasets, error } = useSWR(
     `${process.env.NEXT_PUBLIC_API_ROOT}/v3/datasets?searchquery=${q}&pagesize=20&pagenum=1${queryParams}`,
     (url: string) =>
@@ -62,10 +66,11 @@ const SearchVM = () => {
         .then((res) =>
           Dataset.fromJsonList(res[0]["user_search"][0]["results"].slice(0, 10))
         )
+        .catch((e) =>
+          toast.error("Something went wrong while fetching search results")
+        )
   );
-  if (error) {
-    toast.error("Something went wrong while fetching search results");
-  }
+
   return {
     datasets,
     error,

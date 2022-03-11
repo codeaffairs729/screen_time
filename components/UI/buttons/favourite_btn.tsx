@@ -1,8 +1,9 @@
+import clsx from "clsx";
 import Image from "next/image";
 import Loader from "../loader";
 
 const FavouriteBtn = ({
-  className="",
+  className = "",
   isFavourited = false,
   isDisabled = false,
   isLoading = false,
@@ -19,7 +20,7 @@ const FavouriteBtn = ({
       aria-label="Favoruite dataset"
       onClick={onClick}
       disabled={isDisabled}
-      className="flex items-center justify-center"
+      className={clsx("flex items-center justify-center", className)}
     >
       {!isLoading ? (
         <Image

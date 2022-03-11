@@ -7,7 +7,7 @@ export const isBrowser = () => {
 /**
  * Parse error messages from response
  */
-export const getHttpErrorMsg = async(
+export const getHttpErrorMsg = async (
   errorRes: any,
   { defaultMessage = "Something went wrong" } = {}
 ): Promise<string> => {
