@@ -1,5 +1,7 @@
+import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { ReactNode } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "store";
@@ -53,11 +55,14 @@ const NavItem = ({
   link: string;
   openInNewTab?: boolean;
 }) => {
+  const router = useRouter();
+  const currentRoute = router.pathname;
+
   return (
     <Link href={link}>
       <a
         target={openInNewTab ? "_blank" : "_self"}
-        className="font-semibold text-sm text-gray-600 m-3 hover:text-dtech-secondary-dark whitespace-nowrap"
+        className={clsx("font-semibold text-sm text-gray-600 m-3 hover:text-dtech-secondary-dark whitespace-nowrap underline-offset-4 decoration-dtech-secondary-dark decoration-4", {'underline': currentRoute==link})}
       >
         {label}
       </a>
