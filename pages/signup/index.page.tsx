@@ -112,7 +112,7 @@ const SigninPage = () => {
                     console.log('val', val, JSON.stringify(val));
                     
                     if (![true, false].includes(val)) {
-                      return "Data owner is requiredss";
+                      return "Data owner is requireds";
                     }
                   },
                 },

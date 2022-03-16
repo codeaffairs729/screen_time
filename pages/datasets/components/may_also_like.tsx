@@ -1,6 +1,4 @@
 import DatasetDownload from "components/dataset/dataset_download";
-import DataHost from "components/dataset/data_host";
-import DataOwner from "components/dataset/data_owner";
 import ErrorAlert from "components/UI/alerts/error_alert";
 import Loader from "components/UI/loader";
 import Dataset from "models/dataset.model";
@@ -8,6 +6,7 @@ import Link from "next/link";
 import { useContext } from "react";
 import useSWR from "swr";
 import { DatasetDetailVMContext } from "../dataset_detail.vm";
+import LabelledRow from "components/dataset/labelled_row";
 
 const MayAlsoLike = () => {
   const { dataset } = useContext(DatasetDetailVMContext);
@@ -34,7 +33,10 @@ const MayAlsoLike = () => {
 
   if (error) {
     return (
-      <ErrorAlert className="m-2" message="Something went wrong while fetching related datasets. Please try again later" />
+      <ErrorAlert
+        className="m-2"
+        message="Something went wrong while fetching related datasets. Please try again later"
+      />
     );
   }
 
@@ -57,18 +59,28 @@ const MayAlsoLike = () => {
 
 const MayAlsoLikeDataset = ({ dataset }: { dataset: Dataset }) => {
   return (
-    <div className="border p-2 m-1.5">
-      <h4 className="font-semibold text-sm">
+    <div className="border p-2 mb-1">
+      <h4 className="font-semibold text-sm mb-1.5">
         <Link href={`/datasets/${dataset.id}`}>
           <a className="hover:text-dtech-secondary-light">
             {dataset.detail.name}
           </a>
         </Link>
       </h4>
-      <p className="text-xs text-gray-800">{dataset.detail.description}</p>
-      <DatasetDownload urls={dataset.urls} />
-      <DataHost className="my-2" dataset={dataset}/>
-      <DataOwner className="mb-2" dataset={dataset}/>
+      <p className="text-xs text-gray-800 mb-1.5">{dataset.detail.description}</p>
+      <DatasetDownload className="mb-1.5" urls={dataset.urls} />
+      <LabelledRow className="mb-1.5" label="Data Host">
+        <a
+          href={dataset.detail.hostUrl}
+          target="_blank"
+          rel="noreferrer"
+          className="text-xs underline"
+        >
+          {dataset.detail.hostName}
+        </a>
+      </LabelledRow>
+      <LabelledRow className="mb-1.5" label="Data Owner">{dataset.owner.name}</LabelledRow>
+      <LabelledRow className="mb-1.5" label="License">{dataset.detail.license.type}</LabelledRow>
     </div>
   );
 };

@@ -1,14 +1,14 @@
 import { useFavouriteDataset, useHttpCall } from "common/hooks";
 import Http from "common/http";
 import DatasetDownload from "components/dataset/dataset_download";
-import DataOwner from "components/dataset/data_owner";
+import LabelledRow from "components/dataset/labelled_row";
 import FavouriteBtn from "components/UI/buttons/favourite_btn";
 import Dataset from "models/dataset.model";
 import Link from "next/link";
 
 const FavouriteDatasetItem = ({ dataset }: { dataset: Dataset }) => {
-  const { isFavourited, handleFavourite, isHandlingFavourite } = useFavouriteDataset(dataset);
-
+  const { isFavourited, handleFavourite, isHandlingFavourite } =
+    useFavouriteDataset(dataset);
 
   return (
     <div className="flex border-t border-l border-r last:border-b">
@@ -21,7 +21,8 @@ const FavouriteDatasetItem = ({ dataset }: { dataset: Dataset }) => {
           </Link>
         </h4>
         <DatasetDownload className="mb-2" urls={dataset.urls} />
-        <DataOwner dataset={dataset} />
+        {/* <DataOwner dataset={dataset} /> */}
+        <LabelledRow label="Data Owner">{dataset.owner.name}</LabelledRow>
       </div>
       <div className="border-l p-3 px-8 flex items-center justify-center">
         <FavouriteBtn

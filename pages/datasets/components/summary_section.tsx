@@ -4,9 +4,10 @@ import { useContext } from "react";
 import { DatasetDetailVMContext } from "../dataset_detail.vm";
 import PrimaryBtn from "components/UI/form/primary_btn";
 import StarRating from "components/UI/star_rating";
-import LabelledRow from "./labelled_row";
-import DataHost from "components/dataset/data_host";
-import DataOwner from "components/dataset/data_owner";
+import LabelledRow from "components/dataset/labelled_row";
+// import LabelledRow from "./labelled_row";
+// import DataHost from "components/dataset/1data_host";
+// import DataOwner from "components/dataset/data_owner";
 
 const SummarySection = () => {
   const vm = useContext(DatasetDetailVMContext);
@@ -23,8 +24,19 @@ const SummarySection = () => {
       <DatasetDownload urls={vm.dataset?.urls} />
       <div className="text-xs font-medium mt-2">Summary</div>
       <div className="text-xs mb-2">{vm.dataset.detail.description}</div>
-      <DataHost className="mb-2" dataset={vm.dataset}/>
-      <DataOwner className="mb-2" dataset={vm.dataset}/>
+      {/* <DataHost className="mb-2" dataset={vm.dataset}/>
+      <DataOwner className="mb-2" dataset={vm.dataset}/> */}
+      <LabelledRow className="mb-1.5" label="Data Host">
+        <a
+          href={vm.dataset.detail.hostUrl}
+          target="_blank"
+          rel="noreferrer"
+          className="text-xs underline"
+        >
+          {vm.dataset.detail.hostName}
+        </a>
+      </LabelledRow>
+      <LabelledRow className="mb-1.5" label="Data Owner">{vm.dataset.owner.name}</LabelledRow>
       <PrimaryBtn
         label="Contact Owner"
         className="bg-dtech-secondary-light w-32 mb-2"
@@ -39,16 +51,16 @@ const SummarySection = () => {
           );
         }}
       />
-      <LabelledRow label="Tags" tooltip="Keyword and common themes">
+      <LabelledRow className="mb-1.5" label="Tags" tooltip="Keyword and common themes">
         {vm.dataset.detail.topics.map(capitalize).join(", ")}
       </LabelledRow>
-      <LabelledRow label="License" tooltip="License">
+      <LabelledRow className="mb-1.5" label="License" tooltip="License">
         {vm.dataset.detail.license.type}
       </LabelledRow>
-      <LabelledRow label="Popularity" tooltip="Popularity">
+      <LabelledRow className="mb-1.5" label="Popularity" tooltip="Popularity">
         <StarRating rating={vm.dataset.detail.popularity} />
       </LabelledRow>
-      <LabelledRow label="Quality" tooltip="Quality">
+      <LabelledRow className="mb-1.5" label="Quality" tooltip="Quality">
         <StarRating rating={vm.dataset.detail.dataQuality} />
       </LabelledRow>
     </div>

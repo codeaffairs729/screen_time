@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import { useFavouriteDataset } from "common/hooks";
 import DatasetDownload from "components/dataset/dataset_download";
-// import DatasetDownload from "./1dataset_download";
+import LabelledRow from "components/dataset/labelled_row";
 import Favourite from "components/UI/buttons/favourite_btn";
 import StarRating from "components/UI/star_rating";
 import { DateTime } from "luxon";
@@ -34,15 +34,33 @@ const Row = ({ dataset }: { dataset: Dataset }) => {
     <>
       <Cell className="min-w-[350px]">
         <div>
-          <h4 className="font-semibold text-sm">
+          <h4 className="font-semibold text-sm mb-1">
             <Link href={`/datasets/${dataset.id}`}>
               <a className="hover:text-dtech-secondary-light">
                 {dataset.detail.name}
               </a>
             </Link>
           </h4>
-          <p className="text-xs text-gray-800">{dataset.detail.description}</p>
-          <DatasetDownload urls={dataset.urls} />
+          <p className="text-xs text-gray-800 mb-1.5">
+            {dataset.detail.description}
+          </p>
+          <DatasetDownload urls={dataset.urls} className="mb-2" />
+          <LabelledRow className="mb-1.5" label="Data Host">
+            <a
+              href={dataset.detail.hostUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="text-xs underline"
+            >
+              {dataset.detail.hostName}
+            </a>
+          </LabelledRow>
+          <LabelledRow className="mb-1.5" label="Data Owner">
+            {dataset.owner.name}
+          </LabelledRow>
+          <LabelledRow className="mb-1.5" label="License">
+            {dataset.detail.license.type}
+          </LabelledRow>
         </div>
       </Cell>
       <Cell className="text-center">

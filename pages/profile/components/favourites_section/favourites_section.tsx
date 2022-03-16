@@ -1,12 +1,8 @@
 import { useHttpCall } from "common/hooks";
 import Http from "common/http";
-import DatasetDownload from "components/dataset/dataset_download";
-import DataOwner from "components/dataset/data_owner";
 import ErrorAlert from "components/UI/alerts/error_alert";
-import FavouriteBtn from "components/UI/buttons/favourite_btn";
 import Loader from "components/UI/loader";
 import Dataset from "models/dataset.model";
-import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import useSWR from "swr";
 import FavouritesSectionContainer from "./favourites_section_container";

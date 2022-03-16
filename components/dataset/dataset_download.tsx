@@ -9,24 +9,23 @@ const DatasetDownload = ({
   urls: DatasetUrl[];
   className?: string;
 }) => {
-  if (!urls || urls.length < 1) return <div />;
   return (
-    <>
-      {urls.length > 0 && (
-        <div className={clsx("flex", className)}>
-          <span className="text-xs font-medium text-gray-800 mr-1">Data:</span>
-          <div>
-            {urls.map((url, i) => (
-              <DatasetDownloadItem
-                key={i}
-                label={`${url.format}, ${url.sizemb} MB`}
-                url={url.url}
-              />
-            ))}
-          </div>
-        </div>
-      )}
-    </>
+    <div className={clsx("flex", className)}>
+      <span className="text-xs font-medium text-gray-800 mr-1">Data:</span>
+      <div>
+        {urls && urls.length > 0 ? (
+          urls.map((url, i) => (
+            <DatasetDownloadItem
+              key={i}
+              label={`${url.format}, ${url.sizemb} MB`}
+              url={url.url}
+            />
+          ))
+        ) : (
+          <span className="text-xs block text-gray-600">None</span>
+        )}
+      </div>
+    </div>
   );
 };
 

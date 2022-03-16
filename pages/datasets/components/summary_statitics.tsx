@@ -1,7 +1,8 @@
+import LabelledRow from "components/dataset/labelled_row";
 import { capitalize } from "lodash-es";
 import { useContext } from "react";
 import { DatasetDetailVMContext } from "../dataset_detail.vm";
-import LabelledRow from "./labelled_row";
+// import LabelledRow from "./1labelled_row";
 
 const SummaryStatistics = () => {
   const vm = useContext(DatasetDetailVMContext);
@@ -22,18 +23,21 @@ const SummaryStatistics = () => {
     <div className="flex divide-x-2 pt-2">
       <div className="w-full px-3 pt-1">
         <LabelledRow
+          className="mb-1.5"
           label="Likes"
           tooltip="Number of users who have liked this dataset / proportion of likes in all user feedback"
         >
           {`${totalLikes} / ${likePercent}%`}
         </LabelledRow>
         <LabelledRow
+          className="mb-1.5"
           label="Added to favourites"
           tooltip="Number of users who have added this dataset to their favourites list"
         >
           {dataset.detail.favourites}
         </LabelledRow>
         <LabelledRow
+          className="mb-1.5"
           label="Feedback Sentiment"
           tooltip="Feedback Sentiment"
         >
@@ -42,18 +46,21 @@ const SummaryStatistics = () => {
       </div>
       <div className="w-full px-3 pt-1">
         <LabelledRow
+          className="mb-1.5"
           label="Viewed"
           tooltip="Number of times users have looked at the detailed view of this dataset"
         >
           {dataset.detail.views}
         </LabelledRow>
         <LabelledRow
+          className="mb-1.5"
           label="Downloaded"
           tooltip="Number of times users have looked at the detailed view of this dataset"
         >
           {dataset.detail.downloads}
         </LabelledRow>
         <LabelledRow
+          className="mb-1.5"
           label="Displayed in search results"
           tooltip="Number of times this dataset has been displayed to users in the list view of the search results"
         >
