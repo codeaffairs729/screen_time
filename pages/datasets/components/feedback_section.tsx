@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import { useContext } from "react";
 import { DatasetDetailVMContext } from "../dataset_detail.vm";
 import FeedbackForm from "./feedback_form";
+import PurposeForm from "./purpose_form";
 
 const FeedbackSection = () => {
   const {
@@ -26,17 +27,22 @@ const FeedbackSection = () => {
             isLiked={dataset?.detail?.isLiked ?? false}
             datasetId={id as string}
           />
-          <span className="text-sm text-gray-500 font-medium ml-1">{dataset?.detail.likes}</span>
+          <span className="text-sm text-gray-500 font-medium ml-1">
+            {dataset?.detail.likes}
+          </span>
         </div>
         <div className="flex items-center">
           <DislikeBtn
             isDisliked={dataset?.detail?.isDisliked ?? false}
             datasetId={id as string}
           />
-          <span className="text-sm text-gray-500 font-medium ml-1">{dataset?.detail.likes}</span>
+          <span className="text-sm text-gray-500 font-medium ml-1">
+            {dataset?.detail.likes}
+          </span>
         </div>
       </div>
-      <FeedbackForm/>
+      <FeedbackForm />
+      <PurposeForm />
     </div>
   );
 };

@@ -10,59 +10,60 @@ import { useSelector } from "react-redux";
 import ReactTooltip from "react-tooltip";
 import { RootState } from "store";
 
-const FeedbackForm = () => {
+const PurposeForm = () => {
   const {
     query: { id },
   } = useRouter();
   const { control, handleSubmit, reset } = useForm();
   const user = useSelector((state: RootState) => state.auth.user);
-  const { isLoading: isSubmittingFeedback, execute: executeSubmitFeedback } =
+  const { isLoading: isSubmittingPrupose, execute: executeSubmitPrupose } =
     useHttpCall();
-  const submitFeedback = (data: any) =>
-    executeSubmitFeedback(
+  const submitPrupose = (data: any) =>
+    executeSubmitPrupose(
       () =>
         Http.post(`/v1/datasets/${id}/comments`, {
           ...data,
-          type: "feedback",
+          type: "purpose",
         }),
       {
         onSuccess: (res) => {
           reset();
-          toast.success("You feedback was successfully submitted");
+          toast.success("You usage was successfully submitted");
         },
         onError: (error) =>
-          toast.error("Something went wrong while submitting your feedback"),
+          toast.error("Something went wrong while submitting your usage"),
       }
     );
 
   return (
-    <div className="mb-8">
+    <div>
       <div className="flex justify-between items-center">
         <p className="text-gray-600 font-medium text-sm mb-2">
-          Add you feedback <InfoIcon title="Add your feedback" />
+          What are you using this dataset for? Let us know!{" "}
+          <InfoIcon title="Add your usage" />
         </p>
         <PrimaryBtn
           label="Submit"
           className="bg-dtech-secondary-light w-32 mb-2"
-          isLoading={isSubmittingFeedback}
-          onClick={handleSubmit(submitFeedback)}
+          isLoading={isSubmittingPrupose}
+          onClick={handleSubmit(submitPrupose)}
           isDisabled={!user}
         />
       </div>
-      <div data-tip={!user ? "Please login to submit feedback" : null}>
+      <div data-tip={!user ? "Please login to submit usage" : null}>
         <TextField
           type="textarea"
           disabled={!user}
           formControl={{
             control,
             name: "description",
-            rules: { required: "Feedback is required" },
+            rules: { required: "This is required" },
           }}
         />
       </div>
-      <ReactTooltip uuid="dtechtive-feedbackform-tooltip" />
+      <ReactTooltip uuid="dtechtive-pruposeform-tooltip" />
     </div>
   );
 };
 
-export default FeedbackForm;
+export default PurposeForm;
