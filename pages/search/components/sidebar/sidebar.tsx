@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import FilterFileType from "./components/filters/filter_file_type";
 import QualityFilter from "./components/filters/quality_filter";
-import TopicFilter from "./components/filters/topic_filter";
+import FilterTopic from "./components/filters/filter_topic";
 import FilterOwner from "./components/filters/filter_owner";
 import FilterLicense from "./components/filters/filter_license";
 import FilterLastUpdate from "./components/filters/filter_last_update";
@@ -20,7 +20,7 @@ const Sidebar = ({ className = "" }: { className?: string }) => {
       <FilterOwner />
       <FilterLicense />
       <QualityFilter />
-      <TopicFilter />
+      <FilterTopic />
       <FilterLastUpdate />
     </div>
   );

@@ -5,9 +5,6 @@ import { DatasetDetailVMContext } from "../dataset_detail.vm";
 import PrimaryBtn from "components/UI/form/primary_btn";
 import StarRating from "components/UI/star_rating";
 import LabelledRow from "components/dataset/labelled_row";
-// import LabelledRow from "./labelled_row";
-// import DataHost from "components/dataset/1data_host";
-// import DataOwner from "components/dataset/data_owner";
 
 const SummarySection = () => {
   const vm = useContext(DatasetDetailVMContext);
@@ -36,7 +33,9 @@ const SummarySection = () => {
           {vm.dataset.detail.hostName}
         </a>
       </LabelledRow>
-      <LabelledRow className="mb-1.5" label="Data Owner">{vm.dataset.owner.name}</LabelledRow>
+      <LabelledRow className="mb-1.5" label="Data Owner">
+        {vm.dataset.owner.name}
+      </LabelledRow>
       <PrimaryBtn
         label="Contact Owner"
         className="bg-dtech-secondary-light w-32 mb-2"
@@ -51,7 +50,11 @@ const SummarySection = () => {
           );
         }}
       />
-      <LabelledRow className="mb-1.5" label="Tags" tooltip="Keyword and common themes">
+      <LabelledRow
+        className="mb-1.5"
+        label="Tags"
+        tooltip="Keyword and common themes"
+      >
         {vm.dataset.detail.topics.map(capitalize).join(", ")}
       </LabelledRow>
       <LabelledRow className="mb-1.5" label="License" tooltip="License">

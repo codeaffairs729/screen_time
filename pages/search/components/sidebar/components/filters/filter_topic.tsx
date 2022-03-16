@@ -3,10 +3,10 @@ import { useContext } from "react";
 import FilterCheckboxField from "../filter_checkbox_field";
 import FilterSection from "../filter_section";
 import Loader from "components/UI/loader";
-import { useForm } from "react-hook-form";
+import { capitalize } from "lodash-es";
 import { useWatchFilter } from "common/hooks";
 
-const TopicFilter = () => {
+const FilterTopic = () => {
   const vm = useContext(SearchVMContext);
   const topics =
     vm.datasets?.reduce((a, b) => {
@@ -25,7 +25,7 @@ const TopicFilter = () => {
         <FilterCheckboxField
           register={register(`topic`)}
           key={i}
-          label={t}
+          label={capitalize(t)}
           value={t}
         />
       ))}
@@ -38,4 +38,4 @@ const TopicFilter = () => {
   );
 };
 
-export default TopicFilter;
+export default FilterTopic;
