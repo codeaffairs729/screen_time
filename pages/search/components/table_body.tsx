@@ -2,7 +2,7 @@ import clsx from "clsx";
 import { useFavouriteDataset } from "common/hooks";
 import DatasetDownload from "components/dataset/dataset_download";
 import LabelledRow from "components/dataset/labelled_row";
-import Favourite from "components/UI/buttons/favourite_btn";
+import FavouriteBtn from "components/UI/buttons/favourite_btn";
 import StarRating from "components/UI/star_rating";
 import { DateTime } from "luxon";
 import Dataset from "models/dataset.model";
@@ -70,11 +70,19 @@ const Row = ({ dataset }: { dataset: Dataset }) => {
         {<StarRating rating={dataset.detail.dataQuality} />}
       </Cell>
       <Cell className="text-xs text-center pt-1 font-medium text-gray-700">
-        {dataset.detail.lastUpdate.toLocaleString({ ...DateTime.DATE_FULL })}
+        {dataset.detail.lastUpdate.isValid
+          ? dataset.detail.lastUpdate.toLocaleString({ ...DateTime.DATE_FULL })
+          : ""}
       </Cell>
-      <Cell>{dataset.detail.lastDownloaded}</Cell>
+      <Cell>
+        {dataset.detail.lastDownloaded.isValid
+          ? dataset.detail.lastDownloaded.toLocaleString({
+              ...DateTime.DATE_FULL,
+            })
+          : ""}
+      </Cell>
       <Cell className="text-center pt-1">
-        <Favourite
+        <FavouriteBtn
           isLoading={isHandlingFavourite}
           className="mx-auto"
           isFavourited={isFavourited}

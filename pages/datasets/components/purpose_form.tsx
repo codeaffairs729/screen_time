@@ -28,10 +28,10 @@ const PurposeForm = () => {
       {
         onSuccess: (res) => {
           reset();
-          toast.success("You usage was successfully submitted");
+          toast.success("Your use case was successfully submitted");
         },
         onError: (error) =>
-          toast.error("Something went wrong while submitting your usage"),
+          toast.error("Something went wrong while submitting your use case"),
       }
     );
 
@@ -50,14 +50,14 @@ const PurposeForm = () => {
           isDisabled={!user}
         />
       </div>
-      <div data-tip={!user ? "Please login to submit usage" : null}>
+      <div data-tip={!user ? "Please login to submit your use case" : null}>
         <TextField
           type="textarea"
           disabled={!user}
           formControl={{
             control,
             name: "description",
-            rules: { required: "This is required" },
+            rules: { required: "Use case is required" },
           }}
         />
       </div>

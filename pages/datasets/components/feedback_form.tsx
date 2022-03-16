@@ -39,7 +39,7 @@ const FeedbackForm = () => {
     <div className="mb-8">
       <div className="flex justify-between items-center">
         <p className="text-gray-600 font-medium text-sm mb-2">
-          Add you feedback <InfoIcon title="Add your feedback" />
+          Add your feedback <InfoIcon title="Add your feedback" />
         </p>
         <PrimaryBtn
           label="Submit"

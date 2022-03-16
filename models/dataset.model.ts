@@ -57,7 +57,7 @@ class Dataset {
         likes: json["dataset"]["like_count"],
         dislikes: json["dataset"]["unlike_count"],
         favourites: json["dataset"]["favourite_count"],
-        lastDownloaded: json["dataset"]["lastdownloaded"],
+        lastDownloaded: DateTime.fromISO(json["dataset"]["lastdownloaded"]),
         displays: json["dataset"]["displays"],
         views: json["dataset"]["views"],
         downloads: json["dataset"]["downloads"],
