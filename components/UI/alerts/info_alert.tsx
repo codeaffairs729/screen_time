@@ -1,7 +1,6 @@
 import clsx from "clsx";
-import { ReactNode } from "react";
 
-const SuccessAlert = ({
+const InfoAlert = ({
   message,
   className = "",
 }: {
@@ -28,12 +27,10 @@ const SuccessAlert = ({
       </div>
       <div className="ml-4">
         <div className="font-semibold text-lg text-blue-800">Info</div>
-        <div className="text-sm text-blue-600">
-          This is an alert message, alert message goes here..!
-        </div>
+        <div className="text-sm text-blue-600">{message}</div>
       </div>
     </div>
   );
 };
 
-export default SuccessAlert;
+export default InfoAlert;

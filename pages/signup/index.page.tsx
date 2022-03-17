@@ -18,7 +18,9 @@ const SigninPage = () => {
         <div className="text-center mt-8 mb-4">
           <h1 className="font-semibold text-lg">Sign up</h1>
           <span className="inline-flex space-x-1">
-            <i className="mr-1 text-sm underline">Why should you create an account?</i>{" "}
+            <i className="mr-1 text-sm underline">
+              Why should you create an account?
+            </i>{" "}
             <InfoIcon
               className="ml-1"
               title="Register a new account to access more features"
@@ -106,11 +108,8 @@ const SigninPage = () => {
               formControl={{
                 control: vm.form.control,
                 name: "is_data_owner",
-                // rules: { required: "Data owner is required" },
                 rules: {
                   validate: (val: boolean) => {
-                    console.log('val', val, JSON.stringify(val));
-                    
                     if (![true, false].includes(val)) {
                       return "Data owner is requireds";
                     }

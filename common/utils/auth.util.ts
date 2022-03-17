@@ -52,8 +52,6 @@ const checkAuthentication = (ctx: NextPageContext): void => {
 
   // If user is authenticated and user is on register or login page then
   // redirect back to home
-  console.log("ctx.pathname", ctx?.pathname, userIsAuthenticated);
-
   if (ctx.pathname === "/signin" || ctx.pathname === "/signup") {
     if (userIsAuthenticated) {
       redirectUser(ctx, "/");

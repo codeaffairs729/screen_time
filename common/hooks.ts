@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import log from "loglevel";
 import { Filter } from "pages/search/search.vm";
 import { useForm, useWatch } from "react-hook-form";
 import Dataset from "models/dataset.model";
 import Http from "./http";
 import toast from "react-hot-toast";
-const { useEffect } = require("react");
+import { uniq } from "lodash-es";
 
 export const useScript = (url: string) => {
   useEffect(() => {
@@ -69,27 +69,37 @@ export const useHttpCall = <T>(initial: any = null) => {
 
 export const useWatchFilter = ({
   setActiveFilter,
-  // newState,
   name,
+  defaultValue = [],
 }: {
   setActiveFilter: Function;
-  // newState: { [key: string]: any };
   name: string;
+  defaultValue?: string[];
 }) => {
-  const { register, control } = useForm();
-  // const vm = useContext(SearchVMContext);
+  const { register, control, reset } = useForm();
   const newState = useWatch({
     control,
     name,
-    defaultValue: [],
+    defaultValue: defaultValue,
   });
   useEffect(() => {
-    setActiveFilter((state: Filter) => ({
-      ...state,
-      [name]: newState,
-    }));
+    let newState2: string[];
+    if (typeof newState === "string") {
+      newState2 = [newState];
+    } else if (newState) {
+      newState2 = uniq(newState);
+    } else {
+      newState2 = [];
+    }
+    setActiveFilter((state: Filter) => {
+      return {
+        ...state,
+        [name]: newState2,
+      };
+    });
+    // }
   }, [newState]);
-  return { register, control };
+  return { register, control, reset };
 };
 
 /**

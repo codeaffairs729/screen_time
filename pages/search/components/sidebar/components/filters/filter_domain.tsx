@@ -9,12 +9,11 @@ import Loader from "components/UI/loader";
 
 const FilterDomain = () => {
   const vm = useContext(SearchVMContext);
-  const { register } = useWatchFilter({
+  const [domains, setDomains] = useState<string[]>([]);
+  const { register, reset } = useWatchFilter({
     setActiveFilter: vm.setActiveFilter,
     name: "domain",
   });
-
-  const [domains, setDomains] = useState<string[]>([]);
 
   useEffect(() => {
     if (vm.datasets?.length) {
@@ -22,6 +21,9 @@ const FilterDomain = () => {
         .filter((d) => d.detail.domain)
         .map((d) => d.detail.domain);
       setDomains(uniq(datasetDomains));
+      reset({
+        domain: vm.activeFilter["domain"],
+      });
     }
   }, [vm.datasets]);
 
@@ -46,16 +48,6 @@ const FilterDomain = () => {
             value={d}
           />
         ))}
-      {/* <FilterCheckboxField
-        register={register("domain")}
-        label="Entertainment"
-        value="entertainment"
-      />
-      <FilterCheckboxField
-        register={register("domain")}
-        label="Health"
-        value="health"
-      /> */}
     </FilterSection>
   );
 };

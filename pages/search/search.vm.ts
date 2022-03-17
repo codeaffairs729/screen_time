@@ -9,6 +9,7 @@ import useSWR from "swr";
 import Dataset from "../../models/dataset.model";
 
 export type Filter = {
+  domain?: string[];
   file_type?: string[];
   owner?: string[];
   license?: string[];
@@ -80,6 +81,7 @@ const SearchVM = () => {
     error,
     isLoading: !datasets && !error,
     onSearchChange,
+    activeFilter,
     setActiveFilter,
   };
 };
@@ -89,6 +91,7 @@ interface ISearchVMContext {
   error: any;
   isLoading: boolean;
   onSearchChange: Function;
+  activeFilter: Filter;
   setActiveFilter: Function;
 }
 

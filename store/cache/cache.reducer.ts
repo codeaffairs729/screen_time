@@ -14,12 +14,9 @@ const cacheReducer = (state: CacheType = initialState, action: Action) => {
       delete newState[action.payload];
       return newState;
     case CLEAR:
-      console.log('CLEAR', CLEAR);
-      
       return {};
     default:
       return state;
-    // throw new Error('Cache redux action type does match any available types');
   }
 };
 

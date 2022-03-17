@@ -70,8 +70,6 @@ const DatasetSearchInput = ({
           if (action.action === "input-change") setInput(value); // <---
         }}
         onKeyDown={(e) => {
-          console.log("input", input);
-
           if (e.key === "Enter") {
             e.preventDefault();
             e.stopPropagation();
