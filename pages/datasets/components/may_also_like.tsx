@@ -68,7 +68,7 @@ const MayAlsoLikeDataset = ({ dataset }: { dataset: Dataset }) => {
         </Link>
       </h4>
       <p className="text-xs text-gray-800 mb-1.5">{dataset.detail.description}</p>
-      <DatasetDownload className="mb-1.5" urls={dataset.urls} />
+      <DatasetDownload className="mb-1.5" dataset={dataset} />
       <LabelledRow className="mb-1.5" label="Data Host">
         <a
           href={dataset.detail.hostUrl}

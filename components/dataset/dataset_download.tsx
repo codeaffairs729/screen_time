@@ -1,14 +1,16 @@
 import clsx from "clsx";
-import { DatasetUrl } from "models/dataset.model";
+import Http from "common/http";
+import Dataset from "models/dataset.model";
 import Image from "next/image";
 
 const DatasetDownload = ({
-  urls,
+  dataset,
   className = "",
 }: {
-  urls: DatasetUrl[];
+  dataset: Dataset;
   className?: string;
 }) => {
+  const urls = dataset.urls;
   return (
     <div className={clsx("flex", className)}>
       <span className="text-xs font-medium text-gray-800 mr-1">Data:</span>
@@ -17,6 +19,7 @@ const DatasetDownload = ({
           urls.map((url, i) => (
             <DatasetDownloadItem
               key={i}
+              dataset={dataset}
               label={`${url.format}, ${url.sizemb} MB`}
               url={url.url}
             />
@@ -31,15 +34,25 @@ const DatasetDownload = ({
 
 const DatasetDownloadItem = ({
   label,
+  dataset,
   url,
 }: {
   label: string;
+  dataset: Dataset;
   url: string;
 }) => {
+  const updateDownloadStat = () => {
+    return Http.post(`/v1/datasets/${dataset.id}/downloads`);
+  };
   const newUrl = url?.replace(/["']/g, "");
 
   return (
-    <a href={newUrl} className="flex space-x-1" download>
+    <a
+      href={newUrl}
+      className="flex space-x-1"
+      onClick={updateDownloadStat}
+      download
+    >
       <Image
         src="/images/icons/folder.svg"
         width="20px"

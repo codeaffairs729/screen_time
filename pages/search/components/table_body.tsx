@@ -1,5 +1,4 @@
 import clsx from "clsx";
-import { useFavouriteDataset } from "common/hooks";
 import DatasetDownload from "components/dataset/dataset_download";
 import LabelledRow from "components/dataset/labelled_row";
 import FavouriteBtn from "components/UI/buttons/favourite_btn";
@@ -42,7 +41,7 @@ const Row = ({ dataset }: { dataset: Dataset }) => {
           <p className="text-xs text-gray-800 mb-1.5">
             {dataset.detail.description}
           </p>
-          <DatasetDownload urls={dataset.urls} className="mb-2" />
+          <DatasetDownload dataset={dataset} className="mb-2" />
           <LabelledRow className="mb-1.5" label="Data Host">
             <a
               href={dataset.detail.hostUrl}

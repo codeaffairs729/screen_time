@@ -7,9 +7,6 @@ import { IoMdArrowDropdown } from "react-icons/io";
 import { SearchVMContext } from "../search.vm";
 
 const SortbyField = () => {
-  // const { register, watch } = useForm();
-  // const fieldwatch = watch();
-  // console.log("fieldwatch", fieldwatch);
   const vm = useContext(SearchVMContext);
   const { register } = useWatchFilter({
     setActiveFilter: vm.setActiveFilter,

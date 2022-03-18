@@ -1,4 +1,3 @@
-import { useFavouriteDataset, useHttpCall } from "common/hooks";
 import Http from "common/http";
 import DatasetDownload from "components/dataset/dataset_download";
 import LabelledRow from "components/dataset/labelled_row";
@@ -17,8 +16,7 @@ const FavouriteDatasetItem = ({ dataset }: { dataset: Dataset }) => {
             </a>
           </Link>
         </h4>
-        <DatasetDownload className="mb-2" urls={dataset.urls} />
-        {/* <DataOwner dataset={dataset} /> */}
+        <DatasetDownload className="mb-2" dataset={dataset} />
         <LabelledRow label="Data Owner">{dataset.owner.name}</LabelledRow>
       </div>
       <div className="border-l p-3 px-8 flex items-center justify-center">

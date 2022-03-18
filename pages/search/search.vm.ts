@@ -1,3 +1,4 @@
+import Http from "common/http";
 import { SearchOption } from "components/UI/dataset_search_input";
 import { useRouter } from "next/router";
 import { createContext, useEffect, useState } from "react";
@@ -28,6 +29,9 @@ const SearchVM = () => {
   const [activeFilter, setActiveFilter] = useState<Filter>({});
   const [queryParams, setQueryParams] = useState<string>("");
 
+  /**
+   * Update the query params on updating any filter
+   */
   useEffect(() => {
     const getQueryParam = (key: keyof Filter): string => {
       if (
@@ -46,7 +50,6 @@ const SearchVM = () => {
       .map((k) => getQueryParam(k as keyof Filter))
       .filter((qp) => qp)
       .join("&");
-
     setQueryParams(cQueryParams ? `&${cQueryParams}` : "");
   }, [activeFilter]);
 
@@ -75,7 +78,24 @@ const SearchVM = () => {
           toast.error("Something went wrong while fetching search results");
           throw e;
         })
+        .then((datasets) => {
+          updateDisplayCount(datasets.map((d) => d.id));
+          return datasets;
+        })
+        .catch((e) => {
+          throw e;
+        }),
+    { revalidateOnFocus: false }
   );
+  
+  /**
+   * Update the display count when the datasets appear in the search result
+   */
+  const updateDisplayCount = (datasetIds: number[]) => {
+    return Http.post("/v1/datasets/displays", {
+      meta_dataset_ids: datasetIds,
+    });
+  };
 
   return {
     datasets,

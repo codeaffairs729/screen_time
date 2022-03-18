@@ -86,8 +86,6 @@ export const useWatchFilter = ({
   });
   useEffect(() => {
     let newState2: string[];
-    console.log('newState', newState);
-    
     if (typeof newState === "string") {
       newState2 = [newState];
     } else if (newState) {
@@ -109,34 +107,34 @@ export const useWatchFilter = ({
 /**
  * Favourite a dataset
  */
-export const useFavouriteDataset = (dataset: Dataset) => {
-  // const user = useSelector((state: RootState)=>state.auth.user);
-  const [isFavourited, setIsFavourited] = useState(dataset.detail.isFavourited);
-  const { execute: executeHandleFavourite, isLoading: isHandlingFavourite } =
-    useHttpCall();
-  const handleFavourite = () =>
-    executeHandleFavourite(
-      async () => {
-        // if(!user){
-        //   toast.
-        //   return;
-        // }
-        if (!isFavourited) {
-          const res = await Http.put(`/v1/datasets/${dataset.id}/favourite`);
-          setIsFavourited(true);
-        } else {
-          const res = await Http.delete(`/v1/datasets/${dataset.id}/favourite`);
-          setIsFavourited(false);
-        }
-      },
-      {
-        onError: (res) => toast.error("Something went wrong while favouriting"),
-      }
-    );
-  return {
-    isFavourited,
-    setIsFavourited,
-    isHandlingFavourite,
-    handleFavourite,
-  };
-};
+// export const useFavouriteDataset = (dataset: Dataset) => {
+//   // const user = useSelector((state: RootState)=>state.auth.user);
+//   const [isFavourited, setIsFavourited] = useState(dataset.detail.isFavourited);
+//   const { execute: executeHandleFavourite, isLoading: isHandlingFavourite } =
+//     useHttpCall();
+//   const handleFavourite = () =>
+//     executeHandleFavourite(
+//       async () => {
+//         // if(!user){
+//         //   toast.
+//         //   return;
+//         // }
+//         if (!isFavourited) {
+//           const res = await Http.put(`/v1/datasets/${dataset.id}/favourite`);
+//           setIsFavourited(true);
+//         } else {
+//           const res = await Http.delete(`/v1/datasets/${dataset.id}/favourite`);
+//           setIsFavourited(false);
+//         }
+//       },
+//       {
+//         onError: (res) => toast.error("Something went wrong while favouriting"),
+//       }
+//     );
+//   return {
+//     isFavourited,
+//     setIsFavourited,
+//     isHandlingFavourite,
+//     handleFavourite,
+//   };
+// };

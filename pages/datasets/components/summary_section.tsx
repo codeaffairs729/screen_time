@@ -1,10 +1,10 @@
 import { capitalize } from "lodash-es";
-import DatasetDownload from "./dataset_download";
 import { useContext } from "react";
 import { DatasetDetailVMContext } from "../dataset_detail.vm";
 import PrimaryBtn from "components/UI/form/primary_btn";
 import StarRating from "components/UI/star_rating";
 import LabelledRow from "components/dataset/labelled_row";
+import DatasetDownload from "components/dataset/dataset_download";
 
 const SummarySection = () => {
   const vm = useContext(DatasetDetailVMContext);
@@ -18,7 +18,7 @@ const SummarySection = () => {
         Dataset
       </div>
       <h4 className="text-sm font-medium mb-3">{vm.dataset?.detail.name}</h4>
-      <DatasetDownload urls={vm.dataset?.urls} />
+      <DatasetDownload className="flex-col" dataset={vm.dataset} />
       <div className="text-xs font-medium mt-2">Summary</div>
       <div className="text-xs mb-2">{vm.dataset.detail.description}</div>
       {/* <DataHost className="mb-2" dataset={vm.dataset}/>
