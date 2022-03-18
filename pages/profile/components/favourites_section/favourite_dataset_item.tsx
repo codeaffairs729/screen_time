@@ -7,9 +7,6 @@ import Dataset from "models/dataset.model";
 import Link from "next/link";
 
 const FavouriteDatasetItem = ({ dataset }: { dataset: Dataset }) => {
-  const { isFavourited, handleFavourite, isHandlingFavourite } =
-    useFavouriteDataset(dataset);
-
   return (
     <div className="flex border-t border-l border-r last:border-b">
       <div className="w-full p-2">
@@ -25,11 +22,7 @@ const FavouriteDatasetItem = ({ dataset }: { dataset: Dataset }) => {
         <LabelledRow label="Data Owner">{dataset.owner.name}</LabelledRow>
       </div>
       <div className="border-l p-3 px-8 flex items-center justify-center">
-        <FavouriteBtn
-          isFavourited={isFavourited}
-          isLoading={isHandlingFavourite}
-          onClick={handleFavourite}
-        />
+        <FavouriteBtn dataset={dataset} />
       </div>
     </div>
   );

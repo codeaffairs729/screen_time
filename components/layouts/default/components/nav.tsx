@@ -39,7 +39,7 @@ const Nav = ({
           openInNewTab={true}
         />
         {!user && <NavItem label="Sign Up" link="/signup" />}
-        {!user && <NavItem label="Login" link="/signin" />}
+        {!user && <NavItem label="Sign In" link="/signin" />}
         <ProfileDropdown />
       </div>
     </nav>

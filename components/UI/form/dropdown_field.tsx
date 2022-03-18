@@ -121,7 +121,6 @@ const ComboOption = ({ option }: { option: Option }) => {
                 active ? "text-white" : "text-dtech-secondary-light"
               }`}
             >
-              {/* <CheckIcon className="w-5 h-5" aria-hidden="true" /> */}
               <BsCheck />
             </span>
           ) : null}

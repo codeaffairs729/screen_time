@@ -6,6 +6,8 @@ import Dataset from "models/dataset.model";
 import Http from "./http";
 import toast from "react-hot-toast";
 import { uniq } from "lodash-es";
+import { RootState } from "store";
+import { useSelector } from "react-redux";
 
 export const useScript = (url: string) => {
   useEffect(() => {
@@ -84,6 +86,8 @@ export const useWatchFilter = ({
   });
   useEffect(() => {
     let newState2: string[];
+    console.log('newState', newState);
+    
     if (typeof newState === "string") {
       newState2 = [newState];
     } else if (newState) {
@@ -106,12 +110,17 @@ export const useWatchFilter = ({
  * Favourite a dataset
  */
 export const useFavouriteDataset = (dataset: Dataset) => {
+  // const user = useSelector((state: RootState)=>state.auth.user);
   const [isFavourited, setIsFavourited] = useState(dataset.detail.isFavourited);
   const { execute: executeHandleFavourite, isLoading: isHandlingFavourite } =
     useHttpCall();
   const handleFavourite = () =>
     executeHandleFavourite(
       async () => {
+        // if(!user){
+        //   toast.
+        //   return;
+        // }
         if (!isFavourited) {
           const res = await Http.put(`/v1/datasets/${dataset.id}/favourite`);
           setIsFavourited(true);

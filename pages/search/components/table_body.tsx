@@ -27,8 +27,6 @@ const TableBody = () => {
 };
 
 const Row = ({ dataset }: { dataset: Dataset }) => {
-  const { isFavourited, handleFavourite, isHandlingFavourite } =
-    useFavouriteDataset(dataset);
 
   return (
     <>
@@ -83,10 +81,8 @@ const Row = ({ dataset }: { dataset: Dataset }) => {
       </Cell>
       <Cell className="text-center pt-1">
         <FavouriteBtn
-          isLoading={isHandlingFavourite}
           className="mx-auto"
-          isFavourited={isFavourited}
-          onClick={handleFavourite}
+          dataset={dataset}
         />
       </Cell>
     </>

@@ -14,6 +14,7 @@ export type Filter = {
   owner?: string[];
   license?: string[];
   quality?: string[];
+  sort_by?: string[];
 };
 
 const SearchVM = () => {

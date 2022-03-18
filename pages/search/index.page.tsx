@@ -1,7 +1,9 @@
 import DatasetSearchInput from "components/UI/dataset_search_input";
+// import SelectField from "components/UI/form/select_field";
 import DefaultLayout from "../../components/layouts/default";
 import ResultTable from "./components/result_table";
 import Sidebar from "./components/sidebar/sidebar";
+import SortbyField from "./components/sortby_field";
 import SearchVM, { SearchVMContext } from "./search.vm";
 
 const SearchPage = () => {
@@ -19,7 +21,12 @@ const SearchPage = () => {
       <SearchVMContext.Provider value={vm}>
         <div className="flex">
           <Sidebar className="w-40 shrink-0" />
-          <ResultTable />
+          <div className="overflow-x-auto w-full">
+            <div className="text-right">
+              <SortbyField />
+            </div>
+            <ResultTable />
+          </div>
         </div>
       </SearchVMContext.Provider>
     </DefaultLayout>

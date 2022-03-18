@@ -27,11 +27,9 @@ const ResultTable = () => {
   }
 
   return (
-    <div className="overflow-x-auto w-full">
-      <div className="grid gap-px [grid-template-columns:2fr_repeat(5,120px)] p-px">
-        <TableHeader />
-        <TableBody />
-      </div>
+    <div className="grid gap-px [grid-template-columns:2fr_repeat(5,120px)] p-px">
+      <TableHeader />
+      <TableBody />
     </div>
   );
 };

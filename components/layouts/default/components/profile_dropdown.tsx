@@ -11,7 +11,7 @@ const ProfileDropdown = () => {
   const user = useSelector((state: RootState) => state.auth.user);
 
   return (
-    <Menu as="div" className="relative inline-block text-left">
+    <Menu as="div" className="relative inline-block text-left ml-2">
       <Menu.Button aria-label="profile dropdown button" className="w-10">
         <Image
           src="/images/icons/profile/guest_Icon.svg"
