@@ -16,7 +16,7 @@ const SigninPage = () => {
     <DefaultLayout>
       <div className="h-[calc(100vh-var(--nav-height))] flex flex-col justify-between">
         <div className="text-center">
-          <h1 className="font-semibold text-lg mb-2 mt-8">Login</h1>
+          <h1 className="font-semibold text-lg mb-2 mt-8">Sign In</h1>
           <Link
             href={
               vm.lastSearchQueryUrl ? `/search${vm.lastSearchQueryUrl}` : "/"
@@ -67,7 +67,7 @@ const SigninPage = () => {
             />
             <PrimaryBtn
               className="bg-dtech-primary-dark min-w-[150px]"
-              label="Login"
+              label="Sign In"
               isLoading={vm.isSigningIn}
               onClick={vm.form.handleSubmit(vm.performLogin)}
             />
