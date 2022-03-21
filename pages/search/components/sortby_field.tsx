@@ -1,16 +1,46 @@
 import { Menu, Transition } from "@headlessui/react";
 import clsx from "clsx";
-import { Fragment, useContext, useEffect, useRef, useState } from "react";
-import { useForm, UseFormRegisterReturn } from "react-hook-form";
+import { Fragment, useContext, useEffect, useState } from "react";
 import { IoMdArrowDropdown } from "react-icons/io";
-import { SearchVMContext } from "../search.vm";
+import { Filter, SearchVMContext } from "../search.vm";
+import { startCase } from "lodash-es";
+
+type Option = {
+  value: string;
+  label: string;
+};
 
 const SortbyField = () => {
-  const vm = useContext(SearchVMContext);
-  // const { register } = useWatchFilter({
-  //   setActiveFilter: vm.setActiveFilter,
-  //   name: "sort_by",
-  // });
+  const { setActiveFilter, activeFilter } = useContext(SearchVMContext);
+  const options: Option[] = [
+    {
+      label: "Most Relevant",
+      value: "most_relevant",
+    },
+    {
+      label: "High Quality",
+      value: "high_quality",
+    },
+    {
+      label: "Most Popular",
+      value: "most_popular",
+    },
+    {
+      label: "Most Recently Updated",
+      value: "most_recently_updated",
+    },
+    {
+      label: "Most Recently Downloaded",
+      value: "most_recently_downloaded",
+    },
+  ];
+  const [activeOption, setActiveOption] = useState<Option>(options[0]);
+  useEffect(() => {
+    setActiveFilter((state: Filter) => ({
+      ...state,
+      sort_by: [activeOption.value],
+    }));
+  }, [activeOption]);
 
   return (
     <div className="w-56 ml-auto mr-2 mb-2">
@@ -18,7 +48,7 @@ const SortbyField = () => {
         {({ open }) => (
           <>
             <Menu.Button className="flex justify-center items-center space-x-1 rounded w-full px-3 pr-1.5 py-0.5 text-xs font-semibold text-white bg-dtech-secondary-light">
-              <span>Sort by</span>
+              <span>{activeOption ? activeOption.label : "Sort by"}</span>
               <IoMdArrowDropdown
                 className={clsx("w-5 h-5 transition ease-in-out delay-150", {
                   "rotate-180": open,
@@ -35,44 +65,13 @@ const SortbyField = () => {
               leaveTo="transform opacity-0 scale-95"
             >
               <Menu.Items className="absolute z-10 right-0 w-48 mt-2 origin-top-right bg-white divide-y divide-gray-100 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none border border-dtech-secondary-light">
-                {/* <div className="px-1 py-1 flex flex-col space-y-1">
-                  <Menu.Item>
-                    {({ active }) => (
-                      <Checkbox
-                        label="High Quality"
-                        register={register("sort_by")}
-                        value="high_quality"
-                      />
-                    )}
-                  </Menu.Item>
-                  <Menu.Item>
-                    {({ active }) => (
-                      <Checkbox
-                        label="Most Popular"
-                        register={register("sort_by")}
-                        value="most_popular"
-                      />
-                    )}
-                  </Menu.Item>
-                  <Menu.Item>
-                    {({ active }) => (
-                      <Checkbox
-                        label="Most recently updated"
-                        register={register("sort_by")}
-                        value="most_recently_updated"
-                      />
-                    )}
-                  </Menu.Item>
-                  <Menu.Item>
-                    {({ active }) => (
-                      <Checkbox
-                        label="Most recently downloaded"
-                        register={register("sort_by")}
-                        value="most_recently_downloaded"
-                      />
-                    )}
-                  </Menu.Item>
-                </div> */}
+                {options.map((o) => (
+                  <MenuItem
+                    key={o.value}
+                    onClick={() => setActiveOption(o)}
+                    option={o}
+                  />
+                ))}
               </Menu.Items>
             </Transition>
           </>
@@ -82,25 +81,19 @@ const SortbyField = () => {
   );
 };
 
-const Checkbox = ({
-  label,
-  register,
-  value,
+const MenuItem = ({
+  onClick,
+  option,
 }: {
-  label: string;
-  register?: UseFormRegisterReturn;
-  value: string;
+  onClick: () => void;
+  option: Option;
 }) => {
   return (
-    <div className="flex items-center">
-      <input
-        {...register}
-        type="checkbox"
-        className="text-dtech-primary-light focus:ring-0 rounded-sm border-dtech-primary-light"
-        value={value}
-      />
-      <span className="ml-2 font-medium text-xs text-gray-700">{label}</span>
-    </div>
+    <Menu.Item as="div" onClick={onClick} className="cursor-pointer">
+      <span className="ml-2 font-medium text-xs text-gray-700">
+        {option.label}
+      </span>
+    </Menu.Item>
   );
 };
 

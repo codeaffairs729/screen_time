@@ -22,8 +22,8 @@ const QualityFilter = () => {
       {fields.map((field, i) => (
         <StarRow key={field.id} stars={i + 1}>
           <FilterCheckboxField
+            className="mr-1.5 mb-0.5"
             register={register(`quality.${i}.checkbox`)}
-            // label={field.value}
             value={field.value}
             defaultChecked={!!field.checkbox}
           />
