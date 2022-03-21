@@ -38,8 +38,13 @@ const FilterTopic = () => {
   return (
     <FilterSection label="Topics">
       {vm.isLoading && (
-        <div className="h-20 flex items-center justify-center">
+        <div className="m-3 flex items-center justify-center">
           <Loader />
+        </div>
+      )}
+      {!vm.isLoading && fields.length === 0 && (
+        <div className="m-3 text-xs text-gray-500 flex items-center justify-center">
+          No topics
         </div>
       )}
       {!vm.isLoading &&

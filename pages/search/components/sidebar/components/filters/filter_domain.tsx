@@ -1,15 +1,11 @@
-// import { FilterValueItem, useWatchFilter } from "common/hooks";
 import {
-  Filter,
   FilterOptionItem,
   SearchVMContext,
   useSearchFilter,
 } from "pages/search/search.vm";
 import { useContext, useEffect, useState } from "react";
-import { useFieldArray, useForm, useWatch } from "react-hook-form";
 import FilterCheckboxField from "../filter_checkbox_field";
 import FilterSection from "../filter_section";
-import { uniq } from "lodash-es";
 import Loader from "components/UI/loader";
 
 const FilterDomain = () => {
