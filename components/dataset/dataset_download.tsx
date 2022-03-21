@@ -42,7 +42,7 @@ const DatasetDownloadItem = ({
   url: string;
 }) => {
   const updateDownloadStat = () => {
-    return Http.post(`/v1/datasets/${dataset.id}/downloads`);
+    Http.post(`/v1/datasets/${dataset.id}/downloads`);
   };
   const newUrl = url?.replace(/["']/g, "");
 

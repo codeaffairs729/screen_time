@@ -1,7 +1,9 @@
 import Http from "common/http";
 import { SearchOption } from "components/UI/dataset_search_input";
+import { isEqual } from "lodash-es";
 import { useRouter } from "next/router";
-import { createContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
+import { useFieldArray, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { SingleValue } from "react-select";
@@ -11,6 +13,9 @@ import Dataset from "../../models/dataset.model";
 
 export type Filter = {
   domain?: string[];
+  location?: string[];
+  topic?: string[];
+  last_update?: string[];
   file_type?: string[];
   owner?: string[];
   license?: string[];
@@ -87,7 +92,7 @@ const SearchVM = () => {
         }),
     { revalidateOnFocus: false }
   );
-  
+
   /**
    * Update the display count when the datasets appear in the search result
    */
@@ -116,6 +121,56 @@ interface ISearchVMContext {
   setActiveFilter: Function;
 }
 
+export default SearchVM;
+
 export const SearchVMContext = createContext({} as ISearchVMContext);
 
-export default SearchVM;
+export interface FilterOptionItem {
+  value: string;
+  label: string;
+  checkbox: boolean | string;
+}
+export interface FilterOptions {
+  [key: string]: FilterOptionItem[];
+}
+
+export const useSearchFilter = ({
+  name,
+  filterOptionItems,
+}: {
+  name: keyof Filter;
+  filterOptionItems: FilterOptionItem[] | undefined;
+}) => {
+  const { activeFilter, setActiveFilter } = useContext(SearchVMContext);
+  const { control, register, watch, reset } = useForm<FilterOptions>();
+  const { fields, replace, update } = useFieldArray({ control, name });
+
+  useEffect(() => {
+    if (!filterOptionItems) return;
+    replace(
+      filterOptionItems?.map((f) => ({
+        ...f,
+        checkbox: (activeFilter?.[name] ?? []).includes(f.value)
+          ? f.value
+          : false,
+      }))
+    );
+  }, [filterOptionItems]);
+
+  useEffect(() => {
+    const subscription = watch((formState) => {
+      const currentFilterState = formState[name];
+      const newFilterState = currentFilterState
+        ?.filter((f) => f)
+        .filter((f) => f?.checkbox)
+        .map((f) => f?.value);
+      setActiveFilter((state: Filter) => ({
+        ...state,
+        [name]: newFilterState,
+      }));
+    });
+    return () => subscription.unsubscribe();
+  }, [watch]);
+
+  return { control, register, fields, replace };
+};

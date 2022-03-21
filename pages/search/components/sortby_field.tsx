@@ -1,6 +1,5 @@
 import { Menu, Transition } from "@headlessui/react";
 import clsx from "clsx";
-import { useWatchFilter } from "common/hooks";
 import { Fragment, useContext, useEffect, useRef, useState } from "react";
 import { useForm, UseFormRegisterReturn } from "react-hook-form";
 import { IoMdArrowDropdown } from "react-icons/io";
@@ -8,10 +7,10 @@ import { SearchVMContext } from "../search.vm";
 
 const SortbyField = () => {
   const vm = useContext(SearchVMContext);
-  const { register } = useWatchFilter({
-    setActiveFilter: vm.setActiveFilter,
-    name: "sort_by",
-  });
+  // const { register } = useWatchFilter({
+  //   setActiveFilter: vm.setActiveFilter,
+  //   name: "sort_by",
+  // });
 
   return (
     <div className="w-56 ml-auto mr-2 mb-2">
@@ -36,7 +35,7 @@ const SortbyField = () => {
               leaveTo="transform opacity-0 scale-95"
             >
               <Menu.Items className="absolute z-10 right-0 w-48 mt-2 origin-top-right bg-white divide-y divide-gray-100 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none border border-dtech-secondary-light">
-                <div className="px-1 py-1 flex flex-col space-y-1">
+                {/* <div className="px-1 py-1 flex flex-col space-y-1">
                   <Menu.Item>
                     {({ active }) => (
                       <Checkbox
@@ -73,7 +72,7 @@ const SortbyField = () => {
                       />
                     )}
                   </Menu.Item>
-                </div>
+                </div> */}
               </Menu.Items>
             </Transition>
           </>

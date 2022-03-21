@@ -5,8 +5,8 @@ import FilterTopic from "./components/filters/filter_topic";
 import FilterOwner from "./components/filters/filter_owner";
 import FilterLicense from "./components/filters/filter_license";
 import FilterLastUpdate from "./components/filters/filter_last_update";
-import FilterDomain from "./components/filters/filter_domain";
 import FilterLocation from "./components/filters/filter_location";
+import FilterDomain from "./components/filters/filter_domain";
 
 const Sidebar = ({ className = "" }: { className?: string }) => {
   return (

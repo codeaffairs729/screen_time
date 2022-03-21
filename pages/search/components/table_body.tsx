@@ -71,7 +71,7 @@ const Row = ({ dataset }: { dataset: Dataset }) => {
           ? dataset.detail.lastUpdate.toLocaleString({ ...DateTime.DATE_FULL })
           : ""}
       </Cell>
-      <Cell>
+      <Cell className="text-xs text-center pt-1 font-medium text-gray-700">
         {dataset.detail.lastDownloaded.isValid
           ? dataset.detail.lastDownloaded.toLocaleString({
               ...DateTime.DATE_FULL,

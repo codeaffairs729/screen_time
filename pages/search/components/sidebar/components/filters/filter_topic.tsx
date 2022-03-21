@@ -1,39 +1,57 @@
-import { SearchVMContext } from "pages/search/search.vm";
-import { useContext } from "react";
+import {
+  FilterOptionItem,
+  SearchVMContext,
+  useSearchFilter,
+} from "pages/search/search.vm";
+import { useContext, useEffect, useState } from "react";
 import FilterCheckboxField from "../filter_checkbox_field";
 import FilterSection from "../filter_section";
 import Loader from "components/UI/loader";
-import { capitalize } from "lodash-es";
-import { useWatchFilter } from "common/hooks";
 
 const FilterTopic = () => {
   const vm = useContext(SearchVMContext);
-  const topics =
-    vm.datasets?.reduce((a, b) => {
+  const [filterOptionItems, setFilterOptionItems] = useState<
+    FilterOptionItem[] | undefined
+  >([]);
+
+  useEffect(() => {
+    const topics = vm.datasets?.reduce((a, b) => {
       b.detail.topics.forEach((t) => a.add(t));
       return a;
-    }, new Set<string>()) ?? new Set<string>();
+    }, new Set<string>());
+    setFilterOptionItems(
+      topics
+        ? Array.from(topics).map((t) => ({
+            checkbox: false,
+            value: t,
+            label: t,
+          }))
+        : undefined
+    );
+  }, [vm.datasets]);
 
-  const { register } = useWatchFilter({
-    setActiveFilter: vm.setActiveFilter,
+  const { register, fields } = useSearchFilter({
     name: "topic",
+    filterOptionItems,
   });
 
   return (
     <FilterSection label="Topics">
-      {Array.from(topics)?.map((t, i) => (
-        <FilterCheckboxField
-          register={register(`topic`)}
-          key={i}
-          label={capitalize(t)}
-          value={t}
-        />
-      ))}
       {vm.isLoading && (
         <div className="h-20 flex items-center justify-center">
           <Loader />
         </div>
       )}
+      {!vm.isLoading &&
+        fields.map((field, i) => (
+          <FilterCheckboxField
+            key={field.id}
+            register={register(`topic.${i}.checkbox`)}
+            label={field.value}
+            value={field.value}
+            defaultChecked={!!field.checkbox}
+          />
+        ))}
     </FilterSection>
   );
 };

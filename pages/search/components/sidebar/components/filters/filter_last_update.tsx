@@ -1,34 +1,30 @@
-import { useWatchFilter } from "common/hooks";
-import { Filter, SearchVMContext } from "pages/search/search.vm";
-import { useContext, useEffect } from "react";
-import { useForm, useWatch } from "react-hook-form";
+import { FilterOptionItem, useSearchFilter } from "pages/search/search.vm";
+import { useRef } from "react";
 import FilterCheckboxField from "../filter_checkbox_field";
 import FilterSection from "../filter_section";
 
 const FilterLastUpdate = () => {
-  const vm = useContext(SearchVMContext);
-  const { register } = useWatchFilter({
-    setActiveFilter: vm.setActiveFilter,
+  const filterValues = useRef<FilterOptionItem[]>([
+    { checkbox: false, label: "Past Week", value: "past_week" },
+    { checkbox: false, label: "Past Month", value: "past_month" },
+    { checkbox: false, label: "Past Year", value: "past_year" },
+  ]);
+  const { register, fields } = useSearchFilter({
     name: "last_update",
+    filterOptionItems: filterValues.current,
   });
 
   return (
     <FilterSection label="Last Updated">
-      <FilterCheckboxField
-        register={register("last_update")}
-        label="Past Week"
-        value="past_week"
-      />
-      <FilterCheckboxField
-        register={register("last_update")}
-        label="Past Month"
-        value="Past_month"
-      />
-      <FilterCheckboxField
-        register={register("last_update")}
-        label="Past Year"
-        value="past_year"
-      />
+      {fields.map((field, i) => (
+        <FilterCheckboxField
+          key={field.id}
+          register={register(`last_update.${i}.checkbox`)}
+          label={field.label}
+          value={field.value}
+          defaultChecked={!!field.checkbox}
+        />
+      ))}
     </FilterSection>
   );
 };

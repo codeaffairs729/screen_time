@@ -1,41 +1,48 @@
-import { useWatchFilter } from "common/hooks";
 import StarRating from "components/UI/star_rating";
-import Image from "next/image";
-import { SearchVMContext } from "pages/search/search.vm";
-import { useContext } from "react";
+import { useSearchFilter } from "pages/search/search.vm";
+import { ReactNode, useRef } from "react";
 import FilterCheckboxField from "../filter_checkbox_field";
 import FilterSection from "../filter_section";
 
 const QualityFilter = () => {
-  const vm = useContext(SearchVMContext);
-  const { register } = useWatchFilter({
-    setActiveFilter: vm.setActiveFilter,
+  const filterValues = useRef([
+    { checkbox: false, value: "1", label: "1" },
+    { checkbox: false, value: "2", label: "2" },
+    { checkbox: false, value: "3", label: "3" },
+    { checkbox: false, value: "4", label: "4" },
+    { checkbox: false, value: "5", label: "5" },
+  ]);
+  const { register, fields } = useSearchFilter({
     name: "quality",
+    filterOptionItems: filterValues.current,
   });
 
   return (
     <FilterSection label="Quality">
-      {[...Array(5)].map((_, i) => (
-        <StarRow register={register} key={i} stars={i + 1} />
+      {fields.map((field, i) => (
+        <StarRow key={field.id} stars={i + 1}>
+          <FilterCheckboxField
+            register={register(`quality.${i}.checkbox`)}
+            // label={field.value}
+            value={field.value}
+            defaultChecked={!!field.checkbox}
+          />
+        </StarRow>
       ))}
     </FilterSection>
   );
 };
 
-const StarRow = ({ stars, register }: { stars: number; register: any }) => {
+const StarRow = ({
+  stars,
+  children,
+}: {
+  stars: number;
+  children: ReactNode;
+}) => {
   return (
     <div className="flex items-center justify-start">
-      <FilterCheckboxField
-        value={stars}
-        register={register("quality")}
-        className="mr-1 mb-0"
-      />
-      {/* {[...Array(stars).map((_,i)=>(<Image
-        src={`/images/icons/star/${type}_star.svg`}
-        width="14px"
-        height="14px"
-        alt={`${type} star`}
-      />))]} */}
+      {children}
       <StarRating rating={stars} />
     </div>
   );

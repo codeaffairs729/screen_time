@@ -1,30 +1,30 @@
-import { Filter, SearchVMContext } from "pages/search/search.vm";
-import { useContext, useEffect } from "react";
-import { useForm, useWatch } from "react-hook-form";
+import { useSearchFilter } from "pages/search/search.vm";
+import { useRef } from "react";
 import FilterCheckboxField from "../filter_checkbox_field";
 import FilterSection from "../filter_section";
 
 const FilterLicense = () => {
-  const { register, watch, control } = useForm();
-  const vm = useContext(SearchVMContext);
-  const licenseState = useWatch({
-    control,
+  const filterValues = useRef([
+    { checkbox: false, value: "Open", label: "Open" },
+    { checkbox: false, value: "OGL", label: "OGL" },
+    { checkbox: false, value: "Closed", label: "Closed" },
+  ]);
+  const { register, fields } = useSearchFilter({
     name: "license",
-    defaultValue: [],
+    filterOptionItems: filterValues.current,
   });
-
-  useEffect(() => {
-    vm.setActiveFilter((state: Filter) => ({
-      ...state,
-      license: licenseState,
-    }));
-  }, [licenseState]);
 
   return (
     <FilterSection label="License">
-      <FilterCheckboxField register={register("license")} label="Open" value="Open" />
-      <FilterCheckboxField register={register("license")} label="OGL" value="OGL" />
-      <FilterCheckboxField register={register("license")} label="Closed" value="Closed" />
+      {fields.map((field, i) => (
+        <FilterCheckboxField
+          key={field.id}
+          register={register(`license.${i}.checkbox`)}
+          label={field.value}
+          value={field.value}
+          defaultChecked={!!field.checkbox}
+        />
+      ))}
     </FilterSection>
   );
 };

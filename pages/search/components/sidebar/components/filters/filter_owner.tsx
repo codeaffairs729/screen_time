@@ -1,18 +1,29 @@
-import { useWatchFilter } from "common/hooks";
-import { Filter, SearchVMContext } from "pages/search/search.vm";
-import { useContext, useEffect } from "react";
-import { useForm, useWatch } from "react-hook-form";
+import { useSearchFilter } from "pages/search/search.vm";
+import { useRef } from "react";
 import FilterCheckboxField from "../filter_checkbox_field";
 import FilterSection from "../filter_section";
 
 const FilterOwner = () => {
-  const vm = useContext(SearchVMContext);
-  const {register}= useWatchFilter({setActiveFilter: vm.setActiveFilter, name: 'owner'});
+  const filterValues = useRef([
+    { checkbox: false, value: "NHS", label: "NHS" },
+    { checkbox: false, value: "ONS", label: "ONS" },
+  ]);
+  const { register, fields } = useSearchFilter({
+    name: "owner",
+    filterOptionItems: filterValues.current,
+  });
 
   return (
     <FilterSection label="Owner">
-      <FilterCheckboxField register={register("owner")} label="NHS" value="NHS" />
-      <FilterCheckboxField register={register("owner")} label="ONS" value="ONS" />
+      {fields.map((field, i) => (
+        <FilterCheckboxField
+          key={field.id}
+          register={register(`owner.${i}.checkbox`)}
+          label={field.value}
+          value={field.value}
+          defaultChecked={!!field.checkbox}
+        />
+      ))}
     </FilterSection>
   );
 };
