@@ -68,14 +68,12 @@ const Row = ({ dataset }: { dataset: Dataset }) => {
       </Cell>
       <Cell className="text-xs text-center pt-1 font-medium text-gray-700">
         {dataset.detail.lastUpdate.isValid
-          ? dataset.detail.lastUpdate.toLocaleString({ ...DateTime.DATE_FULL })
+          ? dataset.detail.lastUpdate.toRelative()
           : ""}
       </Cell>
       <Cell className="text-xs text-center pt-1 font-medium text-gray-700">
         {dataset.detail.lastDownloaded.isValid
-          ? dataset.detail.lastDownloaded.toLocaleString({
-              ...DateTime.DATE_FULL,
-            })
+          ? dataset.detail.lastDownloaded.toRelative()
           : ""}
       </Cell>
       <Cell className="text-center pt-1">
