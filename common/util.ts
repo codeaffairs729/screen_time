@@ -13,7 +13,7 @@ export const getHttpErrorMsg = async (
 ): Promise<string> => {
   try {
     const body = await errorRes.response.json();
-    return body["detail"][0];
+    return body["detail"];
   } catch (error) {
     log.error(error);
     return defaultMessage;

@@ -1,5 +1,6 @@
 import withAuth from "common/HOCs/with_auth";
 import DefaultLayout from "components/layouts/default";
+import ErrorAlert from "components/UI/alerts/error_alert";
 import PrimaryBtn from "components/UI/form/primary_btn";
 import TextField from "components/UI/form/text_field";
 import InfoIcon from "components/UI/icons/info_icon";
@@ -29,6 +30,12 @@ const SigninPage = () => {
           </Link>
         </div>
         <div className="grow flex flex-col items-center justify-center pb-8">
+          {vm.signinErrorMsg && (
+            <ErrorAlert
+              message={vm.signinErrorMsg}
+              className="max-w-[450px] w-full mb-4"
+            />
+          )}
           <FormRow label="Email">
             <TextField
               className="w-60"
@@ -68,6 +75,7 @@ const SigninPage = () => {
             <PrimaryBtn
               className="bg-dtech-primary-dark min-w-[150px]"
               label="Sign In"
+              isDisabled={vm.isSigningIn}
               isLoading={vm.isSigningIn}
               onClick={vm.form.handleSubmit(vm.performLogin)}
             />

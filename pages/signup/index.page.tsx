@@ -8,6 +8,7 @@ import { useWatch } from "react-hook-form";
 import FormRow from "./components/form_row";
 import SignupVM from "./signup.vm";
 import isEmail from "validator/lib/isEmail";
+import ErrorAlert from "components/UI/alerts/error_alert";
 
 const SigninPage = () => {
   const vm = SignupVM();
@@ -28,6 +29,12 @@ const SigninPage = () => {
           </span>
         </div>
         <div className="grow flex flex-col items-center justify-center pb-8">
+          {vm.signupErrorMsg && (
+            <ErrorAlert
+              message={vm.signupErrorMsg}
+              className="max-w-[450px] w-full mb-4"
+            />
+          )}
           <FormRow label="Name">
             <TextField
               className="w-60"
@@ -147,6 +154,8 @@ const SigninPage = () => {
             <PrimaryBtn
               className="bg-dtech-primary-dark min-w-[150px]"
               label="Get started now"
+              isLoading={vm.isSigningUp}
+              isDisabled={vm.isSigningUp}
               onClick={vm.form.handleSubmit(vm.handleSignup)}
             />
           </div>
