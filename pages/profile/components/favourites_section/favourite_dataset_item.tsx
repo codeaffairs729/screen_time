@@ -17,7 +17,7 @@ const FavouriteDatasetItem = ({ dataset }: { dataset: Dataset }) => {
           </Link>
         </h4>
         <DatasetDownload className="mb-2" dataset={dataset} />
-        <LabelledRow label="Data Owner">{dataset.owner.name}</LabelledRow>
+        <LabelledRow label="Data Owner">{dataset.owner.organisation}</LabelledRow>
       </div>
       <div className="border-l p-3 px-8 flex items-center justify-center">
         <FavouriteBtn dataset={dataset} />

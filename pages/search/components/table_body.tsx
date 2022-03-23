@@ -53,7 +53,7 @@ const Row = ({ dataset }: { dataset: Dataset }) => {
             </a>
           </LabelledRow>
           <LabelledRow className="mb-1.5" label="Data Owner">
-            {dataset.owner.name}
+            {dataset.owner.organisation}
           </LabelledRow>
           <LabelledRow className="mb-1.5" label="License">
             {dataset.detail.license.type}

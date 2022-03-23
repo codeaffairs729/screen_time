@@ -34,7 +34,7 @@ const SummarySection = () => {
         </a>
       </LabelledRow>
       <LabelledRow className="mb-1.5" label="Data Owner">
-        {vm.dataset.owner.name}
+        {vm.dataset.owner.organisation}
       </LabelledRow>
       <PrimaryBtn
         label="Contact Owner"
