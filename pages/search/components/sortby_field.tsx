@@ -15,23 +15,23 @@ const SortbyField = () => {
   const options: Option[] = [
     {
       label: "Most Relevant",
-      value: "most_relevant",
+      value: "relevance",
     },
     {
       label: "High Quality",
-      value: "high_quality",
+      value: "quality",
     },
     {
       label: "Most Popular",
-      value: "most_popular",
+      value: "popularity",
     },
     {
       label: "Most Recently Updated",
-      value: "most_recently_updated",
+      value: "updated",
     },
     {
       label: "Most Recently Downloaded",
-      value: "most_recently_downloaded",
+      value: "downloaded",
     },
   ];
   const [activeOption, setActiveOption] = useState<Option>(options[0]);
