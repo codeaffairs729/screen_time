@@ -84,7 +84,7 @@ const SigninPage = () => {
                 control: vm.form.control,
                 name: "confirm_password",
                 rules: {
-                  required: "Confitm password is required",
+                  required: "Confirm password is required",
                   validate: (val: string) => {
                     if (vm.form.watch("password") != val) {
                       return "Your passwords do no match";
@@ -118,7 +118,7 @@ const SigninPage = () => {
                 rules: {
                   validate: (val: boolean) => {
                     if (![true, false].includes(val)) {
-                      return "Data owner is requireds";
+                      return "Data owner is required";
                     }
                   },
                 },

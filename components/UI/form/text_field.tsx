@@ -26,13 +26,17 @@ const TextField = ({
         ? ""
         : formControl["defaultValue"],
   });
+  const hasError = error && Object.keys(error).length > 0;
 
   return (
     <div className={clsx("relative w-full", className)}>
       {type == "textarea" ? (
         <textarea
           placeholder={placeholder}
-          className="block px-3 py-2 w-full text-sm appearance-none bg-transparent rounded-lg focus:ring-dtech-secondary-light border-2 border-dtech-secondary-light focus:border-dtech-secondary-light placeholder:text-gray-500 placeholder:text-sm placeholder:font-bold disabled:border-gray-300 disabled:bg-gray-50"
+          className={clsx(
+            "block px-3 py-2 w-full text-sm appearance-none bg-transparent rounded-lg focus:ring-dtech-secondary-light border-2 border-dtech-secondary-light focus:border-dtech-secondary-light placeholder:text-gray-500 placeholder:text-sm placeholder:font-bold disabled:border-gray-300 disabled:bg-gray-50",
+            { "border-red-700": hasError }
+          )}
           rows={rows}
           {...register}
           disabled={disabled}
@@ -41,13 +45,16 @@ const TextField = ({
         <input
           type={type}
           placeholder={placeholder}
-          className="block px-3 py-2 w-full text-sm appearance-none bg-transparent rounded-lg focus:ring-dtech-secondary-light border-2 border-dtech-secondary-light focus:border-dtech-secondary-light placeholder:text-gray-500 placeholder:text-sm placeholder:font-bold disabled:border-gray-300 disabled:bg-gray-50"
+          className={clsx(
+            "block px-3 py-2 w-full text-sm appearance-none bg-transparent rounded-lg focus:ring-dtech-secondary-light border-2 border-dtech-secondary-light focus:border-dtech-secondary-light placeholder:text-gray-500 placeholder:text-sm placeholder:font-bold disabled:border-gray-300 disabled:bg-gray-50",
+            { "border-red-700": hasError }
+          )}
           {...register}
           disabled={disabled}
         />
       )}
-      {error && Object.keys(error).length > 0 && (
-        <div className="text-xs font-light text-red-800 ml-1 mt-1">
+      {hasError && (
+        <div className="text-xs text-red-800 ml-1 mt-1">
           {error["message"]}
         </div>
       )}

@@ -43,6 +43,7 @@ const DropdownField = ({
             .replace(/\s+/g, "")
             .includes(query.toLowerCase().replace(/\s+/g, ""))
         );
+  const hasError = error && Object.keys(error).length > 0;
 
   return (
     <div className={clsx(className)}>
@@ -56,7 +57,10 @@ const DropdownField = ({
         <div className="relative">
           <div className="relative w-full text-left bg-white rounded-lg cursor-default">
             <Combobox.Input
-              className="w-full rounded-lg focus:ring-dtech-secondary-light border-2 border-dtech-secondary-light focus:border-dtech-secondary-light disabled:border-gray-300 disabled:bg-gray-50 py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 placeholder:text-gray-500 placeholder:text-sm placeholder:font-bold"
+              className={clsx(
+                "w-full rounded-lg focus:ring-dtech-secondary-light border-2 border-dtech-secondary-light focus:border-dtech-secondary-light disabled:border-gray-300 disabled:bg-gray-50 py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 placeholder:text-gray-500 placeholder:text-sm placeholder:font-bold",
+                { "border-red-700": hasError }
+              )}
               displayValue={(option: Option) => option.label}
               onChange={(event) => setQuery(event.target.value)}
               placeholder={placeholder}
@@ -87,8 +91,8 @@ const DropdownField = ({
           </Transition>
         </div>
       </Combobox>
-      {error && Object.keys(error).length > 0 && (
-        <div className="text-xs font-light text-red-800 ml-1 mt-1">
+      {hasError && (
+        <div className="text-xs text-red-800 ml-1 mt-1">
           {error["message"]}
         </div>
       )}
