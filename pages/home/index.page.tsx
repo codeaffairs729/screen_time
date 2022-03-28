@@ -19,6 +19,8 @@ const HomePage = () => {
           <div className="mt-6 max-w-xl mx-auto">
             <DatasetSearchInput
               onChange={(option) => {
+                console.log('option', option);
+                
                 if (!option) return;
                 router.push({
                   pathname: "/search",
