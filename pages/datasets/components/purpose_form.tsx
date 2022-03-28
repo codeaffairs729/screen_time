@@ -40,7 +40,7 @@ const PurposeForm = () => {
       <div className="flex justify-between items-center">
         <p className="text-gray-600 font-medium text-sm mb-2">
           What are you using this dataset for? Let us know!{" "}
-          <InfoIcon title="Add your usage" />
+          <InfoIcon title="We would be grateful if you are able to tell us about the nature of the problem that you are hoping to solve by using this dataset. This information will only be shared with the data owner and the owner's organisation for the purpose of further maintenance and improvement the data." />
         </p>
         <PrimaryBtn
           label="Submit"

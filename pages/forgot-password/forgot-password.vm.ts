@@ -42,7 +42,6 @@ interface IForgotPasswordVMContext {
   form: UseFormReturn;
   sendResetEmail: () => void;
   currentStep: PageStep;
-  setCurrentStep: Dispatch<SetStateAction<PageStep>>;
 }
 
 export const enum PageStep {
