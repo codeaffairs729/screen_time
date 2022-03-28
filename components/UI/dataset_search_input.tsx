@@ -3,8 +3,9 @@ import debounce from "debounce-promise";
 import useSWR from "swr";
 import clsx from "clsx";
 import { SingleValue } from "react-select";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/router";
+import Http from "common/http";
 
 export type SearchOption = { value: any; label: string };
 
@@ -15,21 +16,20 @@ const DatasetSearchInput = ({
   onChange: (option: SingleValue<SearchOption>) => void;
   className?: string;
 }) => {
-  const loadAutoComplete = debounce(async (inputValue: string) => {
-    if (!inputValue) return;
-    let options: SearchOption[] = [];
-    options = [
-      {
-        value: "health",
-        label: "Health",
-      },
-      {
-        value: "covid",
-        label: "Covid",
-      },
-    ];
-    return options;
-  });
+  const loadAutoComplete = useMemo(
+    () =>
+      debounce(async (inputValue: string) => {
+        if (!inputValue) return;
+        const res = await Http.get<{ generated_text: string }[]>("", {
+          baseUrl: `${process.env.NEXT_PUBLIC_SENTIMENT_API_ROOT}/completion/${inputValue}`,
+        });
+        return res.map((t) => ({
+          value: t["generated_text"],
+          label: t["generated_text"],
+        }));
+      }, 500),
+    []
+  );
 
   const Option = ({ data, innerProps }: any) => {
     return (
