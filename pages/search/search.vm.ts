@@ -72,17 +72,16 @@ const SearchVM = () => {
    * TODO: convert searchquery, pagenum and pagesize to
    */
   const { data: datasets, error } = useSWR(
-    `${process.env.NEXT_PUBLIC_API_ROOT}/v3/datasets?searchquery=${q}&pagesize=20&pagenum=1${queryParams}`,
+    `/v3/datasets?searchquery=${q}&pagesize=20&pagenum=1${queryParams}`,
     (url: string) =>
-      fetch(url)
-        .then((res) => res.json())
-        .then((res) =>
-          Dataset.fromJsonList(res[0]["user_search"][0]["results"].slice(0, 10))
-        )
+      Http.get(url, { baseUrl: `${process.env.NEXT_PUBLIC_API_ROOT}` })
         .catch((e) => {
           toast.error("Something went wrong while fetching search results");
           throw e;
         })
+        .then((res) =>
+          Dataset.fromJsonList(res[0]["user_search"][0]["results"].slice(0, 10))
+        )
         .then((datasets) => {
           updateDisplayCount(datasets.map((d) => d.id));
           return datasets;
