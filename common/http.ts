@@ -4,6 +4,7 @@ import Router from "next/router";
 import { Non200ResponseError } from "common/exceptions";
 import log from "common/logger";
 import { initializeStore } from "store";
+import AuthService from "services/auth.service";
 // import AuthService from "services/auth.service";
 // import { initializeStore } from 'store';
 // import AuthService from './services/auth.service';
@@ -15,7 +16,7 @@ async function parseHttpResponse(response: Response) {
   if (!response.ok) {
     let error;
     if (response.status === 401 ) {
-      // AuthService.logout();
+      AuthService.logout();
       error = new Non200ResponseError("Please login to continue", {
         response: response,
         status: response.status,

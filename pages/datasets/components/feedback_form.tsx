@@ -1,3 +1,4 @@
+import { Non200ResponseError } from "common/exceptions";
 import { useHttpCall } from "common/hooks";
 import Http from "common/http";
 import PrimaryBtn from "components/UI/form/primary_btn";
@@ -30,8 +31,13 @@ const FeedbackForm = () => {
           reset();
           toast.success("You feedback was successfully submitted");
         },
-        onError: (error) =>
-          toast.error("Something went wrong while submitting your feedback"),
+        onError: (error) => {
+          let message = "Something went wrong while submitting your feedback";
+          if (error instanceof Non200ResponseError) {
+            message = error.message;
+          }
+          toast.error(message);
+        },
       }
     );
 
