@@ -1,6 +1,5 @@
 import DatasetSearchInput from "components/UI/dataset_search_input";
-// import SelectField from "components/UI/form/select_field";
-import DefaultLayout from "../../components/layouts/default";
+import DefaultLayout from "components/layouts/default";
 import ResultTable from "./components/result_table";
 import Sidebar from "./components/sidebar/sidebar";
 import SortbyField from "./components/sortby_field";

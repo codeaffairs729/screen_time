@@ -4,14 +4,17 @@ import TextField from "components/UI/form/text_field";
 import InfoIcon from "components/UI/icons/info_icon";
 import Link from "next/link";
 import { useContext } from "react";
-import ForgotPasswordVM, { ForgotPasswordVMContext, PageStep } from "../forgot-password.vm";
+import ForgotPasswordVM, {
+  ForgotPasswordVMContext,
+  PageStep,
+} from "../forgot-password.vm";
 import FormRow from "./form_row";
 
 const RequestResetEmail = () => {
   const vm = useContext(ForgotPasswordVMContext);
 
   if (vm.currentStep != PageStep.RequestResetEmail) {
-    return <div/>;
+    return <div />;
   }
 
   return (
@@ -50,6 +53,8 @@ const RequestResetEmail = () => {
           <PrimaryBtn
             className="bg-dtech-primary-dark min-w-[150px]"
             label="Send Email"
+            isLoading={vm.isSendingMail}
+            isDisabled={vm.isSendingMail}
             onClick={vm.form.handleSubmit(vm.sendResetEmail)}
           />
         </div>

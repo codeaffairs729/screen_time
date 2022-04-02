@@ -5,39 +5,48 @@ import { Non200ResponseError } from "common/exceptions";
 import log from "common/logger";
 import { initializeStore } from "store";
 import AuthService from "services/auth.service";
-// import AuthService from "services/auth.service";
-// import { initializeStore } from 'store';
-// import AuthService from './services/auth.service';
 
 /**
  * Parse a fetch response
  */
-async function parseHttpResponse(response: Response) {
+async function parseHttpResponse(
+  response: Response,
+  redirectToLoginPageIfAuthRequired: boolean = true
+) {
   if (!response.ok) {
     let error;
-    if (response.status === 401 ) {
-      AuthService.logout();
+    if (response.status === 401) {
+      if (redirectToLoginPageIfAuthRequired) {
+        AuthService.logout();
+      }
       error = new Non200ResponseError("Please login to continue", {
         response: response,
         status: response.status,
         url: response.url,
       });
       // return Promise.reject('Please login to continue')
-    }else{
+    } else {
       error = new Non200ResponseError("Non 2xx response", {
         response: response,
         status: response.status,
         url: response.url,
       });
-
     }
-    return Promise.reject(error)
+    return Promise.reject(error);
   }
   if (response.status == 204) {
     return {};
   } else {
-    const jsonResponse = await response.json();
-    return jsonResponse;
+    try {
+      const jsonResponse = await response.json();
+      return jsonResponse;
+    } catch (error) {
+      console.error(
+        `Error while while readng response stream from ${response.url}`,
+        error
+      );
+      return {};
+    }
   }
 }
 
@@ -62,7 +71,7 @@ function buildHeaders(extraHeaders = {}, isPostForm = false) {
   const store = initializeStore();
   let authToken = store.getState().auth.token;
   if (authToken) {
-    headers['Authorization'] = `Bearer ${authToken}`;
+    headers["Authorization"] = `Bearer ${authToken}`;
   }
   return headers;
 }
@@ -101,7 +110,12 @@ class Http {
    */
   static async get<T = any>(
     url: string,
-    { params = {}, baseUrl = "", extraHeaders = {} } = {}
+    {
+      params = {},
+      baseUrl = "",
+      extraHeaders = {},
+      redirectToLoginPageIfAuthRequired = true,
+    } = {}
   ): Promise<T> {
     // Build api end point along with query params
     const httpUrl = buildUrl(url, params, baseUrl);
@@ -113,7 +127,10 @@ class Http {
         headers: buildHeaders(extraHeaders),
       });
 
-      result = await parseHttpResponse(response);
+      result = await parseHttpResponse(
+        response,
+        redirectToLoginPageIfAuthRequired
+      );
     } catch (error) {
       log.error(
         `Something went wrong while making the get request to ${httpUrl}`,
@@ -135,7 +152,12 @@ class Http {
   static async post<T = any>(
     url: string,
     data = {},
-    { params = {}, baseUrl = "", extraHeaders = {} } = {}
+    {
+      params = {},
+      baseUrl = "",
+      extraHeaders = {},
+      redirectToLoginPageIfAuthRequired = true,
+    } = {}
   ): Promise<T> {
     // // Build Query params
     const httpUrl = buildUrl(url, params, baseUrl);
@@ -147,7 +169,10 @@ class Http {
         headers: buildHeaders(extraHeaders),
         body: JSON.stringify(data),
       });
-      result = await parseHttpResponse(response);
+      result = await parseHttpResponse(
+        response,
+        redirectToLoginPageIfAuthRequired
+      );
     } catch (error) {
       log.error(
         `Something went wrong while making the post request to ${httpUrl}`,
@@ -169,7 +194,12 @@ class Http {
   static async delete<T = any>(
     url: string,
     data = {},
-    { params = {}, baseUrl = "", extraHeaders = {} } = {}
+    {
+      params = {},
+      baseUrl = "",
+      extraHeaders = {},
+      redirectToLoginPageIfAuthRequired = true,
+    } = {}
   ): Promise<T> {
     // // Build url and uery params
     const httpUrl = buildUrl(url, params, baseUrl);
@@ -181,7 +211,10 @@ class Http {
         headers: buildHeaders(extraHeaders),
         body: JSON.stringify(data),
       });
-      result = await parseHttpResponse(response);
+      result = await parseHttpResponse(
+        response,
+        redirectToLoginPageIfAuthRequired
+      );
     } catch (error) {
       log.error(
         `Something went wrong while making the delete request to ${httpUrl}`,
@@ -202,7 +235,12 @@ class Http {
   static async patch<T = any>(
     url: string,
     data = {},
-    { params = {}, baseUrl = "", extraHeaders = {} } = {}
+    {
+      params = {},
+      baseUrl = "",
+      extraHeaders = {},
+      redirectToLoginPageIfAuthRequired = true,
+    } = {}
   ): Promise<T> {
     // // Build url and uery params
     const httpUrl = buildUrl(url, params, baseUrl);
@@ -214,7 +252,10 @@ class Http {
         headers: buildHeaders(extraHeaders),
         body: JSON.stringify(data),
       });
-      result = await parseHttpResponse(response);
+      result = await parseHttpResponse(
+        response,
+        redirectToLoginPageIfAuthRequired
+      );
     } catch (error) {
       log.error(
         `Something went wrong while making the patch request to ${httpUrl}`,
@@ -236,7 +277,12 @@ class Http {
   static async put<T = any>(
     url: string,
     data = {},
-    { params = {}, baseUrl = "", extraHeaders = {} } = {}
+    {
+      params = {},
+      baseUrl = "",
+      extraHeaders = {},
+      redirectToLoginPageIfAuthRequired = true,
+    } = {}
   ): Promise<T> {
     // // Build url and uery params
     const httpUrl = buildUrl(url, params, baseUrl);
@@ -248,7 +294,10 @@ class Http {
         headers: buildHeaders(extraHeaders),
         body: JSON.stringify(data),
       });
-      result = await parseHttpResponse(response);
+      result = await parseHttpResponse(
+        response,
+        redirectToLoginPageIfAuthRequired
+      );
     } catch (error) {
       log.error(
         `Something went wrong while making the put request to ${httpUrl}`,
@@ -265,7 +314,12 @@ class Http {
   static async postFormData<T>(
     url: string,
     data: FormData,
-    { params = {}, baseUrl = "", extraHeaders = {} } = {}
+    {
+      params = {},
+      baseUrl = "",
+      extraHeaders = {},
+      redirectToLoginPageIfAuthRequired = true,
+    } = {}
   ): Promise<T> {
     // const httpUrl = buildUrl(url);
     const httpUrl = buildUrl(url, params, baseUrl);
@@ -276,7 +330,10 @@ class Http {
         headers: buildHeaders(extraHeaders, true),
         body: data,
       });
-      result = await parseHttpResponse(response);
+      result = await parseHttpResponse(
+        response,
+        redirectToLoginPageIfAuthRequired
+      );
     } catch (error) {
       log.error(
         `Something went wrong while making the form data request to ${httpUrl}`,
