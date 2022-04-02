@@ -74,7 +74,7 @@ const SearchVM = () => {
   const { data: datasets, error } = useSWR(
     `/v3/datasets?searchquery=${q}&pagesize=20&pagenum=1${queryParams}`,
     (url: string) =>
-      Http.get(url, { baseUrl: `${process.env.NEXT_PUBLIC_API_ROOT}` })
+      Http.get(url, { baseUrl: `${process.env.NEXT_PUBLIC_PUBLIC_API_ROOT}` })
         .catch((e) => {
           toast.error("Something went wrong while fetching search results");
           throw e;

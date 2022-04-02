@@ -11,10 +11,10 @@ import FavouriteDatasetItem from "./favourite_dataset_item";
 
 const FavouritesSection = () => {
   const { data: favouriteDatasets, error } = useSWR(
-    `${process.env.NEXT_PUBLIC_DASHBOARD_API_ROOT}/v1/users/favourites`,
+    `${process.env.NEXT_PUBLIC_WEBPORTAL_API_ROOT}/v1/users/favourites`,
     (url: string) =>
       Http.get("/v1/users/favourites", {
-        baseUrl: process.env.NEXT_PUBLIC_DASHBOARD_API_ROOT,
+        baseUrl: process.env.NEXT_PUBLIC_WEBPORTAL_API_ROOT,
       })
         .then((res) => Dataset.fromJsonList(res))
         .catch((e) => {

@@ -64,7 +64,7 @@ DatasetDetailPage.getInitialProps = async ({ query }: NextPageContext) => {
   try {
     const datasetId = query["id"];
     const datasetData = await Http.get(`/v3/datasets/${datasetId}`, {
-      baseUrl: process.env.NEXT_PUBLIC_API_ROOT,
+      baseUrl: process.env.NEXT_PUBLIC_PUBLIC_API_ROOT,
     });
     const dataset = Dataset.fromJson(
       datasetData[0]["user_search"][0]["results"][0]

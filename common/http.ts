@@ -93,9 +93,9 @@ function buildUrl(
   if (httpParams) httpParams = `?${httpParams}`;
   // const httpUrl = `${API.baseUrl}${url}${httpParams}`;
   const httpUrl = `${
-    baseUrl ? baseUrl : process.env.NEXT_PUBLIC_DASHBOARD_API_ROOT
+    baseUrl ? baseUrl : process.env.NEXT_PUBLIC_WEBPORTAL_API_ROOT
   }${url}`;
-  // const httpUrl = `${process.env.NEXT_PUBLIC_API_ROOT}${url}${httpParams}`;
+  // const httpUrl = `${process.env.NEXT_PUBLIC_PUBLIC_API_ROOT}${url}${httpParams}`;
   return `${httpUrl}${httpParams}`;
 }
 
