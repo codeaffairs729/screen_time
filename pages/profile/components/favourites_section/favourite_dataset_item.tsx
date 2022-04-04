@@ -5,7 +5,13 @@ import FavouriteBtn from "components/UI/buttons/favourite_btn";
 import Dataset from "models/dataset.model";
 import Link from "next/link";
 
-const FavouriteDatasetItem = ({ dataset }: { dataset: Dataset }) => {
+const FavouriteDatasetItem = ({
+  dataset,
+  onFavouriteSuccess,
+}: {
+  dataset: Dataset;
+  onFavouriteSuccess: () => void;
+}) => {
   return (
     <div className="flex border-t border-l border-r last:border-b">
       <div className="w-full p-2">
@@ -17,10 +23,15 @@ const FavouriteDatasetItem = ({ dataset }: { dataset: Dataset }) => {
           </Link>
         </h4>
         <DatasetDownload className="mb-2" dataset={dataset} />
-        <LabelledRow label="Data Owner">{dataset.owner.organisation}</LabelledRow>
+        <LabelledRow label="Data Owner">
+          {dataset.owner.organisation}
+        </LabelledRow>
       </div>
       <div className="border-l p-3 px-8 flex items-center justify-center">
-        <FavouriteBtn dataset={dataset} />
+        <FavouriteBtn
+          dataset={dataset}
+          onFavouriteSuccess={onFavouriteSuccess}
+        />
       </div>
     </div>
   );

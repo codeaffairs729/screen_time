@@ -13,16 +13,22 @@ import Loader from "../loader";
 const FavouriteBtn = ({
   className = "",
   dataset,
+  onFavouriteSuccess,
 }: {
   className?: string;
   dataset: Dataset;
-  onClick?: () => void;
+  onFavouriteSuccess?: () => void;
 }) => {
   const { handleFavourite, isFavourited, isHandlingFavourite, user } =
-    useFavouriteDataset(dataset);
+    useFavouriteDataset(dataset, onFavouriteSuccess);
 
   return (
-    <div className="inline-block" data-tip={!user ? "Please login to add this dataset to your favourites" : null}>
+    <div
+      className="inline-block"
+      data-tip={
+        !user ? "Please login to add this dataset to your favourites" : null
+      }
+    >
       <button
         aria-label="Favoruite dataset"
         onClick={handleFavourite}
@@ -50,7 +56,10 @@ const FavouriteBtn = ({
 /**
  * Favourite a dataset
  */
-const useFavouriteDataset = (dataset: Dataset) => {
+const useFavouriteDataset = (
+  dataset: Dataset,
+  onFavouriteSuccess?: () => void
+) => {
   const user = useSelector((state: RootState) => state.auth.user);
   const [isFavourited, setIsFavourited] = useState(dataset.detail.isFavourited);
   const { execute: executeHandleFavourite, isLoading: isHandlingFavourite } =
@@ -72,6 +81,7 @@ const useFavouriteDataset = (dataset: Dataset) => {
       },
       {
         onError: (res) => toast.error("Something went wrong while favouriting"),
+        onSuccess: (res) => onFavouriteSuccess?.(),
       }
     );
   return {

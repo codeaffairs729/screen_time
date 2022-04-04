@@ -13,6 +13,9 @@ export const getHttpErrorMsg = async (
 ): Promise<string> => {
   try {
     const body = await errorRes.response.json();
+    if(Array.isArray(body["detail"])){// TODO: handle array of array messages
+      throw new Error("Error message cannot be an array");
+    }
     return body["detail"];
   } catch (error) {
     log.error(error);

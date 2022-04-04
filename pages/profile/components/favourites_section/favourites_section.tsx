@@ -5,18 +5,22 @@ import InfoAlert from "components/UI/alerts/info_alert";
 import Loader from "components/UI/loader";
 import Dataset from "models/dataset.model";
 import toast from "react-hot-toast";
-import useSWR from "swr";
+import useSWR, { useSWRConfig } from "swr";
 import FavouritesSectionContainer from "./favourites_section_container";
 import FavouriteDatasetItem from "./favourite_dataset_item";
 
 const FavouritesSection = () => {
+  const { mutate } = useSWRConfig();
+  const favEndpoint = `${process.env.NEXT_PUBLIC_WEBPORTAL_API_ROOT}/v1/users/favourites`;
   const { data: favouriteDatasets, error } = useSWR(
-    `${process.env.NEXT_PUBLIC_WEBPORTAL_API_ROOT}/v1/users/favourites`,
+    favEndpoint,
     (url: string) =>
       Http.get("/v1/users/favourites", {
         baseUrl: process.env.NEXT_PUBLIC_WEBPORTAL_API_ROOT,
       })
-        .then((res) => Dataset.fromJsonList(res))
+        .then((res) => {
+          return Dataset.fromJsonList(res);
+        })
         .catch((e) => {
           toast.error("Something went wrong while fetching favourites");
           throw e;
@@ -58,7 +62,11 @@ const FavouritesSection = () => {
           <InfoAlert message="No favourites found" className="mt-1" />
         )}
         {favouriteDatasets?.map((dataset, i) => (
-          <FavouriteDatasetItem key={i} dataset={dataset} />
+          <FavouriteDatasetItem
+            key={dataset.id}
+            dataset={dataset}
+            onFavouriteSuccess={() => mutate(favEndpoint)}
+          />
         ))}
       </div>
     </FavouritesSectionContainer>
