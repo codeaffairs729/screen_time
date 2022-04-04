@@ -37,7 +37,7 @@ const FeedbackSection = () => {
             datasetId={id as string}
           />
           <span className="text-sm text-gray-500 font-medium ml-1">
-            {dataset?.detail.likes}
+            {dataset?.detail.dislikes}
           </span>
         </div>
       </div>
