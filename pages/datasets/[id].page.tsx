@@ -12,6 +12,8 @@ import ErrorAlert from "components/UI/alerts/error_alert";
 import MayAlsoLike from "./components/may_also_like";
 import BackBtn from "components/UI/buttons/back_btn";
 import log from "common/logger";
+import { getCookieFromServer } from "common/utils/cookie.util";
+import { AUTH_TOKEN } from "common/constants/cookie.key";
 
 const DatasetDetailPage = ({ dataset }: { dataset: Dataset | undefined }) => {
   if (!dataset) {
@@ -60,11 +62,16 @@ const DatasetDetailPage = ({ dataset }: { dataset: Dataset | undefined }) => {
   );
 };
 
-DatasetDetailPage.getInitialProps = async ({ query }: NextPageContext) => {
+DatasetDetailPage.getInitialProps = async ({ query, req }: NextPageContext) => {
   try {
     const datasetId = query["id"];
+    let authToken;
+    if (req?.headers.cookie) {
+      authToken = getCookieFromServer(AUTH_TOKEN, req);
+    }
     const datasetData = await Http.get(`/v3/datasets/${datasetId}`, {
       baseUrl: process.env.NEXT_PUBLIC_PUBLIC_API_ROOT,
+      extraHeaders: authToken ? { Authorization: `Bearer ${authToken}` } : {},
     });
     const dataset = Dataset.fromJson(
       datasetData[0]["user_search"][0]["results"][0]

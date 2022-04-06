@@ -22,24 +22,8 @@ const FeedbackSection = () => {
         <InfoIcon title="Add you feedback" className="ml-1" />
       </p>
       <div className="flex space-x-3 mb-3">
-        <div className="flex items-center">
-          <LikeBtn
-            isLiked={dataset?.detail?.isLiked ?? false}
-            datasetId={id as string}
-          />
-          <span className="text-sm text-gray-500 font-medium ml-1">
-            {dataset?.detail.likes}
-          </span>
-        </div>
-        <div className="flex items-center">
-          <DislikeBtn
-            isDisliked={dataset?.detail?.isDisliked ?? false}
-            datasetId={id as string}
-          />
-          <span className="text-sm text-gray-500 font-medium ml-1">
-            {dataset?.detail.dislikes}
-          </span>
-        </div>
+        <LikeBtn dataset={dataset} />
+        <DislikeBtn dataset={dataset} />
       </div>
       <FeedbackForm />
       <PurposeForm />
