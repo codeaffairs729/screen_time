@@ -40,7 +40,10 @@ const SummarySection = () => {
         label="Contact Owner"
         className="bg-dtech-secondary-light w-32 mb-2"
         onClick={() => {
-          const email = vm.dataset?.owner.contact.email;
+          let email = vm.dataset?.owner.contact.email;
+          if ((email?.search(/^mailto:/) ?? -1) > -1) {
+            email = email?.slice(7);
+          }
           const subject =
             "Enquiry about a dataset from a Dtime detechtive user";
           const body = `Dataset: ${vm.dataset?.detail.name}`;
