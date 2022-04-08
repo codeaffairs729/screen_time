@@ -2,6 +2,7 @@
   "name": "dashboard_webclient",
   "private": true,
   "scripts": {
+    "startproxy": "lcp --proxyUrl https://dashboard-api-n6tgdvtqda-uc.a.run.app --port 8000 & lcp --proxyUrl https://api.dtechtive.dtime.ai --port 8001 & lcp --proxyUrl https://sent-api-n6tgdvtqda-uc.a.run.app --port 8002",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
