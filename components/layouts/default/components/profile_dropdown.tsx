@@ -14,7 +14,9 @@ const ProfileDropdown = () => {
     <Menu as="div" className="relative inline-block text-left ml-2">
       <Menu.Button aria-label="profile dropdown button" className="w-10">
         <Image
-          src="/images/icons/profile/guest_Icon.svg"
+          src={`/images/icons/profile/${
+            user ? "signedin_icon" : "guest_Icon"
+          }.svg`}
           width="40"
           height="40"
           alt="profile dropdown"
@@ -32,19 +34,24 @@ const ProfileDropdown = () => {
         <Menu.Items className="absolute z-30 right-0 w-56 origin-top-right bg-white shadow-lg overflow-hidden border border-dtech-secondary-light">
           {user && (
             <>
+              <span className="text-sm font-medium mx-2 mt-2 mb-2 block">
+                {user.name}
+              </span>
               <MenuItem label="My Profile" link="/profile" />
               <MenuItem label="Log out" onClick={() => AuthService.logout()} />
             </>
           )}
           {!user && (
             <>
-              <span className="text-sm font-medium mx-2 mt-2 -mb-2 block">Hi,</span>
-              <span className="text-xs text-gray-600 mx-2">
+              <span className="text-sm font-medium mx-2 mt-2 mb-2 block">
+                Guest User
+              </span>
+              {/* <span className="text-xs text-gray-600 mx-2">
                 Log in or Create a new account
               </span>
               <br />
               <MenuItem label="Sign In" link="/signin" />
-              <MenuItem label="Sign Up" link="/signup" />
+              <MenuItem label="Sign Up" link="/signup" /> */}
             </>
           )}
         </Menu.Items>
