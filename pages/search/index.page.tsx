@@ -4,6 +4,7 @@ import ResultTable from "./components/result_table";
 import Sidebar from "./components/sidebar/sidebar";
 import SortbyField from "./components/sortby_field";
 import SearchVM, { SearchVMContext } from "./search.vm";
+import Pagination from "components/UI/pagination";
 
 const SearchPage = () => {
   const vm = SearchVM();
@@ -25,6 +26,11 @@ const SearchPage = () => {
               <SortbyField />
             </div>
             <ResultTable />
+            <Pagination
+              currentPageNo={vm.currentPageNo}
+              setCurrentPageNo={vm.setCurrentPageNo}
+              totalPages={vm.totalPages}
+            />
           </div>
         </div>
       </SearchVMContext.Provider>

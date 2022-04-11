@@ -33,7 +33,9 @@ const SearchVM = () => {
 
   const [activeFilter, setActiveFilter] = useState<Filter>({});
   const [queryParams, setQueryParams] = useState<string>("");
-
+  const [currentPageNo, setCurrentPageNo] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [pageSize, setPageSize] = useState(20);
   /**
    * Update the query params on updating any filter
    */
@@ -72,16 +74,22 @@ const SearchVM = () => {
    * TODO: convert searchquery, pagenum and pagesize to
    */
   const { data: datasets, error } = useSWR(
-    `/v3/datasets?searchquery=${q}&pagesize=20&pagenum=1${queryParams}`,
+    `/v3/datasets?searchquery=${q}&pagesize=${pageSize}&pagenum=${currentPageNo}${queryParams}`,
     (url: string) =>
       Http.get(url, { baseUrl: `${process.env.NEXT_PUBLIC_PUBLIC_API_ROOT}` })
         .catch((e) => {
           toast.error("Something went wrong while fetching search results");
           throw e;
         })
-        .then((res) =>
-          Dataset.fromJsonList(res[0]["user_search"][0]["results"].slice(0, 10))
-        )
+        .then((res) => {
+          setCurrentPageNo(res[0]["user_search"][0]["pagenum"]);
+          setTotalPages(
+            Math.ceil(res[0]["user_search"][0]["total"] / pageSize)
+          );
+          return Dataset.fromJsonList(
+            res[0]["user_search"][0]["results"].slice(0, 10)
+          );
+        })
         .then((datasets) => {
           updateDisplayCount(datasets.map((d) => d.id));
           return datasets;
@@ -108,6 +116,9 @@ const SearchVM = () => {
     onSearchChange,
     activeFilter,
     setActiveFilter,
+    currentPageNo,
+    setCurrentPageNo,
+    totalPages,
   };
 };
 
@@ -118,6 +129,9 @@ interface ISearchVMContext {
   onSearchChange: Function;
   activeFilter: Filter;
   setActiveFilter: Function;
+  currentPageNo: number;
+  setCurrentPageNo: (pageNo: number) => void;
+  totalPages: number;
 }
 
 export default SearchVM;
