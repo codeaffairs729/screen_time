@@ -1,20 +1,39 @@
 import Http from "common/http";
 import Dataset from "models/dataset.model";
-import { createContext, useEffect } from "react";
+import {
+  createContext,
+  SetStateAction,
+  useEffect,
+  useState,
+  Dispatch,
+} from "react";
 import useSWR from "swr";
 
-const DatasetDetailVM = (dataset: Dataset | undefined) => {
+const DatasetDetailVM = (initialDataset: Dataset | undefined) => {
+  const [dataset, setDataset] = useState(initialDataset);
+
   useEffect(() => {
-    if (dataset) {
+    if (dataset?.id) {
       Http.post(`/v1/datasets/${dataset.id}/views`); // Increment view count on visiting dataset detail page
     }
-  }, [dataset]);
+  }, [dataset?.id]);
 
-  return { dataset };
+  useEffect(()=>{
+    
+    console.log('dataset vm', dataset);
+    
+  }, [dataset]);
+  
+  return { dataset, setDataset };
 };
 
-export const DatasetDetailVMContext = createContext<{
+interface IDatasetDetailVMContext {
   dataset: Dataset | undefined;
-}>({ dataset: undefined });
+  setDataset: Dispatch<SetStateAction<Dataset | undefined>>;
+}
+
+export const DatasetDetailVMContext = createContext<IDatasetDetailVMContext>(
+  {} as IDatasetDetailVMContext
+);
 
 export default DatasetDetailVM;
