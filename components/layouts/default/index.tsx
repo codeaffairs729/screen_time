@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import clsx from "clsx";
 import Nav from "./components/nav";
+import Footer from "./components/footer";
 
 const DefaultLayout = ({
   children,
@@ -14,9 +15,15 @@ const DefaultLayout = ({
   navContent?: ReactNode;
 }) => {
   return (
-    <div className={clsx("w-full min-h-screen max-w-site mx-auto", className)}>
-      <Nav showLogo={showLogo}  content={navContent} />
+    <div
+      className={clsx(
+        "w-full min-h-screen max-w-site mx-auto flex flex-col",
+        className
+      )}
+    >
+      <Nav showLogo={showLogo} content={navContent} />
       {children}
+      <Footer className="mt-auto" />
     </div>
   );
 };

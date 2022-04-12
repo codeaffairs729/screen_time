@@ -29,7 +29,7 @@ const SigninPage = () => {
             </a>
           </Link>
         </div>
-        <div className="grow flex flex-col items-center justify-center pb-8">
+        <div className="grow flex flex-col items-center justify-center">
           {vm.signinErrorMsg && (
             <ErrorAlert
               message={vm.signinErrorMsg}
@@ -80,13 +80,6 @@ const SigninPage = () => {
               onClick={vm.form.handleSubmit(vm.performLogin)}
             />
           </div>
-        </div>
-        <div className="text-center pb-4">
-          <Link href="/data-privacy-policy">
-            <a className="text-sm underline text-gray-600">
-              Data privacy policy
-            </a>
-          </Link>
         </div>
       </div>
     </DefaultLayout>

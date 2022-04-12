@@ -28,7 +28,7 @@ const SigninPage = () => {
             />
           </span>
         </div>
-        <div className="grow flex flex-col items-center justify-center pb-8">
+        <div className="grow flex flex-col items-center justify-center">
           {vm.signupErrorMsg && (
             <ErrorAlert
               message={vm.signupErrorMsg}
@@ -178,13 +178,6 @@ const SigninPage = () => {
               onClick={vm.form.handleSubmit(vm.handleSignup)}
             />
           </div>
-        </div>
-        <div className="text-center pb-4">
-          <Link href="/data-privacy-policy">
-            <a className="text-sm underline text-gray-600">
-              Data privacy policy
-            </a>
-          </Link>
         </div>
       </div>
     </DefaultLayout>
