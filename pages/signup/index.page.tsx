@@ -17,7 +17,7 @@ const SigninPage = () => {
     <DefaultLayout>
       <div className="h-[calc(100vh-var(--nav-height))] flex flex-col justify-between">
         <div className="text-center mt-8 mb-4">
-          <h1 className="font-semibold text-lg">Sign up</h1>
+          <h1 className="font-semibold text-lg">Sign Up</h1>
           <span className="inline-flex space-x-1">
             <i className="mr-1 text-sm underline">
               Why should you create an account?

@@ -38,7 +38,7 @@ const ProfileDropdown = () => {
                 {user.name}
               </span>
               <MenuItem label="My Profile" link="/profile" />
-              <MenuItem label="Log out" onClick={() => AuthService.logout()} />
+              <MenuItem label="Log Out" onClick={() => AuthService.logout()} />
             </>
           )}
           {!user && (
@@ -50,7 +50,7 @@ const ProfileDropdown = () => {
                 Log in or Create a new account
               </span>
               <br />
-              <MenuItem label="Sign In" link="/signin" />
+              <MenuItem label="Log In" link="/login" />
               <MenuItem label="Sign Up" link="/signup" /> */}
             </>
           )}

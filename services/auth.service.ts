@@ -34,7 +34,7 @@ class AuthService {
    * delete cookie
    * redirect user to signin page
    */
-  static async logout(redirectUrl = '/signin') {
+  static async logout(redirectUrl = '/login') {
     const store = initializeStore();
     store.dispatch(logoutUser());
     deleteCookie(AUTH_TOKEN);

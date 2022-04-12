@@ -52,7 +52,7 @@ const checkAuthentication = (ctx: NextPageContext): void => {
 
   // If user is authenticated and user is on register or login page then
   // redirect back to home
-  if (ctx.pathname === "/signin" || ctx.pathname === "/signup") {
+  if (ctx.pathname === "/login" || ctx.pathname === "/signup") {
     if (userIsAuthenticated) {
       redirectUser(ctx, "/");
     } else {
@@ -62,14 +62,14 @@ const checkAuthentication = (ctx: NextPageContext): void => {
 
   // if (
   //   userIsAuthenticated &&
-  //   (ctx.resolvedUrl === "/signin" || ctx.resolvedUrl === "/signup")
+  //   (ctx.resolvedUrl === "/login" || ctx.resolvedUrl === "/signup")
   // ) {
   //   // No home page at '/home', hence redirect to dashboard if signed in
   //   redirectUser(ctx, "/dashboard/home");
   // }
   // If user is not authenticated then redirect user to login page
   if (!userIsAuthenticated) {
-    redirectUser(ctx, "/signin");
+    redirectUser(ctx, "/login");
   }
 };
 

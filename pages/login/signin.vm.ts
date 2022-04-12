@@ -24,7 +24,7 @@ const SigninVM = () => {
     executePerformLogin(
       () => {
         setSigninErrorMsg(null);
-        return Http.post(`/v1/users/signin`, data);
+        return Http.post(`/v1/users/login`, data);
       },
       {
         onSuccess: (res) =>

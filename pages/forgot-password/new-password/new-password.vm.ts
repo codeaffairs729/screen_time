@@ -28,9 +28,9 @@ const NewPasswordVM = () => {
       {
         onSuccess: (res) => {
           toast.success(
-            "Successfully reset your password; You may now sign in with your new password"
+            "Successfully reset your password; You may now log in with your new password"
           );
-          router.push("/signin");
+          router.push("/login");
         },
         onError: async (error: any) =>
           setResetErrorMsg(await getHttpErrorMsg(error)),
