@@ -43,7 +43,7 @@ const SortbyField = () => {
   }, [activeOption]);
 
   return (
-    <div className="w-56 ml-auto mr-2 mb-2">
+    <div className="mr-2 mb-2">
       <Menu as="div" className="relative inline-block text-left">
         {({ open }) => (
           <>

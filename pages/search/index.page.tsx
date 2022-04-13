@@ -22,15 +22,15 @@ const SearchPage = () => {
         <div className="flex">
           <Sidebar className="w-40 shrink-0" />
           <div className="overflow-x-auto w-full">
-            <div className="text-right">
+            <div className="flex items-center justify-between w-full">
+              <Pagination
+                currentPageNo={vm.currentPageNo}
+                setCurrentPageNo={vm.setCurrentPageNo}
+                totalPages={vm.totalPages}
+              />
               <SortbyField />
             </div>
             <ResultTable />
-            <Pagination
-              currentPageNo={vm.currentPageNo}
-              setCurrentPageNo={vm.setCurrentPageNo}
-              totalPages={vm.totalPages}
-            />
           </div>
         </div>
       </SearchVMContext.Provider>

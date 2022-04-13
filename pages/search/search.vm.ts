@@ -97,7 +97,7 @@ const SearchVM = () => {
         .catch((e) => {
           throw e;
         }),
-    // { revalidateOnFocus: false }
+    { revalidateOnFocus: false }
   );
 
   /**
