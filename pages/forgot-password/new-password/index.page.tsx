@@ -38,7 +38,26 @@ const ForgotPasswordPage = () => {
               formControl={{
                 control: vm.form.control,
                 name: "password",
-                rules: { required: "Password is required" },
+                rules: {
+                  validate: (val: string) => {
+                    if (val.length < 8) {
+                      return "Password should be atleast of length 8.";
+                    }
+                    if (val.search(/[A-Z]/) < 0) {
+                      return "Password should contain atleast 1 uppercase character.";
+                    }
+                    if (val.search(/[0-9]/) < 0) {
+                      return "Password should contain atleast 1 number.";
+                    }
+                    if (
+                      val.search(
+                        /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/
+                      )
+                    ) {
+                      return "Password should contain atleast 1 special character.";
+                    }
+                  },
+                },
               }}
               placeholder="Password"
               type="password"
