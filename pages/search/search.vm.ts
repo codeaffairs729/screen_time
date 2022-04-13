@@ -31,8 +31,10 @@ const SearchVM = () => {
 
   const dispatch = useDispatch();
 
-  const [activeFilter, setActiveFilter] = useState<Filter>({});
-  const [queryParams, setQueryParams] = useState<string>("");
+  const [activeFilter, setActiveFilter] = useState<Filter>({
+    sort_by: ["relevance"],
+  });
+  const [queryParams, setQueryParams] = useState<string>("&sort_by=relevance");
   const [currentPageNo, setCurrentPageNo] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [pageSize, setPageSize] = useState(20);

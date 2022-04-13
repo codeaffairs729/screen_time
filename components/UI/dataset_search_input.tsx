@@ -20,17 +20,17 @@ const DatasetSearchInput = ({
     () =>
       debounce(async (inputValue: string) => {
         if (!inputValue) return;
-        // const res = await Http.get<{ generated_text: string }[]>("", {
-        //   baseUrl: `${process.env.NEXT_PUBLIC_SENTIMENT_API_ROOT}/completion/${inputValue}`,
-        // });
-        // return res.map((t) => ({
-        //   value: t["generated_text"],
-        //   label: t["generated_text"],
-        // }));
-        return [
-          { label: "covid", value: "covid" },
-          { label: "health", value: "health" },
-        ];
+        const res = await Http.get<[]>("", {
+          baseUrl: `${process.env.NEXT_PUBLIC_SENTIMENT_API_ROOT}/completion/${inputValue}`,
+        });
+        return res.map((t) => ({
+          value: t[0],
+          label: t[0],
+        }));
+        // return [
+        //   { label: "covid", value: "covid" },
+        //   { label: "health", value: "health" },
+        // ];
       }, 500),
     []
   );

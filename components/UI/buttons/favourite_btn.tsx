@@ -3,7 +3,7 @@ import { useHttpCall } from "common/hooks";
 import Http from "common/http";
 import Dataset from "models/dataset.model";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 import ReactTooltip from "react-tooltip";
@@ -62,15 +62,14 @@ const useFavouriteDataset = (
 ) => {
   const user = useSelector((state: RootState) => state.auth.user);
   const [isFavourited, setIsFavourited] = useState(dataset.detail.isFavourited);
+  useEffect(()=>{
+    setIsFavourited(dataset.detail.isFavourited);
+  }, [dataset]);
   const { execute: executeHandleFavourite, isLoading: isHandlingFavourite } =
     useHttpCall();
   const handleFavourite = () =>
     executeHandleFavourite(
       async () => {
-        // if(!user){
-        //   toast.
-        //   return;
-        // }
         if (!isFavourited) {
           const res = await Http.put(`/v1/datasets/${dataset.id}/favourite`);
           setIsFavourited(true);

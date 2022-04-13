@@ -24,7 +24,8 @@ const FavouritesSection = () => {
         .catch((e) => {
           toast.error("Something went wrong while fetching favourites");
           throw e;
-        })
+        }),
+    { revalidateOnFocus: false }
   );
 
   const isFetchingFavourites = !favouriteDatasets && !error;
