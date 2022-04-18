@@ -5,7 +5,7 @@ const BackBtn = () => {
   const router = useRouter();
 
   return (
-    <button onClick={router.back} className="flex items-center justify-center m-1">
+    <button onClick={router.back} className="inline-flex items-center m-1 whitespace-nowrap">
       <Image
         src="/images/icons/arrows/up_arrow.svg"
         className="-rotate-90"

@@ -54,7 +54,7 @@ const ProfilePage = () => {
               className="mb-2"
             />
             <HeaderValue
-              header="Data Owner"
+              header="Data owner"
               value={user.isDataOwner ? "Yes" : "No"}
               className="mb-2"
             />

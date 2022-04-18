@@ -5,11 +5,18 @@ import PrimaryBtn from "components/UI/form/primary_btn";
 import StarRating from "components/UI/star_rating";
 import LabelledRow from "components/dataset/labelled_row";
 import DatasetDownload from "components/dataset/dataset_download";
+import ReactTooltip from "react-tooltip";
+import isEmail from "validator/lib/isEmail";
 
 const SummarySection = () => {
   const vm = useContext(DatasetDetailVMContext);
   if (!vm.dataset) {
     return <div />;
+  }
+
+  let contactOwnerEmail = vm.dataset?.owner.contact.email;
+  if ((contactOwnerEmail?.search(/^mailto:/) ?? -1) > -1) {
+    contactOwnerEmail = contactOwnerEmail?.slice(7);
   }
 
   return (
@@ -36,23 +43,30 @@ const SummarySection = () => {
       <LabelledRow className="mb-1.5" label="Data Owner">
         {vm.dataset.owner.organisation}
       </LabelledRow>
-      <PrimaryBtn
-        label="Contact Owner"
-        className="bg-dtech-secondary-light w-32 mb-2"
-        onClick={() => {
-          let email = vm.dataset?.owner.contact.email;
-          if ((email?.search(/^mailto:/) ?? -1) > -1) {
-            email = email?.slice(7);
-          }
-          const subject =
-            "Enquiry about a dataset from a Dtime detechtive user";
-          const body = `Dataset: ${vm.dataset?.detail.name}`;
-          window.open(
-            `mailto:${email}?subject=${subject}&body=${body}`,
-            "_blank"
-          );
-        }}
-      />
+      <div
+        className="inline-block"
+        data-tip={
+          !isEmail(contactOwnerEmail)
+            ? "Data owner contact information not available"
+            : undefined
+        }
+      >
+        <PrimaryBtn
+          label="Contact Owner"
+          isDisabled={!isEmail(contactOwnerEmail)}
+          className="bg-dtech-secondary-light w-32 mb-2"
+          onClick={() => {
+            const subject =
+              "Enquiry about a dataset from a Dtime detechtive user";
+            const body = `Dataset: ${vm.dataset?.detail.name}`;
+            window.open(
+              `mailto:${contactOwnerEmail}?subject=${subject}&body=${body}`,
+              "_blank"
+            );
+          }}
+        />
+      </div>
+      <ReactTooltip uuid="dtechtive-feedbackform-tooltip" />
       <LabelledRow
         className="mb-1.5"
         label="Tags"

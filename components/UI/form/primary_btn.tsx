@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import ReactTooltip from "react-tooltip";
 import Loader from "../loader";
 
 const PrimaryBtn = ({
