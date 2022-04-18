@@ -29,7 +29,7 @@ const Footer = ({ className = "" }: { className?: string }) => {
             />
             <FooterSocialMediaItem
               icon={<FaTwitter />}
-              link="https://www.twitter.com/"
+              link="https://twitter.com/dtime_ai"
             />
           </div>
         </div>
