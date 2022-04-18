@@ -1,6 +1,9 @@
 import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
+import { FaLinkedinIn, FaTwitter } from "react-icons/fa";
+import FooterLink from "./components/footer_link";
+import FooterSocialMediaItem from "./components/footer_social_media_item";
 
 const Footer = ({ className = "" }: { className?: string }) => {
   return (
@@ -18,6 +21,17 @@ const Footer = ({ className = "" }: { className?: string }) => {
               />
             </a>
           </Link>
+          <h5 className="text-sm font-light mb-0.5 text-gray-800">Follow us on</h5>
+          <div className="flex space-x-2">
+            <FooterSocialMediaItem
+              icon={<FaLinkedinIn />}
+              link="https://www.linkedin.com/company/dtime-ai/"
+            />
+            <FooterSocialMediaItem
+              icon={<FaTwitter />}
+              link="https://www.twitter.com/"
+            />
+          </div>
         </div>
         <div className="flex flex-col m-4 space-y-1.5">
           <FooterLink label="FAQs" href="/faq" />
@@ -54,35 +68,6 @@ const Footer = ({ className = "" }: { className?: string }) => {
       </div>
     </footer>
   );
-};
-
-const FooterLink = ({
-  label,
-  href,
-  onClick,
-}: {
-  label: string;
-  href?: string;
-  onClick?: () => void;
-}) => {
-  const content = (
-    <span className="text-dtech-primary-dark underline text-sm">{label}</span>
-  );
-  if (onClick) {
-    return (
-      <button className="text-left" onClick={onClick}>
-        {content}
-      </button>
-    );
-  }
-  if (href) {
-    return (
-      <Link href={href}>
-        <a>{content}</a>
-      </Link>
-    );
-  }
-  throw new Error("Footer Link requires either href or onclick");
 };
 
 export default Footer;
