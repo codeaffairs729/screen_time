@@ -11,17 +11,41 @@ const Footer = ({ className = "" }: { className?: string }) => {
       <hr className="mx-8 my-4" />
       <div className="flex justify-between sm:mx-4">
         <div>
-          <Link href="/">
-            <a className="block max-w-[200px] p-2.5">
+          <Link href="https://dtime.ai/">
+            <a className="block max-w-[100px]" target="_blank" rel="noreferrer">
               <Image
-                src="/images/logo_notagline.png"
-                width="1000"
-                height="250"
+                src="/images/dtime_logo.png"
+                width="2501"
+                height="942"
                 alt="Dtechtive logo"
               />
             </a>
           </Link>
-          <h5 className="text-sm font-light mb-0.5 text-gray-800">Follow us on</h5>
+          <span className="text-sm font-light mb-0.5 text-gray-800 block">
+            Visit our website{" "}
+            <a
+              target="_blank"
+              rel="noreferrer"
+              href="https://dtime.ai/"
+              className="underline hover:text-dtech-secondary-dark"
+            >
+              dtime.ai
+            </a>
+          </span>
+          <span className="text-sm font-light mb-0.5 text-gray-800 block">
+            Email us at{" "}
+            <a
+              target="_blank"
+              rel="noreferrer"
+              href="mailto:contact@dtime.ai"
+              className="underline hover:text-dtech-secondary-dark"
+            >
+              contact@dtime.ai
+            </a>
+          </span>
+          <h5 className="text-sm font-light mb-0.5 text-gray-800 mt-5">
+            Follow us on
+          </h5>
           <div className="flex space-x-2">
             <FooterSocialMediaItem
               icon={<FaLinkedinIn />}
@@ -52,9 +76,9 @@ const Footer = ({ className = "" }: { className?: string }) => {
             label="Report a Problem"
             onClick={() => {
               const email = "dtechtive@dtime.ai";
-              const subject = "";
-              const body =
+              const subject =
                 "Reporting a problem with the dtecthtive data search portal";
+              const body = "";
               window.open(
                 `mailto:${email}?subject=${subject}&body=${body}`,
                 "_blank"
