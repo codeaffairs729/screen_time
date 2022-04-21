@@ -35,7 +35,7 @@ const SearchVM = () => {
     sort_by: ["relevance"],
   });
   const [queryParams, setQueryParams] = useState<string>("&sort_by=relevance");
-  const [currentPageNo, setCurrentPageNo] = useState(4);
+  const [currentPageNo, setCurrentPageNo] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [pageSize, setPageSize] = useState(20);
   /**
