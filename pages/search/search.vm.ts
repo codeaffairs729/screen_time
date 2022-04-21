@@ -35,7 +35,7 @@ const SearchVM = () => {
     sort_by: ["relevance"],
   });
   const [queryParams, setQueryParams] = useState<string>("&sort_by=relevance");
-  const [currentPageNo, setCurrentPageNo] = useState(1);
+  const [currentPageNo, setCurrentPageNo] = useState(4);
   const [totalPages, setTotalPages] = useState(1);
   const [pageSize, setPageSize] = useState(20);
   /**
@@ -68,6 +68,7 @@ const SearchVM = () => {
   const onSearchChange = (option: SingleValue<SearchOption>) => {
     if (!option) return;
     dispatch(updateCache("last-search-query", option.value));
+    setCurrentPageNo(1);
     router.push({ pathname: "/search", query: { q: option.value } });
   };
 
