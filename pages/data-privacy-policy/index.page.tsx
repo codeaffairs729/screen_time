@@ -22,10 +22,11 @@ const DataPrivacyPolicy = () => {
           When you browse the site, your <Bold>IP address</Bold> is collected
           and cookies are used to monitor your session. Additionally, if you
           register as a user you will be required to provide your{" "}
-          <Bold>name</Bold>, <Bold>email address</Bold>, <Bold>organisation</Bold> and <Bold>role</Bold>.
-          This information is used purely for the purposes of maintaining the
-          portal, improving it based on how you use it, and notifying users of
-          any changes or service interruptions.
+          <Bold>name</Bold>, <Bold>email address</Bold>,{" "}
+          <Bold>organisation</Bold> and <Bold>role</Bold>. This information is
+          used purely for the purposes of maintaining the portal, improving it
+          based on how you use it, and notifying users of any changes or service
+          interruptions.
         </P>
         <P>
           We will not share your information with other organisations for
@@ -52,8 +53,9 @@ const DataPrivacyPolicy = () => {
           </a>{" "}
           or{" "}
           <a
-            href="cookies.insites.com"
+            href="https://cookies.insites.com/"
             target="_blank"
+            rel="noreferrer"
             className="text-dtech-secondary-light hover:underline"
           >
             cookies.insites.com
