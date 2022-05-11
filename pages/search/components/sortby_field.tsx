@@ -44,7 +44,7 @@ const SortbyField = () => {
 
   return (
     <div className="mr-2 mb-2">
-      <Menu as="div" className="relative inline-block text-left">
+      <Menu id="sortby-dropdown" as="div" className="relative inline-block text-left">
         {({ open }) => (
           <>
             <Menu.Button className="flex justify-center items-center space-x-1 rounded w-full px-3 pr-1.5 py-0.5 text-xs font-semibold text-white bg-dtech-secondary-light">
@@ -64,7 +64,9 @@ const SortbyField = () => {
               leaveFrom="transform opacity-100 scale-100"
               leaveTo="transform opacity-0 scale-95"
             >
-              <Menu.Items className="absolute z-10 right-0 w-48 mt-2 origin-top-right bg-white divide-y divide-gray-100 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none border border-dtech-secondary-light">
+              <Menu.Items
+                className="absolute z-10 right-0 w-48 mt-2 origin-top-right bg-white divide-y divide-gray-100 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none border border-dtech-secondary-light"
+              >
                 {options.map((o) => (
                   <MenuItem
                     key={o.value}

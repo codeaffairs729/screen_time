@@ -31,7 +31,7 @@ const ProfileDropdown = () => {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="absolute z-30 right-0 w-56 origin-top-right bg-white shadow-lg overflow-hidden border border-dtech-secondary-light">
+        <Menu.Items aria-label="profile dropdown menu" className="absolute z-30 right-0 w-56 origin-top-right bg-white shadow-lg overflow-hidden border border-dtech-secondary-light">
           {user && (
             <>
               <span className="text-sm font-medium mx-2 mt-2 mb-2 block">
