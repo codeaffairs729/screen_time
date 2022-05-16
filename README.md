@@ -1,34 +1,39 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [tailwindcss](https://tailwindcss.com/).
 
-## Getting Started
 
-First, run the development server:
+## Local dev
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+1. Copy and rename `.env.example` to `.env`
+2. Fill the `.env` file with appropriate values
+3. Run `npm run dev`
+
+Since the frontend depends on multiple api services, to make the standalone frontend dev easier we can communicate with the currently deployed api services by:
+1. Install https://www.npmjs.com/package/local-cors-proxy
+2. For env variable api root in the `.env` append '/proxy' to the end; for eg `NEXT_PUBLIC_PUBLIC_API_ROOT=http://127.0.0.1:8001/proxy`
+3. Run `npm run startproxy` 
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## Architecture
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+Each page will be contained within its own folder. This page folder will usually contain a `<pagename>.page.tsx`(view), `<pagename>.vm.tsx`(view model) and a `components` folder for all the page specific components (the root `components` folder would only contain components that are used across the web app. This is roughly based on the MVVM(Model View View Model) architecture. We aim to have `<pagename>.page.tsx` containing only the UI as much as possible separated from the business logic and `<pagename>.vm.tsx` would contain all the business logic.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+### Folder structure
 
-## Learn More
+The general folder structure remains same as the default nextjs folder structure.
+- `/components`: all the global components used throughout the webapp
+- `/common`: common utilities
+- `/store`: redux store
+- `/models`: js classes which represents the json data the frontend recieves via the apis; the `vm` would usually parse the json from the api to a model instance
+- `/services`: services eg Authentication service which handles authentication related functionality
+### Naming convention
 
-To learn more about Next.js, take a look at the following resources:
+- filenames are camel_cased
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Code Formating
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+ - Eslint (not sure, but I believe eslint and its code formatting rules comes as part of the default nextjs installation; and I use the vscode `ctrl+shift+i` command to format the code; I also have eslint plugin installed on my vscode; will update this section).
 
-## Deploy on Vercel
+ ## Deployment/CICD
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+ The project is deployed using google cloud run(containerized deployments). We have gitlab CICD setup so that every commit pushed results in a new docker image build which is deployed.
