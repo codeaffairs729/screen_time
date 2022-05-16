@@ -20,10 +20,7 @@ const RegisterDataSourcePage = () => {
           <h1 className="font-semibold text-lg">Register a Data Source</h1>
           <span className="inline-flex space-x-1">
             <i className="mr-1 text-sm underline">Need help?</i>{" "}
-            <InfoIcon
-              className="ml-1"
-              title="Register a new data source"
-            />
+            <InfoIcon className="ml-1" title="Register a new data source" />
           </span>
         </div>
         <div className="grow md:flex md:space-x-6 justify-center max-w-site mx-auto">
@@ -33,18 +30,18 @@ const RegisterDataSourcePage = () => {
                 className="w-60"
                 formControl={{
                   control: vm.form.control,
-                  name: "source_url",
+                  name: "site_url",
                   rules: { required: "URL is required" },
                 }}
                 placeholder=""
               />
             </FormRow>
-            <FormRow label="Organisation">
+            <FormRow label="Organisation" required={true}>
               <TextField
                 className="w-60"
                 formControl={{
                   control: vm.form.control,
-                  name: "source_org",
+                  name: "site_name",
                   rules: { required: "Organisation is required" },
                 }}
                 placeholder=""
@@ -62,13 +59,23 @@ const RegisterDataSourcePage = () => {
               />
             </FormRow>
             <FormRow label="Metadata availability">
-              <TextField
+              <DropdownField
                 className="w-60"
                 formControl={{
                   control: vm.form.control,
-                  name: "metadata_availability",
-                  rules: {},
+                  name: "metadata_exists",
+                  rules: { required: "Metadata availability is required" },
                 }}
+                options={[
+                  {
+                    value: true,
+                    label: "Yes",
+                  },
+                  {
+                    value: false,
+                    label: "No",
+                  },
+                ]}
                 placeholder=""
               />
             </FormRow>
@@ -77,16 +84,16 @@ const RegisterDataSourcePage = () => {
                 className="w-60"
                 formControl={{
                   control: vm.form.control,
-                  name: "sitemap_availability",
+                  name: "sitemap_exists",
                   rules: {},
                 }}
                 options={[
                   {
-                    value: "yes",
+                    value: true,
                     label: "Yes",
                   },
                   {
-                    value: "no",
+                    value: false,
                     label: "No",
                   },
                 ]}
@@ -98,7 +105,7 @@ const RegisterDataSourcePage = () => {
                 className="w-60"
                 formControl={{
                   control: vm.form.control,
-                  name: "sitemap",
+                  name: "sitemap_url",
                   rules: {},
                 }}
                 placeholder=""
@@ -116,12 +123,44 @@ const RegisterDataSourcePage = () => {
                 }}
                 options={[
                   {
+                    value: "once",
+                    label: "Once",
+                  },
+                  {
+                    value: "adhoc",
+                    label: "Adhoc",
+                  },
+                  {
+                    value: "within-day",
+                    label: "Within a day",
+                  },
+                  {
+                    value: "daily",
+                    label: "Daily",
+                  },
+                  {
+                    value: "weekly",
+                    label: "Weekly",
+                  },
+                  {
                     value: "monthly",
                     label: "Monthly",
                   },
                   {
-                    value: "yearly",
-                    label: "Yearly",
+                    value: "quaterly",
+                    label: "Quaterly",
+                  },
+                  {
+                    value: "semi-annual",
+                    label: "Semi annual",
+                  },
+                  {
+                    value: "annual",
+                    label: "Annual",
+                  },
+                  {
+                    value: "multi-year",
+                    label: "Multi year",
                   },
                 ]}
                 placeholder=""
@@ -132,7 +171,7 @@ const RegisterDataSourcePage = () => {
                 className="w-60"
                 formControl={{
                   control: vm.form.control,
-                  name: "contact_person",
+                  name: "contact_name",
                   rules: {},
                 }}
                 placeholder=""
@@ -144,7 +183,7 @@ const RegisterDataSourcePage = () => {
                 type="email"
                 formControl={{
                   control: vm.form.control,
-                  name: "email",
+                  name: "contact_email",
                   rules: {
                     required: "Email is required",
                     validate: (val: string) => {
@@ -156,12 +195,16 @@ const RegisterDataSourcePage = () => {
                 }}
               />
             </FormRow>
-            <FormRow label="Sitemap" isTwoRow={true} className="flex-col">
+            <FormRow
+              label="Comments & Feedback"
+              isTwoRow={true}
+              className="flex-col"
+            >
               <TextField
                 type="textarea"
                 formControl={{
                   control: vm.form.control,
-                  name: "comments",
+                  name: "comment",
                   rules: {},
                 }}
               />
