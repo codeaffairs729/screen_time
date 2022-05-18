@@ -14,7 +14,7 @@ const RegisterDataSourceVM = () => {
   const registerDataSource = (data: any) => {
     const sanitizedValues = pickBy(data, (value) => value.length > 0);
     executeRegisterDataSource(
-      () => Http.post("/v1/data_sources", sanitizedValues),
+      () => Http.post("/v1/data_sources/", sanitizedValues),
       {
         onSuccess: (res) =>
           toast.success("The data source was successfully added."),
