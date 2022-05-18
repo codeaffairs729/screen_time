@@ -7,6 +7,7 @@ import Link from "next/link";
 import { useWatch } from "react-hook-form";
 import FormRow from "./components/form_row";
 import isEmail from "validator/lib/isEmail";
+import isURL from "validator/lib/isURL";
 import ErrorAlert from "components/UI/alerts/error_alert";
 import RegisterDataSourceVM from "./register_data_source.vm";
 
@@ -31,7 +32,14 @@ const RegisterDataSourcePage = () => {
                 formControl={{
                   control: vm.form.control,
                   name: "site_url",
-                  rules: { required: "URL is required" },
+                  rules: {
+                    required: "URL is required",
+                    validate: (val: string) => {
+                      if (!isURL(val)) {
+                        return "Please enter a valid url";
+                      }
+                    },
+                  },
                 }}
                 placeholder=""
               />
@@ -63,17 +71,22 @@ const RegisterDataSourcePage = () => {
                 className="w-60"
                 formControl={{
                   control: vm.form.control,
-                  name: "metadata_exists",
-                  rules: { required: "Metadata availability is required" },
+                  name: "metadata_level",
+                  rules: {},
+                  defaultValue: "nil",
                 }}
                 options={[
                   {
-                    value: true,
-                    label: "Yes",
+                    value: "full",
+                    label: "Full",
                   },
                   {
-                    value: false,
-                    label: "No",
+                    value: "partial",
+                    label: "Partial",
+                  },
+                  {
+                    value: "nil",
+                    label: "Nil",
                   },
                 ]}
                 placeholder=""
@@ -185,9 +198,8 @@ const RegisterDataSourcePage = () => {
                   control: vm.form.control,
                   name: "contact_email",
                   rules: {
-                    required: "Email is required",
                     validate: (val: string) => {
-                      if (!isEmail(val)) {
+                      if (val && !isEmail(val)) {
                         return "Please enter a valid email";
                       }
                     },

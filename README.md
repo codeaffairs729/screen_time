@@ -1,6 +1,5 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [tailwindcss](https://tailwindcss.com/).
 
-
 ## Local dev
 
 1. Copy and rename `.env.example` to `.env`
@@ -8,9 +7,10 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 3. Run `npm run dev`
 
 Since the frontend depends on multiple api services, to make the standalone frontend dev easier we can communicate with the currently deployed api services by:
+
 1. Install https://www.npmjs.com/package/local-cors-proxy
 2. For env variable api root in the `.env` append '/proxy' to the end; for eg `NEXT_PUBLIC_PUBLIC_API_ROOT=http://127.0.0.1:8001/proxy`
-3. Run `npm run startproxy` 
+3. Run `npm run startproxy`
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
@@ -21,19 +21,21 @@ Each page will be contained within its own folder. This page folder will usually
 ### Folder structure
 
 The general folder structure remains same as the default nextjs folder structure.
+
 - `/components`: all the global components used throughout the webapp
 - `/common`: common utilities
 - `/store`: redux store
 - `/models`: js classes which represents the json data the frontend recieves via the apis; the `vm` would usually parse the json from the api to a model instance
 - `/services`: services eg Authentication service which handles authentication related functionality
+
 ### Naming convention
 
 - filenames are camel_cased
 
 ## Code Formating
 
- - Eslint (not sure, but I believe eslint and its code formatting rules comes as part of the default nextjs installation; and I use the vscode `ctrl+shift+i` command to format the code; I also have eslint plugin installed on my vscode; will update this section).
+- Eslint (not sure, but I believe eslint and its code formatting rules comes as part of the default nextjs installation; and I use the vscode `ctrl+shift+i` command to format the code; I also have eslint plugin installed on my vscode; will update this section).
 
- ## Deployment/CICD
+## Deployment/CICD
 
- The project is deployed using google cloud run(containerized deployments). We have gitlab CICD setup so that every commit pushed results in a new docker image build which is deployed.
+The project is deployed using google cloud run(containerized deployments). We have gitlab CICD setup so that every commit pushed results in a new docker image build which is deployed.
