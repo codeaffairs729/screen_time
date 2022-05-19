@@ -77,7 +77,9 @@ const SearchVM = () => {
    * TODO: convert searchquery, pagenum and pagesize to
    */
   const { data: datasets, error } = useSWR(
-    `/v3/datasets?searchquery=${q}&pagesize=${pageSize}&pagenum=${currentPageNo}${queryParams}`,
+    q
+      ? `/v3/datasets?searchquery=${q}&pagesize=${pageSize}&pagenum=${currentPageNo}${queryParams}`
+      : null,
     (url: string) =>
       Http.get(url, { baseUrl: `${process.env.NEXT_PUBLIC_PUBLIC_API_ROOT}` })
         .catch((e) => {

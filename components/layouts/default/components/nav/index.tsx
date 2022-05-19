@@ -5,7 +5,8 @@ import { useRouter } from "next/router";
 import { ReactNode } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "store";
-import ProfileDropdown from "./profile_dropdown";
+import NavMenuDropdown from "./components/nav_menu_dropdown";
+import ProfileDropdown from "./components/profile_dropdown";
 
 const Nav = ({
   content,
@@ -33,6 +34,16 @@ const Nav = ({
       {content}
       <div className="ml-auto flex items-center">
         <NavItem label="Home" link="/" />
+        <NavMenuDropdown label="User contributions" menuItems={[
+          {
+            label: "Data Source Registration",
+            link: "/register-data-source"
+          },
+          {
+            label: "Domain Vocabulary Generator",
+            link: "/thesaurus"
+          },
+        ]}/>
         <NavItem
           label="API"
           link="https://api.dtechtive.dtime.ai/docs"
