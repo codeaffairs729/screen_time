@@ -23,7 +23,7 @@ const FilterOwner = () => {
   }, [vm.datasets]);
 
   const { register, fields } = useSearchFilter({
-    name: "owner",
+    name: "org",
     filterOptionItems,
   });
 
@@ -43,7 +43,7 @@ const FilterOwner = () => {
         fields.map((field, i) => (
           <FilterCheckboxField
             key={field.id}
-            register={register(`owner.${i}.checkbox`)}
+            register={register(`org.${i}.checkbox`)}
             label={field.value}
             value={field.value}
             defaultChecked={!!field.checkbox}

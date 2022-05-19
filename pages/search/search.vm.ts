@@ -17,7 +17,7 @@ export type Filter = {
   topic?: string[];
   last_update?: string[];
   file_type?: string[];
-  owner?: string[];
+  org?: string[];
   license?: string[];
   quality?: string[];
   sort_by?: string[];
