@@ -51,7 +51,7 @@ const NavMenuDropdown = ({
       >
         <Menu.Items
           aria-label="profile dropdown menu"
-          className="absolute z-30 right-0 w-56 origin-top-right bg-white shadow-lg overflow-hidden border border-dtech-secondary-light"
+          className="absolute z-30 left-0 w-56 origin-top-right bg-white shadow-lg overflow-hidden border border-dtech-secondary-light"
         >
           {menuItems.map((m, i) => (
             <MenuItem key={i} {...m} />
