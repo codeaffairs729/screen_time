@@ -21,6 +21,13 @@ export const useScript = (url: string) => {
   }, [url]);
 };
 
+// useHttpCall isLoading state data that can be used for showing loading icon, error state data to show the error, data ?,
+// and the execute function itself that is the function to execute with the backend API.
+
+// The execute Fucntion, takes in a httpFn, a request or so, and also takes in onSuccess Func to give instruction for when 
+// success in requestion, onError Func on when caught an error, what to do. and postProcess Func what to do with the return data. 
+
+
 export const useHttpCall = <T>(initial: any = null) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<any>(null);
