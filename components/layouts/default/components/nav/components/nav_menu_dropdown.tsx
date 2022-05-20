@@ -25,7 +25,7 @@ const NavMenuDropdown = ({
 }) => {
   const router = useRouter();
   const currentRoute = router.pathname;
-  const usCurrentRoute = menuItems
+  const isCurrentRoute = menuItems
     .map((m) => m.link)
     .filter((l) => l)
     .includes(currentRoute);
@@ -35,7 +35,7 @@ const NavMenuDropdown = ({
       <Menu.Button
         className={clsx(
           "font-semibold text-sm text-gray-600 m-3 hover:text-dtech-secondary-dark whitespace-nowrap underline-offset-4 decoration-dtech-secondary-dark decoration-4",
-          { underline: usCurrentRoute }
+          { underline: isCurrentRoute }
         )}
       >
         {label}
@@ -51,7 +51,7 @@ const NavMenuDropdown = ({
       >
         <Menu.Items
           aria-label="profile dropdown menu"
-          className="absolute z-30 left-0 w-56 origin-top-right bg-white shadow-lg overflow-hidden border border-dtech-secondary-light"
+          className="absolute z-30 left-0 w-56 origin-top-right bg-white shadow-lg overflow-hidden border"
         >
           {menuItems.map((m, i) => (
             <MenuItem key={i} {...m} />
@@ -63,12 +63,17 @@ const NavMenuDropdown = ({
 };
 
 const MenuItem = ({ label, link, onClick }: MenuItemType) => {
+  const router = useRouter();
+  const currentRoute = router.pathname;
+
   if (onClick) {
     return (
       <Menu.Item>
         <button
           className={clsx(
-            "hover:text-dtech-primary-dark block px-2.5 py-2 text-sm font-semibold text-gray-500"
+            "hover:text-dtech-primary-dark block px-2.5 py-2 text-sm font-semibold text-gray-500 underline-offset-2 decoration-2 decoration-dtech-secondary-dark",
+          { underline: currentRoute == link }
+
           )}
           onClick={onClick}
         >
@@ -83,7 +88,9 @@ const MenuItem = ({ label, link, onClick }: MenuItemType) => {
         <Link href={link}>
           <a
             className={clsx(
-              "hover:text-dtech-primary-dark block px-2.5 py-2 text-sm font-semibold text-gray-500"
+              "hover:text-dtech-primary-dark block px-2.5 py-2 text-sm font-semibold text-gray-500 underline-offset-2 decoration-2 decoration-dtech-secondary-dark",
+          { underline: currentRoute == link }
+
             )}
           >
             {label}
