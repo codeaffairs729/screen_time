@@ -36,7 +36,7 @@ const NavMenuDropdown = ({
         className={clsx(
           "font-semibold text-sm text-gray-600 m-3 hover:text-dtech-secondary-dark whitespace-nowrap underline-offset-4 decoration-dtech-secondary-dark decoration-4",
           { underline: isCurrentRoute }
-        )}
+        )  }
       >
         {label}
       </Menu.Button>
@@ -51,7 +51,7 @@ const NavMenuDropdown = ({
       >
         <Menu.Items
           aria-label="profile dropdown menu"
-          className="absolute z-30 left-0 w-56 origin-top-right bg-white shadow-lg overflow-hidden border"
+          className="absolute z-30 left-0 w-56 origin-top-right bg-white bg-opacity-50 backdrop-blur-sm rounded shadow-lg overflow-hidden border"
         >
           {menuItems.map((m, i) => (
             <MenuItem key={i} {...m} />
