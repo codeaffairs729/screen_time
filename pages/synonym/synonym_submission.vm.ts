@@ -2,14 +2,34 @@ import { useHttpCall } from "common/hooks";
 import Http from "common/http";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { useSelector } from "react-redux";
-import { RootState } from "store";
-import ErrorAlert from "components/UI/alerts/error_alert";
 
-const SubmitSynonymVM = () => {
+// Function to find the duplicates
+const toFindDuplicates = (arr: string[]) =>
+    arr.filter((item, index) => arr.indexOf(item) !== index);
+
+function checkDuplicate(submitSynonyms: any) {
+    // Validation for duplicate input
+    var validity = true;
+    const lowerSynonyms: string[] = [];
+    Object.keys(submitSynonyms).forEach((key, idx) => {
+        if (submitSynonyms[key]) {
+            lowerSynonyms.push(submitSynonyms[key].toLowerCase());
+        }
+    });
+    const duplicatesSynonyms = toFindDuplicates(lowerSynonyms);
+    if (duplicatesSynonyms.length != 0) {
+        validity = false;
+    }
+    return validity;
+}
+
+const SubmitSynonymVM = (
+    user: any,
+    keyword: string,
+    activeDomain: string,
+    setKeyword: (arg0: string) => void
+) => {
     const form = useForm();
-
-    const user = useSelector((state: RootState) => state.auth.user);
 
     // use the API for submitting the synonym
     const {
@@ -17,20 +37,36 @@ const SubmitSynonymVM = () => {
         isLoading: isSubmittingSynonymKeyword,
     } = useHttpCall();
     const submitSynonymKeyword = (data: any) => {
-        console.log(data, "Submit Synonym");
-        console.log(user);
+        // Validation for duplicate input
+        if (checkDuplicate(data)) {
+            executeSubmitSynonym(
+                () =>
+                    Http.post(
+                        `/add?domain=${activeDomain}`,
+                        {
+                            ...data,
+                            keyword: keyword,
+                            user_id: user.email,
+                        },
+                        {
+                            baseUrl: "http://127.0.0.1:8000/api",
+                        }
+                    ),
+                {
+                    onSuccess: (res) => {
+                        console.log(res);
+                        setKeyword(res.keyword);
+                    },
+                    onError: (e) =>
+                        toast.error(
+                            "Something went wrong while adding the data source."
+                        ),
+                }
+            );
+        } else {
+            toast.error("Duplicates in synonym entries not allowed.");
+        }
     };
-    // executeSubmitSynonym(
-    //     () => Http.post("/v1/datasets/data_sources", data),
-    //     {
-    //         onSuccess: (res) =>
-    //             toast.success("The data source was successfully added."),
-    //         onError: (e) =>
-    //             toast.error(
-    //                 "Something went wrong while adding the data source."
-    //             ),
-    //     }
-    // );
 
     return { form, submitSynonymKeyword, isSubmittingSynonymKeyword };
 };

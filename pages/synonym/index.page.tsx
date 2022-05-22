@@ -10,25 +10,37 @@ import WordDisplay from "./components/word_display";
 import { useSelector } from "react-redux";
 import { RootState } from "store";
 import SubmitSynonymVM from "./synonym_submission.vm";
-import PageLoadVM from "./initial_load.vm";
+import PageLoadVM from "./page_load.vm";
 import NewKeywordVM from "./new_keyword.vm";
 import FlagKeywordVM from "./flag_keyword.vm";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import DomainDropdown from "./components/domain_dropdown";
 
 const KeywordSynonym = () => {
     const user = useSelector((state: RootState) => state.auth.user);
-    const [pageLoadState, setPageLoadState] = useState(true);
-    const [domainOptions, setDomainOptions] = useState([
-        "health",
-        "environment",
-        "general",
-    ]);
-    const [activeDomain, setActiveDomain] = useState(domainOptions[0]);
-    const submit_synonym_vm = SubmitSynonymVM();
-    const page_load_vm = PageLoadVM();
-    const new_keyword_vm = NewKeywordVM();
-    const flag_keyword_vm = FlagKeywordVM();
+    const [keyword, setKeyword] = useState("general");
+    const [keywordDomains, setKeywordDomains] = useState(["general"]);
+    const [activeDomain, setActiveDomain] = useState(keywordDomains[0]);
+    const {
+        form: ss_vm_form,
+        submitSynonymKeyword,
+        isSubmittingSynonymKeyword,
+    } = SubmitSynonymVM(user, keyword, activeDomain, setKeyword);
+    const { isPageLoading } = PageLoadVM(
+        setKeyword,
+        setKeywordDomains,
+        setActiveDomain
+    );
+    const { fetchNewKeyword, isFetchingNewkeyword } = NewKeywordVM(
+        activeDomain,
+        setKeyword
+    );
+    const { registerFlagKeyword, isFlaggingKeyword } = FlagKeywordVM(
+        user,
+        keyword,
+        activeDomain,
+        setKeyword
+    );
 
     if (!user) {
         return (
@@ -36,30 +48,21 @@ const KeywordSynonym = () => {
         );
     }
 
-    const handleChangeDomain = (d: string) => {
-        setActiveDomain(d);
-    };
-
-    const handleSkipKeyword = () => {
-        console.log("skip");
-    };
-
-    const handleFlagKeyword = () => {
-        console.log("flag");
-    };
-
     return (
         <DefaultLayout>
             <div className="h-[calc(100vh-var(--nav-height))] flex flex-col">
                 <div className="text-center">
                     <DomainDropdown
-                        items={domainOptions}
+                        items={keywordDomains}
                         activeItem={activeDomain}
-                        changeFunc={(d) => handleChangeDomain(d)}
+                        changeFunc={(d) => {
+                            setActiveDomain(d);
+                            fetchNewKeyword();
+                        }}
                     />
                     <WordDisplay
-                        keyword="Rubella"
-                        skipFunc={handleSkipKeyword}
+                        keyword={keyword}
+                        skipFunc={() => fetchNewKeyword()}
                     />
 
                     <span className="mt-4 space-x-3">
@@ -68,7 +71,7 @@ const KeywordSynonym = () => {
                         </i>{" "}
                         <button
                             className="ml-5 mr-1 mt-0.5 text-2xl text-gray-500"
-                            onClick={handleFlagKeyword}
+                            onClick={() => registerFlagKeyword()}
                         >
                             &#9872;
                         </button>{" "}
@@ -83,9 +86,16 @@ const KeywordSynonym = () => {
                         <TextField
                             className="w-60"
                             formControl={{
-                                control: submit_synonym_vm.form.control,
+                                control: ss_vm_form.control,
                                 name: "synonym_1",
-                                rules: {},
+                                rules: {
+                                    required:
+                                        "At least 1 synonym must be entered.",
+                                    pattern: {
+                                        value: /^([^0-9#$£]*)$/,
+                                        message: "Contins illegal chatacters.",
+                                    },
+                                },
                             }}
                             placeholder="Enter synonym..."
                             type="text"
@@ -95,9 +105,14 @@ const KeywordSynonym = () => {
                         <TextField
                             className="w-60"
                             formControl={{
-                                control: submit_synonym_vm.form.control,
+                                control: ss_vm_form.control,
                                 name: "synonym_2",
-                                rules: {},
+                                rules: {
+                                    pattern: {
+                                        value: /^([^0-9#$£]*)$/,
+                                        message: "Contins illegal chatacters.",
+                                    },
+                                },
                             }}
                             placeholder="Enter synonym..."
                             type="text"
@@ -107,9 +122,14 @@ const KeywordSynonym = () => {
                         <TextField
                             className="w-60"
                             formControl={{
-                                control: submit_synonym_vm.form.control,
+                                control: ss_vm_form.control,
                                 name: "synonym_3",
-                                rules: {},
+                                rules: {
+                                    pattern: {
+                                        value: /^([^0-9#$£]*)$/,
+                                        message: "Contins illegal chatacters.",
+                                    },
+                                },
                             }}
                             placeholder="Enter synonym..."
                             type="text"
@@ -118,10 +138,8 @@ const KeywordSynonym = () => {
                     <PrimaryBtn
                         className="mt-8 bg-dtech-primary-dark max-w-[150px]"
                         label="Submit"
-                        isLoading={submit_synonym_vm.isSubmittingSynonymKeyword}
-                        onClick={submit_synonym_vm.form.handleSubmit(
-                            submit_synonym_vm.submitSynonymKeyword
-                        )}
+                        isLoading={isSubmittingSynonymKeyword}
+                        onClick={ss_vm_form.handleSubmit(submitSynonymKeyword)}
                     />
                 </div>
             </div>

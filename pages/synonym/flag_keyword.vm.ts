@@ -1,26 +1,44 @@
 import { useHttpCall } from "common/hooks";
 import Http from "common/http";
-import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
-const FlagKeywordVM = () => {
-    const form = useForm();
-    // use the API for flagging the keyword.
+const FlagKeywordVM = (
+    user: any,
+    keyword: string,
+    activeDomain: string,
+    setKeyword: (arg0: string) => void
+) => {
     const { execute: executeFlagKeyword, isLoading: isFlaggingKeyword } =
         useHttpCall();
-    const registerFlagKeyword = (data: any) => {
-        console.log(data, "FlagKeyword VM");
+    const registerFlagKeyword = () => {
+        executeFlagKeyword(
+            () =>
+                Http.post(
+                    `/flag?domain=${activeDomain}`,
+                    {
+                        keyword: keyword,
+                        user_id: user.email,
+                        keyword_domain_name: activeDomain,
+                    },
+                    {
+                        baseUrl: "http://127.0.0.1:8000/api",
+                    }
+                ),
+            {
+                onSuccess: (res) => {
+                    console.log(res);
+                    setKeyword(res.keyword);
+                    toast.success("The keyword has been flagged.");
+                },
+                onError: (e) =>
+                    toast.error(
+                        "Something went wrong while adding the data source."
+                    ),
+            }
+        );
     };
-    // executeFlagKeyword(() => Http.post("/v1/API", data), {
-    //     onSuccess: (res) =>
-    //         toast.success("The keyword has been flagged."),
-    //     onError: (e) =>
-    //         toast.error(
-    //             "Something went wrong while adding the data source."
-    //         ),
-    // });
 
-    return { form, registerFlagKeyword, isFlaggingKeyword };
+    return { registerFlagKeyword, isFlaggingKeyword };
 };
 
 export default FlagKeywordVM;

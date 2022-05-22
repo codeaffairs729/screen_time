@@ -16,11 +16,8 @@ type Props = {
 
 const WordDisplay = ({ keyword, skipFunc }: Props) => {
     return (
-        <div
-            className="mt-10 text-3xl font-bold text-black text-center"
-            onClick={skipFunc}
-        >
-            &ldquo;{keyword}&rdquo;
+        <div className="mt-10 text-3xl font-bold text-black text-center">
+            <span onClick={skipFunc}>&ldquo;{keyword}&rdquo;</span>
         </div>
     );
 };
