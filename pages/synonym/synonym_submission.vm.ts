@@ -39,14 +39,21 @@ const SubmitSynonymVM = (
     const submitSynonymKeyword = (data: any) => {
         // Validation for duplicate input
         if (checkDuplicate(data)) {
+            var user_synonyms: any[] = [];
+            for (const [key, value] of Object.entries(data)) {
+                if (value !== "") {
+                    user_synonyms.push(value);
+                }
+            }
             executeSubmitSynonym(
                 () =>
                     Http.post(
                         `/add?domain=${activeDomain}`,
                         {
-                            ...data,
                             keyword: keyword,
+                            keyword_domain_name: activeDomain,
                             user_id: user.email,
+                            user_synonyms: user_synonyms,
                         },
                         {
                             baseUrl: "http://127.0.0.1:8000/api",
