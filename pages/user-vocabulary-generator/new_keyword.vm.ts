@@ -12,12 +12,9 @@ const NewKeywordVM = (
     const fetchNewKeyword = () => {
         executeFetchNewKeyword(
             () =>
-                Http.get(`/random?domain=${activeDomain}`, {
-                    baseUrl: "http://127.0.0.1:8000/api",
-                }),
+                Http.get(`/v1/user-vocabulary-generator/random?domain=${activeDomain}`),
             {
                 onSuccess: (res) => {
-                    console.log(res);
                     setKeyword(res.keyword);
                 },
                 onError: (e) =>

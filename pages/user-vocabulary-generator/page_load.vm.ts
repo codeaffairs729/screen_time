@@ -18,12 +18,9 @@ const PageLoadVM = (
     const fetchPageLoad = () => {
         executePageLoad(
             () =>
-                Http.get("/onload", {
-                    baseUrl: "http://127.0.0.1:8000/api",
-                }),
+                Http.get("/v1/user-vocabulary-generator/onload"),
             {
                 onSuccess: (res) => {
-                    console.log(res);
                     setKeyword(res.keyword);
                     setKeywordDomains(res.keyword_domains);
                     setActiveDomain(res.default_domain);

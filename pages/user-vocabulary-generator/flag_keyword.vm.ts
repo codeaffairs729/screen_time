@@ -14,19 +14,15 @@ const FlagKeywordVM = (
         executeFlagKeyword(
             () =>
                 Http.post(
-                    `/flag?domain=${activeDomain}`,
+                    `/v1/user-vocabulary-generator/flag?domain=${activeDomain}`,
                     {
                         keyword: keyword,
                         user_id: user.email,
                         keyword_domain_name: activeDomain,
-                    },
-                    {
-                        baseUrl: "http://127.0.0.1:8000/api",
                     }
                 ),
             {
                 onSuccess: (res) => {
-                    console.log(res);
                     setKeyword(res.keyword);
                     toast.success("The keyword has been flagged.");
                 },

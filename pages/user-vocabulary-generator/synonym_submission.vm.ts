@@ -47,21 +47,14 @@ const SubmitSynonymVM = (
             }
             executeSubmitSynonym(
                 () =>
-                    Http.post(
-                        `/add?domain=${activeDomain}`,
-                        {
-                            keyword: keyword,
-                            keyword_domain_name: activeDomain,
-                            user_id: user.email,
-                            user_synonyms: user_synonyms,
-                        },
-                        {
-                            baseUrl: "http://127.0.0.1:8000/api",
-                        }
-                    ),
+                    Http.post(`/v1/user-vocabulary-generator/add?domain=${activeDomain}`, {
+                        keyword: keyword,
+                        keyword_domain_name: activeDomain,
+                        user_id: user.email,
+                        user_synonyms: user_synonyms,
+                    }),
                 {
                     onSuccess: (res) => {
-                        console.log(res);
                         setKeyword(res.keyword);
                     },
                     onError: (e) =>
