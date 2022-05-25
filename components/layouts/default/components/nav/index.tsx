@@ -41,7 +41,7 @@ const Nav = ({
           },
           {
             label: "Domain Vocabulary Generator",
-            link: "/thesaurus"
+            link: "/user-vocabulary-generator"
           },
         ]}/>
         <NavItem
