@@ -53,6 +53,7 @@ const DropdownField = ({
           onChange(o?.value);
           setSelected(o);
         }}
+        nullable
       >
         <div className="relative">
           <div className="relative w-full text-left bg-white rounded-lg cursor-default">
@@ -61,7 +62,7 @@ const DropdownField = ({
                 "w-full rounded-lg focus:ring-dtech-secondary-light border-2 border-dtech-secondary-light focus:border-dtech-secondary-light disabled:border-gray-300 disabled:bg-gray-50 py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 placeholder:text-gray-500 placeholder:text-sm placeholder:font-bold",
                 { "border-red-700": hasError }
               )}
-              displayValue={(option: Option) => option.label}
+              displayValue={(option: Option) => option?.label}
               onChange={(event) => setQuery(event.target.value)}
               placeholder={placeholder}
               name={name}
