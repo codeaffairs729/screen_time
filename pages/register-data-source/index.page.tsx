@@ -3,14 +3,11 @@ import InfoIcon from "components/UI/icons/info_icon";
 import DropdownField from "components/UI/form/dropdown_field";
 import PrimaryBtn from "components/UI/form/primary_btn";
 import TextField from "components/UI/form/text_field";
-import Link from "next/link";
-import { useWatch } from "react-hook-form";
 import FormRow from "./components/form_row";
 import isEmail from "validator/lib/isEmail";
 import isURL from "validator/lib/isURL";
 import ErrorAlert from "components/UI/alerts/error_alert";
 import RegisterDataSourceVM from "./register_data_source.vm";
-import { watch } from "fs";
 import withAuth from "common/HOCs/with_auth";
 import SuccessScreen from "./components/success_screen";
 
@@ -72,15 +69,6 @@ const RegisterDataSourcePage = () => {
                                 />
                             </FormRow>
                             <FormRow label="Domain">
-                                {/* <TextField
-                className="w-60"
-                formControl={{
-                  control: vm.form.control,
-                  name: "domain",
-                  rules: {},
-                }}
-                placeholder=""
-              /> */}
                                 <DropdownField
                                     className="w-60"
                                     formControl={{
