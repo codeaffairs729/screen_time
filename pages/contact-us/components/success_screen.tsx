@@ -12,7 +12,7 @@ const SuccessScreen = () => {
             </p>
             <PrimaryBtn
                 label="Return to Home"
-                className="bg-dtech-primary-dark w-32 mb-2 mx-auto mt-16"
+                className="bg-dtech-primary-dark max-w-[180px] mb-2 mx-auto mt-16"
                 onClick={() => router.replace("/")}
             />
         </div>

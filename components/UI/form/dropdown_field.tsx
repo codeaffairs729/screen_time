@@ -46,7 +46,7 @@ const DropdownField = ({
   const hasError = error && Object.keys(error).length > 0;
 
   return (
-    <div className={clsx(className)}>
+    <div className={clsx("w-full", className)}>
       <Combobox
         value={selected}
         onChange={(o) => {

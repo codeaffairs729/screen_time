@@ -6,12 +6,14 @@ import { FieldProps } from "common/type";
 type TextFieldProps = FieldProps & {
     type?: string;
     rows?: number;
+    textfieldClassName?: string;
 };
 
 const TextField = ({
     placeholder,
     type = "text",
     className = "",
+    textfieldClassName = "",
     disabled = false,
     rows = 3,
     formControl,
@@ -35,7 +37,8 @@ const TextField = ({
                     placeholder={placeholder}
                     className={clsx(
                         "block px-3 py-2 w-full text-sm appearance-none bg-transparent rounded-lg focus:ring-dtech-secondary-light border-2 border-dtech-secondary-light focus:border-dtech-secondary-light placeholder:text-gray-500 placeholder:text-sm placeholder:font-bold disabled:border-gray-300 disabled:bg-gray-50",
-                        { "border-red-700": hasError }
+                        { "border-red-700": hasError },
+                        textfieldClassName
                     )}
                     rows={rows}
                     {...register}
@@ -47,7 +50,8 @@ const TextField = ({
                     placeholder={placeholder}
                     className={clsx(
                         "block px-3 py-2 w-full text-sm appearance-none bg-transparent rounded-lg focus:ring-dtech-secondary-light border-2 border-dtech-secondary-light focus:border-dtech-secondary-light placeholder:text-gray-500 placeholder:text-sm placeholder:font-bold disabled:border-gray-300 disabled:bg-gray-50",
-                        { "border-red-700": hasError }
+                        { "border-red-700": hasError },
+                        textfieldClassName
                     )}
                     {...register}
                     disabled={disabled}

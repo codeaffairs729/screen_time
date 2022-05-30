@@ -2,7 +2,7 @@ import { useHttpCall } from "common/hooks";
 import Http from "common/http";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { pickBy } from "lodash";
+import { pickBy } from "lodash-es";
 import { useState } from "react";
 
 const RegisterDataSourceVM = () => {
@@ -15,7 +15,7 @@ const RegisterDataSourceVM = () => {
   } = useHttpCall();
   const registerDataSource = (data: any) => {
     const sanitizedValues = pickBy(data, (value) => value.length > 0);
-    executeRegisterDataSource(
+    return executeRegisterDataSource(
       () => Http.post("/v1/data_sources/", sanitizedValues),
       {
         onSuccess: (res) =>{

@@ -23,12 +23,12 @@ const ContactUsPage = () => {
                 </div>
                 {vm.isSubmissionSuccess && <SuccessScreen />}
                 {!vm.isSubmissionSuccess && (
-                    <>
-                        <div className="md:flex md:space-x-6 justify-center m-auto">
-                            <div className="">
+                    <div className="m-auto w-full">
+                        <div className="md:flex md:space-x-6 justify-center max-w-site w-full lg:px-[10%] px-4">
+                            <div className="w-full">
                                 <FormRow label="Your name" required={true}>
                                     <TextField
-                                        className="w-60"
+                                        className=""
                                         formControl={{
                                             control: vm.form.control,
                                             name: "name",
@@ -41,12 +41,13 @@ const ContactUsPage = () => {
                                 </FormRow>
                                 <FormRow label="Your Email" required={true}>
                                     <TextField
-                                        className="w-60"
+                                        className=""
                                         type="email"
                                         formControl={{
                                             control: vm.form.control,
                                             name: "email",
                                             rules: {
+                                                required: "Email is required",
                                                 validate: (val: string) => {
                                                     if (val && !isEmail(val)) {
                                                         return "Please enter a valid email";
@@ -57,36 +58,31 @@ const ContactUsPage = () => {
                                         placeholder=""
                                     />
                                 </FormRow>
-                                <FormRow label="Organisation" required={true}>
+                                <FormRow label="Organisation">
                                     <TextField
-                                        className="w-60"
+                                        className=""
                                         formControl={{
                                             control: vm.form.control,
                                             name: "organisation",
-                                            rules: {
-                                                required:
-                                                    "Organisation is required",
-                                            },
+                                            rules: {},
                                         }}
                                         placeholder=""
                                     />
                                 </FormRow>
-                                <FormRow label="Role" required={true}>
+                                <FormRow label="Role">
                                     <TextField
-                                        className="w-60"
+                                        className=""
                                         formControl={{
                                             control: vm.form.control,
                                             name: "role",
-                                            rules: {
-                                                required: "Role is required",
-                                            },
+                                            rules: {},
                                         }}
                                         placeholder=""
                                     />
                                 </FormRow>
                                 <FormRow label="Data Owner">
                                     <DropdownField
-                                        className="w-60"
+                                        className=""
                                         formControl={{
                                             control: vm.form.control,
                                             name: "data_owner",
@@ -106,18 +102,19 @@ const ContactUsPage = () => {
                                     />
                                 </FormRow>
                             </div>
-                            <div className="">
+                            <div className="w-full">
                                 <FormRow
                                     label="Message"
                                     isTwoRow={true}
-                                    className="flex-col"
+                                    className="flex-col h-full pb-3"
                                 >
                                     <TextField
                                         type="textarea"
-                                        className="w-[315px]"
+                                        className="w-[315px] h-full"
+                                        textfieldClassName="h-full"
                                         formControl={{
                                             control: vm.form.control,
-                                            name: "comment",
+                                            name: "message",
                                             rules: {},
                                         }}
                                     />
@@ -126,11 +123,11 @@ const ContactUsPage = () => {
                         </div>
                         <PrimaryBtn
                             label="Submit"
-                            className="bg-dtech-primary-dark w-32 my-4 mx-auto"
+                            className="bg-dtech-primary-dark max-w-[120px] my-4 mx-auto"
                             isLoading={vm.isSendingMail}
                             onClick={vm.form.handleSubmit(vm.sendEmail)}
                         />
-                    </>
+                    </div>
                 )}
             </div>
         </DefaultLayout>

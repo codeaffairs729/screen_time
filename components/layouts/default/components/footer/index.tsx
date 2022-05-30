@@ -61,15 +61,16 @@ const Footer = ({ className = "" }: { className?: string }) => {
           <FooterLink label="FAQs" href="/faq" />
           <FooterLink
             label="Contact Us"
-            onClick={() => {
-              const email = "dtechtive@dtime.ai";
-              const subject = "";
-              const body = "";
-              window.open(
-                `mailto:${email}?subject=${subject}&body=${body}`,
-                "_blank"
-              );
-            }}
+            // onClick={() => {
+            //   const email = "dtechtive@dtime.ai";
+            //   const subject = "";
+            //   const body = "";
+            //   window.open(
+            //     `mailto:${email}?subject=${subject}&body=${body}`,
+            //     "_blank"
+            //   );
+            // }}
+            href="/contact-us"
           />
           <FooterLink label="Privacy Policy" href="/data-privacy-policy" />
           <FooterLink
