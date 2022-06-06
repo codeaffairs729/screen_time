@@ -15,10 +15,12 @@ const FilterOwner = () => {
   >([]);
 
   useEffect(() => {
-    const owners = vm.datasets
-      ?.map((d) => d.owner.organisation)
-      .filter((owner, i, a) => a.indexOf(owner) == i)
-      .map((owner) => ({ value: owner, label: owner, checkbox: false }));
+    // const owners = vm.datasets
+    //   ?.map((d) => d.owner.organisation)
+    //   .filter((owner, i, a) => a.indexOf(owner) == i)
+    //   .map((owner) => ({ value: owner, label: owner, checkbox: false }));
+    // setFilterOptionItems(owners);
+    const owners = vm.filterOptions?.org?.map((owner) => ({ value: owner, label: owner, checkbox: false }));
     setFilterOptionItems(owners);
   }, [vm.datasets]);
 

@@ -107,15 +107,18 @@ const ContactUsPage = () => {
                                     label="Message"
                                     isTwoRow={true}
                                     className="flex-col h-full pb-3"
+                                    required={true}
                                 >
                                     <TextField
                                         type="textarea"
-                                        className="w-[315px] h-full"
+                                        className="h-full"
                                         textfieldClassName="h-full"
                                         formControl={{
                                             control: vm.form.control,
                                             name: "message",
-                                            rules: {},
+                                            rules: {
+                                                required: "Message is required",
+                                            },
                                         }}
                                     />
                                 </FormRow>
