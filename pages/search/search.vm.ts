@@ -98,7 +98,7 @@ const SearchVM = () => {
                     throw e;
                 })
                 .then((res) => {
-                    setCurrentPageNo(res[0]["user_search"][0]["pagenum"]);
+                    // setCurrentPageNo(res[0]["user_search"][0]["pagenum"]);
                     setTotalPages(
                         Math.ceil(res[0]["user_search"][0]["total"] / pageSize)
                     );
