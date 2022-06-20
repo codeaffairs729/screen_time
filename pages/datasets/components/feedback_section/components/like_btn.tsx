@@ -36,7 +36,6 @@ const LikeBtn = () => {
       {
         onSuccess: (res) => {
           const didLike = res["is_like"] !== undefined; // if the user performed like then response would contain 'is_like' property
-          console.log("like res", res);
 
           if (dataset) {
             console.log("like dataset before", dataset);
@@ -62,6 +61,7 @@ const LikeBtn = () => {
     <div className="flex items-center">
       <button
         data-tip="Like dataset"
+        data-selector="like-count-btn"
         className="h-7 w-7 flex items-center justify-center"
         onClick={performLike}
       >
@@ -79,7 +79,7 @@ const LikeBtn = () => {
         )}
         <ReactTooltip uuid="dtechtive-like-tooltip" />
       </button>
-      <span className="text-sm text-gray-500 font-medium ml-1">{likes}</span>
+      <span data-selector="like-count" className="text-sm text-gray-500 font-medium ml-1">{likes}</span>
     </div>
   );
 };
