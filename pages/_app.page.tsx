@@ -34,38 +34,46 @@ import { Toaster } from "react-hot-toast";
 import Loader from "components/UI/loader";
 
 function DtechtiveApp({ Component, pageProps }: AppProps) {
-  const store = useStore(pageProps.initialReduxState);
-  const persistor = persistStore(store, {}, function () {
-    persistor.persist();
-  });
+    const store = useStore(pageProps.initialReduxState);
+    const persistor = persistStore(store, {}, function () {
+        persistor.persist();
+    });
 
-  if (!(typeof window === "undefined")) {
-    const reduxVersion = 0.1;
-    const currentReduxVersion = Number(localStorage.getItem("reduxVersion"));
-    if (currentReduxVersion != reduxVersion) {
-      localStorage.setItem("reduxVersion", JSON.stringify(reduxVersion));
-      persistor.purge();
-      window.location.reload();
+    if (!(typeof window === "undefined")) {
+        const reduxVersion = 0.1;
+        const currentReduxVersion = Number(
+            localStorage.getItem("reduxVersion")
+        );
+        if (currentReduxVersion != reduxVersion) {
+            localStorage.setItem("reduxVersion", JSON.stringify(reduxVersion));
+            persistor.purge();
+            window.location.reload();
+        }
     }
-  }
 
-  return (
-    <>
-      <Provider store={store}>
-        <PersistGate
-          loading={
-            <div className="w-screen h-screen flex items-center justify-center">
-              <Loader />
-            </div>
-          }
-          persistor={persistor}
-        >
-          <Component {...pageProps} />
-          <Toaster position="bottom-center" reverseOrder={false} />
-        </PersistGate>
-      </Provider>
-    </>
-  );
+    return (
+        <>
+            <Provider store={store}>
+                <PersistGate
+                    loading={
+                        <div className="w-screen h-screen flex items-center justify-center">
+                            <Loader />
+                        </div>
+                    }
+                    persistor={persistor}
+                >
+                    <Component {...pageProps} />
+                    <Toaster
+                        position="bottom-center"
+                        reverseOrder={false}
+                        toastOptions={{
+                            className: "dtechtive-toast-container",
+                        }}
+                    />
+                </PersistGate>
+            </Provider>
+        </>
+    );
 }
 
 export default DtechtiveApp;
