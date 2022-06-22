@@ -3,6 +3,9 @@ import sequelize from "../database";
 
 const userData = {
     email: "johndoe@a.com",
+    password: "pass",
+    passwordHash:
+        "$2b$12$O99PkKPPIR8DNiM832P8r.9pU7nXV.557D.hxP5ZevRQqBz9r.H2a",
 };
 
 const metaDatasetData = {
@@ -16,10 +19,13 @@ const beforeData = {
 };
 let page: Page;
 
+/**
+ * Delete user and the users likes from the db
+ */
 const deleteUser = async () => {
     await sequelize.query(
         `
-        DELETE FROM meta_dataset_likes using users WHERE users.email ='johndoe@a.com' and users.id  = meta_dataset_likes.user_id;
+        DELETE FROM meta_dataset_likes using users WHERE users.email ='${userData["email"]}' and users.id  = meta_dataset_likes.user_id;
         `
     );
     await sequelize.query(
@@ -29,39 +35,28 @@ const deleteUser = async () => {
     );
 };
 
-test.describe("Like dataset", () => {
+test.describe("Like/Dislike dataset", () => {
     test.beforeAll(async ({ browser }) => {
         try {
             await deleteUser();
-            const [usersInsertResults, usersInsertMetadata] =
-                await sequelize.query(
-                    `
+            await sequelize.query(
+                `
                         INSERT INTO users (name, email, password, organisation, is_data_owner, role) 
-                        VALUES ('John Doe', '${userData["email"]}', 'pass', 'DTime', TRUE, 'developer');
+                        VALUES ('John Doe', '${userData["email"]}', '${userData["passwordHash"]}', 'DTime', TRUE, 'developer');
                     `
-                );
-            const [userResult, userMetadata] = await sequelize.query(
-                `
-                    SELECT * FROM users WHERE email='${userData["email"]}';
-                `
             );
-            user = (userResult as any)[0];
-            const [likeInsertResult, likeInsertMetadata] =
-                await sequelize.query(
-                    `
-                        INSERT INTO meta_dataset_likes (is_like, user_id, meta_dataset_id) 
-                        VALUES (TRUE, '${user["id"]}', '${metaDatasetData["id"]}');
-                    `
-                );
             page = await browser.newPage();
             console.log("DATABASE SETUP COMPLETED");
         } catch (error) {
             console.log("beforeAll error", error);
         }
     });
-    test("Like dataset before login", async () => {
-        await page.goto(`http://localhost:3000/datasets/1365`);
+    test("Test Setup", async () => {
+        await page.goto(
+            `http://localhost:3000/datasets/${metaDatasetData["id"]}`
+        );
         await page.locator('button:has-text("Feedback")').click();
+        // Check the like count (call this L) and dislike count (call this D)
         beforeData["likes"] = Number(
             await page.locator("span[data-selector='like-count']").innerText()
         );
@@ -84,26 +79,56 @@ test.describe("Like dataset", () => {
             )
         ).toBeVisible();
     });
-    test("Toggle like dataset after login", async () => {
+    test("Logged In User Like", async () => {
         // Login
         await Promise.all([
             page.waitForNavigation(/*{ url: 'http://localhost:3000/login' }*/),
             page.locator("text=Log In").click(),
         ]);
-        // await page.goto(`http://localhost:3000/login`);
-        await page.locator('[placeholder="Email"]').fill("a@a.com");
+        await page.locator('[placeholder="Email"]').fill(userData["email"]);
         await page.locator('[placeholder="Password"]').click();
-        await page.locator('[placeholder="Password"]').fill("pass");
+        await page
+            .locator('[placeholder="Password"]')
+            .fill(userData["password"]);
         await Promise.all([
-            page.waitForNavigation(/*{ url: 'http://localhost:3000/' }*/),
+            page.waitForResponse((response) => response.status() == 200),
+            //     `http://127.0.0.1:8000/proxy/v1/users/signin`
+            // ),
             page.locator('button:has-text("Log In")').click(),
         ]);
-        // Like
-        await page.goto(`http://localhost:3000/datasets/1365`);
+        // Navigate to like button
+        await page.goto(
+            `http://localhost:3000/datasets/${metaDatasetData["id"]}`
+        );
         await page.locator('button:has-text("Feedback")').click();
+        // EXPECTATION: "Like dataset" button is inactive
+        await expect(
+            page.locator(
+                "button[data-selector='like-btn'] img[data-selector='like_inactive']"
+            )
+        ).toHaveCount(1);
+        // EXPECTATION: Like count is L
+        const likes0 = Number(
+            await page.locator("span[data-selector='like-count']").innerText()
+        );
+        await expect(likes0).toEqual(beforeData["likes"]);
+        // EXPECTATION: "Dislike dataset" button is inactive
+        await expect(
+            page.locator(
+                "button[data-selector='dislike-btn'] img[data-selector='dislike_inactive']"
+            )
+        ).toHaveCount(1);
+        // EXPECTATION: Dislike count is D
+        const dislikes0 = Number(
+            await page
+                .locator("span[data-selector='dislike-count']")
+                .innerText()
+        );
+        await expect(dislikes0).toEqual(beforeData["dislikes"]);
+        // Click like
         await Promise.all([
             page.waitForResponse(
-                "http://127.0.0.1:8000/proxy/v1/datasets/1365/like"
+                `http://127.0.0.1:8000/proxy/v1/datasets/${metaDatasetData["id"]}/like`
             ),
             page.locator("button[data-selector='like-btn']").click(),
         ]);
@@ -118,12 +143,64 @@ test.describe("Like dataset", () => {
             await page.locator("span[data-selector='like-count']").innerText()
         );
         await expect(likes1).toEqual(beforeData["likes"] + 1);
+        // EXPECTATION: "Dislike dataset" button is inactive
+        await expect(
+            page.locator(
+                "button[data-selector='dislike-btn'] img[data-selector='dislike_inactive']"
+            )
+        ).toHaveCount(1);
+        // EXPECTATION: Dislike count is D
+        const dislikes1 = Number(
+            await page
+                .locator("span[data-selector='dislike-count']")
+                .innerText()
+        );
+        await expect(dislikes1).toEqual(beforeData["dislikes"]);
         // Remove like
+        // await Promise.all([
+        //     page.waitForResponse(
+        //         `http://127.0.0.1:8000/proxy/v1/datasets/${metaDatasetData["id"]}/like`
+        //     ),
+        //     page.locator("button[data-selector='like-btn']").click(),
+        // ]);
+        // // EXPECTATION: "Like dataset" button is inactive
+        // await expect(
+        //     page.locator(
+        //         "button[data-selector='like-btn'] img[data-selector='like_inactive']"
+        //     )
+        // ).toHaveCount(1);
+        // // EXPECTATION: Like count is L
+        // const likes2 = Number(
+        //     await page.locator("span[data-selector='like-count']").innerText()
+        // );
+        // await expect(likes2).toEqual(beforeData["likes"]);
+        // // EXPECTATION: "Dislike dataset" button is inactive
+        // await expect(
+        //     page.locator(
+        //         "button[data-selector='dislike-btn'] img[data-selector='dislike_inactive']"
+        //     )
+        // ).toHaveCount(1);
+        // // EXPECTATION: Dislike count is D
+        // const dislikes2 = Number(
+        //     await page
+        //         .locator("span[data-selector='dislike-count']")
+        //         .innerText()
+        // );
+        // await expect(dislikes2).toEqual(beforeData["dislikes"]);
+    });
+    test("With 'Like dataset' button active, click 'Dislike dataset' button", async () => {
+        // await Promise.all([
+        //     page.waitForResponse(
+        //         "http://127.0.0.1:8000/proxy/v1/datasets/${metaDatasetData['id']}/like"
+        //     ),
+        //     page.locator("button[data-selector='like-btn']").click(),
+        // ]);
+        // Click Dislike button
         await Promise.all([
             page.waitForResponse(
-                "http://127.0.0.1:8000/proxy/v1/datasets/1365/like"
+                `http://127.0.0.1:8000/proxy/v1/datasets/${metaDatasetData["id"]}/dislike`
             ),
-            page.locator("button[data-selector='like-btn']").click(),
+            page.locator("button[data-selector='dislike-btn']").click(),
         ]);
         // EXPECTATION: "Like dataset" button is inactive
         await expect(
@@ -132,43 +209,28 @@ test.describe("Like dataset", () => {
             )
         ).toHaveCount(1);
         // EXPECTATION: Like count is L
-        const likes2 = Number(
+        const likes1 = Number(
             await page.locator("span[data-selector='like-count']").innerText()
         );
-        await expect(likes2).toEqual(beforeData["likes"]);
-    });
-    // test("Click on 'Like dataset' button again so that like is removed", async () => {
-    // });
-    test("With 'Like dataset' button active, click 'Dislike dataset' button", async () => {
-        await Promise.all([
-            page.waitForResponse(
-                "http://127.0.0.1:8000/proxy/v1/datasets/1365/like"
-            ),
-            page.locator("button[data-selector='like-btn']").click(),
-        ]);
-        await Promise.all([
-            page.waitForResponse(
-                "http://127.0.0.1:8000/proxy/v1/datasets/1365/dislike"
-            ),
-            page.locator("button[data-selector='dislike-btn']").click(),
-        ]);
+        await expect(likes1).toEqual(beforeData["likes"]);
         // EXPECTATION: "Dislike dataset" button is active
         await expect(
             page.locator(
                 "button[data-selector='dislike-btn'] img[data-selector='dislike_active']"
             )
         ).toHaveCount(1);
-        // EXPECTATION: "Like dataset" button is inactive
-        await expect(
-            page.locator(
-                "button[data-selector='like-btn'] img[data-selector='like_inactive']"
-            )
-        ).toHaveCount(1);
+        // EXPECTATION: Dislike count is D+1
+        const dislikes1 = Number(
+            await page
+                .locator("span[data-selector='dislike-count']")
+                .innerText()
+        );
+        await expect(dislikes1).toEqual(beforeData["dislikes"] + 1);
     });
     test("Click on 'Like dataset' button", async () => {
         await Promise.all([
             page.waitForResponse(
-                "http://127.0.0.1:8000/proxy/v1/datasets/1365/like"
+                `http://127.0.0.1:8000/proxy/v1/datasets/${metaDatasetData["id"]}/like`
             ),
             page.locator("button[data-selector='like-btn']").click(),
         ]);
@@ -178,22 +240,29 @@ test.describe("Like dataset", () => {
                 "button[data-selector='like-btn'] img[data-selector='like_active']"
             )
         ).toHaveCount(1);
+        // EXPECTATION: Like count is L+1
+        const likes = Number(
+            await page.locator("span[data-selector='like-count']").innerText()
+        );
+        await expect(likes).toEqual(beforeData["likes"] + 1);
         // EXPECTATION: "Dislike dataset" button is inactive
         await expect(
             page.locator(
                 "button[data-selector='dislike-btn'] img[data-selector='dislike_inactive']"
             )
         ).toHaveCount(1);
-        // EXPECTATION: Like count is L+1
-        const likes = Number(
-            await page.locator("span[data-selector='like-count']").innerText()
+        // EXPECTATION: Dislike count is D
+        const dislikes1 = Number(
+            await page
+                .locator("span[data-selector='dislike-count']")
+                .innerText()
         );
-        await expect(likes).toEqual(beforeData["likes"] + 1);
+        await expect(dislikes1).toEqual(beforeData["dislikes"]);
     });
     test("Click on 'Like dataset' button again", async () => {
         await Promise.all([
             page.waitForResponse(
-                "http://127.0.0.1:8000/proxy/v1/datasets/1365/like"
+                `http://127.0.0.1:8000/proxy/v1/datasets/${metaDatasetData["id"]}/like`
             ),
             page.locator("button[data-selector='like-btn']").click(),
         ]);
@@ -203,23 +272,30 @@ test.describe("Like dataset", () => {
                 "button[data-selector='like-btn'] img[data-selector='like_inactive']"
             )
         ).toHaveCount(1);
+        // EXPECTATION: Like count is L
+        const likes = Number(
+            await page.locator("span[data-selector='like-count']").innerText()
+        );
+        await expect(likes).toEqual(beforeData["likes"]);
         // EXPECTATION: "Dislike dataset" button is inactive
         await expect(
             page.locator(
                 "button[data-selector='dislike-btn'] img[data-selector='dislike_inactive']"
             )
         ).toHaveCount(1);
-        // EXPECTATION: Like count is L
-        const likes = Number(
-            await page.locator("span[data-selector='like-count']").innerText()
+        // EXPECTATION: Dislike count is D
+        const dislikes1 = Number(
+            await page
+                .locator("span[data-selector='dislike-count']")
+                .innerText()
         );
-        await expect(likes).toEqual(beforeData["likes"]);
+        await expect(dislikes1).toEqual(beforeData["dislikes"]);
     });
     test("Toggle 'Dislike dataset' button", async () => {
         // Dislike Dataset
         await Promise.all([
             page.waitForResponse(
-                "http://127.0.0.1:8000/proxy/v1/datasets/1365/dislike"
+                `http://127.0.0.1:8000/proxy/v1/datasets/${metaDatasetData["id"]}/dislike`
             ),
             page.locator("button[data-selector='dislike-btn']").click(),
         ]);
@@ -236,10 +312,21 @@ test.describe("Like dataset", () => {
                 .innerText()
         );
         await expect(dislikes1).toEqual(beforeData["dislikes"] + 1);
+        //  EXPECTATION: "Like dataset" button is inactive
+        await expect(
+            page.locator(
+                "button[data-selector='like-btn'] img[data-selector='like_inactive']"
+            )
+        ).toHaveCount(1);
+        // EXPECTATION: Like count is L
+        const likes = Number(
+            await page.locator("span[data-selector='like-count']").innerText()
+        );
+        await expect(likes).toEqual(beforeData["likes"]);
         // Remove Dislike Dataset
         await Promise.all([
             page.waitForResponse(
-                "http://127.0.0.1:8000/proxy/v1/datasets/1365/dislike"
+                `http://127.0.0.1:8000/proxy/v1/datasets/${metaDatasetData["id"]}/dislike`
             ),
             page.locator("button[data-selector='dislike-btn']").click(),
         ]);
@@ -256,6 +343,17 @@ test.describe("Like dataset", () => {
                 .innerText()
         );
         await expect(dislikes2).toEqual(beforeData["dislikes"]);
+        //  EXPECTATION: "Like dataset" button is inactive
+        await expect(
+            page.locator(
+                "button[data-selector='like-btn'] img[data-selector='like_inactive']"
+            )
+        ).toHaveCount(1);
+        // EXPECTATION: Like count is L
+        const likes1 = Number(
+            await page.locator("span[data-selector='like-count']").innerText()
+        );
+        await expect(likes1).toEqual(beforeData["likes"]);
         await page.pause();
     });
     test.afterAll(async ({}) => {
