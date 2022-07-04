@@ -39,3 +39,8 @@ The general folder structure remains same as the default nextjs folder structure
 ## Deployment/CICD
 
 The project is deployed using google cloud run(containerized deployments). We have gitlab CICD setup so that every commit pushed results in a new docker image build which is deployed.
+
+## Tests
+
+1. Use appropriate values for env variables defined on `.env` file for testing
+2. Run a specific test file by `npx playwright test tests/pages/datasets/like_dataset.spec.ts --project=chromium --headed`

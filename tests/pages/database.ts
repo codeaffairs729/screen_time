@@ -1,7 +1,6 @@
-// const { Sequelize } = require('sequelize');
 import {Sequelize} from 'sequelize';
 
-const sequelize = new Sequelize('postgres://dashboard_api:dashboard_api@127.0.0.1:5432/dashboard_api', {logging: false}); // Example for postgres
+const sequelize = new Sequelize(`${process.env.TEST_DB_URL}`, {logging: console.log}); // Example for postgres
 
 (async ()=>{
   try {
