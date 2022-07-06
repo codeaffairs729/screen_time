@@ -44,3 +44,7 @@ The project is deployed using google cloud run(containerized deployments). We ha
 
 1. Use appropriate values for env variables defined on `.env` file for testing
 2. Run a specific test file by `npx playwright test tests/pages/datasets/like_dataset.spec.ts --project=chromium --headed`
+
+
+### For user-vocabulary-generator
+`npx playwright test tests/pages/user-vocabulary-generator/submit.spec.ts --project=chromium --headed`
