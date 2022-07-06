@@ -8,15 +8,18 @@ const PrimaryBtn = ({
   isLoading = false,
   isDisabled = false,
   className = "bg-dtech-primary-dark",
+  dataSelector,
 }: {
   label: string;
   onClick?: () => void;
   isLoading?: boolean;
   isDisabled?: boolean;
   className?: string;
+  dataSelector?: string;
 }) => {
   return (
     <button
+      data-selector={dataSelector}
       type="button"
       onClick={onClick}
       disabled={isDisabled}

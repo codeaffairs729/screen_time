@@ -2,7 +2,7 @@ import clsx from "clsx";
 
 const ErrorAlert = ({ message, className="" }: { message: string, className?: string }) => {
   return (
-    <div className={clsx("flex flex-row items-center bg-red-200 px-3 py-1 scroll-py-11 border-b-2 border-red-300", className)}>
+    <div data-selector="error-alert" className={clsx("flex flex-row items-center bg-red-200 px-3 py-1 scroll-py-11 border-b-2 border-red-300", className)}>
       <div className="flex items-center bg-red-100 border-2 border-red-500 justify-center h-7 w-7 flex-shrink-0 rounded-full">
         <span className="text-red-400">
           <svg fill="currentColor" viewBox="0 0 20 20" className="h-3 w-3">
