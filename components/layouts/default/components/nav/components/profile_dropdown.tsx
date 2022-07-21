@@ -12,7 +12,7 @@ const ProfileDropdown = () => {
 
   return (
     <Menu as="div" className="relative inline-block text-left ml-2">
-      <Menu.Button aria-label="profile dropdown button" className="w-10">
+      <Menu.Button aria-label="profile dropdown button" data-selector="profile-dropdown-button" className="w-10">
         <Image
           src={`/images/icons/profile/${
             user ? "signedin_icon" : "guest_Icon"

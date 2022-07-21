@@ -34,7 +34,7 @@ const SummaryStatistics = () => {
           label="Added to favourites"
           tooltip="Number of users who have added this dataset to their favourites list"
         >
-          {dataset.detail.favourites}
+          <span data-selector="statistics-fav-count">{dataset.detail.favourites}</span>
         </LabelledRow>
         <LabelledRow
           className="mb-1.5"
