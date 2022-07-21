@@ -1,6 +1,6 @@
 import {Sequelize} from 'sequelize';
 
-const sequelize = new Sequelize(`${process.env.TEST_DB_URL}`, {logging: console.log}); // Example for postgres
+const sequelize = new Sequelize(`${process.env.TEST_DB_URL}`, {logging: console.log});
 
 (async ()=>{
   try {

@@ -13,7 +13,7 @@ const FavouriteDatasetItem = ({
   onFavouriteSuccess: () => void;
 }) => {
   return (
-    <div className="flex border-t border-l border-r last:border-b">
+    <div className="flex border-t border-l border-r last:border-b" data-selector="favourite-dataset" data-dataset-id={dataset.id}>
       <div className="w-full p-2">
         <h4 className="font-semibold text-sm text-gray-700 mb-2">
           <Link href={`/datasets/${dataset.id}`}>
