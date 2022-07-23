@@ -9,15 +9,17 @@ const FilterCheckboxField = ({
   value,
   className = "",
   defaultChecked,
+  dataSelector
 }: {
   label?: string;
   value?: any;
   register?: UseFormRegisterReturn;
   className?: string;
   defaultChecked: boolean;
+  dataSelector?: string;
 }) => {
   return (
-    <div className={clsx("flex items-center mb-1.5", className)}>
+    <div data-selector={dataSelector} className={clsx("flex items-center mb-1.5", className)}>
       <input
         type="checkbox"
         {...register}
