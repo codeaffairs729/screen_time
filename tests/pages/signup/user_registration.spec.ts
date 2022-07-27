@@ -1,5 +1,6 @@
 import { test, expect, Page } from "@playwright/test";
 import sequelize from "tests/database";
+import { deleteUser } from "tests/utils";
 
 const userData = {
     name: "John Doe",
@@ -12,22 +13,6 @@ const userData = {
     dataOwner: "",
 };
 
-/**
- * Delete user and the users likes from the db
- */
-const deleteUser = async () => {
-    await sequelize.query(
-        `
-      DELETE FROM meta_dataset_likes using users WHERE users.email ='${userData["email"]}' and users.id  = meta_dataset_likes.user_id;
-      `
-    );
-    await sequelize.query(
-        `
-      DELETE FROM users WHERE email='johndoe@a.com';
-      `
-    );
-};
-
 // Create a new user in db
 const createUser = async () => {
     await sequelize.query(
@@ -36,41 +21,28 @@ const createUser = async () => {
                 VALUES ('${userData["name"]}', '${userData["email"]}', '${userData["passwordHash"]}', '${userData["organisation"]}', FALSE, 'developer');
             `
     );
-    console.log('done Create user');
-    
+    console.log("done Create user");
 };
 
 const fillRegistrationPage = async (page: Page) => {
-    // Click [placeholder="Name"]
     await page.locator('[placeholder="Name"]').click();
-    // Fill [placeholder="Name"]
     await page.locator('[placeholder="Name"]').fill(userData["name"]);
-    // Click [placeholder="Email"]
     await page.locator('[placeholder="Email"]').click();
-    // Fill [placeholder="Email"]
     await page.locator('[placeholder="Email"]').fill(userData["email"]);
-    // Click [placeholder="Password"]
     await page.locator('[placeholder="Password"]').click();
-    // Fill [placeholder="Password"]
     await page.locator('[placeholder="Password"]').fill(userData["password"]);
-    // Click [placeholder="Confirm Password"]
     await page.locator('[placeholder="Confirm Password"]').click();
-    // Fill [placeholder="Confirm Password"]
     await page
         .locator('[placeholder="Confirm Password"]')
         .fill(userData["password"]);
-    // Click [placeholder="Organisation"]
     await page.locator('[placeholder="Organisation"]').click();
-    // Fill [placeholder="Organisation"]
     await page
         .locator('[placeholder="Organisation"]')
         .fill(userData["organisation"]);
-    // Select owner
     await page.locator('[data-selector="data-owner-dropdown"] button').click();
     await page
         .locator('[data-selector="data-owner-dropdown"] span:has-text("No")')
         .click();
-    // Select role
     await page.locator('[data-selector="role-dropdown"] button').click();
     await page
         .locator('[data-selector="role-dropdown"] span:has-text("Developer")')
@@ -82,9 +54,7 @@ let page: Page;
 test.describe("User registration", () => {
     test.beforeAll(async ({ browser }) => {
         try {
-            await deleteUser();
-            await createUser();
-            await deleteUser();
+            await deleteUser(userData);
             page = await browser.newPage();
             console.log("DATABASE SETUP COMPLETED");
             // Navigate to login page (/signup)
@@ -159,14 +129,18 @@ test.describe("User registration", () => {
         ]);
         // EXPECTATION: See error message "A user with this email already exists."
         await expect(
-            page.locator("[data-selector='error-alert']>div>div:has-text('A user with this email already exists.')")
+            page.locator(
+                "[data-selector='error-alert']>div>div:has-text('A user with this email already exists.')"
+            )
         ).toBeVisible();
-        await deleteUser();
+        await deleteUser(userData);
     });
     test("fill form and register", async () => {
         // On successful registration user is logged in redirected to the home page
         await Promise.all([
-            page.waitForNavigation({ url: "http://localhost:3000/" }),
+            page.waitForNavigation({
+                url: `${process.env.NEXT_PUBLIC_SENTIMENT_WEBCLIENT_ROOT}`,
+            }),
             page.waitForResponse(
                 `${process.env.NEXT_PUBLIC_WEBPORTAL_API_ROOT}/v1/users/signup`
             ),
