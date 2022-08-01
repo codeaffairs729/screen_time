@@ -113,7 +113,7 @@ const SearchVM = () => {
                         topic: resFitlerOptions["topic"],
                     });
                     return Dataset.fromJsonList(
-                        res[0]["user_search"][0]["results"].slice(0, 10)
+                        res[0]["user_search"][0]["results"]
                     );
                 })
                 .then((datasets) => {

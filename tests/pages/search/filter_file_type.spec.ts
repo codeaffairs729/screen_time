@@ -1,4 +1,4 @@
-import { test, expect, Page } from "@playwright/test";
+import { test, expect, Page, Response } from "@playwright/test";
 
 let page: Page;
 
@@ -8,23 +8,12 @@ const filterDatasetData = {
     R3: [] as string[], // list of all the titles on the third search
     FT1: [] as string[], // list of all the file type options available on the first search
     FT2: [] as string[], // list of all the file type options available on the second search
-    T: "",
+    FT: "",
 };
 
-const getSearchResults = async () => {
-    await page
-        .locator('[data-selector="dataset-search-item"]')
-        .first()
-        .waitFor();
-    const searchResultsLocators = page.locator(
-        '[data-selector="dataset-search-item"] h4 a'
-    );
-    const searchResults = await searchResultsLocators.evaluateAll((list) =>
-        list.map((el) => (el as any).innerText)
-    );
-    return searchResults;
-};
-
+/**
+ * Get the list of all the filter texts
+ */
 const getFilters = async () => {
     await expect(
         page.locator('[data-selector="file-type-filter-section"]')
@@ -36,86 +25,179 @@ const getFilters = async () => {
     return fileTypeTexts;
 };
 
-test.describe("Favourite/unfavourite dataset", () => {
+/**
+ * Return datasets from the search
+ */
+const getDatasetResults = async (
+    response: Response
+) => {
+    const resp = await response.json();
+    const results: { [key: string]: any }[] = resp[0].user_search[0].results;
+    return results;
+};
+
+
+/**
+ * Valid filter items are those filters which are not present in all of the results
+ */
+const getValidFilterItems = (results:{ [key: string]: any }[])=>{
+    const filterItems: string[] = [];
+    results.forEach((result: any) => {
+        result.urls.forEach((url: any) => filterItems.push(url.format));
+    });
+    const validFilterItems: Set<string> = new Set();
+    for (let filter of filterItems) {
+        if (!filter || validFilterItems.has(filter)) {
+            continue;
+        }
+        const filteredResultCount = results.filter((result: any) =>
+            result.urls.map((url: any) => url.format).includes(filter)
+        ).length;
+        if (filteredResultCount != results.length) {
+            validFilterItems.add(filter);
+            console.log("validFilterItems", validFilterItems);
+        }
+    }
+    return validFilterItems;
+}
+
+const getValidFilterCheckbox = (validFilterItems: Set<string>) => {
+    let validFilterCheckbox;
+    for (let filter of filterDatasetData.FT1) {
+        if (validFilterItems.has(filter)) {
+            validFilterCheckbox = page.locator('[data-selector="file-type"]', {
+                hasText: filter,
+            });
+            break;
+        }
+    }
+    return validFilterCheckbox;
+};
+
+test.describe("Filter dataset by file type", () => {
     test.beforeAll(async ({ browser }) => {
         page = await browser.newPage();
     });
     test("Search and not filter by file type", async () => {
-        // Search
+        // Navigate to the search home page and search
         await page.goto(`${process.env.NEXT_PUBLIC_SENTIMENT_WEBCLIENT_ROOT}/`);
         await page.locator(".dataset-search-input input").click();
         await page.locator(".dataset-search-input input").fill("covid");
+        let validFilterItems: Set<string> = new Set();
         await Promise.all([
-            page.waitForNavigation(/*{ url: 'http://localhost:3000/search?q=covid' }*/),
+            page.waitForResponse(async (response: Response) => {
+                const regex = new RegExp(".*datasets.*");
+                const isValid =
+                    regex.test(response.url()) && response.status() === 200;
+                if (isValid) {
+                    const results = await getDatasetResults(response);
+                    validFilterItems = getValidFilterItems(results);
+                    filterDatasetData.R1 = (results as any).map((result: any) => result["id"]);;
+                }
+                return isValid;
+            }),
+            // EXPECTATION: user is taken to the Results List view
+            page.waitForNavigation({
+                url: `${process.env.NEXT_PUBLIC_SENTIMENT_WEBCLIENT_ROOT}/search?q=covid`,
+            }),
             page.locator(".dataset-search-input input").press("Enter"),
         ]);
 
-        // Record search results
-        filterDatasetData.R1 = await getSearchResults();
-        // EXPECTATION: there are 10 results listed
-        expect(filterDatasetData.R1.length==10).toBe(true);
-
-
+        // EXPECTATION: there are 20 results listed
+        expect(filterDatasetData.R1.length == 20).toBe(true);
         // Record filters
         filterDatasetData.FT1 = await getFilters();
 
-        const selectedFilter = page
-            .locator('[data-selector="file-type"]')
-            .first();
-        filterDatasetData.T = await selectedFilter.locator("span").innerText();
+        let validFilterCheckbox;
+        const newValidFilterCheckbox = getValidFilterCheckbox(validFilterItems);
+        if (newValidFilterCheckbox) {
+            validFilterCheckbox = newValidFilterCheckbox;
+        }
+        if (!validFilterCheckbox) {
+            return; // Cancel rest of the test if all the results contain all the filters
+        }
+        filterDatasetData.FT = await validFilterCheckbox
+            .locator("span")
+            .innerText();
 
-        // Check filter after checking
-        await selectedFilter.locator("input").check();
-        // await Promise.all([
-        //     page.waitForResponse("**"),
-        //     selectedFilter.locator("input").check(),
-        // ]);
-        const newSelectedFilter = page
-            .locator('[data-selector="file-type"]')
+        // Check filter
+        await Promise.all([
+            page.waitForResponse(async (response: Response) => {
+                const regex = new RegExp(".*datasets.*");
+                const isValid =
+                    regex.test(response.url()) && response.status() === 200;
+                if (isValid) {
+                    const results = await getDatasetResults(response);
+                    // const results = res[1] as any;
+                    filterDatasetData.R2 = results
+                        .filter((result: any) =>
+                            result.urls
+                                .map((url: any) => url.format)
+                                .includes(filterDatasetData.FT)
+                        )
+                        .map((result: any) => result["id"]);
+                }
+                return isValid;
+            }),
+            validFilterCheckbox.locator("input").check(),
+        ]);
+
+        const selectedFilter = page
+            .locator('[data-selector="file-type"] :checked')
             .first();
         // EXPECTATION: the file type T is ticked in the options list
-        expect(
-            await newSelectedFilter.locator("input").isChecked()
-        ).toBeTruthy();
+        expect(selectedFilter.isChecked()).toBeTruthy();
 
         // Record filters
         filterDatasetData.FT2 = await getFilters();
         // EXPECTATION: FT2 is the same as FT1 (the options shouldn't change)
-        await expect(
+        expect(
             JSON.stringify(filterDatasetData.FT1) ==
                 JSON.stringify(filterDatasetData.FT2)
         ).toBe(true);
 
-        // Record new set of search results
-        filterDatasetData.R2 = await getSearchResults();
         // EXPECTATION: R2 != R1 (a filtering operation has occurred)
         expect(
             JSON.stringify(filterDatasetData.R1) ==
                 JSON.stringify(filterDatasetData.R2)
-        ).toBe(true); // TODO: should be false
-        // EXPECTATION: C = 10 (the filter is appropriate)
-        expect(filterDatasetData.R2.length==10).toBe(true);
-
-        // Check filter after checking
-        await selectedFilter.locator("input").check();
-        // await Promise.all([
-        //     page.waitForResponse("**"),
-        //     selectedFilter.locator("input").check(),
-        // ]);
-        const currentSelectedFilter = page
-            .locator('[data-selector="file-type"] input:checked');
-        // EXPECTATION: the file type T becomes not ticked in the options list
-        expect(
-            await currentSelectedFilter.isChecked()
         ).toBe(false);
+        // EXPECTATION: C = 20 (the filter is appropriate)
+        expect(filterDatasetData.R2.length == 20).toBe(true);
+
+        let currentSelectedFilter = page.locator(
+            '[data-selector="file-type"] input:checked'
+        );
+        
+        // Uncheck filter
+        await Promise.all([
+            page.waitForResponse(async (response: Response) => {
+                const regex = new RegExp(".*datasets.*");
+                const isValid =
+                    regex.test(response.url()) && response.status() === 200;
+                if (isValid) {
+                    const results = await getDatasetResults(response);
+                    filterDatasetData.R3 = (results as any).map((result: any) => result["id"]);
+                }
+                return isValid;
+            }),
+            currentSelectedFilter.uncheck(),
+        ]);
+
+        // await page.pause();
+        currentSelectedFilter = page.locator(
+            '[data-selector="file-type"] input:checked'
+        );
+        // EXPECTATION: the file type T becomes not ticked in the options list
+        await expect(currentSelectedFilter).toHaveCount(0);
 
         // Record new set of search results
-        filterDatasetData.R3 = await getSearchResults();
+
         // EXPECTATION: R3 == R1 (the filter operation has been successfully reversed)
         expect(
             JSON.stringify(filterDatasetData.R1) ==
                 JSON.stringify(filterDatasetData.R3)
         ).toBe(true);
         console.log(filterDatasetData);
+        await page.pause();
     });
 });
