@@ -36,7 +36,7 @@ const FilterFileType = () => {
     });
 
     return (
-        <FilterSection label="File type">
+        <FilterSection dataSelector="file-type-filter-section" label="File type">
             {vm.isLoading && (
                 <div className="m-3 flex items-center justify-center">
                     <Loader />
@@ -50,6 +50,7 @@ const FilterFileType = () => {
             {!vm.isLoading &&
                 fields.map((field, i) => (
                     <FilterCheckboxField
+                        dataSelector="file-type"
                         key={field.id}
                         register={register(`file_type.${i}.checkbox`)}
                         label={field.value}
