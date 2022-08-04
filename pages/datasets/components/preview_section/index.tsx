@@ -11,45 +11,13 @@ const PreviewSection = () => {
     const [previewIDList, setPreviewIDList] = useState<any>(null);
     const [previewData, setPreviewData] = useState<any>(null);
 
-    // const { isPageLoading } = DatasetPreviewVM(
-    //     setPreviewDataList,
-    //     setPreviewIDList,
-    //     setPreviewData,
-    //     setPreviewID,
-    //     vm.dataset?.id
-    // );
-
-    useEffect(() => {
-        const getOnLoad = async () => {
-            await fetch(
-                `http://127.0.0.1:8085/api/datafilepreview?dataset_id=${vm.dataset?.id}`
-            )
-                .then((res) => {
-                    return res.json();
-                })
-                .then((previewDataFetch) => {
-                    console.log(previewDataFetch);
-
-                    if (previewDataFetch.length > 0) {
-                        setPreviewDataList(previewDataFetch);
-
-                        var id_list = previewDataFetch.map(
-                            (item: any, idx: number) => {
-                                return {
-                                    id: item.datafile_id,
-                                    label: "Data file " + (idx + 1),
-                                };
-                            }
-                        );
-                        setPreviewIDList(id_list);
-                        setPreviewData(previewDataFetch[0]);
-                        setPreviewID(previewDataFetch[0].datafile_id);
-                    }
-                });
-        };
-
-        getOnLoad().catch(console.error);
-    }, []);
+    const { isPageLoading } = DatasetPreviewVM(
+        setPreviewDataList,
+        setPreviewIDList,
+        setPreviewData,
+        setPreviewID,
+        vm.dataset?.id
+    );
 
     const handleChangePreviewID = (newID: Number) => {
         console.log(newID);
@@ -76,6 +44,8 @@ const PreviewSection = () => {
                     />
                     <DatafilePreview previewData={previewData} />
                 </div>
+            ) : isPageLoading ? (
+                <div>Preview data is loading...</div>
             ) : (
                 <div>No preview available.</div>
             )}
@@ -84,38 +54,3 @@ const PreviewSection = () => {
 };
 
 export default PreviewSection;
-
-// const [previewID, setPreviewID] = useState<any>(null);
-// const [previewOptions, setPreviewOptions] = useState<any>(null);
-
-// useEffect(() => {
-//     const previewOptions = vm.dataset?.urls.map((file, idx) => {
-//         return {
-//             id: idx,
-//             label: `${
-//                 file.description.replace(/['"]+/g, "")
-//                     ? file.description.replace(/['"]+/g, "") + ": "
-//                     : ""
-//             }${file.format}, ${file.sizemb} MB`,
-//             url: file.url,
-//             dataset_id: vm.dataset?.id,
-//             active: idx === 0 ? true : false,
-//         };
-//     });
-//     setPreviewID(0);
-//     setPreviewOptions(previewOptions);
-// }, []);
-
-// {previewID !== null && previewOptions !== null && (
-//     <div>
-//         <PreviewSelect
-//             options={previewOptions}
-//             previewID={previewID}
-//             setPreviewID={setPreviewID}
-//         />
-//         <PreviewDataFile
-//             previewID={previewID}
-//             previewOptions={previewOptions}
-//         />
-//     </div>
-// )}

@@ -85,16 +85,16 @@ const DatafilePreview = ({ previewData }) => {
         <div className="mt-6 border-t-2 border-t-gray-300">
             <SheetTab tabList={previewTabList} setActive={setActive} />
 
-            <div className="my-8 ml-5">
-                <p className="text-sm font-bold mb-3">Datafile Sample</p>
+            <div className="my-8">
+                <p className="text-sm font-bold mb-4 ml-5">Datafile Sample</p>
                 {/* <PreviewTable data={previewHead[previewActiveTab]} /> */}
                 {previewHead[previewActiveTab] && (
                     <PreviewTable data={previewHead[previewActiveTab]} />
                 )}
             </div>
 
-            <div className="my-8 ml-5">
-                <p className="text-sm font-bold mb-3">Datafile Summary</p>
+            <div className="my-8">
+                <p className="text-sm font-bold mb-4 ml-5">Datafile Summary</p>
 
                 {/* <PreviewTable data={previewSummary[previewActiveTab]} /> */}
 
@@ -104,8 +104,8 @@ const DatafilePreview = ({ previewData }) => {
             </div>
 
             {previewType == "GeoJSON" && (
-                <div className="my-8 ml-5">
-                    <p className="text-sm font-bold mb-3">
+                <div className="my-8">
+                    <p className="text-sm font-bold mb-4 ml-5">
                         Datafile geographic bounds
                     </p>
                     <MapView totalBounds={previewTotalBounds} />
