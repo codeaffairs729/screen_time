@@ -42,7 +42,7 @@ const FilterTopic = () => {
     });
 
     return (
-        <FilterSection label="Topics">
+        <FilterSection dataSelector="topic-filter-section" label="Topics">
             {vm.isLoading && (
                 <div className="m-3 flex items-center justify-center">
                     <Loader />
@@ -56,6 +56,7 @@ const FilterTopic = () => {
             {!vm.isLoading &&
                 fields.map((field, i) => (
                     <FilterCheckboxField
+                        dataSelector="topic-filter"
                         key={field.id}
                         register={register(`topic.${i}.checkbox`)}
                         label={field.value}

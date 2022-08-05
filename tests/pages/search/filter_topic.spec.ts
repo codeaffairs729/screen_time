@@ -6,19 +6,19 @@ const filterDatasetData = {
     R1: [] as string[], // list of all the titles on the first search
     R2: [] as string[], // list of all the titles on the second search
     R3: [] as string[], // list of all the titles on the third search
-    FT1: [] as string[], // list of all the file type options available on the first search
-    FT2: [] as string[], // list of all the file type options available on the second search
-    FT: "",
+    T1: [] as string[], // list of all the topic options available on the first search
+    T2: [] as string[], // list of all the topic options available on the second search
+    T: "",
 };
 
 /**
  * Get the list of all the filter texts
  */
-const getFilters = async () => {
+const getTopics = async () => {
     await expect(
-        page.locator('[data-selector="file-type-filter-section"]')
+        page.locator('[data-selector="topic-filter-section"]')
     ).toBeVisible();
-    const fileTypes = page.locator('[data-selector="file-type"]');
+    const fileTypes = page.locator('[data-selector="topic-filter"]');
     const fileTypeTexts = (await fileTypes.allInnerTexts()).filter(
         (e) => e.trim() != ""
     );
@@ -28,70 +28,82 @@ const getFilters = async () => {
 /**
  * Return datasets from the search
  */
-const getDatasetResults = async (
-    response: Response
-) => {
+const getDatasetResults = async (response: Response) => {
     const resp = await response.json();
     const results: { [key: string]: any }[] = resp[0].user_search[0].results;
-    return results;
+    const filter_options = resp[0].user_search[0].filter_options;
+    return { filterOptions: filter_options, results };
 };
 
-
 /**
- * Valid filter items are those filters which are not present in all of the results
+ * Valid topics are those topics which are not present in all of the results
  */
-const getValidFilterItems = (results:{ [key: string]: any }[])=>{
-    const filterItems: string[] = [];
-    results.forEach((result: any) => {
-        result.urls.forEach((url: any) => filterItems.push(url.format));
-    });
-    const validFilterItems: Set<string> = new Set();
-    for (let filter of filterItems) {
-        if (!filter || validFilterItems.has(filter)) {
+const getValidTopics = (
+    results: { [key: string]: any }[],
+    topics: string[] = []
+) => {
+    // const topics: string[] = [];
+    // results.forEach((result: any) => {
+    //     result.urls.forEach((url: any) => topics.push(url.format));
+    // });
+    const validTopics: Set<string> = new Set();
+    for (let topic of topics) {
+        if (!topic || validTopics.has(topic)) {
             continue;
         }
         const filteredResultCount = results.filter((result: any) =>
-            result.urls.map((url: any) => url.format).includes(filter)
+            result.urls.map((url: any) => url.format).includes(topic)
         ).length;
         if (filteredResultCount != results.length) {
-            validFilterItems.add(filter);
+            validTopics.add(topic);
         }
     }
-    return validFilterItems;
-}
+    return validTopics;
+};
 
-const getValidFilterCheckbox = (validFilterItems: Set<string>) => {
-    let validFilterCheckbox;
-    for (let filter of filterDatasetData.FT1) {
-        if (validFilterItems.has(filter)) {
-            validFilterCheckbox = page.locator('[data-selector="file-type"]', {
-                hasText: filter,
-            });
+const getValidTopicCheckbox = (validTopics: Set<string>) => {
+    let validTopicCheckbox;
+    for (let filter of filterDatasetData.T1) {
+        if (validTopics.has(filter)) {
+            validTopicCheckbox = page.locator(
+                '[data-selector="topic-filter"]',
+                {
+                    has: page.locator(`text="${filter}"`),
+                }
+            );
             break;
         }
     }
-    return validFilterCheckbox;
+    return validTopicCheckbox;
 };
 
-test.describe("Filter dataset by file type", () => {
+test.describe("Filter dataset by topic", () => {
     test.beforeAll(async ({ browser }) => {
         page = await browser.newPage();
     });
-    test("Search and filter by file type", async () => {
+    test("Search and filter by topic", async () => {
         // Navigate to the search home page and search
         await page.goto(`${process.env.NEXT_PUBLIC_SENTIMENT_WEBCLIENT_ROOT}/`);
         await page.locator(".dataset-search-input input").click();
         await page.locator(".dataset-search-input input").fill("covid");
-        let validFilterItems: Set<string> = new Set();
+        let validTopics: Set<string> = new Set();
         await Promise.all([
             page.waitForResponse(async (response: Response) => {
                 const regex = new RegExp(".*datasets.*");
                 const isValid =
                     regex.test(response.url()) && response.status() === 200;
                 if (isValid) {
-                    const results = await getDatasetResults(response);
-                    validFilterItems = getValidFilterItems(results);
-                    filterDatasetData.R1 = (results as any).map((result: any) => result["id"]);;
+                    const { results, filterOptions } = await getDatasetResults(
+                        response
+                    );
+                    filterDatasetData.T1 = filterOptions["topic"];
+                    validTopics = getValidTopics(
+                        results,
+                        filterOptions["topic"]
+                    );
+                    filterDatasetData.R1 = (results as any).map(
+                        (result: any) => result["id"]
+                    );
                 }
                 return isValid;
             }),
@@ -101,21 +113,18 @@ test.describe("Filter dataset by file type", () => {
             }),
             page.locator(".dataset-search-input input").press("Enter"),
         ]);
-
         // EXPECTATION: there are 20 results listed
         expect(filterDatasetData.R1.length == 20).toBe(true);
-        // Record filters
-        filterDatasetData.FT1 = await getFilters();
-
-        let validFilterCheckbox;
-        const newValidFilterCheckbox = getValidFilterCheckbox(validFilterItems);
+        let validTopicCheckbox;
+        const newValidFilterCheckbox = getValidTopicCheckbox(validTopics);
         if (newValidFilterCheckbox) {
-            validFilterCheckbox = newValidFilterCheckbox;
+            validTopicCheckbox = newValidFilterCheckbox;
         }
-        if (!validFilterCheckbox) {
+
+        if (!validTopicCheckbox) {
             return; // Cancel rest of the test if all the results contain all the filters
         }
-        filterDatasetData.FT = await validFilterCheckbox
+        filterDatasetData.T = await validTopicCheckbox
             .locator("span")
             .innerText();
 
@@ -126,33 +135,35 @@ test.describe("Filter dataset by file type", () => {
                 const isValid =
                     regex.test(response.url()) && response.status() === 200;
                 if (isValid) {
-                    const results = await getDatasetResults(response);
+                    const { results, filterOptions } = await getDatasetResults(
+                        response
+                    );
                     // const results = res[1] as any;
                     filterDatasetData.R2 = results
                         .filter((result: any) =>
-                            result.urls
-                                .map((url: any) => url.format)
-                                .includes(filterDatasetData.FT)
+                            JSON.parse(
+                                result["dataset"].topics.replace(/'/g, '"')
+                            ).includes(filterDatasetData.T)
                         )
                         .map((result: any) => result["id"]);
                 }
                 return isValid;
             }),
-            validFilterCheckbox.locator("input").check(),
+            validTopicCheckbox.locator("input").check(),
         ]);
 
         const selectedFilter = page
-            .locator('[data-selector="file-type"] :checked')
+            .locator('[data-selector="topic-filter"] :checked')
             .first();
-        // EXPECTATION: the file type T is ticked in the options list
+        // EXPECTATION: the topic T is ticked in the options list
         expect(selectedFilter.isChecked()).toBeTruthy();
 
         // Record filters
-        filterDatasetData.FT2 = await getFilters();
-        // EXPECTATION: FT2 is the same as FT1 (the options shouldn't change)
+        filterDatasetData.T2 = await getTopics();
+        // EXPECTATION: T2 is the same as T1 (the options shouldn't change)
         expect(
-            JSON.stringify(filterDatasetData.FT1) ==
-                JSON.stringify(filterDatasetData.FT2)
+            JSON.stringify(filterDatasetData.T1) ==
+                JSON.stringify(filterDatasetData.T2)
         ).toBe(true);
 
         // EXPECTATION: R2 != R1 (a filtering operation has occurred)
@@ -164,9 +175,8 @@ test.describe("Filter dataset by file type", () => {
         expect(filterDatasetData.R2.length == 20).toBe(true);
 
         let currentSelectedFilter = page.locator(
-            '[data-selector="file-type"] input:checked'
+            '[data-selector="topic-filter"] input:checked'
         );
-        
         // Uncheck filter
         await Promise.all([
             page.waitForResponse(async (response: Response) => {
@@ -174,23 +184,21 @@ test.describe("Filter dataset by file type", () => {
                 const isValid =
                     regex.test(response.url()) && response.status() === 200;
                 if (isValid) {
-                    const results = await getDatasetResults(response);
-                    filterDatasetData.R3 = (results as any).map((result: any) => result["id"]);
+                    const {results} = await getDatasetResults(response);
+                    filterDatasetData.R3 = (results as any).map(
+                        (result: any) => result["id"]
+                    );
                 }
                 return isValid;
             }),
             currentSelectedFilter.uncheck(),
         ]);
 
-        // await page.pause();
         currentSelectedFilter = page.locator(
-            '[data-selector="file-type"] input:checked'
+            '[data-selector="topic-filter"] input:checked'
         );
-        // EXPECTATION: the file type T becomes not ticked in the options list
+        // EXPECTATION: the topic T becomes not ticked in the options list
         await expect(currentSelectedFilter).toHaveCount(0);
-
-        // Record new set of search results
-
         // EXPECTATION: R3 == R1 (the filter operation has been successfully reversed)
         expect(
             JSON.stringify(filterDatasetData.R1) ==

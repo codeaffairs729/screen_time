@@ -32,6 +32,8 @@ import "styles/globals.css";
 import { AppProps } from "next/app";
 import { Toaster } from "react-hot-toast";
 import Loader from "components/UI/loader";
+import { useScript } from "common/hooks";
+import { useEffect } from "react";
 
 function DtechtiveApp({ Component, pageProps }: AppProps) {
     const store = useStore(pageProps.initialReduxState);
@@ -50,6 +52,28 @@ function DtechtiveApp({ Component, pageProps }: AppProps) {
             window.location.reload();
         }
     }
+
+    var MicAccessTool: any;
+    useScript("/js/acctoolbar.min.js", () => {
+        window.onload = function () {
+            (window as any).micAccessTool = new MicAccessTool({
+                link: "http://your-awesome-website.com/your-accessibility-declaration.pdf",
+                contact: "mailto:your-mail@your-awesome-website.com",
+                buttonPosition: "right", // default is 'left'
+                // forceLang: "ru-RU", // default is 'en' may be 'he-IL', 'ru-RU', or 'fr_FR'
+            });
+        };
+    });
+    // useEffect(() => {
+    //     window.onload = function () {
+    //         (window as any).micAccessTool = new MicAccessTool({
+    //             link: "http://your-awesome-website.com/your-accessibility-declaration.pdf",
+    //             contact: "mailto:your-mail@your-awesome-website.com",
+    //             buttonPosition: "right", // default is 'left'
+    //             // forceLang: "ru-RU", // default is 'en' may be 'he-IL', 'ru-RU', or 'fr_FR'
+    //         });
+    //     };
+    // }, [MicAccessTool]);
 
     return (
         <>
