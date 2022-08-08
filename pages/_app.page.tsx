@@ -53,27 +53,7 @@ function DtechtiveApp({ Component, pageProps }: AppProps) {
         }
     }
 
-    var MicAccessTool: any;
-    useScript("/js/acctoolbar.min.js", () => {
-        window.onload = function () {
-            (window as any).micAccessTool = new MicAccessTool({
-                link: "http://your-awesome-website.com/your-accessibility-declaration.pdf",
-                contact: "mailto:your-mail@your-awesome-website.com",
-                buttonPosition: "right", // default is 'left'
-                // forceLang: "ru-RU", // default is 'en' may be 'he-IL', 'ru-RU', or 'fr_FR'
-            });
-        };
-    });
-    // useEffect(() => {
-    //     window.onload = function () {
-    //         (window as any).micAccessTool = new MicAccessTool({
-    //             link: "http://your-awesome-website.com/your-accessibility-declaration.pdf",
-    //             contact: "mailto:your-mail@your-awesome-website.com",
-    //             buttonPosition: "right", // default is 'left'
-    //             // forceLang: "ru-RU", // default is 'en' may be 'he-IL', 'ru-RU', or 'fr_FR'
-    //         });
-    //     };
-    // }, [MicAccessTool]);
+    useScript("/js/acctoolbar.min.js");
 
     return (
         <>
