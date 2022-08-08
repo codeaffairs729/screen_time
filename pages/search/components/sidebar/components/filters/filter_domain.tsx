@@ -35,7 +35,7 @@ const FilterDomain = () => {
     });
 
     return (
-        <FilterSection label="Domain">
+        <FilterSection dataSelector="domain-filter-section" label="Domain">
             {vm.isLoading && (
                 <div className="m-3 flex items-center justify-center">
                     <Loader />
@@ -49,6 +49,7 @@ const FilterDomain = () => {
             {!vm.isLoading &&
                 fields.map((field, i) => (
                     <FilterCheckboxField
+                        dataSelector="domain-filter"
                         key={field.id}
                         register={register(`domain.${i}.checkbox`)}
                         label={field.value}
