@@ -143,6 +143,9 @@ test.describe("Vocabulary Generator: Submit Keywords", () => {
             .locator("id=keyword-display")
             .textContent();
         // const domain_value = await page
+        //     .locator('input[role="combobox"]')
+        //     .inputValue();
+        // const domain_value = await page
         //     .locator("input#headlessui-combobox-input-35")
         //     .innerText();
         // console.log(domain_value);
