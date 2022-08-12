@@ -1,6 +1,8 @@
 import { test, expect, Page } from "@playwright/test";
 import sequelize from "../database";
 
+const { QueryTypes } = require("sequelize");
+
 const userData = {
     email: "johndoe@a.com",
     password: "pass",
@@ -16,6 +18,8 @@ const deleteUser = async () => {
     await sequelize.query(
         `
         DELETE FROM users WHERE email='johndoe@a.com';
+        DELETE FROM user_flagged_vocabulary WHERE user_id='johndoe@a.com';
+        DELETE FROM user_vocabulary WHERE user_id='johndoe@a.com';
         `
     );
 };
@@ -64,10 +68,16 @@ test.describe("Vocabulary Generator: Submit Keywords", () => {
         await page.locator("text=User contributions").click();
         // Click text=Domain Vocabulary Generator
         await Promise.all([
-            page.waitForNavigation(/*{ url: 'http://localhost:3000/user-vocabulary-generator' }*/),
+            page.waitForNavigation({
+                url: "http://localhost:3000/user-vocabulary-generator",
+            }),
+            page.waitForResponse(
+                `http://127.0.0.1:8000/proxy/v1/user-vocabulary-generator/onload`
+            ),
             page.locator("text=Domain Vocabulary Generator").click(),
         ]);
-
+    });
+    test("Part 1: Submission tests", async () => {
         // Test empty submission
         // Fill input[name="synonym_1"]
         await page.locator('input[name="synonym_1"]').fill("");
@@ -128,36 +138,87 @@ test.describe("Vocabulary Generator: Submit Keywords", () => {
         ).toHaveCount(1);
 
         // Test valid submission and key word change
-        // // Before submission original old keyword
-        // const old_keyword = await page
-        //     .locator("id=keyword-display")
-        //     .textContent();
-        // // Fill input[name="synonym_1"]
-        // await page.locator('input[name="synonym_1"]').fill("asd");
-        // // Fill input[name="synonym_2"]
-        // await page.locator('input[name="synonym_2"]').fill("");
-        // // Fill input[name="synonym_3"]
-        // await page.locator('input[name="synonym_3"]').fill("");
-        // // Click button:has-text("Submit")
-        // await Promise.all([
-        //     page.waitForResponse(
-        //         `${process.env.NEXT_PUBLIC_WEBPORTAL_API_ROOT}/v1/user-vocabulary-generator/add?domain=technology`
-        //     ),
-        //     await page.locator('button:has-text("Submit")').click(),
-        // ]);
+        // Before submission original old keyword
+        const old_keyword = await page
+            .locator("id=keyword-display")
+            .textContent();
+        // const domain_value = await page
+        //     .locator("input#headlessui-combobox-input-35")
+        //     .innerText();
+        // console.log(domain_value);
+        // Fill input[name="synonym_1"]
+        await page.locator('input[name="synonym_1"]').fill("asd");
+        // Fill input[name="synonym_2"]
+        await page.locator('input[name="synonym_2"]').fill("");
+        // Fill input[name="synonym_3"]
+        await page.locator('input[name="synonym_3"]').fill("");
+        // Click button:has-text("Submit")
+        await Promise.all([
+            // TODO : get the current active domain from the frontend and pass it on to the url here
+            page.waitForResponse(
+                `http://127.0.0.1:8000/proxy/v1/user-vocabulary-generator/add?domain=health`
+            ),
+            await page.locator('button:has-text("Submit")').click(),
+        ]);
+        const user_synonym = await sequelize.query(
+            "SELECT * FROM user_vocabulary WHERE user_id='johndoe@a.com'",
+            { type: QueryTypes.SELECT }
+        );
+        expect(user_synonym.length).toBeGreaterThanOrEqual(1);
 
-        // // setTimeout(() => {
-        // //     console.log();
-        // // }, 5000);
-        // // After submission new keyword
-        // const new_keyword = await page
-        //     .locator("id=keyword-display")
-        //     .textContent();
-        // console.log(new_keyword);
-        // console.log(old_keyword);
-        // // expect(new_keyword).not.toEqual(old_keyword);
+        // After submission new keyword and old key word dont match
+        const new_keyword = await page
+            .locator("id=keyword-display")
+            .textContent();
+        expect(new_keyword).not.toEqual(old_keyword);
+    });
+    test("Part 2: ", async () => {
+        // Test refresh to check change in keywords
+        const keyword_1 = await page
+            .locator("id=keyword-display")
+            .textContent();
+        await Promise.all([
+            page.waitForResponse(
+                `http://127.0.0.1:8000/proxy/v1/user-vocabulary-generator/onload`
+            ),
+            page.reload(),
+        ]);
+        const keyword_2 = await page
+            .locator("id=keyword-display")
+            .textContent();
+        // After reload new keyword and old key word dont match
+        expect(keyword_2).not.toEqual(keyword_1);
 
-        // await page.pause();
+        // New keyword on clicking on the keyword
+        await Promise.all([
+            page.waitForResponse(
+                `http://127.0.0.1:8000/proxy/v1/user-vocabulary-generator/random?domain=health`
+            ),
+            page.locator("id=keyword-display").click(),
+        ]);
+        const keyword_3 = await page
+            .locator("id=keyword-display")
+            .textContent();
+        // After clicking on the keyword, the new keyword is random and not equal to the earlier one
+        expect(keyword_3).not.toEqual(keyword_2);
+
+        // Flagging keyword records the user, keyword, domain_name with a new keyword load
+        await Promise.all([
+            page.waitForResponse(
+                `http://127.0.0.1:8000/proxy/v1/user-vocabulary-generator/flag?domain=health`
+            ),
+            page.locator('button:has-text("⚐")').click(),
+        ]);
+        const user_flags = await sequelize.query(
+            "SELECT * FROM user_flagged_vocabulary WHERE user_id='johndoe@a.com'",
+            { type: QueryTypes.SELECT }
+        );
+        expect(user_flags.length).toBeGreaterThanOrEqual(1);
+        const keyword_4 = await page
+            .locator("id=keyword-display")
+            .textContent();
+        // After flagging on the keyword, the new keyword is random and not equal to the earlier one
+        expect(keyword_4).not.toEqual(keyword_3);
     });
     test.afterAll(async ({}) => {
         try {
