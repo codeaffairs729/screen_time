@@ -89,7 +89,10 @@ const DatafilePreview = ({ previewData }) => {
                 <p className="text-sm font-bold mb-4 ml-5">Datafile Sample</p>
                 {/* <PreviewTable data={previewHead[previewActiveTab]} /> */}
                 {previewHead[previewActiveTab] && (
-                    <PreviewTable data={previewHead[previewActiveTab]} />
+                    <PreviewTable
+                        data={previewHead[previewActiveTab]}
+                        id={"tableSample"}
+                    />
                 )}
             </div>
 
@@ -99,7 +102,10 @@ const DatafilePreview = ({ previewData }) => {
                 {/* <PreviewTable data={previewSummary[previewActiveTab]} /> */}
 
                 {previewSummary[previewActiveTab] && (
-                    <PreviewTable data={previewSummary[previewActiveTab]} />
+                    <PreviewTable
+                        data={previewSummary[previewActiveTab]}
+                        id={"tableSummary"}
+                    />
                 )}
             </div>
 
@@ -108,7 +114,10 @@ const DatafilePreview = ({ previewData }) => {
                     <p className="text-sm font-bold mb-4 ml-5">
                         Datafile geographic bounds
                     </p>
-                    <MapView totalBounds={previewTotalBounds} />
+                    <MapView
+                        totalBounds={previewTotalBounds}
+                        id={"previewGeographic"}
+                    />
                 </div>
             )}
         </div>
