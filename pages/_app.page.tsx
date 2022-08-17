@@ -35,7 +35,6 @@ import Loader from "components/UI/loader";
 import { useScript } from "common/hooks";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
-import { gaPageView } from "../services/ga";
 import posthog from "posthog-js";
 
 function DtechtiveApp({ Component, pageProps }: AppProps) {
@@ -81,12 +80,19 @@ function DtechtiveApp({ Component, pageProps }: AppProps) {
 
     useEffect(() => {
         // Init PostHog
-        posthog.init("phc_HfQBhd9FAx2wjqftT9wxQMRa1HUotiFp6QINKAU2Tb9", {
-            api_host: "https://app.posthog.com",
-        });
+        posthog.init(
+            process.env.NEXT_PUBLIC_POSTHOG_KEY ??
+                "phc_HfQBhd9FAx2wjqftT9wxQMRa1HUotiFp6QINKAU2Tb9",
+            {
+                api_host: "https://app.posthog.com",
+                loaded: (posthog) => {
+                    if (process.env.NODE_ENV === "development")
+                        posthog.opt_out_capturing();
+                },
+            }
+        );
 
-        const handleRouteChange = (url: any) => {
-            gaPageView(url);
+        const handleRouteChange = () => {
             posthog.capture("$pageview");
         };
         //When the component is mounted, subscribe to router changes

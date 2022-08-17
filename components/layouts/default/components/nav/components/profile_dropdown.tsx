@@ -6,7 +6,7 @@ import { Fragment } from "react";
 import { useSelector } from "react-redux";
 import AuthService from "services/auth.service";
 import { RootState } from "store";
-import { posthog } from "posthog-js";
+import { usereventLogout } from "services/usermetrics.service";
 
 const ProfileDropdown = () => {
     const user = useSelector((state: RootState) => state.auth.user);
@@ -50,7 +50,7 @@ const ProfileDropdown = () => {
                                 label="Log Out"
                                 onClick={() => {
                                     AuthService.logout();
-                                    posthog.reset();
+                                    usereventLogout();
                                 }}
                             />
                         </>

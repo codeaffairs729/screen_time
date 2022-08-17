@@ -2,13 +2,10 @@ import DatasetSearchInput from "components/UI/dataset_search_input";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import DefaultLayout from "../../components/layouts/default";
-import { RootState } from "store";
-import { useSelector } from "react-redux";
-import { usereventSearchQuery } from "services/ga";
+import { usereventSearchQuery } from "services/usermetrics.service";
 
 const HomePage = () => {
     const router = useRouter();
-    const user = useSelector((state: RootState) => state.auth.user);
 
     return (
         <DefaultLayout showLogo={false}>
@@ -25,8 +22,6 @@ const HomePage = () => {
                             onChange={(option) => {
                                 if (!option) return;
 
-                                // gtag: record the search query by the user if they are logged in, if not, use anonymous.
-                                usereventSearchQuery(option.value, user);
                                 router.push({
                                     pathname: "/search",
                                     query: { q: option.value },

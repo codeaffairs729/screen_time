@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "store";
 import { useState } from "react";
 import { getHttpErrorMsg } from "common/util";
-import { posthog } from "posthog-js";
+import { usereventLogin } from "services/usermetrics.service";
 
 const SigninVM = () => {
     const form = useForm();
@@ -34,19 +34,7 @@ const SigninVM = () => {
                         res["token"],
                         "/"
                     );
-                    posthog.identify(
-                        res["user"].id, // distinct_id, required
-                        {}, // $set, optional
-                        {
-                            email: res["user"].email,
-                            role:
-                                res["user"].role !== "other"
-                                    ? res["user"].role
-                                    : res["user"].role_other !== null
-                                    ? "other " + res["user"].role_other
-                                    : "other",
-                        } // $set_once, optional
-                    );
+                    usereventLogin(User.fromJson(res["user"]));
                 },
                 onError: async (error: any) =>
                     setSigninErrorMsg(await getHttpErrorMsg(error)),

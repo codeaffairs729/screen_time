@@ -6,6 +6,7 @@ import { SingleValue, components } from "react-select";
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/router";
 import Http from "common/http";
+import { usereventSearchQuery } from "services/usermetrics.service";
 
 export type SearchOption = { value: any; label: string };
 
@@ -48,7 +49,9 @@ const DatasetSearchInput = ({
 
     const Input = (props: any) => {
         // add attribues to the component below
-        return <components.Input {...props} data-selector="dataset-search-input" />;
+        return (
+            <components.Input {...props} data-selector="dataset-search-input" />
+        );
     };
 
     const {
@@ -84,6 +87,7 @@ const DatasetSearchInput = ({
                     if (e.key === "Enter") {
                         e.preventDefault();
                         e.stopPropagation();
+                        usereventSearchQuery(input);
                         onChange({
                             label: "User input",
                             value: input,

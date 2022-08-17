@@ -10,6 +10,7 @@ import { SingleValue } from "react-select";
 import { updateCache } from "store/cache/cache.action";
 import useSWR from "swr";
 import Dataset from "../../models/dataset.model";
+import { usereventSearchQueryResults } from "services/usermetrics.service";
 
 export type Filter = {
     domain?: string[];
@@ -118,6 +119,10 @@ const SearchVM = () => {
                 })
                 .then((datasets) => {
                     updateDisplayCount(datasets.map((d) => d.id));
+                    usereventSearchQueryResults(
+                        q,
+                        datasets.map((d) => d.id)
+                    );
                     return datasets;
                 })
                 .catch((e) => {

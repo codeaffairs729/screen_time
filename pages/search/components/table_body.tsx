@@ -9,9 +9,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { ReactNode, useContext } from "react";
 import { SearchVMContext } from "../search.vm";
-import { RootState } from "store";
-import { useSelector } from "react-redux";
-import { usereventDatasetView } from "services/ga";
+import { usereventDatasetView } from "services/usermetrics.service";
+import { useRouter } from "next/router";
 
 const TableBody = () => {
     const vm = useContext(SearchVMContext);
@@ -29,8 +28,10 @@ const TableBody = () => {
 };
 
 const Row = ({ dataset }: { dataset: Dataset }) => {
-    const user = useSelector((state: RootState) => state.auth.user);
-
+    const router = useRouter();
+    const {
+        query: { q },
+    } = router;
     return (
         <>
             <Cell
@@ -42,7 +43,7 @@ const Row = ({ dataset }: { dataset: Dataset }) => {
                 <h4 className="font-semibold text-sm mb-1">
                     <Link href={`/datasets/${dataset.id}`}>
                         <a
-                            onClick={() => usereventDatasetView(user, dataset)}
+                            onClick={() => usereventDatasetView(dataset, q)}
                             className="hover:text-dtech-secondary-light"
                         >
                             {dataset.detail.name}
