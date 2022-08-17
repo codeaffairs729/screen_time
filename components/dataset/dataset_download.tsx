@@ -2,6 +2,9 @@ import clsx from "clsx";
 import Http from "common/http";
 import Dataset from "models/dataset.model";
 import Image from "next/image";
+import { RootState } from "store";
+import { useSelector } from "react-redux";
+import { gtageventDatasetDownload } from "services/ga";
 
 const DatasetDownload = ({
     dataset,
@@ -48,8 +51,11 @@ const DatasetDownloadItem = ({
     dataset: Dataset;
     url: string;
 }) => {
+    const user = useSelector((state: RootState) => state.auth.user);
+
     const updateDownloadStat = () => {
         Http.post(`/v1/datasets/${dataset.id}/downloads`);
+        gtageventDatasetDownload(user, dataset, url);
     };
     const newUrl = url?.replace(/["']/g, "");
 

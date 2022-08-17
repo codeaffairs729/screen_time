@@ -9,6 +9,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { ReactNode, useContext } from "react";
 import { SearchVMContext } from "../search.vm";
+import { RootState } from "store";
+import { useSelector } from "react-redux";
+import { gtageventDatasetView } from "services/ga";
 
 const TableBody = () => {
     const vm = useContext(SearchVMContext);
@@ -26,13 +29,22 @@ const TableBody = () => {
 };
 
 const Row = ({ dataset }: { dataset: Dataset }) => {
+    const user = useSelector((state: RootState) => state.auth.user);
+
     return (
         <>
-            <Cell className="min-w-[350px]" dataSelector="dataset-search-item" dataDatasetId={dataset.id}>
+            <Cell
+                className="min-w-[350px]"
+                dataSelector="dataset-search-item"
+                dataDatasetId={dataset.id}
+            >
                 {/* <div> */}
                 <h4 className="font-semibold text-sm mb-1">
                     <Link href={`/datasets/${dataset.id}`}>
-                        <a className="hover:text-dtech-secondary-light">
+                        <a
+                            onClick={() => gtageventDatasetView(user, dataset)}
+                            className="hover:text-dtech-secondary-light"
+                        >
                             {dataset.detail.name}
                         </a>
                     </Link>
@@ -75,7 +87,11 @@ const Row = ({ dataset }: { dataset: Dataset }) => {
                     ? dataset.detail.lastDownloaded.toRelative()
                     : ""}
             </Cell>
-            <Cell className="text-center pt-1" dataSelector="fav-btn__container" dataDatasetId={dataset.id}>
+            <Cell
+                className="text-center pt-1"
+                dataSelector="fav-btn__container"
+                dataDatasetId={dataset.id}
+            >
                 <FavouriteBtn className="mx-auto" dataset={dataset} />
             </Cell>
         </>

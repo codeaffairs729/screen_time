@@ -34,8 +34,11 @@ import { Toaster } from "react-hot-toast";
 import Loader from "components/UI/loader";
 import { useScript } from "common/hooks";
 import { useEffect } from "react";
+import { useRouter } from "next/router";
+import { gaPageView } from "../services/ga";
 
 function DtechtiveApp({ Component, pageProps }: AppProps) {
+    const router = useRouter();
     const store = useStore(pageProps.initialReduxState);
     const persistor = persistStore(store, {}, function () {
         persistor.persist();
@@ -74,6 +77,21 @@ function DtechtiveApp({ Component, pageProps }: AppProps) {
     //         });
     //     };
     // }, [MicAccessTool]);
+
+    useEffect(() => {
+        const handleRouteChange = (url: any) => {
+            gaPageView(url);
+        };
+        //When the component is mounted, subscribe to router changes
+        //and log those page views
+        router.events.on("routeChangeComplete", handleRouteChange);
+
+        // If the component is unmounted, unsubscribe
+        // from the event with the `off` method
+        return () => {
+            router.events.off("routeChangeComplete", handleRouteChange);
+        };
+    }, [router.events]);
 
     return (
         <>
