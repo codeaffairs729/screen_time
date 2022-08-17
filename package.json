@@ -30,6 +30,7 @@
     "next": "^12.0.10",
     "next-redux-wrapper": "^7.0.5",
     "pg": "^8.7.3",
+    "posthog-js": "^1.29.0",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-hook-form": "^7.27.0",

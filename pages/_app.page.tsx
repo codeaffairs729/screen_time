@@ -36,6 +36,7 @@ import { useScript } from "common/hooks";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { gaPageView } from "../services/ga";
+import posthog from "posthog-js";
 
 function DtechtiveApp({ Component, pageProps }: AppProps) {
     const router = useRouter();
@@ -79,8 +80,14 @@ function DtechtiveApp({ Component, pageProps }: AppProps) {
     // }, [MicAccessTool]);
 
     useEffect(() => {
+        // Init PostHog
+        posthog.init("phc_HfQBhd9FAx2wjqftT9wxQMRa1HUotiFp6QINKAU2Tb9", {
+            api_host: "https://app.posthog.com",
+        });
+
         const handleRouteChange = (url: any) => {
             gaPageView(url);
+            posthog.capture("$pageview");
         };
         //When the component is mounted, subscribe to router changes
         //and log those page views

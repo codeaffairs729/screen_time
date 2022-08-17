@@ -11,7 +11,7 @@ import { ReactNode, useContext } from "react";
 import { SearchVMContext } from "../search.vm";
 import { RootState } from "store";
 import { useSelector } from "react-redux";
-import { gtageventDatasetView } from "services/ga";
+import { usereventDatasetView } from "services/ga";
 
 const TableBody = () => {
     const vm = useContext(SearchVMContext);
@@ -42,7 +42,7 @@ const Row = ({ dataset }: { dataset: Dataset }) => {
                 <h4 className="font-semibold text-sm mb-1">
                     <Link href={`/datasets/${dataset.id}`}>
                         <a
-                            onClick={() => gtageventDatasetView(user, dataset)}
+                            onClick={() => usereventDatasetView(user, dataset)}
                             className="hover:text-dtech-secondary-light"
                         >
                             {dataset.detail.name}

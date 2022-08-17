@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import DefaultLayout from "../../components/layouts/default";
 import { RootState } from "store";
 import { useSelector } from "react-redux";
-import { gtageventSearchQuery } from "services/ga";
+import { usereventSearchQuery } from "services/ga";
 
 const HomePage = () => {
     const router = useRouter();
@@ -26,7 +26,7 @@ const HomePage = () => {
                                 if (!option) return;
 
                                 // gtag: record the search query by the user if they are logged in, if not, use anonymous.
-                                gtageventSearchQuery(option.value, user);
+                                usereventSearchQuery(option.value, user);
                                 router.push({
                                     pathname: "/search",
                                     query: { q: option.value },

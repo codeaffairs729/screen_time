@@ -1,3 +1,5 @@
+import { posthog } from "posthog-js";
+
 // log the pageview with their URL
 export const gaPageView = (url) => {
     window.gtag("config", process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS, {
@@ -5,36 +7,29 @@ export const gaPageView = (url) => {
     });
 };
 
-// log specific events happening.
-// gtag('event', '<event_name>', {<event_params>});
-export const gaUserEvent = ({ action, params }) => {
-    // ga.event({
-    //     action: "search",
-    //     params : {
-    //       search_term: query
-    //     }
-    //   })
-    window.gtag("event", action, params);
-};
-
-// Custom events
-// gtag('event',
-//      <action: string>, -> value that will appear as the event action in GA Event reports.
-//   {
-//     'event_category': <category: string = "general">,
-//     'event_label': <label>,
-//     'value': <value>
-//   });
-export const gtageventSearchQuery = (query, user) => {
+export const usereventSearchQuery = (query, user) => {
     const user_id = user !== null ? user.email : "anonymous";
     window.gtag("event", "search", {
         search_term: query,
         user_id: user_id,
     });
-    console.log(query, user_id);
+
+    // PostHog
+    posthog.capture("search query", { search_term: query });
 };
 
-export const gtageventDatasetDownload = (user, dataset, url) => {
+export const usereventSearchQueryResults = (query, user) => {
+    const user_id = user !== null ? user.email : "anonymous";
+    window.gtag("event", "search", {
+        search_term: query,
+        user_id: user_id,
+    });
+
+    // PostHog
+    posthog.capture("search query results", { search_term: query });
+};
+
+export const usereventDatasetDownload = (user, dataset, url) => {
     const user_id = user !== null ? user.email : "anonymous";
 
     window.gtag("event", "dataset_download", {
@@ -42,15 +37,24 @@ export const gtageventDatasetDownload = (user, dataset, url) => {
         dataset_id: dataset.id,
         datafile_id: url,
     });
-    console.log(user_id, dataset.id, url);
+
+    // PostHog
+    posthog.capture("datafile download", {
+        dataset_id: dataset.id,
+        datafile_id: url,
+    });
 };
 
-export const gtageventDatasetView = (user, dataset) => {
+export const usereventDatasetView = (user, dataset) => {
     const user_id = user !== null ? user.email : "anonymous";
 
     window.gtag("event", "dataset_view", {
         user_id: user_id,
         dataset_id: dataset.id,
     });
-    console.log(user_id, dataset);
+
+    // PostHog
+    posthog.capture("dataset view", {
+        dataset_id: dataset.id,
+    });
 };

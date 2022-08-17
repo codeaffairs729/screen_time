@@ -4,7 +4,7 @@ import Dataset from "models/dataset.model";
 import Image from "next/image";
 import { RootState } from "store";
 import { useSelector } from "react-redux";
-import { gtageventDatasetDownload } from "services/ga";
+import { usereventDatasetDownload } from "services/ga";
 
 const DatasetDownload = ({
     dataset,
@@ -55,7 +55,7 @@ const DatasetDownloadItem = ({
 
     const updateDownloadStat = () => {
         Http.post(`/v1/datasets/${dataset.id}/downloads`);
-        gtageventDatasetDownload(user, dataset, url);
+        usereventDatasetDownload(user, dataset, url);
     };
     const newUrl = url?.replace(/["']/g, "");
 
