@@ -7,7 +7,7 @@ loadEnvConfig(projectDir);
 const config: PlaywrightTestConfig = {
     forbidOnly: !!process.env.CI,
     retries: process.env.CI ? 2 : 0,
-    workers: 3,
+    workers: 20,
     use: {
         trace: "on-first-retry",
     },
@@ -23,6 +23,12 @@ const config: PlaywrightTestConfig = {
         {
             name: "webkit",
             use: { ...devices["Desktop Safari"] },
+        },
+        {
+            name: "site",
+            testDir: "./tests/pages",
+            testMatch: /.*.spec.ts/,
+            
         },
     ],
 };

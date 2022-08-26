@@ -3,7 +3,7 @@ import sequelize from "tests/database";
 
 const userData = {
     name: "John Doe",
-    email: "johndoe@a.com",
+    email: "johndoe_favourite_dataset@a.com",
     password: "Password1!",
     passwordHash:
         "$2b$12$hCFuhNBfoQ2uKX1GUHduaeXRJaFS04NS1.oclV8.DpsqWSM1RxTPK",
@@ -50,7 +50,7 @@ const loginUser = async () => {
     await page.locator('[placeholder="Password"]').click();
     await page.locator('[placeholder="Password"]').fill(userData.password);
     await Promise.all([
-        page.waitForNavigation(/*{ url: 'http://localhost:3000/' }*/),
+        page.waitForNavigation(/*{ url: '${process.env.NEXT_PUBLIC_SENTIMENT_WEBCLIENT_ROOT}/' }*/),
         page.locator('button:has-text("Log In")').click(),
     ]);
 };
@@ -60,20 +60,20 @@ const logoutUser = async () => {
         .locator('button[data-selector="profile-dropdown-button"]')
         .click();
     await Promise.all([
-        page.waitForNavigation(/*{ url: 'http://localhost:3000/' }*/),
+        page.waitForNavigation(/*{ url: '${process.env.NEXT_PUBLIC_SENTIMENT_WEBCLIENT_ROOT}/' }*/),
         page.locator('button:has-text("Log Out")').click(),
     ]);
 };
 
 const searchForDataset = async () => {
     await Promise.all([
-        page.waitForNavigation(/*{ url: 'http://localhost:3000/' }*/),
+        page.waitForNavigation(/*{ url: '${process.env.NEXT_PUBLIC_SENTIMENT_WEBCLIENT_ROOT}/' }*/),
         page.locator('a:has-text("Home")').click(),
     ]);
     await page.locator(".dataset-search-input input").click();
     await page.locator(".dataset-search-input input").fill("covid");
     await Promise.all([
-        page.waitForNavigation(/*{ url: 'http://localhost:3000/search?q=covid' }*/),
+        page.waitForNavigation(/*{ url: '${process.env.NEXT_PUBLIC_SENTIMENT_WEBCLIENT_ROOT}/search?q=covid' }*/),
         page.locator(".dataset-search-input input").press("Enter"),
     ]);
 };
@@ -83,7 +83,7 @@ const checkProfileFavourites = async (extraSteps: Function) => {
         .locator('button[data-selector="profile-dropdown-button"]')
         .click();
     await Promise.all([
-        page.waitForNavigation(/*{ url: 'http://localhost:3000/profile' }*/),
+        page.waitForNavigation(/*{ url: '${process.env.NEXT_PUBLIC_SENTIMENT_WEBCLIENT_ROOT}/profile' }*/),
         page.locator('a:has-text("My Profile")').click(),
     ]);
     await extraSteps();
@@ -132,7 +132,7 @@ test.describe("Favourite/unfavourite dataset", () => {
             "data-dataset-id"
         );
         await Promise.all([
-            page.waitForNavigation(/*{ url: 'http://localhost:3000/datasets/<id>' }*/),
+            page.waitForNavigation(/*{ url: '${process.env.NEXT_PUBLIC_SENTIMENT_WEBCLIENT_ROOT}/datasets/<id>' }*/),
             datasetItem.locator("h4 a").click(),
         ]);
         favDatasetData["statisticsFavCount"] = Number(
@@ -141,7 +141,7 @@ test.describe("Favourite/unfavourite dataset", () => {
                 .innerText()
         );
         await Promise.all([
-            page.waitForNavigation(/*{ url: 'http://localhost:3000/search?q=covid' }*/),
+            page.waitForNavigation(/*{ url: '${process.env.NEXT_PUBLIC_SENTIMENT_WEBCLIENT_ROOT}/search?q=covid' }*/),
             page.locator('[data-selector="back-btn"]').click(),
         ]);
         console.log("statisticsFavCount", favDatasetData["statisticsFavCount"]);
@@ -164,7 +164,7 @@ test.describe("Favourite/unfavourite dataset", () => {
             )
         ).toHaveCount(1);
         await Promise.all([
-            page.waitForNavigation(/*{ url: 'http://localhost:3000/datasets/<id>' }*/),
+            page.waitForNavigation(/*{ url: '${process.env.NEXT_PUBLIC_SENTIMENT_WEBCLIENT_ROOT}/datasets/<id>' }*/),
             page
                 .locator(
                     `[data-selector="dataset-search-item"][data-dataset-id='${favDatasetData["id"]}']`
@@ -221,11 +221,9 @@ test.describe("Favourite/unfavourite dataset", () => {
                 page.locator(`[data-dataset-id="${favDatasetData["id"]}"]`)
             ).toHaveCount(0);
         });
-
-        // await page.pause();
         await searchForDataset();
         await Promise.all([
-            page.waitForNavigation(/*{ url: 'http://localhost:3000/datasets/<id>' }*/),
+            page.waitForNavigation(/*{ url: '${process.env.NEXT_PUBLIC_SENTIMENT_WEBCLIENT_ROOT}/datasets/<id>' }*/),
             page
                 .locator(
                     `[data-selector="dataset-search-item"][data-dataset-id='${favDatasetData["id"]}']`

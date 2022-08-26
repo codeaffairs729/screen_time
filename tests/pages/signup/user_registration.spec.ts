@@ -58,7 +58,7 @@ test.describe("User registration", () => {
             page = await browser.newPage();
             console.log("DATABASE SETUP COMPLETED");
             // Navigate to login page (/signup)
-            await page.goto(`http://localhost:3000/signup`);
+            await page.goto(`${process.env.NEXT_PUBLIC_SENTIMENT_WEBCLIENT_ROOT}/signup`);
         } catch (error) {
             console.log("beforeAll error", error);
         }

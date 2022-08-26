@@ -129,7 +129,6 @@ test.describe("Filter dataset by domain", () => {
         filterDatasetData.D = await validDomainCheckbox
             .locator("span")
             .innerText();
-
         // Check filter
         await Promise.all([
             page.waitForResponse(async (response: Response) => {
@@ -208,6 +207,5 @@ test.describe("Filter dataset by domain", () => {
                 JSON.stringify(filterDatasetData.R3)
         ).toBe(true);
         console.log(filterDatasetData);
-        await page.pause();
     });
 });
