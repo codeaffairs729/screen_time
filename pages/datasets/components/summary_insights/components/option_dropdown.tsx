@@ -2,7 +2,7 @@ import { Fragment, useState } from "react";
 import { Combobox, Transition } from "@headlessui/react";
 import { CheckIcon, SelectorIcon } from "@heroicons/react/solid";
 
-export default function DomainDropdown({
+export default function OptionDropdown({
     items,
     activeItem,
     changeFunc,
@@ -25,12 +25,12 @@ export default function DomainDropdown({
               );
 
     return (
-        <div className="w-72 mx-auto text-left">
+        <div className="w-72 text-left">
             <Combobox value={activeItem} onChange={changeFunc}>
                 <div className="relative mt-1">
-                    <div className="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
+                    <div className="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left">
                         <Combobox.Input
-                            className="w-full rounded-lg py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 focus:ring-dtech-secondary-light border-2 border-dtech-secondary-light focus:border-dtech-secondary-light"
+                            className="w-full rounded-lg py-2 pl-3 pr-10 text-md font-semibold leading-5 text-gray-900 border-[0px] bg-[#f5f5f5]"
                             displayValue={(item: string) => item}
                             onChange={(event) => setQuery(event.target.value)}
                         />
@@ -58,10 +58,8 @@ export default function DomainDropdown({
                                     <Combobox.Option
                                         key={idx}
                                         className={({ active }) =>
-                                            `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                                                active
-                                                    ? "text-white bg-dtech-secondary-light"
-                                                    : "text-gray-900"
+                                            `relative cursor-default select-none py-2 pl-10 pr-4 text-gray-900 ${
+                                                active ? "bg-gray-200" : ""
                                             }`
                                         }
                                         value={item}
@@ -81,8 +79,8 @@ export default function DomainDropdown({
                                                     <span
                                                         className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
                                                             active
-                                                                ? "text-white"
-                                                                : "text-dtech-secondary-light"
+                                                                ? "text-gray-900"
+                                                                : "text-gray-900"
                                                         }`}
                                                     >
                                                         <CheckIcon

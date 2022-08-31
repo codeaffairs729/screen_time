@@ -1,5 +1,5 @@
 import { test, expect, Page } from "@playwright/test";
-import sequelize from "../database";
+import sequelize from "tests/database";
 
 const { QueryTypes } = require("sequelize");
 

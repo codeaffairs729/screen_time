@@ -2,10 +2,10 @@ import DefaultLayout from "components/layouts/default";
 import SummarySection from "./components/summary_section";
 import DatasetDetailVM, { DatasetDetailVMContext } from "./dataset_detail.vm";
 import { Tab } from "@headlessui/react";
-import SummaryStatistics from "./components/summary_statitics";
 import TabHeader from "./components/tab_header";
 import FeedbackSection from "./components/feedback_section";
 import PreviewSection from "./components/preview_section";
+import SummaryInsights from "./components/summary_insights";
 import { NextPageContext } from "next";
 import Http from "common/http";
 import Dataset from "models/dataset.model";
@@ -40,8 +40,8 @@ const DatasetDetailPage = ({ dataset }: { dataset: Dataset | undefined }) => {
                     <div className="w-2/3 border">
                         <Tab.Group>
                             <Tab.List className="flex justify-between border-b-2 border-gray-400">
-                                <TabHeader>Preview Dataset</TabHeader>
-                                <TabHeader>Summary Statistics</TabHeader>
+                                <TabHeader>Preview</TabHeader>
+                                <TabHeader>Insights</TabHeader>
                                 <TabHeader>Feedback</TabHeader>
                                 <TabHeader>You may also like</TabHeader>
                             </Tab.List>
@@ -50,7 +50,7 @@ const DatasetDetailPage = ({ dataset }: { dataset: Dataset | undefined }) => {
                                     <PreviewSection />
                                 </Tab.Panel>
                                 <Tab.Panel className="w-full">
-                                    <SummaryStatistics />
+                                    <SummaryInsights />
                                 </Tab.Panel>
                                 <Tab.Panel className="w-full">
                                     <FeedbackSection />
