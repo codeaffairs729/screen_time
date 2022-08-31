@@ -1,8 +1,11 @@
 import React from "react";
 
-export default function RenderTable({ tableData }) {
+export default function RenderTable({ tableData, id }) {
     return (
-        <table className="w-full table-auto overflow-x-auto overflow-y-auto overflow-scroll block whitespace-nowrap">
+        <table
+            id={id}
+            className="w-full table-auto overflow-x-auto overflow-y-auto overflow-scroll block whitespace-nowrap"
+        >
             <thead className="text-xs bg-gray-200">
                 <tr>
                     <th
