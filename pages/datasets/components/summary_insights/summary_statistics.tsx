@@ -56,7 +56,9 @@ const SummaryRow = ({
         <div className="flex my-3.5 items-end">
             <div className="mx-2">{renderIcon(icon)}</div>
             <div className="mx-2 font-medium text-md">{name}</div>
-            <div className="mx-3 text-dtech-secondary-dark text-xl font-semibold">{value}</div>
+            <div className="mx-3 text-dtech-secondary-dark text-xl font-semibold">
+                {value}
+            </div>
         </div>
     );
 };
@@ -86,14 +88,22 @@ const SummaryStatistics = () => {
                     <SummaryRow
                         icon="heart"
                         name="Added to favorites"
-                        value="1"
+                        value={`${dataset.detail.favourites}`}
                     />
-                    <SummaryRow icon="download" name="Downloaded" value="1" />
-                    <SummaryRow icon="eye" name="Viewed" value="1" />
+                    <SummaryRow
+                        icon="download"
+                        name="Downloaded"
+                        value={`${dataset.detail.downloads}`}
+                    />
+                    <SummaryRow
+                        icon="eye"
+                        name="Viewed"
+                        value={`${dataset.detail.views}`}
+                    />
                     <SummaryRow
                         icon="search"
                         name="Displayed in search results"
-                        value="1"
+                        value={`${dataset.detail.displays}`}
                     />
                 </div>
             </div>
