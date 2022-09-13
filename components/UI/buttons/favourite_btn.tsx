@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 import ReactTooltip from "react-tooltip";
 import { RootState } from "store";
 import Loader from "../loader";
+import { BsHeart, BsHeartFill } from "react-icons/bs";
 
 const FavouriteBtn = ({
     className = "",
@@ -42,17 +43,13 @@ const FavouriteBtn = ({
                 )}
             >
                 {!isHandlingFavourite ? (
-                    <Image
-                        src={`/images/icons/favourite/${
-                            isFavourited ? "favourited" : "not_favourited"
-                        }.svg`}
-                        data-selector={
-                            isFavourited ? "fav_active" : "fav_inactive"
-                        }
-                        width="25px"
-                        height="25px"
-                        alt="favourite"
-                    />
+                    <>
+                        {isFavourited ? (
+                            <BsHeartFill className="w-5 h-5 text-[#AD1DEB]" />
+                        ) : (
+                            <BsHeart className="w-5 h-5 text-[#AD1DEB]" />
+                        )}
+                    </>
                 ) : (
                     <Loader className="m-0.5" />
                 )}

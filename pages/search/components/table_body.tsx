@@ -1,13 +1,9 @@
-import clsx from "clsx";
-import DatasetDownload from "components/dataset/dataset_download";
 import LabelledRow from "components/dataset/labelled_row";
 import FavouriteBtn from "components/UI/buttons/favourite_btn";
 import StarRating from "components/UI/star_rating";
-import { DateTime } from "luxon";
 import Dataset from "models/dataset.model";
-import Image from "next/image";
 import Link from "next/link";
-import { ReactNode, useContext } from "react";
+import { useContext } from "react";
 import { SearchVMContext } from "../search.vm";
 import { usereventDatasetView } from "services/usermetrics.service";
 import { useRouter } from "next/router";
@@ -21,7 +17,7 @@ const TableBody = () => {
     return (
         <>
             {vm.datasets?.map((dataset, i) => (
-                <Row key={i} dataset={dataset} />
+                <Row key={i} dataset={dataset} data-results-id={i} />
             ))}
         </>
     );
@@ -34,93 +30,70 @@ const Row = ({ dataset }: { dataset: Dataset }) => {
     } = router;
     return (
         <>
-            <Cell
-                className="min-w-[350px]"
-                dataSelector="dataset-search-item"
-                dataDatasetId={dataset.id}
+            <div
+                className="outline outline-1 outline-gray-300 sm:px-2 md:px-5 py-1 flex flex-row justify-between"
+                data-dataset-id={"dataset-search-item"}
+                data-selector={dataset.id}
             >
-                {/* <div> */}
-                <h4 className="font-semibold text-sm mb-1">
-                    <Link href={`/datasets/${dataset.id}`}>
-                        <a
-                            onClick={() => usereventDatasetView(dataset, q)}
-                            className="hover:text-dtech-secondary-light"
-                        >
-                            {dataset.detail.name}
-                        </a>
-                    </Link>
-                </h4>
-                <p className="text-xs text-gray-800 mb-1.5">
-                    {dataset.detail.description}
-                </p>
-                <DatasetDownload dataset={dataset} className="mb-2" />
-                <LabelledRow className="mb-1.5" label="Data Host">
-                    <a
-                        href={dataset.detail.hostUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="text-xs underline"
-                    >
-                        {dataset.detail.hostName}
-                    </a>
-                </LabelledRow>
-                <LabelledRow className="mb-1.5" label="Data Owner">
-                    {dataset.owner.organisation}
-                </LabelledRow>
-                <LabelledRow className="mb-1.5" label="License">
-                    {dataset.detail.license.type}
-                </LabelledRow>
-                {/* </div> */}
-            </Cell>
-            <Cell className="text-center">
-                {<StarRating rating={dataset.detail.popularity} />}
-            </Cell>
-            <Cell className="text-center">
-                {<StarRating rating={dataset.detail.dataQuality} />}
-            </Cell>
-            <Cell className="text-xs text-center pt-1 font-medium text-gray-700">
-                {dataset.detail.lastUpdate.isValid
-                    ? dataset.detail.lastUpdate.toRelative()
-                    : ""}
-            </Cell>
-            <Cell className="text-xs text-center pt-1 font-medium text-gray-700">
-                {dataset.detail.lastDownloaded.isValid
-                    ? dataset.detail.lastDownloaded.toRelative()
-                    : ""}
-            </Cell>
-            <Cell
-                className="text-center pt-1"
-                dataSelector="fav-btn__container"
-                dataDatasetId={dataset.id}
-            >
-                <FavouriteBtn className="mx-auto" dataset={dataset} />
-            </Cell>
-        </>
-    );
-};
+                <div className="flex flex-col flex-1">
+                    <h3 className="font-semibold text-md my-3">
+                        <Link href={`/datasets/${dataset.id}`}>
+                            <a
+                                onClick={() => usereventDatasetView(dataset, q)}
+                                className="hover:text-dtech-secondary-light"
+                            >
+                                {dataset.detail.name}
+                            </a>
+                        </Link>
+                    </h3>
 
-const Cell = ({
-    children,
-    className = "",
-    dataDatasetId,
-    dataSelector,
-}: {
-    children: ReactNode;
-    className?: string;
-    dataDatasetId?: string | Number;
-    dataSelector?: string;
-}) => {
-    return (
-        <div
-            data-dataset-id={dataDatasetId}
-            data-selector={dataSelector}
-            className={clsx(
-                "outline outline-1 outline-gray-300 px-2 py-1",
-                className
-            )}
-        >
-            {children}
-        </div>
+                    <p className="text-xs text-gray-800 my-1.5">
+                        {dataset.detail.description}
+                    </p>
+
+                    <div className="flex flex-row my-1.5">
+                        <LabelledRow className="mr-10" label="License">
+                            {dataset.detail.license.type}
+                        </LabelledRow>
+                        <LabelledRow className="mr-10" label="Last updated">
+                            {dataset.detail.lastUpdate.isValid
+                                ? dataset.detail.lastUpdate.toRelative()
+                                : "-"}
+                        </LabelledRow>
+                        <LabelledRow className="mr-10" label="Metadata quality">
+                            {<StarRating rating={dataset.detail.dataQuality} />}
+                        </LabelledRow>
+                    </div>
+
+                    <div className="flex flex-row my-1.5">
+                        <LabelledRow className="mr-10" label="Data Host">
+                            <a
+                                href={dataset.detail.hostUrl}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="text-xs underline"
+                            >
+                                {dataset.detail.hostName}
+                            </a>
+                        </LabelledRow>
+                        <LabelledRow className="mr-10" label="Data Owner">
+                            {dataset.owner.organisation == ""
+                                ? "-"
+                                : dataset.owner.organisation}
+                        </LabelledRow>
+                    </div>
+                </div>
+                <div className="w-20 md:w-40 items-center py-5">
+                    <div
+                        data-dataset-id={dataset.id}
+                        data-selector={"fav-btn__container"}
+                        className="text-center"
+                    >
+                        <FavouriteBtn className="mx-auto" dataset={dataset} />
+                    </div>
+                </div>
+            </div>
+        </>
     );
 };
 
