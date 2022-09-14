@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import AuthService from "services/auth.service";
 import { RootState } from "store";
 import { usereventLogout } from "services/usermetrics.service";
+import { BsPersonCircle } from "react-icons/bs";
 
 const ProfileDropdown = () => {
     const user = useSelector((state: RootState) => state.auth.user);
@@ -16,16 +17,13 @@ const ProfileDropdown = () => {
             <Menu.Button
                 aria-label="profile dropdown button"
                 data-selector="profile-dropdown-button"
-                className="w-10"
+                className="text-3xl"
             >
-                <Image
-                    src={`/images/icons/profile/${
-                        user ? "signedin_icon" : "guest_Icon"
-                    }.svg`}
-                    width="40"
-                    height="40"
-                    alt="profile dropdown"
-                />
+                {user ? (
+                    <BsPersonCircle className="text-dtech-secondary-dark" />
+                ) : (
+                    <BsPersonCircle className="text-gray-300" />
+                )}
             </Menu.Button>
             <Transition
                 as={Fragment}

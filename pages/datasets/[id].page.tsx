@@ -11,12 +11,15 @@ import Http from "common/http";
 import Dataset from "models/dataset.model";
 import ErrorAlert from "components/UI/alerts/error_alert";
 import MayAlsoLike from "./components/may_also_like";
+import DataFilesSection from "./components/data_files";
 import BackBtn from "components/UI/buttons/back_btn";
-import log from "common/logger";
 import { getCookieFromServer } from "common/utils/cookie.util";
 import { AUTH_TOKEN } from "common/constants/cookie.key";
+import { useState } from "react";
 
 const DatasetDetailPage = ({ dataset }: { dataset: Dataset | undefined }) => {
+    const [selectedIndex, setSelectedIndex] = useState(0);
+
     if (!dataset) {
         return (
             <DefaultLayout>
@@ -38,14 +41,25 @@ const DatasetDetailPage = ({ dataset }: { dataset: Dataset | undefined }) => {
                         <SummarySection />
                     </div>
                     <div className="w-2/3 border">
-                        <Tab.Group>
+                        <Tab.Group
+                            selectedIndex={selectedIndex}
+                            onChange={setSelectedIndex}
+                        >
                             <Tab.List className="flex justify-between border-b-2 border-gray-400">
+                                <TabHeader>Data files</TabHeader>
                                 <TabHeader>Preview</TabHeader>
                                 <TabHeader>Insights</TabHeader>
                                 <TabHeader>Feedback</TabHeader>
-                                <TabHeader>You may also like</TabHeader>
+                                <TabHeader>Related datasets</TabHeader>
                             </Tab.List>
                             <Tab.Panels className="h-[calc(100%-var(--dataset-detail-tab-header-height))] w-full flex">
+                                <Tab.Panel className="w-full">
+                                    <DataFilesSection
+                                        goToPreview={() => {
+                                            setSelectedIndex(1);
+                                        }}
+                                    />
+                                </Tab.Panel>
                                 <Tab.Panel className="w-full">
                                     <PreviewSection />
                                 </Tab.Panel>
