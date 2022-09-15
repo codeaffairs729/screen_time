@@ -86,7 +86,7 @@ const SearchVM = () => {
      */
     const { data: datasets, error } = useSWR(
         q
-            ? `/v3/datasets?searchquery=${q}&pagesize=${pageSize}&pagenum=${currentPageNo}${queryParams}`
+            ? `/v3/datasets/?searchquery=${q}&pagesize=${pageSize}&pagenum=${currentPageNo}${queryParams}`
             : null,
         (url: string) =>
             Http.get(url, {

@@ -32,7 +32,6 @@ const getDatasetResults = async (response: Response) => {
     const resp = await response.json();
     const results: { [key: string]: any }[] = resp[0].user_search[0].results;
     const filter_options = resp[0].user_search[0].filter_options;
-    await page.pause();
     return { filterOptions: filter_options, results };
 };
 
@@ -130,11 +129,9 @@ test.describe("Filter dataset by domain", () => {
         filterDatasetData.D = await validDomainCheckbox
             .locator("span")
             .innerText();
-        // await page.pause();
         // Check filter
         await Promise.all([
             page.waitForResponse(async (response: Response) => {
-                console.log("response", response);
                 const regex = new RegExp(".*datasets.*");
                 const isValid =
                     regex.test(response.url()) && response.status() === 200;
