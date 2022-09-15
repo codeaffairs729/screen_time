@@ -58,7 +58,7 @@ test.describe("User registration", () => {
             page = await browser.newPage();
             console.log("DATABASE SETUP COMPLETED");
             // Navigate to login page (/signup)
-            await page.goto(`${process.env.NEXT_PUBLIC_SENTIMENT_WEBCLIENT_ROOT}/signup`);
+            await page.goto(`${process.env.NEXT_PUBLIC_WEBCLIENT_ROOT}/signup`);
         } catch (error) {
             console.log("beforeAll error", error);
         }
@@ -139,7 +139,7 @@ test.describe("User registration", () => {
         // On successful registration user is logged in redirected to the home page
         await Promise.all([
             page.waitForNavigation({
-                url: `${process.env.NEXT_PUBLIC_SENTIMENT_WEBCLIENT_ROOT}`,
+                url: `${process.env.NEXT_PUBLIC_WEBCLIENT_ROOT}`,
             }),
             page.waitForResponse(
                 `${process.env.NEXT_PUBLIC_WEBPORTAL_API_ROOT}/v1/users/signup`

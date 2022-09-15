@@ -79,7 +79,7 @@ test.describe("Filter dataset by file type", () => {
     });
     test("Search and filter by file type", async () => {
         // Navigate to the search home page and search
-        await page.goto(`${process.env.NEXT_PUBLIC_SENTIMENT_WEBCLIENT_ROOT}/`);
+        await page.goto(`${process.env.NEXT_PUBLIC_WEBCLIENT_ROOT}/`);
         await page.locator(".dataset-search-input input").click();
         await page.locator(".dataset-search-input input").fill("covid");
         let validFilterItems: Set<string> = new Set();
@@ -97,7 +97,7 @@ test.describe("Filter dataset by file type", () => {
             }),
             // EXPECTATION: user is taken to the Results List view
             page.waitForNavigation({
-                url: `${process.env.NEXT_PUBLIC_SENTIMENT_WEBCLIENT_ROOT}/search?q=covid`,
+                url: `${process.env.NEXT_PUBLIC_WEBCLIENT_ROOT}/search?q=covid`,
             }),
             page.locator(".dataset-search-input input").press("Enter"),
         ]);

@@ -30,7 +30,7 @@ const FilterOwner = () => {
   });
 
   return (
-    <FilterSection label="Owner">
+    <FilterSection dataSelector="owner-filter-section" label="Owner">
       {vm.isLoading && (
         <div className="m-3 flex items-center justify-center">
           <Loader />
@@ -44,6 +44,7 @@ const FilterOwner = () => {
       {!vm.isLoading &&
         fields.map((field, i) => (
           <FilterCheckboxField
+          dataSelector="owner-filter"
             key={field.id}
             register={register(`org.${i}.checkbox`)}
             label={field.value}

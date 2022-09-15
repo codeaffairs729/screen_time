@@ -43,14 +43,14 @@ const deleteUserAndFavourites = async () => {
 
 const loginUser = async () => {
     await page.goto(
-        `${process.env.NEXT_PUBLIC_SENTIMENT_WEBCLIENT_ROOT}/login`
+        `${process.env.NEXT_PUBLIC_WEBCLIENT_ROOT}/login`
     );
     await page.locator('[placeholder="Email"]').click();
     await page.locator('[placeholder="Email"]').fill(userData.email);
     await page.locator('[placeholder="Password"]').click();
     await page.locator('[placeholder="Password"]').fill(userData.password);
     await Promise.all([
-        page.waitForNavigation(/*{ url: '${process.env.NEXT_PUBLIC_SENTIMENT_WEBCLIENT_ROOT}/' }*/),
+        page.waitForNavigation(/*{ url: '${process.env.NEXT_PUBLIC_WEBCLIENT_ROOT}/' }*/),
         page.locator('button:has-text("Log In")').click(),
     ]);
 };
@@ -60,20 +60,20 @@ const logoutUser = async () => {
         .locator('button[data-selector="profile-dropdown-button"]')
         .click();
     await Promise.all([
-        page.waitForNavigation(/*{ url: '${process.env.NEXT_PUBLIC_SENTIMENT_WEBCLIENT_ROOT}/' }*/),
+        page.waitForNavigation(/*{ url: '${process.env.NEXT_PUBLIC_WEBCLIENT_ROOT}/' }*/),
         page.locator('button:has-text("Log Out")').click(),
     ]);
 };
 
 const searchForDataset = async () => {
     await Promise.all([
-        page.waitForNavigation(/*{ url: '${process.env.NEXT_PUBLIC_SENTIMENT_WEBCLIENT_ROOT}/' }*/),
+        page.waitForNavigation(/*{ url: '${process.env.NEXT_PUBLIC_WEBCLIENT_ROOT}/' }*/),
         page.locator('a:has-text("Home")').click(),
     ]);
     await page.locator(".dataset-search-input input").click();
     await page.locator(".dataset-search-input input").fill("covid");
     await Promise.all([
-        page.waitForNavigation(/*{ url: '${process.env.NEXT_PUBLIC_SENTIMENT_WEBCLIENT_ROOT}/search?q=covid' }*/),
+        page.waitForNavigation(/*{ url: '${process.env.NEXT_PUBLIC_WEBCLIENT_ROOT}/search?q=covid' }*/),
         page.locator(".dataset-search-input input").press("Enter"),
     ]);
 };
@@ -83,7 +83,7 @@ const checkProfileFavourites = async (extraSteps: Function) => {
         .locator('button[data-selector="profile-dropdown-button"]')
         .click();
     await Promise.all([
-        page.waitForNavigation(/*{ url: '${process.env.NEXT_PUBLIC_SENTIMENT_WEBCLIENT_ROOT}/profile' }*/),
+        page.waitForNavigation(/*{ url: '${process.env.NEXT_PUBLIC_WEBCLIENT_ROOT}/profile' }*/),
         page.locator('a:has-text("My Profile")').click(),
     ]);
     await extraSteps();
@@ -124,7 +124,7 @@ test.describe("Favourite/unfavourite dataset", () => {
         });
     });
     test("Favourite dataset", async () => {
-        searchForDataset();
+        await searchForDataset();
         const datasetItem = await page
             .locator('[data-selector="dataset-search-item"]')
             .nth(0);
@@ -132,16 +132,17 @@ test.describe("Favourite/unfavourite dataset", () => {
             "data-dataset-id"
         );
         await Promise.all([
-            page.waitForNavigation(/*{ url: '${process.env.NEXT_PUBLIC_SENTIMENT_WEBCLIENT_ROOT}/datasets/<id>' }*/),
+            page.waitForNavigation(/*{ url: '${process.env.NEXT_PUBLIC_WEBCLIENT_ROOT}/datasets/<id>' }*/),
             datasetItem.locator("h4 a").click(),
         ]);
+        await page.locator('button:has-text("Summary Statistics")').click();
         favDatasetData["statisticsFavCount"] = Number(
             await page
                 .locator('[data-selector="statistics-fav-count"]')
                 .innerText()
         );
         await Promise.all([
-            page.waitForNavigation(/*{ url: '${process.env.NEXT_PUBLIC_SENTIMENT_WEBCLIENT_ROOT}/search?q=covid' }*/),
+            page.waitForNavigation(/*{ url: '${process.env.NEXT_PUBLIC_WEBCLIENT_ROOT}/search?q=covid' }*/),
             page.locator('[data-selector="back-btn"]').click(),
         ]);
         console.log("statisticsFavCount", favDatasetData["statisticsFavCount"]);
@@ -164,7 +165,7 @@ test.describe("Favourite/unfavourite dataset", () => {
             )
         ).toHaveCount(1);
         await Promise.all([
-            page.waitForNavigation(/*{ url: '${process.env.NEXT_PUBLIC_SENTIMENT_WEBCLIENT_ROOT}/datasets/<id>' }*/),
+            page.waitForNavigation(/*{ url: '${process.env.NEXT_PUBLIC_WEBCLIENT_ROOT}/datasets/<id>' }*/),
             page
                 .locator(
                     `[data-selector="dataset-search-item"][data-dataset-id='${favDatasetData["id"]}']`
@@ -173,6 +174,7 @@ test.describe("Favourite/unfavourite dataset", () => {
                 .locator("h4 a")
                 .click(),
         ]);
+        await page.locator('button:has-text("Summary Statistics")').click();
         const newFavCount = Number(
             await page
                 .locator(`[data-selector="statistics-fav-count"]`)
@@ -223,7 +225,7 @@ test.describe("Favourite/unfavourite dataset", () => {
         });
         await searchForDataset();
         await Promise.all([
-            page.waitForNavigation(/*{ url: '${process.env.NEXT_PUBLIC_SENTIMENT_WEBCLIENT_ROOT}/datasets/<id>' }*/),
+            page.waitForNavigation(/*{ url: '${process.env.NEXT_PUBLIC_WEBCLIENT_ROOT}/datasets/<id>' }*/),
             page
                 .locator(
                     `[data-selector="dataset-search-item"][data-dataset-id='${favDatasetData["id"]}']`
@@ -232,6 +234,7 @@ test.describe("Favourite/unfavourite dataset", () => {
                 .locator("h4 a")
                 .click(),
         ]);
+        await page.locator('button:has-text("Summary Statistics")').click();
         const newFavCount = Number(
             await page
                 .locator(`[data-selector="statistics-fav-count"]`)

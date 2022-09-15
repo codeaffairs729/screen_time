@@ -32,6 +32,7 @@ const getDatasetResults = async (response: Response) => {
     const resp = await response.json();
     const results: { [key: string]: any }[] = resp[0].user_search[0].results;
     const filter_options = resp[0].user_search[0].filter_options;
+    await page.pause();
     return { filterOptions: filter_options, results };
 };
 
@@ -85,7 +86,7 @@ test.describe("Filter dataset by domain", () => {
     });
     test("Search and filter by domain", async () => {
         // Navigate to the search home page and search
-        await page.goto(`${process.env.NEXT_PUBLIC_SENTIMENT_WEBCLIENT_ROOT}/`);
+        await page.goto(`${process.env.NEXT_PUBLIC_WEBCLIENT_ROOT}/`);
         await page.locator(".dataset-search-input input").click();
         await page.locator(".dataset-search-input input").fill("covid");
         let validDomains: Set<string> = new Set();
@@ -111,7 +112,7 @@ test.describe("Filter dataset by domain", () => {
             }),
             // EXPECTATION: user is taken to the Results List view
             page.waitForNavigation({
-                url: `${process.env.NEXT_PUBLIC_SENTIMENT_WEBCLIENT_ROOT}/search?q=covid`,
+                url: `${process.env.NEXT_PUBLIC_WEBCLIENT_ROOT}/search?q=covid`,
             }),
             page.locator(".dataset-search-input input").press("Enter"),
         ]);
@@ -129,9 +130,11 @@ test.describe("Filter dataset by domain", () => {
         filterDatasetData.D = await validDomainCheckbox
             .locator("span")
             .innerText();
+        // await page.pause();
         // Check filter
         await Promise.all([
             page.waitForResponse(async (response: Response) => {
+                console.log("response", response);
                 const regex = new RegExp(".*datasets.*");
                 const isValid =
                     regex.test(response.url()) && response.status() === 200;
@@ -142,7 +145,8 @@ test.describe("Filter dataset by domain", () => {
                     filterDatasetData.R2 = results
                         .filter(
                             (result: any) =>
-                                result["dataset"].domain.toLowerCase() == filterDatasetData.D.toLowerCase()
+                                result["dataset"].domain.toLowerCase() ==
+                                filterDatasetData.D.toLowerCase()
                             // JSON.parse(
                             //     result["dataset"].domain
                             // ).includes(filterDatasetData.T)

@@ -3,26 +3,26 @@ import { test, expect, Page, Response } from "@playwright/test";
 let page: Page;
 
 const filterDatasetData = {
-    R1: [] as string[], // list of all the titles on the first search
-    R2: [] as string[], // list of all the titles on the second search
-    R3: [] as string[], // list of all the titles on the third search
-    T1: [] as string[], // list of all the topic options available on the first search
-    T2: [] as string[], // list of all the topic options available on the second search
-    T: "",
+    R1: [] as string[], // list of all the datasets on the first search
+    R2: [] as string[], // list of all the datasets on the second search
+    R3: [] as string[], // list of all the datasets on the third search
+    F1: [] as string[], // list of all the filter options available on the first search
+    F2: [] as string[], // list of all the filter options available on the second search
+    D: "", // filter checkbox text
 };
 
 /**
  * Get the list of all the filter texts
  */
-const getTopics = async () => {
+const getDomains = async () => {
     await expect(
-        page.locator('[data-selector="topic-filter-section"]')
+        page.locator('[data-selector="owner-filter-section"]')
     ).toBeVisible();
-    const topicTypes = page.locator('[data-selector="topic-filter"]');
-    const topicTypeTexts = (await topicTypes.allInnerTexts()).filter(
+    const domainTypes = page.locator('[data-selector="owner-filter"]');
+    const domainTypeTexts = (await domainTypes.allInnerTexts()).filter(
         (e) => e.trim() != ""
     );
-    return topicTypeTexts;
+    return domainTypeTexts;
 };
 
 /**
@@ -31,40 +31,42 @@ const getTopics = async () => {
 const getDatasetResults = async (response: Response) => {
     const resp = await response.json();
     const results: { [key: string]: any }[] = resp[0].user_search[0].results;
-    const filter_options = resp[0].user_search[0].filter_options;
+    const filter_options = resp[0].user_search[0].filter_options.filter(
+        (f: string) => f
+    );
     return { filterOptions: filter_options, results };
 };
 
 /**
- * Valid topics are those topics which are not present in all of the results
+ * Valid filters are those filters which are filter options not present in all of the results
  */
-const getValidTopics = (
+const getValidFilters = (
     results: { [key: string]: any }[],
-    topics: string[] = []
+    filters: string[] = []
 ) => {
-    const validTopics: Set<string> = new Set();
-    for (let topic of topics) {
-        if (!topic || validTopics.has(topic)) {
+    const validFilters: Set<string> = new Set();
+    for (let filter of filters) {
+        if (!filter || validFilters.has(filter)) {
             continue;
         }
-        const filteredResultCount = results.filter((result: any) =>
-            JSON.parse(result["dataset"].topics.replace(/'/g, '"')).includes(
-                topic
-            )
+        const filteredResultCount = results.filter(
+            (result: any) =>
+                // result.urls.map((url: any) => url.format).includes(filter)
+                result["dataset"].filter == filter
         ).length;
         if (filteredResultCount != results.length) {
-            validTopics.add(topic);
+            validFilters.add(filter);
         }
     }
-    return validTopics;
+    return validFilters;
 };
 
-const getValidTopicCheckbox = (validTopics: Set<string>) => {
-    let validTopicCheckbox;
-    for (let filter of filterDatasetData.T1) {
-        if (validTopics.has(filter)) {
-            validTopicCheckbox = page.locator(
-                '[data-selector="topic-filter"]',
+const getValidDomainCheckbox = (validDomains: Set<string>) => {
+    let validDomainCheckbox;
+    for (let filter of filterDatasetData.F1) {
+        if (validDomains.has(filter)) {
+            validDomainCheckbox = page.locator(
+                '[data-selector="owner-filter"]',
                 {
                     has: page.locator(`text="${filter}"`),
                 }
@@ -72,19 +74,20 @@ const getValidTopicCheckbox = (validTopics: Set<string>) => {
             break;
         }
     }
-    return validTopicCheckbox;
+    return validDomainCheckbox;
 };
 
-test.describe("Filter dataset by topic", () => {
+test.describe("Filter dataset by owner", () => {
     test.beforeAll(async ({ browser }) => {
         page = await browser.newPage();
     });
-    test("Search and filter by topic", async () => {
+    test("Search and filter by owner", async () => {
         // Navigate to the search home page and search
         await page.goto(`${process.env.NEXT_PUBLIC_WEBCLIENT_ROOT}/`);
         await page.locator(".dataset-search-input input").click();
         await page.locator(".dataset-search-input input").fill("covid");
-        let validTopics: Set<string> = new Set();
+        let validDomains: Set<string> = new Set();
+        await page.pause();
         await Promise.all([
             page.waitForResponse(async (response: Response) => {
                 const regex = new RegExp(".*datasets.*");
@@ -94,10 +97,10 @@ test.describe("Filter dataset by topic", () => {
                     const { results, filterOptions } = await getDatasetResults(
                         response
                     );
-                    filterDatasetData.T1 = filterOptions["topic"];
-                    validTopics = getValidTopics(
+                    filterDatasetData.F1 = filterOptions["org"];
+                    validDomains = getValidFilters(
                         results,
-                        filterOptions["topic"]
+                        filterOptions["org"]
                     );
                     filterDatasetData.R1 = (results as any).map(
                         (result: any) => result["id"]
@@ -113,19 +116,18 @@ test.describe("Filter dataset by topic", () => {
         ]);
         // EXPECTATION: there are 20 results listed
         expect(filterDatasetData.R1.length == 20).toBe(true);
-        let validTopicCheckbox;
-        const newValidFilterCheckbox = getValidTopicCheckbox(validTopics);
+        let validDomainCheckbox;
+        const newValidFilterCheckbox = getValidDomainCheckbox(validDomains);
         if (newValidFilterCheckbox) {
-            validTopicCheckbox = newValidFilterCheckbox;
+            validDomainCheckbox = newValidFilterCheckbox;
         }
 
-        if (!validTopicCheckbox) {
+        if (!validDomainCheckbox) {
             return; // Cancel rest of the test if all the results contain all the filters
         }
-        filterDatasetData.T = await validTopicCheckbox
+        filterDatasetData.D = await validDomainCheckbox
             .locator("span")
             .innerText();
-
         // Check filter
         await Promise.all([
             page.waitForResponse(async (response: Response) => {
@@ -136,32 +138,34 @@ test.describe("Filter dataset by topic", () => {
                     const { results, filterOptions } = await getDatasetResults(
                         response
                     );
-                    // const results = res[1] as any;
                     filterDatasetData.R2 = results
-                        .filter((result: any) =>
-                            JSON.parse(
-                                result["dataset"].topics.replace(/'/g, '"')
-                            ).includes(filterDatasetData.T)
+                        .filter(
+                            (result: any) =>
+                                result["dataset"].domain.toLowerCase() ==
+                                filterDatasetData.D.toLowerCase()
+                            // JSON.parse(
+                            //     result["dataset"].domain
+                            // ).includes(filterDatasetData.T)
                         )
                         .map((result: any) => result["id"]);
                 }
                 return isValid;
             }),
-            validTopicCheckbox.locator("input").check(),
+            validDomainCheckbox.locator("input").check(),
         ]);
 
         const selectedFilter = page
-            .locator('[data-selector="topic-filter"] :checked')
+            .locator('[data-selector="owner-filter"] :checked')
             .first();
-        // EXPECTATION: the topic T is ticked in the options list
+        // EXPECTATION: the domain T is ticked in the options list
         expect(selectedFilter.isChecked()).toBeTruthy();
 
         // Record filters
-        filterDatasetData.T2 = await getTopics();
-        // EXPECTATION: T2 is the same as T1 (the options shouldn't change)
+        filterDatasetData.F2 = await getDomains();
+        // EXPECTATION: F2 is the same as F1 (the options shouldn't change)
         expect(
-            JSON.stringify(filterDatasetData.T1) ==
-                JSON.stringify(filterDatasetData.T2)
+            JSON.stringify(filterDatasetData.F1) ==
+                JSON.stringify(filterDatasetData.F2)
         ).toBe(true);
 
         // EXPECTATION: R2 != R1 (a filtering operation has occurred)
@@ -173,7 +177,7 @@ test.describe("Filter dataset by topic", () => {
         expect(filterDatasetData.R2.length == 20).toBe(true);
 
         let currentSelectedFilter = page.locator(
-            '[data-selector="topic-filter"] input:checked'
+            '[data-selector="domain-filter"] input:checked'
         );
         // Uncheck filter
         await Promise.all([
@@ -193,9 +197,9 @@ test.describe("Filter dataset by topic", () => {
         ]);
 
         currentSelectedFilter = page.locator(
-            '[data-selector="topic-filter"] input:checked'
+            '[data-selector="domain-filter"] input:checked'
         );
-        // EXPECTATION: the topic T becomes not ticked in the options list
+        // EXPECTATION: the domain T becomes not ticked in the options list
         await expect(currentSelectedFilter).toHaveCount(0);
         // EXPECTATION: R3 == R1 (the filter operation has been successfully reversed)
         expect(
@@ -203,6 +207,5 @@ test.describe("Filter dataset by topic", () => {
                 JSON.stringify(filterDatasetData.R3)
         ).toBe(true);
         console.log(filterDatasetData);
-        await page.pause();
     });
 });
