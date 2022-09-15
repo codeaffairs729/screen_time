@@ -35,7 +35,7 @@ test.describe("User login", () => {
     });
     test("test for validation errors when submitting without filling the form", async () => {
         // Navigate to login page (/login)
-        await page.goto(`${process.env.NEXT_PUBLIC_SENTIMENT_WEBCLIENT_ROOT}/login`);
+        await page.goto(`${process.env.NEXT_PUBLIC_WEBCLIENT_ROOT}/login`);
         // Click on "Get started now" button before filling in the fields
         await page.locator('button[data-selector="signin-button"]').click();
         // EXPECTATION: See validation messages for respective fields
@@ -65,7 +65,7 @@ test.describe("User login", () => {
         // On successful login user is redirected to the home page
         await Promise.all([
             page.waitForNavigation({
-                url: `${process.env.NEXT_PUBLIC_SENTIMENT_WEBCLIENT_ROOT}`,
+                url: `${process.env.NEXT_PUBLIC_WEBCLIENT_ROOT}`,
             }),
             page.waitForResponse(
                 `${process.env.NEXT_PUBLIC_WEBPORTAL_API_ROOT}/v1/users/signin`
@@ -85,7 +85,7 @@ test.describe("User login", () => {
             .click();
         await Promise.all([
             page.waitForNavigation({
-                url: `${process.env.NEXT_PUBLIC_SENTIMENT_WEBCLIENT_ROOT}/login`,
+                url: `${process.env.NEXT_PUBLIC_WEBCLIENT_ROOT}/login`,
             }),
             page.locator('button:has-text("Log Out")').click(),
         ]);

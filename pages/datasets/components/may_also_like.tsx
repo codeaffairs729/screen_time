@@ -14,7 +14,7 @@ const MayAlsoLike = () => {
         .map((t) => encodeURIComponent(t))
         .join(",");
     const { data: datasets, error } = useSWR(
-        `${process.env.NEXT_PUBLIC_PUBLIC_API_ROOT}/v3/datasets?searchquery=${searchTerm}&pagesize=20&pagenum=1`,
+        `${process.env.NEXT_PUBLIC_PUBLIC_API_ROOT}/v3/datasets/?searchquery=${searchTerm}&pagesize=20&pagenum=1`,
         (url: string) =>
             fetch(url)
                 .then((res) => res.json())

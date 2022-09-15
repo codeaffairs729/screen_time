@@ -2,7 +2,7 @@ import { test, expect, Page } from "@playwright/test";
 import sequelize from "tests/database";
 
 const userData = {
-    email: "johndoe@a.com",
+    email: "johndoe_like_dataset@a.com",
     password: "pass",
     passwordHash:
         "$2b$12$O99PkKPPIR8DNiM832P8r.9pU7nXV.557D.hxP5ZevRQqBz9r.H2a",
@@ -19,6 +19,20 @@ const beforeData = {
 };
 let page: Page;
 
+const loginUser = async (page: Page) => {
+    await page.goto(
+        `${process.env.NEXT_PUBLIC_WEBCLIENT_ROOT}/login`
+    );
+    await page.locator('[placeholder="Email"]').click();
+    await page.locator('[placeholder="Email"]').fill(userData.email);
+    await page.locator('[placeholder="Password"]').click();
+    await page.locator('[placeholder="Password"]').fill(userData.password);
+    await Promise.all([
+        page.waitForNavigation(/*{ url: '${process.env.NEXT_PUBLIC_WEBCLIENT_ROOT}/' }*/),
+        page.locator('button:has-text("Log In")').click(),
+    ]);
+};
+
 /**
  * Delete user and the users likes from the db
  */
@@ -30,7 +44,7 @@ const deleteUser = async () => {
     );
     await sequelize.query(
         `
-        DELETE FROM users WHERE email='johndoe@a.com';
+        DELETE FROM users WHERE email='${userData["email"]}';
         `
     );
 };
@@ -53,7 +67,7 @@ test.describe("Like/Dislike dataset", () => {
     });
     test("Test Setup", async () => {
         await page.goto(
-            `http://localhost:3000/datasets/${metaDatasetData["id"]}`
+            `${process.env.NEXT_PUBLIC_WEBCLIENT_ROOT}/datasets/${metaDatasetData["id"]}`
         );
         await page.locator('button:has-text("Feedback")').click();
         // Check the like count (call this L) and dislike count (call this D)
@@ -81,24 +95,10 @@ test.describe("Like/Dislike dataset", () => {
     });
     test("Logged In User Like", async () => {
         // Login
-        await Promise.all([
-            page.waitForNavigation(/*{ url: 'http://localhost:3000/login' }*/),
-            page.locator("text=Log In").click(),
-        ]);
-        await page.locator('[placeholder="Email"]').fill(userData["email"]);
-        await page.locator('[placeholder="Password"]').click();
-        await page
-            .locator('[placeholder="Password"]')
-            .fill(userData["password"]);
-        await Promise.all([
-            page.waitForResponse((response) => response.status() == 200),
-            //     `http://127.0.0.1:8000/proxy/v1/users/signin`
-            // ),
-            page.locator('button:has-text("Log In")').click(),
-        ]);
+        await loginUser(page);
         // Navigate to like button
         await page.goto(
-            `http://localhost:3000/datasets/${metaDatasetData["id"]}`
+            `${process.env.NEXT_PUBLIC_WEBCLIENT_ROOT}/datasets/${metaDatasetData["id"]}`
         );
         await page.locator('button:has-text("Feedback")').click();
         // EXPECTATION: "Like dataset" button is inactive
@@ -128,7 +128,7 @@ test.describe("Like/Dislike dataset", () => {
         // Click like
         await Promise.all([
             page.waitForResponse(
-                `http://127.0.0.1:8000/proxy/v1/datasets/${metaDatasetData["id"]}/like`
+                `${process.env.NEXT_PUBLIC_WEBPORTAL_API_ROOT}/v1/datasets/${metaDatasetData["id"]}/like`
             ),
             page.locator("button[data-selector='like-btn']").click(),
         ]);
@@ -159,7 +159,7 @@ test.describe("Like/Dislike dataset", () => {
         // Remove like
         // await Promise.all([
         //     page.waitForResponse(
-        //         `http://127.0.0.1:8000/proxy/v1/datasets/${metaDatasetData["id"]}/like`
+        //         `${process.env.NEXT_PUBLIC_WEBPORTAL_API_ROOT}/v1/datasets/${metaDatasetData["id"]}/like`
         //     ),
         //     page.locator("button[data-selector='like-btn']").click(),
         // ]);
@@ -191,14 +191,14 @@ test.describe("Like/Dislike dataset", () => {
     test("With 'Like dataset' button active, click 'Dislike dataset' button", async () => {
         // await Promise.all([
         //     page.waitForResponse(
-        //         "http://127.0.0.1:8000/proxy/v1/datasets/${metaDatasetData['id']}/like"
+        //         "${process.env.NEXT_PUBLIC_WEBPORTAL_API_ROOT}/v1/datasets/${metaDatasetData['id']}/like"
         //     ),
         //     page.locator("button[data-selector='like-btn']").click(),
         // ]);
         // Click Dislike button
         await Promise.all([
             page.waitForResponse(
-                `http://127.0.0.1:8000/proxy/v1/datasets/${metaDatasetData["id"]}/dislike`
+                `${process.env.NEXT_PUBLIC_WEBPORTAL_API_ROOT}/v1/datasets/${metaDatasetData["id"]}/dislike`
             ),
             page.locator("button[data-selector='dislike-btn']").click(),
         ]);
@@ -230,7 +230,7 @@ test.describe("Like/Dislike dataset", () => {
     test("Click on 'Like dataset' button", async () => {
         await Promise.all([
             page.waitForResponse(
-                `http://127.0.0.1:8000/proxy/v1/datasets/${metaDatasetData["id"]}/like`
+                `${process.env.NEXT_PUBLIC_WEBPORTAL_API_ROOT}/v1/datasets/${metaDatasetData["id"]}/like`
             ),
             page.locator("button[data-selector='like-btn']").click(),
         ]);
@@ -262,7 +262,7 @@ test.describe("Like/Dislike dataset", () => {
     test("Click on 'Like dataset' button again", async () => {
         await Promise.all([
             page.waitForResponse(
-                `http://127.0.0.1:8000/proxy/v1/datasets/${metaDatasetData["id"]}/like`
+                `${process.env.NEXT_PUBLIC_WEBPORTAL_API_ROOT}/v1/datasets/${metaDatasetData["id"]}/like`
             ),
             page.locator("button[data-selector='like-btn']").click(),
         ]);
@@ -295,7 +295,7 @@ test.describe("Like/Dislike dataset", () => {
         // Dislike Dataset
         await Promise.all([
             page.waitForResponse(
-                `http://127.0.0.1:8000/proxy/v1/datasets/${metaDatasetData["id"]}/dislike`
+                `${process.env.NEXT_PUBLIC_WEBPORTAL_API_ROOT}/v1/datasets/${metaDatasetData["id"]}/dislike`
             ),
             page.locator("button[data-selector='dislike-btn']").click(),
         ]);
@@ -326,7 +326,7 @@ test.describe("Like/Dislike dataset", () => {
         // Remove Dislike Dataset
         await Promise.all([
             page.waitForResponse(
-                `http://127.0.0.1:8000/proxy/v1/datasets/${metaDatasetData["id"]}/dislike`
+                `${process.env.NEXT_PUBLIC_WEBPORTAL_API_ROOT}/v1/datasets/${metaDatasetData["id"]}/dislike`
             ),
             page.locator("button[data-selector='dislike-btn']").click(),
         ]);
@@ -354,7 +354,7 @@ test.describe("Like/Dislike dataset", () => {
             await page.locator("span[data-selector='like-count']").innerText()
         );
         await expect(likes1).toEqual(beforeData["likes"]);
-        await page.pause();
+        // await page.pause();
     });
     test.afterAll(async ({}) => {
         try {

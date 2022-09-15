@@ -24,7 +24,7 @@ const DataFilesSection = ({ goToPreview }: { goToPreview: () => void }) => {
                             <th className="py-3 px-6 text-center">Preview</th>
                         </tr>
                     </thead>
-                    <tbody className="text-gray-600 text-sm font-light">
+                    <tbody className="text-gray-600 text-sm font-light" data-testid="data-files">
                         {vm.dataset.urls.length > 0 ? (
                             vm.dataset.urls.map((url, i) => {
                                 return (
