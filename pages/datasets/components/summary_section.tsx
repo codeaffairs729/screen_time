@@ -33,7 +33,7 @@ const SummarySection = () => {
             <div className="text-xs font-medium mt-2">Summary</div>
             <div className="text-xs mb-2">{vm.dataset.detail.description}</div>
 
-            <LabelledRow className="mb-1.5" label="Data Host">
+            <LabelledRow displayContext="data-host" className="mb-1.5" label="Data Host">
                 <a
                     href={vm.dataset.detail.hostUrl}
                     target="_blank"
