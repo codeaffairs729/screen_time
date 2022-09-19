@@ -2,7 +2,8 @@ import DefaultLayout from "components/layouts/default";
 import SummarySection from "./components/summary_section";
 import DatasetDetailVM, { DatasetDetailVMContext } from "./dataset_detail.vm";
 import { Tab } from "@headlessui/react";
-import TabHeader from "./components/tab_header";
+import TabHeader from "components/UI/tabbed/header";
+import TabPanel from "components/UI/tabbed/panel";
 import FeedbackSection from "./components/feedback_section";
 import PreviewSection from "./components/preview_section";
 import SummaryInsights from "./components/summary_insights";
@@ -45,7 +46,7 @@ const DatasetDetailPage = ({ dataset }: { dataset: Dataset | undefined }) => {
                             selectedIndex={selectedIndex}
                             onChange={setSelectedIndex}
                         >
-                            <Tab.List className="flex justify-between border-b-2 border-gray-400">
+                            <Tab.List className="flex flex-row justify-between">
                                 <TabHeader>Data files</TabHeader>
                                 <TabHeader>Preview</TabHeader>
                                 <TabHeader>Insights</TabHeader>
@@ -53,25 +54,25 @@ const DatasetDetailPage = ({ dataset }: { dataset: Dataset | undefined }) => {
                                 <TabHeader>Related datasets</TabHeader>
                             </Tab.List>
                             <Tab.Panels className="h-[calc(100%-var(--dataset-detail-tab-header-height))] w-full flex">
-                                <Tab.Panel className="w-full">
+                                <TabPanel>
                                     <DataFilesSection
                                         goToPreview={() => {
                                             setSelectedIndex(1);
                                         }}
                                     />
-                                </Tab.Panel>
-                                <Tab.Panel className="w-full">
+                                </TabPanel>
+                                <TabPanel>
                                     <PreviewSection />
-                                </Tab.Panel>
-                                <Tab.Panel className="w-full">
+                                </TabPanel>
+                                <TabPanel>
                                     <SummaryInsights />
-                                </Tab.Panel>
-                                <Tab.Panel className="w-full">
+                                </TabPanel>
+                                <TabPanel>
                                     <FeedbackSection />
-                                </Tab.Panel>
-                                <Tab.Panel className="w-full">
+                                </TabPanel>
+                                <TabPanel>
                                     <MayAlsoLike />
-                                </Tab.Panel>
+                                </TabPanel>
                             </Tab.Panels>
                         </Tab.Group>
                     </div>

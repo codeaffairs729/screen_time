@@ -11,7 +11,7 @@ import PurposeForm from "./components/purpose_form";
 
 const FeedbackSection = () => {
   return (
-    <div className="p-3">
+    <div>
       <p className="text-gray-600 font-medium text-sm mb-2">
         Did you find this dataset useful?
         <InfoIcon title="Add you feedback" className="ml-1" />

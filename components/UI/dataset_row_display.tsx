@@ -13,17 +13,16 @@ const DatasetRowDisplay = ({
     displayContext: String;
     onFavouriteChange?: () => void;
 }) => {
-    console.log(dataset);
     return (
         <div
-            className="outline outline-1 outline-gray-300 sm:px-2 md:px-5 py-1 flex flex-row justify-between hover:bg-gray-100"
+            className="border border-1 border-gray-300 sm:px-2 md:px-5 py-1 flex flex-row justify-between bg-white hover:bg-gray-100"
             data-testid={displayContext}
             data-selector={dataset.id}
             id={dataset.id.toString()}
             data-title={dataset.detail.name}
         >
             <div className="flex flex-col flex-1">
-                <h3 className="font-semibold text-md my-3 hover:text-dtech-secondary-light cursor-pointer">
+                <h3 className="font-semibold text-md my-3 hover:text-dtech-secondary-dark cursor-pointer">
                     <Link href={`/datasets/${dataset.id}`}>
                         <a className="">{dataset.detail.name}</a>
                     </Link>

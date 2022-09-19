@@ -35,7 +35,7 @@ const PreviewSection = () => {
     };
 
     return (
-        <div className="p-3">
+        <div>
             {previewData && previewIDList && previewID && previewDataList ? (
                 <div>
                     <PreviewSelect

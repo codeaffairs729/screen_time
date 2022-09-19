@@ -84,7 +84,7 @@ const SummaryStatistics = () => {
                 High level statistical insights
             </div>
             <div className="flex justify-around">
-                <div className="bg-gray-100 border-gray-200 border-[1.5px] my-5 mx-3 px-5 py-3">
+                <div className="bg-white border-gray-200 border-[1.5px] my-5 mx-3 px-5 py-3">
                     <SummaryRow
                         icon="heart"
                         name="Added to favorites"

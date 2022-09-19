@@ -47,7 +47,7 @@ const MayAlsoLike = () => {
     }
 
     return (
-        <div className="max-h-[calc(100vh-140px)] overflow-y-auto">
+        <div>
             {datasets?.map((dataset, i) => (
                 <DatasetRowDisplay
                     key={dataset.id}
