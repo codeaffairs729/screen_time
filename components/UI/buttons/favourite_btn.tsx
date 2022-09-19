@@ -14,14 +14,14 @@ import { BsHeart, BsHeartFill } from "react-icons/bs";
 const FavouriteBtn = ({
     className = "",
     dataset,
-    onFavouriteSuccess,
+    onFavouriteChange,
 }: {
     className?: string;
     dataset: Dataset;
-    onFavouriteSuccess?: () => void;
+    onFavouriteChange?: () => void;
 }) => {
     const { handleFavourite, isFavourited, isHandlingFavourite, user } =
-        useFavouriteDataset(dataset, onFavouriteSuccess);
+        useFavouriteDataset(dataset, onFavouriteChange);
 
     return (
         <div
@@ -64,7 +64,7 @@ const FavouriteBtn = ({
  */
 const useFavouriteDataset = (
     dataset: Dataset,
-    onFavouriteSuccess?: () => void
+    onFavouriteChange?: () => void
 ) => {
     const user = useSelector((state: RootState) => state.auth.user);
     const [isFavourited, setIsFavourited] = useState(
@@ -93,7 +93,7 @@ const useFavouriteDataset = (
             {
                 onError: (res) =>
                     toast.error("Something went wrong while favouriting"),
-                onSuccess: (res) => onFavouriteSuccess?.(),
+                onSuccess: (res) => onFavouriteChange?.(),
             }
         );
     return {

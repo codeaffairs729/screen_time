@@ -7,25 +7,25 @@ import FavouriteBtn from "components/UI/buttons/favourite_btn";
 const DatasetRowDisplay = ({
     dataset,
     displayContext,
+    onFavouriteChange,
 }: {
     dataset: Dataset;
     displayContext: String;
+    onFavouriteChange?: () => void;
 }) => {
     console.log(dataset);
     return (
         <div
-            className="outline outline-1 outline-gray-300 sm:px-2 md:px-5 py-1 flex flex-row justify-between"
+            className="outline outline-1 outline-gray-300 sm:px-2 md:px-5 py-1 flex flex-row justify-between hover:bg-gray-100"
             data-testid={displayContext}
             data-selector={dataset.id}
             id={dataset.id.toString()}
             data-title={dataset.detail.name}
         >
             <div className="flex flex-col flex-1">
-                <h3 className="font-semibold text-md my-3">
+                <h3 className="font-semibold text-md my-3 hover:text-dtech-secondary-light cursor-pointer">
                     <Link href={`/datasets/${dataset.id}`}>
-                        <a className="hover:text-dtech-secondary-light">
-                            {dataset.detail.name}
-                        </a>
+                        <a className="">{dataset.detail.name}</a>
                     </Link>
                 </h3>
 
@@ -38,7 +38,7 @@ const DatasetRowDisplay = ({
                                     "$1"
                                 )}
                             </span>
-                            <span className="font-semibold">... more.</span>
+                            <span className="font-semibold">...</span>
                         </span>
                     ) : (
                         dataset.detail.description
@@ -87,7 +87,11 @@ const DatasetRowDisplay = ({
                     data-selector={"fav-btn__container"}
                     className="text-center"
                 >
-                    <FavouriteBtn className="mx-auto" dataset={dataset} />
+                    <FavouriteBtn
+                        className="mx-auto"
+                        dataset={dataset}
+                        onFavouriteChange={onFavouriteChange}
+                    />
                 </div>
             </div>
         </div>
