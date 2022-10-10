@@ -122,7 +122,7 @@ test.describe("Filter dataset by file type", () => {
         // Check filter
         await Promise.all([
             page.waitForResponse(async (response: Response) => {
-                const regex = new RegExp(".*datasets.*");
+                const regex = new RegExp(".*searchquery.*");
                 const isValid =
                     regex.test(response.url()) && response.status() === 200;
                 if (isValid) {
@@ -160,6 +160,8 @@ test.describe("Filter dataset by file type", () => {
             JSON.stringify(filterDatasetData.R1) ==
                 JSON.stringify(filterDatasetData.R2)
         ).toBe(false);
+        console.log('filterDatasetData', filterDatasetData);
+        await page.pause();
         // EXPECTATION: C = 20 (the filter is appropriate)
         expect(filterDatasetData.R2.length == 20).toBe(true);
 
