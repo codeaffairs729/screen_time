@@ -10,14 +10,20 @@ import authReducer, {
 import { Action, AuthState } from "./auth/auth.type";
 import cacheReducer from "./cache/cache.reducer";
 import { CacheType } from "./cache/cache.type";
+import userReducer, {
+    initialState as userInitialState,
+} from "./user/user.reducer";
+import { UserState } from "./user/user.type";
 
 export type RootState = {
     auth: AuthState;
     cache: CacheType;
+    user: UserState;
 };
 
 const rootInitialData = {
     auth: authInitialState,
+    user: userInitialState,
 };
 
 const persistConfig = {
@@ -28,7 +34,9 @@ const persistConfig = {
 const combinedReducer = combineReducers({
     auth: authReducer,
     cache: cacheReducer,
+    user: userReducer,
 });
+
 const rootReducer = (state: RootState | undefined, action: Action) => {
     if (action.type == "RESET_APP_STATE") {
         state = undefined;
@@ -36,7 +44,9 @@ const rootReducer = (state: RootState | undefined, action: Action) => {
     }
     return combinedReducer(state, action);
 };
+
 const persistedReducer = persistReducer(persistConfig, rootReducer);
+
 function makeStore(initialState = rootInitialData) {
     return createStore<any, any, any, any>(
         persistedReducer,

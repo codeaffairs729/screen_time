@@ -1,8 +1,10 @@
+import { useState } from "react";
 import Dataset from "models/dataset.model";
 import Link from "next/link";
 import LabelledRow from "components/dataset/labelled_row";
 import StarRating from "components/UI/star_rating";
 import FavouriteBtn from "components/UI/buttons/favourite_btn";
+import BookmarkBtn from "./user_bookmark/bookmark_btn";
 
 const DatasetRowDisplay = ({
     dataset,
@@ -84,12 +86,24 @@ const DatasetRowDisplay = ({
                 <div
                     data-dataset-id={dataset.id}
                     data-selector={"fav-btn__container"}
-                    className="text-center"
+                    className="text-center my-2"
                 >
                     <FavouriteBtn
                         className="mx-auto"
                         dataset={dataset}
                         onFavouriteChange={onFavouriteChange}
+                    />
+                </div>
+
+                <div
+                    data-dataset-id={dataset.id}
+                    data-selector={"bookmark-btn__container"}
+                    className="text-center my-2"
+                >
+                    <BookmarkBtn
+                        className="mx-auto"
+                        dataset={dataset}
+                        // onFavouriteChange={onFavouriteChange}
                     />
                 </div>
             </div>

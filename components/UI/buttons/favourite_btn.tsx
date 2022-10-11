@@ -2,7 +2,6 @@ import clsx from "clsx";
 import { useHttpCall } from "common/hooks";
 import Http from "common/http";
 import Dataset from "models/dataset.model";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
@@ -42,16 +41,22 @@ const FavouriteBtn = ({
                     className
                 )}
             >
-                {!isHandlingFavourite ? (
+                {!user ? (
+                    <BsHeart className="w-5 h-5 text-gray-600" />
+                ) : (
                     <>
-                        {isFavourited ? (
-                            <BsHeartFill className="w-5 h-5 text-[#AD1DEB]" />
+                        {!isHandlingFavourite ? (
+                            <>
+                                {isFavourited ? (
+                                    <BsHeartFill className="w-5 h-5 text-[#AD1DEB]" />
+                                ) : (
+                                    <BsHeart className="w-5 h-5 text-[#AD1DEB]" />
+                                )}
+                            </>
                         ) : (
-                            <BsHeart className="w-5 h-5 text-[#AD1DEB]" />
+                            <Loader className="m-0.5" />
                         )}
                     </>
-                ) : (
-                    <Loader className="m-0.5" />
                 )}
             </button>
             <ReactTooltip uuid="dtechtive-favourite-btn-tooltip" />
