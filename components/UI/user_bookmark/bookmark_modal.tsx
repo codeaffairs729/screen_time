@@ -66,7 +66,7 @@ export default function BookmarkModal({
 
                                 {/*footer*/}
                                 <div className="flex items-center justify-between px-5 py-3 border-t border-solid border-slate-200 rounded-b">
-                                    <CreateNewList />
+                                    <CreateNewList inLists={false} />
                                     <button
                                         className="text-red-500 background-transparent font-bold uppercase text-xs mx-2 mb-1 px-3 py-1.5 outline-none focus:outline-none ease-linear transition-all duration-150"
                                         type="button"

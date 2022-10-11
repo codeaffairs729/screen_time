@@ -13,7 +13,7 @@ import ListsSection from "./components/lists_section";
 import { Tab } from "@headlessui/react";
 import { ReactNode } from "react";
 
-const ProfilePage = () => {
+const AccountPage = () => {
     const user = useSelector((state: RootState) => state.auth.user);
     if (!user) {
         return (
@@ -90,7 +90,7 @@ const ProfilePage = () => {
     );
 };
 
-export default withAuth(ProfilePage);
+export default withAuth(AccountPage);
 
 const TabHeader = ({ children }: { children: ReactNode }) => {
     return (

@@ -4,7 +4,7 @@ import { RootState } from "store";
 import CreateListVM from "./create_list.vm";
 import Loader from "../loader";
 
-const CreateNewList = () => {
+const CreateNewList = ({ inLists = false }: { inLists: boolean }) => {
     const user = useSelector((state: RootState) => state.auth.user);
     const bookmark_lists = useSelector(
         (state: RootState) => state.user.bookmarkLists
@@ -22,15 +22,20 @@ const CreateNewList = () => {
             <>
                 {isCreatingList ? (
                     <button
-                        className="bg-dtech-secondary-light rounded text-white text-sm mr-2 mb-1 px-3 py-1.5 outline-none focus:outline-none ease-linear transition-all duration-150"
+                        // className="bg-dtech-secondary-light rounded text-white text-sm mr-2 mb-1 px-3 py-1.5 outline-none focus:outline-none ease-linear transition-all duration-150"
+                        className={`bg-dtech-secondary-light text-white text-sm mr-2 mb-1 px-3 py-1.5 outline-none focus:outline-none ease-linear transition-all duration-150 ${
+                            inLists ? "rounded-full w-full" : "rounded"
+                        }`}
                         type="button"
-                        onClick={() => setNewNameActive(true)}
                     >
                         <Loader />
                     </button>
                 ) : (
                     <button
-                        className="bg-dtech-secondary-light rounded text-white font-semibold text-sm mr-2 mb-1 px-3 py-1.5 outline-none focus:outline-none ease-linear transition-all duration-150"
+                        // className="bg-dtech-secondary-light rounded text-white font-semibold text-sm mr-2 mb-1 px-3 py-1.5 outline-none focus:outline-none ease-linear transition-all duration-150"
+                        className={`bg-dtech-secondary-light text-white text-sm mr-2 mb-1 px-3 py-1.5 outline-none focus:outline-none ease-linear transition-all duration-150 ${
+                            inLists ? "rounded-full w-full" : "rounded"
+                        }`}
                         type="button"
                         onClick={() => setNewNameActive(true)}
                     >

@@ -43,7 +43,8 @@ const ProfileDropdown = () => {
                             <span className="text-sm font-medium mx-2 mt-2 mb-2 block">
                                 {user.name}
                             </span>
-                            <MenuItem label="My Profile" link="/profile" />
+                            <MenuItem label="My Workspace" link="/workspace" />
+                            <MenuItem label="My Account" link="/account" />
                             <MenuItem
                                 label="Log Out"
                                 onClick={() => {
