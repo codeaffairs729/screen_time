@@ -1,7 +1,7 @@
 import FavouritesSection from "./favourites_section";
+import BookmarksSection from "./bookmarks_section";
 import { Tab } from "@headlessui/react";
 import TabPanel from "components/UI/tabbed/panel";
-import { BsPlusSquareFill } from "react-icons/bs";
 import clsx from "clsx";
 import { ReactNode } from "react";
 import CreateNewList from "components/UI/user_bookmark/create_new_list";
@@ -33,6 +33,9 @@ const ListsSection = () => {
                     <Tab.Panels className="w-full flex">
                         <TabPanel>
                             <FavouritesSection />
+                        </TabPanel>
+                        <TabPanel>
+                            <BookmarksSection datasetIDS={1} />
                         </TabPanel>
                     </Tab.Panels>
                 </div>
