@@ -55,7 +55,7 @@ const DatasetRowDisplay = ({
                         {dataset.detail.license.type}
                     </LabelledRow>
                     <LabelledRow className="mr-10" label="Last updated">
-                        {dataset.detail.lastUpdate.isValid
+                        {dataset.detail.lastUpdate?.isValid
                             ? dataset.detail.lastUpdate.toRelative()
                             : "-"}
                     </LabelledRow>

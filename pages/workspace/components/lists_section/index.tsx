@@ -34,9 +34,13 @@ const ListsSection = () => {
                         <TabPanel>
                             <FavouritesSection />
                         </TabPanel>
-                        <TabPanel>
-                            <BookmarksSection datasetIDS={1} />
-                        </TabPanel>
+                        {bookmark_lists.map((list: any, idx: any) => (
+                            <TabPanel key={idx}>
+                                <BookmarksSection
+                                    datasetIDS={list.listDatasets}
+                                />
+                            </TabPanel>
+                        ))}
                     </Tab.Panels>
                 </div>
             </Tab.Group>
