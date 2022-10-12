@@ -9,9 +9,6 @@ import { RootState } from "store";
 import HeaderValue from "./components/header_value";
 import { Role } from "models/user.model";
 import { startCase } from "lodash-es";
-import ListsSection from "./components/lists_section";
-import { Tab } from "@headlessui/react";
-import { ReactNode } from "react";
 
 const AccountPage = () => {
     const user = useSelector((state: RootState) => state.auth.user);
@@ -72,38 +69,9 @@ const AccountPage = () => {
                         />
                     </div>
                 </div>
-
-                <div>
-                    <Tab.Group>
-                        <Tab.List className="w-full flex justify-around my-6">
-                            <TabHeader>My Lists</TabHeader>
-                        </Tab.List>
-                        <Tab.Panels className="w-full">
-                            <Tab.Panel>
-                                <ListsSection />
-                            </Tab.Panel>
-                        </Tab.Panels>
-                    </Tab.Group>
-                </div>
             </div>
         </DefaultLayout>
     );
 };
 
 export default withAuth(AccountPage);
-
-const TabHeader = ({ children }: { children: ReactNode }) => {
-    return (
-        <Tab
-            className={({ selected }) =>
-                `text-sm font-medium px-3 py-1 mx-5 rounded-full  ${
-                    selected
-                        ? "bg-dtech-primary-dark text-white"
-                        : "border-[1px] border-black"
-                }`
-            }
-        >
-            {children}
-        </Tab>
-    );
-};
