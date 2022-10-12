@@ -20,7 +20,6 @@ const SummarySection = () => {
 
     return (
         <div className="border-t p-3">
-            <div className="p-3 -m-3 mb-3 text-sm font-semibold text-dtech-primary-dark">Dataset</div>
             <h4
                 className="text-lg font-medium mb-3"
                 data-testid="dataset-title"
@@ -29,7 +28,9 @@ const SummarySection = () => {
             </h4>
 
             <div className="text-sm font-medium mt-2">Summary</div>
-            <div className="text-xs mb-2 mt-1">{vm.dataset.detail.description}</div>
+            <div className="text-xs mb-2 mt-1">
+                {vm.dataset.detail.description}
+            </div>
 
             <LabelledRow
                 displayContext="data-host"

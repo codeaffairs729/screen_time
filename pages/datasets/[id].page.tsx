@@ -36,7 +36,11 @@ const DatasetDetailPage = ({ dataset }: { dataset: Dataset | undefined }) => {
     return (
         <DefaultLayout>
             <DatasetDetailVMContext.Provider value={vm}>
-                <BackBtn />
+                <div className="flex flex-row justify-between mb-4">
+                    <BackBtn />
+                    <p className="text-center text-lg font-semibold">Dataset</p>
+                    <span></span>
+                </div>
                 <div className="flex">
                     <div className="w-1/3">
                         <SummarySection />
