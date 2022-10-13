@@ -6,6 +6,8 @@ import StarRating from "components/UI/star_rating";
 import LabelledRow from "components/dataset/labelled_row";
 import ReactTooltip from "react-tooltip";
 import isEmail from "validator/lib/isEmail";
+import FavouriteBtn from "components/UI/buttons/favourite_btn";
+import BookmarkBtn from "components/UI/user_bookmark/bookmark_btn";
 
 const SummarySection = () => {
     const vm = useContext(DatasetDetailVMContext);
@@ -20,12 +22,26 @@ const SummarySection = () => {
 
     return (
         <div className="border-t p-3">
-            <h4
-                className="text-lg font-medium mb-3"
-                data-testid="dataset-title"
-            >
-                {vm.dataset?.detail.name}
-            </h4>
+            <div className="flex flex-row">
+                <h4
+                    className="text-lg font-medium mb-3"
+                    data-testid="dataset-title"
+                >
+                    {vm.dataset?.detail.name}
+                </h4>
+                <div className="flex flex-col">
+                    <div className="my-1">
+                        <FavouriteBtn
+                            className="mx-auto"
+                            dataset={vm.dataset}
+                            onFavouriteChange={() => {}}
+                        />
+                    </div>
+                    <div className="my-1">
+                        <BookmarkBtn className="mx-auto" dataset={vm.dataset} />
+                    </div>
+                </div>
+            </div>
 
             <div className="text-sm font-medium mt-2">Summary</div>
             <div className="text-xs mb-2 mt-1">

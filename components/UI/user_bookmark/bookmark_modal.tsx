@@ -2,11 +2,19 @@ import Dataset from "models/dataset.model";
 import CreateNewList from "./create_new_list";
 import { useSelector } from "react-redux";
 import { RootState } from "store";
-import { BsTrash, BsBookmarkCheckFill, BsBookmark } from "react-icons/bs";
+import {
+    BsTrash,
+    BsBookmarkCheckFill,
+    BsBookmark,
+    BsPencil,
+    BsCheck,
+} from "react-icons/bs";
 import DeleteListVM from "./delete_list.vm";
 import Loader from "../loader";
 import AddListItemVM from "./add_list_item.vm";
 import DelListItemVM from "./del_list_item.vm";
+import EditListNameVM from "./edit_list_name.vm";
+import { useState } from "react";
 
 export default function BookmarkModal({
     showModal,
@@ -98,6 +106,9 @@ const ModelList = ({
     const { deleteUserList, isDeletingList } = DeleteListVM(user);
     const { addNewListItem, isAddingListItem } = AddListItemVM(user);
     const { delOldListItem, isDeletingListItem } = DelListItemVM(user);
+    const { editListName, isEditingListName } = EditListNameVM(user);
+    const [editActive, setEditActive] = useState(false);
+    const [newListName, setNewListName] = useState(list.listName);
 
     let thisList = false;
     let thisItemID = 0;
@@ -148,24 +159,76 @@ const ModelList = ({
                     </button>
                 )}
 
-                <span>{list.listName}</span>
+                <>
+                    {editActive ? (
+                        <input
+                            type="text"
+                            className="py-0 px-0.5 outline-none"
+                            value={newListName}
+                            onChange={(event) =>
+                                setNewListName(event.target.value)
+                            }
+                        />
+                    ) : (
+                        <span>{list.listName}</span>
+                    )}
+                </>
             </div>
 
             <div className="flex items-center">
-                {isDeletingList ? (
-                    <button className="px-2">
-                        <Loader />
-                    </button>
-                ) : (
-                    <button
-                        className="px-2 py-0.5"
-                        onClick={() => {
-                            deleteUserList(list.listName, list.listID);
-                        }}
-                    >
-                        <BsTrash className="text-gray-600 hover:text-red-600" />
-                    </button>
-                )}
+                <div>
+                    {isEditingListName ? (
+                        <button className="px-2">
+                            <Loader />
+                        </button>
+                    ) : (
+                        <>
+                            {editActive ? (
+                                <button
+                                    className="px-2 py-0.5"
+                                    onClick={() => {
+                                        editListName(newListName, list.listID);
+                                        setEditActive(false);
+                                    }}
+                                >
+                                    <BsCheck className="text-gray-600 hover:text-red-600" />
+                                </button>
+                            ) : (
+                                <button
+                                    className="px-2 py-0.5"
+                                    onClick={() => {
+                                        setEditActive(true);
+                                    }}
+                                >
+                                    <BsPencil className="text-gray-600 hover:text-red-600" />
+                                </button>
+                            )}
+                        </>
+                    )}
+                </div>
+                <div>
+                    {!editActive && (
+                        <>
+                            {isDeletingList ? (
+                                <button className="px-2">
+                                    <Loader />
+                                </button>
+                            ) : (
+                                <button
+                                    className="px-2 py-0.5"
+                                    onClick={() => {
+                                        deleteUserList(
+                                            list.listName,
+                                            list.listID
+                                        );
+                                    }}
+                                >
+                                    <BsTrash className="text-gray-600 hover:text-red-600" />
+                                </button>
+                            )}
+                        </>
+                    )}
+                </div>
             </div>
         </li>
     );

@@ -100,11 +100,7 @@ const DatasetRowDisplay = ({
                     data-selector={"bookmark-btn__container"}
                     className="text-center my-2"
                 >
-                    <BookmarkBtn
-                        className="mx-auto"
-                        dataset={dataset}
-                        // onFavouriteChange={onFavouriteChange}
-                    />
+                    <BookmarkBtn className="mx-auto" dataset={dataset} />
                 </div>
             </div>
         </div>

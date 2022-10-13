@@ -42,30 +42,38 @@ class UserService {
 
         store.dispatch(updateBookmarkListsItems(lists, items));
 
-        const dataset_ids = bookmarkListsItems.list_items.map(
+        const all_dataset_ids = bookmarkListsItems.list_items.map(
             (item: any) => item.dataset_id
         );
+
+        let dataset_ids = Array.from(new Set(all_dataset_ids));
 
         console.log(dataset_ids);
 
         // Fetch bookmark itsm dataset data
         // https://api.dtechtive.com/data_view/{ids}?li=193&li=194
         // let item_req_param = "li=193&li=194";
-        let item_req_param = "";
-        dataset_ids.forEach((id: any) => {
-            item_req_param = `${item_req_param}li=${id}&`;
-        });
-        const res_itemsdata = await Http.get(
-            `/data_view/{ids}?${item_req_param}`,
-            {
-                baseUrl: process.env.NEXT_PUBLIC_PUBLIC_API_ROOT,
-            }
-        );
 
-        const bookmark_itesm_data = Dataset.fromJsonList(
-            res_itemsdata[0].user_search[0].results
-        );
-        store.dispatch(updateBookmarkItemsData(bookmark_itesm_data));
+        if (dataset_ids.length > 0) {
+            let item_req_param = "";
+            dataset_ids.forEach((id: any) => {
+                item_req_param = `${item_req_param}li=${id}&`;
+            });
+            const res_itemsdata = await Http.get(
+                `/data_view/{ids}?${item_req_param}`,
+                {
+                    baseUrl: process.env.NEXT_PUBLIC_PUBLIC_API_ROOT,
+                }
+            );
+
+            const bookmark_items_data = Dataset.fromJsonList(
+                res_itemsdata[0].user_search[0].results
+            );
+            store.dispatch(updateBookmarkItemsData(bookmark_items_data));
+        } else {
+            const bookmark_items_data: any = [];
+            store.dispatch(updateBookmarkItemsData(bookmark_items_data));
+        }
     }
 
     static async clear() {
