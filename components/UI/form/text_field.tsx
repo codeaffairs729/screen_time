@@ -10,7 +10,7 @@ type TextFieldProps = FieldProps & {
 };
 
 const TextField = ({
-    placeholder,
+    placeholder = "",
     type = "text",
     className = "",
     textfieldClassName = "",
@@ -36,7 +36,7 @@ const TextField = ({
                 <textarea
                     placeholder={placeholder}
                     className={clsx(
-                        "block px-3 py-2 w-full text-sm appearance-none bg-transparent rounded-lg focus:ring-dtech-secondary-light border-2 border-dtech-secondary-light focus:border-dtech-secondary-light placeholder:text-gray-500 placeholder:text-sm placeholder:font-bold disabled:border-gray-300 disabled:bg-gray-50",
+                        "block px-3 py-2 w-full text-sm appearance-none bg-transparent rounded-lg focus:ring-dtech-secondary-light border-2 border-dtech-secondary-light focus:border-dtech-secondary-light placeholder:text-gray-400 placeholder:text-sm disabled:border-gray-300 disabled:bg-gray-50",
                         { "border-red-700": hasError },
                         textfieldClassName
                     )}
@@ -49,7 +49,7 @@ const TextField = ({
                     type={type}
                     placeholder={placeholder}
                     className={clsx(
-                        "block px-3 py-2 w-full text-sm appearance-none bg-transparent rounded-lg focus:ring-dtech-secondary-light border-2 border-dtech-secondary-light focus:border-dtech-secondary-light placeholder:text-gray-500 placeholder:text-sm placeholder:font-bold disabled:border-gray-300 disabled:bg-gray-50",
+                        "block px-3 py-2 w-full text-sm appearance-none bg-transparent rounded-lg focus:ring-dtech-secondary-light border-2 border-dtech-secondary-light focus:border-dtech-secondary-light placeholder:text-gray-400 placeholder:text-sm disabled:border-gray-300 disabled:bg-gray-50",
                         { "border-red-700": hasError },
                         textfieldClassName
                     )}

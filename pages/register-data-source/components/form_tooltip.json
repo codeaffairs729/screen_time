@@ -1,0 +1,18 @@
+{
+    "site_url": "Site URL tool-tip",
+    "site_name": "Site Name tool-tip",
+    "sitemap_exists": "Sitemap Available tool-tip",
+    "sitemap_url": "Sitemap URL tool-tip",
+    "metadata_standards": "Metadata standards tool-tip",
+    "metadata_level": "Metadata level tool-tip",
+    "downloadable_status": "Downloadable statuc tool-tip",
+    "domain": "Domains tool-tip",
+    "domain_other": "Other Domains tool-tip",
+    "data_type": "Data type tool-tip",
+    "data_management_system": "Data management system tool-tip",
+    "data_duplication": "Data duplication tool-tip",
+    "contact_email": "Contact email tool-tip",
+    "comment": "comments tool-tip",
+    "usage_rights": "Usage rights tool-tip",
+    "update_frequency": "Update frequency tool-tip"
+}
