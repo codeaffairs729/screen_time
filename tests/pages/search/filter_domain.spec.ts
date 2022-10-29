@@ -132,7 +132,7 @@ test.describe("Filter dataset by domain", () => {
         // Check filter
         await Promise.all([
             page.waitForResponse(async (response: Response) => {
-                const regex = new RegExp(".*datasets.*");
+                const regex = new RegExp(".*searchquery.*");
                 const isValid =
                     regex.test(response.url()) && response.status() === 200;
                 if (isValid) {
@@ -144,9 +144,6 @@ test.describe("Filter dataset by domain", () => {
                             (result: any) =>
                                 result["dataset"].domain.toLowerCase() ==
                                 filterDatasetData.D.toLowerCase()
-                            // JSON.parse(
-                            //     result["dataset"].domain
-                            // ).includes(filterDatasetData.T)
                         )
                         .map((result: any) => result["id"]);
                 }

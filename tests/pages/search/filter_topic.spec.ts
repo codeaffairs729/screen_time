@@ -129,7 +129,7 @@ test.describe("Filter dataset by topic", () => {
         // Check filter
         await Promise.all([
             page.waitForResponse(async (response: Response) => {
-                const regex = new RegExp(".*datasets.*");
+                const regex = new RegExp(".*searchquery.*");
                 const isValid =
                     regex.test(response.url()) && response.status() === 200;
                 if (isValid) {
