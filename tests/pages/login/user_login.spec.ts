@@ -28,7 +28,6 @@ test.describe("User login", () => {
             await createUser(userData);
             page = await browser.newPage();
             console.log("DATABASE SETUP COMPLETED");
-            
         } catch (error) {
             console.log("beforeAll error", error);
         }
@@ -67,9 +66,7 @@ test.describe("User login", () => {
             page.waitForNavigation({
                 url: `${process.env.NEXT_PUBLIC_WEBCLIENT_ROOT}`,
             }),
-            page.waitForResponse(
-                `${process.env.NEXT_PUBLIC_WEBPORTAL_API_ROOT}/v1/users/signin`
-            ),
+            page.waitForResponse(new RegExp(".*/v1/users/signin.*")),
             page.locator('button[data-selector="signin-button"]').click(),
         ]);
         // EXPECTATION: Show message "You have successfully signed in"

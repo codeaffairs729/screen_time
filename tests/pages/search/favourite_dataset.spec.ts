@@ -84,7 +84,7 @@ const checkProfileFavourites = async (extraSteps: Function) => {
         .click();
     await Promise.all([
         page.waitForNavigation(/*{ url: '${process.env.NEXT_PUBLIC_WEBCLIENT_ROOT}/profile' }*/),
-        page.locator('a:has-text("My Profile")').click(),
+        page.locator('a:has-text("My Account")').click(),
     ]);
     await extraSteps();
 };

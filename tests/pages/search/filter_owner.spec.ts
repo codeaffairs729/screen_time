@@ -14,7 +14,7 @@ const filterDatasetData = {
 /**
  * Get the list of all the filter texts
  */
-const getDomains = async () => {
+const getOwners = async () => {
     await expect(
         page.locator('[data-selector="owner-filter-section"]')
     ).toBeVisible();
@@ -31,7 +31,7 @@ const getDomains = async () => {
 const getDatasetResults = async (response: Response) => {
     const resp = await response.json();
     const results: { [key: string]: any }[] = resp[0].user_search[0].results;
-    const filter_options = resp[0].user_search[0].filter_options.filter(
+    const filter_options = resp[0].user_search[0].filter_options.org.filter(
         (f: string) => f
     );
     return { filterOptions: filter_options, results };
@@ -63,6 +63,8 @@ const getValidFilters = (
 
 const getValidDomainCheckbox = (validDomains: Set<string>) => {
     let validDomainCheckbox;
+    console.log('filterDatasetData.F1', filterDatasetData.F1);
+    
     for (let filter of filterDatasetData.F1) {
         if (validDomains.has(filter)) {
             validDomainCheckbox = page.locator(
@@ -87,7 +89,6 @@ test.describe("Filter dataset by owner", () => {
         await page.locator(".dataset-search-input input").click();
         await page.locator(".dataset-search-input input").fill("covid");
         let validDomains: Set<string> = new Set();
-        await page.pause();
         await Promise.all([
             page.waitForResponse(async (response: Response) => {
                 const regex = new RegExp(".*datasets.*");
@@ -97,11 +98,13 @@ test.describe("Filter dataset by owner", () => {
                     const { results, filterOptions } = await getDatasetResults(
                         response
                     );
-                    filterDatasetData.F1 = filterOptions["org"];
+                    filterDatasetData.F1 = filterOptions;
                     validDomains = getValidFilters(
                         results,
-                        filterOptions["org"]
+                        filterOptions
                     );
+                    console.log('validDomains', validDomains);
+                    
                     filterDatasetData.R1 = (results as any).map(
                         (result: any) => result["id"]
                     );
@@ -128,12 +131,15 @@ test.describe("Filter dataset by owner", () => {
         filterDatasetData.D = await validDomainCheckbox
             .locator("span")
             .innerText();
+        console.log('validDomainCheckbox', validDomainCheckbox);
+        
         // Check filter
         await Promise.all([
             page.waitForResponse(async (response: Response) => {
-                const regex = new RegExp(".*datasets.*");
+                const regex = new RegExp(".*searchquery.*");
                 const isValid =
                     regex.test(response.url()) && response.status() === 200;
+                console.log("isValid", isValid);
                 if (isValid) {
                     const { results, filterOptions } = await getDatasetResults(
                         response
@@ -141,7 +147,7 @@ test.describe("Filter dataset by owner", () => {
                     filterDatasetData.R2 = results
                         .filter(
                             (result: any) =>
-                                result["dataset"].domain.toLowerCase() ==
+                                result["dataset"].hostName.toLowerCase() ==
                                 filterDatasetData.D.toLowerCase()
                             // JSON.parse(
                             //     result["dataset"].domain
@@ -161,7 +167,7 @@ test.describe("Filter dataset by owner", () => {
         expect(selectedFilter.isChecked()).toBeTruthy();
 
         // Record filters
-        filterDatasetData.F2 = await getDomains();
+        filterDatasetData.F2 = await getOwners();
         // EXPECTATION: F2 is the same as F1 (the options shouldn't change)
         expect(
             JSON.stringify(filterDatasetData.F1) ==
@@ -173,6 +179,8 @@ test.describe("Filter dataset by owner", () => {
             JSON.stringify(filterDatasetData.R1) ==
                 JSON.stringify(filterDatasetData.R2)
         ).toBe(false);
+        console.log('filterDatasetData', filterDatasetData);
+        
         // EXPECTATION: C = 20 (the filter is appropriate)
         expect(filterDatasetData.R2.length == 20).toBe(true);
 
