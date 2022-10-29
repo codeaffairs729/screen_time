@@ -9,6 +9,7 @@ import FormRow from "./components/form_row";
 import SignupVM from "./signup.vm";
 import isEmail from "validator/lib/isEmail";
 import ErrorAlert from "components/UI/alerts/error_alert";
+import { useRouter } from "next/router";
 
 const SigninPage = () => {
     const vm = SignupVM();
@@ -17,16 +18,16 @@ const SigninPage = () => {
         <DefaultLayout>
             <div className="h-[calc(100vh-var(--nav-height))] flex flex-col justify-between">
                 <div className="text-center mt-8 mb-4">
-                    <h1 className="font-semibold text-lg">Sign Up</h1>
-                    <span className="inline-flex space-x-1">
-                        <i className="mr-1 text-sm underline">
-                            Why should you create an account?
-                        </i>{" "}
-                        <InfoIcon
-                            className="ml-1"
-                            title="Register a new account to access more features"
-                        />
-                    </span>
+                    <h1 className="font-semibold text-lg">
+                        {vm.signupType == "org_admin"
+                            ? "Organisation Admin Sign Up"
+                            : "Individual Sign Up"}
+                    </h1>
+                    <p className="text-sm text-gray-600 max-w-[480px] mx-auto">
+                        {vm.signupType == "org_admin"
+                            ? "As an organisation admin, you can manage the members and resources of your organisation. Please use a work email address to sign up."
+                            : "As a registered user, you can gain access to features such as data downloads, data previews, providing feedback to data providers, among others."}
+                    </p>
                 </div>
                 <div className="grow flex flex-col items-center justify-center">
                     {vm.signupErrorMsg && (
