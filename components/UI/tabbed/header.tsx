@@ -2,7 +2,7 @@ import { Tab } from "@headlessui/react";
 import clsx from "clsx";
 import { ReactNode } from "react";
 
-const TabHeader = ({ children }: { children: ReactNode }) => {
+const TabHeader = ({ children, className="" }: { children: ReactNode, className?: string }) => {
     return (
         <Tab
             className={({ selected }) =>
@@ -14,7 +14,7 @@ const TabHeader = ({ children }: { children: ReactNode }) => {
                 )
             }
         >
-            <div className="mx-auto">{children}</div>
+            <div className={clsx("mx-auto", className)}>{children}</div>
         </Tab>
     );
 };
