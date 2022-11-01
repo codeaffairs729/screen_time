@@ -2,6 +2,10 @@ import { Tab } from "@headlessui/react";
 import { ReactNode } from "react";
 import DataQualityFeedback from "./data_quality_feedback";
 import DataUseFeedback from "./data_use_feedback";
+import { useSelector } from "react-redux";
+import { RootState } from "store";
+import ErrorAlert from "components/UI/alerts/error_alert";
+import LoginAlert from "components/UI/alerts/login_alert";
 
 const TabHeader = ({ children }: { children: ReactNode }) => {
     return (
@@ -20,8 +24,15 @@ const TabHeader = ({ children }: { children: ReactNode }) => {
 };
 
 const FeedbackSection = () => {
+    const user = useSelector((state: RootState) => state.auth.user);
+
+    if (!user) {
+        return <LoginAlert />;
+    }
+
     return (
         <div className="">
+            <div></div>
             <Tab.Group>
                 <Tab.List className="flex">
                     <TabHeader>Data quality</TabHeader>
