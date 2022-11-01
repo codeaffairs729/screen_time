@@ -12,7 +12,7 @@ const AddListItemVM = (user: User | null) => {
         executeAddListItem(
             () =>
                 Http.post(`/v1/user-bookmarks/listadditem`, {
-                    user_id: user?.email,
+                    user_id: user?.id,
                     list_id: listID,
                     dataset_id: datasetID,
                 }),

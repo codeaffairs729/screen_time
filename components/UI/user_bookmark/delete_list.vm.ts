@@ -14,7 +14,7 @@ const DeleteListVM = (user: User | null) => {
                 Http.delete(`/v1/user-bookmarks/deletelist`, {
                     list_id: listID,
                     list_name: listName,
-                    user_id: user?.email,
+                    user_id: user?.id,
                 }),
             {
                 onSuccess: (res) => {

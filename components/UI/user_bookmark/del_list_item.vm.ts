@@ -16,7 +16,7 @@ const DelListItemVM = (user: User | null) => {
         executeDelListItem(
             () =>
                 Http.delete(`/v1/user-bookmarks/listdelitem`, {
-                    user_id: user?.email,
+                    user_id: user?.id,
                     list_id: listID,
                     dataset_id: datasetID,
                     item_id: itemID,

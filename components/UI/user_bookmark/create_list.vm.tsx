@@ -22,7 +22,7 @@ const CreateListVM = (user: User | null, bookmark_lists: any) => {
             executeCreateList(
                 () =>
                     Http.post(`/v1/user-bookmarks/createlist`, {
-                        user_id: user?.email,
+                        user_id: user?.id,
                         list_name: listName,
                     }),
                 {

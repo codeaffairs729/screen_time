@@ -14,7 +14,7 @@ const EditListNameVM = (user: User | null) => {
                 Http.put(`/v1/user-bookmarks/updatelist`, {
                     list_id: listID,
                     list_name: listName,
-                    user_id: user?.email,
+                    user_id: user?.id,
                 }),
             {
                 onSuccess: (res) => {

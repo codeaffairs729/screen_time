@@ -26,7 +26,7 @@ class AuthService {
         saveCookie(AUTH_TOKEN, token);
         // 3. Fetch user service APIs data after login
         const res_userlistitems = await Http.get(
-            `/v1/user-bookmarks/userlistitems?user_id=${user?.email}`
+            `/v1/user-bookmarks/userlistitems`
         );
         UserService.update(res_userlistitems);
         // 4. redirect
