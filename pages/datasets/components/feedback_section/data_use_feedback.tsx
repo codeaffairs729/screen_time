@@ -23,9 +23,9 @@ const DataUseFeedback = () => {
             </div>
             <div className="">
                 <div className="my-5 mx-3 px-5 py-3">
-                    <DomainsTopics />
-                    <PotentialUsecases />
-                    
+                    <DomainsTopics vm={vmForm} />
+                    <PotentialUsecases vm={vmForm} />
+
                     <UsecaseDescription vm={vmForm} />
                     <CommentAnonymous vm={vmForm} />
 

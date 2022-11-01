@@ -14,7 +14,7 @@ const UsecaseDescription = ({ vm }: { vm: any }) => {
                 type="textarea"
                 formControl={{
                     control: vm.form.control,
-                    name: "usecase-description",
+                    name: "usecase_description",
                     rules: {},
                 }}
                 placeholder="Additional comments on data quality"

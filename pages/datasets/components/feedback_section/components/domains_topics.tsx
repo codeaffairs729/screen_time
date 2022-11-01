@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Select from "react-select";
+import { useController } from "react-hook-form";
 
 interface SelectOption {
     value: string;
@@ -26,8 +27,23 @@ const topicOptions: SelectOption[] = [
     { value: "ps2", label: "Demographics", domain: "popsoc" },
 ];
 
-const DomainsTopics = () => {
+const DomainsTopics = ({ vm }: { vm: any }) => {
     const [selDomains, setSelDomains] = useState<readonly SelectOption[]>([]);
+
+    const formControl = {
+        control: vm.form.control,
+        name: "domains",
+        rules: {},
+    };
+
+    const {
+        fieldState: { error },
+        field: { onChange, name },
+    } = useController({
+        ...formControl,
+        defaultValue: [],
+    });
+
     return (
         <div>
             <p className="font-semibold text-md">
@@ -43,32 +59,61 @@ const DomainsTopics = () => {
                 options={domainOptions}
                 className="w-96"
                 isSearchable={true}
-                onChange={(val: readonly SelectOption[]) => setSelDomains(val)}
+                onChange={(val: readonly SelectOption[]) => {
+                    setSelDomains(val);
+                    onChange(val.map((opt) => opt.value));
+                }}
             />
             {selDomains.map((domainOption, idx) => {
                 return (
-                    <div key={idx} className="my-3">
-                        <p className="text-sm">
-                            Select applicable topics within domain:{" "}
-                            <span className="font-semibold text-dtech-secondary-dark">
-                                {domainOption.label}
-                            </span>
-                        </p>
-                        <Select
-                            isMulti
-                            name={`topics-${domainOption.value}`}
-                            options={topicOptions.filter((topicOption) => {
-                                return topicOption.domain == domainOption.value;
-                            })}
-                            className="w-96"
-                            isSearchable={true}
-                            // onChange={(val: readonly SelectOption[]) =>
-                            //     setSelDomains(val)
-                            // }
-                        />
-                    </div>
+                    <SelTopics key={idx} domainOption={domainOption} vm={vm} />
                 );
             })}
+        </div>
+    );
+};
+
+const SelTopics = ({
+    domainOption,
+    vm,
+}: {
+    domainOption: SelectOption;
+    vm: any;
+}) => {
+    const formControl = {
+        control: vm.form.control,
+        name: `topics_${domainOption.value}`,
+        rules: {},
+    };
+
+    const {
+        fieldState: { error },
+        field: { onChange, name },
+    } = useController({
+        ...formControl,
+        defaultValue: [],
+    });
+
+    return (
+        <div className="my-3">
+            <p className="text-sm">
+                Select applicable topics within domain:{" "}
+                <span className="font-semibold text-dtech-secondary-dark">
+                    {domainOption.label}
+                </span>
+            </p>
+            <Select
+                isMulti
+                name={`topics-${domainOption.value}`}
+                options={topicOptions.filter((topicOption) => {
+                    return topicOption.domain == domainOption.value;
+                })}
+                className="w-96"
+                isSearchable={true}
+                onChange={(val: readonly SelectOption[]) =>
+                    onChange(val.map((opt) => opt.value))
+                }
+            />
         </div>
     );
 };
