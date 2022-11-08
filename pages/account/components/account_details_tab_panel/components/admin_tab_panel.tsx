@@ -7,74 +7,87 @@ import { useForm } from "react-hook-form";
 import MembersTable from "./members_table";
 import { BsCardImage } from "react-icons/bs";
 import PrimaryBtn from "components/UI/form/primary_btn";
+import AddMemberModal from "./add_member_modal";
+import AdminTabPanelVM, { AdminTabPanelVMContext } from "./admin_tab_panel.vm";
 
 const AdminTabPanel = () => {
     const { control } = useForm();
+    const vm = AdminTabPanelVM();
     return (
         <Tab.Panel>
-            <div className="flex items-center space-x-4">
-                <div className="w-52 p-3 relative mx-auto text-center">
-                    <BsCardImage className="w-full text-9xl text-gray-500" />
-                    <PrimaryBtn
-                        className="bg-dtech-secondary-dark"
-                        label="Upload logo"
-                    />
+            <AdminTabPanelVMContext.Provider value={vm}>
+                <div className="flex items-center space-x-4">
+                    <div className="w-52 p-3 relative mx-auto text-center">
+                        <BsCardImage className="w-full text-9xl text-gray-500" />
+                        <PrimaryBtn
+                            className="bg-dtech-secondary-dark"
+                            label="Upload logo"
+                        />
+                    </div>
+                    <div className="w-full">
+                        <FormRow label="Organisation">
+                            <TextField
+                                className="bg-gray-50"
+                                formControl={{
+                                    control: control,
+                                    name: "organisation",
+                                    rules: { required: "Organisation is required" },
+                                }}
+                                placeholder="Organisation"
+                            />
+                        </FormRow>
+                        <FormRow label="Sector">
+                            <DropdownField
+                                className=""
+                                placeholder="Sector"
+                                options={[
+                                    {
+                                        value: "public_sector",
+                                        label: "Public Sector",
+                                    },
+                                    {
+                                        value: "private_sector",
+                                        label: "Private Sector",
+                                    },
+                                    {
+                                        value: "third_sector",
+                                        label: "Third Sector",
+                                    },
+                                ]}
+                                formControl={{
+                                    control: control,
+                                    name: "sector",
+                                    rules: {},
+                                }}
+                            />
+                        </FormRow>
+                        <FormRow label="Max. members">
+                            <TextField
+                                className="bg-gray-50"
+                                formControl={{
+                                    control: control,
+                                    defaultValue: "250",
+                                    name: "max_members",
+                                    rules: { required: "Max. members is required" },
+                                }}
+                                placeholder="Max. members"
+                            />
+                        </FormRow>
+                    </div>
                 </div>
-                <div className="w-full">
-                    <FormRow label="Organisation">
-                        <TextField
-                            className="bg-gray-50"
-                            formControl={{
-                                control: control,
-                                name: "organisation",
-                                rules: { required: "Organisation is required" },
-                            }}
-                            placeholder="Organisation"
-                        />
-                    </FormRow>
-                    <FormRow label="Sector">
-                        <DropdownField
-                            className=""
-                            placeholder="Sector"
-                            options={[
-                                {
-                                    value: "public_sector",
-                                    label: "Public Sector",
-                                },
-                                {
-                                    value: "private_sector",
-                                    label: "Private Sector",
-                                },
-                                {
-                                    value: "third_sector",
-                                    label: "Third Sector",
-                                },
-                            ]}
-                            formControl={{
-                                control: control,
-                                name: "sector",
-                                rules: {},
-                            }}
-                        />
-                    </FormRow>
-                    <FormRow label="Max. members">
-                        <TextField
-                            className="bg-gray-50"
-                            formControl={{
-                                control: control,
-                                defaultValue: "250",
-                                name: "max_members",
-                                rules: { required: "Max. members is required" },
-                            }}
-                            placeholder="Max. members"
-                        />
-                    </FormRow>
-                </div>
-            </div>
-            <h3 className="text-sm text-gray-500 font-medium border-b border-gray-400 mt-6">
-                Members
-            </h3>
-            <MembersTable />
+                <h3 className="text-sm text-gray-500 font-medium border-b border-gray-400 mt-6">
+                    Members
+                </h3>
+                <MembersTable />
+                <PrimaryBtn
+                    className="bg-dtech-secondary-dark w-min whitespace-nowrap"
+                    label="Add member"
+                    onClick={() =>
+                        vm.setIsAddMemberModalOpen(true)
+                    }
+                />
+                <AddMemberModal isOpen={vm.isAddMemberModalOpen} setIsOpen={vm.setIsAddMemberModalOpen} />
+            </AdminTabPanelVMContext.Provider>
         </Tab.Panel>
     );
 };
