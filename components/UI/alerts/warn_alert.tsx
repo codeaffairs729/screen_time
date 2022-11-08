@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import { ReactNode } from "react";
 
-const SuccessAlert = ({
+const WarnAlert = ({
   message,
   className = "",
 }: {
@@ -34,4 +34,4 @@ const SuccessAlert = ({
   );
 };
 
-export default SuccessAlert;
+export default WarnAlert;

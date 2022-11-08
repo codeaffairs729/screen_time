@@ -25,7 +25,10 @@ const SignupVM = () => {
         executeHandleSignup(
             () => {
                 setSignupErrorMsg(null);
-                return Http.post("/v1/users/signup", data);
+                return Http.post("/v1/users/signup", {
+                    ...data,
+                    signup_type: signupType,
+                });
             },
             {
                 onSuccess: (res) => {
