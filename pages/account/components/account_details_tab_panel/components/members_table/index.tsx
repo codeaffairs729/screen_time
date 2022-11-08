@@ -3,6 +3,7 @@ import { ReactNode } from "react";
 import { useForm } from "react-hook-form";
 import MembersTableVM from "./members_table.vm";
 import { BsSearch } from "react-icons/bs";
+import clsx from "clsx";
 
 const MembersTable = () => {
     const { control } = useForm();
@@ -65,7 +66,7 @@ const MembersTable = () => {
                                             }}
                                         />
                                     </TD>
-                                    <TD>
+                                    <TD className="flex flex-col items-center">
                                         <button className="text-sm underline text-blue-700">
                                             Make admin
                                         </button>
@@ -83,9 +84,9 @@ const MembersTable = () => {
     );
 };
 
-const TD = ({ children }: { children: ReactNode }) => {
+const TD = ({ children, className="" }: { children: ReactNode, className?: string }) => {
     return (
-        <td className="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400">
+        <td className={clsx("border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400", className)}>
             {children}
         </td>
     );

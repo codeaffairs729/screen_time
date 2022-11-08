@@ -2,14 +2,10 @@ import DefaultLayout from "components/layouts/default";
 import DropdownField from "components/UI/form/dropdown_field";
 import PrimaryBtn from "components/UI/form/primary_btn";
 import TextField from "components/UI/form/text_field";
-import InfoIcon from "components/UI/icons/info_icon";
-import Link from "next/link";
-import { useWatch } from "react-hook-form";
 import FormRow from "./components/form_row";
 import SignupVM from "./signup.vm";
 import isEmail from "validator/lib/isEmail";
 import ErrorAlert from "components/UI/alerts/error_alert";
-import { useRouter } from "next/router";
 
 const SigninPage = () => {
     const vm = SignupVM();
