@@ -21,7 +21,8 @@ const AdminTabPanelVM = () => {
         executeFetchOrgUsers(
             () => Http.get(`/v1/users/org/${organisationId}`),
             {
-                onError: (error) => toast.error(error),
+                onError: async (error) =>
+                    toast.error(await getHttpErrorMsg(error)),
                 postProcess: (res) =>
                     User.fromJsonList(res["data"]).filter((user) =>
                         user.roles.every(
@@ -77,6 +78,11 @@ const AdminTabPanelVM = () => {
             }
         );
 
+    const { execute: executeSaveOrgDetails, isLoading: isSavingOrgDetails } =
+        useHttpCall();
+    const saveOrgDetails = (data: any) =>
+        executeSaveOrgDetails(() => Http.patch(`/v1/iam/org/${organisationId}`, data));
+
     return {
         isAddMemberModalOpen,
         setIsAddMemberModalOpen,
@@ -86,6 +92,8 @@ const AdminTabPanelVM = () => {
         isDeletingOrgMember,
         isFetchingOrgUsers,
         orgusers,
+        isSavingOrgDetails,
+        saveOrgDetails
     };
 };
 

@@ -1,5 +1,6 @@
 import { useHttpCall } from "common/hooks";
 import Http from "common/http";
+import { getHttpErrorMsg } from "common/util";
 import User from "models/user.model";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
@@ -21,7 +22,8 @@ const MembersTableVM = () => {
                     `/v1/users/org/${user?.organisations?.[0].organisation_id}`
                 ),
             {
-                onError: (error) => toast.error(error),
+                onError: async (error) =>
+                    toast.error(await getHttpErrorMsg(error)),
                 postProcess: (res) => res["data"],
                 // onSuccess: (res)=>toast
             }

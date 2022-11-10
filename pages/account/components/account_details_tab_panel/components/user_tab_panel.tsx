@@ -3,14 +3,19 @@ import DropdownField from "components/UI/form/dropdown_field";
 import FormRow from "components/UI/form/form_row";
 import PrimaryBtn from "components/UI/form/primary_btn";
 import TextField from "components/UI/form/text_field";
+import User from "models/user.model";
 import Image from "next/image";
 import { useForm } from "react-hook-form";
+import { useSelector } from "react-redux";
+import { RootState } from "store";
 
 const UserTabPanel = () => {
+    const user = useSelector((state: RootState) => state.auth.user);
     const { control } = useForm();
+
     return (
         <Tab.Panel className="flex items-center space-x-4">
-            <div className="w-52 p-3 relative mx-auto">
+            {/* <div className="w-52 p-3 relative mx-auto">
                 <Image
                     src="/images/icons/profile/guest_Icon.svg"
                     width="40"
@@ -22,7 +27,7 @@ const UserTabPanel = () => {
                     className="bg-dtech-secondary-dark"
                     label="Upload photo"
                 />
-            </div>
+            </div> */}
             <div className="w-full">
                 <FormRow label="Name">
                     <TextField
@@ -30,6 +35,7 @@ const UserTabPanel = () => {
                         formControl={{
                             control: control,
                             name: "name",
+                            defaultValue: user?.name,
                             rules: { required: "Name is required" },
                         }}
                         placeholder="Name"
@@ -41,6 +47,7 @@ const UserTabPanel = () => {
                         formControl={{
                             control: control,
                             name: "email",
+                            defaultValue: user?.email,
                             rules: { required: "Email is required" },
                         }}
                         placeholder="Email"
@@ -52,6 +59,7 @@ const UserTabPanel = () => {
                         formControl={{
                             control: control,
                             name: "organisation",
+                            defaultValue: user?.organisation,
                             rules: { required: "Organisation is required" },
                         }}
                         placeholder="Organisation"
@@ -63,20 +71,10 @@ const UserTabPanel = () => {
                         formControl={{
                             control: control,
                             name: "role",
+                            defaultValue: user?.role,
                             rules: { required: "Role is required" },
                         }}
                         placeholder="Role"
-                    />
-                </FormRow>
-                <FormRow label="Data Owner">
-                    <TextField
-                        className="bg-gray-50"
-                        formControl={{
-                            control: control,
-                            name: "data_owner",
-                            rules: { required: "Data Owner is required" },
-                        }}
-                        placeholder="Data Owner"
                     />
                 </FormRow>
                 <FormRow label="Data Owner">
@@ -87,10 +85,10 @@ const UserTabPanel = () => {
                             { value: true, label: "Yes" },
                             { value: false, label: "No" },
                         ]}
-                        dataSelector="data-owner-dropdown"
                         formControl={{
                             control: control,
                             name: "is_data_owner",
+                            defaultValue: user?.isDataOwner,
                             rules: {
                                 validate: (val: boolean) => {
                                     if (![true, false].includes(val)) {
@@ -104,14 +102,14 @@ const UserTabPanel = () => {
                 <FormRow label="Admin">
                     <DropdownField
                         className=""
-                        placeholder="Choose whether data owner"
+                        placeholder="Choose whether admin"
                         options={[
                             { value: true, label: "Yes" },
                             { value: false, label: "No" },
                         ]}
-                        dataSelector="admin-dropdown"
                         formControl={{
                             control: control,
+                            defaultValue: User.isOrgAdmin(user),
                             name: "is_admin",
                             rules: {
                                 validate: (val: boolean) => {
