@@ -34,13 +34,14 @@ const OrganisationInviteVM = () => {
     useEffect(() => {
         console.log("useefffect", invite_token, Boolean(invite_token));
         if (invite_token) {
+            setErrorData((prevState) => ({ ...prevState, showError: false }));
             verifyOrgInvite();
         } else {
             console.log("error");
 
             setErrorData((prevState) => ({ ...prevState, showError: true }));
         }
-    }, []);
+    }, [invite_token]);
     return { errorData, isVerifying, showSuccess };
 };
 
