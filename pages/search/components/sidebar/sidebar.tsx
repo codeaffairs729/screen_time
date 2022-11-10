@@ -10,8 +10,10 @@ import FilterDomain from "./components/filters/filter_domain";
 
 const Sidebar = ({ className = "" }: { className?: string }) => {
   return (
-    <div className={clsx("border rounded overflow-hidden mx-3", className)}>
-      <div className="bg-dtech-primary-light text-white text-sm font-medium px-2 py-0.5 rounded overflow-hidden">
+    <div
+      className={clsx("border-0 rounded overflow-hidden mx-3", className)}
+    >
+      <div className=" text-black text-lg font-medium pr-2 py-0.5 rounded overflow-hidden">
         Filters
       </div>
       <FilterDomain />
