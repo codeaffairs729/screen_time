@@ -1,13 +1,10 @@
 import { useHttpCall } from "common/hooks";
 import Http from "common/http";
 import { getHttpErrorMsg } from "common/util";
-import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
-const OrganisationInviteVM = () => {
-    const {
-        query: { invite_token },
-    } = useRouter();
+const OrganisationInviteVM = ({query}: any) => {
+    const {invite_token} = query;
     const [errorData, setErrorData] = useState({
         showError: false,
         errorMessage: "Token is missing. Please make sure the url is correct.",
@@ -32,13 +29,10 @@ const OrganisationInviteVM = () => {
             }
         );
     useEffect(() => {
-        console.log("useefffect", invite_token, Boolean(invite_token));
         if (invite_token) {
             setErrorData((prevState) => ({ ...prevState, showError: false }));
             verifyOrgInvite();
         } else {
-            console.log("error");
-
             setErrorData((prevState) => ({ ...prevState, showError: true }));
         }
     }, [invite_token]);
