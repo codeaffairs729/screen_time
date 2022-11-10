@@ -34,13 +34,13 @@ const MembersTable = () => {
                                     <th className="border-b dark:border-slate-600 font-medium p-4 pl-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">
                                         Name
                                     </th>
-                                    <th className="border-b dark:border-slate-600 font-medium p-4 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">
+                                    <th className="border-b dark:border-slate-600 font-medium p-4 pl-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">
                                         Email
                                     </th>
-                                    <th className="border-b dark:border-slate-600 font-medium p-4 pr-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">
+                                    <th className="border-b dark:border-slate-600 font-medium p-4 pl-8  pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">
                                         Permission
                                     </th>
-                                    <th className="border-b dark:border-slate-600 font-medium p-4 pr-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">
+                                    <th className="border-b dark:border-slate-600 font-medium p-4 pl-8  pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">
                                         Action
                                     </th>
                                 </tr>
@@ -52,7 +52,7 @@ const MembersTable = () => {
                                             <TD>{user.name}</TD>
                                             <TD>{user.email}</TD>
                                             <TD>
-                                                <DropdownField
+                                                {/* <DropdownField
                                                     className=""
                                                     placeholder="Role"
                                                     options={[
@@ -71,7 +71,8 @@ const MembersTable = () => {
                                                         name: "sector",
                                                         rules: {},
                                                     }}
-                                                />
+                                                /> */}
+                                                {User.getRole(user)?.name}
                                             </TD>
                                             <TD className="flex flex-col items-center">
                                                 <TextBtn
@@ -81,7 +82,9 @@ const MembersTable = () => {
                                                 <TextBtn
                                                     label="Remove user"
                                                     className="text-sm underline text-red-700"
-                                                    isLoading={adminPanelVm.isDeletingOrgMember}
+                                                    isLoading={
+                                                        adminPanelVm.isDeletingOrgMember
+                                                    }
                                                     onClick={() =>
                                                         adminPanelVm.deleteOrgMember(
                                                             user.id
@@ -106,11 +109,12 @@ const MembersTable = () => {
                         <Loader />
                     </div>
                 )}
-                {!adminPanelVm.isFetchingOrgUsers && adminPanelVm.orgusers.length == 0 && (
-                    <div className="text-sm font-light text-gray-800">
-                        No users were found
-                    </div>
-                )}
+                {!adminPanelVm.isFetchingOrgUsers &&
+                    adminPanelVm.orgusers.length == 0 && (
+                        <div className="text-sm font-light text-gray-800">
+                            No users were found
+                        </div>
+                    )}
             </div>
         </>
     );
