@@ -122,9 +122,7 @@ const WorkspacePage = () => {
                         />
                     </Tab.List>
                     <Tab.Panels className="h-[calc(100%-var(--dataset-detail-tab-header-height))] w-full flex">
-                        {/* <TabPanel> */}
-                            <AccountDetailsTabPanel />
-                        {/* </TabPanel> */}
+                        <AccountDetailsTabPanel />
                         <TabPanel>
                             <p>Work in progress.</p>
                         </TabPanel>

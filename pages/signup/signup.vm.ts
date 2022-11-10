@@ -2,7 +2,7 @@ import { useHttpCall } from "common/hooks";
 import Http from "common/http";
 import { getHttpErrorMsg } from "common/util";
 import { Option } from "components/UI/form/dropdown_field";
-import User, { Role } from "models/user.model";
+import User, { UserRole } from "models/user.model";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -43,8 +43,8 @@ const SignupVM = () => {
             }
         );
 
-    const roleOptions: Option[] = Object.keys(Role ?? {}).map((k) => ({
-        value: Role[k as keyof typeof Role],
+    const roleOptions: Option[] = Object.keys(UserRole ?? {}).map((k) => ({
+        value: UserRole[k as keyof typeof UserRole],
         label: k,
     }));
 

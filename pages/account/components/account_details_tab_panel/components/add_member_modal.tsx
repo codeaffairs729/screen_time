@@ -85,10 +85,10 @@ function AddMemberModal({
                                                 label: "Organization Member",
                                                 value: "Organization Member",
                                             },
-                                            {
-                                                label: "Registered User",
-                                                value: "Registered User",
-                                            },
+                                            // {
+                                            //     label: "Registered User",
+                                            //     value: "Registered User",
+                                            // },
                                         ]}
                                         dataSelector="data-owner-dropdown"
                                         formControl={{
@@ -110,7 +110,7 @@ function AddMemberModal({
                                                 ...data,
                                                 roles: [data["roles"]],
                                             });
-                                            reset();
+                                            // reset();
                                         })}
                                     />
                                     {/* <p className="text-center text-xs text-red-700 mt-4">

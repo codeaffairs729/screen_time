@@ -1,7 +1,7 @@
 import { Combobox, Transition } from "@headlessui/react";
 import clsx from "clsx";
 import { FieldProps } from "common/type";
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { HiOutlineSelector } from "react-icons/hi";
 import { BsCheck } from "react-icons/bs";
 import { useController } from "react-hook-form";
@@ -23,6 +23,20 @@ const DropdownField = ({
 } & FieldProps) => {
     const [selected, setSelected] = useState<Option>();
     const [query, setQuery] = useState("");
+
+    useEffect(() => {
+        console.log('formControl["defaultValue"]', formControl["defaultValue"]);
+
+        if (formControl["defaultValue"] != undefined) {
+            const option = options.find(
+                (o) => o.value == formControl["defaultValue"]
+            );
+            console.log("option", options, option);
+            if (option) {
+                setSelected(option);
+            }
+        }
+    }, [formControl["defaultValue"]]);
 
     const {
         fieldState: { error },

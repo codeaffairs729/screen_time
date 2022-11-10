@@ -5,18 +5,29 @@ import TabPanel from "components/UI/tabbed/panel";
 import { Fragment, ReactNode } from "react";
 import AdminTabPanel from "./components/admin_tab_panel";
 import UserTabPanel from "./components/user_tab_panel";
+import { useSelector } from "react-redux";
+import { RootState } from "store";
+import User from "models/user.model";
 
 const AccountDetailsTabPanel = () => {
+    const user = useSelector((state: RootState) => state.auth.user);
+
     return (
         <TabPanel>
             <Tab.Group>
                 <Tab.List className="flex space-x-2 mb-20">
-                    <TabButton className="max-w-[150px] text-center">User</TabButton>
-                    <TabButton className="max-w-[150px] text-center">Admin</TabButton>
+                    <TabButton className="max-w-[150px] text-center">
+                        User
+                    </TabButton>
+                    {User.isOrgAdmin(user) && (
+                        <TabButton className="max-w-[150px] text-center">
+                            Admin
+                        </TabButton>
+                    )}
                 </Tab.List>
                 <Tab.Panels>
                     <UserTabPanel />
-                    <AdminTabPanel/>
+                    {User.isOrgAdmin(user) && <AdminTabPanel />}
                 </Tab.Panels>
             </Tab.Group>
         </TabPanel>
