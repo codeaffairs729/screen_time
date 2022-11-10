@@ -32,7 +32,7 @@ const OrganisationInviteVM = () => {
             }
         );
     useEffect(() => {
-        console.log("useefffect");
+        console.log("useefffect", invite_token, Boolean(invite_token));
         if (invite_token) {
             verifyOrgInvite();
         } else {
