@@ -15,7 +15,7 @@ const SigninPage = () => {
 
     return (
         <DefaultLayout>
-            <div className="h-[calc(100vh-var(--nav-height))] flex flex-col justify-between">
+            <div className="min-h-[calc(100vh-var(--nav-height))] flex flex-col justify-between">
                 <div className="text-center">
                     <h1 className="font-semibold text-lg mb-2 mt-8">Log In</h1>
                     <Link

@@ -7,11 +7,12 @@ import PrimaryBtn from "components/UI/form/primary_btn";
 import TextField from "components/UI/form/text_field";
 import InfoIcon from "components/UI/icons/info_icon";
 import Loader from "components/UI/loader";
+import { NextPageContext } from "next";
 import Link from "next/link";
 import OrganisationInviteVM from "./organisation_invite.vm";
 
-const OrganisationInvitePage = () => {
-    const vm = OrganisationInviteVM();
+const OrganisationInvitePage = ({query}: any) => {
+    const vm = OrganisationInviteVM({query});
     return (
         <DefaultLayout>
             <div className="container mx-auto">
@@ -32,5 +33,9 @@ const OrganisationInvitePage = () => {
         </DefaultLayout>
     );
 };
+
+OrganisationInvitePage.getInitialProps = async ({query}: NextPageContext)=>{
+    return {query}
+}
 
 export default OrganisationInvitePage;
