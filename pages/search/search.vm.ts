@@ -14,14 +14,18 @@ import { usereventSearchQueryResults } from "services/usermetrics.service";
 
 export type Filter = {
     domain?: string[];
-    location?: string[];
     topic?: string[];
     last_update?: string[];
     file_type?: string[];
     org?: string[];
-    license?: string[];
     quality?: string[];
     sort_by?: string[];
+    usage_rights?: string[];
+    keywords?: string[];
+    data_host?: string[];
+    update_frequency?: string[];
+    start_date?: string[];
+    end_date?: string[];
 };
 
 const SearchVM = () => {
@@ -108,10 +112,11 @@ const SearchVM = () => {
                     setFilterOptions({
                         domain: resFitlerOptions["domain"],
                         file_type: resFitlerOptions["file_type"],
-                        license: resFitlerOptions["licence"],
-                        location: resFitlerOptions["location"],
                         org: resFitlerOptions["org"],
                         topic: resFitlerOptions["topic"],
+                        usage_rights: resFitlerOptions["usage_rights"],
+                        keywords: resFitlerOptions["keywords"],
+                        data_host: resFitlerOptions["host_name"],
                     });
                     return Dataset.fromJsonList(
                         res[0]["user_search"][0]["results"]

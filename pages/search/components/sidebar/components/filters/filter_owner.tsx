@@ -30,7 +30,7 @@ const FilterOwner = () => {
   });
 
   return (
-    <FilterSection dataSelector="owner-filter-section" label="Owner">
+    <FilterSection dataSelector="owner-filter-section" label="Data Owner">
       {vm.isLoading && (
         <div className="m-3 flex items-center justify-center">
           <Loader />
@@ -38,7 +38,7 @@ const FilterOwner = () => {
       )}
       {!vm.isLoading && fields.length === 0 && (
         <div className="m-3 text-xs text-gray-500 flex items-center justify-center">
-          No owners
+          No data owners
         </div>
       )}
       {!vm.isLoading &&

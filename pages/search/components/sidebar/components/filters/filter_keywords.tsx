@@ -8,35 +8,28 @@ import { useContext, useEffect, useState } from "react";
 import FilterCheckboxField from "../filter_checkbox_field";
 import FilterSection from "../filter_section";
 
-const FilterFileType = () => {
+const FilterKeywords = () => {
     const vm = useContext(SearchVMContext);
     const [filterOptionItems, setFilterOptionItems] = useState<
         FilterOptionItem[] | undefined
     >([]);
 
     useEffect(() => {
-        //   const fileFormats = vm.datasets
-        //     ?.map((d) => d.urls.map((u) => u.format))
-        //     .reduce((a, b) => [...a, ...b], [])
-        //     .filter((f) => f)
-        //     .filter((format, i, a) => a.indexOf(format) == i)
-        //     .map((format) => ({ value: format, label: format, checkbox: false }));
-        //   setFilterOptionItems(fileFormats);
-        const fileFormats = vm.filterOptions?.file_type?.map((format) => ({
+        const keywords = vm.filterOptions?.keywords?.map((format) => ({
             value: format,
             label: format,
             checkbox: false,
         }));
-        setFilterOptionItems(fileFormats);
+        setFilterOptionItems(keywords);
     }, [vm.filterOptions]);
 
     const { register, fields } = useSearchFilter({
-        name: "file_type",
+        name: "keywords",
         filterOptionItems,
     });
 
     return (
-        <FilterSection dataSelector="file-type-filter-section" label="File Format">
+        <FilterSection dataSelector="keywords-filter-section" label="Keywords">
             {vm.isLoading && (
                 <div className="m-3 flex items-center justify-center">
                     <Loader />
@@ -44,15 +37,15 @@ const FilterFileType = () => {
             )}
             {!vm.isLoading && fields.length === 0 && (
                 <div className="m-3 text-xs text-gray-500 flex items-center justify-center">
-                    No file format
+                    No keywords
                 </div>
             )}
             {!vm.isLoading &&
                 fields.map((field, i) => (
                     <FilterCheckboxField
-                        dataSelector="file-type"
+                        dataSelector="keywords"
                         key={field.id}
-                        register={register(`file_type.${i}.checkbox`)}
+                        register={register(`keywords.${i}.checkbox`)}
                         label={field.value}
                         value={field.value}
                         defaultChecked={!!field.checkbox}
@@ -62,4 +55,4 @@ const FilterFileType = () => {
     );
 };
 
-export default FilterFileType;
+export default FilterKeywords;

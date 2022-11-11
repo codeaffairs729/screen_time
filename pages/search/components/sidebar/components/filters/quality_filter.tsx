@@ -18,7 +18,7 @@ const QualityFilter = () => {
   });
 
   return (
-    <FilterSection label="Quality">
+    <FilterSection label="Metadata Quality">
       {fields.map((field, i) => (
         <StarRow key={field.id} stars={i + 1}>
           <FilterCheckboxField
