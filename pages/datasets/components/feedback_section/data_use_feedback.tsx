@@ -24,6 +24,7 @@ const DataUseFeedback = () => {
             <div className="">
                 <div className="my-5 mx-3 px-5 py-3">
                     <DomainsTopics vm={vmForm} />
+                    
                     <PotentialUsecases vm={vmForm} />
 
                     <UsecaseDescription vm={vmForm} />

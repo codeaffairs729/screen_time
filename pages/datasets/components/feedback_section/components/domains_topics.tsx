@@ -8,14 +8,14 @@ interface SelectOption {
     domain?: string;
 }
 
-const domainOptions: SelectOption[] = [
+export const domainOptions: SelectOption[] = [
     { value: "envnat", label: "Environment and nature" },
     { value: "govpub", label: "Government and public sector" },
     { value: "hlthcare", label: "Health and care" },
     { value: "popsoc", label: "Population and society" },
 ];
 
-const topicOptions: SelectOption[] = [
+export const topicOptions: SelectOption[] = [
     { value: "en1", label: "Air quality", domain: "envnat" },
     { value: "en2", label: "Biodiversity", domain: "envnat" },
     { value: "gp1", label: "Civil services", domain: "govpub" },
@@ -26,6 +26,42 @@ const topicOptions: SelectOption[] = [
     { value: "ps1", label: "Social development", domain: "popsoc" },
     { value: "ps2", label: "Demographics", domain: "popsoc" },
 ];
+
+interface DomainTopicsList {
+    domain: string;
+    topics: string[];
+}
+
+export const sanitizeDomainTopics = (data: any) => {
+    const domains = data.domains;
+
+    let domain_topics_list: DomainTopicsList[] = [];
+
+    domains.forEach((domain: string) => {
+        var domain_option = domainOptions.find(
+            (option) => option.value === domain
+        );
+        if (domain_option != undefined) {
+            var domain_topic_labels: string[] = [];
+            var topics = data[`topics_${domain}`];
+            topics.forEach((topic: string) => {
+                var topic_option = topicOptions.find(
+                    (option) => option.value === topic
+                );
+                if (topic_option != undefined) {
+                    domain_topic_labels.push(topic_option.label);
+                }
+            });
+
+            domain_topics_list.push({
+                domain: domain_option.label,
+                topics: domain_topic_labels,
+            });
+        }
+    });
+
+    return domain_topics_list;
+};
 
 const DomainsTopics = ({ vm }: { vm: any }) => {
     const [selDomains, setSelDomains] = useState<readonly SelectOption[]>([]);
