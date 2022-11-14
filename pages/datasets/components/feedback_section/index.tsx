@@ -26,9 +26,9 @@ const TabHeader = ({ children }: { children: ReactNode }) => {
 const FeedbackSection = () => {
     const user = useSelector((state: RootState) => state.auth.user);
 
-    if (!user) {
-        return <LoginAlert />;
-    }
+    // if (!user) {
+    //     return <LoginAlert />;
+    // }
 
     return (
         <div className="">
