@@ -14,19 +14,19 @@ const RegisterDataSourceVM = () => {
         isLoading: isRegisteringDataSource,
     } = useHttpCall();
     const registerDataSource = (data: any) => {
-        console.log(data);
-        // const sanitizedValues = pickBy(data, (value) => value.length > 0);
-        // return executeRegisterDataSource(
-        //   () => Http.post("/v1/data_sources/", sanitizedValues),
-        //   {
-        //     onSuccess: (res) =>{
-        //       toast.success("The data source was successfully added.");
-        //       setIsSubmissionSuccess(true);
-        //     },
-        //     onError: (e) =>
-        //       toast.error("Something went wrong while adding the data source."),
-        //   }
-        // );
+        const sanitizedValues = pickBy(data, (value) => value.length > 0);
+        console.log(sanitizedValues);
+        return executeRegisterDataSource(
+          () => Http.post("/v1/data_sources/", sanitizedValues),
+          {
+            onSuccess: (res) =>{
+              toast.success("The data source was successfully added.");
+              setIsSubmissionSuccess(true);
+            },
+            onError: (e) =>
+              toast.error("Something went wrong while adding the data source."),
+          }
+        );
     };
 
     return {

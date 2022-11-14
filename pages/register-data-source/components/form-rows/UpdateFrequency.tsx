@@ -19,16 +19,8 @@ const UpdateFrequency = ({ vm }: { vm: any }) => {
                 }}
                 options={[
                     {
-                        value: "once",
-                        label: "Once",
-                    },
-                    {
-                        value: "adhoc",
-                        label: "Adhoc",
-                    },
-                    {
-                        value: "within-day",
-                        label: "Within a day",
+                        value: "continually",
+                        label: "Continually",
                     },
                     {
                         value: "daily",
@@ -39,24 +31,40 @@ const UpdateFrequency = ({ vm }: { vm: any }) => {
                         label: "Weekly",
                     },
                     {
+                        value: "fortnightly",
+                        label: "Fortnightly",
+                    },
+                    {
                         value: "monthly",
                         label: "Monthly",
                     },
                     {
-                        value: "quaterly",
-                        label: "Quaterly",
+                        value: "quarterly",
+                        label: "Quarterly",
                     },
                     {
-                        value: "semi-annual",
-                        label: "Semi annual",
+                        value: "biannually",
+                        label: "Bi-annually",
                     },
                     {
-                        value: "annual",
-                        label: "Annual",
+                        value: "annually",
+                        label: "Annually",
                     },
                     {
-                        value: "multi-year",
-                        label: "Multi year",
+                        value: "as-needed",
+                        label: "As needed",
+                    },
+                    {
+                        value: "irregular",
+                        label: "Irregular",
+                    },
+                    {
+                        value: "not-planned",
+                        label: "Not planned",
+                    },
+                    {
+                        value: "unknown",
+                        label: "Unknown",
                     },
                 ]}
                 placeholder=""

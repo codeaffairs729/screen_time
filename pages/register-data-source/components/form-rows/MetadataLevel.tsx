@@ -21,18 +21,22 @@ const MetadataLevel = ({ vm }: { vm: any }) => {
                     },
                     defaultValue: "nil",
                 }}
-                options={[
+                options={[                    
                     {
-                        value: "full",
-                        label: "Full",
+                        value: "good",
+                        label: "Good",
                     },
                     {
-                        value: "partial",
-                        label: "Partial",
+                        value: "sufficient",
+                        label: "Sufficient",
                     },
                     {
-                        value: "nil",
-                        label: "Nil",
+                        value: "bad",
+                        label: "Bad",
+                    },
+                    {
+                        value: "unknown",
+                        label: "Don't know",
                     },
                 ]}
                 placeholder=""
