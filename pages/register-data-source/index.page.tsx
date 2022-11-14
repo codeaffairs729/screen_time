@@ -1,17 +1,29 @@
 import DefaultLayout from "components/layouts/default";
 import InfoIcon from "components/UI/icons/info_icon";
-import DropdownField from "components/UI/form/dropdown_field";
 import PrimaryBtn from "components/UI/form/primary_btn";
-import TextField from "components/UI/form/text_field";
-import FormRow from "./components/form_row";
-import isEmail from "validator/lib/isEmail";
-import isURL from "validator/lib/isURL";
-import ErrorAlert from "components/UI/alerts/error_alert";
 import RegisterDataSourceVM from "./register_data_source.vm";
 import withAuth from "common/HOCs/with_auth";
 import SuccessScreen from "./components/success_screen";
+import SiteUrl from "./components/form-rows/SiteUrl";
+import SiteName from "./components/form-rows/SiteName";
+import Domain from "./components/form-rows/Domain";
+import MetadataLevel from "./components/form-rows/MetadataLevel";
+import SitemapAvailability from "./components/form-rows/SitemapAvailability";
+import UpdateFrequency from "./components/form-rows/UpdateFrequency";
+import Comment from "./components/form-rows/Comment";
+import ContactEmail from "./components/form-rows/ContactEmail";
+import UsageRights from "./components/form-rows/UsageRights";
+import DownloadStatus from "./components/form-rows/DownloadStatus";
+import DataType from "./components/form-rows/DataType";
+import DataManagementSystem from "./components/form-rows/DataManagementSystem";
+import MetadataStandards from "./components/form-rows/MetadataStandards";
+import DataDuplication from "./components/form-rows/DataDuplication";
+import { useState } from "react";
+import { BsChevronDown, BsChevronUp } from "react-icons/bs";
 
 const RegisterDataSourcePage = () => {
+    const [showAdvanced, setShowAdvanced] = useState(false);
+
     const vm = RegisterDataSourceVM();
 
     return (
@@ -31,256 +43,76 @@ const RegisterDataSourcePage = () => {
                 </div>
                 {vm.isSubmissionSuccess && <SuccessScreen />}
                 {!vm.isSubmissionSuccess && (
-                    <div className="md:flex md:space-x-6 justify-center max-w-site m-auto">
-                        <div className="">
-                            <FormRow
-                                label="Data source website URL"
-                                required={true}
-                            >
-                                <TextField
-                                    className="w-60"
-                                    formControl={{
-                                        control: vm.form.control,
-                                        name: "site_url",
-                                        rules: {
-                                            required: "URL is required",
-                                            validate: (val: string) => {
-                                                if (!isURL(val)) {
-                                                    return "Please enter a valid url";
-                                                }
-                                            },
-                                        },
-                                    }}
-                                    placeholder=""
-                                />
-                            </FormRow>
-                            <FormRow label="Organisation" required={true}>
-                                <TextField
-                                    className="w-60"
-                                    formControl={{
-                                        control: vm.form.control,
-                                        name: "site_name",
-                                        rules: {
-                                            required:
-                                                "Organisation is required",
-                                        },
-                                    }}
-                                    placeholder=""
-                                />
-                            </FormRow>
-                            <FormRow label="Domain">
-                                <DropdownField
-                                    className="w-60"
-                                    formControl={{
-                                        control: vm.form.control,
-                                        name: "domain",
-                                        rules: {},
-                                        defaultValue: "nil",
-                                    }}
-                                    options={[
-                                        {
-                                            value: "environment",
-                                            label: "Environment",
-                                        },
-                                        {
-                                            value: "health",
-                                            label: "Health",
-                                        },
-                                        {
-                                            value: "transport",
-                                            label: "Transport",
-                                        },
-                                        {
-                                            value: "education",
-                                            label: "Education",
-                                        },
-                                        {
-                                            value: "finance",
-                                            label: "Finance",
-                                        },
-                                        {
-                                            value: "energy",
-                                            label: "Energy",
-                                        },
-                                        {
-                                            value: "employment",
-                                            label: "Employment",
-                                        },
-                                        {
-                                            value: "other",
-                                            label: "Other",
-                                        },
-                                    ]}
-                                    placeholder=""
-                                />
-                            </FormRow>
-                            <FormRow label="Metadata availability">
-                                <DropdownField
-                                    className="w-60"
-                                    formControl={{
-                                        control: vm.form.control,
-                                        name: "metadata_level",
-                                        rules: {},
-                                        defaultValue: "nil",
-                                    }}
-                                    options={[
-                                        {
-                                            value: "full",
-                                            label: "Full",
-                                        },
-                                        {
-                                            value: "partial",
-                                            label: "Partial",
-                                        },
-                                        {
-                                            value: "nil",
-                                            label: "Nil",
-                                        },
-                                    ]}
-                                    placeholder=""
-                                />
-                            </FormRow>
-                            <FormRow label="Sitemap availability">
-                                <DropdownField
-                                    className="w-60"
-                                    formControl={{
-                                        control: vm.form.control,
-                                        name: "sitemap_exists",
-                                        rules: {},
-                                    }}
-                                    options={[
-                                        {
-                                            value: true,
-                                            label: "Yes",
-                                        },
-                                        {
-                                            value: false,
-                                            label: "No",
-                                        },
-                                    ]}
-                                    placeholder=""
-                                />
-                            </FormRow>
-                            <FormRow label="Sitemap">
-                                <TextField
-                                    disabled={
-                                        vm.form.watch("sitemap_exists") != true
-                                    }
-                                    className="w-60"
-                                    formControl={{
-                                        control: vm.form.control,
-                                        name: "sitemap_url",
-                                        rules: {},
-                                    }}
-                                    placeholder=""
-                                />
-                            </FormRow>
+                    <div className="justify-center max-w-site m-auto">
+                        <div className="mt-2 mb-4 text-sm py-2 px-4">
+                            <span className="font-semibold text-dtech-primary-dark">
+                                Required fields:
+                            </span>{" "}
+                            <span className="text-gray-500">
+                                These fields are necessary for us to start the
+                                indexing process.
+                            </span>
                         </div>
+                        <SiteUrl vm={vm} />
+                        <SiteName vm={vm} />
+                        <Domain vm={vm} />
+                        <UsageRights vm={vm} />
+                        <DownloadStatus vm={vm} />
+                        <MetadataLevel vm={vm} />
+                        <ContactEmail vm={vm} />
+
+                        {/* Optional-Advanced  */}
+
                         <div className="">
-                            <FormRow label="How often is the website updated?">
-                                <DropdownField
-                                    className="w-60"
-                                    formControl={{
-                                        control: vm.form.control,
-                                        name: "update_frequency",
-                                        rules: {},
-                                    }}
-                                    options={[
-                                        {
-                                            value: "once",
-                                            label: "Once",
-                                        },
-                                        {
-                                            value: "adhoc",
-                                            label: "Adhoc",
-                                        },
-                                        {
-                                            value: "within-day",
-                                            label: "Within a day",
-                                        },
-                                        {
-                                            value: "daily",
-                                            label: "Daily",
-                                        },
-                                        {
-                                            value: "weekly",
-                                            label: "Weekly",
-                                        },
-                                        {
-                                            value: "monthly",
-                                            label: "Monthly",
-                                        },
-                                        {
-                                            value: "quaterly",
-                                            label: "Quaterly",
-                                        },
-                                        {
-                                            value: "semi-annual",
-                                            label: "Semi annual",
-                                        },
-                                        {
-                                            value: "annual",
-                                            label: "Annual",
-                                        },
-                                        {
-                                            value: "multi-year",
-                                            label: "Multi year",
-                                        },
-                                    ]}
-                                    placeholder=""
-                                />
-                            </FormRow>
-                            <FormRow label="Contact Person">
-                                <TextField
-                                    className="w-60"
-                                    formControl={{
-                                        control: vm.form.control,
-                                        name: "contact_name",
-                                        rules: {},
-                                    }}
-                                    placeholder=""
-                                />
-                            </FormRow>
-                            <FormRow label="Email">
-                                <TextField
-                                    className="w-60"
-                                    type="email"
-                                    formControl={{
-                                        control: vm.form.control,
-                                        name: "contact_email",
-                                        rules: {
-                                            validate: (val: string) => {
-                                                if (val && !isEmail(val)) {
-                                                    return "Please enter a valid email";
-                                                }
-                                            },
-                                        },
-                                    }}
-                                />
-                            </FormRow>
-                            <FormRow
-                                label="Comments & Feedback"
-                                isTwoRow={true}
-                                className="flex-col"
+                            <div
+                                className={`mt-2 mb-4 cursor-pointer flex justify-between text-sm py-2 px-4 rounded-sm ${
+                                    !showAdvanced && "bg-gray-100"
+                                }`}
+                                onClick={() => {
+                                    setShowAdvanced(!showAdvanced);
+                                }}
                             >
-                                <TextField
-                                    type="textarea"
-                                    formControl={{
-                                        control: vm.form.control,
-                                        name: "comment",
-                                        rules: {},
-                                    }}
-                                />
-                            </FormRow>
-                            <PrimaryBtn
-                                label="Submit"
-                                className="bg-dtech-primary-dark w-32 mb-2 ml-auto"
-                                isLoading={vm.isRegisteringDataSource}
-                                onClick={vm.form.handleSubmit(
-                                    vm.registerDataSource
-                                )}
-                            />
+                                <span>
+                                    <span className="font-semibold">
+                                        Advanced fields:
+                                    </span>{" "}
+                                    <span className="text-gray-500">
+                                        The additional information will help us
+                                        index the data source websites faster
+                                    </span>
+                                </span>
+                                <span>
+                                    {showAdvanced ? (
+                                        <BsChevronUp className="ml-8" />
+                                    ) : (
+                                        <BsChevronDown className="ml-8" />
+                                    )}
+                                </span>
+                            </div>
+
+                            <div
+                                className={`${
+                                    showAdvanced ? "" : "hidden "
+                                } transition-2 ease-in-out delay-150 duration-300`}
+                            >
+                                <DataType vm={vm} />
+                                <DataManagementSystem vm={vm} />
+                                <MetadataStandards vm={vm} />
+                                <UpdateFrequency vm={vm} />
+                                <SitemapAvailability vm={vm} />
+                                <DataDuplication vm={vm} />
+                                <Comment vm={vm} />
+                            </div>
                         </div>
+
+                        <PrimaryBtn
+                            label="Submit"
+                            className="bg-dtech-primary-dark w-48 mt-5 mb-2 mx-auto"
+                            isLoading={vm.isRegisteringDataSource}
+                            onClick={vm.form.handleSubmit(
+                                vm.registerDataSource
+                            )}
+                        />
                     </div>
                 )}
             </div>
