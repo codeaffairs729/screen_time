@@ -3,10 +3,12 @@ import ChevronDownIcon from '@heroicons/react/solid/ChevronDownIcon';
 
 const FilterSection = ({
     label,
+    disable,
     children,
     dataSelector,
 }: {
     label: string;
+    disable?: boolean;
     children: ReactNode;
     dataSelector?: string;
 }) => {
@@ -19,7 +21,11 @@ const FilterSection = ({
             >
                 <h4
                     className={`${
-                        hideFilters ? "text-black" : "text-dtech-primary-dark"
+                        disable
+                            ? "text-gray-300"
+                            : hideFilters
+                            ? "text-black"
+                            : "text-dtech-primary-dark"
                     } text-sm font-medium pr-2 py-2`}
                 >
                     {label}
@@ -27,7 +33,9 @@ const FilterSection = ({
                 <ChevronDownIcon
                     className={`
                     ${
-                        hideFilters
+                        disable
+                            ? "text-gray-300"
+                            : hideFilters
                             ? "text-black"
                             : "text-dtech-primary-dark rotate-180"
                     }
@@ -36,7 +44,7 @@ const FilterSection = ({
             </div>
             <div
                 className={`overflow-auto transition-all duration-300	${
-                    hideFilters ? "max-h-0" : "max-h-80"
+                    disable || hideFilters ? "max-h-0" : "max-h-80"
                 }`}
             >
                 {children}

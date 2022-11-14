@@ -42,15 +42,14 @@ const FilterTopic = () => {
     });
 
     return (
-        <FilterSection dataSelector="topic-filter-section" label="Topics">
+        <FilterSection
+            dataSelector="topic-filter-section"
+            label="Topics"
+            disable={!fields.length}
+        >
             {vm.isLoading && (
                 <div className="m-3 flex items-center justify-center">
                     <Loader />
-                </div>
-            )}
-            {!vm.isLoading && fields.length === 0 && (
-                <div className="m-3 text-xs text-gray-500 flex items-center justify-center">
-                    No topics
                 </div>
             )}
             {!vm.isLoading &&

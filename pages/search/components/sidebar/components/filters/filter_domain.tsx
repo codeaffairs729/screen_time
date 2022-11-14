@@ -35,15 +35,14 @@ const FilterDomain = () => {
     });
 
     return (
-        <FilterSection dataSelector="domain-filter-section" label="Domain">
+        <FilterSection
+            dataSelector="domain-filter-section"
+            label="Domain"
+            disable={!fields.length}
+        >
             {vm.isLoading && (
                 <div className="m-3 flex items-center justify-center">
                     <Loader />
-                </div>
-            )}
-            {!vm.isLoading && fields.length === 0 && (
-                <div className="m-3 text-xs text-gray-500 flex items-center justify-center">
-                    No domains
                 </div>
             )}
             {!vm.isLoading &&

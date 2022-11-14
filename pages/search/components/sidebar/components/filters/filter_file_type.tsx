@@ -36,15 +36,14 @@ const FilterFileType = () => {
     });
 
     return (
-        <FilterSection dataSelector="file-type-filter-section" label="File Format">
+        <FilterSection
+            dataSelector="file-type-filter-section"
+            label="File Format"
+            disable={!fields.length}
+        >
             {vm.isLoading && (
                 <div className="m-3 flex items-center justify-center">
                     <Loader />
-                </div>
-            )}
-            {!vm.isLoading && fields.length === 0 && (
-                <div className="m-3 text-xs text-gray-500 flex items-center justify-center">
-                    No file format
                 </div>
             )}
             {!vm.isLoading &&

@@ -32,15 +32,11 @@ const FilterUsageRights = () => {
         <FilterSection
             dataSelector="usage_rights-filter-section"
             label="Usage Rights"
+            disable={!fields.length}
         >
             {vm.isLoading && (
                 <div className="m-3 flex items-center justify-center">
                     <Loader />
-                </div>
-            )}
-            {!vm.isLoading && fields.length === 0 && (
-                <div className="m-3 text-xs text-gray-500 flex items-center justify-center">
-                    No usage rights
                 </div>
             )}
             {!vm.isLoading &&
