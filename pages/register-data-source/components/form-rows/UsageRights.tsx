@@ -28,7 +28,7 @@ const UsageRights = ({ vm }: { vm: any }) => {
                     },
                     {
                         value: "commercial",
-                        label: "commercial",
+                        label: "Commercial",
                     },
                     {
                         value: "unknown",
