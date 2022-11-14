@@ -22,7 +22,7 @@ const FilterTimeCoverage = () => {
     }, [startDate, endDate]);
 
     return (
-        <FilterSection label="Time Coverage">
+        <FilterSection label="Time Coverage" disable={true}>
             <div className="flex flex-col justify-center items-end">
                 <div className="flex items-center mb-1.5">
                     <span className="mx-2 text-xs text-gray-700">From</span>
