@@ -20,7 +20,7 @@ const FilterOwner = () => {
     //   .filter((owner, i, a) => a.indexOf(owner) == i)
     //   .map((owner) => ({ value: owner, label: owner, checkbox: false }));
     // setFilterOptionItems(owners);
-    const owners = vm.filterOptions?.org?.map((owner) => ({
+    const owners = vm.filterOptions?.data_owners?.map((owner) => ({
       value: owner,
       label: owner,
       checkbox: false,
@@ -29,14 +29,14 @@ const FilterOwner = () => {
   }, [vm.datasets]);
 
   const { register, fields } = useSearchFilter({
-    name: "org",
+    name: "data_owners",
     filterOptionItems,
   });
 
   return (
     <FilterSection
-      dataSelector="owner-filter-section"
-      label="Data Owner"
+      dataSelector="data-owners-filter-section"
+      label="Data Owners"
       disable={(vm.isLoading || !fields.length)}
     >
       {vm.isLoading && (
@@ -47,9 +47,9 @@ const FilterOwner = () => {
       {!vm.isLoading &&
         fields.map((field, i) => (
           <FilterCheckboxField
-            dataSelector="owner-filter"
+            dataSelector="data-owners"
             key={field.id}
-            register={register(`org.${i}.checkbox`)}
+            register={register(`data_owners.${i}.checkbox`)}
             label={field.value}
             value={field.value}
             defaultChecked={!!field.checkbox}

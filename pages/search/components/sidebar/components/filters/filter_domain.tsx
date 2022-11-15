@@ -20,7 +20,7 @@ const FilterDomain = () => {
         //   .filter((domain, i, a) => a.indexOf(domain) == i)
         //   .map((domain) => ({ value: domain, label: domain, checkbox: false }));
         // setFilterOptionItems(domains);
-        const domains = vm.filterOptions?.domain?.map((domain) => ({
+        const domains = vm.filterOptions?.domains?.map((domain) => ({
             value: domain,
             label: domain,
             checkbox: false,
@@ -30,14 +30,14 @@ const FilterDomain = () => {
     }, [vm.filterOptions]);
 
     const { register, fields } = useSearchFilter({
-        name: "domain",
+        name: "domains",
         filterOptionItems,
     });
 
     return (
         <FilterSection
-            dataSelector="domain-filter-section"
-            label="Domain"
+            dataSelector="domains-filter-section"
+            label="Domains"
             disable={(vm.isLoading || !fields.length)}
         >
             {vm.isLoading && (
@@ -48,9 +48,9 @@ const FilterDomain = () => {
             {!vm.isLoading &&
                 fields.map((field, i) => (
                     <FilterCheckboxField
-                        dataSelector="domain-filter"
+                        dataSelector="domains-filter"
                         key={field.id}
-                        register={register(`domain.${i}.checkbox`)}
+                        register={register(`domains.${i}.checkbox`)}
                         label={field.value}
                         value={field.value}
                         defaultChecked={!!field.checkbox}

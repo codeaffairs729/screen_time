@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import FilterFileType from "./components/filters/filter_file_type";
+import FilterFileFormats from "./components/filters/filter_file_formats";
 import QualityFilter from "./components/filters/quality_filter";
 import FilterTopic from "./components/filters/filter_topic";
 import FilterOwner from "./components/filters/filter_owner";
@@ -25,7 +25,7 @@ const Sidebar = ({ className = "" }: { className?: string }) => {
       <FilterKeywords />
       <FilterOwner />
       <FilterDataHost />
-      <FilterFileType />
+      <FilterFileFormats />
       <FilterTimeCoverage />
       <FilterLastUpdate />
       <FilterUpdateFrequency />

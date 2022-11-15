@@ -28,7 +28,7 @@ const FilterTopic = () => {
         //       }))
         //     : undefined
         // );
-        const topics = vm.filterOptions?.topic?.map((t) => ({
+        const topics = vm.filterOptions?.topics?.map((t) => ({
             checkbox: false,
             value: t,
             label: t,
@@ -37,13 +37,13 @@ const FilterTopic = () => {
     }, [vm.filterOptions]);
 
     const { register, fields } = useSearchFilter({
-        name: "topic",
+        name: "topics",
         filterOptionItems,
     });
 
     return (
         <FilterSection
-            dataSelector="topic-filter-section"
+            dataSelector="topics-filter-section"
             label="Topics"
             disable={(vm.isLoading || !fields.length)}
         >
@@ -55,9 +55,9 @@ const FilterTopic = () => {
             {!vm.isLoading &&
                 fields.map((field, i) => (
                     <FilterCheckboxField
-                        dataSelector="topic-filter"
+                        dataSelector="topics-filter"
                         key={field.id}
-                        register={register(`topic.${i}.checkbox`)}
+                        register={register(`topics.${i}.checkbox`)}
                         label={field.value}
                         value={field.value}
                         defaultChecked={!!field.checkbox}

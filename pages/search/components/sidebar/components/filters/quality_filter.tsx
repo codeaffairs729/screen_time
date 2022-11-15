@@ -14,7 +14,7 @@ const QualityFilter = () => {
     { checkbox: false, value: "5", label: "5" },
   ]);
   const { register, fields } = useSearchFilter({
-    name: "quality",
+    name: "metadata_quality",
     filterOptionItems: filterValues.current,
   });
 
@@ -24,7 +24,7 @@ const QualityFilter = () => {
         <StarRow key={field.id} stars={i + 1}>
           <FilterCheckboxField
             className="mr-1.5 mb-0.5"
-            register={register(`quality.${i}.checkbox`)}
+            register={register(`metadata_quality.${i}.checkbox`)}
             value={field.value}
             defaultChecked={!!field.checkbox}
           />

@@ -11,7 +11,7 @@ const FilterLastUpdate = () => {
     { checkbox: false, label: "Past Year", value: "past_year" },
   ]);
   const { register, fields } = useSearchFilter({
-    name: "last_update",
+    name: "last_updated",
     filterOptionItems: filterValues.current,
   });
 
@@ -20,7 +20,7 @@ const FilterLastUpdate = () => {
       {fields.map((field, i) => (
         <FilterCheckboxField
           key={field.id}
-          register={register(`last_update.${i}.checkbox`)}
+          register={register(`last_updated.${i}.checkbox`)}
           label={field.label}
           value={field.value}
           defaultChecked={!!field.checkbox}

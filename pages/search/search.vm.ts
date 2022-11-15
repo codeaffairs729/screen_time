@@ -13,16 +13,16 @@ import Dataset from "../../models/dataset.model.v4";
 import { usereventSearchQueryResults } from "services/usermetrics.service";
 
 export type Filter = {
-    domain?: string[];
-    topic?: string[];
-    last_update?: string[];
-    file_type?: string[];
-    org?: string[];
-    quality?: string[];
+    domains?: string[];
+    topics?: string[];
+    last_updated?: string[];
+    file_formats?: string[];
+    data_owners?: string[];
+    metadata_quality?: string[];
     sort_by?: string[];
     usage_rights?: string[];
     keywords?: string[];
-    data_host?: string[];
+    data_hosts?: string[];
     update_frequency?: string[];
     start_date?: string[];
     end_date?: string[];
@@ -110,13 +110,13 @@ const SearchVM = () => {
                     const resFitlerOptions =
                         res[0]["user_search"][0]["filter_options"];
                     setFilterOptions({
-                        domain: resFitlerOptions["domains"],
-                        file_type: resFitlerOptions["file_formats"],
-                        org: resFitlerOptions["data_owners"],
-                        topic: resFitlerOptions["topics"],
+                        domains: resFitlerOptions["domains"],
+                        file_formats: resFitlerOptions["file_formats"],
+                        data_owners: resFitlerOptions["data_owners"],
+                        topics: resFitlerOptions["topics"],
                         usage_rights: resFitlerOptions["usage_rights"],
                         keywords: resFitlerOptions["keywords"],
-                        data_host: resFitlerOptions["data_hosts"],
+                        data_hosts: resFitlerOptions["data_hosts"],
                         update_frequency: resFitlerOptions["update_frequency"],
                     });
 

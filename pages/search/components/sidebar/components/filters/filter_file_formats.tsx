@@ -22,7 +22,7 @@ const FilterFileType = () => {
         //     .filter((format, i, a) => a.indexOf(format) == i)
         //     .map((format) => ({ value: format, label: format, checkbox: false }));
         //   setFilterOptionItems(fileFormats);
-        const fileFormats = vm.filterOptions?.file_type?.map((format) => ({
+        const fileFormats = vm.filterOptions?.file_formats?.map((format) => ({
             value: format,
             label: format,
             checkbox: false,
@@ -31,15 +31,15 @@ const FilterFileType = () => {
     }, [vm.filterOptions]);
 
     const { register, fields } = useSearchFilter({
-        name: "file_type",
+        name: "file_formats",
         filterOptionItems,
     });
 
     return (
         <FilterSection
-            dataSelector="file-type-filter-section"
-            label="File Format"
-            disable={(vm.isLoading || !fields.length)}
+            dataSelector="file-formats-filter-section"
+            label="File Formats"
+            disable={vm.isLoading || !fields.length}
         >
             {vm.isLoading && (
                 <div className="m-3 flex items-center justify-center">
@@ -49,9 +49,9 @@ const FilterFileType = () => {
             {!vm.isLoading &&
                 fields.map((field, i) => (
                     <FilterCheckboxField
-                        dataSelector="file-type"
+                        dataSelector="file-formats"
                         key={field.id}
-                        register={register(`file_type.${i}.checkbox`)}
+                        register={register(`file_formats.${i}.checkbox`)}
                         label={field.value}
                         value={field.value}
                         defaultChecked={!!field.checkbox}
