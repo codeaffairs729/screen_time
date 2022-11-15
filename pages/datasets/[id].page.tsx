@@ -9,7 +9,7 @@ import PreviewSection from "./components/preview_section";
 import SummaryInsights from "./components/summary_insights";
 import { NextPageContext } from "next";
 import Http from "common/http";
-import Dataset from "models/dataset.model";
+import Dataset from "models/dataset.model.v4";
 import ErrorAlert from "components/UI/alerts/error_alert";
 import MayAlsoLike from "./components/may_also_like";
 import DataFilesSection from "./components/data_files";
@@ -93,7 +93,7 @@ DatasetDetailPage.getInitialProps = async ({ query, req }: NextPageContext) => {
         if (req?.headers.cookie) {
             authToken = getCookieFromServer(AUTH_TOKEN, req);
         }
-        const datasetData = await Http.get(`/v3/datasets/${datasetId}`, {
+        const datasetData = await Http.get(`/v4/datasets/${datasetId}`, {
             baseUrl: process.env.NEXT_PUBLIC_PUBLIC_API_ROOT,
             extraHeaders: authToken
                 ? { Authorization: `Bearer ${authToken}` }

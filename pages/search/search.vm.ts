@@ -9,7 +9,7 @@ import { useDispatch } from "react-redux";
 import { SingleValue } from "react-select";
 import { updateCache } from "store/cache/cache.action";
 import useSWR from "swr";
-import Dataset from "../../models/dataset.model";
+import Dataset from "../../models/dataset.model.v4";
 import { usereventSearchQueryResults } from "services/usermetrics.service";
 
 export type Filter = {
@@ -90,7 +90,7 @@ const SearchVM = () => {
      */
     const { data: datasets, error } = useSWR(
         q
-            ? `/v3/datasets/?searchquery=${q}&pagesize=${pageSize}&pagenum=${currentPageNo}${queryParams}`
+            ? `/v4/datasets/?search_query=${q}&page_size=${pageSize}&page_num=${currentPageNo}${queryParams}`
             : null,
         (url: string) =>
             Http.get(url, {
@@ -110,14 +110,16 @@ const SearchVM = () => {
                     const resFitlerOptions =
                         res[0]["user_search"][0]["filter_options"];
                     setFilterOptions({
-                        domain: resFitlerOptions["domain"],
-                        file_type: resFitlerOptions["file_type"],
-                        org: resFitlerOptions["org"],
-                        topic: resFitlerOptions["topic"],
+                        domain: resFitlerOptions["domains"],
+                        file_type: resFitlerOptions["file_formats"],
+                        org: resFitlerOptions["data_owners"],
+                        topic: resFitlerOptions["topics"],
                         usage_rights: resFitlerOptions["usage_rights"],
                         keywords: resFitlerOptions["keywords"],
-                        data_host: resFitlerOptions["host_name"],
+                        data_host: resFitlerOptions["data_hosts"],
+                        update_frequency: resFitlerOptions["update_frequency"],
                     });
+
                     return Dataset.fromJsonList(
                         res[0]["user_search"][0]["results"]
                     );

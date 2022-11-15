@@ -1,5 +1,5 @@
 import { ReactNode, useState } from "react";
-import ChevronDownIcon from '@heroicons/react/solid/ChevronDownIcon';
+import ChevronDownIcon from "@heroicons/react/solid/ChevronDownIcon";
 
 const FilterSection = ({
     label,
@@ -16,7 +16,9 @@ const FilterSection = ({
     return (
         <div data-selector={dataSelector}>
             <div
-                className="flex items-center justify-between cursor-pointer"
+                className={`${
+                    disable ? "cursor-not-allowed" : " cursor-pointer"
+                } flex items-center justify-between`}
                 onClick={() => setHideFilters(!hideFilters)}
             >
                 <h4
