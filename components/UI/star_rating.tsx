@@ -8,7 +8,7 @@ const StarRating = ({ rating }: { rating: number }) => {
     const fullStars = [...Array(fullStarsNo)].map((_, i) => (
         // <Star key={`full_${i}`} type="full" />
 
-        <div key={`full_${i}`} className="inline-block mx-[0.7px]">
+        <div key={`full_${i}`} className="mx-[0.7px]">
             <BsStarFill />
         </div>
     ));
@@ -16,20 +16,20 @@ const StarRating = ({ rating }: { rating: number }) => {
     const emptyStarsNo = 5 - Math.ceil(roundedStars);
     const emptyStars = [...Array(emptyStarsNo)].map((_, i) => (
         // <Star key={`empty_${i}`} type="empty" />
-        <div key={`empty_${i}`} className="inline-block mx-[0.7px]">
+        <div key={`empty_${i}`} className="mx-[0.7px]">
             <BsStar />
         </div>
     ));
 
     const halfStars = [...Array(5 - fullStarsNo - emptyStarsNo)].map((_, i) => (
         // <Star key={`half_${i}`} type="half" />
-        <div key={`half_${i}`} className="inline-block mx-[0.7px]">
+        <div key={`half_${i}`} className="mx-[0.7px]">
             <BsStarHalf />
         </div>
     ));
 
     return (
-        <div className="text-[13px] text-[#AD1DEB]">
+        <div className="flex inline-block text-[13px] text-[#AD1DEB]">
             {fullStars}
             {halfStars}
             {emptyStars}

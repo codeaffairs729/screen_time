@@ -1,29 +1,54 @@
-import { useHttpCall } from "common/hooks";
-import Http from "common/http";
-import DislikeBtn from "./components/dislike_btn";
-import LikeBtn from "./components/like_btn";
-import InfoIcon from "components/UI/icons/info_icon";
-import { useRouter } from "next/router";
-import { useContext } from "react";
-import { DatasetDetailVMContext } from "../../dataset_detail.vm";
-import FeedbackForm from "./components/feedback_form";
-import PurposeForm from "./components/purpose_form";
+import { Tab } from "@headlessui/react";
+import { ReactNode } from "react";
+import DataQualityFeedback from "./data_quality_feedback";
+import DataUseFeedback from "./data_use_feedback";
+import { useSelector } from "react-redux";
+import { RootState } from "store";
+import ErrorAlert from "components/UI/alerts/error_alert";
+import LoginAlert from "components/UI/alerts/login_alert";
+
+const TabHeader = ({ children }: { children: ReactNode }) => {
+    return (
+        <Tab
+            className={({ selected }) =>
+                `text-sm font-medium px-3 py-1 mx-5 rounded-full  ${
+                    selected
+                        ? "bg-dtech-primary-dark text-white"
+                        : "border-[1px] border-black"
+                }`
+            }
+        >
+            {children}
+        </Tab>
+    );
+};
 
 const FeedbackSection = () => {
-  return (
-    <div>
-      <p className="text-gray-600 font-medium text-sm mb-2">
-        Did you find this dataset useful?
-        <InfoIcon title="Add you feedback" className="ml-1" />
-      </p>
-      <div className="flex space-x-3 mb-3">
-        <LikeBtn />
-        <DislikeBtn />
-      </div>
-      <FeedbackForm />
-      <PurposeForm />
-    </div>
-  );
+    const user = useSelector((state: RootState) => state.auth.user);
+
+    if (!user) {
+        return <LoginAlert />;
+    }
+
+    return (
+        <div className="">
+            <div></div>
+            <Tab.Group>
+                <Tab.List className="flex">
+                    <TabHeader>Data quality</TabHeader>
+                    <TabHeader>Data use cases</TabHeader>
+                </Tab.List>
+                <Tab.Panels className="mt-5">
+                    <Tab.Panel className="w-full">
+                        <DataQualityFeedback />
+                    </Tab.Panel>
+                    <Tab.Panel className="w-full">
+                        <DataUseFeedback />
+                    </Tab.Panel>
+                </Tab.Panels>
+            </Tab.Group>
+        </div>
+    );
 };
 
 export default FeedbackSection;

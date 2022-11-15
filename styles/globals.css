@@ -9,3 +9,5 @@
   --footer-height: 205px; /* height of the footer */
   --dataset-detail-tab-header-height: 46px; /* height of the tab header on the dataset detail page */
 }
+
+input[type='text']:focus { box-shadow: none; }
