@@ -45,7 +45,7 @@ const FilterTopic = () => {
         <FilterSection
             dataSelector="topic-filter-section"
             label="Topics"
-            disable={!fields.length}
+            disable={(vm.isLoading || !fields.length)}
         >
             {vm.isLoading && (
                 <div className="m-3 flex items-center justify-center">

@@ -1,10 +1,11 @@
 import StarRating from "components/UI/star_rating";
-import { useSearchFilter } from "pages/search/search.vm";
-import { ReactNode, useRef } from "react";
+import { useSearchFilter, SearchVMContext} from "pages/search/search.vm";
+import { ReactNode, useContext, useRef } from "react";
 import FilterCheckboxField from "../filter_checkbox_field";
 import FilterSection from "../filter_section";
 
 const QualityFilter = () => {
+  const vm = useContext(SearchVMContext);
   const filterValues = useRef([
     { checkbox: false, value: "1", label: "1" },
     { checkbox: false, value: "2", label: "2" },
@@ -18,7 +19,7 @@ const QualityFilter = () => {
   });
 
   return (
-    <FilterSection label="Metadata Quality">
+    <FilterSection label="Metadata Quality" disable={vm.isLoading}>
       {fields.map((field, i) => (
         <StarRow key={field.id} stars={i + 1}>
           <FilterCheckboxField

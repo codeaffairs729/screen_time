@@ -1,9 +1,10 @@
-import { FilterOptionItem, useSearchFilter } from "pages/search/search.vm";
-import { useRef } from "react";
+import { FilterOptionItem, useSearchFilter, SearchVMContext } from "pages/search/search.vm";
+import { useRef, useContext } from "react";
 import FilterCheckboxField from "../filter_checkbox_field";
 import FilterSection from "../filter_section";
 
 const FilterUpdateFrequency = () => {
+    const vm = useContext(SearchVMContext);
     const filterValues = useRef<FilterOptionItem[]>([
         { checkbox: false, label: "Continually", value: "continually" },
         { checkbox: false, label: "Daily", value: "daily" },
@@ -24,7 +25,7 @@ const FilterUpdateFrequency = () => {
     });
 
     return (
-        <FilterSection label="Update Frequency">
+        <FilterSection label="Update Frequency" disable={vm.isLoading}>
             {fields.map((field, i) => (
                 <FilterCheckboxField
                     key={field.id}

@@ -37,7 +37,7 @@ const FilterOwner = () => {
     <FilterSection
       dataSelector="owner-filter-section"
       label="Data Owner"
-      disable={!fields.length}
+      disable={(vm.isLoading || !fields.length)}
     >
       {vm.isLoading && (
         <div className="m-3 flex items-center justify-center">

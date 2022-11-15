@@ -32,7 +32,7 @@ const FilterDataHost = () => {
         <FilterSection
             dataSelector="data-host-filter-section"
             label="Data Host"
-            disable={!fields.length}
+            disable={(vm.isLoading || !fields.length)}
         >
             {vm.isLoading && (
                 <div className="m-3 flex items-center justify-center">

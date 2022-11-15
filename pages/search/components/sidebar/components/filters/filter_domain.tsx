@@ -38,7 +38,7 @@ const FilterDomain = () => {
         <FilterSection
             dataSelector="domain-filter-section"
             label="Domain"
-            disable={!fields.length}
+            disable={(vm.isLoading || !fields.length)}
         >
             {vm.isLoading && (
                 <div className="m-3 flex items-center justify-center">

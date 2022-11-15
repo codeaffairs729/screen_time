@@ -32,7 +32,7 @@ const FilterUsageRights = () => {
         <FilterSection
             dataSelector="usage_rights-filter-section"
             label="Usage Rights"
-            disable={!fields.length}
+            disable={(vm.isLoading || !fields.length)}
         >
             {vm.isLoading && (
                 <div className="m-3 flex items-center justify-center">

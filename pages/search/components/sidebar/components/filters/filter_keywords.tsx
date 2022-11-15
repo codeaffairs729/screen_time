@@ -32,7 +32,7 @@ const FilterKeywords = () => {
         <FilterSection
             dataSelector="keywords-filter-section"
             label="Keywords"
-            disable={!fields.length}
+            disable={(vm.isLoading || !fields.length)}
         >
             {vm.isLoading && (
                 <div className="m-3 flex items-center justify-center">

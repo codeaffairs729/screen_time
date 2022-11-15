@@ -39,7 +39,7 @@ const FilterFileType = () => {
         <FilterSection
             dataSelector="file-type-filter-section"
             label="File Format"
-            disable={!fields.length}
+            disable={(vm.isLoading || !fields.length)}
         >
             {vm.isLoading && (
                 <div className="m-3 flex items-center justify-center">

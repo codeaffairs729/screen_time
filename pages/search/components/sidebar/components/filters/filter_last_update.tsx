@@ -1,9 +1,10 @@
-import { FilterOptionItem, useSearchFilter } from "pages/search/search.vm";
-import { useRef } from "react";
+import { FilterOptionItem, useSearchFilter, SearchVMContext } from "pages/search/search.vm";
+import { useContext, useRef } from "react";
 import FilterCheckboxField from "../filter_checkbox_field";
 import FilterSection from "../filter_section";
 
 const FilterLastUpdate = () => {
+  const vm = useContext(SearchVMContext);
   const filterValues = useRef<FilterOptionItem[]>([
     { checkbox: false, label: "Past Week", value: "past_week" },
     { checkbox: false, label: "Past Month", value: "past_month" },
@@ -15,7 +16,7 @@ const FilterLastUpdate = () => {
   });
 
   return (
-    <FilterSection label="Last Updated">
+    <FilterSection label="Last Updated" disable={(vm.isLoading)}>
       {fields.map((field, i) => (
         <FilterCheckboxField
           key={field.id}
