@@ -1,21 +1,33 @@
 import StarRating from "components/UI/star_rating";
-import { useSearchFilter, SearchVMContext} from "pages/search/search.vm";
-import { ReactNode, useContext, useRef } from "react";
+import {
+    useSearchFilter,
+    SearchVMContext,
+    FilterOptionItem,
+} from "pages/search/search.vm";
+import { ReactNode, useContext, useEffect, useState } from "react";
 import FilterCheckboxField from "../filter_checkbox_field";
 import FilterSection from "../filter_section";
 
 const QualityFilter = () => {
   const vm = useContext(SearchVMContext);
-  const filterValues = useRef([
-    { checkbox: false, value: "1", label: "1" },
-    { checkbox: false, value: "2", label: "2" },
-    { checkbox: false, value: "3", label: "3" },
-    { checkbox: false, value: "4", label: "4" },
-    { checkbox: false, value: "5", label: "5" },
-  ]);
+  const [filterOptions, setFilterOptions] = useState<
+    FilterOptionItem[] | undefined
+  >([]);
+  useEffect(() => {
+    const filterValues = [
+      { checkbox: false, value: "1", label: "1" },
+      { checkbox: false, value: "2", label: "2" },
+      { checkbox: false, value: "3", label: "3" },
+      { checkbox: false, value: "4", label: "4" },
+      { checkbox: false, value: "5", label: "5" },
+    ];
+
+    setFilterOptions(filterValues);
+  }, [vm.filterOptions]);
+
   const { register, fields } = useSearchFilter({
     name: "metadata_quality",
-    filterOptionItems: filterValues.current,
+    filterOptionItems: filterOptions,
   });
 
   return (

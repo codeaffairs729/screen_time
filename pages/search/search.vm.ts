@@ -45,6 +45,8 @@ const SearchVM = () => {
     const [currentPageNo, setCurrentPageNo] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [pageSize, setPageSize] = useState(20);
+    const [isFilterActive, setIsFilterActive] = useState<boolean>(false);
+    const [ loading, setLoading ] = useState<boolean>(false)
     /**
      * Update the query params on updating any filter
      */
@@ -67,10 +69,17 @@ const SearchVM = () => {
             }
             return "";
         };
+        const filterActive = Object.keys(activeFilter).some((key: string) =>
+            key === "sort_by"
+                ? !activeFilter[key]?.includes("relevance")
+                : activeFilter[key as keyof Filter]?.length
+        );
         let cQueryParams = Object.keys(activeFilter)
             .map((k) => getQueryParam(k as keyof Filter))
             .filter((qp) => qp)
             .join("&");
+
+        setIsFilterActive(filterActive);
         setQueryParams(cQueryParams ? `&${cQueryParams}` : "");
     }, [activeFilter]);
 
@@ -82,6 +91,23 @@ const SearchVM = () => {
         dispatch(updateCache("last-search-query", option.value));
         setCurrentPageNo(1);
         router.push({ pathname: "/search", query: { q: option.value } });
+    };
+
+    /**
+     * Reset all the filters and data search results
+     */
+    const resetAllFilters = () => {
+        if (isFilterActive) {
+            const updatedFilters = Object.keys(activeFilter).reduce(
+                (pv: Filter, cv: string) => ({
+                    ...pv,
+                    [cv]: cv == "sort_by" ? ["relevance"] : [],
+                }),
+                {}
+            );
+            setLoading(true)
+            setActiveFilter(updatedFilters);
+        }
     };
 
     /**
@@ -97,12 +123,14 @@ const SearchVM = () => {
                 baseUrl: `${process.env.NEXT_PUBLIC_PUBLIC_API_ROOT}`,
             })
                 .catch((e) => {
+                    setLoading(false)
                     toast.error(
                         "Something went wrong while fetching search results"
                     );
                     throw e;
                 })
                 .then((res) => {
+                    setLoading(false)
                     // setCurrentPageNo(res[0]["user_search"][0]["pagenum"]);
                     setTotalPages(
                         Math.ceil(res[0]["user_search"][0]["total"] / pageSize)
@@ -125,6 +153,7 @@ const SearchVM = () => {
                     );
                 })
                 .then((datasets) => {
+                    setLoading(false)
                     updateDisplayCount(datasets.map((d) => d.id));
                     usereventSearchQueryResults(
                         q,
@@ -133,6 +162,7 @@ const SearchVM = () => {
                     return datasets;
                 })
                 .catch((e) => {
+                    setLoading(false)
                     console.error(e);
                     throw e;
                 }),
@@ -151,7 +181,7 @@ const SearchVM = () => {
     return {
         datasets,
         error,
-        isLoading: !datasets && !error,
+        isLoading: (!datasets && !error) || loading,
         onSearchChange,
         activeFilter,
         setActiveFilter,
@@ -160,6 +190,8 @@ const SearchVM = () => {
         totalPages,
         filterOptions,
         setFilterOptions,
+        resetAllFilters,
+        isFilterActive,
     };
 };
 
@@ -175,6 +207,8 @@ interface ISearchVMContext {
     currentPageNo: number;
     setCurrentPageNo: (pageNo: number) => void;
     totalPages: number;
+    resetAllFilters: Function;
+    isFilterActive: boolean;
 }
 
 export default SearchVM;
