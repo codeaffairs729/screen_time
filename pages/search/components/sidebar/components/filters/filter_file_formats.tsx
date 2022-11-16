@@ -1,3 +1,4 @@
+import Loader from "components/UI/loader";
 import {
     FilterOptionItem,
     SearchVMContext,
@@ -6,46 +7,39 @@ import {
 import { useContext, useEffect, useState } from "react";
 import FilterCheckboxField from "../filter_checkbox_field";
 import FilterSection from "../filter_section";
-import Loader from "components/UI/loader";
 
-const FilterTopic = () => {
+const FilterFileType = () => {
     const vm = useContext(SearchVMContext);
     const [filterOptionItems, setFilterOptionItems] = useState<
         FilterOptionItem[] | undefined
     >([]);
 
     useEffect(() => {
-        // const topics = vm.datasets?.reduce((a, b) => {
-        //   b.detail.topics.forEach((t) => a.add(t));
-        //   return a;
-        // }, new Set<string>());
-        // setFilterOptionItems(
-        //   topics
-        //     ? Array.from(topics).map((t) => ({
-        //         checkbox: false,
-        //         value: t,
-        //         label: t,
-        //       }))
-        //     : undefined
-        // );
-        const topics = vm.filterOptions?.topics?.map((t) => ({
+        //   const fileFormats = vm.datasets
+        //     ?.map((d) => d.urls.map((u) => u.format))
+        //     .reduce((a, b) => [...a, ...b], [])
+        //     .filter((f) => f)
+        //     .filter((format, i, a) => a.indexOf(format) == i)
+        //     .map((format) => ({ value: format, label: format, checkbox: false }));
+        //   setFilterOptionItems(fileFormats);
+        const fileFormats = vm.filterOptions?.file_formats?.map((format) => ({
+            value: format,
+            label: format,
             checkbox: false,
-            value: t,
-            label: t,
         }));
-        setFilterOptionItems(topics);
+        setFilterOptionItems(fileFormats);
     }, [vm.filterOptions]);
 
     const { register, fields } = useSearchFilter({
-        name: "topics",
+        name: "file_formats",
         filterOptionItems,
     });
 
     return (
         <FilterSection
-            dataSelector="topics-filter-section"
-            label="Topics"
-            disable={(vm.isLoading || !fields.length)}
+            dataSelector="file-formats-filter-section"
+            label="File Formats"
+            disable={vm.isLoading || !fields.length}
         >
             {vm.isLoading && (
                 <div className="m-3 flex items-center justify-center">
@@ -55,9 +49,9 @@ const FilterTopic = () => {
             {!vm.isLoading &&
                 fields.map((field, i) => (
                     <FilterCheckboxField
-                        dataSelector="topics-filter"
+                        dataSelector="file-formats"
                         key={field.id}
-                        register={register(`topics.${i}.checkbox`)}
+                        register={register(`file_formats.${i}.checkbox`)}
                         label={field.value}
                         value={field.value}
                         defaultChecked={!!field.checkbox}
@@ -67,4 +61,4 @@ const FilterTopic = () => {
     );
 };
 
-export default FilterTopic;
+export default FilterFileType;

@@ -8,52 +8,43 @@ import { useContext, useEffect, useState } from "react";
 import FilterCheckboxField from "../filter_checkbox_field";
 import FilterSection from "../filter_section";
 
-const FilterLocation = () => {
+const FilterUsageRights = () => {
     const vm = useContext(SearchVMContext);
     const [filterOptionItems, setFilterOptionItems] = useState<
         FilterOptionItem[] | undefined
     >([]);
 
     useEffect(() => {
-        // const locations = vm.datasets
-        //   ?.map((d) => d.detail.locations)
-        //   .reduce((a, b) => [...a, ...b], [])
-        //   .filter((location, i, a) => a.indexOf(location) == i)
-        //   .map((location) => ({
-        //     value: location,
-        //     label: location,
-        //     checkbox: false,
-        //   }));
-        // setFilterOptionItems(locations);
-        const locations = vm.filterOptions?.location?.map((location) => ({
-            value: location,
-            label: location,
+        const usageRights = vm.filterOptions?.usage_rights?.map((format) => ({
+            value: format,
+            label: format,
             checkbox: false,
         }));
-        setFilterOptionItems(locations);
+        setFilterOptionItems(usageRights);
     }, [vm.filterOptions]);
+
     const { register, fields } = useSearchFilter({
-        name: "location",
+        name: "usage_rights",
         filterOptionItems,
     });
 
     return (
-        <FilterSection label="Location">
+        <FilterSection
+            dataSelector="usage_rights-filter-section"
+            label="Usage Rights"
+            disable={(vm.isLoading || !fields.length)}
+        >
             {vm.isLoading && (
                 <div className="m-3 flex items-center justify-center">
                     <Loader />
                 </div>
             )}
-            {!vm.isLoading && fields.length === 0 && (
-                <div className="m-3 text-xs text-gray-500 flex items-center justify-center">
-                    No locations
-                </div>
-            )}
             {!vm.isLoading &&
                 fields.map((field, i) => (
                     <FilterCheckboxField
+                        dataSelector="usage_rights"
                         key={field.id}
-                        register={register(`location.${i}.checkbox`)}
+                        register={register(`usage_rights.${i}.checkbox`)}
                         label={field.value}
                         value={field.value}
                         defaultChecked={!!field.checkbox}
@@ -63,4 +54,4 @@ const FilterLocation = () => {
     );
 };
 
-export default FilterLocation;
+export default FilterUsageRights;

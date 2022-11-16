@@ -1,6 +1,6 @@
 import ErrorAlert from "components/UI/alerts/error_alert";
 import Loader from "components/UI/loader";
-import Dataset from "models/dataset.model";
+import Dataset from "models/dataset.model.v4";
 import { useContext } from "react";
 import useSWR from "swr";
 import { DatasetDetailVMContext } from "../dataset_detail.vm";
@@ -14,7 +14,7 @@ const MayAlsoLike = () => {
         .map((t) => encodeURIComponent(t))
         .join(",");
     const { data: datasets, error } = useSWR(
-        `${process.env.NEXT_PUBLIC_PUBLIC_API_ROOT}/v3/datasets/?searchquery=${searchTerm}&pagesize=20&pagenum=1`,
+        `${process.env.NEXT_PUBLIC_PUBLIC_API_ROOT}/v4/datasets/?search_query=${searchTerm}&page_size=20&page_num=1`,
         (url: string) =>
             fetch(url)
                 .then((res) => res.json())

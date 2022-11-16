@@ -8,51 +8,43 @@ import { useContext, useEffect, useState } from "react";
 import FilterCheckboxField from "../filter_checkbox_field";
 import FilterSection from "../filter_section";
 
-const FilterFileType = () => {
+const FilterUpdateFrequency = () => {
     const vm = useContext(SearchVMContext);
     const [filterOptionItems, setFilterOptionItems] = useState<
         FilterOptionItem[] | undefined
     >([]);
 
     useEffect(() => {
-        //   const fileFormats = vm.datasets
-        //     ?.map((d) => d.urls.map((u) => u.format))
-        //     .reduce((a, b) => [...a, ...b], [])
-        //     .filter((f) => f)
-        //     .filter((format, i, a) => a.indexOf(format) == i)
-        //     .map((format) => ({ value: format, label: format, checkbox: false }));
-        //   setFilterOptionItems(fileFormats);
-        const fileFormats = vm.filterOptions?.file_type?.map((format) => ({
+        const updateFrequency = vm.filterOptions?.update_frequency?.map((format) => ({
             value: format,
             label: format,
             checkbox: false,
         }));
-        setFilterOptionItems(fileFormats);
+        setFilterOptionItems(updateFrequency);
     }, [vm.filterOptions]);
 
     const { register, fields } = useSearchFilter({
-        name: "file_type",
+        name: "update_frequency",
         filterOptionItems,
     });
 
     return (
-        <FilterSection dataSelector="file-type-filter-section" label="File type">
+        <FilterSection
+            dataSelector="update-frequency-filter-section"
+            label="Update Frequency"
+            disable={(vm.isLoading || !fields.length)}
+        >
             {vm.isLoading && (
                 <div className="m-3 flex items-center justify-center">
                     <Loader />
                 </div>
             )}
-            {!vm.isLoading && fields.length === 0 && (
-                <div className="m-3 text-xs text-gray-500 flex items-center justify-center">
-                    No file types
-                </div>
-            )}
             {!vm.isLoading &&
                 fields.map((field, i) => (
                     <FilterCheckboxField
-                        dataSelector="file-type"
+                        dataSelector="update_frequency"
                         key={field.id}
-                        register={register(`file_type.${i}.checkbox`)}
+                        register={register(`update_frequency.${i}.checkbox`)}
                         label={field.value}
                         value={field.value}
                         defaultChecked={!!field.checkbox}
@@ -62,4 +54,4 @@ const FilterFileType = () => {
     );
 };
 
-export default FilterFileType;
+export default FilterUpdateFrequency;

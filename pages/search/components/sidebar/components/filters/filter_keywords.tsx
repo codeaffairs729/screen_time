@@ -8,47 +8,43 @@ import { useContext, useEffect, useState } from "react";
 import FilterCheckboxField from "../filter_checkbox_field";
 import FilterSection from "../filter_section";
 
-const FilterLicense = () => {
+const FilterKeywords = () => {
     const vm = useContext(SearchVMContext);
     const [filterOptionItems, setFilterOptionItems] = useState<
         FilterOptionItem[] | undefined
     >([]);
 
     useEffect(() => {
-        // const licenses = vm.datasets
-        //   ?.map((d) => d.detail.license.type)
-        //   .filter((license, i, a) => a.indexOf(license) == i)
-        //   .map((license) => ({ value: license, label: license, checkbox: false }));
-        // setFilterOptionItems(licenses);
-        const licenses = vm.filterOptions?.license?.map((license) => ({
-            value: license,
-            label: license,
+        const keywords = vm.filterOptions?.keywords?.map((format) => ({
+            value: format,
+            label: format,
             checkbox: false,
         }));
-        setFilterOptionItems(licenses);
+        setFilterOptionItems(keywords);
     }, [vm.filterOptions]);
+
     const { register, fields } = useSearchFilter({
-        name: "license",
+        name: "keywords",
         filterOptionItems,
     });
 
     return (
-        <FilterSection label="License">
+        <FilterSection
+            dataSelector="keywords-filter-section"
+            label="Keywords"
+            disable={(vm.isLoading || !fields.length)}
+        >
             {vm.isLoading && (
                 <div className="m-3 flex items-center justify-center">
                     <Loader />
                 </div>
             )}
-            {!vm.isLoading && fields.length === 0 && (
-                <div className="m-3 text-xs text-gray-500 flex items-center justify-center">
-                    No licenses
-                </div>
-            )}
             {!vm.isLoading &&
                 fields.map((field, i) => (
                     <FilterCheckboxField
+                        dataSelector="keywords"
                         key={field.id}
-                        register={register(`license.${i}.checkbox`)}
+                        register={register(`keywords.${i}.checkbox`)}
                         label={field.value}
                         value={field.value}
                         defaultChecked={!!field.checkbox}
@@ -58,4 +54,4 @@ const FilterLicense = () => {
     );
 };
 
-export default FilterLicense;
+export default FilterKeywords;

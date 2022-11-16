@@ -1,3 +1,4 @@
+import Loader from "components/UI/loader";
 import {
     FilterOptionItem,
     SearchVMContext,
@@ -6,45 +7,31 @@ import {
 import { useContext, useEffect, useState } from "react";
 import FilterCheckboxField from "../filter_checkbox_field";
 import FilterSection from "../filter_section";
-import Loader from "components/UI/loader";
 
-const FilterTopic = () => {
+const FilterDataHost = () => {
     const vm = useContext(SearchVMContext);
     const [filterOptionItems, setFilterOptionItems] = useState<
         FilterOptionItem[] | undefined
     >([]);
 
     useEffect(() => {
-        // const topics = vm.datasets?.reduce((a, b) => {
-        //   b.detail.topics.forEach((t) => a.add(t));
-        //   return a;
-        // }, new Set<string>());
-        // setFilterOptionItems(
-        //   topics
-        //     ? Array.from(topics).map((t) => ({
-        //         checkbox: false,
-        //         value: t,
-        //         label: t,
-        //       }))
-        //     : undefined
-        // );
-        const topics = vm.filterOptions?.topics?.map((t) => ({
+        const dataHost = vm.filterOptions?.data_hosts?.map((format) => ({
+            value: format,
+            label: format,
             checkbox: false,
-            value: t,
-            label: t,
         }));
-        setFilterOptionItems(topics);
+        setFilterOptionItems(dataHost);
     }, [vm.filterOptions]);
 
     const { register, fields } = useSearchFilter({
-        name: "topics",
+        name: "data_hosts",
         filterOptionItems,
     });
 
     return (
         <FilterSection
-            dataSelector="topics-filter-section"
-            label="Topics"
+            dataSelector="data-hosts-filter-section"
+            label="Data Hosts"
             disable={(vm.isLoading || !fields.length)}
         >
             {vm.isLoading && (
@@ -55,9 +42,9 @@ const FilterTopic = () => {
             {!vm.isLoading &&
                 fields.map((field, i) => (
                     <FilterCheckboxField
-                        dataSelector="topics-filter"
+                        dataSelector="data_hosts"
                         key={field.id}
-                        register={register(`topics.${i}.checkbox`)}
+                        register={register(`data_hosts.${i}.checkbox`)}
                         label={field.value}
                         value={field.value}
                         defaultChecked={!!field.checkbox}
@@ -67,4 +54,4 @@ const FilterTopic = () => {
     );
 };
 
-export default FilterTopic;
+export default FilterDataHost;
