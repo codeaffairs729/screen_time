@@ -10,28 +10,44 @@ import FilterKeywords from "./components/filters/filter_keywords";
 import FilterDataHost from "./components/filters/filter_data_host";
 import FilterUpdateFrequency from "./components/filters/filter_update_frequency";
 import FilterTimeCoverage from "./components/filters/filter_time_coverage";
+import { SearchVMContext } from "pages/search/search.vm";
+import { useContext } from "react";
+import { FaFilter } from "react-icons/fa";
 
 const Sidebar = ({ className = "" }: { className?: string }) => {
-  return (
-    <div
-      className={clsx("border-0 rounded overflow-hidden mx-3", className)}
-    >
-      <div className=" text-black text-lg font-medium pr-2 py-0.5 rounded overflow-hidden">
-        Filters
-      </div>
-      <FilterUsageRights />
-      <FilterDomain />
-      <FilterTopic />
-      <FilterKeywords />
-      <FilterOwner />
-      <FilterDataHost />
-      <FilterFileFormats />
-      <FilterTimeCoverage />
-      <FilterLastUpdate />
-      <FilterUpdateFrequency />
-      <QualityFilter />
-    </div>
-  );
+    const vm = useContext(SearchVMContext);
+
+    return (
+        <div
+            className={clsx("border-0 rounded overflow-hidden mx-3", className)}
+        >
+            <div className="flex justify-between text-black text-lg font-medium pr-2 py-0.5 rounded overflow-hidden">
+                <span>Filters</span>
+                <div
+                    onClick={() => vm.resetAllFilters()}
+                    className={`${
+                        vm.isFilterActive && !vm.isLoading
+                            ? "text-blue-700 hover:text-dtech-secondary-dark cursor-pointer"
+                            : "text-gray-300 cursor-not-allowed"
+                    } flex justify-center items-center`}
+                >
+                    <span className="text-[10px] text-inherit">Clear</span>
+                    <FaFilter className="w-2 h-2 ml-1 text-inherit" />
+                </div>
+            </div>
+            <FilterUsageRights />
+            <FilterDomain />
+            <FilterTopic />
+            <FilterKeywords />
+            <FilterOwner />
+            <FilterDataHost />
+            <FilterFileFormats />
+            <FilterTimeCoverage />
+            <FilterLastUpdate />
+            <FilterUpdateFrequency />
+            <QualityFilter />
+        </div>
+    );
 };
 
 export default Sidebar;

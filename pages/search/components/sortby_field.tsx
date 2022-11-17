@@ -35,12 +35,19 @@ const SortbyField = () => {
     },
   ];
   const [activeOption, setActiveOption] = useState<Option>(options[0]);
-  useEffect(() => {
+  const onChange = (value: string) =>
     setActiveFilter((state: Filter) => ({
       ...state,
-      sort_by: [activeOption.value],
+      sort_by: [value],
     }));
-  }, [activeOption]);
+
+  useEffect(() => {
+    const currentOption = options.filter((option: Option) =>
+      activeFilter?.sort_by?.includes(option.value)
+    )[0];
+
+    setActiveOption(currentOption);
+  }, [activeFilter]);
 
   return (
     <div className="mr-2 mb-2">
@@ -70,7 +77,7 @@ const SortbyField = () => {
                 {options.map((o) => (
                   <MenuItem
                     key={o.value}
-                    onClick={() => setActiveOption(o)}
+                    onClick={() => onChange(o.value)}
                     option={o}
                   />
                 ))}
