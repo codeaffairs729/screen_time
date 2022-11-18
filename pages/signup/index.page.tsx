@@ -7,7 +7,7 @@ import SignupVM from "./signup.vm";
 import isEmail from "validator/lib/isEmail";
 import ErrorAlert from "components/UI/alerts/error_alert";
 
-const SigninPage = () => {
+const SignupPage = () => {
     const vm = SignupVM();
 
     return (
@@ -186,4 +186,4 @@ const SigninPage = () => {
     );
 };
 
-export default SigninPage;
+export default SignupPage;
