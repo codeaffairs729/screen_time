@@ -19,8 +19,8 @@ const ListsSection = () => {
     return (
         <div>
             <Tab.Group>
-                <div className="flex">
-                    <Tab.List className="flex flex-col min-w-[15rem] w-1/6 mt-5">
+                <div>
+                    <Tab.List className="flex min-w-[15rem] w-1/6 mt-5">
                         <TabHeader>Favorites</TabHeader>
 
                         {bookmark_lists.map((list: any, idx: any) => (
@@ -54,15 +54,12 @@ const TabHeader = ({ children }: { children: ReactNode }) => {
     return (
         <Tab
             className={({ selected }) =>
-                clsx(
-                    "flex text-sm font-semibold px-1 py-1 mb-2 outline-none w-full rounded-full border-dtech-primary-dark border-[1px]",
-                    selected
-                        ? "bg-dtech-primary-dark text-white "
-                        : "text-dtech-primary-dark"
-                )
+                `flex text-lg px-1 py-1 outline-none text-dtech-main-dark border-dtech-main-dark ${
+                    selected && "border-b-2"
+                }`
             }
         >
-            <div className="mx-auto">{children}</div>
+            <span>{children}</span>
         </Tab>
     );
 };

@@ -6,6 +6,7 @@ import { ReactNode } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "store";
 import NavMenuDropdown from "./components/nav_menu_dropdown";
+import Notification from "./components/notification";
 import ProfileDropdown from "./components/profile_dropdown";
 import SignupDropdown from "./components/signup_dropdown";
 
@@ -56,6 +57,7 @@ const Nav = ({
                     link="https://api.dtechtive.com/docs"
                     openInNewTab={true}
                 />
+                {user && <Notification />}
                 {!user && <SignupDropdown />}
                 {!user && <NavItem label="Log In" link="/login" />}
                 <ProfileDropdown />
