@@ -158,11 +158,30 @@ class User {
 
     }
 
+    /**
+     * Even though a user can have multiple organisations, at the moment 
+     * a user is considered to be part of a single org
+     * TODO: in the future handle mutliple orgs
+     */
     static getOrganisation(user: User | null) {
         if (!user) {
             return null;
         }
         return user.organisations?.[0];
+    }
+
+    static updateOrganisation(user: User | null, orgDetails: any) {
+        if (!user) {
+            return null;
+        }
+        const org = user.organisations?.[0];
+        if (!org){
+            throw Error("User doesnt have an organisation")
+        }
+        // org.name = orgDetails['name']
+        // org.maxMembers = orgDetails['maxMembers']
+        user.organisations[0] = {...org, ...orgDetails}
+        return user;
     }
 }
 
