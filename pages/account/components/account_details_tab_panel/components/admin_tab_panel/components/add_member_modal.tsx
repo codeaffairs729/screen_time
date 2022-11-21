@@ -7,7 +7,7 @@ import _ from "lodash";
 import { Fragment, useContext } from "react";
 import { useForm } from "react-hook-form";
 import isEmail from "validator/lib/isEmail";
-import { AdminTabPanelVMContext } from "./admin_tab_panel.vm";
+import { AdminTabPanelVMContext } from "../admin_tab_panel.vm";
 
 function AddMemberModal({
     isOpen,

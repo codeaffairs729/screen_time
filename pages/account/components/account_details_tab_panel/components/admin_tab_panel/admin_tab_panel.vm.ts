@@ -4,12 +4,14 @@ import { getHttpErrorMsg } from "common/util";
 import User from "models/user.model";
 import { createContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "store";
+import { updateUser } from "store/auth/auth.action";
 
 const AdminTabPanelVM = () => {
-    const admin_user = useSelector((state: RootState) => state.auth.user);
-    const organisationId = admin_user?.organisations?.[0].organisation_id;
+    const adminUser = useSelector((state: RootState) => state.auth.user);
+    const dispatch = useDispatch();
+    const organisationId = adminUser?.organisations?.[0].organisation_id;
     let [isAddMemberModalOpen, setIsAddMemberModalOpen] = useState(false);
 
     const {
@@ -81,7 +83,27 @@ const AdminTabPanelVM = () => {
     const { execute: executeSaveOrgDetails, isLoading: isSavingOrgDetails } =
         useHttpCall();
     const saveOrgDetails = (data: any) =>
-        executeSaveOrgDetails(() => Http.patch(`/v1/iam/org/${organisationId}`, data));
+        executeSaveOrgDetails(
+            () => Http.patch(`/v1/iam/org/${organisationId}`, data),
+            {
+                onSuccess: (res) => {
+                    const newAdminUser = User.updateOrganisation(adminUser, {
+                        name: res["data"]["name"],
+                        maxMembers: res["data"]["max_members"],
+                        sector: res["data"]["sector"],
+                    });
+                    if (!newAdminUser) {
+                        console.log("newAdminUser", newAdminUser)
+                        throw new Error(
+                            "Updated user is not valid"
+                            
+                        );
+                    }
+                    dispatch(updateUser(newAdminUser));
+                    toast.success("Details were updated successfully");
+                },
+            }
+        );
 
     return {
         isAddMemberModalOpen,
@@ -93,7 +115,7 @@ const AdminTabPanelVM = () => {
         isFetchingOrgUsers,
         orgusers,
         isSavingOrgDetails,
-        saveOrgDetails
+        saveOrgDetails,
     };
 };
 

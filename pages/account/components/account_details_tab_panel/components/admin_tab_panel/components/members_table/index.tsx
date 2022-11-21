@@ -5,7 +5,7 @@ import { BsSearch } from "react-icons/bs";
 import clsx from "clsx";
 import Loader from "components/UI/loader";
 import TextBtn from "components/UI/buttons/text_btn";
-import { AdminTabPanelVMContext } from "../admin_tab_panel.vm";
+import { AdminTabPanelVMContext } from "../../admin_tab_panel.vm";
 import User from "models/user.model";
 
 const MembersTable = () => {
