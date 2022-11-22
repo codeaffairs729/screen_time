@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { BsStar, BsStarHalf, BsStarFill } from "react-icons/bs";
 
-const StarRating = ({ rating }: { rating: number }) => {
+const StarRating = ({ rating, starClassName = "" }: { rating: number, starClassName?: string}) => {
     const roundedStars = Math.round((rating || 0) * 2) / 2;
 
     const fullStarsNo = Math.floor(roundedStars);
@@ -9,7 +9,7 @@ const StarRating = ({ rating }: { rating: number }) => {
         // <Star key={`full_${i}`} type="full" />
 
         <div key={`full_${i}`} className="mx-[0.7px]">
-            <BsStarFill />
+            <BsStarFill className={starClassName}/>
         </div>
     ));
 
@@ -17,14 +17,14 @@ const StarRating = ({ rating }: { rating: number }) => {
     const emptyStars = [...Array(emptyStarsNo)].map((_, i) => (
         // <Star key={`empty_${i}`} type="empty" />
         <div key={`empty_${i}`} className="mx-[0.7px]">
-            <BsStar />
+            <BsStar className={starClassName}/>
         </div>
     ));
 
     const halfStars = [...Array(5 - fullStarsNo - emptyStarsNo)].map((_, i) => (
         // <Star key={`half_${i}`} type="half" />
         <div key={`half_${i}`} className="mx-[0.7px]">
-            <BsStarHalf />
+            <BsStarHalf className={starClassName}/>
         </div>
     ));
 

@@ -33,17 +33,19 @@ const Notifications = () => {
 const NotificationCard = ({ notification, index }: any) => {
     const notificationTitle = "Feedback request";
     const isMarkRead = false;
+    const message =
+        "Weekly Covid-19 deaths registered in Scotland. Provide feedback on Weekly Covid-19 deaths registered in Scotland";
     return (
         <div
             className={`${
-                index % 2 == 0 ? "bg-[#F0E2FA]" : "bg-neutral-100"
+                index % 2 == 0 ? "bg-dtech-main-light" : "bg-neutral-100"
             } my-4 px-2.5 py-2 cursor-pointer flex flex-col items-end rounded-lg`}
         >
             <Link href={"#"}>
                 <span className="flex items-center w-full">
                     <a
                         className={clsx(
-                            "text-[#9A65C4] block text-sm font-semibold mr-auto"
+                            "text-dtech-additional-dark block text-sm font-semibold mr-auto"
                         )}
                     >
                         {notificationTitle}
@@ -57,13 +59,10 @@ const NotificationCard = ({ notification, index }: any) => {
                 </span>
             </Link>
             <div
-                className={`text-[#302D2D] text-sm flex justify-between my-4 mr-auto w-1/2`}
+                className={`text-gray-800 text-sm justify-between my-4 mr-auto w-1/2`}
             >
-                <span>
-                    Provide feedback on Weekly Covid-19 deaths registered in
-                    Scotland. Provide feedback on Weekly Covid-19 deaths
-                    registered in Scotland
-                </span>
+                <span>Provide feedback on </span>
+                <span className="italic font-medium">{message}</span>
             </div>
         </div>
     );

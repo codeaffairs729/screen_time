@@ -7,6 +7,7 @@ import { ReactNode } from "react";
 import CreateNewList from "components/UI/user_bookmark/create_new_list";
 import { useSelector } from "react-redux";
 import { RootState } from "store";
+import { BsPlusLg } from "react-icons/bs";
 
 const ListsSection = () => {
     const bookmark_items = useSelector(
@@ -20,22 +21,28 @@ const ListsSection = () => {
         <div>
             <Tab.Group>
                 <div>
-                    <Tab.List className="flex min-w-[15rem] w-1/6 mt-5">
-                        <TabHeader>Favorites</TabHeader>
+                    <Tab.List className="flex min-w-[15rem] items-center px-6 w-[70vw]">
+                        <div className="flex items-center w-2/3 overflow-auto">
+                            <TabHeader>Favorites</TabHeader>
 
-                        {bookmark_lists.map((list: any, idx: any) => (
-                            <TabHeader key={idx}>{list.listName}</TabHeader>
-                        ))}
-                        <div className="px-1 py-1 mt-5">
-                            <CreateNewList inLists={true} />
+                            {bookmark_lists.map((list: any, idx: any) => (
+                                <TabHeader key={idx}>{list.listName}</TabHeader>
+                            ))}
+                        </div>
+                        <div className="ml-8 mr-auto">
+                            <div className="flex items-center justify-between border border-dtech-main-dark border-dashed rounded-lg px-3 h-8 w-44 cursor-pointer">
+                                <BsPlusLg className="text-dtech-main-dark h-[18px] w-[18px]" />
+                                <span className="text-lg">Create new list</span>
+                            </div>
+                            {/* <CreateNewList inLists={true} /> */}
                         </div>
                     </Tab.List>
                     <Tab.Panels className="w-full flex">
-                        <TabPanel>
+                        <TabPanel className="bg-white">
                             <FavouritesSection />
                         </TabPanel>
                         {bookmark_lists.map((list: any, idx: any) => (
-                            <TabPanel key={idx}>
+                            <TabPanel key={idx} className="bg-white">
                                 <BookmarksSection
                                     datasetIDS={list.listDatasets}
                                 />
@@ -54,7 +61,7 @@ const TabHeader = ({ children }: { children: ReactNode }) => {
     return (
         <Tab
             className={({ selected }) =>
-                `flex text-lg px-1 py-1 outline-none text-dtech-main-dark border-dtech-main-dark ${
+                `transition-all h-fit text-lg mr-10 outline-none text-dtech-main-dark border-dtech-main-dark w-24 overflow-hidden whitespace-nowrap text-ellipsis text-center ${
                     selected && "border-b-2"
                 }`
             }

@@ -12,7 +12,7 @@ const TabPanel = ({
     return (
         <Tab.Panel
             className={clsx(
-                "w-full bg-gray-100 p-6 min-h-[calc(100vh-260px)] overflow-y-auto",
+                "w-full bg-gray-100 p-6 min-h-[calc(100vh-260px)] outline-none overflow-y-auto",
                 className
             )}
         >

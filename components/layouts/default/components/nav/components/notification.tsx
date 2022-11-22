@@ -31,20 +31,15 @@ const Notification = () => {
             >
                 <Menu.Items
                     aria-label="profile dropdown menu"
-                    className="top-[25px] py-2 select-none max-h-[80vh] overflow-auto absolute z-30 right-0 w-72 font-medium origin-top-right bg-white shadow-lg border border-dtech-secondary-light"
+                    className="shadow-custom-1 top-[25px] py-2 px-2.5 mt-1 select-none max-h-[80vh] min-h-[300px] overflow-auto absolute z-30 right-0 w-72 font-medium origin-top-right bg-white"
                 >
-                    <div className="flex px-2.5 justify-between items-center text-[#7b42fb]">
-                        <span className="text-inherit">Notifications</span>
-                        <BsFillTriangleFill className="text-inherit" />
-                    </div>
-                    <Link href={"#"}>
-                        <span className="px-2.5 text-[#7b42fb] text-xs underline cursor-pointer">
-                            See all
-                        </span>
-                    </Link>
-                    {["", "", "", "", "", "", "", ""].map(
-                        (notfication, index) => (
-                            <NotificationCard key={index} />
+                    {["", "", "", "", "", "", ""].map(
+                        (notification, index) => (
+                            <NotificationCard
+                                notification={notification}
+                                key={index}
+                                index={index}
+                            />
                         )
                     )}
                 </Menu.Items>
@@ -53,36 +48,39 @@ const Notification = () => {
     );
 };
 
-const NotificationCard = ({ notification }: any) => {
+const NotificationCard = ({
+    notification,
+    index,
+}: {
+    notification: any;
+    index: number;
+}) => {
     const notificationTitle = "Feedback request";
     const isMarkRead = false;
+    const message = "Weekly Covid-19 deaths registered in Scotland";
     return (
-        <div className="bg-gray-100 my-4 px-2.5 py-2 cursor-pointer flex flex-col items-end">
+        <div className="shadow-underline py-4 px-2.5 cursor-pointer flex flex-col items-end">
             <Link href={"#"}>
                 <span className="flex items-center w-full">
                     <a
                         className={clsx(
-                            "text-dtech-primary-dark block text-sm font-semibold mr-auto"
+                            "text-dtech-additional-dark block text-sm font-semibold mr-auto"
                         )}
                     >
                         {notificationTitle}
                     </a>
-                    {!isMarkRead && (
-                        <div className="h-2 w-2 bg-dtech-alert rounded border border-white" />
+                    <span className="text-gray-600 text-[13px]">
+                        {getNotificationAge("Fri Nov 22 2022 20:30:32")}
+                    </span>
+                    {index % 2 == 0 && (
+                        <div className="h-3 w-3 bg-dtech-notification-alert-secondary ml-1 rounded-full border border-white" />
                     )}
                 </span>
             </Link>
-            <div
-                className={`${
-                    isMarkRead ? "text-gray-500" : "text-semibold text-gray-600"
-                } text-sm`}
-            >
-                Provide feedback on Weekly Covid-19 deaths registered in
-                Scotland
+            <div className="my-2 text-[13px] font-normal">
+                <span>Provide feedback on </span>
+                <span className="italic font-medium">{message}</span>
             </div>
-            <span className="text-gray-600 text-sm">
-                {getNotificationAge("Fri Nov 18 2022 15:44:32")}
-            </span>
         </div>
     );
 };

@@ -26,7 +26,7 @@ const WorkspacePage = () => {
             <div className="my-10 mx-4 md:mx-20 text-left text-[26px] font-semibold">
                 My Workspace
             </div>
-            <div className="flex mx-4 md:mx-20 border-y bg-[#FAFAFA]">
+            <div className="flex mx-4 md:mx-20 border-y bg-white">
                 <Tab.Group>
                     <div>
                         <Tab.List className="relative text-dtech-main-dark">
@@ -51,16 +51,16 @@ const WorkspacePage = () => {
                         </Tab.List>
                     </div>
                     <Tab.Panels className="h-[calc(100%-var(--dataset-detail-tab-header-height))] w-full flex">
-                        <TabPanel className="bg-[#FAFAFA]">
+                        <TabPanel className="bg-white">
                             <p>Work in progress.</p>
                         </TabPanel>
-                        <TabPanel className="bg-[#FAFAFA]">
+                        <TabPanel className="bg-white">
                             <ListsSection />
                         </TabPanel>
-                        <TabPanel className="bg-[#FAFAFA]">
+                        <TabPanel className="bg-white">
                             <p>Work in progress.</p>
                         </TabPanel>
-                        <TabPanel className="bg-[#FAFAFA]">
+                        <TabPanel className="bg-white">
                             <Notifications />
                         </TabPanel>
                     </Tab.Panels>

@@ -31,5 +31,5 @@ export const getNotificationAge = (date: string) => {
     if (interval > 1) {
         return Math.floor(interval) + " minutes ago";
     }
-    return Math.floor(seconds) + " just now";
+    return " just now";
 };

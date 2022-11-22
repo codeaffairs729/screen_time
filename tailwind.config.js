@@ -8,6 +8,8 @@ module.exports = {
       colors: {
         dtech: {
           "main-dark":"#3F0068",
+          "main-light":"#F0E2FA",
+          "additional-dark":"#9A65C4",
           "primary-light": "#09c6f9",
           "primary-dark": "#045DE9",
           "secondary-light": "#6E72FC",
@@ -23,10 +25,16 @@ module.exports = {
         xxs: "8px",
       },
       width: {
+        '3.5':'14px',
         '50': '200px'
       },
       height: {
+        '3.5':'14px',
         '26' : '110px'
+      },
+      boxShadow: {
+        'underline': 'inset 0px -1px 0px rgba(95, 86, 86, 0.25)',
+        'custom-1': '0px 4px 7px rgba(95, 95, 99, 0.8)'
       }
     },
   },
