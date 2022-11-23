@@ -6,7 +6,7 @@ import clsx from "clsx";
 import Loader from "components/UI/loader";
 import TextBtn from "components/UI/buttons/text_btn";
 import { AdminTabPanelVMContext } from "../../admin_tab_panel.vm";
-import User from "models/user.model";
+import User, { Role } from "models/user.model";
 
 const MembersTable = () => {
     const { control } = useForm();
@@ -51,33 +51,37 @@ const MembersTable = () => {
                                         <tr key={user.email}>
                                             <TD>{user.name}</TD>
                                             <TD>{user.email}</TD>
-                                            <TD>
-                                                {/* <DropdownField
-                                                    className=""
-                                                    placeholder="Role"
-                                                    options={[
-                                                        {
-                                                            value: "admin",
-                                                            label: "Admin",
-                                                        },
-                                                        {
-                                                            value: "member",
-                                                            label: "Member",
-                                                        },
-                                                    ]}
-                                                    formControl={{
-                                                        defaultValue: "admin",
-                                                        control: control,
-                                                        name: "sector",
-                                                        rules: {},
-                                                    }}
-                                                /> */}
-                                                {User.getRole(user)?.name}
-                                            </TD>
+                                            <TD>{User.getRole(user)?.name}</TD>
                                             <TD className="flex flex-col items-center">
                                                 <TextBtn
-                                                    label="Make admin"
+                                                    label={`${
+                                                        User.getRole(user)
+                                                            ?.name ==
+                                                        Role.ORGANIZATION_ADMIN
+                                                            ? "Make member"
+                                                            : "Make admin"
+                                                    }`}
                                                     className="text-sm underline text-blue-700"
+                                                    onClick={() => {
+                                                        if (
+                                                            User.getRole(user)
+                                                                ?.name ==
+                                                            Role.ORGANIZATION_ADMIN
+                                                        ) {
+                                                            adminPanelVm.makeOrgMember(
+                                                                user
+                                                            );
+                                                        } else {
+                                                            adminPanelVm.makeOrgAdmin(
+                                                                user
+                                                            );
+                                                        }
+                                                    }}
+                                                    isLoading={
+                                                        adminPanelVm.isChangingRole &&
+                                                        adminPanelVm.changingRoleUserId ==
+                                                            user.id
+                                                    }
                                                 />
                                                 <TextBtn
                                                     label="Remove user"

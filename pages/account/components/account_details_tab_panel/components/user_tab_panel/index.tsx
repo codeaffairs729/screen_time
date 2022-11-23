@@ -59,6 +59,7 @@ const UserTabPanel = () => {
                 <FormRow label="Organisation">
                     <TextField
                         className="bg-gray-50"
+                        disabled={true}
                         formControl={{
                             control: control,
                             name: "organisation",
@@ -69,16 +70,6 @@ const UserTabPanel = () => {
                     />
                 </FormRow>
                 <FormRow label="Role">
-                    {/* <TextField
-                        className="bg-gray-50"
-                        formControl={{
-                            control: control,
-                            name: "role",
-                            defaultValue: user?.role,
-                            rules: { required: "Role is required" },
-                        }}
-                        placeholder="Role"
-                    /> */}
                     <DropdownField
                         // className="w-60"
                         placeholder="Please select your role"
@@ -92,7 +83,7 @@ const UserTabPanel = () => {
                         }}
                     />
                 </FormRow>
-                <FormRow label="Data Owner">
+                {/* <FormRow label="Data Owner">
                     <DropdownField
                         className=""
                         placeholder="Choose whether data owner"
@@ -113,8 +104,8 @@ const UserTabPanel = () => {
                             },
                         }}
                     />
-                </FormRow>
-                <FormRow label="Admin">
+                </FormRow> */}
+                {/* <FormRow label="Admin">
                     <DropdownField
                         className=""
                         placeholder="Choose whether admin"
@@ -135,7 +126,7 @@ const UserTabPanel = () => {
                             },
                         }}
                     />
-                </FormRow>
+                </FormRow> */}
                 <PrimaryBtn
                     className="bg-dtech-secondary-dark w-min whitespace-nowrap ml-auto"
                     label="Update"

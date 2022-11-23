@@ -101,7 +101,7 @@ const DropdownField = ({
                                 Nothing found.
                             </div>
                         ) : (
-                            options.map((option, i) => (
+                            filteredOtions.map((option, i) => (
                                 <ComboOption key={i} option={option} />
                             ))
                         )}

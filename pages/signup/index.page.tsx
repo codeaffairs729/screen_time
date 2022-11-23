@@ -123,7 +123,7 @@ const SignupPage = () => {
                             placeholder="Organisation"
                         />
                     </FormRow>
-                    <FormRow label="Data Owner">
+                    {/* <FormRow label="Data Owner">
                         <DropdownField
                             className="w-60"
                             placeholder="Choose whether data owner"
@@ -141,7 +141,7 @@ const SignupPage = () => {
                                 },
                             }}
                         />
-                    </FormRow>
+                    </FormRow> */}
                     <FormRow label="Role">
                         <DropdownField
                             className="w-60"
