@@ -28,10 +28,7 @@ const AdminTabPanelVM = () => {
                     toast.error(await getHttpErrorMsg(error)),
                 postProcess: (res) =>
                     User.fromJsonList(res["data"]).filter((user) =>
-                        user.roles.every(
-                            (role) => user.id !== adminUser?.id
-                            // (role) => role.name != "Organization Admin"
-                        )
+                        user.roles.every((role) => user.id !== adminUser?.id)
                     ),
             }
         );
@@ -76,8 +73,8 @@ const AdminTabPanelVM = () => {
                     );
                     fetchOrgUsers();
                 },
-                onError: (error) => {
-                    toast.error("Something went wrong while removing th user.");
+                onError: async (error) => {
+                    await getHttpErrorMsg(error);
                 },
             }
         );
@@ -100,6 +97,9 @@ const AdminTabPanelVM = () => {
                     }
                     dispatch(updateUser(newAdminUser));
                     toast.success("Details were updated successfully");
+                },
+                onError: async (error) => {
+                    await getHttpErrorMsg(error);
                 },
             }
         );
@@ -124,8 +124,8 @@ const AdminTabPanelVM = () => {
                     }
                 ),
             {
-                onError: (error) => {
-                    toast.error("Something went wrong while updating role");
+                onError: async (error) => {
+                    toast.error(await getHttpErrorMsg(error));
                 },
                 onSuccess: (res) => {
                     toast.success("Role was updated successfully");
