@@ -1,34 +1,6 @@
-import { Menu, Transition } from "@headlessui/react";
 import clsx from "clsx";
 import Link from "next/link";
-import { Fragment } from "react";
-import { getNotificationAge } from "../workspace.vm";
-import { MdOutlineFactCheck } from "react-icons/md";
-
-const Notifications = () => {
-    return (
-        <Menu
-            as="div"
-            className="relative inline-block text-left m-2 flex flex-col"
-        >
-            <Link href={"#"}>
-                <div className="flex items-center justify-end cursor-pointer">
-                    <MdOutlineFactCheck className="text-dtech-main-dark" />
-                    <span className="pl-1.5 pr-2.5 text-sm">
-                        Mark all as read
-                    </span>
-                </div>
-            </Link>
-            {["", "", "", "", "", "", "", ""].map((notfication, index) => (
-                <NotificationCard
-                    notfication={notfication}
-                    index={index}
-                    key={index}
-                />
-            ))}
-        </Menu>
-    );
-};
+import { getNotificationAge } from "../../workspace.vm";
 
 const NotificationCard = ({ notification, index }: any) => {
     const notificationTitle = "Feedback request";
@@ -68,4 +40,4 @@ const NotificationCard = ({ notification, index }: any) => {
     );
 };
 
-export default Notifications;
+export default NotificationCard;

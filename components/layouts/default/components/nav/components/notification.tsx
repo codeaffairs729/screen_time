@@ -31,7 +31,7 @@ const Notification = () => {
             >
                 <Menu.Items
                     aria-label="profile dropdown menu"
-                    className="shadow-custom-1 top-[25px] py-2 px-2.5 mt-1 select-none max-h-[80vh] min-h-[300px] overflow-auto absolute z-30 right-0 w-72 font-medium origin-top-right bg-white"
+                    className="shadow-custom-1 top-[25px] py-2 px-2.5 mt-1 select-none max-h-[80vh] min-h-[300px] overflow-auto absolute z-30 right-0 w-80 font-medium origin-top-right bg-white"
                 >
                     {["", "", "", "", "", "", ""].map(
                         (notification, index) => (

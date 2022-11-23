@@ -19,7 +19,7 @@ const BookmarksSection = ({ datasetIDS }: { datasetIDS: any }) => {
     return (
         <div>
             {bookmarkItemsData?.map((dataset: any) => (
-                <>
+                <div key={dataset.id}>
                     {datasetIDS.includes(dataset.id) && (
                         <DatasetRowDisplay
                             key={dataset.id}
@@ -27,7 +27,7 @@ const BookmarksSection = ({ datasetIDS }: { datasetIDS: any }) => {
                             displayContext={"favorite-item"}
                         />
                     )}
-                </>
+                </div>
             ))}
         </div>
     );
