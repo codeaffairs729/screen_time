@@ -5,7 +5,7 @@ import Loader from "components/UI/loader";
 import Dataset from "models/dataset.model";
 import toast from "react-hot-toast";
 import useSWR, { useSWRConfig } from "swr";
-import DatasetRowDisplay from "components/UI/dataset_row_display";
+import DatasetRowDisplay from "components/UI/data_row_display";
 
 const FavouritesSection = () => {
     const { mutate } = useSWRConfig();

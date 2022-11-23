@@ -10,8 +10,8 @@ const CreateList = () => {
     const bookmark_lists = useSelector(
         (state: RootState) => state.user.bookmarkLists
     );
-    const [newNameActive, setNewNameActive] = useState(false);
-    const [listName, setListName] = useState("");
+    const [newNameActive, setNewNameActive] = useState<boolean>(false);
+    const [listName, setListName] = useState<string>("");
 
     const ref = useRef<any>();
 
@@ -39,7 +39,7 @@ const CreateList = () => {
                     <Loader />
                 ) : (
                     <BsPlusLg
-                        className="text-dtech-main-dark h-[18px] w-[18px]"
+                        className="text-dtech-main-dark h-[18px] w-[18px] hover:opacity-80"
                         onClick={() =>
                             newNameActive
                                 ? createList()

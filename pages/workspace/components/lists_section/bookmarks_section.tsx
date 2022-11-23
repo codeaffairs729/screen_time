@@ -1,5 +1,5 @@
 import Loader from "components/UI/loader";
-import DatasetRowDisplay from "components/UI/dataset_row_display";
+import DatasetRowDisplay from "components/UI/data_row_display";
 import { useSelector } from "react-redux";
 import { RootState } from "store";
 

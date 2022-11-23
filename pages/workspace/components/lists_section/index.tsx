@@ -56,7 +56,7 @@ const TabHeader = ({ children }: { children: ReactNode }) => {
     return (
         <Tab
             className={({ selected }) =>
-                `transition-all h-fit text-lg mr-10 outline-none text-dtech-main-dark border-dtech-main-dark w-24 overflow-hidden whitespace-nowrap text-ellipsis text-center ${
+                `transition-all h-fit text-lg mr-10 outline-none text-dtech-main-dark border-dtech-main-dark w-24 whitespace-nowrap text-center ${
                     selected && "border-b-2"
                 }`
             }
