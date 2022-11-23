@@ -32,7 +32,6 @@ const AdminTabPanel = () => {
                         <FormRow label="Organisation">
                             <TextField
                                 className="bg-gray-50"
-                                disabled={true}
                                 formControl={{
                                     control: control,
                                     name: "name",
