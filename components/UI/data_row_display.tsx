@@ -90,10 +90,14 @@ const DatasetRowDisplay = ({
                             {dataset.detail.hostName}
                         </LabeledRow>
                     </div>
-                    <div className="flex my-1.5">
-                        <span className="text-xs mr-1">Updated</span>
-                        <span className="text-xs font-medium">3 February 2021</span>
-                    </div>
+                    {dataset.detail.lastUpdate?.isValid && (
+                        <div className="flex my-1.5">
+                            <span className="text-xs mr-1">Updated</span>
+                            <span className="text-xs font-medium">
+                                {dataset.detail.lastUpdate.toRelative()}
+                            </span>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

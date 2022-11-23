@@ -7,7 +7,7 @@ const Notifications = () => {
     return (
         <Menu
             as="div"
-            className="relative inline-block text-left m-2 flex flex-col"
+            className="relative inline-block text-left m-2 flex flex-col w-full lg:w-3/4"
         >
             <Link href={"#"}>
                 <div className="flex items-center justify-end cursor-pointer">

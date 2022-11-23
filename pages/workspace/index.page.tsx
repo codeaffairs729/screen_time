@@ -8,6 +8,7 @@ import { Tab } from "@headlessui/react";
 import TabPanel from "components/UI/tabbed/panel";
 import Notifications from "./components/notifications_section";
 import TabHeaders from "./components/tabs";
+import { VscTriangleDown } from "react-icons/vsc";
 
 const WorkspacePage = () => {
     const user = useSelector((state: RootState) => state.auth.user);
@@ -19,8 +20,14 @@ const WorkspacePage = () => {
 
     return (
         <DefaultLayout>
-            <div className="my-10 mx-4 md:mx-20 text-left text-[26px] font-semibold">
-                My Workspace
+            <div className="my-10 mx-4 md:mx-20 flex items-center">
+                <span className="text-left text-[26px] font-semibold">
+                    My Workspace
+                </span>
+                <span className="cursor-pointer flex items-center ml-6">
+                    <span className="text-dtech-main-dark text-sm">My User Workspace</span>
+                    <VscTriangleDown className="ml-2 text-2xl text-dtech-main-dark"/>
+                </span>
             </div>
             <div className="flex mx-4 md:mx-20 border-t bg-white">
                 <Tab.Group>
