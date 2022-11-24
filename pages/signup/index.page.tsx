@@ -7,7 +7,7 @@ import SignupVM from "./signup.vm";
 import isEmail from "validator/lib/isEmail";
 import ErrorAlert from "components/UI/alerts/error_alert";
 
-const SigninPage = () => {
+const SignupPage = () => {
     const vm = SignupVM();
 
     return (
@@ -123,7 +123,7 @@ const SigninPage = () => {
                             placeholder="Organisation"
                         />
                     </FormRow>
-                    <FormRow label="Data Owner">
+                    {/* <FormRow label="Data Owner">
                         <DropdownField
                             className="w-60"
                             placeholder="Choose whether data owner"
@@ -141,7 +141,7 @@ const SigninPage = () => {
                                 },
                             }}
                         />
-                    </FormRow>
+                    </FormRow> */}
                     <FormRow label="Role">
                         <DropdownField
                             className="w-60"
@@ -186,4 +186,4 @@ const SigninPage = () => {
     );
 };
 
-export default SigninPage;
+export default SignupPage;

@@ -8,10 +8,12 @@ import Image from "next/image";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { RootState } from "store";
+import UserTabPanelVM from "./user_tab_panel.vm";
 
 const UserTabPanel = () => {
     const user = useSelector((state: RootState) => state.auth.user);
-    const { control } = useForm();
+    const { control, handleSubmit } = useForm();
+    const vm = UserTabPanelVM();
 
     return (
         <Tab.Panel className="flex items-center space-x-4">
@@ -44,6 +46,7 @@ const UserTabPanel = () => {
                 <FormRow label="Email">
                     <TextField
                         className="bg-gray-50"
+                        disabled={true}
                         formControl={{
                             control: control,
                             name: "email",
@@ -56,6 +59,7 @@ const UserTabPanel = () => {
                 <FormRow label="Organisation">
                     <TextField
                         className="bg-gray-50"
+                        disabled={true}
                         formControl={{
                             control: control,
                             name: "organisation",
@@ -66,18 +70,20 @@ const UserTabPanel = () => {
                     />
                 </FormRow>
                 <FormRow label="Role">
-                    <TextField
-                        className="bg-gray-50"
+                    <DropdownField
+                        // className="w-60"
+                        placeholder="Please select your role"
+                        options={vm.roleOptions}
+                        dataSelector="role-dropdown"
                         formControl={{
                             control: control,
-                            name: "role",
                             defaultValue: user?.role,
+                            name: "role",
                             rules: { required: "Role is required" },
                         }}
-                        placeholder="Role"
                     />
                 </FormRow>
-                <FormRow label="Data Owner">
+                {/* <FormRow label="Data Owner">
                     <DropdownField
                         className=""
                         placeholder="Choose whether data owner"
@@ -98,8 +104,8 @@ const UserTabPanel = () => {
                             },
                         }}
                     />
-                </FormRow>
-                <FormRow label="Admin">
+                </FormRow> */}
+                {/* <FormRow label="Admin">
                     <DropdownField
                         className=""
                         placeholder="Choose whether admin"
@@ -120,7 +126,13 @@ const UserTabPanel = () => {
                             },
                         }}
                     />
-                </FormRow>
+                </FormRow> */}
+                <PrimaryBtn
+                    className="bg-dtech-secondary-dark w-min whitespace-nowrap ml-auto"
+                    label="Update"
+                    isLoading={vm.isSavingUserDetails}
+                    onClick={handleSubmit(vm.saveUserDetails)}
+                />
             </div>
         </Tab.Panel>
     );

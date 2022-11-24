@@ -43,7 +43,7 @@ class Organisation {
         });
     }
 }
-class Role {
+export class Role {
     static REGISTERED_USER = "Registered User";
     static ORGANIZATION_ADMIN = "Organization Admin";
     static ORGANIZATION_MEMBER = "Organization Member";
@@ -71,7 +71,7 @@ class User {
         role,
         roles,
         roleOther,
-        isDataOwner,
+        // isDataOwner,
         organisation,
         organisations,
         updatedAt,
@@ -83,7 +83,7 @@ class User {
         roleOther: UserRole;
         role: UserRole;
         roles: Role[];
-        isDataOwner: Boolean;
+        // isDataOwner: Boolean;
         organisation: string;
         organisations: Organisation[];
         updatedAt: DateTime;
@@ -95,7 +95,7 @@ class User {
         this.role = role;
         this.roles = roles;
         this.roleOther = roleOther;
-        this.isDataOwner = isDataOwner;
+        // this.isDataOwner = isDataOwner;
         this.organisation = organisation;
         this.organisations = organisations;
         this.updatedAt = updatedAt;
@@ -108,7 +108,7 @@ class User {
     role: UserRole;
     roles: Role[];
     roleOther: string;
-    isDataOwner: Boolean;
+    // isDataOwner: Boolean;
     organisation: string;
     organisations: Organisation[];
     updatedAt: DateTime;
@@ -121,7 +121,6 @@ class User {
         const roles = (json["roles"] as any[]).map((roleJson) =>
             Role.fromJson(roleJson)
         );
-        console.log("data owner", json["is_data_owner"], json);
 
         return new User({
             id: json["id"],
@@ -130,7 +129,7 @@ class User {
             role: json["role"],
             roles: roles,
             roleOther: json["role_other"],
-            isDataOwner: json["is_data_owner"],
+            // isDataOwner: json["is_data_owner"],
             organisation: json["organisation"],
             organisations: organisations,
             updatedAt: DateTime.fromISO(json["updated_at"]),
@@ -149,20 +148,42 @@ class User {
         return user.roles.some((role) => role.name == Role.ORGANIZATION_ADMIN);
     }
 
-    static getRole(user: User | null){
+    static getOrg(user: User | null): Organisation | null {
+        if (!user) {
+            return null;
+        }
+        return user.organisations?.[0];
+    }
+
+    static getRole(user: User | null) {
         if (!user) {
             return null;
         }
         return user.roles?.[0];
- 
-
     }
 
+    /**
+     * Even though a user can have multiple organisations, at the moment
+     * a user is considered to be part of a single org
+     * TODO: in the future handle mutliple orgs
+     */
     static getOrganisation(user: User | null) {
         if (!user) {
             return null;
         }
         return user.organisations?.[0];
+    }
+
+    static updateOrganisation(user: User | null, orgDetails: any) {
+        if (!user) {
+            return null;
+        }
+        const org = user.organisations?.[0];
+        if (!org) {
+            throw Error("User doesnt have an organisation");
+        }
+        user.organisations[0] = { ...org, ...orgDetails };
+        return user;
     }
 }
 
