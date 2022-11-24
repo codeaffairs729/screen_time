@@ -2,7 +2,7 @@ import { Menu, Transition } from "@headlessui/react";
 import clsx from "clsx";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { Fragment, useState } from "react";
+import { Fragment, ReactNode, useState } from "react";
 import { VscTriangleDown } from "react-icons/vsc";
 
 export type MenuItemType = {
@@ -13,11 +13,17 @@ export type MenuItemType = {
 };
 
 const Dropdown = ({
+    menuTitle,
     label,
     menuItems,
+    labelClasses = "",
+    menuItemsClasses = "",
 }: {
+    menuTitle?: string;
     label: string;
     menuItems: MenuItemType[];
+    labelClasses?: string;
+    menuItemsClasses?: string;
 }) => {
     const router = useRouter();
     const [showMenu, setShowMenu] = useState(false);
@@ -33,7 +39,9 @@ const Dropdown = ({
                 onClick={() => !showMenu && setShowMenu(true)}
                 className="cursor-pointer flex items-center ml-6 hover:text-dtech-main-dark outline-none"
             >
-                <span className="text-inherit text-sm">{label}</span>
+                <span className={clsx("text-inherit text-sm", labelClasses)}>
+                    {label}
+                </span>
                 <VscTriangleDown
                     className={`ml-2 text-2xl text-inherit transition-all ${
                         showMenu && "rotate-180"
@@ -52,8 +60,16 @@ const Dropdown = ({
             >
                 <Menu.Items
                     aria-label="profile dropdown menu"
-                    className="absolute z-30 left-[-25%] mt-2 w-56 origin-top-right bg-white shadow-custom-1"
+                    className={clsx(
+                        "flex flex-col absolute z-30 left-[-25%] mt-2 w-56 origin-top-right bg-white shadow-custom-1",
+                        menuItemsClasses
+                    )}
                 >
+                    {menuTitle && (
+                        <div className="text-dtech-dark-grey text-sm px-2.5 py-1 text-center italic">
+                            {menuTitle}
+                        </div>
+                    )}
                     {menuItems.map((m, i) => (
                         <MenuItem key={i} {...m} />
                     ))}
