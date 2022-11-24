@@ -11,13 +11,13 @@ const NotificationCard = ({ notification, index }: any) => {
         <div
             className={`${
                 index % 2 == 0 ? "bg-dtech-main-light" : "bg-neutral-100"
-            } my-4 px-2.5 py-2 cursor-pointer flex flex-col items-end rounded-lg`}
+            } my-4 px-2.5 py-2 cursor-pointer flex flex-col items-end rounded-lg text-dtech-additional-dark`}
         >
             <Link href={"#"}>
                 <span className="flex items-center w-full">
                     <a
                         className={clsx(
-                            "text-dtech-additional-dark block text-sm font-semibold mr-auto"
+                            "text-inherit block text-sm font-semibold mr-auto"
                         )}
                     >
                         {notificationTitle}

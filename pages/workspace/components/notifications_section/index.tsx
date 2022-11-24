@@ -12,7 +12,7 @@ const Notifications = () => {
             <Link href={"#"}>
                 <div className="flex items-center justify-end cursor-pointer">
                     <MdOutlineFactCheck className="text-dtech-main-dark" />
-                    <span className="pl-1.5 pr-2.5 text-sm">
+                    <span className="pl-1.5 pr-2.5 text-sm text-dtech-dark-grey">
                         Mark all as read
                     </span>
                 </div>

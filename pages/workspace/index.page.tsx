@@ -8,9 +8,21 @@ import { Tab } from "@headlessui/react";
 import TabPanel from "components/UI/tabbed/panel";
 import Notifications from "./components/notifications_section";
 import TabHeaders from "./components/tabs";
-import { VscTriangleDown } from "react-icons/vsc";
+import Dropdown from "components/UI/drop_down";
+import { useState } from "react";
+import { MenuItemType } from "components/UI/drop_down";
+
+const ITEMS: MenuItemType[] = [
+    { label: "My User Workspace" },
+    { label: "My Admin Workspace" },
+];
 
 const WorkspacePage = () => {
+    const [workspace, setWorkspace] = useState<string>("My User Workspace");
+    const menuItems: MenuItemType[] = ITEMS.map((item) => ({
+        ...item,
+        onClick: () => setWorkspace(item.label),
+    }));
     const user = useSelector((state: RootState) => state.auth.user);
     if (!user) {
         return (
@@ -24,10 +36,7 @@ const WorkspacePage = () => {
                 <span className="text-left text-[26px] font-semibold">
                     My Workspace
                 </span>
-                <span className="cursor-pointer flex items-center ml-6">
-                    <span className="text-dtech-main-dark text-sm">My User Workspace</span>
-                    <VscTriangleDown className="ml-2 text-2xl text-dtech-main-dark"/>
-                </span>
+                <Dropdown label={workspace} menuItems={menuItems} />
             </div>
             <div className="flex mx-4 md:mx-20 border-t bg-white">
                 <Tab.Group>

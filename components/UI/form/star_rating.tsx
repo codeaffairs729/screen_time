@@ -42,7 +42,7 @@ const StarRatingInput = ({
                             <button
                                 type="button"
                                 key={index}
-                                className={` bg-transparent border-none outline-none cursor-pointer mx-[0.7px] text-[13px] ${
+                                className={` bg-transparent border-none outline-none cursor-pointer mx-[0.7px] text-m ${
                                     index <= (hover || rating) && !dk
                                         ? "text-dtech-secondary-dark"
                                         : "text-gray-300"

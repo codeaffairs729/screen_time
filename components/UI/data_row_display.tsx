@@ -34,7 +34,7 @@ const DatasetRowDisplay = ({
                         className={"flex space-x-1 flex-col ml-4"}
                     >
                         <span className="text-xs whitespace-nowrap relative">
-                            <span className="text-[13px]">
+                            <span className="text-m">
                                 Metadata Quality
                             </span>
                             <InfoIcon

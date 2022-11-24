@@ -9,6 +9,7 @@ module.exports = {
         dtech: {
           "main-dark":"#3F0068",
           "main-light":"#F0E2FA",
+          "dark-grey":"#302D2D",
           "additional-dark":"#9A65C4",
           "primary-light": "#09c6f9",
           "primary-dark": "#045DE9",
@@ -23,6 +24,7 @@ module.exports = {
       },
       fontSize: {
         xxs: "8px",
+        m: "13px"
       },
       width: {
         '3.5':'14px',

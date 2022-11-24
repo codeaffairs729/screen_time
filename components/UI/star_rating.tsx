@@ -29,7 +29,7 @@ const StarRating = ({ rating, starClassName = "" }: { rating: number, starClassN
     ));
 
     return (
-        <div className="flex inline-block text-[13px] text-[#AD1DEB]">
+        <div className="flex inline-block text-m text-[#AD1DEB]">
             {fullStars}
             {halfStars}
             {emptyStars}
