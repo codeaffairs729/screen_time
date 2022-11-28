@@ -11,9 +11,8 @@ import { RootState } from "store";
 import UserTabPanelVM from "./user_tab_panel.vm";
 
 const UserTabPanel = () => {
-    const user = useSelector((state: RootState) => state.auth.user);
-    const { control, handleSubmit } = useForm();
     const vm = UserTabPanelVM();
+    // console.log('watch("role")', watch("role"));
 
     return (
         <Tab.Panel className="flex items-center space-x-4">
@@ -35,9 +34,8 @@ const UserTabPanel = () => {
                     <TextField
                         className="bg-gray-50"
                         formControl={{
-                            control: control,
+                            control: vm.form.control,
                             name: "name",
-                            defaultValue: user?.name,
                             rules: { required: "Name is required" },
                         }}
                         placeholder="Name"
@@ -48,9 +46,8 @@ const UserTabPanel = () => {
                         className="bg-gray-50"
                         disabled={true}
                         formControl={{
-                            control: control,
+                            control: vm.form.control,
                             name: "email",
-                            defaultValue: user?.email,
                             rules: { required: "Email is required" },
                         }}
                         placeholder="Email"
@@ -61,9 +58,8 @@ const UserTabPanel = () => {
                         className="bg-gray-50"
                         disabled={true}
                         formControl={{
-                            control: control,
+                            control: vm.form.control,
                             name: "organisation",
-                            defaultValue: user?.organisation,
                             rules: { required: "Organisation is required" },
                         }}
                         placeholder="Organisation"
@@ -76,62 +72,32 @@ const UserTabPanel = () => {
                         options={vm.roleOptions}
                         dataSelector="role-dropdown"
                         formControl={{
-                            control: control,
-                            defaultValue: user?.role,
+                            control: vm.form.control,
                             name: "role",
                             rules: { required: "Role is required" },
                         }}
                     />
                 </FormRow>
-                {/* <FormRow label="Data Owner">
-                    <DropdownField
-                        className=""
-                        placeholder="Choose whether data owner"
-                        options={[
-                            { value: true, label: "Yes" },
-                            { value: false, label: "No" },
-                        ]}
-                        formControl={{
-                            control: control,
-                            name: "is_data_owner",
-                            defaultValue: user?.isDataOwner,
-                            rules: {
-                                validate: (val: boolean) => {
-                                    if (![true, false].includes(val)) {
-                                        return "Data owner is required";
-                                    }
+                {vm.form.watch("role") == "other" && (
+                    <FormRow label="Role Other">
+                        <TextField
+                            className="bg-gray-50"
+                            formControl={{
+                                control: vm.form.control,
+                                name: "role_other",
+                                rules: {
+                                    required: "Role Other is required",
                                 },
-                            },
-                        }}
-                    />
-                </FormRow> */}
-                {/* <FormRow label="Admin">
-                    <DropdownField
-                        className=""
-                        placeholder="Choose whether admin"
-                        options={[
-                            { value: true, label: "Yes" },
-                            { value: false, label: "No" },
-                        ]}
-                        formControl={{
-                            control: control,
-                            defaultValue: User.isOrgAdmin(user),
-                            name: "is_admin",
-                            rules: {
-                                validate: (val: boolean) => {
-                                    if (![true, false].includes(val)) {
-                                        return "Admin is required";
-                                    }
-                                },
-                            },
-                        }}
-                    />
-                </FormRow> */}
+                            }}
+                            placeholder="Role Other"
+                        />
+                    </FormRow>
+                )}
                 <PrimaryBtn
                     className="bg-dtech-secondary-dark w-min whitespace-nowrap ml-auto"
                     label="Update"
                     isLoading={vm.isSavingUserDetails}
-                    onClick={handleSubmit(vm.saveUserDetails)}
+                    onClick={vm.form.handleSubmit(vm.saveUserDetails)}
                 />
             </div>
         </Tab.Panel>

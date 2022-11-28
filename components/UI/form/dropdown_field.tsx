@@ -24,23 +24,9 @@ const DropdownField = ({
     const [selected, setSelected] = useState<Option>();
     const [query, setQuery] = useState("");
 
-    useEffect(() => {
-        console.log('formControl["defaultValue"]', formControl["defaultValue"]);
-
-        if (formControl["defaultValue"] != undefined) {
-            const option = options.find(
-                (o) => o.value == formControl["defaultValue"]
-            );
-            console.log("option", options, option);
-            if (option) {
-                setSelected(option);
-            }
-        }
-    }, [formControl["defaultValue"]]);
-
     const {
         fieldState: { error },
-        field: { onChange, name },
+        field: { onChange, name, value },
     } = useController({
         ...formControl,
         defaultValue:
@@ -48,6 +34,21 @@ const DropdownField = ({
                 ? ""
                 : formControl["defaultValue"],
     });
+
+    useEffect(() => {
+        const newValue = value || formControl["defaultValue"];
+        if (![undefined, null].includes(newValue)) {
+            const option = options.find(
+                (o) => o.value == newValue
+            );
+            console.log("option", options, option);
+            if (option) {
+                setSelected(option);
+                onChange(option?.value);
+                console.log("option", option);
+            }
+        }
+    }, [value, formControl["defaultValue"]]);
 
     const filteredOtions =
         query === ""

@@ -47,7 +47,7 @@ const AdminTabPanelVM = () => {
     }) =>
         executeInviteMember(
             () =>
-                Http.post("/v1/iam/sent_org_member_invite", {
+                Http.post("/v1/iam/send_org_member_invite", {
                     email,
                     roles,
                 }),
