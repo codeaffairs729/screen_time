@@ -28,15 +28,16 @@ const Dropdown = ({
     const router = useRouter();
     const [showMenu, setShowMenu] = useState(false);
     const currentRoute = router.pathname;
-    // const isCurrentRoute = menuItems
-    //     .map((m) => m.link)
-    //     .filter((l) => l)
-    //     .includes(currentRoute);
 
+    const onClick = (e: any) => {
+        // e.preventDefault();
+        e.stopPropagation();
+        !showMenu && setShowMenu(true);
+    };
     return (
         <Menu as="div" className="relative inline-block text-left">
             <Menu.Button
-                onClick={() => !showMenu && setShowMenu(true)}
+                onClick={onClick}
                 className="cursor-pointer flex items-center ml-6 hover:text-dtech-main-dark outline-none"
             >
                 <span className={clsx("text-inherit text-sm", labelClasses)}>
@@ -61,7 +62,7 @@ const Dropdown = ({
                 <Menu.Items
                     aria-label="profile dropdown menu"
                     className={clsx(
-                        "flex flex-col absolute z-30 left-[-25%] mt-2 w-56 origin-top-right bg-white shadow-custom-1",
+                        "outline-none flex flex-col absolute z-30 left-[-25%] mt-2 w-56 origin-top-right bg-white shadow-custom-1",
                         menuItemsClasses
                     )}
                 >

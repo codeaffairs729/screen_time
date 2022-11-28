@@ -36,7 +36,8 @@ module.exports = {
       },
       boxShadow: {
         'underline': 'inset 0px -1px 0px rgba(95, 86, 86, 0.25)',
-        'custom-1': '0px 4px 7px rgba(95, 95, 99, 0.8)'
+        'custom-1': '0px 4px 7px rgba(95, 95, 99, 0.8)',
+        'list-shdaow': '0px 7px 3px rgba(95, 95, 99, 0.43)'
       }
     },
   },
