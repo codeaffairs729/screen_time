@@ -13,7 +13,10 @@ const Notification = () => {
                 data-selector="profile-dropdown-button"
                 className="text-2xl select-none"
             >
-                <IoMdNotificationsOutline className="text-gray-600" />
+                <IoMdNotificationsOutline
+                    id="notification-bell-icon"
+                    className="text-gray-600"
+                />
             </Menu.Button>
             {hasUnreadMessage && (
                 <div className="h-2 w-2 bg-dtech-notification-alert rounded absolute right-[2px] border border-white" />
