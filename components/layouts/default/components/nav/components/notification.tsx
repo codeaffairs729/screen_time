@@ -5,6 +5,7 @@ import { IoMdNotificationsOutline } from "react-icons/io";
 import NotificationCard from "./notification_card";
 
 const Notification = () => {
+    const notifications: string[] = ["", "", "", "", ""];
     const hasUnreadMessage = true;
     return (
         <Menu as="div" className="relative inline-block text-left m-2 flex">
@@ -32,7 +33,7 @@ const Notification = () => {
             >
                 <Menu.Items
                     aria-label="profile dropdown menu"
-                    className="shadow-custom-1 top-[25px] py-2 px-2.5 mt-1 select-none max-h-[80vh] min-h-[300px] overflow-auto absolute z-30 right-0 w-80 origin-top-right bg-white"
+                    className="shadow-custom-1 top-[25px] py-2 px-2.5 mt-1 select-none max-h-[80vh] overflow-auto absolute z-30 right-0 w-80 origin-top-right bg-white"
                 >
                     <div className="flex px-2.5 pt-2 justify-between items-center">
                         <span className="text-sm font-medium text-gray-800">
@@ -44,13 +45,19 @@ const Notification = () => {
                             </span>
                         </Link>
                     </div>
-                    {["", "", "", "", "", "", ""].map((notification, index) => (
-                        <NotificationCard
-                            notification={notification}
-                            key={index}
-                            index={index}
-                        />
-                    ))}
+                    {notifications.length ? (
+                        notifications.map((notification, index) => (
+                            <NotificationCard
+                                notification={notification}
+                                key={index}
+                                index={index}
+                            />
+                        ))
+                    ) : (
+                        <div className="w-full text-center p-4">
+                            No new notifications
+                        </div>
+                    )}
                 </Menu.Items>
             </Transition>
         </Menu>
