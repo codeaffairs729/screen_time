@@ -27,11 +27,9 @@ const ITEMS: MenuItemType[] = [
 const SearchBar = ({
     onChange,
     className = "",
-    image = "",
 }: {
     onChange: (option: SingleValue<SearchOption>) => void;
     className?: string;
-    image?: string;
 }) => {
     const [activeSearchCategory, setActiveSearchCategory] = useState<string>(
         ITEMS[0].label
@@ -86,6 +84,10 @@ const SearchBar = ({
         return null;
     };
 
+    const Placeholder = () => {
+        return null
+    }
+
     const Input = (props: any) => {
         // add attribues to the component below
         return (
@@ -94,8 +96,9 @@ const SearchBar = ({
                 <components.Input
                     placeholder="Search e.x.  Covid in Scotland"
                     data-selector="dataset-search-input"
-                    className="p-1"
+                    className="p-1 !mr-auto"
                     {...props}
+                    inputClassName="!w-auto"
                 />
                 <Dropdown
                     label={activeSearchCategory}
@@ -139,7 +142,6 @@ const SearchBar = ({
     const [input, setInput] = useState("");
     return (
         <div className={clsx("mx-auto", className)}>
-            {/* <span>{image && <Image src={image} />}</span> */}
             <AsyncSelect
                 cacheOptions
                 loadOptions={loadAutoComplete}
@@ -153,6 +155,7 @@ const SearchBar = ({
                     Input,
                     Option,
                     Control,
+                    Placeholder,
                     SingleValue,
                     IndicatorsContainer,
                     ValueContainer,
