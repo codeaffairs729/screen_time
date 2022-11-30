@@ -20,7 +20,7 @@ const Notification = () => {
                 />
             </Menu.Button>
             {hasUnreadMessage && (
-                <div className="h-2 w-2 bg-dtech-notification-alert rounded absolute right-[2px] border border-white" />
+                <div id="notification-alert" className="h-2 w-2 bg-dtech-notification-alert rounded absolute right-[2px] border border-white" />
             )}
             <Transition
                 as={Fragment}
@@ -54,7 +54,7 @@ const Notification = () => {
                             />
                         ))
                     ) : (
-                        <div className="w-full text-center p-4">
+                        <div id="notification-not-found" className="w-full text-center p-4">
                             No new notifications
                         </div>
                     )}

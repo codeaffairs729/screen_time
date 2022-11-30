@@ -13,7 +13,7 @@ const Notifications = () => {
             }`}
         >
             <Link href={"#"}>
-                <div className="flex items-center justify-end cursor-pointer">
+                <div id="mark-read" className="flex items-center justify-end cursor-pointer">
                     <MdOutlineFactCheck className="text-dtech-main-dark" />
                     <span className="pl-1.5 pr-2.5 text-sm text-dtech-dark-grey">
                         Mark all as read
@@ -29,7 +29,7 @@ const Notifications = () => {
                     />
                 ))
             ) : (
-                <div className="w-full text-center">No new notifications</div>
+                <div id="notification-tab" className="w-full text-center">No new notifications</div>
             )}
         </Menu>
     );

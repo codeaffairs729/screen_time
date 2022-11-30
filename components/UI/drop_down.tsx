@@ -40,7 +40,7 @@ const Dropdown = ({
                 onClick={onClick}
                 className="cursor-pointer flex items-center ml-6 hover:text-dtech-main-dark outline-none"
             >
-                <span className={clsx("text-inherit text-sm", labelClasses)}>
+                <span id="profile-dropdown" className={clsx("text-inherit text-sm", labelClasses)}>
                     {label}
                 </span>
                 <VscTriangleDown
@@ -67,7 +67,7 @@ const Dropdown = ({
                     )}
                 >
                     {menuTitle && (
-                        <div className="text-dtech-dark-grey text-sm px-2.5 py-1 text-center italic">
+                        <div id="menu-title" className="text-dtech-dark-grey text-sm px-2.5 py-1 text-center italic">
                             {menuTitle}
                         </div>
                     )}

@@ -13,7 +13,7 @@ const NotificationCard = ({
     const isMarkRead = false;
     const message = "Weekly Covid-19 deaths registered in Scotland";
     return (
-        <div className="shadow-underline py-4 px-2.5 cursor-pointer flex flex-col items-end">
+        <div id={"feedback-request-"+index} className="shadow-underline py-4 px-2.5 cursor-pointer flex flex-col items-end">
             <Link href={"#"}>
                 <span className="flex items-center w-full">
                     <a
@@ -27,7 +27,7 @@ const NotificationCard = ({
                         {getNotificationAge("Fri Nov 22 2022 20:30:32")}
                     </span>
                     {index % 2 == 0 && (
-                        <div className="h-3 w-3 bg-dtech-notification-alert-secondary ml-1 rounded-full border border-white" />
+                        <div id="notification-dot" className="h-3 w-3 bg-dtech-notification-alert-secondary ml-1 rounded-full border border-white" />
                     )}
                 </span>
             </Link>
