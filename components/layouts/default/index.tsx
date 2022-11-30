@@ -9,11 +9,13 @@ const DefaultLayout = ({
     children,
     className = "",
     showLogo = true,
+    showSearchBar = true,
     navContent,
 }: {
     children: ReactNode;
     className?: string;
     showLogo?: boolean;
+    showSearchBar?: boolean;
     navContent?: ReactNode;
 }) => {
     return (
@@ -38,7 +40,11 @@ const DefaultLayout = ({
                 </a>
                 .
             </div>
-            <Nav showLogo={showLogo} content={navContent} />
+            <Nav
+                showSearchBar={showSearchBar}
+                showLogo={showLogo}
+                content={navContent}
+            />
             {children}
             <Footer className="mt-auto" />
         </div>

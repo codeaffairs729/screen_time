@@ -11,8 +11,6 @@ import TabHeaders from "./components/tabs";
 import Dropdown from "components/UI/drop_down";
 import { useState } from "react";
 import { MenuItemType } from "components/UI/drop_down";
-import SearchBar from "components/UI/search_bar";
-import SearchVM from "pages/search/search.vm";
 
 const ITEMS: MenuItemType[] = [
     { label: "My User Workspace" },
@@ -20,7 +18,6 @@ const ITEMS: MenuItemType[] = [
 ];
 
 const WorkspacePage = () => {
-    const vm = SearchVM();
     const [workspace, setWorkspace] = useState<string>("My User Workspace");
     const menuItems: MenuItemType[] = ITEMS.map((item) => ({
         ...item,
@@ -34,7 +31,7 @@ const WorkspacePage = () => {
     }
 
     return (
-        <DefaultLayout navContent={<SearchBar onChange={vm.onSearchChange} />}>
+        <DefaultLayout>
             <div className="my-10 mx-4 md:mx-20 flex items-center">
                 <span className="text-left text-[26px] font-semibold">
                     My Workspace

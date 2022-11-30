@@ -31,14 +31,6 @@ const SearchBar = ({
     onChange: (option: SingleValue<SearchOption>) => void;
     className?: string;
 }) => {
-    const [activeSearchCategory, setActiveSearchCategory] = useState<string>(
-        ITEMS[0].label
-    );
-    const menuItems = ITEMS.map((item) => ({
-        ...item,
-        onClick: () => setActiveSearchCategory(item.label),
-    }));
-
     const loadAutoComplete = useMemo(
         () =>
             debounce(async (inputValue: string) => {
@@ -53,83 +45,6 @@ const SearchBar = ({
             }, 500),
         []
     );
-    const Option = ({ data, innerProps }: any) => {
-        return (
-            <div
-                {...innerProps}
-                className="p-3 bg-[#FAFAFA] text-[17px] cursor-pointer hover:bg-[#F6EDFC]"
-            >
-                {data.label}
-            </div>
-        );
-    };
-    const MenuList = (props: any) => {
-        return (
-            <components.MenuList
-                {...props}
-                className="bg-[#FAFAFA] text-[17px] !rounded-none"
-            />
-        );
-    };
-    const Menu = (props: any) => {
-        return (
-            <components.Menu
-                {...props}
-                className="!w-[90%] left-[50%] translate-x-[-50%] shadow-list-shdaow bg-[#FAFAFA] !top-[80%] !rounded-none"
-            />
-        );
-    };
-
-    const SingleValue = () => {
-        return null;
-    };
-
-    const Placeholder = () => {
-        return null
-    }
-
-    const Input = (props: any) => {
-        // add attribues to the component below
-        return (
-            <div className="flex items-center">
-                <IoSearchOutline className="rotate-[90deg] w-6 h-6 mx-3" />
-                <components.Input
-                    placeholder="Search e.x.  Covid in Scotland"
-                    data-selector="dataset-search-input"
-                    className="p-1 !mr-auto"
-                    {...props}
-                    inputClassName="!w-auto"
-                />
-                <Dropdown
-                    label={activeSearchCategory}
-                    menuItems={menuItems}
-                    menuItemsClasses="translate-x-[-50%]"
-                />
-            </div>
-        );
-    };
-
-    const ValueContainer = (props: any) => {
-        return (
-            <components.ValueContainer
-                {...props}
-                className="!overflow-visible"
-            />
-        );
-    };
-
-    const IndicatorsContainer = () => {
-        return null;
-    };
-
-    const Control = (props: any) => {
-        return (
-            <components.Control
-                {...props}
-                className="!border-0 !shadow-none !bg-[#F6EDFC]"
-            />
-        );
-    };
 
     const {
         query: { q },
@@ -140,6 +55,7 @@ const SearchBar = ({
         }
     }, [q]);
     const [input, setInput] = useState("");
+
     return (
         <div className={clsx("mx-auto", className)}>
             <AsyncSelect
@@ -152,11 +68,9 @@ const SearchBar = ({
                 components={{
                     Menu,
                     MenuList,
-                    Input,
                     Option,
                     Control,
                     Placeholder,
-                    SingleValue,
                     IndicatorsContainer,
                     ValueContainer,
                 }}
@@ -188,4 +102,68 @@ const SearchBar = ({
         </div>
     );
 };
+
+const ValueContainer = ({ children, ...props }: any) => {
+    const [activeSearchCategory, setActiveSearchCategory] = useState<string>(
+        ITEMS[0].label
+    );
+
+    const menuItems = ITEMS.map((item) => ({
+        ...item,
+        onClick: () => setActiveSearchCategory(item.label),
+    }));
+    return (
+        <components.ValueContainer {...props} className="!overflow-visible">
+            <div className="flex items-center">
+                <IoSearchOutline className="rotate-[90deg] w-6 h-6 mx-3" />
+                {children}
+                <Dropdown
+                    label={activeSearchCategory}
+                    menuItems={menuItems}
+                    menuItemsClasses="translate-x-[-50%]"
+                />
+            </div>
+        </components.ValueContainer>
+    );
+};
+
+const Control = (props: any) => {
+    return (
+        <components.Control
+            {...props}
+            className="!border-0 !shadow-none !bg-[#F6EDFC]"
+        />
+    );
+};
+
+const Option = ({ data, innerProps }: any) => {
+    return (
+        <div
+            {...innerProps}
+            className="p-3 bg-[#FAFAFA] text-[17px] cursor-pointer hover:bg-[#F6EDFC]"
+        >
+            {data.label}
+        </div>
+    );
+};
+const MenuList = (props: any) => {
+    return (
+        <components.MenuList
+            {...props}
+            className="bg-[#FAFAFA] text-[17px] !rounded-none"
+        />
+    );
+};
+const Menu = (props: any) => {
+    return (
+        <components.Menu
+            {...props}
+            className="!w-[90%] left-[50%] translate-x-[-50%] shadow-list-shdaow bg-[#FAFAFA] !top-[80%] !rounded-none"
+        />
+    );
+};
+
+const Placeholder = () => null;
+const IndicatorsContainer = () => null;
+
 export default SearchBar;
