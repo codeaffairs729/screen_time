@@ -6,11 +6,12 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 2. Fill the `.env` file with appropriate values
 3. Run `npm run dev`
 
-Since the frontend depends on multiple api services, to make the standalone frontend dev easier we can communicate with the currently deployed api services by:
+Since the frontend depends on multiple api services, to make the standalone frontend dev easier and not run in CORS issues we can communicate with the currently deployed api services by:
 
 1. Install https://www.npmjs.com/package/local-cors-proxy
-2. For env variable api root in the `.env` append '/proxy' to the end; for eg `NEXT_PUBLIC_PUBLIC_API_ROOT=http://127.0.0.1:8001/proxy`
-3. Run `npm run startproxy`
+2. Make sure `START_PROXY_CMD` env variable in .env file is as needed
+3. For required api root env variable in the `.env` file append '/proxy' to the end; for eg `NEXT_PUBLIC_PUBLIC_API_ROOT=http://127.0.0.1:8001/proxy`
+4. Run `npm run startproxy`
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
