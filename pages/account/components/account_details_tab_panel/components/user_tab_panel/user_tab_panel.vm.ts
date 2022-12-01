@@ -21,8 +21,6 @@ const UserTabPanelVM = () => {
     }));
 
     useEffect(() => {
-        console.log('user', user?.role);
-        
         form.reset({ ...user, role_other: user?.roleOther } ?? {});
     }, [user]);
 
