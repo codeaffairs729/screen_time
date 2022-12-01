@@ -1,6 +1,7 @@
+import DatasetRow from "components/UI/dataset_row.v4";
 import { useContext } from "react";
 import { SearchVMContext } from "../search.vm";
-import DatasetRowDisplay from "components/UI/dataset_row_display";
+// import DatasetRowDisplay from "components/UI/dataset_row_display";
 
 const TableBody = () => {
     const vm = useContext(SearchVMContext);
@@ -11,7 +12,9 @@ const TableBody = () => {
     return (
         <>
             {vm.datasets?.map((dataset, i) => (
-                <DatasetRowDisplay
+                <DatasetRow
+                    datasetStats={vm.stats[dataset.id]}
+                    isLoadingStats={vm.isFetchingStats}
                     key={dataset.id}
                     dataset={dataset}
                     displayContext={"search-item"}

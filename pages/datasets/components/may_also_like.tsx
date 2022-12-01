@@ -1,13 +1,48 @@
 import ErrorAlert from "components/UI/alerts/error_alert";
 import Loader from "components/UI/loader";
 import Dataset from "models/dataset.model.v4";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import useSWR from "swr";
 import { DatasetDetailVMContext } from "../dataset_detail.vm";
 import DatasetRowDisplay from "components/UI/dataset_row_display";
+import DatasetService from "services/dataset.service";
+import DatasetStats from "models/dataset_stats.model";
+import { useHttpCall } from "common/hooks";
+import DatasetRow from "components/UI/dataset_row.v4";
+import Http from "common/http";
 
 const MayAlsoLike = () => {
     const { dataset } = useContext(DatasetDetailVMContext);
+    // const [isLoadingStats, setIsLoadingStats] = useState(false);
+    /**
+     * Fetch stats for datasets to highlight favourite status
+     */
+    const {
+        execute: excuteFectchStats,
+        data: stats,
+        isLoading: isFetchingStats,
+    } = useHttpCall<{ [key: string]: any }>({});
+    const fectchStats = (ids: number[]) =>
+        excuteFectchStats(
+            () =>
+                Http.post("/v1/datasets/stats", {
+                    meta_dataset_ids: ids,
+                }),
+            {
+                postProcess: (res) => {
+                    const o: { [key: string]: DatasetStats } = {};
+                    Object.keys(res).map(
+                        (id) =>
+                            (o[id] = DatasetStats.fromJson({
+                                ...res[id],
+                                dataset_id: id,
+                            }))
+                    );
+                    return o;
+                },
+            }
+        );
+
     const searchTerm = dataset?.detail.topics
         .slice(0, 5)
         .filter((t) => t)
@@ -18,16 +53,21 @@ const MayAlsoLike = () => {
         (url: string) =>
             fetch(url)
                 .then((res) => res.json())
-                .then((res) =>
-                    Dataset.fromJsonList(
+                .then((res) => {
+                    const datasets = Dataset.fromJsonList(
                         res[0]["user_search"][0]["results"]
                             .slice(0, 10)
                             .filter((ds: any) => ds["id"] != dataset?.["id"])
-                    )
-                )
+                    );
+                    const datasetIds = datasets.map((dataset) => dataset.id);
+                    if (datasetIds.length) {
+                        fectchStats(datasetIds);
+                    }
+                    return datasets;
+                })
     );
-
     const isLoading = !datasets && !error;
+    // console.log("isLoadingStats", isLoadingStats)
 
     if (error) {
         return (
@@ -48,8 +88,16 @@ const MayAlsoLike = () => {
 
     return (
         <div>
+            {/* {JSON.stringify(isLoadingStats)} */}
             {datasets?.map((dataset, i) => (
-                <DatasetRowDisplay
+                // <DatasetRowDisplay
+                //     key={dataset.id}
+                //     dataset={dataset}
+                //     displayContext={"similar-item"}
+                // />
+                <DatasetRow
+                    datasetStats={stats[dataset.id]}
+                    isLoadingStats={isFetchingStats}
                     key={dataset.id}
                     dataset={dataset}
                     displayContext={"similar-item"}
