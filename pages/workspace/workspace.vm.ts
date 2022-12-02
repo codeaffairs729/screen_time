@@ -1,13 +1,31 @@
-import { useHttpCall } from "common/hooks";
 import Http from "common/http";
-import { getHttpErrorMsg } from "common/util";
-import { Option } from "components/UI/form/dropdown_field";
-import User, { UserRole } from "models/user.model";
+import { SearchOption } from "components/UI/dataset_search_input";
+import { isEqual } from "lodash-es";
 import { useRouter } from "next/router";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { createContext, useContext, useEffect, useRef, useState } from "react";
+import { useFieldArray, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import AuthService from "services/auth.service";
+import { useDispatch } from "react-redux";
+import { SingleValue } from "react-select";
+import { updateCache } from "store/cache/cache.action";
+import useSWR from "swr";
+import Dataset from "../../models/dataset.model.v4";
+import { usereventSearchQueryResults } from "services/usermetrics.service";
+import { useHttpCall } from "common/hooks";
+import { updateNotifications } from "store/user/user.action";
+import { AUTH_TOKEN } from "common/constants/cookie.key";
+
+const NOTIFICATION_FETCH_TIME = 60 * 1000; //Fetch notifications every 30 mins
+
+export type Notification = {
+    id: number;
+    updated_at: string;
+    created_at: string;
+    read_at: string;
+    read_status: string;
+    description: string;
+    notification_type: string;
+};
 
 export const getNotificationAge = (date: string) => {
     let seconds = Math.floor((+new Date() - +new Date(date)) / 1000);
@@ -32,4 +50,70 @@ export const getNotificationAge = (date: string) => {
         return Math.floor(interval) + " minutes ago";
     }
     return " just now";
+};
+
+export const getNotificationHeading = (type: string) => {
+    switch (type.toLowerCase()) {
+        case "feedback request":
+            return "Provide feedback on";
+        default:
+            return "Notification";
+    }
+};
+
+export const NotificationsVM = () => {
+    const [notifications, setNotifications] = useState([]);
+    const { isLoading, execute } = useHttpCall();
+
+    const markAllRead = () => {
+        execute(
+            () => {
+                return Http.get(`/v1/notifications/mark_all_read`);
+            },
+            {
+                onSuccess: (res) => {
+                    toast.success("Notifications expired successfully");
+                    console.log(res, "data");
+                    //   dispatch({ notifications: [] });
+                },
+                onError: async (error: any) => {
+                    toast.error(
+                        "Something went wrong while fetching notifications"
+                    );
+                    console.log(error, "error");
+                },
+            }
+        );
+    };
+
+    const fetchNotifications = (dispatch: any) => {
+        const ref = setInterval(() => {
+            document.cookie.includes(AUTH_TOKEN)
+                ? execute(
+                      () => {
+                          return Http.get(`/v1/notifications/`);
+                      },
+                      {
+                          onSuccess: (res) => {
+                              console.log(res, "data");
+                              //   dispatch({ notifications: [] });
+                          },
+                          onError: async (error: any) => {
+                              toast.error(
+                                  "Something went wrong while fetching notifications"
+                              );
+                              console.log(error, "error");
+                          },
+                      }
+                  )
+                : clearInterval(ref);
+        }, NOTIFICATION_FETCH_TIME);
+    };
+
+    return {
+        isLoading,
+        notifications,
+        markAllRead,
+        fetchNotifications,
+    };
 };

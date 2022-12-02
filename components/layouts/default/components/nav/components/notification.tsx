@@ -2,11 +2,19 @@ import { Menu, Transition } from "@headlessui/react";
 import Link from "next/link";
 import { Fragment } from "react";
 import { IoMdNotificationsOutline } from "react-icons/io";
+import { useSelector } from "react-redux";
 import NotificationCard from "./notification_card";
+import { RootState } from "store";
+import { Notification } from "pages/workspace/workspace.vm";
 
 const Notification = () => {
-    const notifications: string[] = ["", "", "", "", ""];
-    const hasUnreadMessage = true;
+    const notifications: Notification[] = useSelector(
+        (state: RootState) => state.user.notifications
+    );
+    console.log(notifications, "notifications");
+    const hasUnreadMessage = notifications.some(
+        (notification: Notification) => !notification.read_status
+    );
     return (
         <Menu as="div" className="relative inline-block text-left m-2 flex">
             <Menu.Button
@@ -39,7 +47,7 @@ const Notification = () => {
                         <span className="text-sm font-medium text-gray-800">
                             Notifications
                         </span>
-                        <Link href={"#"}>
+                        <Link href={"/workspace#notifications"}>
                             <span className="px-2.5 text-m underline cursor-pointer">
                                 View all
                             </span>

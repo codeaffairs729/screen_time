@@ -9,21 +9,40 @@ import TabPanel from "components/UI/tabbed/panel";
 import Notifications from "./components/notifications_section";
 import TabHeaders from "./components/tabs";
 import Dropdown from "components/UI/drop_down";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MenuItemType } from "components/UI/drop_down";
+import { useRouter } from "next/router";
+import { NotificationsVM } from "./workspace.vm";
 
 const ITEMS: MenuItemType[] = [
     { label: "My User Workspace" },
     { label: "My Admin Workspace" },
 ];
 
+enum tabIndex {
+    datasets,
+    lists,
+    history,
+    notifications,
+}
+
 const WorkspacePage = () => {
+    const vm = NotificationsVM()
     const [workspace, setWorkspace] = useState<string>("My User Workspace");
+    const [selectedIndex, setSelectedIndex] = useState<any>(0);
+    const [loading, setLoading] = useState<boolean>(true);
+    const user = useSelector((state: RootState) => state.auth.user);
+    const { asPath } = useRouter();
     const menuItems: MenuItemType[] = ITEMS.map((item) => ({
         ...item,
         onClick: () => setWorkspace(item.label),
     }));
-    const user = useSelector((state: RootState) => state.auth.user);
+    useEffect(() => {
+        const hashParam: string = asPath.split("#")[1];
+        setSelectedIndex(tabIndex[hashParam as any]);
+        setLoading(false);
+    }, []);
+
     if (!user) {
         return (
             <ErrorAlert className="m-2" message="Please login to continue" />
@@ -39,23 +58,25 @@ const WorkspacePage = () => {
                 <Dropdown label={workspace} menuItems={menuItems} />
             </div>
             <div className="flex mx-4 md:mx-20 border-t bg-white">
-                <Tab.Group>
-                    <TabHeaders />
-                    <Tab.Panels className="h-[calc(100%-var(--dataset-detail-tab-header-height))] w-full flex">
-                        <TabPanel className="bg-white">
-                            <p>Work in progress.</p>
-                        </TabPanel>
-                        <TabPanel className="bg-white">
-                            <ListsSection />
-                        </TabPanel>
-                        <TabPanel className="bg-white">
-                            <p>Work in progress.</p>
-                        </TabPanel>
-                        <TabPanel className="bg-white">
-                            <Notifications />
-                        </TabPanel>
-                    </Tab.Panels>
-                </Tab.Group>
+                {!loading && (
+                    <Tab.Group defaultIndex={selectedIndex}>
+                        <TabHeaders selectedIndex={selectedIndex} />
+                        <Tab.Panels className="h-[calc(100%-var(--dataset-detail-tab-header-height))] w-full flex">
+                            <TabPanel className="bg-white">
+                                <p>Work in progress.</p>
+                            </TabPanel>
+                            <TabPanel className="bg-white">
+                                <ListsSection />
+                            </TabPanel>
+                            <TabPanel className="bg-white">
+                                <p>Work in progress.</p>
+                            </TabPanel>
+                            <TabPanel className="bg-white">
+                                <Notifications />
+                            </TabPanel>
+                        </Tab.Panels>
+                    </Tab.Group>
+                )}
             </div>
         </DefaultLayout>
     );

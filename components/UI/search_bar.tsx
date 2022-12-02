@@ -1,14 +1,7 @@
 import AsyncSelect from "react-select/async";
 import debounce from "debounce-promise";
-import useSWR from "swr";
 import clsx from "clsx";
-import Select, {
-    SingleValue,
-    components,
-    ControlProps,
-    Props,
-    StylesConfig,
-} from "react-select";
+import { SingleValue, components } from "react-select";
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/router";
 import Http from "common/http";
