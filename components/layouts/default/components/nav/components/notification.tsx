@@ -5,7 +5,7 @@ import { IoMdNotificationsOutline } from "react-icons/io";
 import { useSelector } from "react-redux";
 import NotificationCard from "./notification_card";
 import { RootState } from "store";
-import { Notification } from "pages/workspace/workspace.vm";
+import { Notification } from "pages/workspace/notification.vm";
 
 const Notification = () => {
     const notifications: Notification[] = useSelector(

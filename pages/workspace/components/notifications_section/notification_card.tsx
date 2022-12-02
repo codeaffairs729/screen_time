@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import Link from "next/link";
-import { getNotificationAge } from "../../workspace.vm";
+import { getNotificationAge } from "../../notification.vm";
 
 const NotificationCard = ({ notification, index }: any) => {
     const notificationTitle = "Feedback request";

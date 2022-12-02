@@ -14,7 +14,7 @@ import { AUTH_TOKEN } from "common/constants/cookie.key";
 import {
     NotificationsVM,
     // NotificationsVMContext,
-} from "./workspace/workspace.vm";
+} from "./workspace/notification.vm";
 
 function DtechtiveApp({ Component, pageProps }: AppProps) {
     const router = useRouter();

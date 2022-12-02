@@ -3,8 +3,8 @@ import clsx from "clsx";
 import {
     getNotificationAge,
     getNotificationHeading,
-} from "pages/workspace/workspace.vm";
-import { Notification } from "pages/workspace/workspace.vm";
+} from "pages/workspace/notification.vm";
+import { Notification } from "pages/workspace/notification.vm";
 
 const NotificationCard = ({
     notification,

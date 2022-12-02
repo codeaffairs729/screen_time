@@ -5,7 +5,7 @@ import {
     NOTIFICATION_UPDATE,
     UserAction,
 } from "./user.type";
-import { Notification } from "pages/workspace/workspace.vm";
+import { Notification } from "pages/workspace/notification.vm";
 
 export const updateBookmarkListsItems = (
     lists: any,

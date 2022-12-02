@@ -54,7 +54,7 @@ export const getNotificationAge = (date: string) => {
 
 export const getNotificationHeading = (type: string) => {
     switch (type.toLowerCase()) {
-        case "feedback request":
+        case "feedback_request":
             return "Provide feedback on";
         default:
             return "Notification";
@@ -96,7 +96,7 @@ export const NotificationsVM = () => {
                       {
                           onSuccess: (res) => {
                               console.log(res, "data");
-                              //   dispatch({ notifications: [] });
+                                dispatch(res);
                           },
                           onError: async (error: any) => {
                               toast.error(

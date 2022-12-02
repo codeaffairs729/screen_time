@@ -1,4 +1,4 @@
-import { Notification } from "pages/workspace/workspace.vm";
+import { Notification } from "pages/workspace/notification.vm";
 export const UPDATE = "update";
 export const CLEAR = "clear";
 export const UPDATE_ITEMS_DATA = "update_items_data";
