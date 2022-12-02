@@ -40,8 +40,8 @@ const HEADERS: Header[] = [
     },
 ];
 
-const TabHeaders = () => {
-    const [selected, setSelected] = useState<number>(0);
+const TabHeaders = ({ selectedIndex = 0 }: { selectedIndex?: number }) => {
+    const [selected, setSelected] = useState<number>(selectedIndex);
 
     return (
         <div>

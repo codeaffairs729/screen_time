@@ -9,10 +9,12 @@ import { RootState } from "store";
 import { useState } from "react";
 import { getHttpErrorMsg } from "common/util";
 import { usereventLogin } from "services/usermetrics.service";
+import { NotificationsVM } from "pages/workspace/workspace.vm";
 
 const SigninVM = () => {
     const form = useForm();
     const cache = useSelector((state: RootState) => state.cache);
+    const { fetchNotifications } = NotificationsVM();
     const lastSearchQuery = cache["last-search-query"];
     const lastSearchQueryUrl = lastSearchQuery
         ? `?q=${encodeURI(lastSearchQuery)}`
@@ -32,7 +34,8 @@ const SigninVM = () => {
                     AuthService.signin(
                         User.fromJson(res["user"]),
                         res["token"],
-                        "/"
+                        "/",
+                        fetchNotifications
                     );
                     usereventLogin(User.fromJson(res["user"]));
                 },

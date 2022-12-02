@@ -3,12 +3,15 @@ import BookmarksSection from "./bookmarks_section";
 import { Tab } from "@headlessui/react";
 import TabPanel from "components/UI/tabbed/panel";
 import clsx from "clsx";
-import { ReactNode } from "react";
+import { createRef, ReactNode } from "react";
 import CreateNewList from "components/UI/user_bookmark/create_new_list";
 import { useSelector } from "react-redux";
 import { RootState } from "store";
 import { BsPlusLg } from "react-icons/bs";
 import CreateList from "components/UI/user_bookmark/create_list";
+import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
+
+const SCROLLABLE_VALUE: number = 150;
 
 const ListsSection = () => {
     const bookmark_items = useSelector(
@@ -18,17 +21,37 @@ const ListsSection = () => {
         (state: RootState) => state.user.bookmarkLists
     );
 
+    const scrollableDiv = createRef<HTMLDivElement>();
+    const scroll = (value: number) => {
+        if (scrollableDiv?.current) scrollableDiv.current.scrollLeft += value;
+    };
     return (
         <div>
             <Tab.Group>
                 <div>
                     <Tab.List className="flex min-w-[15rem] items-center px-6 w-[70vw]">
-                        <div className="flex items-center w-2/3 overflow-auto">
+                        <div
+                            className="cursor-pointer py-1 px-4"
+                            onClick={() => scroll(-SCROLLABLE_VALUE)}
+                        >
+                            <BsChevronLeft />
+                        </div>
+                        <div
+                            ref={scrollableDiv}
+                            id="scrollable-div"
+                            className="scroll-smooth no-scrollbar flex gap-10 items-center w-2/3 overflow-x-auto overflow-y-hidden justify-between whitespace-nowrap"
+                        >
                             <TabHeader>Favorites</TabHeader>
 
                             {bookmark_lists.map((list: any, idx: any) => (
                                 <TabHeader key={idx}>{list.listName}</TabHeader>
                             ))}
+                        </div>
+                        <div
+                            className="cursor-pointer py-1 px-4"
+                            onClick={() => scroll(SCROLLABLE_VALUE)}
+                        >
+                            <BsChevronRight />
                         </div>
                         <CreateList />
                     </Tab.List>
@@ -56,7 +79,7 @@ const TabHeader = ({ children }: { children: ReactNode }) => {
     return (
         <Tab
             className={({ selected }) =>
-                `transition-all h-fit text-lg mr-10 outline-none text-dtech-main-dark border-dtech-main-dark w-24 whitespace-nowrap text-center ${
+                `transition-all h-fit text-lg outline-none text-dtech-main-dark border-dtech-main-dark text-center ${
                     selected && "border-b-2"
                 }`
             }

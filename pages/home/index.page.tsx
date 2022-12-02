@@ -8,7 +8,7 @@ const HomePage = () => {
     const router = useRouter();
 
     return (
-        <DefaultLayout showLogo={false}>
+        <DefaultLayout showLogo={false} showSearchBar={false}>
             <div className="h-[calc(100vh-var(--nav-height))] flex items-center justify-center mx-2">
                 <div className="max-w-3xl mx-auto">
                     <Image

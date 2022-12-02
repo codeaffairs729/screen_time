@@ -3,6 +3,8 @@ import Http from "common/http";
 import { getHttpErrorMsg } from "common/util";
 import { Option } from "components/UI/form/dropdown_field";
 import User, { UserRole } from "models/user.model";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "store";
@@ -11,11 +13,18 @@ import { updateUser } from "store/auth/auth.action";
 const UserTabPanelVM = () => {
     const user = useSelector((state: RootState) => state.auth.user);
     const dispatch = useDispatch();
+    const form = useForm();
 
     const roleOptions: Option[] = Object.keys(UserRole ?? {}).map((k) => ({
         value: UserRole[k as keyof typeof UserRole],
         label: k,
     }));
+
+    useEffect(() => {
+        console.log('user', user?.role);
+        
+        form.reset({ ...user, role_other: user?.roleOther } ?? {});
+    }, [user]);
 
     const { isLoading: isSavingUserDetails, execute: executeSaveUserDetails } =
         useHttpCall();
@@ -32,7 +41,7 @@ const UserTabPanelVM = () => {
                     toast.error(await getHttpErrorMsg(error)),
             }
         );
-    return { roleOptions, saveUserDetails, isSavingUserDetails };
+    return { roleOptions, saveUserDetails, isSavingUserDetails, user, form };
 };
 
 export default UserTabPanelVM;

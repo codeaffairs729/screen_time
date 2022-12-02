@@ -1,7 +1,9 @@
 import clsx from "clsx";
+import SearchBar from "components/UI/search_bar";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import SearchVM from "pages/search/search.vm";
 import { ReactNode } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "store";
@@ -13,10 +15,13 @@ import SignupDropdown from "./components/signup_dropdown";
 const Nav = ({
     content,
     showLogo = true,
+    showSearchBar = true,
 }: {
     content?: ReactNode;
     showLogo?: boolean;
+    showSearchBar?: boolean;
 }) => {
+    const vm = SearchVM();
     const user = useSelector((state: RootState) => state.auth.user);
 
     return (
@@ -33,6 +38,7 @@ const Nav = ({
                     </a>
                 </Link>
             )}
+            {showSearchBar && <SearchBar onChange={vm.onSearchChange} />}
             {content}
             <div className="ml-auto flex items-center">
                 <NavItem label="Home" link="/" />
