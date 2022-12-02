@@ -31,9 +31,9 @@ const Notifications = () => {
                 </div>
             </Link>
             {notifications.length > 0 ? (
-                notifications.map((notfication, index) => (
+                notifications.map((notification, index) => (
                     <NotificationCard
-                        notfication={notfication}
+                        notification={notification}
                         index={index}
                         key={index}
                     />

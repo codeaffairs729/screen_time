@@ -52,13 +52,20 @@ export const getNotificationAge = (date: string) => {
     return " just now";
 };
 
-export const getNotificationHeading = (type: string) => {
-    switch (type.toLowerCase()) {
+export const getNotificationSubHeading = (type: string) => {
+    switch (type?.toLowerCase()) {
         case "feedback_request":
             return "Provide feedback on";
         default:
-            return "Notification";
+            return "Provide feedback on";
     }
+};
+
+export const formatHeading = (type: string) => {
+    const heading = type
+        ?.split("_")
+        .reduce((pv, cv) => `${pv} ${cv[0].toUpperCase()}${cv.slice(1)}`);
+    return heading ? heading : "Feedback request";
 };
 
 export const NotificationsVM = () => {
@@ -96,7 +103,7 @@ export const NotificationsVM = () => {
                       {
                           onSuccess: (res) => {
                               console.log(res, "data");
-                                dispatch(res);
+                              dispatch(updateNotifications(res));
                           },
                           onError: async (error: any) => {
                               toast.error(
