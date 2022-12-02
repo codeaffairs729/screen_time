@@ -4,7 +4,7 @@ import { MdOutlineFactCheck } from "react-icons/md";
 import { useSelector } from "react-redux";
 import NotificationCard from "./notification_card";
 import { RootState } from "store";
-import { Notification, NotificationsVM } from "pages/workspace/workspace.vm";
+import { Notification, NotificationsVM } from "pages/workspace/notification.vm";
 
 const Notifications = () => {
     const { markAllRead } = NotificationsVM();
@@ -32,9 +32,9 @@ const Notifications = () => {
                 </div>
             </Link>
             {notifications.length > 0 ? (
-                notifications.map((notfication, index) => (
+                notifications.map((notification, index) => (
                     <NotificationCard
-                        notfication={notfication}
+                        notification={notification}
                         index={index}
                         key={index}
                     />

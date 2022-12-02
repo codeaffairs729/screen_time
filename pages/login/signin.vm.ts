@@ -9,7 +9,7 @@ import { RootState } from "store";
 import { useState } from "react";
 import { getHttpErrorMsg } from "common/util";
 import { usereventLogin } from "services/usermetrics.service";
-import { NotificationsVM } from "pages/workspace/workspace.vm";
+import { NotificationsVM } from "pages/workspace/notification.vm";
 
 const SigninVM = () => {
     const form = useForm();

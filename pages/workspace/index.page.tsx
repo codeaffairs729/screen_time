@@ -12,7 +12,7 @@ import Dropdown from "components/UI/drop_down";
 import { useEffect, useState } from "react";
 import { MenuItemType } from "components/UI/drop_down";
 import { useRouter } from "next/router";
-import { NotificationsVM } from "./workspace.vm";
+import { NotificationsVM } from "./notification.vm";
 
 const ITEMS: MenuItemType[] = [
     { label: "My User Workspace" },

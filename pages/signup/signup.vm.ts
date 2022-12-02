@@ -4,7 +4,7 @@ import { getHttpErrorMsg } from "common/util";
 import { Option } from "components/UI/form/dropdown_field";
 import User, { UserRole } from "models/user.model";
 import { useRouter } from "next/router";
-import { NotificationsVM } from "pages/workspace/workspace.vm";
+import { NotificationsVM } from "pages/workspace/notification.vm";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";

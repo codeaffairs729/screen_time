@@ -1,10 +1,11 @@
 import Link from "next/link";
 import clsx from "clsx";
 import {
+    formatHeading,
     getNotificationAge,
-    getNotificationHeading,
-} from "pages/workspace/workspace.vm";
-import { Notification } from "pages/workspace/workspace.vm";
+    getNotificationSubHeading,
+} from "pages/workspace/notification.vm";
+import { Notification } from "pages/workspace/notification.vm";
 
 const NotificationCard = ({
     notification,
@@ -13,7 +14,8 @@ const NotificationCard = ({
     notification: Notification;
     index: number;
 }) => {
-    const { notification_type, description, read_status } = notification;
+    const { notification_type, description, read_status, created_at } =
+        notification;
     return (
         <div
             id={"feedback-request-" + index}
@@ -26,21 +28,19 @@ const NotificationCard = ({
                             "text-dtech-additional-dark block text-sm font-semibold mr-auto"
                         )}
                     >
-                        {notification_type}
+                        {formatHeading(notification_type)}
                     </a>
                     <span className="text-gray-600 text-m">
-                        {getNotificationAge("Fri Nov 22 2022 20:30:32")}
+                        {getNotificationAge(created_at)}
                     </span>
-                    {read_status == "True" && (
-                        <div
-                            id="notification-dot"
-                            className="h-3 w-3 bg-dtech-notification-alert-secondary ml-1 rounded-full border border-white"
-                        />
+
+                    {!read_status && (
+                        <div  id="notification-dot" className="h-3 w-3 bg-dtech-notification-alert-secondary ml-1 rounded-full border border-white" />
                     )}
                 </span>
             </Link>
-            <div className="my-2 text-m font-normal text-gray-800">
-                <span>{getNotificationHeading(notification_type)} </span>
+            <div className="my-2 text-m font-normal text-gray-800 w-full">
+                <span>{getNotificationSubHeading(notification_type)} </span>
                 <span className="italic font-medium">{description}</span>
             </div>
         </div>
