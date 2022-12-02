@@ -4,6 +4,8 @@ import ExpireNotification from "./expire_notification";
 import ClearNotification from "./clear_notification";
 import SearchAndDownload from "./search_and_download";
 import CheckMenuNotification from "./check_menu_notification";
+import AutoExpiryOfNotification from "./auto_expiry_of_notifications";
+import UserFeedback from "./user_feedback";
 
 test.describe("User journey", () => {
     let page: any;
@@ -39,5 +41,14 @@ test.describe("User journey", () => {
     test("Check menu Notification", async ()=>{
         const check_menu_notification = new CheckMenuNotification(page)
         await check_menu_notification.CheckMenu();
+    })
+
+    test("Auto Expiry Of notification", async()=>{
+        const auto_expiry_notification = new AutoExpiryOfNotification(page)
+        await auto_expiry_notification.autoExpiryOfNotifications();
+    })
+    test("User Feedback",async () => {
+        const user_feedback = new UserFeedback(page)
+        await user_feedback.userFeedback();
     })
 });

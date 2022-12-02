@@ -1,18 +1,14 @@
 import { Page, expect } from "@playwright/test";
 
-export default class CheckMenuNotification {
+export default class AutoExpiryOfNotification {
     readonly page: Page;
     constructor(page: Page) {
         this.page = page;
     }
-    async CheckMenu() {
+    async autoExpiryOfNotifications() {
         const { page } = this;
         await page.waitForTimeout(6000);
-        expect(await page.locator("#notification-alert").isVisible()).toBe(
-            true
-        );
         await page.click("#notification-bell-icon");
-        await page.waitForTimeout(3000);
         await page.waitForTimeout(3000);
         await expect(
             page.locator("#notification-heading-0"),
@@ -20,8 +16,8 @@ export default class CheckMenuNotification {
         ).toHaveText("Feedback request");
         await expect(
             page.locator("#notification-detail-0"),
-            "Provide feedback on"
-        ).toHaveText("Provide feedback on");
+            "Provide feedback on "
+        ).toHaveText("Provide feedback on ");
         await expect(
             page.locator("#notification-date-0"),
             " just now"
@@ -29,7 +25,11 @@ export default class CheckMenuNotification {
         expect(await page.locator("#notification-dot-0").isVisible()).toBe(
             true
         );
-        await page.click("#notification-0");
-        await page.waitForTimeout(3000);
+        await page.waitForTimeout(30000); // TimeOut Expiry of Notification
+        await page.click("#notification-bell-icon");
+        await expect(
+            page.locator("#notification-not-found"),
+            "Notification Exists !"
+        ).toHaveText("No new notifications");
     }
 }

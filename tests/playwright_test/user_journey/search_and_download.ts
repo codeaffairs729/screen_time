@@ -12,8 +12,8 @@ export default class SearchAndDownload {
         await page.locator("#react-select-product-search-input").fill("covid");
         await page.locator("#react-select-product-search-input").press("Enter");
         await page.waitForNavigation();
-        await page.click("//h4[text()='File Formats']");
-        await page.check("input[value='CSV']");
+        // await page.click("//h4[text()='File Formats']");
+        // await page.check("input[value='CSV']");
         await page.click("//div[@id='193']/div[1]/h3[1]/a[1]");
         const [download] = await Promise.all([
             page.waitForEvent("download"),
