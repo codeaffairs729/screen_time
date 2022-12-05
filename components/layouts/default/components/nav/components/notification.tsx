@@ -9,6 +9,7 @@ import {
     Notification,
     NotificationsVMContext,
 } from "pages/workspace/notification.vm";
+import Loader from "components/UI/loader";
 
 const Notification = () => {
     const { isLoading, notifications } = useContext(NotificationsVMContext);
@@ -54,7 +55,11 @@ const Notification = () => {
                             </span>
                         </Link>
                     </div>
-                    {!isLoading && notifications.length ? (
+                    {isLoading ? (
+                        <div className="w-full py-6 px-2.5 h-full flex items-center justify-center">
+                            <Loader />
+                        </div>
+                    ) : notifications.length ? (
                         notifications.map((notification, index) => (
                             <NotificationCard
                                 notification={notification}
