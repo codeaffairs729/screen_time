@@ -31,6 +31,7 @@ export type Notification = {
     read_at: string;
     read_status: string;
     description: string;
+    dataset_id: number;
     notification_type: string;
 };
 
@@ -65,6 +66,16 @@ export const getNotificationSubHeading = (type: string) => {
             return "Provide feedback on";
         default:
             return "Provide feedback on";
+    }
+};
+
+export const notificationActionUrl = (notification: Notification) => {
+    const { notification_type: type, dataset_id: datasetId } = notification;
+    switch (type?.toLowerCase()) {
+        case "feedback_request":
+            return `/datasets/${datasetId}#feedback`;
+        default:
+            return `/datasets/${datasetId}#feedback`;
     }
 };
 

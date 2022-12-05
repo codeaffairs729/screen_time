@@ -4,6 +4,7 @@ import {
     formatHeading,
     getNotificationAge,
     getNotificationSubHeading,
+    notificationActionUrl,
 } from "pages/workspace/notification.vm";
 import { Notification } from "pages/workspace/notification.vm";
 
@@ -18,7 +19,7 @@ const NotificationCard = ({
         notification;
     return (
         <div className="shadow-underline py-4 px-2.5 cursor-pointer flex flex-col items-end">
-            <Link href={"#"}>
+            <Link href={notificationActionUrl(notification)}>
                 <span className="flex items-center w-full">
                     <a
                         className={clsx(
