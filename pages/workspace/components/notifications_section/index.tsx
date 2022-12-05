@@ -1,16 +1,23 @@
 import { Menu } from "@headlessui/react";
 import Link from "next/link";
 import { MdOutlineFactCheck } from "react-icons/md";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import NotificationCard from "./notification_card";
 import { RootState } from "store";
-import { Notification, NotificationsVM } from "pages/workspace/notification.vm";
+import {
+    Notification,
+    NotificationsVMContext,
+} from "pages/workspace/notification.vm";
+import { useContext } from "react";
 
 const Notifications = () => {
-    const { markAllRead } = NotificationsVM();
-    const notifications: Notification[] = useSelector(
-        (state: RootState) => state.user.notifications
+    const { markAllRead, notifications, isLoading } = useContext(
+        NotificationsVMContext
     );
+
+    const dispatch = useDispatch();
+
+    if (isLoading) return null; //show loader
 
     return (
         <Menu
@@ -22,7 +29,7 @@ const Notifications = () => {
             <Link href={"#"}>
                 <div
                     id="mark-read"
-                    onClick={() => markAllRead()}
+                    onClick={() => markAllRead(dispatch)}
                     className="flex items-center justify-end cursor-pointer"
                 >
                     <MdOutlineFactCheck className="text-dtech-main-dark" />

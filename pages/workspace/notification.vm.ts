@@ -2,7 +2,15 @@ import Http from "common/http";
 import { SearchOption } from "components/UI/dataset_search_input";
 import { isEqual } from "lodash-es";
 import { useRouter } from "next/router";
-import { createContext, useContext, useEffect, useRef, useState } from "react";
+import {
+    createContext,
+    useContext,
+    useEffect,
+    useRef,
+    useState,
+    SetStateAction,
+    Dispatch,
+} from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
@@ -15,7 +23,7 @@ import { useHttpCall } from "common/hooks";
 import { updateNotifications } from "store/user/user.action";
 import { AUTH_TOKEN } from "common/constants/cookie.key";
 
-const NOTIFICATION_FETCH_TIME = 60 * 1000; //Fetch notifications every 30 mins
+const NOTIFICATION_FETCH_TIME = 10 * 1000; //Fetch notifications every 30 mins
 
 export type Notification = {
     id: number;
@@ -69,24 +77,26 @@ export const formatHeading = (type: string) => {
 };
 
 export const NotificationsVM = () => {
-    const [notifications, setNotifications] = useState([]);
-    const { isLoading, execute } = useHttpCall();
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [notifications, setNotifications] = useState<Notification[]>([]);
+    const { execute } = useHttpCall();
 
-    const markAllRead = () => {
+    const markAllRead = (dispatch: any) => {
         execute(
             () => {
-                return Http.get(`/v1/notifications/mark_all_read`);
+                return Http.patch(`/v1/notifications/mark_all_read`);
             },
             {
                 onSuccess: (res) => {
                     toast.success("Notifications expired successfully");
-                    console.log(res, "data");
-                    //   dispatch({ notifications: [] });
+                    setNotifications(res);
+                    setIsLoading(false);
                 },
                 onError: async (error: any) => {
                     toast.error(
                         "Something went wrong while fetching notifications"
                     );
+                    setIsLoading(false);
                     console.log(error, "error");
                 },
             }
@@ -102,13 +112,14 @@ export const NotificationsVM = () => {
                       },
                       {
                           onSuccess: (res) => {
-                              console.log(res, "data");
-                              dispatch(updateNotifications(res));
+                              setNotifications(res);
+                              setIsLoading(false);
                           },
                           onError: async (error: any) => {
                               toast.error(
                                   "Something went wrong while fetching notifications"
                               );
+                              setIsLoading(false);
                               console.log(error, "error");
                           },
                       }
@@ -117,10 +128,41 @@ export const NotificationsVM = () => {
         }, NOTIFICATION_FETCH_TIME);
     };
 
+    const createFeedbackNotification = (datasetId: number) => {
+        execute(
+            () => {
+                return Http.post(
+                    `/v1/notifications/${datasetId}/feedback_request`
+                );
+            },
+            {
+                onSuccess: (res) => {
+                    console.log("Success");
+                },
+                onError: async (error: any) => {
+                    console.log(error, "error");
+                },
+            }
+        );
+    };
+
     return {
         isLoading,
         notifications,
         markAllRead,
         fetchNotifications,
+        createFeedbackNotification,
     };
 };
+
+interface INotificationsVMContext {
+    notifications: Notification[];
+    isLoading: boolean;
+    markAllRead: Function;
+    fetchNotifications: Function;
+    createFeedbackNotification: Function;
+}
+
+export const NotificationsVMContext = createContext<INotificationsVMContext>(
+    {} as INotificationsVMContext
+);

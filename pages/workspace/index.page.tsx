@@ -12,7 +12,6 @@ import Dropdown from "components/UI/drop_down";
 import { useEffect, useState } from "react";
 import { MenuItemType } from "components/UI/drop_down";
 import { useRouter } from "next/router";
-import { NotificationsVM } from "./notification.vm";
 
 const ITEMS: MenuItemType[] = [
     { label: "My User Workspace" },
@@ -27,7 +26,6 @@ enum tabIndex {
 }
 
 const WorkspacePage = () => {
-    const vm = NotificationsVM()
     const [workspace, setWorkspace] = useState<string>("My User Workspace");
     const [selectedIndex, setSelectedIndex] = useState<any>(0);
     const [loading, setLoading] = useState<boolean>(true);

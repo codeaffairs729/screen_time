@@ -13,12 +13,13 @@ import posthog from "posthog-js";
 import { AUTH_TOKEN } from "common/constants/cookie.key";
 import {
     NotificationsVM,
+    NotificationsVMContext,
     // NotificationsVMContext,
 } from "./workspace/notification.vm";
 
 function DtechtiveApp({ Component, pageProps }: AppProps) {
     const router = useRouter();
-    const { fetchNotifications } = NotificationsVM();
+    const vm: any = NotificationsVM();
     // const context = NotificationsVMContext;
     const store = useStore(pageProps.initialReduxState);
 
@@ -68,7 +69,8 @@ function DtechtiveApp({ Component, pageProps }: AppProps) {
         };
     }, [router.events]);
     useEffect(() => {
-        if (document.cookie.includes(AUTH_TOKEN)) fetchNotifications(store.dispatch);
+        if (document.cookie.includes(AUTH_TOKEN))
+            vm.fetchNotifications(store.dispatch);
     }, []);
     return (
         <>
@@ -81,7 +83,9 @@ function DtechtiveApp({ Component, pageProps }: AppProps) {
                     }
                     persistor={persistor}
                 >
-                    <Component {...pageProps} />
+                    <NotificationsVMContext.Provider value={vm}>
+                        <Component {...pageProps} />
+                    </NotificationsVMContext.Provider>
                     <Toaster
                         position="bottom-center"
                         reverseOrder={false}

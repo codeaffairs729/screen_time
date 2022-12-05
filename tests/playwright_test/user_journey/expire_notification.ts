@@ -18,7 +18,8 @@ export default class ExpireNotification {
         ).toHaveText("No new notifications");
         await page.waitForTimeout(3000);
         await page.click("#profile-dropdown"); //profile dropdown
-        await page.getByRole("link", { name: "My Workspace" }).click();
+        // await page.getByRole("link", { name: "My Workspace" }).click();
+        await page.click("My Workspace")
         await page.waitForNavigation();
         await page.click("//img[@alt='Notifications']");
         await expect(

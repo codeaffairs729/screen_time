@@ -18,12 +18,9 @@ export default class SearchAndDownload {
         const [download] = await Promise.all([
             page.waitForEvent("download"),
             page
-                .getByRole("row", { name: "Deaths By Health Boa CSV null MB" })
-                .getByRole("link")
-                .click(),
+                .click("COVID-19 Wider Impacts - Excess Deaths")
         ]);
         await page.waitForTimeout(5000);
-        const path = await download.path();
-        await page.waitForTimeout(3000);
+
     }
 }
