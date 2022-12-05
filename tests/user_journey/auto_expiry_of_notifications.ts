@@ -7,7 +7,7 @@ export default class AutoExpiryOfNotification {
     }
     async autoExpiryOfNotifications() {
         const { page } = this;
-        await page.waitForTimeout(6000);
+        await page.waitForTimeout(3000);
         await page.click("#notification-bell-icon");
         await page.waitForTimeout(3000);
         await expect(
@@ -16,10 +16,10 @@ export default class AutoExpiryOfNotification {
         ).toHaveText("Feedback request");
         await expect(
             page.locator("#notification-detail-0"),
-            "Provide feedback on "
-        ).toHaveText("Provide feedback on ");
+            "Provide feedback on"
+        ).toHaveText("Provide feedback on");
         await expect(
-            page.locator("#notification-date-0"),
+            page.locator("#notification-age-0"),
             " just now"
         ).toHaveText(" just now");
         expect(await page.locator("#notification-dot-0").isVisible()).toBe(

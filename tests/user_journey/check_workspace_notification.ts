@@ -9,9 +9,9 @@ export default class CheckWorkspaceNotification {
     async checkWorkspaceNotification() {
         const { page } = this;
         await page.click("#notification-bell-icon");
-        await page.click("#view-all");
+        // await page.click("#view-all");
         await expect(
-            page.locator("#workspace-notification-heading--0"),
+            page.locator("#workspace-notification-heading-0"),
             "Feedback request"
         ).toHaveText("Feedback request");
         await expect(
@@ -25,6 +25,13 @@ export default class CheckWorkspaceNotification {
         expect(await page.locator("#workspace-notification-dot-0").isVisible()).toBe(
             true
         );
-        await page.click("#workspace-notification-0");
+        // await page.click("#workspace-notification-0");
+        const [page1] = await Promise.all([
+            page.waitForEvent('popup'),
+            page.waitForNavigation({ url: `${process.env.NEXT_PUBLIC_WEBCLIENT_ROOT}/datasets/193#feedback` }),
+            page.click("#workspace-notification-0")
+          ]);
+
+        // await page1.click("#notification-bell-icon"); 
     }
 }

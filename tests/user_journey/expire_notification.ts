@@ -7,6 +7,7 @@ export default class ExpireNotification {
     }
     async NotificationExpire() {
         const { page } = this;
+        page.waitForTimeout(7000);
         expect(await page.locator("#notification-alert").isVisible()).toBe(
             false
         );
@@ -18,10 +19,12 @@ export default class ExpireNotification {
         ).toHaveText("No new notifications");
         await page.waitForTimeout(3000);
         await page.click("#profile-dropdown"); //profile dropdown
-        // await page.getByRole("link", { name: "My Workspace" }).click();
-        await page.click("My Workspace")
-        await page.waitForNavigation();
-        await page.click("//img[@alt='Notifications']");
+        await Promise.all([
+            page.waitForNavigation({ url: `${process.env.NEXT_PUBLIC_WEBCLIENT_ROOT}/workspace` }),
+            page.locator('text=My Workspace').click()
+          ]);
+        await page.waitForTimeout(3000);
+        await page.locator('button[role="tab"]:has-text("Notifications")').click();
         await expect(
             page.locator("#notification-tab"),
             "Notification present"

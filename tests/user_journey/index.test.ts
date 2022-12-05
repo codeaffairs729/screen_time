@@ -6,6 +6,7 @@ import SearchAndDownload from "./search_and_download";
 import CheckMenuNotification from "./check_menu_notification";
 import AutoExpiryOfNotification from "./auto_expiry_of_notifications";
 import UserFeedback from "./user_feedback";
+import CheckWorkspaceNotification from "./check_workspace_notification";
 
 test.describe("User journey", () => {
     let page: any;
@@ -41,6 +42,11 @@ test.describe("User journey", () => {
     test("Check menu Notification", async ()=>{
         const check_menu_notification = new CheckMenuNotification(page)
         await check_menu_notification.CheckMenu();
+    })
+
+    test("Check WorkSpace Notification",async () => {
+        const check_workspace_notification = new CheckWorkspaceNotification(page)
+        await check_workspace_notification.checkWorkspaceNotification();
     })
 
     test("Auto Expiry Of notification", async()=>{

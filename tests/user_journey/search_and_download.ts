@@ -18,9 +18,11 @@ export default class SearchAndDownload {
         const [download] = await Promise.all([
             page.waitForEvent("download"),
             page
-                .click("COVID-19 Wider Impacts - Excess Deaths")
-        ]);
-        await page.waitForTimeout(5000);
-
+                .locator("text=Deaths By Health BoaCSVnull MB >> a svg")
+                .click(),
+        ]); 
+        await page.waitForTimeout(2000);
+        await page.click("#notification-bell-icon");
+        await page.click("#view-all");
     }
 }

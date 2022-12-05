@@ -23,13 +23,22 @@ export default class CheckMenuNotification {
             "Provide feedback on"
         ).toHaveText("Provide feedback on");
         await expect(
-            page.locator("#notification-date-0"),
+            page.locator("#notification-age-0"),
             " just now"
         ).toHaveText(" just now");
         expect(await page.locator("#notification-dot-0").isVisible()).toBe(
             true
         );
-        await page.click("#notification-0");
-        await page.waitForTimeout(3000);
+        await page.pause()  
+        // await page.click("#notification-0");
+        const [page1] = await Promise.all([
+            page.waitForEvent('popup'),
+            page.click("#notification-0"),
+            page.waitForNavigation({ url: `${process.env.NEXT_PUBLIC_WEBCLIENT_ROOT}/datasets/193#feedback` }),
+            
+          ]);
+        await page1.pause()  
+        await page1.locator('#notification-bell-icon').click();
+        await page1.click("#view-all")
     }
 }

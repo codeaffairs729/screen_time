@@ -50,7 +50,7 @@ const Notification = () => {
                             Notifications
                         </span>
                         <Link href={"/workspace#notifications"}>
-                            <span className="px-2.5 text-m underline cursor-pointer">
+                            <span id="view-all" className="px-2.5 text-m underline cursor-pointer">
                                 View all
                             </span>
                         </Link>

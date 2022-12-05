@@ -14,8 +14,8 @@ export default class Login {
     async LogIn() {
         const { page } = this;
         await this.load();
-        await page.fill("input[type='email']", "a@a.com");
-        await page.fill("input[type='password']", "pass");
+        await page.fill("input[type='email']", "test@test.com");
+        await page.fill("input[type='password']", "Test@1234");
         await page.click("button[data-selector='signin-button']");
         await page.waitForNavigation();
     }
@@ -33,7 +33,7 @@ export default class Login {
         await expect(
             page.locator("#menu-title"),
             "User name Doesn't match!"
-        ).toHaveText("Hi, John Doe!");
+        ).toHaveText("Hi, string!");
         await page.waitForTimeout(2000);
     }
 }
