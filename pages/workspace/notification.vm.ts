@@ -20,7 +20,6 @@ import useSWR from "swr";
 import Dataset from "../../models/dataset.model.v4";
 import { usereventSearchQueryResults } from "services/usermetrics.service";
 import { useHttpCall } from "common/hooks";
-import { updateNotifications } from "store/user/user.action";
 import { AUTH_TOKEN } from "common/constants/cookie.key";
 
 const NOTIFICATION_FETCH_TIME = 10 * 1000; //Fetch notifications every 30 mins
