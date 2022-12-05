@@ -4,14 +4,12 @@ import {
     UPDATE,
     CLEAR,
     UPDATE_ITEMS_DATA,
-    NOTIFICATION_UPDATE,
 } from "./user.type";
 
 export const initialState: UserState = {
     bookmarkLists: null,
     bookmarkItems: null,
     bookmarkItemsData: null,
-    notifications: [],
 };
 
 const userReducer = (state: UserState = initialState, action: UserAction) => {
@@ -26,11 +24,6 @@ const userReducer = (state: UserState = initialState, action: UserAction) => {
                 bookmarkLists: null,
                 bookmarkItems: null,
                 bookmarkItemsData: null,
-            };
-        case NOTIFICATION_UPDATE:
-            return {
-                ...state,
-                notifications: action.payload,
             };
         default:
             return state;

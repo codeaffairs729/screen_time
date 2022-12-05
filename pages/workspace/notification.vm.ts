@@ -20,7 +20,6 @@ import useSWR from "swr";
 import Dataset from "../../models/dataset.model.v4";
 import { usereventSearchQueryResults } from "services/usermetrics.service";
 import { useHttpCall } from "common/hooks";
-import { updateNotifications } from "store/user/user.action";
 import { AUTH_TOKEN } from "common/constants/cookie.key";
 
 const NOTIFICATION_FETCH_TIME = 10 * 1000; //Fetch notifications every 30 mins
@@ -32,6 +31,7 @@ export type Notification = {
     read_at: string;
     read_status: string;
     description: string;
+    dataset_id: number;
     notification_type: string;
 };
 
@@ -66,6 +66,16 @@ export const getNotificationSubHeading = (type: string) => {
             return "Provide feedback on";
         default:
             return "Provide feedback on";
+    }
+};
+
+export const notificationActionUrl = (notification: Notification) => {
+    const { notification_type: type, dataset_id: datasetId } = notification;
+    switch (type?.toLowerCase()) {
+        case "feedback_request":
+            return `/datasets/${datasetId}#feedback`;
+        default:
+            return `/datasets/${datasetId}#feedback`;
     }
 };
 

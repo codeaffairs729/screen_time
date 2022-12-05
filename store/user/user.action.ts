@@ -2,7 +2,6 @@ import {
     UPDATE,
     CLEAR,
     UPDATE_ITEMS_DATA,
-    NOTIFICATION_UPDATE,
     UserAction,
 } from "./user.type";
 import { Notification } from "pages/workspace/notification.vm";
@@ -28,12 +27,5 @@ export const clearBookmarkListsItems = (): UserAction => {
     return {
         type: CLEAR,
         payload: {},
-    };
-};
-
-export const updateNotifications = (notifications: Notification[]) => {
-    return {
-        type: NOTIFICATION_UPDATE,
-        payload: notifications,
     };
 };

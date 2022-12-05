@@ -9,6 +9,7 @@ import {
     NotificationsVMContext,
 } from "pages/workspace/notification.vm";
 import { useContext } from "react";
+import Loader from "components/UI/loader";
 
 const Notifications = () => {
     const { markAllRead, notifications, isLoading } = useContext(
@@ -17,7 +18,12 @@ const Notifications = () => {
 
     const dispatch = useDispatch();
 
-    if (isLoading) return null; //show loader
+    if (isLoading)
+        return (
+            <div className="w-full h-full flex items-center justify-center">
+                <Loader sizeClass="h-8 w-8"/>
+            </div>
+        );
 
     return (
         <Menu
