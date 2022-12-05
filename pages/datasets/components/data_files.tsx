@@ -2,9 +2,13 @@ import { useContext } from "react";
 import { DatasetDetailVMContext } from "../dataset_detail.vm";
 import { DatasetUrl } from "models/dataset.model";
 import { BsCloudDownloadFill, BsEyeFill } from "react-icons/bs";
+import { useDispatch } from "react-redux";
+import { NotificationsVMContext } from "pages/workspace/notification.vm";
 
 const DataFilesSection = ({ goToPreview }: { goToPreview: () => void }) => {
     const vm = useContext(DatasetDetailVMContext);
+    const { createFeedbackNotification } = useContext(NotificationsVMContext);
+
     if (!vm.dataset) {
         return <div />;
     }
@@ -32,6 +36,11 @@ const DataFilesSection = ({ goToPreview }: { goToPreview: () => void }) => {
                                     url={url}
                                     key={i}
                                     goToPreview={goToPreview}
+                                    onDownload={() =>
+                                        createFeedbackNotification(
+                                            vm.dataset?.id
+                                        )
+                                    }
                                 />
                             );
                         })
@@ -49,9 +58,11 @@ const DataFilesSection = ({ goToPreview }: { goToPreview: () => void }) => {
 const DataFileRow = ({
     url,
     goToPreview,
+    onDownload,
 }: {
     url: DatasetUrl;
     goToPreview: () => void;
+    onDownload: () => void;
 }) => {
     return (
         <tr className="border-b border-gray-200 bg-[#FEFEFE] hover:bg-gray-100">
@@ -74,6 +85,7 @@ const DataFileRow = ({
             </td>
             <td className="py-3 px-6 text-center">
                 <a
+                    onClick={() => onDownload()}
                     href={url.url?.replace(/["']/g, "")}
                     className="underline"
                     download

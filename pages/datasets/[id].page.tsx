@@ -47,7 +47,7 @@ const DatasetDetailPage = ({ dataset }: { dataset: Dataset | undefined }) => {
                     </div>
                     <div className="w-2/3 border">
                         <Tab.Group
-                            selectedIndex={selectedIndex}
+                            defaultIndex={selectedIndex}
                             onChange={setSelectedIndex}
                         >
                             <Tab.List className="flex flex-row justify-between">

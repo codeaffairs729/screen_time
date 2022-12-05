@@ -28,7 +28,6 @@ const userReducer = (state: UserState = initialState, action: UserAction) => {
                 bookmarkItemsData: null,
             };
         case NOTIFICATION_UPDATE:
-            console.log(action.payload, "action.payload");
             return {
                 ...state,
                 notifications: action.payload,

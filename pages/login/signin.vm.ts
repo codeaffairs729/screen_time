@@ -6,15 +6,15 @@ import AuthService from "services/auth.service";
 import User from "models/user.model";
 import { useSelector } from "react-redux";
 import { RootState } from "store";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { getHttpErrorMsg } from "common/util";
 import { usereventLogin } from "services/usermetrics.service";
-import { NotificationsVM } from "pages/workspace/notification.vm";
+import { NotificationsVMContext } from "pages/workspace/notification.vm";
 
 const SigninVM = () => {
     const form = useForm();
     const cache = useSelector((state: RootState) => state.cache);
-    const { fetchNotifications } = NotificationsVM();
+    const { fetchNotifications } = useContext(NotificationsVMContext);
     const lastSearchQuery = cache["last-search-query"];
     const lastSearchQueryUrl = lastSearchQuery
         ? `?q=${encodeURI(lastSearchQuery)}`

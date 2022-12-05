@@ -1,17 +1,18 @@
 import { Menu, Transition } from "@headlessui/react";
 import Link from "next/link";
-import { Fragment } from "react";
+import { Fragment, useContext } from "react";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { useSelector } from "react-redux";
 import NotificationCard from "./notification_card";
 import { RootState } from "store";
-import { Notification } from "pages/workspace/notification.vm";
+import {
+    Notification,
+    NotificationsVMContext,
+} from "pages/workspace/notification.vm";
 
 const Notification = () => {
-    const notifications: Notification[] = useSelector(
-        (state: RootState) => state.user.notifications
-    );
-    console.log(notifications, "notifications");
+    const { isLoading, notifications } = useContext(NotificationsVMContext);
+
     const hasUnreadMessage = notifications.some(
         (notification: Notification) => !notification.read_status
     );
@@ -53,7 +54,7 @@ const Notification = () => {
                             </span>
                         </Link>
                     </div>
-                    {notifications.length ? (
+                    {!isLoading && notifications.length ? (
                         notifications.map((notification, index) => (
                             <NotificationCard
                                 notification={notification}

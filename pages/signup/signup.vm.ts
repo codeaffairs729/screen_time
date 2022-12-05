@@ -4,10 +4,9 @@ import { getHttpErrorMsg } from "common/util";
 import { Option } from "components/UI/form/dropdown_field";
 import User, { UserRole } from "models/user.model";
 import { useRouter } from "next/router";
-import { NotificationsVM } from "pages/workspace/notification.vm";
-import { useState } from "react";
+import { NotificationsVMContext } from "pages/workspace/notification.vm";
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
-import toast from "react-hot-toast";
 import AuthService from "services/auth.service";
 
 const SignupVM = () => {
@@ -21,7 +20,7 @@ const SignupVM = () => {
     const {
         query: { signup_type: signupType },
     } = useRouter();
-    const { fetchNotifications } = NotificationsVM();
+    const { fetchNotifications } = useContext(NotificationsVMContext);
     const handleSignup = (data: any) =>
         executeHandleSignup(
             () => {
