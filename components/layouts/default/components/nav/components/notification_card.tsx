@@ -18,28 +18,34 @@ const NotificationCard = ({
     const { notification_type, description, read_status, created_at } =
         notification;
     return (
-        <Link href={notificationActionUrl(notification)} target="_blank">
-            <div className="shadow-underline py-4 px-2.5 cursor-pointer flex flex-col items-end">
-                <span className="flex items-center w-full">
-                    <a
-                        className={clsx(
-                            "text-dtech-additional-dark block text-sm font-semibold mr-auto"
+        <Link href={notificationActionUrl(notification)}>
+            <a target="_blank">
+                <div className="shadow-underline py-4 px-2.5 cursor-pointer flex flex-col items-end">
+                    <span className="flex items-center w-full">
+                        <a
+                            className={clsx(
+                                "text-dtech-additional-dark block text-sm font-semibold mr-auto"
+                            )}
+                        >
+                            {formatHeading(notification_type)}
+                        </a>
+                        <span className="text-gray-600 text-m">
+                            {getNotificationAge(created_at)}
+                        </span>
+                        {!read_status && (
+                            <div className="h-3 w-3 bg-dtech-notification-alert-secondary ml-1 rounded-full border border-white" />
                         )}
-                    >
-                        {formatHeading(notification_type)}
-                    </a>
-                    <span className="text-gray-600 text-m">
-                        {getNotificationAge(created_at)}
                     </span>
-                    {!read_status && (
-                        <div className="h-3 w-3 bg-dtech-notification-alert-secondary ml-1 rounded-full border border-white" />
-                    )}
-                </span>
-                <div className="my-2 text-m font-normal text-gray-800 w-full limit-line">
-                    <span>{getNotificationSubHeading(notification_type)} </span>
-                    <span className="italic font-medium">{description}</span>
+                    <div className="my-2 text-m font-normal text-gray-800 w-full limit-line">
+                        <span>
+                            {getNotificationSubHeading(notification_type)}{" "}
+                        </span>
+                        <span className="italic font-medium">
+                            {description}
+                        </span>
+                    </div>
                 </div>
-            </div>
+            </a>
         </Link>
     );
 };
