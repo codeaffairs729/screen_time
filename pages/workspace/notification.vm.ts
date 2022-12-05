@@ -1,26 +1,9 @@
 import Http from "common/http";
-import { SearchOption } from "components/UI/dataset_search_input";
-import { isEqual } from "lodash-es";
-import { useRouter } from "next/router";
-import {
-    createContext,
-    useContext,
-    useEffect,
-    useRef,
-    useState,
-    SetStateAction,
-    Dispatch,
-} from "react";
-import { useFieldArray, useForm } from "react-hook-form";
+import { createContext, useState } from "react";
 import toast from "react-hot-toast";
-import { useDispatch } from "react-redux";
-import { SingleValue } from "react-select";
-import { updateCache } from "store/cache/cache.action";
-import useSWR from "swr";
-import Dataset from "../../models/dataset.model.v4";
-import { usereventSearchQueryResults } from "services/usermetrics.service";
 import { useHttpCall } from "common/hooks";
 import { AUTH_TOKEN } from "common/constants/cookie.key";
+import Dataset from "models/dataset.model";
 
 const NOTIFICATION_FETCH_TIME = 10 * 1000; //Fetch notifications every 30 mins
 
@@ -138,12 +121,16 @@ export const NotificationsVM = () => {
         }, NOTIFICATION_FETCH_TIME);
     };
 
-    const createFeedbackNotification = (datasetId: number) => {
+    const createFeedbackNotification = (dataset: Dataset) => {
+        console.log(dataset);
+        const { id: dataset_id, detail } = dataset;
+        const { name: title } = detail;
         execute(
             () => {
-                return Http.post(
-                    `/v1/notifications/${datasetId}/feedback_request`
-                );
+                return Http.post(`/v1/notifications/feedback_request`, {
+                    dataset_id,
+                    title,
+                });
             },
             {
                 onSuccess: (res) => {

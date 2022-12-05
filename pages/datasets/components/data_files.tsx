@@ -37,9 +37,7 @@ const DataFilesSection = ({ goToPreview }: { goToPreview: () => void }) => {
                                     key={i}
                                     goToPreview={goToPreview}
                                     onDownload={() =>
-                                        createFeedbackNotification(
-                                            vm.dataset?.id
-                                        )
+                                        createFeedbackNotification(vm.dataset)
                                     }
                                 />
                             );
