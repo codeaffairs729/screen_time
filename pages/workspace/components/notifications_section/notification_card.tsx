@@ -23,7 +23,7 @@ const NotificationCard = ({
                 !read_status ? "bg-dtech-main-light" : "bg-neutral-100"
             } my-4 px-2.5 py-2 cursor-pointer flex flex-col items-end rounded-lg text-dtech-additional-dark min-h-[100px]`}
         >
-            <Link href={notificationActionUrl(notification)}>
+            <Link href={notificationActionUrl(notification)} target="_blank">
                 <span className="flex items-center w-full">
                     <a
                         className={clsx(
