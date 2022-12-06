@@ -1,15 +1,17 @@
-import { Page, expect } from "@playwright/test";
+import { Page, expect, BrowserContext } from "@playwright/test";
 
 export default class CheckWorkspaceNotification {
     readonly page: Page;
-    constructor(page: Page) {
+    context: BrowserContext;
+    constructor(page: Page, context: BrowserContext) {
         this.page = page;
+        this.context = context;
     }
 
     async checkWorkspaceNotification() {
-        const { page } = this;
+        const { page, context } = this;
         await page.click("#notification-bell-icon");
-        // await page.click("#view-all");
+        await page.waitForLoadState();
         await expect(
             page.locator("#workspace-notification-heading-0"),
             "Feedback request"
@@ -22,16 +24,15 @@ export default class CheckWorkspaceNotification {
             page.locator("#workspace-notification-age-0"),
             " just now"
         ).toHaveText(" just now");
-        expect(await page.locator("#workspace-notification-dot-0").isVisible()).toBe(
-            true
-        );
-        // await page.click("#workspace-notification-0");
-        const [page1] = await Promise.all([
-            page.waitForEvent('popup'),
-            page.waitForNavigation({ url: `${process.env.NEXT_PUBLIC_WEBCLIENT_ROOT}/datasets/193#feedback` }),
-            page.click("#workspace-notification-0")
-          ]);
-
-        // await page1.click("#notification-bell-icon"); 
+        expect(
+            await page.locator("#workspace-notification-dot-0").isVisible()
+        ).toBe(true);
+        const [newTab] = await Promise.all([
+            context.waitForEvent("page"),
+            await page.click("#workspace-notification-0"),
+        ]);
+        await newTab.waitForLoadState();
+        expect(newTab.url()).toContain("feedback");
+        await page.bringToFront();
     }
 }

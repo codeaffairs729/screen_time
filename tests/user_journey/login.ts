@@ -26,14 +26,16 @@ export default class Login {
             page.locator("//div[@role='status']"),
             "Login Failed"
         ).toHaveText("You have successfully signed in");
-        await page.waitForTimeout(2000);
-        await page.click("#notification-bell-icon"); // bell icon
+        await page.waitForLoadState();
+        expect(await page.locator("#notification-bell-icon").isVisible()).toBe(
+            true
+        );
         await page.click("#profile-dropdown"); //profile dropdown
         await page.waitForTimeout(2000);
+        let user: any = await page.locator("#menu-title").textContent();
         await expect(
             page.locator("#menu-title"),
             "User name Doesn't match!"
-        ).toHaveText("Hi, string!");
-        await page.waitForTimeout(2000);
+        ).toHaveText(user);
     }
 }
