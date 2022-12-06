@@ -21,7 +21,7 @@ const Notifications = () => {
     if (isLoading)
         return (
             <div className="w-full h-full flex items-center justify-center">
-                <Loader sizeClass="h-8 w-8"/>
+                <Loader sizeClass="h-8 w-8" />
             </div>
         );
 
@@ -34,7 +34,7 @@ const Notifications = () => {
         >
             <Link href={"#"}>
                 <div
-                    onClick={() => markAllRead(dispatch)}
+                    onClick={() => markAllRead()}
                     className="flex items-center justify-end cursor-pointer"
                 >
                     <MdOutlineFactCheck className="text-dtech-main-dark" />
