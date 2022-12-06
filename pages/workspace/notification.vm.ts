@@ -6,7 +6,7 @@ import { AUTH_TOKEN } from "common/constants/cookie.key";
 import Dataset from "models/dataset.model";
 import MNotification from "models/notification.model";
 
-const NOTIFICATION_FETCH_TIME = 10 * 1000; //Fetch notifications every 30 mins
+const NOTIFICATION_FETCH_TIME = 15 * 60 * 1000; //Fetch notifications every 15 mins
 
 export type Notification = {
     id: number;
