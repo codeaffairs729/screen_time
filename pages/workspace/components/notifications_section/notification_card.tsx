@@ -18,14 +18,14 @@ const NotificationCard = ({
     const { notification_type, description, read_status, created_at } =
         notification;
     return (
-        <div
-            id={"workspace-notification-" + index}
-            className={`${
-                !read_status ? "bg-dtech-main-light" : "bg-neutral-100"
-            } my-4 px-2.5 py-2 cursor-pointer flex flex-col items-end rounded-lg text-dtech-additional-dark min-h-[100px]`}
-        >
-            <Link href={notificationActionUrl(notification)}>
-                <a target="_blank">
+        <Link href={notificationActionUrl(notification)}>
+            <a target="_blank">
+                <div
+                    id={"workspace-notification-" + index}
+                    className={`${
+                        !read_status ? "bg-dtech-main-light" : "bg-neutral-100"
+                    } my-4 px-2.5 py-2 cursor-pointer flex flex-col items-end rounded-lg text-dtech-additional-dark min-h-[100px]`}
+                >
                     <span className="flex items-center w-full">
                         <a
                             id={"workspace-notification-heading-" + index}
@@ -48,17 +48,19 @@ const NotificationCard = ({
                             />
                         )}
                     </span>
-                </a>
-            </Link>
-            <div
-                className={`text-gray-800 text-sm justify-between my-4 mr-auto w-1/2`}
-            >
-                <span id={"workspace-notification-detail-" + index}>
-                    {getNotificationSubHeading(notification_type)}{" "}
-                </span>
-                <span className="italic font-medium">{description}</span>
-            </div>
-        </div>
+                    <div
+                        className={`text-gray-800 text-sm justify-between my-4 mr-auto w-1/2`}
+                    >
+                        <span id={"workspace-notification-detail-" + index}>
+                            {getNotificationSubHeading(notification_type)}{" "}
+                        </span>
+                        <span className="italic font-medium">
+                            {description}
+                        </span>
+                    </div>
+                </div>
+            </a>
+        </Link>
     );
 };
 

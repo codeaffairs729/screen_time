@@ -1,10 +1,4 @@
-import {
-    UPDATE,
-    CLEAR,
-    UPDATE_ITEMS_DATA,
-    UserAction,
-} from "./user.type";
-import { Notification } from "pages/workspace/notification.vm";
+import { UPDATE, CLEAR, UPDATE_ITEMS_DATA, UserAction } from "./user.type";
 
 export const updateBookmarkListsItems = (
     lists: any,
