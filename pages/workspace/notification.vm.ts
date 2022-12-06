@@ -103,30 +103,30 @@ export const NotificationsVM = () => {
     };
 
     const fetchNotifications = () => {
-        const ref = setInterval(() => {
-            document.cookie.includes(AUTH_TOKEN)
-                ? execute(
-                      () => {
-                          return Http.get(`/v1/notifications/`);
-                      },
-                      {
-                          onSuccess: (res) => {
-                              const responseNotifications =
-                                  MNotification.fromJsonList(res);
-                              setNotifications(responseNotifications);
-                              setIsLoading(false);
-                          },
-                          onError: async (error: any) => {
-                              toast.error(
-                                  "Something went wrong while fetching notifications"
-                              );
-                              setIsLoading(false);
-                              console.log(error, "error");
-                          },
-                      }
-                  )
-                : clearInterval(ref);
-        }, NOTIFICATION_FETCH_TIME);
+        execute(
+            () => {
+                return Http.get(`/v1/notifications/`);
+            },
+            {
+                onSuccess: (res) => {
+                    const responseNotifications =
+                        MNotification.fromJsonList(res);
+                    setNotifications(responseNotifications);
+                    setIsLoading(false);
+                },
+                onError: async (error: any) => {
+                    toast.error(
+                        "Something went wrong while fetching notifications"
+                    );
+                    setIsLoading(false);
+                    console.log(error, "error");
+                },
+            }
+        );
+
+        if (document.cookie.includes(AUTH_TOKEN)) {
+            setTimeout(fetchNotifications, NOTIFICATION_FETCH_TIME);
+        }
     };
 
     const createFeedbackNotification = (dataset: Dataset) => {
