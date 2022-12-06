@@ -6,8 +6,37 @@ import Dataset from "models/dataset.model";
 import toast from "react-hot-toast";
 import useSWR, { useSWRConfig } from "swr";
 import DatasetRowDisplay from "components/UI/data_row_display";
+import { useHttpCall } from "common/hooks";
+import DatasetStats from "models/dataset_stats.model";
+import DatasetRow from "components/UI/dataset_row.v4";
 
 const FavouritesSection = () => {
+    const {
+        execute: excuteFectchStats,
+        data: stats,
+        isLoading: isFetchingStats,
+    } = useHttpCall<{ [key: string]: any }>({});
+    const fectchStats = (ids: number[]) =>
+        excuteFectchStats(
+            () =>
+                Http.post("/v1/datasets/stats", {
+                    meta_dataset_ids: ids,
+                }),
+            {
+                postProcess: (res) => {
+                    const o: { [key: string]: DatasetStats } = {};
+                    Object.keys(res).map(
+                        (id) =>
+                            (o[id] = DatasetStats.fromJson({
+                                ...res[id],
+                                dataset_id: id,
+                            }))
+                    );
+                    return o;
+                },
+            }
+        );
+
     const { mutate } = useSWRConfig();
     const favEndpoint = `${process.env.NEXT_PUBLIC_WEBPORTAL_API_ROOT}/v1/users/favourites`;
     const { data: favouriteDatasets, error } = useSWR(
@@ -17,7 +46,12 @@ const FavouritesSection = () => {
                 baseUrl: process.env.NEXT_PUBLIC_WEBPORTAL_API_ROOT,
             })
                 .then((res) => {
-                    return Dataset.fromJsonList(res);
+                    const datasets = Dataset.fromJsonList(res);
+                    const datasetIds = datasets.map((dataset) => dataset.id);
+                    if (datasetIds.length) {
+                        fectchStats(datasetIds);
+                    }
+                    return datasets;
                 })
                 .catch((e) => {
                     toast.error(
@@ -54,7 +88,15 @@ const FavouritesSection = () => {
                 <InfoAlert message="No favourites found" className="mt-1" />
             )}
             {favouriteDatasets?.map((dataset, i) => (
-                <DatasetRowDisplay
+                // <DatasetRowDisplay
+                //     key={dataset.id}
+                //     dataset={dataset}
+                //     displayContext={"favorite-item"}
+                //     onFavouriteChange={() => mutate(favEndpoint)}
+                // />
+                <DatasetRow
+                    datasetStats={stats[dataset.id]}
+                    isLoadingStats={isFetchingStats}
                     key={dataset.id}
                     dataset={dataset}
                     displayContext={"favorite-item"}

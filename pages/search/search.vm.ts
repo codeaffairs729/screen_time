@@ -11,6 +11,8 @@ import { updateCache } from "store/cache/cache.action";
 import useSWR from "swr";
 import Dataset from "../../models/dataset.model.v4";
 import { usereventSearchQueryResults } from "services/usermetrics.service";
+import { useHttpCall } from "common/hooks";
+import DatasetStats from "models/dataset_stats.model";
 
 export type Filter = {
     domains?: string[];
@@ -46,7 +48,7 @@ const SearchVM = () => {
     const [totalPages, setTotalPages] = useState(1);
     const [pageSize, setPageSize] = useState(20);
     const [isFilterActive, setIsFilterActive] = useState<boolean>(false);
-    const [ loading, setLoading ] = useState<boolean>(false)
+    const [loading, setLoading] = useState<boolean>(false);
     /**
      * Update the query params on updating any filter
      */
@@ -105,14 +107,43 @@ const SearchVM = () => {
                 }),
                 {}
             );
-            setLoading(true)
+            setLoading(true);
             setActiveFilter(updatedFilters);
         }
     };
 
     /**
+     * Fetch stats for datasets to highlight favourite status
+     */
+    const {
+        execute: excuteFectchStats,
+        data: stats,
+        isLoading: isFetchingStats,
+    } = useHttpCall<{ [key: string]: any }>({});
+    const fectchStats = (ids: number[]) =>
+        excuteFectchStats(
+            () =>
+                Http.post("/v1/datasets/stats", {
+                    meta_dataset_ids: ids,
+                }),
+            {
+                postProcess: (res) => {
+                    const o: { [key: string]: DatasetStats } = {};
+                    Object.keys(res).map(
+                        (id) =>
+                            (o[id] = DatasetStats.fromJson({
+                                ...res[id],
+                                dataset_id: id,
+                            }))
+                    );
+                    return o;
+                },
+            }
+        );
+
+    /**
      * Get search results
-     * TODO: convert searchquery, pagenum and pagesize to
+     * TODO: uriencode searchquery, pagenum and pagesize
      */
     const { data: datasets, error } = useSWR(
         q
@@ -123,14 +154,14 @@ const SearchVM = () => {
                 baseUrl: `${process.env.NEXT_PUBLIC_PUBLIC_API_ROOT}`,
             })
                 .catch((e) => {
-                    setLoading(false)
+                    setLoading(false);
                     toast.error(
                         "Something went wrong while fetching search results"
                     );
                     throw e;
                 })
                 .then((res) => {
-                    setLoading(false)
+                    setLoading(false);
                     // setCurrentPageNo(res[0]["user_search"][0]["pagenum"]);
                     setTotalPages(
                         Math.ceil(res[0]["user_search"][0]["total"] / pageSize)
@@ -148,12 +179,17 @@ const SearchVM = () => {
                         update_frequency: resFitlerOptions["update_frequency"],
                     });
 
-                    return Dataset.fromJsonList(
+                    const datasets = Dataset.fromJsonList(
                         res[0]["user_search"][0]["results"]
                     );
+                    const datasetIds = datasets.map((dataset) => dataset.id);
+                    if (datasetIds.length) {
+                        fectchStats(datasetIds);
+                    }
+                    return datasets;
                 })
                 .then((datasets) => {
-                    setLoading(false)
+                    setLoading(false);
                     updateDisplayCount(datasets.map((d) => d.id));
                     usereventSearchQueryResults(
                         q,
@@ -162,7 +198,7 @@ const SearchVM = () => {
                     return datasets;
                 })
                 .catch((e) => {
-                    setLoading(false)
+                    setLoading(false);
                     console.error(e);
                     throw e;
                 }),
@@ -192,6 +228,8 @@ const SearchVM = () => {
         setFilterOptions,
         resetAllFilters,
         isFilterActive,
+        isFetchingStats,
+        stats,
     };
 };
 
@@ -209,6 +247,8 @@ interface ISearchVMContext {
     totalPages: number;
     resetAllFilters: Function;
     isFilterActive: boolean;
+    isFetchingStats: boolean;
+    stats: { [key: string]: DatasetStats };
 }
 
 export default SearchVM;
