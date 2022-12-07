@@ -16,12 +16,13 @@ const Nav = ({
     content,
     showLogo = true,
     showSearchBar = true,
+    onSearchChange,
 }: {
     content?: ReactNode;
     showLogo?: boolean;
     showSearchBar?: boolean;
+    onSearchChange: any;
 }) => {
-    const vm = SearchVM();
     const user = useSelector((state: RootState) => state.auth.user);
 
     return (
@@ -38,7 +39,7 @@ const Nav = ({
                     </a>
                 </Link>
             )}
-            {showSearchBar && <SearchBar onChange={vm.onSearchChange} />}
+            {showSearchBar && <SearchBar onChange={onSearchChange} />}
             {content}
             <div className="ml-auto flex items-center">
                 <NavItem label="Home" link="/" />
