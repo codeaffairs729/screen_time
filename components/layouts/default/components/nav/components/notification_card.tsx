@@ -18,7 +18,11 @@ const NotificationCard = ({
     const { notification_type, description, read_status, created_at } =
         notification;
     return (
-        <a href={notificationActionUrl(notification)} target="_blank">
+        <a
+            href={notificationActionUrl(notification)}
+            target="_blank"
+            rel="noreferrer"
+        >
             <div
                 id={"notification-" + index}
                 className="shadow-underline py-4 px-2.5 cursor-pointer flex flex-col items-end"
