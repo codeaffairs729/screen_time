@@ -32,6 +32,14 @@ const DatasetDetailPage = ({ dataset }: { dataset: Dataset | undefined }) => {
     const [selectedIndex, setSelectedIndex] = useState<any>(0);
     const [loading, setLoading] = useState<boolean>(true);
     const { asPath } = useRouter();
+    const vm = DatasetDetailVM(dataset);
+
+    useEffect(() => {
+        const hashParam: string = asPath.split("#")[1];
+        setSelectedIndex(tabIndex[hashParam as any]);
+        setLoading(false);
+    }, []);
+
     if (!dataset) {
         return (
             <DefaultLayout>
@@ -42,13 +50,6 @@ const DatasetDetailPage = ({ dataset }: { dataset: Dataset | undefined }) => {
             </DefaultLayout>
         );
     }
-    const vm = DatasetDetailVM(dataset);
-
-    useEffect(() => {
-        const hashParam: string = asPath.split("#")[1];
-        setSelectedIndex(tabIndex[hashParam as any]);
-        setLoading(false);
-    }, []);
 
     return (
         <DefaultLayout>
