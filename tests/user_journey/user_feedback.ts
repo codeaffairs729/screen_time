@@ -16,6 +16,7 @@ export default class UserFeedback {
             context.waitForEvent("page"),
             await page.click("#notification-0"),
         ]);
+        await newTab.waitForLoadState();
         await newTab.click("//button[text()='Data quality']");
         await newTab
             .locator(".inline-block > .flex > button:nth-child(4)")
@@ -42,8 +43,7 @@ export default class UserFeedback {
         );
         await newTab.check("(//div[@class='flex items-center']//input)[2]");
         await newTab.click("//button[text()='Submit']");
-        await newTab.waitForTimeout(3000);
-
+        await newTab.waitForTimeout(15000);
         await newTab.click("#notification-bell-icon");
         await expect(
             newTab.locator("#notification-not-found"),

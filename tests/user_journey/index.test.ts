@@ -29,53 +29,45 @@ test.describe("User journey", () => {
     test("Expire All Notification", async () => {
         const search_and_download = new SearchAndDownload(page);
         await search_and_download.SearchDownload();
-        await page.click("//div[contains(@class,'ml-auto flex')]//a[1]");
         const expire_notification = new ExpireNotification(page);
         await expire_notification.NotificationExpire();
     });
 
-    // test("Clear All notification", async () => {
-    //     const search_and_download = new SearchAndDownload(page);
-    //     await search_and_download.SearchDownload();
-    //     await page.click("(//button[contains(@class,'cursor-pointer flex')]//span)[2]"); //profile dropdown
-    //     await Promise.all([
-    //         page.waitForNavigation({
-    //             url: `${process.env.NEXT_PUBLIC_WEBCLIENT_ROOT}/workspace`,
-    //         }),
-    //         page.locator("//div[@id='menu-title']/following-sibling::a[1]").click(),
-    //     ]);
-    //     const clear_notification = new ClearNotification(page);
-    //     await clear_notification.NotificationClear();
-    // });
+    test("Clear All notification", async () => {
+        const search_and_download = new SearchAndDownload(page);
+        await search_and_download.SearchDownload();
+        const clear_notification = new ClearNotification(page);
+        await clear_notification.NotificationClear();
+    });
 
-    // test("PERFORM A SEARCH AND DOWNLOAD SOME FILES", async () => {
-    //     const search_and_download = new SearchAndDownload(page);
-    //     await search_and_download.SearchDownload();
-    // });
-    // test("Check menu Notification", async () => {
-    //     const check_menu_notification = new CheckMenuNotification(
-    //         page,
-    //         context
-    //     );
-    //     await check_menu_notification.CheckMenu();
-    // });
+    test("PERFORM A SEARCH AND DOWNLOAD SOME FILES", async () => {
+        const search_and_download = new SearchAndDownload(page);
+        await search_and_download.SearchDownload();
+    });
+    test("Check menu Notification", async () => {
+        const check_menu_notification = new CheckMenuNotification(
+            page,
+            context
+        );
+        await check_menu_notification.CheckMenu();
+    });
 
-    // test("Check WorkSpace Notifpaication", async () => {
-    //     const check_workspace_notification = new CheckWorkspaceNotification(
-    //         page,
-    //         context
-    //     );
-    //     await check_workspace_notification.checkWorkspaceNotification();
-    // });
+    test("Check WorkSpace Notifpaication", async () => {
+        const check_workspace_notification = new CheckWorkspaceNotification(
+            page,
+            context
+        );
+        await check_workspace_notification.checkWorkspaceNotification();
+    });
 
-    // test("Auto Expiry Of notification", async () => {
-    //     const auto_expiry_notification = new AutoExpiryOfNotification(page);
-    //     await auto_expiry_notification.autoExpiryOfNotifications();
-    // });
-    // test("User Feedback", async () => {
-    //     const search_and_download = new SearchAndDownload(page);
-    //     await search_and_download.SearchDownload();
-    //     const user_feedback = new UserFeedback(page, context);
-    //     await user_feedback.userFeedback();
-    // });
+    test("Auto Expiry Of notification", async () => {
+        const auto_expiry_notification = new AutoExpiryOfNotification(page);
+        await auto_expiry_notification.autoExpiryOfNotifications();
+    });
+    test("User Feedback", async () => {
+        const search_and_download = new SearchAndDownload(page);
+        await search_and_download.SearchDownload();
+        const user_feedback = new UserFeedback(page, context);
+        await user_feedback.userFeedback();
+    });
 });

@@ -10,6 +10,8 @@ export default class Login {
         await this.page.waitForSelector(
             "button[data-selector='signin-button']"
         );
+        await this.page.waitForSelector("(//div[contains(@class,'relative w-full')]//input)[1]")
+        await this.page.waitForSelector("(//div[contains(@class,'relative w-full')]//input)[2]")
     }
     async LogIn() {
         const { page } = this;
@@ -30,7 +32,7 @@ export default class Login {
         expect(await page.locator("#notification-bell-icon").isVisible()).toBe(
             true
         );
-        await page.click("#profile-dropdown"); //profile dropdown
+        await page.click("(//div[@class='relative inline-block text-left']//button[@class='cursor-pointer flex items-center ml-6 hover:text-dtech-main-dark outline-none'])[1]"); //profile dropdown
         await page.waitForTimeout(2000);
         let user: any = await page.locator("#menu-title").textContent();
         await expect(

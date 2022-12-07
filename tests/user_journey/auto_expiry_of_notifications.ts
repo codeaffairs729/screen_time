@@ -26,13 +26,10 @@ export default class AutoExpiryOfNotification {
             page.locator("#notification-detail-0"),
             "Provide feedback on"
         ).toHaveText(notification_detail);
-        let notification_age: any = await page
-            .locator("#notification-age-0")
-            .textContent();
         await expect(
             page.locator("#notification-age-0"),
             "Error in Date!"
-        ).toHaveText(notification_age);
+        ).toHaveText(" just now");
         expect(await page.locator("#notification-dot-0").isVisible()).toBe(
             true
         );
