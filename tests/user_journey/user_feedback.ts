@@ -43,6 +43,44 @@ export default class UserFeedback {
         );
         await newTab.check("(//div[@class='flex items-center']//input)[2]");
         await newTab.click("//button[text()='Submit']");
+
+        await newTab.click("//*[@id='headlessui-tabs-tab-28']");
+
+        await newTab
+            .locator(".css-319lph-ValueContainer > .css-6j8wv5-Input")
+            .first()
+            .click();
+        await newTab
+            .locator(
+                'text=What are the domains and topics related to your potential use case?Select Domain >> input[role="combobox"]'
+            )
+            .press("Enter");
+        await newTab
+            .locator(".css-319lph-ValueContainer > .css-6j8wv5-Input")
+            .first()
+            .click();
+        await newTab
+            .locator(
+                'text=Select applicable topics within domain: Environment and natureoption Air quality >> input[role="combobox"]'
+            )
+            .press("Enter");
+        await newTab
+            .locator(".css-319lph-ValueContainer > .css-6j8wv5-Input")
+            .click();
+        await newTab
+            .locator(
+                'text=What are the potential use cases for this data?Select from the options below.opt >> input[role="combobox"]'
+            )
+            .press("Enter");
+
+        await newTab.fill(
+            "//*[@id='headlessui-tabs-panel-32']/div/div[2]/div/div[3]/div[2]/textarea",
+            "Random "
+        );
+
+        await newTab.check("//input[@type='checkbox']");
+        await newTab.click("//div[contains(@class,'my-5 mx-3')]//button[1]");
+
         await newTab.waitForTimeout(15000);
         await newTab.click("#notification-bell-icon");
         await expect(

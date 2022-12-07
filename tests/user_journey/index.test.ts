@@ -52,7 +52,7 @@ test.describe("User journey", () => {
         await check_menu_notification.CheckMenu();
     });
 
-    test("Check WorkSpace Notifpaication", async () => {
+    test("Check WorkSpace Notification", async () => {
         const check_workspace_notification = new CheckWorkspaceNotification(
             page,
             context

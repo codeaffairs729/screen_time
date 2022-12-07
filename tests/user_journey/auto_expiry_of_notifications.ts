@@ -14,23 +14,40 @@ export default class AutoExpiryOfNotification {
         await this.sleep(3000);
         await page.click("#notification-bell-icon");
         await page.waitForLoadState();
+        let heading1: any = await page.locator("#notification-heading-0").textContent();
         await expect(
             page.locator("#notification-heading-0"),
-            "Feedback request"
-        ).toHaveText("Feedback request");
-
-        let notification_detail: any = await page
-            .locator("#notification-detail-0")
-            .textContent();
+            "heading do not match !"
+        ).toHaveText(heading1);
+        let detail1: any = await page.locator("#notification-detail-0").textContent();
         await expect(
             page.locator("#notification-detail-0"),
-            "Provide feedback on"
-        ).toHaveText(notification_detail);
+            "Detail doesn't match!"
+        ).toHaveText(detail1);
+        let age1: any = await page.locator("#notification-age-0").textContent();
         await expect(
             page.locator("#notification-age-0"),
-            "Error in Date!"
-        ).toHaveText(" just now");
+            "age Doesn't Match !"
+        ).toHaveText(age1);
         expect(await page.locator("#notification-dot-0").isVisible()).toBe(
+            true
+        );
+        let heading2: any = await page.locator("#notification-heading-1").textContent();
+        await expect(
+            page.locator("#notification-heading-1"),
+            "heading do not match !"
+        ).toHaveText(heading2);
+        let detail2: any = await page.locator("#notification-detail-1").textContent();
+        await expect(
+            page.locator("#notification-detail-1"),
+            "Detail doesn't match!"
+        ).toHaveText(detail2);
+        let age2: any = await page.locator("#notification-age-1").textContent();
+        await expect(
+            page.locator("#notification-age-1"),
+            "age Doesn't Match !"
+        ).toHaveText(age2);
+        expect(await page.locator("#notification-dot-1").isVisible()).toBe(
             true
         );
         // TimeOut Expiry of Notification

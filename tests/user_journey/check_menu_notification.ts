@@ -17,19 +17,40 @@ export default class CheckMenuNotification {
         );
         await page.click("#notification-bell-icon");
         await page.waitForLoadState();
+        let heading1: any = await page.locator("#notification-heading-0").textContent();
         await expect(
             page.locator("#notification-heading-0"),
-            "Feedback request"
-        ).toHaveText("Feedback request");
+            "heading do not match !"
+        ).toHaveText(heading1);
+        let detail1: any = await page.locator("#notification-detail-0").textContent();
         await expect(
             page.locator("#notification-detail-0"),
-            "Provide feedback on"
-        ).toHaveText("Provide feedback on");
+            "Detail doesn't match!"
+        ).toHaveText(detail1);
+        let age1: any = await page.locator("#notification-age-0").textContent();
         await expect(
             page.locator("#notification-age-0"),
-            " just now"
-        ).toHaveText(" just now");
+            "age Doesn't Match !"
+        ).toHaveText(age1);
         expect(await page.locator("#notification-dot-0").isVisible()).toBe(
+            true
+        );
+        let heading2: any = await page.locator("#notification-heading-1").textContent();
+        await expect(
+            page.locator("#notification-heading-1"),
+            "heading do not match !"
+        ).toHaveText(heading2);
+        let detail2: any = await page.locator("#notification-detail-1").textContent();
+        await expect(
+            page.locator("#notification-detail-1"),
+            "Detail doesn't match!"
+        ).toHaveText(detail2);
+        let age2: any = await page.locator("#notification-age-1").textContent();
+        await expect(
+            page.locator("#notification-age-1"),
+            "age Doesn't Match !"
+        ).toHaveText(age2);
+        expect(await page.locator("#notification-dot-1").isVisible()).toBe(
             true
         );
         const [newTab] = await Promise.all([
@@ -38,7 +59,7 @@ export default class CheckMenuNotification {
         ]);
         await newTab.waitForLoadState();
         expect(newTab.url()).toContain("feedback");
-
         await page.bringToFront();
+
     }
 }
