@@ -48,8 +48,10 @@ export const getNotificationSubHeading = (notification_type: string) => {
     const type = notification_type.replace("test_", "");
 
     switch (type?.toLowerCase()) {
-        case "feedback_request":
-            return "Provide feedback on";
+        case "quality_feedback_request":
+            return "Provide data quality feedback on";
+        case "usecase_feedback_request":
+            return "Provide use case feedback on";
         default:
             return "Provide feedback on";
     }
@@ -68,7 +70,7 @@ export const notificationActionUrl = (notification: Notification) => {
 };
 
 export const formatHeading = (notification_type: string) => {
-    const type = notification_type.replace("test_", "").replace("_", " ");
+    const type = notification_type.replace("test_", "").replaceAll("_", " ");
     const heading = `${type[0].toUpperCase()}${type.slice(1)}`;
     return heading ? heading : "Feedback request";
 };
