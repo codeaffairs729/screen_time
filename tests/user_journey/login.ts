@@ -1,5 +1,8 @@
 import { Page, expect } from "@playwright/test";
 import { WAIT_TIME } from "tests/test_time";
+
+const EMAIL = "test@test.com";
+const PASSWORD = "Test@1234";
 export default class Login {
     readonly page: Page;
     constructor(page: Page) {
@@ -22,8 +25,8 @@ export default class Login {
     async LogIn() {
         const { page } = this;
         await this.load();
-        await page.fill("input[type='email']", "test@test.com");
-        await page.fill("input[type='password']", "Test@1234");
+        await page.fill("input[type='email']", EMAIL);
+        await page.fill("input[type='password']", PASSWORD);
         await page.click("button[data-selector='signin-button']");
         await page.waitForNavigation();
     }
