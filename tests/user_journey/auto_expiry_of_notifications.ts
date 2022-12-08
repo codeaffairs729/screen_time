@@ -1,5 +1,9 @@
 import { Page, expect } from "@playwright/test";
-
+import {
+    AUTO_EXPIRY_TIME,
+    WAIT_TIME,
+    FETCH_DELAY_TIME,
+} from "tests/test_time";
 export default class AutoExpiryOfNotification {
     readonly page: Page;
 
@@ -11,15 +15,19 @@ export default class AutoExpiryOfNotification {
 
     async autoExpiryOfNotifications() {
         const { page } = this;
-        await this.sleep(3000);
+        await this.sleep(WAIT_TIME);
         await page.click("#notification-bell-icon");
         await page.waitForLoadState();
-        let heading1: any = await page.locator("#notification-heading-0").textContent();
+        let heading1: any = await page
+            .locator("#notification-heading-0")
+            .textContent();
         await expect(
             page.locator("#notification-heading-0"),
             "heading do not match !"
         ).toHaveText(heading1);
-        let detail1: any = await page.locator("#notification-detail-0").textContent();
+        let detail1: any = await page
+            .locator("#notification-detail-0")
+            .textContent();
         await expect(
             page.locator("#notification-detail-0"),
             "Detail doesn't match!"
@@ -32,12 +40,16 @@ export default class AutoExpiryOfNotification {
         expect(await page.locator("#notification-dot-0").isVisible()).toBe(
             true
         );
-        let heading2: any = await page.locator("#notification-heading-1").textContent();
+        let heading2: any = await page
+            .locator("#notification-heading-1")
+            .textContent();
         await expect(
             page.locator("#notification-heading-1"),
             "heading do not match !"
         ).toHaveText(heading2);
-        let detail2: any = await page.locator("#notification-detail-1").textContent();
+        let detail2: any = await page
+            .locator("#notification-detail-1")
+            .textContent();
         await expect(
             page.locator("#notification-detail-1"),
             "Detail doesn't match!"
@@ -51,7 +63,7 @@ export default class AutoExpiryOfNotification {
             true
         );
         // TimeOut Expiry of Notification
-        await this.sleep(62000);
+        await this.sleep(AUTO_EXPIRY_TIME + FETCH_DELAY_TIME);
         await expect(
             page.locator("#notification-not-found"),
             "Notification Exists !"

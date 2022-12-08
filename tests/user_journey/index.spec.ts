@@ -7,11 +7,12 @@ import CheckMenuNotification from "./check_menu_notification";
 import AutoExpiryOfNotification from "./auto_expiry_of_notifications";
 import UserFeedback from "./user_feedback";
 import CheckWorkspaceNotification from "./check_workspace_notification";
+import { TIMEOUT_TIME } from "tests/test_time";
 
 test.describe("User journey", () => {
     let page: any;
     let context: any;
-    test.setTimeout(100000);
+    test.setTimeout(TIMEOUT_TIME);
     test.beforeAll(async ({ browser }) => {
         context = await browser.newContext();
         page = await context.newPage();

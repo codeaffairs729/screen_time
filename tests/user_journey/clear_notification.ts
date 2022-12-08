@@ -1,5 +1,5 @@
 import { Page, expect } from "@playwright/test";
-
+import { WAIT_TIME } from "tests/test_time";
 export default class ClearNotification {
     readonly page: Page;
     constructor(page: Page) {
@@ -9,9 +9,10 @@ export default class ClearNotification {
 
     async NotificationClear() {
         const { page } = this;
+        //profile dropdown
         await page.click(
             "(//button[contains(@class,'cursor-pointer flex')]//span)[2]"
-        ); //profile dropdown
+        );
         await Promise.all([
             page.waitForNavigation({
                 url: `${process.env.NEXT_PUBLIC_WEBCLIENT_ROOT}/workspace`,
@@ -21,9 +22,9 @@ export default class ClearNotification {
                 .click(),
         ]);
         await page.click("//img[@alt='Notifications']");
-        await this.sleep(3000);
+        await this.sleep(WAIT_TIME);
         await page.click("#mark-read");
-        await this.sleep(3000);
+        await this.sleep(WAIT_TIME);
         expect(await page.locator("#notification-alert").isVisible()).toBe(
             false
         );
@@ -33,11 +34,11 @@ export default class ClearNotification {
             page.locator("#notification-not-found"),
             "Notification Exists !"
         ).toHaveText(notification);
-        await this.sleep(3000);
+        await this.sleep(WAIT_TIME);
         await expect(
             page.locator("#notification-tab"),
             "Notification present"
         ).toHaveText("No new notifications");
-        await this.sleep(3000);
+        await this.sleep(WAIT_TIME);
     }
 }

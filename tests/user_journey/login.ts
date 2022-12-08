@@ -1,17 +1,23 @@
 import { Page, expect } from "@playwright/test";
-
+import { WAIT_TIME } from "tests/test_time";
 export default class Login {
     readonly page: Page;
     constructor(page: Page) {
         this.page = page;
     }
+    sleep = (time: any) => this.page.waitForTimeout(time);
+
     async load() {
         await this.page.goto(`${process.env.NEXT_PUBLIC_WEBCLIENT_ROOT}/login`);
         await this.page.waitForSelector(
             "button[data-selector='signin-button']"
         );
-        await this.page.waitForSelector("(//div[contains(@class,'relative w-full')]//input)[1]")
-        await this.page.waitForSelector("(//div[contains(@class,'relative w-full')]//input)[2]")
+        await this.page.waitForSelector(
+            "(//div[contains(@class,'relative w-full')]//input)[1]"
+        );
+        await this.page.waitForSelector(
+            "(//div[contains(@class,'relative w-full')]//input)[2]"
+        );
     }
     async LogIn() {
         const { page } = this;
@@ -32,8 +38,11 @@ export default class Login {
         expect(await page.locator("#notification-bell-icon").isVisible()).toBe(
             true
         );
-        await page.click("(//div[@class='relative inline-block text-left']//button[@class='cursor-pointer flex items-center ml-6 hover:text-dtech-main-dark outline-none'])[1]"); //profile dropdown
-        await page.waitForTimeout(2000);
+        //profile dropdown
+        await page.click(
+            "(//div[@class='relative inline-block text-left']//button[@class='cursor-pointer flex items-center ml-6 hover:text-dtech-main-dark outline-none'])[1]"
+        );
+        await this.sleep(WAIT_TIME);
         let user: any = await page.locator("#menu-title").textContent();
         await expect(
             page.locator("#menu-title"),

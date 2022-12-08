@@ -1,5 +1,5 @@
 import { Page, expect, BrowserContext } from "@playwright/test";
-
+import { WAIT_TIME, FETCH_DELAY_TIME,FETCH_TIME } from "tests/test_time";
 export default class UserFeedback {
     readonly page: Page;
     context: BrowserContext;
@@ -7,11 +7,12 @@ export default class UserFeedback {
         this.page = page;
         this.context = context;
     }
-    sleep = (time: any) => this.page.waitForTimeout(time);
+    sleep = (time: any, page: any) => page.waitForTimeout(time);
 
     async userFeedback() {
         const { page, context } = this;
-        await this.sleep(3000);
+        await this.sleep(WAIT_TIME, page);
+        // Click on Feedback Notification
         const [newTab] = await Promise.all([
             context.waitForEvent("page"),
             await page.click("#notification-0"),
@@ -80,8 +81,7 @@ export default class UserFeedback {
 
         await newTab.check("//input[@type='checkbox']");
         await newTab.click("//div[contains(@class,'my-5 mx-3')]//button[1]");
-
-        await newTab.waitForTimeout(15000);
+        await this.sleep(FETCH_TIME+FETCH_DELAY_TIME, newTab);
         await newTab.click("#notification-bell-icon");
         await expect(
             newTab.locator("#notification-not-found"),
