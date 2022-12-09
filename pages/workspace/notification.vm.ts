@@ -5,8 +5,11 @@ import { useHttpCall } from "common/hooks";
 import { AUTH_TOKEN } from "common/constants/cookie.key";
 import Dataset from "models/dataset.model";
 import MNotification from "models/notification.model";
+import { useSelector } from "react-redux";
+import { RootState } from "store";
 
 const NOTIFICATION_FETCH_TIME = 15 * 60 * 1000; //Fetch notifications every 15 mins
+const TEST_NOTIFICATION_FETCH_TIME = 10 * 1000; //Fetch notifications every 10 seconds
 
 export type Notification = {
     id: number;
@@ -104,7 +107,12 @@ export const NotificationsVM = () => {
         );
     };
 
-    const fetchNotifications = () => {
+    const fetchNotifications = (user: any) => {
+        const fetchTime =
+            user.email == "test.registered.user@dtime.ai"
+                ? TEST_NOTIFICATION_FETCH_TIME
+                : NOTIFICATION_FETCH_TIME; //Notification Fetch time 10s for test user
+        console.log(user.email, "user.email");
         execute(
             () => {
                 return Http.get(`/v1/notifications/`);
@@ -127,11 +135,11 @@ export const NotificationsVM = () => {
         );
 
         if (document.cookie.includes(AUTH_TOKEN)) {
-            setTimeout(fetchNotifications, NOTIFICATION_FETCH_TIME);
+            setTimeout(() => fetchNotifications(user), fetchTime);
         }
     };
 
-    const createFeedbackNotification = (dataset: Dataset) => {
+    const createFeedbackNotification = (dataset: Dataset, user: any) => {
         const { id: dataset_id, detail } = dataset;
         const { name: title } = detail;
         execute(
@@ -139,6 +147,10 @@ export const NotificationsVM = () => {
                 return Http.post(`/v1/notifications/feedback_request`, {
                     dataset_id,
                     title,
+                    type:
+                        user.email == "test.registered.user@dtime.ai"
+                            ? "test"
+                            : "", // Notification type for test user will be test
                 });
             },
             {

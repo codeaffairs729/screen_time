@@ -2,11 +2,13 @@ import { useContext } from "react";
 import { DatasetDetailVMContext } from "../dataset_detail.vm";
 import { DatasetUrl } from "models/dataset.model";
 import { BsCloudDownloadFill, BsEyeFill } from "react-icons/bs";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "store";
 import { NotificationsVMContext } from "pages/workspace/notification.vm";
 
 const DataFilesSection = ({ goToPreview }: { goToPreview: () => void }) => {
     const vm = useContext(DatasetDetailVMContext);
+    const user = useSelector((state: RootState) => state.auth.user);
     const { createFeedbackNotification } = useContext(NotificationsVMContext);
 
     if (!vm.dataset) {
@@ -37,7 +39,10 @@ const DataFilesSection = ({ goToPreview }: { goToPreview: () => void }) => {
                                     key={i}
                                     goToPreview={goToPreview}
                                     onDownload={() =>
-                                        createFeedbackNotification(vm.dataset)
+                                        createFeedbackNotification(
+                                            vm.dataset,
+                                            user
+                                        )
                                     }
                                 />
                             );
