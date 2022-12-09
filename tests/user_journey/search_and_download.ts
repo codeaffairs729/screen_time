@@ -40,5 +40,6 @@ export default class SearchAndDownload {
         ]);
         await page.waitForSelector("#notification-alert");
         await page.click("#notification-bell-icon");
+        await this.sleep(WAIT_TIME);
     }
 }
