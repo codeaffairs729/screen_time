@@ -35,7 +35,7 @@ class AuthService {
         );
         UserService.update(res_userlistitems);
         // 4. Fetch user notifications
-        fetchNotifications();
+        fetchNotifications(user);
         // 5. redirect
         Router.push(redirectUrl);
         toast.success("You have successfully signed in");
