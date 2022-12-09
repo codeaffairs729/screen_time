@@ -1,15 +1,13 @@
 import { Tab } from "@headlessui/react";
 import Image from "next/image";
-import historyOutline from "public/images/icons/history_outline.svg";
-import historyFilled from "public/images/icons/history_filled.svg";
-import bellOutline from "public/images/icons/bell_outline.svg";
-import bellFilled from "public/images/icons/bell_filled.svg";
+import reportOutline from "public/images/icons/report_outline.svg";
+import reportFilled from "public/images/icons/report_filled.svg";
 import cascadeFolderOutline from "public/images/icons/cascade_folder_outline.svg";
 import cascadeFolderFilled from "public/images/icons/cascade_folder_filled.svg";
-import listOutline from "public/images/icons/list_outline.svg";
-import listFilled from "public/images/icons/list_filled.svg";
-import TabIconHeader from "components/UI/tab_icon_header";
+import barGraphOutline from "public/images/icons/bar_graph_outline.svg";
+import barGraphFilled from "public/images/icons/bar_graph_filled.svg";
 import { useState } from "react";
+import TabIconHeader from "components/UI/tab_icon_header";
 
 type Header = {
     name: string;
@@ -24,19 +22,14 @@ const HEADERS: Header[] = [
         filledIcon: cascadeFolderFilled,
     },
     {
-        name: "Lists",
-        outlineIcon: listOutline,
-        filledIcon: listFilled,
+        name: "Insights",
+        outlineIcon: barGraphOutline,
+        filledIcon: barGraphFilled,
     },
     {
-        name: "History",
-        outlineIcon: historyOutline,
-        filledIcon: historyFilled,
-    },
-    {
-        name: "Notifications",
-        outlineIcon: bellOutline,
-        filledIcon: bellFilled,
+        name: "Report",
+        outlineIcon: reportOutline,
+        filledIcon: reportFilled,
     },
 ];
 

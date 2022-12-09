@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import { Tab } from "@headlessui/react";
 
-const TabHeader = ({
+const TabIconHeader = ({
     children,
     onClick,
 }: {
@@ -24,4 +24,4 @@ const TabHeader = ({
     );
 };
 
-export default TabHeader;
+export default TabIconHeader;
