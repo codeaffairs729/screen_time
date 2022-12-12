@@ -24,9 +24,9 @@ const Nav = ({
                 <Link href="/">
                     <a className="block max-w-[200px] p-2.5">
                         <Image
-                            src="/images/logo_notagline.png"
-                            width="1000"
-                            height="250"
+                            src="/images/logo/dtechtive_without_strapline.png"
+                            width="89"
+                            height="44"
                             alt="Dtechtive logo"
                         />
                     </a>
