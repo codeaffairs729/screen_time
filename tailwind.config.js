@@ -41,6 +41,7 @@ module.exports = {
                 "list-shdaow": "0px 7px 3px rgba(95, 95, 99, 0.43)",
                 container:
                     "inset 0px 1px 0px #B5B6BC, inset -1px 0px 0px #CACACB, inset 1px 0px 0px #CACACB;",
+                "paper-shadow": "0px 0px 15px rgba(95, 95, 99, 0.3)",
             },
         },
     },

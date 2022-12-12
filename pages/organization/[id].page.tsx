@@ -7,7 +7,8 @@ import TabPanel from "components/UI/tabbed/panel";
 import TabHeaders from "./components/tabs";
 import { useRouter } from "next/router";
 import Datasets from "./components/datasets";
-import Insights from "./components/insights";
+import Insights from "./components/insights_section";
+import Report from "./components/report_section";
 
 enum tabIndex {
     datasets,
@@ -43,14 +44,14 @@ const OragnizationDetailPage = () => {
                             <Tab.Group defaultIndex={selectedIndex}>
                                 <TabHeaders selectedIndex={selectedIndex} />
                                 <Tab.Panels className="h-[calc(100%-var(--dataset-detail-tab-header-height))] w-full flex">
-                                    <TabPanel className="bg-dtech-light-grey">
+                                    <TabPanel className="!bg-dtech-light-grey">
                                         <Datasets />
                                     </TabPanel>
-                                    <TabPanel className="bg-dtech-light-grey">
+                                    <TabPanel className="!bg-dtech-light-grey">
                                         <Insights />
                                     </TabPanel>
-                                    <TabPanel className="bg-dtech-light-grey">
-                                        <p>Work in progress.</p>
+                                    <TabPanel className="!bg-dtech-light-grey">
+                                        <Report />
                                     </TabPanel>
                                 </Tab.Panels>
                             </Tab.Group>
