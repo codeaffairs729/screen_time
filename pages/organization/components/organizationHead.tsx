@@ -31,16 +31,16 @@ const OrganisationHead = () => {
                     handleShare={() => {}}
                 />
             </div>
-            <div className="flex my-4">
-                <div className="flex w-2/3">
+            <div className="my-4">
+                <div className="flex justify-between">
+                    <span className="text-sm w-2/3">{description}</span>
                     <img
                         src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg"
                         alt=""
-                        className="h-[100px] w-[140px] mr-2"
+                        className="h-[100px] w-[140px]"
                     />
-                    <span className="text-sm">{description}</span>
                 </div>
-                <div className="flex flex-col justify-center items-end w-1/3">
+                <div className="flex justify-start items-end">
                     <MetaInfoEntity entityName="Domains" entities={domains} />
                     <MetaInfoEntity entityName="Topics" entities={topics} />
                     <MetaInfoEntity entityName="Keywords" entities={keywords} />
@@ -102,10 +102,10 @@ const MetaInfoEntity = ({
     entities: string[];
 }) => {
     return (
-        <div className="flex">
+        <div className="flex mr-8">
             {entities.length > 0 && (
                 <div>
-                    <span className="text-sm font-medium text-dtech-dark-grey">
+                    <span className="text-sm font-medium text-dtech-dark-grey mr-4">
                         {entityName}:{" "}
                     </span>
                     {entities.map((entity, index) => (

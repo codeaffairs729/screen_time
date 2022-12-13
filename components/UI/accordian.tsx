@@ -1,6 +1,10 @@
 import Image from "next/image";
 import { ReactNode, useState } from "react";
-import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
+import { BsPlusLg } from "react-icons/bs";
+import { HiMinus } from "react-icons/hi";
+import plus from "public/images/icons/plus.svg";
+import minus from "public/images/icons/minus.svg";
+
 const Accordian = ({
     children,
     label,
@@ -20,27 +24,39 @@ const Accordian = ({
         >
             <div
                 onClick={() => setSelected(!selected)}
-                className="cursor-pointer flex items-center justify-between p-4 rounded"
+                className="cursor-pointer flex items-center justify-between px-4 py-2 rounded"
             >
                 <span>{label}</span>
-                <span>
+                <span className="select-none">
                     {selected ? (
                         stateIcon ? (
                             { stateIcon }
                         ) : (
-                            <AiOutlineMinus className="w-8 h-8 text-dtech-main-dark" />
+                            <Image
+                                src={minus}
+                                alt=""
+                                height={32}
+                                width={32}
+                                className="select-none"
+                            />
                         )
                     ) : stateIcon ? (
                         { stateIcon }
                     ) : (
-                        <AiOutlinePlus className="w-8 h-8 text-dtech-main-dark" />
+                        <Image
+                            src={plus}
+                            alt=""
+                            height={32}
+                            width={32}
+                            className="select-none"
+                        />
                     )}
                 </span>
             </div>
             <div
                 className={`${
                     selected ? "max-h-[100vh]" : "max-h-0"
-                } overflow-hidden transition-all`}
+                } overflow-hidden transition-all duration-300`}
             >
                 {children}
             </div>

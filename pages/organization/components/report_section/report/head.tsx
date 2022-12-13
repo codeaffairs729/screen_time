@@ -11,7 +11,7 @@ const Head = ({
     handleCancel: Function;
 }) => {
     return (
-        <div className="flex w-2/3 justify-between items-center">
+        <div className="flex justify-between items-center">
             <div className="relative flex text-center w-32 justify-between">
                 <div
                     className={`${
