@@ -16,12 +16,16 @@ const Dropdown = ({
     menuTitle,
     label,
     menuItems,
+    className = "",
+    iconClass = "",
     labelClasses = "",
     menuItemsClasses = "",
 }: {
     menuTitle?: string;
-    label: string;
+    label: string | ReactNode;
     menuItems: MenuItemType[];
+    className?: string;
+    iconClass?: string;
     labelClasses?: string;
     menuItemsClasses?: string;
 }) => {
@@ -38,15 +42,21 @@ const Dropdown = ({
         <Menu as="div" className="relative inline-block text-left">
             <Menu.Button
                 onClick={onClick}
-                className="cursor-pointer flex items-center ml-6 hover:text-dtech-main-dark outline-none"
+                className={clsx(
+                    "cursor-pointer flex items-center ml-6 hover:text-dtech-main-dark outline-none",
+                    className
+                )}
             >
-                <span id="profile-dropdown" className={clsx("text-inherit text-sm", labelClasses)}>
+                <span
+                    id="profile-dropdown"
+                    className={clsx("text-inherit text-sm", labelClasses)}
+                >
                     {label}
                 </span>
                 <VscTriangleDown
                     className={`ml-2 text-2xl text-inherit transition-all ${
                         showMenu && "rotate-180"
-                    }`}
+                    } ${iconClass}`}
                 />
             </Menu.Button>
             <Transition
@@ -67,7 +77,10 @@ const Dropdown = ({
                     )}
                 >
                     {menuTitle && (
-                        <div id="menu-title" className="text-dtech-dark-grey text-sm px-2.5 py-1 text-center italic">
+                        <div
+                            id="menu-title"
+                            className="text-dtech-dark-grey text-sm px-2.5 py-1 text-center italic"
+                        >
                             {menuTitle}
                         </div>
                     )}
