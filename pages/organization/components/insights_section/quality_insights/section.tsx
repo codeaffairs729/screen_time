@@ -38,13 +38,28 @@ const ROW2 = [
             "This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August 2013) and the new 2011 This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August",
     },
 ];
-const TABLE_DATA = [ROW1, ROW2];
-
+// const TABLE_DATA = [ROW1, ROW2];
+const DisplayDataset = ({ title, description }: any) => (
+    <div>
+        <span className="text-sm font-medium text-dtech-dark-grey">
+            {title}
+        </span>
+        <span className="text-sm text-dtech-dark-grey limit-line">
+            {description}
+        </span>
+    </div>
+);
 const QualityInsightsBody = ({ selectedLabel }: { selectedLabel: string }) => {
     const items =
         selectedLabel.toLowerCase() == "data file"
             ? DATAFILE_ITEMS
             : METADATA_ITEMS;
+
+    const tableData = ROW2.map((data, index) => [
+        index,
+        ROW1[index],
+        <DisplayDataset title={data.title} description={data.description} />,
+    ]);
     return (
         <div className="ml-16">
             <div className="text-sm text-dtech-dark-grey my-4">
@@ -57,7 +72,8 @@ const QualityInsightsBody = ({ selectedLabel }: { selectedLabel: string }) => {
                     <div className="px-8">
                         <Table
                             tableHeaders={TABLE_HEADERS}
-                            tableData={TABLE_DATA}
+                            tableData={tableData}
+                            cellPadding={3}
                         />
                     </div>
                 </Accordian>

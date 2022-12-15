@@ -32,7 +32,7 @@ const SearchTermHeader = ({ onChange, selectedLabel }: QualityProps) => {
 
 const Label = ({ label }: { label: string }) => {
     return (
-        <div className="flex flex-col text-dtech-main-dark text-left">
+        <div className="flex flex-col text-dtech-main-dark text-left ">
             <span>Search terms used:</span>
             <span>{label}</span>
         </div>
