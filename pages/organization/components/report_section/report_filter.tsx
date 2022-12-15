@@ -1,8 +1,9 @@
+import CalendarSelect from "components/UI/calendar_select";
 import { useState } from "react";
 import { VscTriangleDown } from "react-icons/vsc";
 
 const ReportFilter = () => {
-    const [showFilter, setShowFilter] = useState<boolean>(false);
+    const [showFilter, setShowFilter] = useState<boolean>(true);
     return (
         <div className="w-1/3 py-4 px-6 flex flex-col items-center">
             <div className="px-4">
@@ -22,33 +23,18 @@ const ReportFilter = () => {
                         showFilter ? "max-h-[100vh]" : "max-h-0"
                     } overflow-hidden transition-all duration-300 m-3`}
                 >
-                    <div className="flex items-center mb-1.5">
-                        <input
-                            type="checkbox"
-                            className="focus:ring-0 filter-checkbox rounded-sm border-dtech-main-dark"
-                        />
-                        <span className="ml-2 text-sm text-gray-700">
-                            Insights
-                        </span>
-                    </div>
-                    <div className="flex items-center mb-1.5">
-                        <input
-                            type="checkbox"
-                            className="focus:ring-0 filter-checkbox rounded-sm border-dtech-main-dark"
-                        />
-                        <span className="ml-2 text-sm text-gray-700">
-                            Dataset quality
-                        </span>
-                    </div>
-                    <div className="flex items-center mb-1.5">
-                        <input
-                            type="checkbox"
-                            className="focus:ring-0 filter-checkbox rounded-sm border-dtech-main-dark"
-                        />
-                        <span className="ml-2 text-sm text-gray-700">
-                            User feedback
-                        </span>
-                    </div>
+                    <Input label="Insights" />
+                    <Input label="Dataset quality" />
+                    <Input label="User feedback" />
+                </div>
+            </div>
+            <div className="px-4">
+                <div className="px-3 w-[244px] py-1 mb-4 flex justify-between bg-dtech-main-light cursor-pointer">
+                    <span>Select period</span>
+                </div>
+                <div className="px-4 flex w-full items-center justify-between mb-6">
+                    <CalendarSelect label="From" />
+                    <CalendarSelect label="To" />
                 </div>
             </div>
             <button
@@ -60,6 +46,18 @@ const ReportFilter = () => {
                     Autogenerate report
                 </span>
             </button>
+        </div>
+    );
+};
+
+const Input = ({ label }: { label: string }) => {
+    return (
+        <div className="flex items-center mb-1.5">
+            <input
+                type="checkbox"
+                className="focus:ring-0 filter-checkbox rounded-sm border-dtech-main-dark"
+            />
+            <span className="ml-2 text-sm text-gray-700">{label}</span>
         </div>
     );
 };

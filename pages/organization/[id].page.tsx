@@ -30,8 +30,7 @@ const OragnizationDetailPage = () => {
     return (
         <DefaultLayout>
             <div className="px-4">
-                <div className="flex flex-row justify-between mb-4 my-2">
-                    <BackBtn />
+                <div className="flex flex-row justify-between mb-4 my-2 ml-4">
                     <p className="text-center text-2xl font-semibold">
                         Organisation
                     </p>
