@@ -1,7 +1,7 @@
 import { Key } from "react";
 import OrganizationResult from "./organization_result";
 import { useContext } from "react";
-import { OrganizationSearchVMContext } from "pages/search/organization.vm";
+import { OrganizationSearchVMContext } from "pages/search/organisation.vm";
 const OraganizationTable = () => {
     const vm = useContext(OrganizationSearchVMContext);
     console.log(vm.datasets);

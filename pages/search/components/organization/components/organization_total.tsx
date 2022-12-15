@@ -2,7 +2,7 @@ import { Menu, Transition } from "@headlessui/react";
 import { IoMdArrowDropdown } from "react-icons/io";
 import clsx from "clsx";
 import { Fragment, useContext, useState } from "react";
-import { OrganizationSearchVMContext } from "pages/search/organization.vm";
+import { OrganizationSearchVMContext } from "pages/search/organisation.vm";
 import { VscTriangleDown } from "react-icons/vsc";
 import Dropdown from "components/UI/drop_down";
 

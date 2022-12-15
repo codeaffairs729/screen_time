@@ -1,6 +1,6 @@
 import OrganizationPagination from "components/UI/organizationPagination";
 import { useContext, useState } from "react";
-import { OrganizationSearchVMContext } from "pages/search/organization.vm";
+import { OrganizationSearchVMContext } from "pages/search/organisation.vm";
 
 const OrganizationSearchPagination = () => {
     const vm = useContext(OrganizationSearchVMContext);

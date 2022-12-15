@@ -5,7 +5,7 @@ import { IoMdArrowDropdown } from "react-icons/io";
 import { Filter, SearchVMContext} from "pages/search/search.vm";
 import { startCase } from "lodash-es";
 import Dropdown from "components/UI/drop_down";
-import { OrganizationSearchVMContext } from "pages/search/organization.vm";
+import { OrganizationSearchVMContext } from "pages/search/organisation.vm";
 type Option = {
     value: string;
     label: string;
