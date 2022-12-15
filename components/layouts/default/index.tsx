@@ -4,18 +4,22 @@ import Nav from "./components/nav";
 import Footer from "./components/footer";
 
 import { BsMegaphone } from "react-icons/bs";
+import SearchVM, { SearchVMContext } from "pages/search/search.vm";
 
 const DefaultLayout = ({
     children,
     className = "",
     showLogo = true,
+    showSearchBar = true,
     navContent,
 }: {
     children: ReactNode;
     className?: string;
     showLogo?: boolean;
+    showSearchBar?: boolean;
     navContent?: ReactNode;
 }) => {
+    const vm = SearchVM();
     return (
         <div
             className={clsx(
@@ -23,6 +27,7 @@ const DefaultLayout = ({
                 className
             )}
         >
+            <SearchVMContext.Provider value={vm}>
             <div className="mx-auto my-2 px-10 py-1 text-gray-800 bg-gray-100 text-sm">
                 <BsMegaphone
                     className="h-4 w-4 text-gray-700 inline mr-2 mb-1"
@@ -38,9 +43,15 @@ const DefaultLayout = ({
                 </a>
                 .
             </div>
-            <Nav showLogo={showLogo} content={navContent} />
-            {children}
+            <Nav
+                showSearchBar={showSearchBar}
+                showLogo={showLogo}
+                content={navContent}
+                onSearchChange={vm.onSearchChange}
+            />
+                {children}
             <Footer className="mt-auto" />
+            </SearchVMContext.Provider>
         </div>
     );
 };

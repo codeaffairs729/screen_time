@@ -16,10 +16,29 @@ import DataFilesSection from "./components/data_files";
 import BackBtn from "components/UI/buttons/back_btn";
 import { getCookieFromServer } from "common/utils/cookie.util";
 import { AUTH_TOKEN } from "common/constants/cookie.key";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import Loader from "components/UI/loader";
+
+enum tabIndex {
+    data_files,
+    preview,
+    insights,
+    feedback,
+    related_datasets,
+}
 
 const DatasetDetailPage = ({ dataset }: { dataset: Dataset | undefined }) => {
-    const [selectedIndex, setSelectedIndex] = useState(0);
+    const [selectedIndex, setSelectedIndex] = useState<any>(0);
+    const [loading, setLoading] = useState<boolean>(true);
+    const { asPath } = useRouter();
+    const vm = DatasetDetailVM(dataset);
+
+    useEffect(() => {
+        const hashParam: string = asPath.split("#")[1];
+        setSelectedIndex(tabIndex[hashParam as any]);
+        setLoading(false);
+    }, []);
 
     if (!dataset) {
         return (
@@ -31,7 +50,6 @@ const DatasetDetailPage = ({ dataset }: { dataset: Dataset | undefined }) => {
             </DefaultLayout>
         );
     }
-    const vm = DatasetDetailVM(dataset);
 
     return (
         <DefaultLayout>
@@ -45,41 +63,47 @@ const DatasetDetailPage = ({ dataset }: { dataset: Dataset | undefined }) => {
                     <div className="w-1/3">
                         <SummarySection />
                     </div>
-                    <div className="w-2/3 border">
-                        <Tab.Group
-                            selectedIndex={selectedIndex}
-                            onChange={setSelectedIndex}
-                        >
-                            <Tab.List className="flex flex-row justify-between">
-                                <TabHeader>Data files</TabHeader>
-                                <TabHeader>Preview</TabHeader>
-                                <TabHeader>Insights</TabHeader>
-                                <TabHeader>Feedback</TabHeader>
-                                <TabHeader>Related datasets</TabHeader>
-                            </Tab.List>
-                            <Tab.Panels className="h-[calc(100%-var(--dataset-detail-tab-header-height))] w-full flex">
-                                <TabPanel>
-                                    <DataFilesSection
-                                        goToPreview={() => {
-                                            setSelectedIndex(1);
-                                        }}
-                                    />
-                                </TabPanel>
-                                <TabPanel>
-                                    <PreviewSection />
-                                </TabPanel>
-                                <TabPanel>
-                                    <SummaryInsights />
-                                </TabPanel>
-                                <TabPanel>
-                                    <FeedbackSection />
-                                </TabPanel>
-                                <TabPanel>
-                                    <MayAlsoLike />
-                                </TabPanel>
-                            </Tab.Panels>
-                        </Tab.Group>
-                    </div>
+                    {loading ? (
+                        <div className="w-full h-full flex items-center justify-center">
+                            <Loader />
+                        </div>
+                    ) : (
+                        <div className="w-2/3 border">
+                            <Tab.Group
+                                defaultIndex={selectedIndex}
+                                onChange={setSelectedIndex}
+                            >
+                                <Tab.List className="flex flex-row justify-between">
+                                    <TabHeader>Data files</TabHeader>
+                                    <TabHeader>Preview</TabHeader>
+                                    <TabHeader>Insights</TabHeader>
+                                    <TabHeader>Feedback</TabHeader>
+                                    <TabHeader>Related datasets</TabHeader>
+                                </Tab.List>
+                                <Tab.Panels className="h-[calc(100%-var(--dataset-detail-tab-header-height))] w-full flex">
+                                    <TabPanel>
+                                        <DataFilesSection
+                                            goToPreview={() => {
+                                                setSelectedIndex(1);
+                                            }}
+                                        />
+                                    </TabPanel>
+                                    <TabPanel>
+                                        <PreviewSection />
+                                    </TabPanel>
+                                    <TabPanel>
+                                        <SummaryInsights />
+                                    </TabPanel>
+                                    <TabPanel>
+                                        <FeedbackSection />
+                                    </TabPanel>
+                                    <TabPanel>
+                                        <MayAlsoLike />
+                                    </TabPanel>
+                                </Tab.Panels>
+                            </Tab.Group>
+                        </div>
+                    )}
                 </div>
             </DatasetDetailVMContext.Provider>
         </DefaultLayout>

@@ -1,5 +1,5 @@
 import Loader from "components/UI/loader";
-import DatasetRowDisplay from "components/UI/dataset_row_display";
+import DatasetRowDisplay from "components/UI/data_row_display";
 import { useSelector } from "react-redux";
 import { RootState } from "store";
 import { useHttpCall } from "common/hooks";
@@ -58,7 +58,7 @@ const BookmarksSection = ({ datasetIDS }: { datasetIDS: any }) => {
     return (
         <div>
             {bookmarkItemsData?.map((dataset: any) => (
-                <>
+                <div key={dataset.id}>
                     {datasetIDS.includes(dataset.id) && (
                         // <DatasetRowDisplay
                         //     key={dataset.id}
@@ -73,7 +73,7 @@ const BookmarksSection = ({ datasetIDS }: { datasetIDS: any }) => {
                             displayContext={"favorite-item"}
                         />
                     )}
-                </>
+                </div>
             ))}
         </div>
     );

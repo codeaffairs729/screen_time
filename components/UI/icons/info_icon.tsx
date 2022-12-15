@@ -3,13 +3,18 @@ import Image from "next/image";
 import ReactTooltip from "react-tooltip";
 import { v4 as uuidv4 } from "uuid";
 import { BsInfoCircle } from "react-icons/bs";
+import { AiOutlineInfoCircle } from "react-icons/ai";
 
 const InfoIcon = ({
     title,
     className = "",
+    oldIcon = true,
+    iconClasses = "",
 }: {
     title: string;
     className?: string;
+    oldIcon?: boolean;
+    iconClasses?: string;
 }) => {
     const tooltipId = `dtechtive-info-tooltip-${uuidv4()}`;
     return (
@@ -28,12 +33,21 @@ const InfoIcon = ({
                 alt={title}
             /> */}
             <span data-tip={title} data-for={tooltipId}>
-                <BsInfoCircle
-                    data-tip={title}
-                    data-for={tooltipId}
-                    className="h-4 w-4 text-gray-600"
-                    aria-hidden="true"
-                />
+                {oldIcon ? (
+                    <BsInfoCircle
+                        data-tip={title}
+                        data-for={tooltipId}
+                        className={clsx("h-4 w-4 text-gray-600", iconClasses)}
+                        aria-hidden="true"
+                    />
+                ) : (
+                    <AiOutlineInfoCircle
+                        data-tip={title}
+                        data-for={tooltipId}
+                        className={clsx("h-4 w-4 text-gray-600", iconClasses)}
+                        aria-hidden="true"
+                    />
+                )}
             </span>
             <ReactTooltip
                 id={tooltipId}

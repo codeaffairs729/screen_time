@@ -9,7 +9,12 @@ import Http from "common/http";
 import UserService from "./user.service";
 
 class AuthService {
-    static async signin(user: User, token: string, redirectUrl: string) {
+    static async signin(
+        user: User,
+        token: string,
+        redirectUrl: string,
+        fetchNotifications: Function
+    ) {
         /**
          * Sign a user in
          *
@@ -29,7 +34,9 @@ class AuthService {
             `/v1/user-bookmarks/userlistitems`
         );
         UserService.update(res_userlistitems);
-        // 4. redirect
+        // 4. Fetch user notifications
+        fetchNotifications();
+        // 5. redirect
         Router.push(redirectUrl);
         toast.success("You have successfully signed in");
     }

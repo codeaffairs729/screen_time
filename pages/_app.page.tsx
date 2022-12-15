@@ -1,4 +1,4 @@
-import { Provider } from "react-redux";
+import { Provider, useDispatch, useSelector } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { persistStore } from "redux-persist";
 import { useStore } from "store";
@@ -10,10 +10,19 @@ import { useScript } from "common/hooks";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import posthog from "posthog-js";
+import { AUTH_TOKEN } from "common/constants/cookie.key";
+import {
+    NotificationsVM,
+    NotificationsVMContext,
+    // NotificationsVMContext,
+} from "./workspace/notification.vm";
 
 function DtechtiveApp({ Component, pageProps }: AppProps) {
     const router = useRouter();
+    const vm: any = NotificationsVM();
+    // const context = NotificationsVMContext;
     const store = useStore(pageProps.initialReduxState);
+
     const persistor = persistStore(store, {}, function () {
         persistor.persist();
     });
@@ -59,7 +68,9 @@ function DtechtiveApp({ Component, pageProps }: AppProps) {
             router.events.off("routeChangeComplete", handleRouteChange);
         };
     }, [router.events]);
-
+    useEffect(() => {
+        if (document.cookie.includes(AUTH_TOKEN)) vm.fetchNotifications();
+    }, []);
     return (
         <>
             <Provider store={store}>
@@ -71,7 +82,9 @@ function DtechtiveApp({ Component, pageProps }: AppProps) {
                     }
                     persistor={persistor}
                 >
-                    <Component {...pageProps} />
+                    <NotificationsVMContext.Provider value={vm}>
+                        <Component {...pageProps} />
+                    </NotificationsVMContext.Provider>
                     <Toaster
                         position="bottom-center"
                         reverseOrder={false}
