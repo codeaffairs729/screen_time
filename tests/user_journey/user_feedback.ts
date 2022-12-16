@@ -1,5 +1,5 @@
 import { Page, expect, BrowserContext } from "@playwright/test";
-import { WAIT_TIME, FETCH_DELAY_TIME,FETCH_TIME } from "tests/test_time";
+import { WAIT_TIME, FETCH_DELAY_TIME, FETCH_TIME } from "tests/test_time";
 export default class UserFeedback {
     readonly page: Page;
     context: BrowserContext;
@@ -44,7 +44,7 @@ export default class UserFeedback {
         );
         await newTab.check("(//div[@class='flex items-center']//input)[2]");
         await newTab.click("//button[text()='Submit']");
-
+        await this.sleep(WAIT_TIME, newTab);
         await newTab.click("//*[@id='headlessui-tabs-tab-28']");
 
         await newTab
@@ -81,8 +81,9 @@ export default class UserFeedback {
 
         await newTab.check("//input[@type='checkbox']");
         await newTab.click("//div[contains(@class,'my-5 mx-3')]//button[1]");
-        await this.sleep(FETCH_TIME+FETCH_DELAY_TIME, newTab);
+        await this.sleep(FETCH_TIME + FETCH_DELAY_TIME, newTab);
         await newTab.click("#notification-bell-icon");
+        await this.sleep(WAIT_TIME, newTab);
         await expect(
             newTab.locator("#notification-not-found"),
             "Notification Exists !"

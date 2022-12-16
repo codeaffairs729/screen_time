@@ -1,7 +1,7 @@
 import { Page, expect } from "@playwright/test";
 import { WAIT_TIME } from "tests/test_time";
 
-const EMAIL = "test@test.com";
+const EMAIL = "test.registered.user@dtime.ai";
 const PASSWORD = "Test@1234";
 export default class Login {
     readonly page: Page;

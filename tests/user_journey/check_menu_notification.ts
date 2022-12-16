@@ -67,6 +67,7 @@ export default class CheckMenuNotification {
         ]);
         await newTab.waitForLoadState();
         expect(newTab.url()).toContain("feedback");
+        await this.sleep(WAIT_TIME)
         await page.bringToFront();
     }
 }
