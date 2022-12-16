@@ -66,7 +66,7 @@ const TabHeaders = ({
                     ) : (
                         <div className="relative inline-block text-left">
                             <span className="text-dtech-main-dark text-xl hover:underline underline-offset-4">
-                                Download Matrics
+                                Download Metrics
                             </span>
                         </div>
                     )}

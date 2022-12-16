@@ -23,8 +23,8 @@ const SearchTermSection = () => {
                 <Table
                     tableHeaders={TABLE_HEADERS}
                     tableData={tableData}
-                    headerClass="text-[17px] font-medium text-gray-700 bg-[#F5F5F5] "
-                    tableClass="w-full text-sm text-left text-gray-500 dark:text-gray-400 border"
+                    headerClass="text-[17px] font-medium bg-[#F5F5F5] "
+                    tableClass="w-full text-sm text-left border table-fixed"
                     cellPadding={20}
                     tableRow="text-[17px] text-black font-normal"
                 />
