@@ -10,14 +10,20 @@ const HomePage = () => {
     return (
         <DefaultLayout showLogo={false} showSearchBar={false}>
             <div className="h-[calc(100vh-var(--nav-height))] flex items-center justify-center mx-2">
-                <div className="max-w-3xl mx-auto">
-                    <Image
-                        src="/images/logo_withtagline.png"
-                        width="2000"
-                        height="411"
-                        alt="Dtechtive logo"
-                    />
-                    <div className="mt-6 max-w-xl mx-auto">
+                <div className="max-w-3xl mx-auto flex flex-col items-center">
+                    <span>
+                        <Image
+                            src="/images/logo/dtechtive_without_tagline.svg"
+                            width="315"
+                            height="155"
+                            alt="Dtechtive logo"
+                        />
+                        <p className="text-[#c1c1c1] text-[11px] font-medium select-none mt-[-10px]">
+                            Discovering the data that other search engines cannot
+                            reach
+                        </p>
+                    </span>
+                    <div className="mt-6 max-w-xl mx-auto w-[575px]">
                         <DatasetSearchInput
                             onChange={(option) => {
                                 if (!option) return;

@@ -26,48 +26,55 @@ const Nav = ({
     const user = useSelector((state: RootState) => state.auth.user);
 
     return (
-        <nav className="flex p-2 h-[var(--nav-height)] items-center">
+        <nav className="flex p-2 h-[var(--nav-height)] items-center ">
             {showLogo && (
                 <Link href="/">
                     <a className="block max-w-[200px] p-2.5">
                         <Image
-                            src="/images/logo_notagline.png"
-                            width="1000"
-                            height="250"
+                            src="/images/logo/dtechtive_without_tagline.svg"
+                            width="89"
+                            height="44"
                             alt="Dtechtive logo"
                         />
                     </a>
                 </Link>
             )}
-            {showSearchBar && <SearchBar onChange={onSearchChange} />}
             {content}
-            <div className="ml-auto flex items-center">
-                <NavItem label="Home" link="/" />
-                {user && (
-                    <NavMenuDropdown
-                        label="User contributions"
-                        menuItems={[
-                            {
-                                label: "Data Source Registration",
-                                link: "/register-data-source",
-                            },
-                            {
-                                label: "Domain Vocabulary Generator",
-                                link: "/user-vocabulary-generator",
-                            },
-                        ]}
+            <div className="flex items-center justify-end ml-auto">
+                {showSearchBar && (
+                    <SearchBar
+                        onChange={onSearchChange}
+                        className="mr-24 ml-auto"
                     />
                 )}
+                <div className="flex items-center">
+                    <NavItem label="Home" link="/" />
+                    {user && (
+                        <NavMenuDropdown
+                            label="User contributions"
+                            menuItems={[
+                                {
+                                    label: "Data Source Registration",
+                                    link: "/register-data-source",
+                                },
+                                {
+                                    label: "Domain Vocabulary Generator",
+                                    link: "/user-vocabulary-generator",
+                                },
+                            ]}
+                        />
+                    )}
 
-                <NavItem
-                    label="API"
-                    link="https://api.dtechtive.com/docs"
-                    openInNewTab={true}
-                />
-                {user && <Notification />}
-                {!user && <SignupDropdown />}
-                {!user && <NavItem label="Log In" link="/login" />}
-                <ProfileDropdown />
+                    <NavItem
+                        label="API"
+                        link="https://api.dtechtive.com/docs"
+                        openInNewTab={true}
+                    />
+                    {user && <Notification />}
+                    {!user && <SignupDropdown />}
+                    {!user && <NavItem label="Log In" link="/login" />}
+                    <ProfileDropdown />
+                </div>
             </div>
         </nav>
     );
