@@ -34,6 +34,7 @@ const Notifications = () => {
         >
             <Link href={"#"}>
                 <div
+                    id="mark-read"
                     onClick={() => markAllRead()}
                     className="flex items-center justify-end cursor-pointer"
                 >
@@ -52,7 +53,9 @@ const Notifications = () => {
                     />
                 ))
             ) : (
-                <div className="w-full text-center">No new notifications</div>
+                <div id="notification-tab" className="w-full text-center">
+                    No new notifications
+                </div>
             )}
         </Menu>
     );
