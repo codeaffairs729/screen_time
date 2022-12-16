@@ -1,20 +1,27 @@
 import clsx from "clsx";
+import SearchBar from "components/UI/search_bar";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import SearchVM from "pages/search/search.vm";
 import { ReactNode } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "store";
 import NavMenuDropdown from "./components/nav_menu_dropdown";
+import Notification from "./components/notification";
 import ProfileDropdown from "./components/profile_dropdown";
 import SignupDropdown from "./components/signup_dropdown";
 
 const Nav = ({
     content,
     showLogo = true,
+    showSearchBar = true,
+    onSearchChange,
 }: {
     content?: ReactNode;
     showLogo?: boolean;
+    showSearchBar?: boolean;
+    onSearchChange: any;
 }) => {
     const user = useSelector((state: RootState) => state.auth.user);
 
@@ -32,6 +39,7 @@ const Nav = ({
                     </a>
                 </Link>
             )}
+            {showSearchBar && <SearchBar onChange={onSearchChange} />}
             {content}
             <div className="ml-auto flex items-center">
                 <NavItem label="Home" link="/" />
@@ -56,6 +64,7 @@ const Nav = ({
                     link="https://api.dtechtive.com/docs"
                     openInNewTab={true}
                 />
+                {user && <Notification />}
                 {!user && <SignupDropdown />}
                 {!user && <NavItem label="Log In" link="/login" />}
                 <ProfileDropdown />

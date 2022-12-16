@@ -7,7 +7,7 @@ loadEnvConfig(projectDir);
 const config: PlaywrightTestConfig = {
     forbidOnly: !!process.env.CI,
     retries: process.env.CI ? 2 : 0,
-    workers: 20,
+    workers: 2,
     use: {
         trace: "on-first-retry",
     },
@@ -28,7 +28,11 @@ const config: PlaywrightTestConfig = {
             name: "site",
             testDir: "./tests/pages",
             testMatch: /.*.spec.ts/,
-            
+        },
+        {
+            name: "user_journey",
+            testDir: "./tests/user_journey",
+            testMatch: /.*.spec.ts/,
         },
     ],
 };

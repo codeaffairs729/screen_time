@@ -1,9 +1,21 @@
 import { Tab } from "@headlessui/react";
 import { ReactNode } from "react";
+import clsx from "clsx";
 
-const TabPanel = ({ children }: { children: ReactNode }) => {
+const TabPanel = ({
+    children,
+    className = "",
+}: {
+    children: ReactNode;
+    className?: string;
+}) => {
     return (
-        <Tab.Panel className="w-full bg-gray-100 p-6 min-h-[calc(100vh-260px)]">
+        <Tab.Panel
+            className={clsx(
+                "w-full bg-gray-100 p-6 min-h-[calc(100vh-260px)]",
+                className
+            )}
+        >
             {children}
         </Tab.Panel>
     );
