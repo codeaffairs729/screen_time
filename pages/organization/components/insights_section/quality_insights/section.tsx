@@ -1,6 +1,7 @@
 import Accordian from "components/UI/accordian";
 import Table from "../../table";
 import MetaRating from "components/UI/metaRating";
+import StarGraph from "../../starGraph";
 
 const METADATA_ITEMS = [
     "Overall score",
@@ -39,6 +40,44 @@ const ROW2 = [
     },
 ];
 // const TABLE_DATA = [ROW1, ROW2];
+const STAR = [
+    [
+        { rating: 10 },
+        { rating: 20 },
+        { rating: 30 },
+        { rating: 20 },
+        { rating: 10 },
+    ],
+    [
+        { rating: 20 },
+        { rating: 10 },
+        { rating: 20 },
+        { rating: 20 },
+        { rating: 10 },
+    ],
+    [
+        { rating: 50 },
+        { rating: 20 },
+        { rating: 30 },
+        { rating: 20 },
+        { rating: 10 },
+    ],
+    [
+        { rating: 10 },
+        { rating: 20 },
+        { rating: 30 },
+        { rating: 20 },
+        { rating: 10 },
+    ],
+    [
+        { rating: 20 },
+        { rating: 10 },
+        { rating: 20 },
+        { rating: 20 },
+        { rating: 10 },
+    ]
+];
+
 const DisplayDataset = ({ title, description }: any) => (
     <div>
         <span className="text-sm font-medium text-dtech-dark-grey">
@@ -67,7 +106,7 @@ const QualityInsightsBody = ({ selectedLabel }: { selectedLabel: string }) => {
                     ? "These scores are determined based on feedback gathered from users."
                     : "These values are determined based on the Metadata Quality Assessment methodology and calculated using algorithms."}
             </div>
-            {items.map((label) => (
+            {items.map((label, index) => (
                 <Accordian label={<AccordianLabel label={label} />}>
                     <div className="px-8">
                         <Table
@@ -76,6 +115,7 @@ const QualityInsightsBody = ({ selectedLabel }: { selectedLabel: string }) => {
                             cellPadding={3}
                         />
                     </div>
+                    <StarGraph star={STAR[index]} />
                 </Accordian>
             ))}
         </div>
