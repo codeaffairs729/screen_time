@@ -20,9 +20,13 @@ const ITEMS: MenuItemType[] = [
 const SearchBar = ({
     onChange,
     className = "",
+    selectClasses = "",
+    placeholder = "Search e.x.  “Covid in Scotland”",
 }: {
     onChange: (option: SingleValue<SearchOption>) => void;
     className?: string;
+    selectClasses?: string;
+    placeholder?: string;
 }) => {
     const loadAutoComplete = useMemo(
         () =>
@@ -63,15 +67,17 @@ const SearchBar = ({
                     MenuList,
                     Option,
                     Control,
-                    Placeholder,
                     IndicatorsContainer,
                     ValueContainer,
                 }}
                 // inputClassName="dataset-search-input"
-                className="dataset-search-input w-[584px]"
+                className={clsx(
+                    "dataset-search-input w-[584px] bg-[#F6EDFC] rounded-[42px]",
+                    selectClasses
+                )}
                 defaultOptions
                 instanceId="product-search"
-                placeholder=""
+                placeholder={placeholder}
                 onChange={onChange}
                 inputValue={input}
                 onInputChange={(value, action) => {
@@ -97,6 +103,8 @@ const SearchBar = ({
 };
 
 const ValueContainer = ({ children, ...props }: any) => {
+    const { pathname } = useRouter();
+    const [isHomePage, setIsHomePage] = useState(true);
     const [activeSearchCategory, setActiveSearchCategory] = useState<string>(
         ITEMS[0].label
     );
@@ -105,15 +113,27 @@ const ValueContainer = ({ children, ...props }: any) => {
         ...item,
         onClick: () => setActiveSearchCategory(item.label),
     }));
+
+    useEffect(() => {
+        setIsHomePage(pathname === "/");
+    }, []);
+
     return (
         <components.ValueContainer {...props} className="!overflow-visible">
             <div className="flex items-center">
-                <IoSearchOutline className="rotate-[90deg] w-6 h-6 mx-3" />
+                <IoSearchOutline
+                    className={clsx(
+                        "rotate-[90deg]  mx-3 text-dtech-main-dark",
+                        isHomePage ? "w-8 h-8" : "w-6 h-6"
+                    )}
+                />
                 {children}
                 <Dropdown
                     label={activeSearchCategory}
+                    labelClasses={isHomePage ? "!text-lg" : ""}
                     menuItems={menuItems}
                     menuItemsClasses="translate-x-[-50%]"
+                    itemsClasses={isHomePage ? "!text-lg" : ""}
                 />
             </div>
         </components.ValueContainer>
@@ -124,7 +144,7 @@ const Control = (props: any) => {
     return (
         <components.Control
             {...props}
-            className="!border-0 !shadow-none !bg-[#F6EDFC]"
+            className="!border-0 !shadow-none !bg-inherit h-full"
         />
     );
 };
@@ -156,7 +176,6 @@ const Menu = (props: any) => {
     );
 };
 
-const Placeholder = () => null;
 const IndicatorsContainer = () => null;
 
 export default SearchBar;

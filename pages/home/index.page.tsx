@@ -3,6 +3,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import DefaultLayout from "../../components/layouts/default";
 import { usereventSearchQuery } from "services/usermetrics.service";
+import SearchBar from "components/UI/search_bar";
 
 const HomePage = () => {
     const router = useRouter();
@@ -19,12 +20,12 @@ const HomePage = () => {
                             alt="Dtechtive logo"
                         />
                         <p className="text-[#c1c1c1] text-[11px] font-medium select-none mt-[-10px]">
-                            Discovering the data that other search engines cannot
-                            reach
+                            Discovering the data that other search engines
+                            cannot reach
                         </p>
                     </span>
                     <div className="mt-6 max-w-xl mx-auto w-[575px]">
-                        <DatasetSearchInput
+                        <SearchBar
                             onChange={(option) => {
                                 if (!option) return;
 
@@ -33,6 +34,7 @@ const HomePage = () => {
                                     query: { q: option.value },
                                 });
                             }}
+                            selectClasses="border border-dtech-main-dark !bg-transparent h-15"
                         />
                     </div>
                 </div>

@@ -18,75 +18,35 @@ const OrganizationSearchVM = () => {
     let datasets: any = [
         {
             id: 1,
-            featured: true,
-            name: "Public Health Scotland",
+            title: "Public Health Scotland",
             description:
                 "Featured Public Health Scotland Metadata Quality Open Commercial The Scottish Health and Social Care open data platform gives access to statistics and ference data for information and re-use. This platform is managed by Public Health Scotland",
             dataQuality: 2,
-            button_tag: ["open"],
+            buttonTags: ["open"],
+            topics: ["health"],
+            domains: ["test"],
+            stats: {
+                datasetsCount: 1,
+                favoritesCount: 2,
+                viewCount: 4,
+                downloadCount: 1,
+            },
         },
         {
             id: 2,
-            featured: false,
-            name: "Care Inspectorate",
-            description:
-                "Inspectorate Meta data Quality Open The Care Inspectorate is a scrutiny body which supports improvement. They look at the quality of care in Scotland to ensure it meets high standards. Where improvement is needed, support services are provided to make positive changes The Care Inspectorate is a scrutiny body which supports improvement. They look at the quality of care in Scotland to ensure it meets high standards. Where improvement is needed, support services are provided to make positive changes…more",
-            dataQuality: 3,
-            button_tag: ["open"],
-        },
-        {
-            id: 3,
-            featured: false,
-            name: "Ordnance Survey",
-            description:
-                "Inspectorate Meta data Quality Open The Care Inspectorate is a scrutiny body which supports improvement. They look at the quality of care in Scotland to ensure it meets high standards. Where improvement is needed, support services are provided to make positive changes The Care Inspectorate is a scrutiny body which supports improvement. They look at the quality of care in Scotland to ensure it meets high standards. Where improvement is needed, support services are provided to make positive changes…more",
-            dataQuality: 4,
-            button_tag: ["open", "commercial"],
-        },
-        {
-            id: 4,
-            featured: false,
-            name: "Care Inspectorate",
+            title: "Test Public Health Scotland",
             description:
                 "Featured Public Health Scotland Metadata Quality Open Commercial The Scottish Health and Social Care open data platform gives access to statistics and ference data for information and re-use. This platform is managed by Public Health Scotland",
-            dataQuality: 5,
-            button_tag: ["open"],
-        },
-        {
-            id: 5,
-            featured: false,
-            name: "Public Health Scotland",
-            description:
-                "Featured Public Health Scotland Metadata Quality Open Commercial The Scottish Health and Social Care open data platform gives access to statistics and ference data for information and re-use. This platform is managed by Public Health Scotland",
-            dataQuality: 4,
-            button_tag: ["open", "commercial"],
-        },
-        {
-            id: 6,
-            featured: true,
-            name: "Care Inspectorate",
-            description:
-                "Inspect  orate Meta data Quality Open The Care Inspectorate is a scrutiny body which supports improvement. They look at the quality of care in Scotland to ensure it meets high standards. Where improvement is needed, support services are provided to make positive changes The Care Inspectorate is a scrutiny body which supports improvement. They look at the quality of care in Scotland to ensure it meets high standards. Where improvement is needed, support services are provided to make positive changes…more",
-            dataQuality: 3,
-            button_tag: ["open"],
-        },
-        {
-            id: 7,
-            featured: false,
-            name: "Ordnance Survey",
-            description:
-                "Inspe ctorate Meta data Quality Open The Care Inspectorate is a scrutiny body which supports improvement. They look at the quality of care in Scotland to ensure it meets high standards. Where improvement is needed, support services are provided to make positive changes The Care Inspectorate is a scrutiny body which supports improvement. They look at the quality of care in Scotland to ensure it meets high standards. Where improvement is needed, support services are provided to make positive changes…more",
             dataQuality: 2,
-            button_tag: ["open"],
-        },
-        {
-            id: 8,
-            featured: false,
-            name: "Care Inspectorate",
-            description:
-                "Featured Public Health Scotland Metadata Quality Open Commercial The Scottish Health and Social Care open data platform gives access to statistics and ference data for information and re-use. This platform is managed by Public Health Scotland",
-            dataQuality: 1,
-            button_tag: ["open"],
+            buttonTags: ["open"],
+            topics: ["health"],
+            domains: ["test"],
+            stats: {
+                datasetsCount: 1,
+                favoritesCount: 2,
+                viewCount: 4,
+                downloadCount: 1,
+            },
         },
     ];
     const len = datasets.length;

@@ -10,15 +10,18 @@ const InfoIcon = ({
     className = "",
     oldIcon = true,
     iconClasses = "",
+    onClick,
 }: {
     title: string;
     className?: string;
     oldIcon?: boolean;
+    onClick?: Function;
     iconClasses?: string;
 }) => {
     const tooltipId = `dtechtive-info-tooltip-${uuidv4()}`;
     return (
         <span
+            onClick={() => onClick && onClick()}
             className={clsx(
                 "inline-flex items-center justify-center align-middle",
                 className

@@ -6,7 +6,8 @@ import {
     BsBookmarkPlus,
 } from "react-icons/bs";
 import Popup from "./popup";
-type OrganizationActionProps = {
+import BookmarkBtn from "./user_bookmark/bookmark_btn";
+type DatasetActionProps = {
     favourite: Boolean;
     bookmark: Boolean;
     popup: Boolean;
@@ -14,14 +15,14 @@ type OrganizationActionProps = {
     handleBookmark: Function;
     handleShare: Function;
 };
-const OrganizationAction = ({
-    favourite,
-    bookmark,
-    popup,
+const DatasetAction = ({
+    favourite = false,
+    bookmark = false,
+    popup = false,
     onFavourite,
     handleBookmark,
     handleShare,
-}: OrganizationActionProps) => {
+}: DatasetActionProps) => {
     return (
         <div>
             <div className="flex">
@@ -31,21 +32,7 @@ const OrganizationAction = ({
                     onClick={() => handleShare()}
                 />
 
-                {bookmark ? (
-                    <BsFillBookmarkPlusFill
-                        className="h-6 w-6 ml-4 text-dtech-main-dark cursor-pointer"
-                        onClick={() => {
-                            handleBookmark();
-                        }}
-                    />
-                ) : (
-                    <BsBookmarkPlus
-                        className="h-6 w-6 ml-4 text-dtech-main-dark cursor-pointer"
-                        onClick={() => {
-                            handleBookmark();
-                        }}
-                    />
-                )}
+                {/* <BookmarkBtn className="mx-auto" dataset={dataset} /> */}
                 {favourite ? (
                     <BsHeartFill
                         className="h-6 w-6 ml-4 text-dtech-main-dark cursor-pointer"
@@ -66,4 +53,4 @@ const OrganizationAction = ({
         </div>
     );
 };
-export default OrganizationAction;
+export default DatasetAction;

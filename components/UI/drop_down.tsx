@@ -9,6 +9,7 @@ export type MenuItemType = {
     label: string;
     link?: string;
     onClick?: () => void;
+    className?: string;
     isLast?: boolean;
 };
 
@@ -20,6 +21,7 @@ const Dropdown = ({
     iconClass = "",
     labelClasses = "",
     menuItemsClasses = "",
+    itemsClasses = "",
 }: {
     menuTitle?: string;
     label: string | ReactNode;
@@ -28,6 +30,7 @@ const Dropdown = ({
     iconClass?: string;
     labelClasses?: string;
     menuItemsClasses?: string;
+    itemsClasses?: string;
 }) => {
     const router = useRouter();
     const [showMenu, setShowMenu] = useState(false);
@@ -85,7 +88,7 @@ const Dropdown = ({
                         </div>
                     )}
                     {menuItems.map((m, i) => (
-                        <MenuItem key={i} {...m} />
+                        <MenuItem key={i} {...m} className={itemsClasses} />
                     ))}
                 </Menu.Items>
             </Transition>
@@ -93,7 +96,13 @@ const Dropdown = ({
     );
 };
 
-const MenuItem = ({ label, link, onClick, isLast }: MenuItemType) => {
+const MenuItem = ({
+    label,
+    link,
+    onClick,
+    isLast,
+    className,
+}: MenuItemType) => {
     const router = useRouter();
     const currentRoute = router.pathname;
 
@@ -105,14 +114,22 @@ const MenuItem = ({ label, link, onClick, isLast }: MenuItemType) => {
         <Menu.Item>
             {onClick ? (
                 <button
-                    className="hover:bg-dtech-main-light text-dtech-primary-dark px-2.5 py-2 text-sm w-full shadow-underline text-left boder-b-1 shadow-dtech-dark-grey text-dtech-dark-grey"
+                    className={clsx(
+                        "hover:bg-dtech-main-light text-dtech-primary-dark px-2.5 py-2 text-sm w-full shadow-underline text-left boder-b-1 shadow-dtech-dark-grey text-dtech-dark-grey",
+                        className
+                    )}
                     onClick={onClick}
                 >
                     {label}
                 </button>
             ) : (
                 <Link href={link || "#"}>
-                    <a className="hover:bg-dtech-main-light text-dtech-primary-dark px-2.5 py-2 text-sm w-full shadow-underline text-left boder-b-1 shadow-dtech-dark-grey text-dtech-dark-grey">
+                    <a
+                        className={clsx(
+                            "hover:bg-dtech-main-light text-dtech-primary-dark px-2.5 py-2 text-sm w-full shadow-underline text-left boder-b-1 shadow-dtech-dark-grey text-dtech-dark-grey",
+                            className
+                        )}
+                    >
                         {label}
                     </a>
                 </Link>
