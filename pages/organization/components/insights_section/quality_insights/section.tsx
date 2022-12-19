@@ -1,7 +1,7 @@
 import Accordian from "components/UI/accordian";
 import Table from "../../table";
 import MetaRating from "components/UI/metaRating";
-import StarGraph from "../../starGraph";
+import BarGraph from "components/UI/BarGraph";
 
 const METADATA_ITEMS = [
     "Overall score",
@@ -40,42 +40,49 @@ const ROW2 = [
     },
 ];
 // const TABLE_DATA = [ROW1, ROW2];
-const STAR = [
+const STARS = [
     [
-        { rating: 10 },
-        { rating: 20 },
-        { rating: 30 },
-        { rating: 20 },
-        { rating: 10 },
+        { name: 1, rating: 10 },
+        { name: 2, rating: 20 },
+        { name: 3, rating: 30 },
+        { name: 4, rating: 20 },
+        { name: 5, rating: 10 },
     ],
     [
-        { rating: 20 },
-        { rating: 10 },
-        { rating: 20 },
-        { rating: 20 },
-        { rating: 10 },
+        { name: 1, rating: 10 },
+        { name: 2, rating: 20 },
+        { name: 3, rating: 50 },
+        { name: 4, rating: 20 },
+        { name: 5, rating: 10 },
     ],
     [
-        { rating: 50 },
-        { rating: 20 },
-        { rating: 30 },
-        { rating: 20 },
-        { rating: 10 },
+        { name: 1, rating: 50 },
+        { name: 2, rating: 20 },
+        { name: 3, rating: 30 },
+        { name: 4, rating: 20 },
+        { name: 5, rating: 10 },
     ],
     [
-        { rating: 10 },
-        { rating: 20 },
-        { rating: 30 },
-        { rating: 20 },
-        { rating: 10 },
+        { name: 1, rating: 10 },
+        { name: 2, rating: 20 },
+        { name: 3, rating: 30 },
+        { name: 4, rating: 20 },
+        { name: 5, rating: 10 },
     ],
     [
-        { rating: 20 },
-        { rating: 10 },
-        { rating: 20 },
-        { rating: 20 },
-        { rating: 10 },
-    ]
+        { name: 1, rating: 20 },
+        { name: 2, rating: 10 },
+        { name: 3, rating: 20 },
+        { name: 4, rating: 20 },
+        { name: 5, rating: 10 },
+    ],
+    [
+        { name: 1, rating: 10 },
+        { name: 2, rating: 10 },
+        { name: 3, rating: 20 },
+        { name: 4, rating: 20 },
+        { name: 5, rating: 10 },
+    ],
 ];
 
 const DisplayDataset = ({ title, description }: any) => (
@@ -99,6 +106,8 @@ const QualityInsightsBody = ({ selectedLabel }: { selectedLabel: string }) => {
         ROW1[index],
         <DisplayDataset title={data.title} description={data.description} />,
     ]);
+    const barDataKey = Object.keys(STARS[0][0])[1];
+    const labelListDatakey = Object.keys(STARS[0][0])[0];
     return (
         <div className="ml-16">
             <div className="text-sm text-dtech-dark-grey my-4">
@@ -115,7 +124,19 @@ const QualityInsightsBody = ({ selectedLabel }: { selectedLabel: string }) => {
                             cellPadding={3}
                         />
                     </div>
-                    <StarGraph star={STAR[index]} />
+                    <BarGraph
+                        star={STARS[index]}
+                        strokeWidthAxis={2}
+                        strokeWidthLabelList={0}
+                        className="font-medium mb-6 mt-6"
+                        xLabel=""
+                        yLabel=""
+                        showIntervalLabel={false}
+                        xvalue="Star rating"
+                        yvalue="Datasets"
+                        barDatakey={barDataKey}
+                        labelListDatakey={labelListDatakey}
+                    />
                 </Accordian>
             ))}
         </div>
