@@ -67,6 +67,7 @@ const SearchBar = ({
                     MenuList,
                     Option,
                     Control,
+                    Placeholder: () => null,
                     IndicatorsContainer,
                     ValueContainer,
                 }}
