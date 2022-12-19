@@ -5,10 +5,9 @@ import Loader from "components/UI/loader";
 import Dataset from "models/dataset.model";
 import toast from "react-hot-toast";
 import useSWR, { useSWRConfig } from "swr";
-import DatasetRowDisplay from "components/UI/data_row_display";
 import { useHttpCall } from "common/hooks";
 import DatasetStats from "models/dataset_stats.model";
-import DatasetRow from "components/UI/dataset_row.v4";
+import DatasetList from "components/UI/dataset_list";
 
 const FavouritesSection = () => {
     const {
@@ -87,22 +86,7 @@ const FavouritesSection = () => {
             {!isFetchingFavourites && (favouriteDatasets?.length ?? 0) == 0 && (
                 <InfoAlert message="No favourites found" className="mt-1" />
             )}
-            {favouriteDatasets?.map((dataset, i) => (
-                // <DatasetRowDisplay
-                //     key={dataset.id}
-                //     dataset={dataset}
-                //     displayContext={"favorite-item"}
-                //     onFavouriteChange={() => mutate(favEndpoint)}
-                // />
-                <DatasetRow
-                    datasetStats={stats[dataset.id]}
-                    isLoadingStats={isFetchingStats}
-                    key={dataset.id}
-                    dataset={dataset}
-                    displayContext={"favorite-item"}
-                    onFavouriteChange={() => mutate(favEndpoint)}
-                />
-            ))}
+            <DatasetList datasets={favouriteDatasets} />
         </div>
     );
 };

@@ -4,12 +4,10 @@ import Dataset from "models/dataset.model.v4";
 import { useContext, useState } from "react";
 import useSWR from "swr";
 import { DatasetDetailVMContext } from "../dataset_detail.vm";
-import DatasetRowDisplay from "components/UI/dataset_row_display";
-import DatasetService from "services/dataset.service";
 import DatasetStats from "models/dataset_stats.model";
 import { useHttpCall } from "common/hooks";
-import DatasetRow from "components/UI/dataset_row.v4";
 import Http from "common/http";
+import DatasetList from "components/UI/dataset_list";
 
 const MayAlsoLike = () => {
     const { dataset } = useContext(DatasetDetailVMContext);
@@ -88,21 +86,7 @@ const MayAlsoLike = () => {
 
     return (
         <div>
-            {/* {JSON.stringify(isLoadingStats)} */}
-            {datasets?.map((dataset, i) => (
-                // <DatasetRowDisplay
-                //     key={dataset.id}
-                //     dataset={dataset}
-                //     displayContext={"similar-item"}
-                // />
-                <DatasetRow
-                    datasetStats={stats[dataset.id]}
-                    isLoadingStats={isFetchingStats}
-                    key={dataset.id}
-                    dataset={dataset}
-                    displayContext={"similar-item"}
-                />
-            ))}
+            <DatasetList datasets={datasets} />
         </div>
     );
 };
