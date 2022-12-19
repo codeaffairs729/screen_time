@@ -26,11 +26,12 @@ const HomePage = () => {
                     </span>
                     <div className="mt-6 max-w-xl mx-auto w-[575px]">
                         <SearchBar
-                            onChange={(option) => {
+                            onChange={(type: string, option: any) => {
                                 if (!option) return;
-
+                                const searchType =
+                                    type === "dataset" ? "" : type;
                                 router.push({
-                                    pathname: "/search",
+                                    pathname: `/search/${searchType}`,
                                     query: { q: option.value },
                                 });
                             }}

@@ -8,13 +8,16 @@ import Http from "common/http";
 import { usereventSearchQuery } from "services/usermetrics.service";
 import { IoSearchOutline } from "react-icons/io5";
 import Dropdown, { MenuItemType } from "./drop_down";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "store";
+import { updateSearchType } from "store/search/search.action";
 
-export type SearchOption = { value: any; label: string };
+// export type SearchOption = { type: string; value: any; label: string };
 const ITEMS: MenuItemType[] = [
+    { label: "Dataset" },
     { label: "Topic" },
     { label: "Region" },
-    { label: "Organization" },
-    { label: "Dataset" },
+    { label: "Organisation" },
 ];
 
 const SearchBar = ({
@@ -23,11 +26,12 @@ const SearchBar = ({
     selectClasses = "",
     placeholder = "Search e.x.  “Covid in Scotland”",
 }: {
-    onChange: (option: SingleValue<SearchOption>) => void;
+    onChange: any;
     className?: string;
     selectClasses?: string;
     placeholder?: string;
 }) => {
+    const searchType = useSelector((state: RootState) => state.search.type);
     const loadAutoComplete = useMemo(
         () =>
             debounce(async (inputValue: string) => {
@@ -92,7 +96,7 @@ const SearchBar = ({
                         e.preventDefault();
                         e.stopPropagation();
                         usereventSearchQuery(input);
-                        onChange({
+                        onChange(searchType, {
                             label: "User input",
                             value: input,
                         });
@@ -105,14 +109,17 @@ const SearchBar = ({
 
 const ValueContainer = ({ children, ...props }: any) => {
     const { pathname } = useRouter();
+    const dispatch = useDispatch();
     const [isHomePage, setIsHomePage] = useState(true);
-    const [activeSearchCategory, setActiveSearchCategory] = useState<string>(
-        ITEMS[0].label
-    );
+    const searchType = useSelector((state: RootState) => state.search.type);
+
+    const handleSearchTypeChange = (type: string) => {
+        dispatch(updateSearchType(type.toLowerCase()));
+    };
 
     const menuItems = ITEMS.map((item) => ({
         ...item,
-        onClick: () => setActiveSearchCategory(item.label),
+        onClick: () => handleSearchTypeChange(item.label),
     }));
 
     useEffect(() => {
@@ -130,7 +137,11 @@ const ValueContainer = ({ children, ...props }: any) => {
                 />
                 {children}
                 <Dropdown
-                    label={activeSearchCategory}
+                    label={`
+                            ${searchType[0]?.toUpperCase()}${searchType.slice(
+                        1
+                    )}
+                        `}
                     labelClasses={isHomePage ? "!text-lg" : ""}
                     menuItems={menuItems}
                     menuItemsClasses="translate-x-[-50%]"
