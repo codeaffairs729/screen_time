@@ -60,7 +60,12 @@ const BookmarksSection = ({ datasetIDS }: { datasetIDS: any }) => {
 
     return (
         <div>
-            <DatasetList datasets={datasets} />
+            <DatasetList
+                datasets={datasets}
+                onFavourite={() => {}}
+                handleBookmark={() => {}}
+                handleShare={() => {}}
+            />
         </div>
     );
 };

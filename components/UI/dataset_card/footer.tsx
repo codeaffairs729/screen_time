@@ -36,16 +36,16 @@ const CardFooter = ({
                     <LabelledRow
                         label="Data Owner"
                         className="mr-12"
-                        labelClasses="font-normal"
-                        childClasses="font-medium"
+                        labelClasses="font-normal text-m"
+                        childClasses="font-medium text-m"
                     >
                         {dataProviders.organisation &&
                             dataProviders.organisation}
                     </LabelledRow>
                     <LabelledRow
                         label="Data Host"
-                        labelClasses="font-normal"
-                        childClasses="font-medium"
+                        labelClasses="font-normal text-m"
+                        childClasses="font-medium text-m"
                     >
                         {dataProviders.hostName}
                     </LabelledRow>
@@ -53,8 +53,8 @@ const CardFooter = ({
             )}
             {lastUpdate?.isValid && (
                 <div className="flex my-1.5">
-                    <span className="text-xs mr-1">Updated</span>
-                    <span className="text-xs font-medium">
+                    <span className="text-sm mr-1">Updated</span>
+                    <span className="text-sm font-medium">
                         {lastUpdate.toRelative()}
                     </span>
                 </div>

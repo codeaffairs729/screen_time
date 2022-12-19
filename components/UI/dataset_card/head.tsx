@@ -1,6 +1,6 @@
 import Link from "next/link";
 import MetaRating from "components/UI/metaRating";
-// import DatasetAction from "components/UI/datasetAction";
+import DatasetAction from "components/UI/datasetAction";
 import { Dataset } from ".";
 
 const CardHead = ({
@@ -47,14 +47,13 @@ const CardHead = ({
                     </span>
                 ))}
             </div>
-            {/* <DatasetAction
-                favourite={favourite}
-                bookmark={bookmark}
-                popup={true}
-                onFavourite={onFavourite}
-                handleBookmark={handleBookmark}
+            <DatasetAction
+                // favourite={favourite}
+                // bookmark={bookmark}
+                // onFavourite={onFavourite}
+                // handleBookmark={handleBookmark}
                 handleShare={handleShare}
-            /> */}
+            />
         </div>
     );
 };

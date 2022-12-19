@@ -5,7 +5,12 @@ interface DatasetsListProps {
     datasets: Dataset[];
 }
 
-const DatasetList = ({ datasets }: any) => {
+const DatasetList = ({
+    datasets,
+    onFavourite,
+    handleBookmark,
+    handleShare,
+}: any) => {
     return datasets?.map((dataset: Dataset, index: number) => {
         const data = {
             title: dataset.detail.name,
@@ -29,9 +34,9 @@ const DatasetList = ({ datasets }: any) => {
                 data={data}
                 lastUpdate={dataset.detail.lastUpdate}
                 dataProviders={dataProviders}
-                onFavourite={() => {}}
-                handleBookmark={() => {}}
-                handleShare={() => {}}
+                onFavourite={onFavourite}
+                handleBookmark={handleBookmark}
+                handleShare={handleShare}
             />
         );
     });

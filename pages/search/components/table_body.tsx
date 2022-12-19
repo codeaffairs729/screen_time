@@ -1,4 +1,5 @@
 import DatasetCard from "components/UI/dataset_card";
+import DatasetList from "components/UI/dataset_list";
 import DatasetRow from "components/UI/dataset_row.v4";
 import Dataset from "models/dataset.model.v4";
 import { useContext } from "react";
@@ -13,32 +14,12 @@ const TableBody = () => {
     }
     return (
         <>
-            {vm.datasets?.map((dataset: Dataset, i) => {
-                const data = {
-                    title: dataset.detail.name,
-                    description: dataset.detail.description,
-                    dataQuality: dataset.detail.dataQuality,
-                    buttonTags: ["open"],
-                    topics: dataset.detail.topics,
-                    domains: dataset.detail.domain,
-                };
-                const dataProviders = {
-                    organisation: dataset.owner.organisation,
-                    hostName: dataset.detail.hostName,
-                };
-                return (
-                    <DatasetCard
-                        key={dataset.id}
-                        href={`/datasets/${dataset.id}`}
-                        data={data}
-                        lastUpdate={dataset.detail.lastUpdate}
-                        dataProviders={dataProviders}
-                        onFavourite={() => {}}
-                        handleBookmark={() => {}}
-                        handleShare={() => {}}
-                    />
-                );
-            })}
+            <DatasetList
+                datasets={vm.datasets}
+                onFavourite={() => {}}
+                handleBookmark={() => {}}
+                handleShare={() => {}}
+            />
         </>
     );
 };

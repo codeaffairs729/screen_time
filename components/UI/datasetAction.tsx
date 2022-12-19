@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
     BsShareFill,
     BsHeartFill,
@@ -8,32 +9,31 @@ import {
 import Popup from "./popup";
 import BookmarkBtn from "./user_bookmark/bookmark_btn";
 type DatasetActionProps = {
-    favourite: Boolean;
-    bookmark: Boolean;
-    popup: Boolean;
-    onFavourite: Function;
-    handleBookmark: Function;
+    favourite?: Boolean;
+    bookmark?: Boolean;
+    onFavourite?: Function;
+    handleBookmark?: Function;
     handleShare: Function;
 };
 const DatasetAction = ({
-    favourite = false,
-    bookmark = false,
-    popup = false,
-    onFavourite,
-    handleBookmark,
+    // favourite = false,
+    // bookmark = false,
+    // onFavourite,
+    // handleBookmark,
     handleShare,
 }: DatasetActionProps) => {
+    const [share, setShare] = useState(false);
     return (
         <div>
             <div className="flex">
                 <BsShareFill
                     className="h-6 w-6 ml-4 text-dtech-main-dark cursor-pointer "
                     data-modal-toggle="popup"
-                    onClick={() => handleShare()}
+                    onClick={() => setShare(!share)}
                 />
 
                 {/* <BookmarkBtn className="mx-auto" dataset={dataset} /> */}
-                {favourite ? (
+                {/* {favourite ? (
                     <BsHeartFill
                         className="h-6 w-6 ml-4 text-dtech-main-dark cursor-pointer"
                         onClick={() => {
@@ -47,9 +47,9 @@ const DatasetAction = ({
                             onFavourite();
                         }}
                     />
-                )}
+                )} */}
             </div>
-            {popup && <Popup />}
+            {share && <Popup />}
         </div>
     );
 };

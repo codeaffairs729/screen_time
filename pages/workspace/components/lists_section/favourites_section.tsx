@@ -86,7 +86,12 @@ const FavouritesSection = () => {
             {!isFetchingFavourites && (favouriteDatasets?.length ?? 0) == 0 && (
                 <InfoAlert message="No favourites found" className="mt-1" />
             )}
-            <DatasetList datasets={favouriteDatasets} />
+            <DatasetList
+                datasets={favouriteDatasets}
+                onFavourite={() => {}}
+                handleBookmark={() => {}}
+                handleShare={() => {}}
+            />
         </div>
     );
 };

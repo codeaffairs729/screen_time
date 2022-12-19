@@ -86,7 +86,12 @@ const MayAlsoLike = () => {
 
     return (
         <div>
-            <DatasetList datasets={datasets} />
+            <DatasetList
+                datasets={datasets}
+                onFavourite={() => {}}
+                handleBookmark={() => {}}
+                handleShare={() => {}}
+            />
         </div>
     );
 };
