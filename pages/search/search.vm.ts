@@ -171,8 +171,12 @@ const SearchVM = () => {
                 .then((res) => {
                     setLoading(false);
                     // setCurrentPageNo(res[0]["user_search"][0]["pagenum"]);
+                    const totalRecords = res[0]["user_search"][0]["total"];
+
                     setTotalPages(
-                        Math.ceil(res[0]["user_search"][0]["total"] / pageSize)
+                        totalRecords
+                            ? Math.ceil(totalRecords / pageSize)
+                            : totalRecords
                     );
                     const resFitlerOptions =
                         res[0]["user_search"][0]["filter_options"];

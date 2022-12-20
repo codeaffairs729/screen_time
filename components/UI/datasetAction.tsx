@@ -1,4 +1,5 @@
 import { useState } from "react";
+import toast from "react-hot-toast";
 import {
     BsShareFill,
     BsHeartFill,
@@ -22,6 +23,8 @@ const DatasetAction = ({
     // handleBookmark,
     handleShare,
 }: DatasetActionProps) => {
+    const [fav, setFav] = useState(false);
+    const [bookmark, setBookmark] = useState(false);
     const [share, setShare] = useState(false);
     return (
         <div>
@@ -33,21 +36,42 @@ const DatasetAction = ({
                 />
 
                 {/* <BookmarkBtn className="mx-auto" dataset={dataset} /> */}
-                {/* {favourite ? (
+                {fav ? (
                     <BsHeartFill
                         className="h-6 w-6 ml-4 text-dtech-main-dark cursor-pointer"
                         onClick={() => {
-                            onFavourite();
+                            setFav(!fav);
+                            toast.success("Successfuly Marked Favorite!");
                         }}
                     />
                 ) : (
                     <BsHeart
                         className="h-6 w-6 ml-4 text-dtech-main-dark cursor-pointer"
                         onClick={() => {
-                            onFavourite();
+                            setFav(!fav);
+                            toast.success("Successfuly Un-marked Favorite!");
                         }}
                     />
-                )} */}
+                )}
+                {bookmark ? (
+                    <BsFillBookmarkPlusFill
+                        className="h-6 w-6 ml-4 text-dtech-main-dark cursor-pointer"
+                        onClick={() => {
+                            setFav(!fav);
+                            toast.success("Successfuly Marked the Bookmarked!");
+                        }}
+                    />
+                ) : (
+                    <BsBookmarkPlus
+                        className="h-6 w-6 ml-4 text-dtech-main-dark cursor-pointer"
+                        onClick={() => {
+                            setFav(!fav);
+                            toast.success(
+                                "Successfuly Un-marked the Bookmarked!"
+                            );
+                        }}
+                    />
+                )}
             </div>
             {share && <Popup />}
         </div>
