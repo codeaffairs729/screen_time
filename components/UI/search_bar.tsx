@@ -61,14 +61,16 @@ const SearchBar = ({
         <div className={clsx("mx-auto", className)}>
             <AsyncSelect
                 cacheOptions
-                loadOptions={loadAutoComplete}
+                loadOptions={
+                    searchType === "dataset" ? loadAutoComplete : () => {}
+                }
                 theme={(theme) => ({
                     ...theme,
                     borderRadius: 70,
                 })}
                 components={{
                     Menu,
-                    MenuList,
+                    MenuList: searchType === "dataset" ? MenuList : () => null,
                     Option,
                     Control,
                     Placeholder: () => null,
@@ -83,7 +85,9 @@ const SearchBar = ({
                 defaultOptions
                 instanceId="product-search"
                 placeholder={placeholder}
-                onChange={onChange}
+                onChange={(option: any) => {
+                    onChange(searchType, option);
+                }}
                 inputValue={input}
                 onInputChange={(value, action) => {
                     // only set the input when the action that caused the
@@ -144,7 +148,7 @@ const ValueContainer = ({ children, ...props }: any) => {
                         `}
                     labelClasses={isHomePage ? "!text-lg" : ""}
                     menuItems={menuItems}
-                    menuItemsClasses="translate-x-[-50%]"
+                    menuItemsClasses="translate-x-[-50%] !left-0"
                     itemsClasses={isHomePage ? "!text-lg" : ""}
                 />
             </div>

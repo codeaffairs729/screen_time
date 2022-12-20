@@ -2,6 +2,7 @@ import Link from "next/link";
 import MetaRating from "components/UI/metaRating";
 import DatasetAction from "components/UI/datasetAction";
 import { Dataset } from ".";
+import { useRouter } from "next/router";
 
 const CardHead = ({
     href = "",
@@ -19,6 +20,7 @@ const CardHead = ({
     handleFAQClick?: Function;
 }) => {
     const { title, dataQuality, buttonTags /*favourite, bookmark*/ } = dataset;
+    const router = useRouter();
     return (
         <div className="flex items-center justify-between w-full p-[10px]">
             <div className="flex items-center">
@@ -36,7 +38,11 @@ const CardHead = ({
                     dataQuality={dataQuality}
                     displayContext={"displayContext"}
                     labelClass="font-normal"
-                    handleFAQClick={handleFAQClick}
+                    handleFAQClick={() => {
+                        router.push({
+                            pathname: `/faq`,
+                        });
+                    }}
                 />
                 {buttonTags.map((tag: string, index: number) => (
                     <span
