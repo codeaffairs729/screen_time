@@ -35,7 +35,6 @@ const DatasetAction = ({
                     onClick={() => setShare(!share)}
                 />
 
-                {/* <BookmarkBtn className="mx-auto" dataset={dataset} /> */}
                 {fav ? (
                     <BsHeartFill
                         className="h-6 w-6 ml-4 text-dtech-main-dark cursor-pointer"
@@ -53,25 +52,7 @@ const DatasetAction = ({
                         }}
                     />
                 )}
-                {bookmark ? (
-                    <BsFillBookmarkPlusFill
-                        className="h-6 w-6 ml-4 text-dtech-main-dark cursor-pointer"
-                        onClick={() => {
-                            setFav(!fav);
-                            toast.success("Successfuly Marked the Bookmarked!");
-                        }}
-                    />
-                ) : (
-                    <BsBookmarkPlus
-                        className="h-6 w-6 ml-4 text-dtech-main-dark cursor-pointer"
-                        onClick={() => {
-                            setFav(!fav);
-                            toast.success(
-                                "Successfuly Un-marked the Bookmarked!"
-                            );
-                        }}
-                    />
-                )}
+                <BookmarkBtn className="mx-auto" dataset={{ id: 1 }} />
             </div>
             {share && <Popup />}
         </div>
