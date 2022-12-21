@@ -1,4 +1,5 @@
 import { Page, expect, BrowserContext } from "@playwright/test";
+import { WAIT_TIME } from "tests/test_time";
 
 export default class CheckWorkspaceNotification {
     readonly page: Page;
@@ -68,6 +69,7 @@ export default class CheckWorkspaceNotification {
         ]);
         await newTab.waitForLoadState();
         expect(newTab.url()).toContain("feedback");
+        await newTab.waitForTimeout(WAIT_TIME);
         await page.bringToFront();
     }
 }

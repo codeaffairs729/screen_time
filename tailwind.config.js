@@ -35,6 +35,7 @@ module.exports = {
             height: {
                 3.5: "14px",
                 26: "110px",
+                15: "60px",
             },
             boxShadow: {
                 underline: "inset 0px -1px 0px rgba(95, 86, 86, 0.25)",

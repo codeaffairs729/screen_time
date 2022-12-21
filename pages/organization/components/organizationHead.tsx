@@ -1,5 +1,5 @@
 import MetaRating from "components/UI/metaRating";
-import OrganizationAction from "components/UI/organizationAction";
+import DatasetAction from "components/UI/dataset_action";
 import Image from "next/image";
 import { BsHeartFill, BsFillEyeFill } from "react-icons/bs";
 import { MdFileDownload } from "react-icons/md";
@@ -25,9 +25,9 @@ const OrganisationHead = () => {
                         Open
                     </button>
                 </div>
-                <OrganizationAction
-                    onFavorite={() => {}}
-                    handleBookmark={() => {}}
+                <DatasetAction
+                    // onFavorite={() => {}}
+                    // handleBookmark={() => {}}
                     handleShare={() => {}}
                 />
             </div>

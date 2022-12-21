@@ -13,17 +13,23 @@ import { CacheType } from "./cache/cache.type";
 import userReducer, {
     initialState as userInitialState,
 } from "./user/user.reducer";
+import searchReducer, {
+    initialState as searchInitialState,
+} from "./search/search.reducer";
 import { UserState } from "./user/user.type";
+import { SearchState } from "./search/search.type";
 
 export type RootState = {
     auth: AuthState;
     cache: CacheType;
     user: UserState;
+    search: SearchState;
 };
 
 const rootInitialData = {
     auth: authInitialState,
     user: userInitialState,
+    search: searchInitialState,
 };
 
 const persistConfig = {
@@ -35,6 +41,7 @@ const combinedReducer = combineReducers({
     auth: authReducer,
     cache: cacheReducer,
     user: userReducer,
+    search: searchReducer,
 });
 
 const rootReducer = (state: RootState | undefined, action: Action) => {

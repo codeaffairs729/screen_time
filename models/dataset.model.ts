@@ -97,7 +97,7 @@ export type DatasetLicense = {
 };
 
 export type DatasetDetail = {
-    domain: string;
+    domain: string[];
     hostUrl: string;
     hostName: string;
     name: string;

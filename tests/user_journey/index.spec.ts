@@ -28,8 +28,6 @@ test.describe("User journey", () => {
     });
 
     test("Expire All Notification", async () => {
-        const search_and_download = new SearchAndDownload(page);
-        await search_and_download.SearchDownload();
         const expire_notification = new ExpireNotification(page);
         await expire_notification.NotificationExpire();
     });
