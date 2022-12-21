@@ -20,6 +20,7 @@ const OrganizationResult = ({ dataset }: { dataset: any }) => {
     };
 
     const {
+        id,
         title,
         description,
         dataQuality,
@@ -32,6 +33,7 @@ const OrganizationResult = ({ dataset }: { dataset: any }) => {
     return (
         <DatasetCard
             data={{
+                id,
                 title,
                 description,
                 dataQuality,

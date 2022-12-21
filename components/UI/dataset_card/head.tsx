@@ -54,10 +54,9 @@ const CardHead = ({
                 ))}
             </div>
             <DatasetAction
-                // favourite={favourite}
-                // bookmark={bookmark}
-                // onFavourite={onFavourite}
-                // handleBookmark={handleBookmark}
+                dataset={dataset}
+                onFavourite={onFavourite}
+                handleBookmark={handleBookmark}
                 handleShare={handleShare}
             />
         </div>

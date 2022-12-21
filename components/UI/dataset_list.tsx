@@ -13,6 +13,7 @@ const DatasetList = ({
 }: any) => {
     return datasets?.map((dataset: Dataset, index: number) => {
         const data = {
+            id: dataset.id,
             title: dataset.detail.name,
             description: dataset.detail.description,
             dataQuality: dataset.detail.dataQuality,

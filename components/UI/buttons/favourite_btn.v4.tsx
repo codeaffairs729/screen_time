@@ -18,7 +18,7 @@ const FavouriteBtn = ({
     onFavouriteChange,
 }: {
     className?: string;
-    datasetStats: DatasetStats;
+    datasetStats: any;
     isLoading?: Boolean;
     onFavouriteChange?: () => void;
 }) => {
@@ -51,9 +51,9 @@ const FavouriteBtn = ({
                         {!isHandlingFavourite ? (
                             <>
                                 {isFavourited ? (
-                                    <BsHeartFill className="w-5 h-5 text-[#AD1DEB]" />
+                                    <BsHeartFill className="h-6 w-6 ml-4 text-dtech-main-dark cursor-pointer" />
                                 ) : (
-                                    <BsHeart className="w-5 h-5 text-[#AD1DEB]" />
+                                    <BsHeart className="h-6 w-6 ml-4 text-dtech-main-dark cursor-pointer" />
                                 )}
                             </>
                         ) : (
@@ -71,12 +71,10 @@ const FavouriteBtn = ({
  * Favourite a dataset
  */
 const useFavouriteDataset = (
-    datasetStats: DatasetStats,
+    datasetStats: any,
     isLoading: Boolean,
     onFavouriteChange?: () => void
 ) => {
-  console.log('datasetStats', datasetStats);
-  
     const user = useSelector((state: RootState) => state.auth.user);
     const [isFavourited, setIsFavourited] = useState(
         datasetStats?.isFavourited ?? false
@@ -91,12 +89,12 @@ const useFavouriteDataset = (
             async () => {
                 if (!isFavourited) {
                     const res = await Http.put(
-                        `/v1/datasets/${datasetStats.datasetId}/favourite`
+                        `/v1/datasets/${datasetStats.id}/favourite`
                     );
                     setIsFavourited(true);
                 } else {
                     const res = await Http.delete(
-                        `/v1/datasets/${datasetStats.datasetId}/favourite`
+                        `/v1/datasets/${datasetStats.id}/favourite`
                     );
                     setIsFavourited(false);
                 }
