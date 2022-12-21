@@ -115,7 +115,7 @@ const OrganizationSortBy = () => {
             <Dropdown 
                 label={`${activeOption ? activeOption.label : "Sort by"}`}
                 menuItems={options}
-                menuItemsClasses="!w-60 !left-[-70%] border border-dtech-main-dark"
+                menuItemsClasses="!w-60 border border-dtech-main-dark"
                 labelClasses=" text-m pr-3.5"
                 className="!ml-0 "
                 iconClass="text-dtech-main-dark !ml-2.5"

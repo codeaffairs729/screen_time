@@ -83,7 +83,7 @@ const OrganizationTotal = () => {
                 <Dropdown
                     label={`${vm.pageSize} result`}
                     menuItems={options}
-                    menuItemsClasses="!w-32 !left-[-40%] border border-dtech-main-dark"
+                    menuItemsClasses="!w-32 border border-dtech-main-dark"
                     labelClasses=" text-m font-normal pr-2.5 "
                     className="!ml-0 "
                     iconClass="text-dtech-main-dark !ml-2.5"

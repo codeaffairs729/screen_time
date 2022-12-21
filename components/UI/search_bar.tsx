@@ -148,7 +148,6 @@ const ValueContainer = ({ children, ...props }: any) => {
                         `}
                     labelClasses={isHomePage ? "!text-lg" : ""}
                     menuItems={menuItems}
-                    menuItemsClasses="translate-x-[-50%] !left-0"
                     itemsClasses={isHomePage ? "!text-lg" : ""}
                 />
             </div>
