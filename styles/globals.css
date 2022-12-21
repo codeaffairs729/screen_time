@@ -30,3 +30,12 @@ input[type='text']:focus { box-shadow: none; }
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
 }
+
+.editor_preview > ul{
+  list-style: revert !important;
+  margin: 1em 1em !important;
+}
+.editor_preview > ol{
+  list-style: revert !important;
+  margin: 1em 1em !important;
+}

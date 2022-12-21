@@ -125,13 +125,12 @@ const QualityInsightsBody = ({ selectedLabel }: { selectedLabel: string }) => {
                         />
                     </div>
                     <BarGraph
-                        star={STARS[index]}
+                        data={STARS[index]}
                         strokeWidthAxis={2}
                         strokeWidthLabelList={0}
                         className="font-medium mb-6 mt-6"
                         xLabel=""
                         yLabel=""
-                        showIntervalLabel={false}
                         xvalue="Star rating"
                         yvalue="Datasets"
                         barDatakey={barDataKey}

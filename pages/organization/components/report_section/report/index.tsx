@@ -1,16 +1,32 @@
 import { useState } from "react";
-import EditReport from "./editReport";
+// import EditReport from "./editReport";
 import Head from "./head";
 import Preview from "./preview";
-
-const Report = () => {
+import { EditorState } from "draft-js";
+const Report = ({ autoGenerate, selected }: any) => {
     const [edit, setEdit] = useState<boolean>(false);
 
-    const handleCancel = () => {};
+    const handleCancel = () => {
+        setEdit(false);
+    };
+    const [editorState, onEditorStateChange] = useState(
+        EditorState.createEmpty()
+    );
+    const [convertedContent, setConvertedContent] = useState("");
     return (
         <div>
             <Head edit={edit} setEdit={setEdit} handleCancel={handleCancel} />
-            {edit ? <EditReport /> : <Preview />}
+            {/* {edit ? (
+                <EditReport
+                    editorState={editorState}
+                    onEditorStateChange={onEditorStateChange}
+                    setConvertedContent={setConvertedContent}
+                    autoGenerate={autoGenerate}
+                    selected={selected}
+                />
+            ) : (
+                <Preview convertedContent={convertedContent} />
+            )} */}
         </div>
     );
 };

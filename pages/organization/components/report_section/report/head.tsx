@@ -34,10 +34,12 @@ const Head = ({
                     Edit
                 </div>
             </div>
-            <div className="flex items-center cursor-pointer">
-                <Image src={downloadIcon} alt="" height={24} width={24} />
-                <span className="ml-2">Download report</span>
-            </div>
+            {!edit && (
+                <div className="flex items-center cursor-pointer">
+                    <Image src={downloadIcon} alt="" height={24} width={24} />
+                    <span className="ml-2">Download report</span>
+                </div>
+            )}
         </div>
     );
 };

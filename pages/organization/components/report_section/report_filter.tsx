@@ -2,7 +2,15 @@ import CalendarSelect from "components/UI/calendar_select";
 import { useState } from "react";
 import { VscTriangleDown } from "react-icons/vsc";
 
-const ReportFilter = () => {
+const ReportFilter = ({
+    handleCheck,
+    handleAutoGenerate,
+    HEADER,
+}: {
+    handleCheck: any;
+    handleAutoGenerate: any;
+    HEADER: any;
+}) => {
     const [showFilter, setShowFilter] = useState<boolean>(true);
     return (
         <div className="w-1/3 py-4 px-6 flex flex-col items-center">
@@ -23,9 +31,17 @@ const ReportFilter = () => {
                         showFilter ? "max-h-[100vh]" : "max-h-0"
                     } overflow-hidden transition-all duration-300 m-3`}
                 >
-                    <Input label="Insights" />
+                    {HEADER.map((header: any) => (
+                        <Input
+                            label={header.label}
+                            isChecked={header.isChecked}
+                            handleCheck={handleCheck}
+                            value={header.label}
+                        />
+                    ))}
+                    {/* <Input label="Insights" />
                     <Input label="Dataset quality" />
-                    <Input label="User feedback" />
+                    <Input label="User feedback" /> */}
                 </div>
             </div>
             <div className="px-4">
@@ -38,7 +54,7 @@ const ReportFilter = () => {
                 </div>
             </div>
             <button
-                onClick={() => {}}
+                onClick={handleAutoGenerate}
                 data-selector="back-btn"
                 className="m-1 whitespace-nowrap bg-dtech-main-dark h-8 flex items-center justify-center rounded"
             >
@@ -50,12 +66,25 @@ const ReportFilter = () => {
     );
 };
 
-const Input = ({ label }: { label: string }) => {
+const Input = ({
+    label,
+    isChecked,
+    handleCheck,
+    value,
+}: {
+    label: string;
+    isChecked: boolean;
+    handleCheck: any;
+    value: string;
+}) => {
     return (
         <div className="flex items-center mb-1.5">
             <input
                 type="checkbox"
                 className="focus:ring-0 filter-checkbox rounded-sm border-dtech-main-dark"
+                value={value}
+                checked={isChecked}
+                onClick={handleCheck}
             />
             <span className="ml-2 text-sm text-gray-700">{label}</span>
         </div>

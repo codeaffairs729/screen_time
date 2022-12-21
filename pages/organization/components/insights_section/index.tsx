@@ -53,7 +53,7 @@ const Insights = () => {
                                 <SearchTermSection />
                             </Tab.Panel>
                             <Tab.Panel>
-                                <DownloadSection />
+                                <DownloadSection selectedLabel={selectedDownload}/>
                             </Tab.Panel>
                         </Tab.Panels>
                     </Tab.Group>

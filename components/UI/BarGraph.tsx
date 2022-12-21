@@ -1,36 +1,63 @@
 import { BarChart, XAxis, YAxis, Bar, LabelList, Cell, Label } from "recharts";
 
 const BarGraph = ({
-    star = [],
+    data = [],
     strokeWidthAxis,
     className,
     xLabel = "",
     yLabel = "",
-    showIntervalLabel = false,
+    showIntervalLabelY = false,
+    showIntervalLabelX = false,
     strokeWidthLabelList,
     xvalue = "",
     yvalue = "",
     barDatakey = "",
     labelListDatakey = "",
+    hideY = false,
+    width = 450,
+    height = 250,
+    XleftPadding = 30,
+    XrightPadding = 100,
+    cellStrokeWidth = 1,
+    barColor = "#F5F5F5",
+    labelListColor = "#3F0068",
+    barSize = 40,
+    labelListPosition = "insideBottom",
 }: {
-    star?: Array<Object>;
+    data?: Array<Object>;
     strokeWidthAxis?: number;
     className?: string;
     xLabel?: string;
     yLabel?: string;
-    showIntervalLabel?: boolean;
+    showIntervalLabelY?: boolean;
+    showIntervalLabelX?: boolean;
     strokeWidthLabelList?: number;
     xvalue?: string;
     yvalue?: string;
     barDatakey?: string;
     labelListDatakey?: string;
+    hideY?: boolean;
+    width?: number;
+    height?: number;
+    XleftPadding?: number;
+    XrightPadding?: number;
+    cellStrokeWidth?: number;
+    barColor?: string;
+    labelListColor?: string;
+    barSize?: number;
+    labelListPosition?: any;
 }) => {
     return (
-        <BarChart width={450} height={250} data={star} className={className}>
+        <BarChart
+            width={width}
+            height={height}
+            data={data}
+            className={className}
+        >
             <XAxis
-                padding={{ left: 30, right: 100 }}
+                padding={{ left: XleftPadding, right: XrightPadding }}
                 dataKey={xLabel}
-                tick={showIntervalLabel}
+                tick={showIntervalLabelX}
                 stroke={"#5F5F63"}
                 strokeWidth={strokeWidthAxis}
             >
@@ -42,10 +69,11 @@ const BarGraph = ({
                 />
             </XAxis>
             <YAxis
-                tick={showIntervalLabel}
+                tick={showIntervalLabelY}
                 dataKey={yLabel}
                 stroke={"#5F5F63"}
                 strokeWidth={strokeWidthAxis}
+                hide={hideY}
             >
                 <Label
                     value={yvalue}
@@ -56,18 +84,18 @@ const BarGraph = ({
                     dy={30}
                 />
             </YAxis>
-            <Bar dataKey={barDatakey} fill="#F5F5F5">
-                {star.map((_, index) => (
+            <Bar dataKey={barDatakey} fill={barColor} barSize={barSize}>
+                {data.map((_, index) => (
                     <Cell
                         key={`cell-${index}}`}
                         stroke={"#3F0068"}
-                        strokeWidth={1}
+                        strokeWidth={cellStrokeWidth}
                     />
                 ))}
                 <LabelList
                     dataKey={labelListDatakey}
-                    fill={"#3F0068"}
-                    position={"insideBottom"}
+                    fill={labelListColor}
+                    position={labelListPosition}
                     strokeWidth={strokeWidthLabelList}
                 />
             </Bar>
