@@ -3,11 +3,7 @@ import { useEffect, useState } from "react";
 
 const ITEMS: MenuItemType[] = [{ label: "Data file" }, { label: "Metadata" }];
 
-type QualityProps = {
-    onChange?: Function;
-};
-
-const QualityInsightsHead = ({ onChange }: QualityProps) => {
+const QualityInsightsHead = ({ onChange }: { onChange?: Function }) => {
     const [selectedLabel, setSelectedLabel] = useState(ITEMS[0].label);
 
     const handleChange = (item: string) => {
@@ -19,14 +15,10 @@ const QualityInsightsHead = ({ onChange }: QualityProps) => {
         onClick: () => handleChange(item.label),
     }));
 
-    // useEffect(() => {
-    //     onChange && onChange(ITEMS[0].label);
-    // }, []);
     return (
         <Dropdown
             className="border-b-[3px] border-dtech-main-dark"
             labelClasses="!text-lg"
-            // className="!m-0"
             menuItems={menuItems}
             label={<Label label={selectedLabel} />}
         />

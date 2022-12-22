@@ -23,7 +23,7 @@ enum searchTerms {
 const Insights = () => {
     const [selectedQualityInsights, setSelectedQualityInsights] =
         useState<string>("");
-    const [selectedSearchTerm, setSelectedSearchTerm] = useState<any>("");
+    const [selectedSearchTerm, setSelectedSearchTerm] = useState<any>(10);
     const [selectedDownload, setSelectedDownload] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(false);
     const [selectedTab, setSelectedTab] = useState<any>(0);

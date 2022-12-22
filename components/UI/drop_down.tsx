@@ -62,11 +62,6 @@ const Dropdown = ({
                 >
                     {label}
                 </span>
-                <VscTriangleDown
-                    className={`ml-2 text-2xl text-inherit transition-all ${
-                        showMenu && "rotate-180"
-                    } ${iconClass}`}
-                />
             </Menu.Button>
             <Transition
                 as={Fragment}

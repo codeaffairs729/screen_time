@@ -116,7 +116,7 @@ const QualityInsightsBody = ({ selectedLabel }: { selectedLabel: string }) => {
                     : "These values are determined based on the Metadata Quality Assessment methodology and calculated using algorithms."}
             </div>
             {items.map((label, index) => (
-                <Accordian label={<AccordianLabel label={label} />}>
+                <Accordian label={<AccordianLabel label={label} />} key={index}>
                     <div>
                         <div className="px-8">
                             <Table

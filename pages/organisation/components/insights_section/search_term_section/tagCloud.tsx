@@ -16,7 +16,7 @@ const displayCloud = (tag: any, size: any) => {
 const TagsCloud = ({ row, row2 }: any) => {
     const data = row.map((r: string, index: any) => ({
         value: r,
-        count: row2[index],
+        count: (20 + index*5) % 80,
     }));
     return (
         <TagCloud

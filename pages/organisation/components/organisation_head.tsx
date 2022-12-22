@@ -3,6 +3,7 @@ import DatasetAction from "components/UI/dataset_action";
 import Image from "next/image";
 import { BsHeartFill, BsFillEyeFill } from "react-icons/bs";
 import { MdFileDownload } from "react-icons/md";
+import DatasetStat from "components/UI/dataset_card/dataset_stat";
 const OrganisationHead = () => {
     const title = "NatureScot Data Services";
     const description =
@@ -12,7 +13,12 @@ const OrganisationHead = () => {
         "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg";
     const domains = ["Health and care"];
     const topics = ["Diseases"];
-
+    const stats = {
+        datasetsCount: 856,
+        favoritesCount: 123,
+        viewCount: 253,
+        downloadCount: 435,
+    };
     return (
         <div className="px-4">
             <div className="flex justify-between items-center">
@@ -44,38 +50,7 @@ const OrganisationHead = () => {
             </div>
             <div className="my-4">
                 <div className="flex justify-between">
-                    <div className="flex">
-                        <div className="flex justify-center items-center mr-6">
-                            <BsHeartFill className="h-[20px] w-[20px] mr-2" />
-                            <span className=" max-w-[100px] text-m">
-                                Added to favourites
-                            </span>
-                            <span>253</span>
-                        </div>
-                        <div className="flex justify-center items-center mr-6">
-                            <BsFillEyeFill className="h-[20px] w-[20px] mr-2" />
-                            <span className="max-w-[100px] text-m">Viewed</span>
-                            <span className="ml-2">3233</span>
-                        </div>
-                        <div className="flex justify-center items-center mr-6">
-                            <MdFileDownload className="h-[20px] w-[20px] mr-2" />
-                            <span className="max-w-[100px] text-m">
-                                Downloaded
-                            </span>
-                            <span className="ml-2">453</span>
-                        </div>
-                        <div className="flex justify-center items-center mr-6">
-                            <Image
-                                src="/public/images/icons/fileEye.svg"
-                                height={20}
-                                width={20}
-                            />
-                            <span className="max-w-[100px] text-m">
-                                Displayed in search results
-                            </span>
-                            <span>453</span>
-                        </div>
-                    </div>
+                    <DatasetStat stats={stats} />
                     <div>
                         <span className="text-sm text-dtech-dark-grey">
                             Updated:{" "}

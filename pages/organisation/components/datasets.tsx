@@ -65,8 +65,9 @@ const Datasets = () => {
                 All the datasets of this organisation are listed here.
             </div>
             <div>
-                {LIST_ITEMS.map((label) => (
+                {LIST_ITEMS.map((label, index: number) => (
                     <Accordian
+                        key={index}
                         label={
                             <ItemCard icon={label.icon} label={label.name} />
                         }
