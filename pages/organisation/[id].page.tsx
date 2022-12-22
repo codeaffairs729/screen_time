@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import OrganisationHead from "./components/organisation_head";
 import { Tab } from "@headlessui/react";
 import TabPanel from "components/UI/tabbed/panel";
-import TabHeaders from "./components/tabs";
+import OrganisationTabHeaders from "./components/organisation_tabs";
 import { useRouter } from "next/router";
 import Datasets from "./components/datasets";
 import Insights from "./components/insights_section";
@@ -41,7 +41,7 @@ const OrganisationDetailPage = () => {
                     <div className="flex border-t px-4 border-t shadow-container">
                         {!loading && (
                             <Tab.Group defaultIndex={selectedIndex}>
-                                <TabHeaders selectedIndex={selectedIndex} />
+                                <OrganisationTabHeaders selectedIndex={selectedIndex} />
                                 <Tab.Panels className="h-[calc(100%-var(--dataset-detail-tab-header-height))] w-full flex">
                                     <TabPanel className="!bg-dtech-light-grey">
                                         <Datasets />

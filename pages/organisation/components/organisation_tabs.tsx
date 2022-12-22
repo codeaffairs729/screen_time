@@ -33,7 +33,7 @@ const HEADERS: Header[] = [
     },
 ];
 
-const TabHeaders = ({ selectedIndex = 0 }: { selectedIndex?: number }) => {
+const OrganisationTabHeaders = ({ selectedIndex = 0 }: { selectedIndex?: number }) => {
     const [selected, setSelected] = useState<number>(selectedIndex);
 
     return (
@@ -64,4 +64,4 @@ const TabHeaders = ({ selectedIndex = 0 }: { selectedIndex?: number }) => {
     );
 };
 
-export default TabHeaders;
+export default OrganisationTabHeaders;
