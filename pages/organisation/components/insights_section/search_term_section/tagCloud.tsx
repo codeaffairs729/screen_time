@@ -27,7 +27,6 @@ const TagsCloud = ({ row, row2 }: any) => {
             disableRandomColor={true}
             renderer={displayCloud}
             className={`flex flex-wrap justify-between text-center m-2 p-2 mt-11 cursor-pointer`}
-            onClick={(tag: any) => console.log(`${tag.value} is Clicked.`)}
         />
     );
 };

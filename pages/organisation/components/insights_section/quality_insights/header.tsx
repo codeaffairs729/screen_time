@@ -5,20 +5,26 @@ const ITEMS: MenuItemType[] = [{ label: "Data file" }, { label: "Metadata" }];
 
 type QualityProps = {
     onChange?: Function;
-    selectedLabel: string;
 };
 
-const QualityInsightsHead = ({ onChange, selectedLabel }: QualityProps) => {
+const QualityInsightsHead = ({ onChange }: QualityProps) => {
+    const [selectedLabel, setSelectedLabel] = useState(ITEMS[0].label);
+
+    const handleChange = (item: string) => {
+        setSelectedLabel(item);
+        onChange && onChange(item);
+    };
     const menuItems = ITEMS.map((item) => ({
         ...item,
-        onClick: () => onChange && onChange(item.label),
+        onClick: () => handleChange(item.label),
     }));
 
-    useEffect(() => {
-        onChange && onChange(ITEMS[0].label);
-    }, []);
+    // useEffect(() => {
+    //     onChange && onChange(ITEMS[0].label);
+    // }, []);
     return (
         <Dropdown
+            className="border-b-[3px] border-dtech-main-dark"
             labelClasses="!text-lg"
             // className="!m-0"
             menuItems={menuItems}
@@ -29,7 +35,7 @@ const QualityInsightsHead = ({ onChange, selectedLabel }: QualityProps) => {
 
 const Label = ({ label }: { label: string }) => {
     return (
-        <div className="flex flex-col text-dtech-main-dark text-left">
+        <div className="flex select-none outline-none flex-col text-dtech-main-dark text-left">
             <span>Dataset quality:</span>
             <span>{label}</span>
         </div>

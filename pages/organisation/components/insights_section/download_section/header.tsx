@@ -9,20 +9,22 @@ const ITEMS: MenuItemType[] = [
 
 type DownloadProps = {
     onChange?: Function;
-    selectedLabel: string;
 };
 
-const DownloadHeader = ({ onChange, selectedLabel }: DownloadProps) => {
+const DownloadHeader = ({ onChange }: DownloadProps) => {
+    const [selectedLabel, setSelectedLabel] = useState(ITEMS[0].label);
+
+    const handleChange = (item: string) => {
+        setSelectedLabel(item);
+        onChange && onChange(item);
+    };
     const menuItems = ITEMS.map((item) => ({
         ...item,
-        onClick: () => onChange && onChange(item.label),
+        onClick: () => handleChange(item.label),
     }));
-
-    useEffect(() => {
-        onChange && onChange(ITEMS[0].label);
-    }, []);
     return (
         <Dropdown
+            className="border-b-[3px] border-dtech-main-dark"
             labelClasses="!text-lg"
             // className="!m-0"
             menuItems={menuItems}
@@ -33,7 +35,7 @@ const DownloadHeader = ({ onChange, selectedLabel }: DownloadProps) => {
 
 const Label = ({ label }: { label: string }) => {
     return (
-        <div className="flex flex-col text-dtech-main-dark text-left">
+        <div className="flex select-none outline-none flex-col text-dtech-main-dark text-left">
             <span>Dataset quality:</span>
             <span>{label}</span>
         </div>

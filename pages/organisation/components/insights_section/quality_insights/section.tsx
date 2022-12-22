@@ -20,7 +20,7 @@ const DATAFILE_ITEMS = [
     "Readiness",
 ];
 
-const TABLE_HEADERS = ["Rank", "Dataset"];
+const TABLE_HEADERS = ["Score", "Dataset"];
 const ROW1 = ["1", "2", "3"];
 const ROW2 = [
     {
@@ -117,25 +117,27 @@ const QualityInsightsBody = ({ selectedLabel }: { selectedLabel: string }) => {
             </div>
             {items.map((label, index) => (
                 <Accordian label={<AccordianLabel label={label} />}>
-                    <div className="px-8">
-                        <Table
-                            tableHeaders={TABLE_HEADERS}
-                            tableData={tableData}
-                            cellPadding={3}
+                    <div>
+                        <div className="px-8">
+                            <Table
+                                tableHeaders={TABLE_HEADERS}
+                                tableData={tableData}
+                                cellPadding={3}
+                            />
+                        </div>
+                        <BarGraph
+                            data={STARS[index]}
+                            strokeWidthAxis={2}
+                            strokeWidthLabelList={0}
+                            className="font-medium mb-6 mt-6"
+                            xLabel=""
+                            yLabel=""
+                            xvalue="Star rating"
+                            yvalue="Datasets"
+                            barDatakey={barDataKey}
+                            labelListDatakey={labelListDatakey}
                         />
                     </div>
-                    <BarGraph
-                        data={STARS[index]}
-                        strokeWidthAxis={2}
-                        strokeWidthLabelList={0}
-                        className="font-medium mb-6 mt-6"
-                        xLabel=""
-                        yLabel=""
-                        xvalue="Star rating"
-                        yvalue="Datasets"
-                        barDatakey={barDataKey}
-                        labelListDatakey={labelListDatakey}
-                    />
                 </Accordian>
             ))}
         </div>

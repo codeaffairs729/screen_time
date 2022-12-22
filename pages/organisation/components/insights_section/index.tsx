@@ -8,37 +8,46 @@ import { Tab } from "@headlessui/react";
 import SearchTermSection from "./search_term_section/section";
 import DownloadSection from "./download_section/section";
 import TabHeaders from "./tabs";
+
+enum tabIndex {
+    dataset_quality,
+    Search_term,
+    download_metrics,
+}
+
+enum searchTerms {
+    top_10 = 10,
+    top_25 = 25,
+}
+
 const Insights = () => {
-    enum tabIndex {
-        datasetQuality,
-        SearchTerm,
-        downloadMatrics,
-    }
     const [selectedQualityInsights, setSelectedQualityInsights] =
         useState<string>("");
-    const [selectedSearchTerm, setSelectedSearchTerm] = useState<string>("");
+    const [selectedSearchTerm, setSelectedSearchTerm] = useState<any>("");
     const [selectedDownload, setSelectedDownload] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(false);
-    const [selectedIndex, setSelectedIndex] = useState<any>(0);
+    const [selectedTab, setSelectedTab] = useState<any>(0);
     const [selected, setSelected] = useState<number>(0);
+
     useEffect(() => {
-        setSelectedIndex(tabIndex[selected]);
+        setSelectedTab(tabIndex[selected]);
         setLoading(false);
     }, []);
+
+    const onSearchTermChange = (selectedTermsCount: string) => {
+        setSelectedSearchTerm(searchTerms[selectedTermsCount as any]);
+    };
+
     return (
         <div>
             <div className="mb-6 ml-10">
                 {!loading && (
-                    <Tab.Group defaultIndex={selectedIndex}>
+                    <Tab.Group selectedIndex={selectedTab}>
                         <TabHeaders
-                            selectedIndex={selectedIndex}
-                            selectedQualityInsights={selectedQualityInsights}
                             setSelectedQualityInsights={
                                 setSelectedQualityInsights
                             }
-                            selectedSearchTerm={selectedSearchTerm}
-                            setSelectedSearchTerm={setSelectedSearchTerm}
-                            selectedDownload={selectedDownload}
+                            setSelectedSearchTerm={onSearchTermChange}
                             setSelectedDownload={setSelectedDownload}
                             setSelected={setSelected}
                             selected={selected}
@@ -50,10 +59,14 @@ const Insights = () => {
                                 />
                             </Tab.Panel>
                             <Tab.Panel>
-                                <SearchTermSection />
+                                <SearchTermSection
+                                    selectedSearchTerm={selectedSearchTerm}
+                                />
                             </Tab.Panel>
                             <Tab.Panel>
-                                <DownloadSection selectedLabel={selectedDownload}/>
+                                <DownloadSection
+                                    selectedLabel={selectedDownload}
+                                />
                             </Tab.Panel>
                         </Tab.Panels>
                     </Tab.Group>

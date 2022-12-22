@@ -42,17 +42,23 @@ const Dropdown = ({
         !showMenu && setShowMenu(true);
     };
     return (
-        <Menu as="div" className="relative inline-block text-left">
+        <Menu
+            as="div"
+            className="relative inline-block text-left select-none outline-none"
+        >
             <Menu.Button
                 onClick={onClick}
                 className={clsx(
-                    "cursor-pointer flex items-center ml-6 hover:text-dtech-main-dark outline-none",
+                    "cursor-pointer flex items-center ml-6 hover:text-dtech-main-dark select-none outline-none",
                     className
                 )}
             >
                 <span
                     id="profile-dropdown"
-                    className={clsx("text-inherit text-sm", labelClasses)}
+                    className={clsx(
+                        "text-inherit text-sm select-none outline-none",
+                        labelClasses
+                    )}
                 >
                     {label}
                 </span>
