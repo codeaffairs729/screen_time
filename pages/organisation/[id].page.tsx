@@ -1,7 +1,7 @@
 import DefaultLayout from "components/layouts/default";
 import BackBtn from "components/UI/buttons/back_btn";
 import { useEffect, useState } from "react";
-import OrganisationHead from "./components/organizationHead";
+import OrganisationHead from "./components/organisation_head";
 import { Tab } from "@headlessui/react";
 import TabPanel from "components/UI/tabbed/panel";
 import TabHeaders from "./components/tabs";
@@ -16,7 +16,7 @@ enum tabIndex {
     report,
 }
 
-const OragnizationDetailPage = () => {
+const OrganisationDetailPage = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const [selectedIndex, setSelectedIndex] = useState<any>(0);
     const { asPath } = useRouter();
@@ -62,4 +62,4 @@ const OragnizationDetailPage = () => {
     );
 };
 
-export default OragnizationDetailPage;
+export default OrganisationDetailPage;

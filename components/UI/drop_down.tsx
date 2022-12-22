@@ -115,7 +115,7 @@ const MenuItem = ({
             {onClick ? (
                 <button
                     className={clsx(
-                        "hover:bg-dtech-main-light text-dtech-primary-dark px-2.5 py-2 text-sm w-full shadow-underline text-left boder-b-1 shadow-dtech-dark-grey text-dtech-dark-grey",
+                        "hover:bg-dtech-main-light px-2.5 py-2 text-sm w-full shadow-underline text-left boder-b-1 shadow-dtech-dark-grey text-dtech-dark-grey",
                         className
                     )}
                     onClick={onClick}
@@ -126,7 +126,7 @@ const MenuItem = ({
                 <Link href={link || "#"}>
                     <a
                         className={clsx(
-                            "hover:bg-dtech-main-light text-dtech-primary-dark px-2.5 py-2 text-sm w-full shadow-underline text-left boder-b-1 shadow-dtech-dark-grey text-dtech-dark-grey",
+                            "hover:bg-dtech-main-light px-2.5 py-2 text-sm w-full shadow-underline text-left boder-b-1 shadow-dtech-dark-grey text-dtech-dark-grey",
                             className
                         )}
                     >

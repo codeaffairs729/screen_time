@@ -8,10 +8,10 @@ const OrganisationHead = () => {
     const description =
         "NatureScot collects data and information on many aspects of Scotland’s environment. Their online data services let people access this knowledge easily.";
     const dataQuality = 3;
-    const imgUrl = "";
+    const imgUrl =
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg";
     const domains = ["Health and care"];
     const topics = ["Diseases"];
-    const keywords = ["Survey"];
 
     return (
         <div className="px-4">
@@ -35,16 +35,11 @@ const OrganisationHead = () => {
             <div className="my-4">
                 <div className="flex justify-between">
                     <span className="text-sm w-2/3">{description}</span>
-                    <img
-                        src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg"
-                        alt=""
-                        className="h-[100px] w-[140px]"
-                    />
+                    <img src={imgUrl} alt="" className="h-[100px] w-[140px]" />
                 </div>
                 <div className="flex justify-start items-end">
                     <MetaInfoEntity entityName="Domains" entities={domains} />
                     <MetaInfoEntity entityName="Topics" entities={topics} />
-                    <MetaInfoEntity entityName="Keywords" entities={keywords} />
                 </div>
             </div>
             <div className="my-4">
