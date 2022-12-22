@@ -39,9 +39,11 @@ const CardHead = ({
                     displayContext={"displayContext"}
                     labelClass="font-normal"
                     handleFAQClick={() => {
-                        router.push({
-                            pathname: `/faq`,
-                        });
+                        handleFAQClick
+                            ? handleFAQClick()
+                            : router.push({
+                                  pathname: `/faq`,
+                              });
                     }}
                 />
                 {buttonTags.map((tag: string, index: number) => (

@@ -26,6 +26,7 @@ const OrganisationHead = () => {
                     </button>
                 </div>
                 <DatasetAction
+                    dataset={{ id: 1 }}
                     // onFavorite={() => {}}
                     // handleBookmark={() => {}}
                     handleShare={() => {}}
