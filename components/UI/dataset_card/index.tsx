@@ -5,6 +5,7 @@ import { DateTime } from "luxon";
 import { DataStats } from "./dataset_stat";
 
 export interface Dataset {
+    id: number | string;
     title: string;
     description: string;
     dataQuality: number;

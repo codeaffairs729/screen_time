@@ -1,50 +1,44 @@
-import { Disclosure } from "@headlessui/react";
-import { BiChevronUp } from "react-icons/bi";
 import DefaultLayout from "components/layouts/default";
+import Accordian from "components/UI/accordian";
 
 const FAQPage = () => {
-  return (
-    <DefaultLayout>
-      <div className="mx-4 md:mx-20 my-2">
-        <Disclosure defaultOpen>
-          {({ open }) => (
-            <>
-              <Disclosure.Button className="flex justify-between w-full px-4 py-2 text-sm font-medium text-left text-white bg-dtech-secondary-light rounded hover:bg-dtech-secondary-dark focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
-                <span>What is your refund policy?</span>
-                <BiChevronUp
-                  className={`${
-                    open ? "transform rotate-180" : ""
-                  } w-5 h-5 text-white`}
-                />
-              </Disclosure.Button>
-              <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-gray-500">
-                If you&rsquo;re unhappy with your purchase for any reason, email
-                us within 90 days and we&rsquo;ll refund you in full, no
-                questions asked.
-              </Disclosure.Panel>
-            </>
-          )}
-        </Disclosure>
-        <Disclosure as="div" className="mt-2">
-          {({ open }) => (
-            <>
-              <Disclosure.Button className="flex justify-between w-full px-4 py-2 text-sm font-medium text-left text-white bg-dtech-secondary-light rounded hover:bg-dtech-secondary-dark focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
-                <span>Do you offer technical support?</span>
-                <BiChevronUp
-                  className={`${
-                    open ? "transform rotate-180" : ""
-                  } w-5 h-5 text-white`}
-                />
-              </Disclosure.Button>
-              <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-gray-500">
-                No.
-              </Disclosure.Panel>
-            </>
-          )}
-        </Disclosure>
-      </div>
-    </DefaultLayout>
-  );
+    return (
+        <DefaultLayout>
+            <div className="mx-4 md:mx-20 my-2">
+                <span className="text-dtech-dark-grey font-semibold text-2xl">
+                    Frequently asked questions
+                </span>
+                <div className="py-6 mt-6 rounded-[20px] px-10 bg-dtech-light-grey min-h-[60vh]">
+                    <Accordian
+                        className="bg-dtech-main-light"
+                        label={"How do you determine Metadata Quality?"}
+                    >
+                        <span className="px-4 py-2 w-full text-sm">
+                            We follow the Metadata Quality Assessment
+                            methodology of the we follow the Metadata Quality
+                            Assessment methodology of the we follow the Metadata
+                        </span>
+                    </Accordian>
+                    <Accordian
+                        className="bg-dtech-main-light"
+                        label={"What is your refund policy?"}
+                    >
+                        <span className="px-4 py-2 w-full text-sm">
+                            If you&rsquo;re unhappy with your purchase for any
+                            reason, email us within 90 days and we&rsquo;ll
+                            refund you in full, no questions asked.
+                        </span>
+                    </Accordian>
+                    <Accordian
+                        className="bg-dtech-main-light"
+                        label={"Do you offer technical support?"}
+                    >
+                        <span className="px-4 py-2 w-full text-sm">No</span>
+                    </Accordian>
+                </div>
+            </div>
+        </DefaultLayout>
+    );
 };
 
 export default FAQPage;

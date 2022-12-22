@@ -7,9 +7,11 @@ import {
     BsHeart,
     BsBookmarkPlus,
 } from "react-icons/bs";
+import FavouriteBtn from "./buttons/favourite_btn.v4";
 import Popup from "./popup";
 import BookmarkBtn from "./user_bookmark/bookmark_btn";
 type DatasetActionProps = {
+    dataset: any;
     favourite?: Boolean;
     bookmark?: Boolean;
     onFavourite?: Function;
@@ -17,14 +19,11 @@ type DatasetActionProps = {
     handleShare: Function;
 };
 const DatasetAction = ({
-    // favourite = false,
-    // bookmark = false,
-    // onFavourite,
-    // handleBookmark,
+    dataset,
+    onFavourite,
+    handleBookmark,
     handleShare,
 }: DatasetActionProps) => {
-    const [fav, setFav] = useState(false);
-    const [bookmark, setBookmark] = useState(false);
     const [share, setShare] = useState(false);
     return (
         <div>
@@ -34,44 +33,12 @@ const DatasetAction = ({
                     data-modal-toggle="popup"
                     onClick={() => setShare(!share)}
                 />
-
-                {/* <BookmarkBtn className="mx-auto" dataset={dataset} /> */}
-                {fav ? (
-                    <BsHeartFill
-                        className="h-6 w-6 ml-4 text-dtech-main-dark cursor-pointer"
-                        onClick={() => {
-                            setFav(!fav);
-                            toast.success("Successfuly Marked Favorite!");
-                        }}
-                    />
-                ) : (
-                    <BsHeart
-                        className="h-6 w-6 ml-4 text-dtech-main-dark cursor-pointer"
-                        onClick={() => {
-                            setFav(!fav);
-                            toast.success("Successfuly Un-marked Favorite!");
-                        }}
-                    />
-                )}
-                {bookmark ? (
-                    <BsFillBookmarkPlusFill
-                        className="h-6 w-6 ml-4 text-dtech-main-dark cursor-pointer"
-                        onClick={() => {
-                            setFav(!fav);
-                            toast.success("Successfuly Marked the Bookmarked!");
-                        }}
-                    />
-                ) : (
-                    <BsBookmarkPlus
-                        className="h-6 w-6 ml-4 text-dtech-main-dark cursor-pointer"
-                        onClick={() => {
-                            setFav(!fav);
-                            toast.success(
-                                "Successfuly Un-marked the Bookmarked!"
-                            );
-                        }}
-                    />
-                )}
+                <FavouriteBtn
+                    className="mx-auto"
+                    datasetStats={dataset}
+                    onFavouriteChange={() => {}}
+                />
+                <BookmarkBtn className="mx-auto" dataset={dataset} />
             </div>
             {share && <Popup />}
         </div>

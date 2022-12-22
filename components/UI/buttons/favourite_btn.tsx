@@ -16,7 +16,7 @@ const FavouriteBtn = ({
     onFavouriteChange,
 }: {
     className?: string;
-    dataset: Dataset;
+    dataset: any;
     onFavouriteChange?: () => void;
 }) => {
     const { handleFavourite, isFavourited, isHandlingFavourite, user } =
@@ -67,16 +67,13 @@ const FavouriteBtn = ({
 /**
  * Favourite a dataset
  */
-const useFavouriteDataset = (
-    dataset: Dataset,
-    onFavouriteChange?: () => void
-) => {
+const useFavouriteDataset = (dataset: any, onFavouriteChange?: () => void) => {
     const user = useSelector((state: RootState) => state.auth.user);
     const [isFavourited, setIsFavourited] = useState(
-        dataset.detail.isFavourited
+        dataset?.detail?.isFavourited
     );
     useEffect(() => {
-        setIsFavourited(dataset.detail.isFavourited);
+        setIsFavourited(dataset?.detail?.isFavourited);
     }, [dataset]);
     const { execute: executeHandleFavourite, isLoading: isHandlingFavourite } =
         useHttpCall();

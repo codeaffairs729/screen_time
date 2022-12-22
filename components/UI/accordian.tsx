@@ -9,10 +9,12 @@ const Accordian = ({
     children,
     label,
     stateIcon,
+    className = "",
 }: {
     children: ReactNode;
     label: string | ReactNode;
     stateIcon?: ReactNode;
+    className?: string;
 }) => {
     const [selected, setSelected] = useState<boolean>(false);
 
@@ -20,7 +22,7 @@ const Accordian = ({
         <div
             className={`${
                 selected ? "bg-dtech-main-light" : "bg-gray-100"
-            } w-full max-w-[768px] my-3`}
+            } w-full max-w-[768px] my-3 ${className}`}
         >
             <div
                 onClick={() => setSelected(!selected)}
@@ -56,7 +58,7 @@ const Accordian = ({
             <div
                 className={`${
                     selected ? "max-h-[100vh]" : "max-h-0"
-                } overflow-hidden transition-all duration-300`}
+                } overflow-hidden transition-all duration-300 flex items-center`}
             >
                 {children}
             </div>

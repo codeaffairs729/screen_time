@@ -23,7 +23,7 @@ export default function BookmarkModal({
 }: {
     showModal: any;
     setShowModal: any;
-    dataset: Dataset;
+    dataset: any;
 }) {
     const bookmark_items = useSelector(
         (state: RootState) => state.user.bookmarkItems
@@ -100,7 +100,7 @@ const ModelList = ({
 }: {
     list: any;
     bookmark_items: any;
-    dataset: Dataset;
+    dataset: any;
 }) => {
     const user = useSelector((state: RootState) => state.auth.user);
     const { deleteUserList, isDeletingList } = DeleteListVM(user);
