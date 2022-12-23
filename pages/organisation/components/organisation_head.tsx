@@ -22,14 +22,16 @@ const OrganisationHead = () => {
     return (
         <div className="px-4">
             <div className="flex justify-between items-center">
-                <div className="text-dtech-dark-grey text-lg font-semibold">
-                    {title}
-                </div>
                 <div className="flex justify-between items-center">
-                    <MetaRating dataQuality={dataQuality} />
-                    <button className="ml-8 text-m w-[105px] border cursor-pointer rounded border-[#5F5F63]">
-                        Open
-                    </button>
+                    <div className="text-dtech-dark-grey text-lg font-semibold">
+                        {title}
+                    </div>
+                    <div className="flex justify-between items-center">
+                        <MetaRating dataQuality={dataQuality} />
+                        <button className="ml-8 text-m w-[105px] border cursor-pointer rounded border-[#5F5F63]">
+                            Open
+                        </button>
+                    </div>
                 </div>
                 <DatasetAction
                     dataset={{ id: 1 }}

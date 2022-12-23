@@ -20,11 +20,22 @@ enum searchTerms {
     top_25 = 25,
 }
 
+enum qualityInsights {
+    data_file,
+    metadata,
+}
+
+enum download {
+    by_region,
+    by_time,
+    by_user_type,
+}
+
 const Insights = () => {
     const [selectedQualityInsights, setSelectedQualityInsights] =
-        useState<string>("");
+        useState<any>(0);
     const [selectedSearchTerm, setSelectedSearchTerm] = useState<any>(10);
-    const [selectedDownload, setSelectedDownload] = useState<string>("");
+    const [selectedDownload, setSelectedDownload] = useState<any>(0);
     const [loading, setLoading] = useState<boolean>(false);
     const [selectedTab, setSelectedTab] = useState<any>(0);
     const [selected, setSelected] = useState<number>(0);
@@ -38,17 +49,23 @@ const Insights = () => {
         setSelectedSearchTerm(searchTerms[selectedTermsCount as any]);
     };
 
+    const onQulaityTypeChange = (label: string) => {
+        setSelectedQualityInsights(qualityInsights[label as any]);
+    };
+
+    const onDownloadTypeChange = (label: string) => {
+        setSelectedDownload(download[label as any]);
+    };
+
     return (
         <div>
             <div className="mb-6 ml-10">
                 {!loading && (
                     <Tab.Group selectedIndex={selectedTab}>
                         <TabHeaders
-                            setSelectedQualityInsights={
-                                setSelectedQualityInsights
-                            }
+                            setSelectedQualityInsights={onQulaityTypeChange}
                             setSelectedSearchTerm={onSearchTermChange}
-                            setSelectedDownload={setSelectedDownload}
+                            setSelectedDownload={onDownloadTypeChange}
                             setSelected={setSelected}
                             selected={selected}
                         />

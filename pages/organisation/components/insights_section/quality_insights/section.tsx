@@ -95,11 +95,8 @@ const DisplayDataset = ({ title, description }: any) => (
         </span>
     </div>
 );
-const QualityInsightsBody = ({ selectedLabel }: { selectedLabel: string }) => {
-    const items =
-        selectedLabel.toLowerCase() == "data file"
-            ? DATAFILE_ITEMS
-            : METADATA_ITEMS;
+const QualityInsightsBody = ({ selectedLabel }: { selectedLabel: number }) => {
+    const items = selectedLabel == 0 ? DATAFILE_ITEMS : METADATA_ITEMS;
 
     const tableData = ROW2.map((data, index) => [
         index,
@@ -111,7 +108,7 @@ const QualityInsightsBody = ({ selectedLabel }: { selectedLabel: string }) => {
     return (
         <div className="ml-16">
             <div className="text-sm text-dtech-dark-grey my-4">
-                {selectedLabel.toLocaleLowerCase() == "data file"
+                {selectedLabel == 0
                     ? "These scores are determined based on feedback gathered from users."
                     : "These values are determined based on the Metadata Quality Assessment methodology and calculated using algorithms."}
             </div>

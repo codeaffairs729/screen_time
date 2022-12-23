@@ -16,7 +16,7 @@ const SearchTermHeader = ({ onChange }: QualityProps) => {
     };
 
     const getLabel = (label: string) => {
-        const res = label.replace("_", " ");
+        const res = label.replaceAll("_", " ");
         return `${res[0].toUpperCase()}${res.slice(1)} terms`;
     };
 
