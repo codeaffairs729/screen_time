@@ -28,8 +28,8 @@ const OrganisationHead = () => {
                     </div>
                     <div className="flex justify-between items-center">
                         <MetaRating dataQuality={dataQuality} />
-                        <button className="ml-8 text-m w-[105px] border cursor-pointer rounded border-[#5F5F63]">
-                            Open
+                        <button className="ml-8 text-m h-6 px-4 border cursor-pointer rounded border-[#5F5F63]">
+                            <span className="my-auto">Open</span>
                         </button>
                     </div>
                 </div>
