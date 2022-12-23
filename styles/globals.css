@@ -39,3 +39,14 @@ input[type='text']:focus { box-shadow: none; }
   list-style: revert !important;
   margin: 1em 1em !important;
 }
+
+.number-icon
+{
+    background-image: url("/images/icons/leaflet/map-marker.svg");
+    background-size: 50px 50px;
+    background-repeat: no-repeat;
+    margin: 0 auto;
+    text-align:center;
+    color:rgb(11, 11, 11);
+    font-weight: bold;
+}

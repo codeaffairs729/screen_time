@@ -1,12 +1,4 @@
-import { useCallback, useState } from "react";
-import {
-    Cell,
-    LabelList,
-    Pie,
-    PieChart,
-    ResponsiveContainer,
-    Sector,
-} from "recharts";
+import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
 
 const COLORS = [
     "#ED95DA",
@@ -30,7 +22,7 @@ const renderLabel = ({
     value,
 }: any) => {
     const RADIAN = Math.PI / 180;
-
+    console.log("mid Angle : ", midAngle, "cx :", cx, "cy :", cy);
     const sin = Math.sin(-RADIAN * midAngle);
     const cos = Math.cos(-RADIAN * midAngle);
     const sx = cx + (outerRadius + 10) * cos;
@@ -54,10 +46,10 @@ const renderLabel = ({
                 fill={fill}
                 stroke={"black"}
                 stroke-width="1"
-                height="100"
-                width="200"
-                x={sx + (cos >= 0 ? 1 : -1) * 12}
-                y={sy}
+                height="90"
+                width="150"
+                x={ex + (cos >= 0 ? 0 : -12) * 12}
+                y={ey + (sin >= 0 ? -5 : -6) * 5}
             />
             <text
                 x={ex + (cos >= 0 ? 1 : -1) * 12}
@@ -87,11 +79,8 @@ const renderLabel = ({
 };
 const PieGraph = ({ data }: { data: Array<Object> }) => {
     return (
-        // <ResponsiveContainer width={1000} height="80%">
-        <PieChart width={1000} height={1000}>
+        <PieChart width={950} height={700}>
             <Pie
-                cx={500}
-                cy={300}
                 data={data}
                 dataKey={"value"}
                 nameKey="name"
@@ -106,7 +95,6 @@ const PieGraph = ({ data }: { data: Array<Object> }) => {
                 ))}
             </Pie>
         </PieChart>
-        // </ResponsiveContainer>
     );
 };
 export default PieGraph;

@@ -23,6 +23,7 @@ const BarGraph = ({
     labelListColor = "#3F0068",
     barSize = 40,
     labelListPosition = "insideBottom",
+    labellistTopPadding= 0,
 }: {
     data?: Array<Object>;
     strokeWidthAxis?: number;
@@ -46,6 +47,7 @@ const BarGraph = ({
     labelListColor?: string;
     barSize?: number;
     labelListPosition?: any;
+    labellistTopPadding?:number;
 }) => {
     return (
         <BarChart
@@ -93,6 +95,7 @@ const BarGraph = ({
                     />
                 ))}
                 <LabelList
+                    dy={labellistTopPadding}
                     dataKey={labelListDatakey}
                     fill={labelListColor}
                     position={labelListPosition}

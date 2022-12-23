@@ -1,13 +1,18 @@
 import BarGraph from "components/UI/BarGraph";
 import PieGraph from "components/UI/PieGraph";
 import WorldMap from "components/UI/world_map";
+import { LatLngExpression } from "leaflet";
 import Table from "../../table";
 
 const DownloadSection = ({ selectedLabel }: { selectedLabel: string }) => {
     const TABLE_HEADERS = ["Region", "Count", "Last used"];
-    const ROW1 = ["Manchester", "London", "Edinburgh", "Bristol"];
-    const ROW2 = ["125", "64", "87", "34"];
+    const ROW1 = ["Manchester", "London", "Edinburgh", "Bristol","Manchester", "London", "Edinburgh", "Bristol"];
+    const ROW2 = ["125", "64", "87", "34","125", "64", "87", "34"];
     const ROW3 = [
+        "22 minutes ago",
+        "1 day ago",
+        "22 minutes ago",
+        "22 minutes ago",
         "22 minutes ago",
         "1 day ago",
         "22 minutes ago",
@@ -40,11 +45,23 @@ const DownloadSection = ({ selectedLabel }: { selectedLabel: string }) => {
         ROW3[index],
     ]);
     const barDataKey = "download_per_month";
-    const labelListDatakey = "month";
+    const LOCATIONS :Array<LatLngExpression> = [
+        [41.8819, -87.6278],
+        [45.890, -87.6279],
+        [42.536457, -70.985786],
+        [35.328674, -90.664658],
+        [31.8819, -87.6278],
+        [75.890, -87.6279],
+        [52.536457, -90.985786],
+        [60.328674, -90.664658],
+    ];
     return (
         <div>
             {selectedLabel.toLowerCase() == "by region" && (
-                <div className="ml-8 mr-24">
+                <div className="ml-8 mr-24 block h-[44rem] overflow-y-scroll no-scrollbar whitespace-nowrap">
+                    <div className="mt-12">
+                        {/* <WorldMap locations={LOCATIONS} counts={ROW2}/> */}
+                    </div>
                     <Table
                         tableHeaders={TABLE_HEADERS}
                         tableData={tableData}
@@ -57,7 +74,6 @@ const DownloadSection = ({ selectedLabel }: { selectedLabel: string }) => {
             )}
             {selectedLabel.toLowerCase() == "by time" && (
                 <div className="ml-[-25px]">
-                    <div className="my-44">{/* <WorldMap /> */}</div>
                     <BarGraph
                         data={TIME}
                         strokeWidthAxis={0.4}
@@ -76,11 +92,12 @@ const DownloadSection = ({ selectedLabel }: { selectedLabel: string }) => {
                         labelListColor={"#3F0068"}
                         barSize={100}
                         labelListPosition="insideTop"
+                        labellistTopPadding={6}
                     />
                 </div>
             )}
             {selectedLabel.toLowerCase() == "by user type" && (
-                <div className="ml-[-50px] mr-24 mt-8">
+                <div className="mr-24 mt-8">
                     <PieGraph data={PIEDATA} />
                 </div>
             )}
