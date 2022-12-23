@@ -3,35 +3,35 @@ import { ReactNode, useState } from "react";
 import SearchTermHeader from "./search_term_section/header";
 import DownloadHeader from "./download_section/header";
 import QualityInsightsHeader from "./quality_insights/header";
-
-enum headers {
-    dataset_quality,
-    search_term,
-    download_metrics,
-}
+import {
+    getSelectedLabelIndex,
+    insightTabIndex,
+} from "pages/organisation/organisation.vm";
 
 const TabHeaders = ({
+    selectedInsightTab,
     setSelectedQualityInsights,
     setSelectedSearchTerm,
     setSelectedDownload,
-    setSelected,
-    selected = 0,
+    setSelectedInsightTab,
 }: {
-    setSelectedQualityInsights?: any;
-    setSelectedSearchTerm?: any;
-    setSelectedDownload?: any;
-    setSelected?: any;
-    selected?: number;
+    selectedInsightTab: number;
+    setSelectedQualityInsights: Function;
+    setSelectedSearchTerm: Function;
+    setSelectedDownload: Function;
+    setSelectedInsightTab: Function;
 }) => {
     const onTabSelect = (selectedTab: string) => {
-        setSelected(headers[selectedTab as any]);
+        setSelectedInsightTab(
+            getSelectedLabelIndex(selectedTab, insightTabIndex)
+        );
     };
 
     return (
         <div className="ml-10 mr-28">
             <Tab.List className={"flex justify-between items-center "}>
                 <HeadTag
-                    isSelected={selected == 0}
+                    isSelected={selectedInsightTab == 0}
                     label={"dataset_quality"}
                     setSelected={onTabSelect}
                 >
@@ -40,14 +40,14 @@ const TabHeaders = ({
                     />
                 </HeadTag>
                 <HeadTag
-                    isSelected={selected == 1}
+                    isSelected={selectedInsightTab == 1}
                     label={"search_term"}
                     setSelected={onTabSelect}
                 >
                     <SearchTermHeader onChange={setSelectedSearchTerm} />
                 </HeadTag>
                 <HeadTag
-                    isSelected={selected == 2}
+                    isSelected={selectedInsightTab == 2}
                     label={"download_metrics"}
                     setSelected={onTabSelect}
                 >

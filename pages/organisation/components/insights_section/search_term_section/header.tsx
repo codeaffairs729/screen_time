@@ -1,5 +1,10 @@
 import Dropdown, { MenuItemType } from "components/UI/drop_down";
-import { useEffect, useState } from "react";
+import {
+    formatLabel,
+    getSelectedLabelIndex,
+    searchTerms,
+} from "pages/organisation/organisation.vm";
+import { useState } from "react";
 
 const ITEMS: MenuItemType[] = [{ label: "top_10" }, { label: "top_25" }];
 
@@ -10,18 +15,13 @@ type QualityProps = {
 const SearchTermHeader = ({ onChange }: QualityProps) => {
     const [selectedLabel, setSelectedLabel] = useState(ITEMS[0].label);
 
-    const handleChange = (item: string) => {
-        setSelectedLabel(item);
-        onChange && onChange(item);
-    };
-
-    const getLabel = (label: string) => {
-        const res = label.replaceAll("_", " ");
-        return `${res[0].toUpperCase()}${res.slice(1)} terms`;
+    const handleChange = (label: string) => {
+        setSelectedLabel(label);
+        onChange && onChange(getSelectedLabelIndex(label, searchTerms));
     };
 
     const menuItems = ITEMS.map((item) => ({
-        label: getLabel(item.label),
+        label: `${formatLabel(item.label)} terms`,
         onClick: () => handleChange(item.label),
     }));
 
@@ -37,12 +37,10 @@ const SearchTermHeader = ({ onChange }: QualityProps) => {
 };
 
 const Label = ({ label }: { label: string }) => {
-    const labelToShow = label.replace("_", " ");
-
     return (
         <div className="flex flex-col select-none outline-none text-dtech-main-dark text-left ">
             <span>Search terms used:</span>
-            <span className="capitalize">{labelToShow} terms</span>
+            <span className="capitalize">{formatLabel(label)} terms</span>
         </div>
     );
 };
