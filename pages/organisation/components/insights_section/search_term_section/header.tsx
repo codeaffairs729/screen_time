@@ -5,6 +5,7 @@ import {
     searchTerms,
 } from "pages/organisation/organisation.vm";
 import { useState } from "react";
+import Label from "../label";
 
 const ITEMS: MenuItemType[] = [{ label: "top_10" }, { label: "top_25" }];
 
@@ -31,17 +32,11 @@ const SearchTermHeader = ({ onChange }: QualityProps) => {
             labelClasses="!text-lg"
             // className="!m-0"
             menuItems={menuItems}
-            label={<Label label={selectedLabel} />}
+            label={
+                <Label labelPrefix="Search terms used:" label={selectedLabel} />
+            }
         />
     );
 };
 
-const Label = ({ label }: { label: string }) => {
-    return (
-        <div className="flex flex-col select-none outline-none text-dtech-main-dark text-left ">
-            <span>Search terms used:</span>
-            <span className="capitalize">{formatLabel(label)} terms</span>
-        </div>
-    );
-};
 export default SearchTermHeader;

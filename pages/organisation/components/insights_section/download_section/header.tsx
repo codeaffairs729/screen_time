@@ -5,6 +5,7 @@ import {
     download,
 } from "pages/organisation/organisation.vm";
 import { useState } from "react";
+import Label from "../label";
 
 const ITEMS: MenuItemType[] = [
     { label: "by_region" },
@@ -33,17 +34,11 @@ const DownloadHeader = ({ onChange }: DownloadProps) => {
             className="border-b-[3px] border-dtech-main-dark"
             labelClasses="!text-lg"
             menuItems={menuItems}
-            label={<Label label={selectedLabel} />}
+            label={
+                <Label labelPrefix="Download metrics:" label={selectedLabel} />
+            }
         />
     );
 };
 
-const Label = ({ label }: { label: string }) => {
-    return (
-        <div className="flex select-none outline-none flex-col text-dtech-main-dark text-left">
-            <span>Dataset quality:</span>
-            <span>{formatLabel(label)}</span>
-        </div>
-    );
-};
 export default DownloadHeader;
