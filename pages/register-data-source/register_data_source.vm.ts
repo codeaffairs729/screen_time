@@ -17,15 +17,23 @@ const RegisterDataSourceVM = () => {
         const sanitizedValues = pickBy(data, (value) => value.length > 0);
         console.log(sanitizedValues);
         return executeRegisterDataSource(
-          () => Http.post("/v1/data_sources/", sanitizedValues),
-          {
-            onSuccess: (res) =>{
-              toast.success("The data source was successfully added.");
-              setIsSubmissionSuccess(true);
-            },
-            onError: (e) =>
-              toast.error("Something went wrong while adding the data source."),
-          }
+            () =>
+                Promise.all([
+                    Http.post("/v1/data_sources/", sanitizedValues),
+                    Http.post("/v1/data_sources/", sanitizedValues, {
+                        baseUrl: process.env.NEXT_PUBLIC_PIPELINE_API_ROOT,
+                    }),
+                ]),
+            {
+                onSuccess: (res) => {
+                    toast.success("The data source was successfully added.");
+                    setIsSubmissionSuccess(true);
+                },
+                onError: (e) =>
+                    toast.error(
+                        "Something went wrong while adding the data source."
+                    ),
+            }
         );
     };
 
