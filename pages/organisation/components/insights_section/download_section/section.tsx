@@ -1,4 +1,5 @@
 import BarGraph from "components/UI/BarGraph";
+import CalendarSelect from "components/UI/calendar_select";
 import PieGraph from "components/UI/PieGraph";
 import WorldMap from "components/UI/world_map";
 import { LatLngExpression } from "leaflet";
@@ -45,6 +46,8 @@ const DownloadSection = ({ selectedLabel }: { selectedLabel: number }) => {
         { name: "Data modelling", value: 400 },
         { name: "Publications", value: 300 },
         { name: "Planning", value: 200 },
+        { name: "gov", value: 500 },
+        { name: "Plan", value: 300 },
     ];
     // const TABLE_DATA = [ROW1, ROW2, ROW3];
     const tableData = ROW2.map((data, index) => [
@@ -83,6 +86,11 @@ const DownloadSection = ({ selectedLabel }: { selectedLabel: number }) => {
             )}
             {selectedLabel == 1 && (
                 <div className="ml-[-25px]">
+                    <div className="flex ml-16">
+                        Please select your time frame:
+                        <CalendarSelect label="From" />
+                        <CalendarSelect label="To" />
+                    </div>
                     <BarGraph
                         data={TIME}
                         strokeWidthAxis={0.4}

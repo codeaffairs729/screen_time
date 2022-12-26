@@ -4,9 +4,9 @@ const COLORS = [
     "#ED95DA",
     "#7F6094",
     "#6E8DDE",
-    "#ED95DA",
-    "#7F6094",
-    "#6E8DDE",
+    "#09c6f9",
+    "#6E72FC",
+    "#CB2020",
     "#ED95DA",
     "#7F6094",
     "#6E8DDE",
@@ -48,7 +48,7 @@ const renderLabel = ({
                 stroke-width="1"
                 height="90"
                 width="150"
-                x={ex + (cos >= 0 ? 0 : -12) * 12}
+                x={ex + (cos >= 0 ? 0 : -12.6) * 12}
                 y={ey + (sin >= 0 ? -5 : -6) * 5}
             />
             <text
@@ -79,7 +79,7 @@ const renderLabel = ({
 };
 const PieGraph = ({ data }: { data: Array<Object> }) => {
     return (
-        <PieChart width={950} height={700}>
+        <PieChart width={950} height={700} >
             <Pie
                 data={data}
                 dataKey={"value"}
@@ -88,7 +88,7 @@ const PieGraph = ({ data }: { data: Array<Object> }) => {
                 labelLine={true}
                 legendType="square"
                 label={renderLabel}
-                radius={80}
+                outerRadius={'60%'}
             >
                 {data.map((_, index) => (
                     <Cell key={`cell-${index}`} fill={COLORS[index]} />
