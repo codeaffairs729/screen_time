@@ -1,4 +1,5 @@
 import CalendarSelect from "components/UI/calendar_select";
+import RangeSelector from "components/UI/range_selector";
 import { useState } from "react";
 import { VscTriangleDown } from "react-icons/vsc";
 
@@ -6,10 +7,18 @@ const ReportFilter = ({
     handleCheck,
     handleAutoGenerate,
     HEADER,
+    fromDate,
+    setFromDate,
+    toDate,
+    setToDate,
 }: {
     handleCheck: any;
     handleAutoGenerate: any;
     HEADER: any;
+    fromDate: any;
+    setFromDate: any;
+    toDate: any;
+    setToDate: any;
 }) => {
     const [showFilter, setShowFilter] = useState<boolean>(true);
     return (
@@ -49,8 +58,12 @@ const ReportFilter = ({
                     <span>Select period</span>
                 </div>
                 <div className="px-4 flex w-full items-center justify-between mb-6">
-                    <CalendarSelect label="From" />
-                    <CalendarSelect label="To" />
+                    <RangeSelector
+                        fromDate={fromDate}
+                        setFromDate={setFromDate}
+                        toDate={toDate}
+                        setToDate={setToDate}
+                    />
                 </div>
             </div>
             <button

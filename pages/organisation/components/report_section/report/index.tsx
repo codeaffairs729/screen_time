@@ -1,5 +1,4 @@
 import { useState } from "react";
-// import EditReport from "./editReport";
 import Head from "./head";
 import Preview from "./preview";
 import { EditorState } from "draft-js";
@@ -7,12 +6,15 @@ import dynamic from "next/dynamic";
 const EditReport = dynamic(() => import("./editReport"), {
     ssr: false,
 });
-const Report = ({ autoGenerate, selected }: any) => {
-    const [edit, setEdit] = useState<boolean>(false);
-
-    const handleCancel = () => {
-        setEdit(false);
-    };
+const Report = ({
+    autoGenerate,
+    selected,
+    edit,
+    setEdit,
+    handleCancel,
+    fromDate,
+    toDate,
+}: any) => {
     const [editorState, onEditorStateChange] = useState(
         EditorState.createEmpty()
     );
@@ -27,6 +29,8 @@ const Report = ({ autoGenerate, selected }: any) => {
                     setConvertedContent={setConvertedContent}
                     autoGenerate={autoGenerate}
                     selected={selected}
+                    fromDate={fromDate}
+                    toDate={toDate}
                 />
             ) : (
                 <Preview convertedContent={convertedContent} />

@@ -4,7 +4,19 @@ import "react-datepicker/dist/react-datepicker.css";
 import { format } from "date-fns";
 import Calander from "./calander";
 
-const CalendarSelect = ({ label = "Select" }: { label?: string }) => {
+const CalendarSelect = ({
+    label = "Select",
+    fromDate,
+    toDate,
+    setFromDate,
+    setToDate,
+}: {
+    label?: string;
+    fromDate?: any;
+    toDate?: any;
+    setFromDate?: any;
+    setToDate?: any;
+}) => {
     const [startDate, setStartDate] = useState(new Date());
     const [dateSelect, setDateSelect] = useState(false);
     const [select, setSelected] = useState(false);
@@ -12,6 +24,21 @@ const CalendarSelect = ({ label = "Select" }: { label?: string }) => {
         setSelected(!select);
         setStartDate(e);
     };
+
+    if (label == "From") {
+        if (startDate <= toDate) {
+            setFromDate(startDate);
+        } else {
+            setFromDate(toDate);
+        }
+    } else {
+        if (fromDate <= startDate) {
+            setToDate(startDate);
+        } else {
+            setToDate(fromDate);
+        }
+    }
+
     return (
         <div className="flex  pl-5">
             <div
@@ -22,7 +49,9 @@ const CalendarSelect = ({ label = "Select" }: { label?: string }) => {
             >
                 {dateSelect ? (
                     <span className="text-sm">
-                        {format(startDate, "dd-MM-yyyy")}
+                        {label == "From"
+                            ? format(fromDate, "dd-MM-yyyy")
+                            : format(toDate, "dd-MM-yyyy")}
                     </span>
                 ) : (
                     <span className="text-sm">{label}</span>

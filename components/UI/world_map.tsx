@@ -37,17 +37,17 @@ const WorldMap = ({
 export default WorldMap;
 
 const MarkerDisplay = ({
-    key,
+    // index,
     location,
     count,
 }: {
-    key: number;
+    // index: number;
     location: LatLngExpression;
     count?: string;
 }) => {
     return (
         <Marker
-            key={key}
+            // key={index}
             position={location}
             icon={L.divIcon({
                 className: "number-icon pt-3",

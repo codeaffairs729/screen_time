@@ -1,8 +1,8 @@
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { useEffect } from "react";
 import { convertToHTML } from "draft-convert";
-import dynamic from "next/dynamic";
 import { Editor } from "react-draft-wysiwyg";
+import { format } from "date-fns";
 // const Editor = dynamic(
 //     () => import("react-draft-wysiwyg").then((mod) => mod.Editor),
 //     { ssr: false }
@@ -13,6 +13,8 @@ const EditReport = ({
     setConvertedContent,
     autoGenerate,
     selected,
+    fromDate,
+    toDate,
 }: any) => {
     useEffect(() => {
         let html = convertToHTML(editorState.getCurrentContent());
@@ -28,22 +30,41 @@ const EditReport = ({
             });
         });
     }
+    console.log(fromDate.getMonth(), "FromDate in Editor ");
+    console.log(toDate, "toDate in Editor ");
     return (
         <div className="min-w-[700px] min-h-[656px]  bg-white shadow-paper-shadow mt-4 w-2/3">
             {autoGenerate && (
-                <div className="flex justify-center">
-                    <img
-                        src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg"
-                        width={200}
-                        height={200}
-                        className={"absolute mt-14 "}
-                    />
-                    <div className="flex absolute justify-start">
+                <div>
+                    <div className="flex justify-center">
+                        <img
+                            src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg"
+                            width={200}
+                            height={200}
+                            className={"absolute mt-14 "}
+                        />
+                    </div>
+                    <div className="flex absolute justify-start ">
                         {selected.map((object: any, index: any) => (
-                            <span className="mt-44">
+                            <span className="ml-1 mt-56" key={index}>
                                 {object.isChecked && object.label}
                             </span>
                         ))}
+                        <div className="mt-48">
+                            {format(fromDate, "dd-MM-yyyy") ===
+                            format(toDate, "dd-MM-yyyy") ? (
+                                <span>{format(fromDate, "dd-MM-yyyy")}</span>
+                            ) : (
+                                <div>
+                                    <span className=" pr-4">
+                                        {format(fromDate, "dd-MM-yyyy")}
+                                    </span>
+                                    <span className="">
+                                        {format(toDate, "dd-MM-yyyy")}
+                                    </span>
+                                </div>
+                            )}
+                        </div>
                     </div>
                 </div>
             )}
@@ -82,7 +103,7 @@ const EditReport = ({
                     },
                 }}
                 wrapperClassName="p-1"
-                editorClassName="pl-1 mt-32"
+                editorClassName="pl-1 mt-44 !h-[476px]"
                 toolbarClassName="!pt-4  mt-0"
                 onEditorStateChange={onEditorStateChange}
                 readOnly={false}
