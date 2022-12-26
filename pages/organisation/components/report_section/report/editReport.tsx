@@ -2,7 +2,7 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { useEffect } from "react";
 import { convertToHTML } from "draft-convert";
 import dynamic from "next/dynamic";
-
+import { Editor } from "react-draft-wysiwyg";
 // const Editor = dynamic(
 //     () => import("react-draft-wysiwyg").then((mod) => mod.Editor),
 //     { ssr: false }
@@ -30,7 +30,7 @@ const EditReport = ({
     }
     return (
         <div className="min-w-[700px] min-h-[656px]  bg-white shadow-paper-shadow mt-4 w-2/3">
-            {/* {autoGenerate && (
+            {autoGenerate && (
                 <div className="flex justify-center">
                     <img
                         src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg"
@@ -87,7 +87,7 @@ const EditReport = ({
                 onEditorStateChange={onEditorStateChange}
                 readOnly={false}
                 spellCheck={true}
-            /> */}
+            />
         </div>
     );
 };

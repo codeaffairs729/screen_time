@@ -50,7 +50,7 @@ const OrganisationDetailPage = () => {
                                         <Insights />
                                     </TabPanel>
                                     <TabPanel className="!bg-dtech-light-grey">
-                                        {/* <Report /> */}
+                                        <Report />
                                     </TabPanel>
                                 </Tab.Panels>
                             </Tab.Group>

@@ -1,10 +1,12 @@
 import BarGraph from "components/UI/BarGraph";
 import CalendarSelect from "components/UI/calendar_select";
 import PieGraph from "components/UI/PieGraph";
-import WorldMap from "components/UI/world_map";
 import { LatLngExpression } from "leaflet";
 import Table from "../../table";
-
+import dynamic from "next/dynamic";
+const WorldMap = dynamic(() => import("components/UI/world_map"), {
+    ssr: false,
+});
 const DownloadSection = ({ selectedLabel }: { selectedLabel: number }) => {
     const TABLE_HEADERS = ["Region", "Count", "Last used"];
     const ROW1 = [
@@ -72,7 +74,7 @@ const DownloadSection = ({ selectedLabel }: { selectedLabel: number }) => {
             {selectedLabel == 0 && (
                 <div className="ml-8 mr-24 block h-[44rem] overflow-y-scroll no-scrollbar whitespace-nowrap">
                     <div className="mt-12">
-                        {/* <WorldMap locations={LOCATIONS} counts={ROW2}/> */}
+                        <WorldMap locations={LOCATIONS} counts={ROW2} />
                     </div>
                     <Table
                         tableHeaders={TABLE_HEADERS}

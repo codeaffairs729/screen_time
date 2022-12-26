@@ -21,11 +21,11 @@ const Calander = ({
                 onChange={handleChange}
                 calendarClassName="!border !border-red"
                 formatWeekDay={(nameOfDay) => nameOfDay.substring(0, 1)}
-                timeClassName={() => "bg-blue"}
-                popperClassName="bg-lightBlue"
-                wrapperClassName={"bg-blue"}
-                weekDayClassName={() => "bg-red"}
-                dayClassName={() => "bg-darkGreen"}
+                // timeClassName={() => "bg-blue"}
+                // popperClassName="bg-lightBlue"
+                // wrapperClassName={"bg-blue"}
+                // weekDayClassName={() => "bg-red"}
+                // dayClassName={() => "bg-darkGreen"}
                 inline
             />
         </div>
