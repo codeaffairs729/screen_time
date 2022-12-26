@@ -47,12 +47,14 @@ const CardHead = ({
                     }}
                 />
                 {buttonTags.map((tag: string, index: number) => (
-                    <span
+                    <button
                         key={index}
-                        className="select-none px-6 text-m font-normal border border-dtech-main-dark rounded ml-8 text-dtech-main-dark"
+                        className="ml-8 text-m h-6 px-4 border cursor-pointer rounded border-[#5F5F63]"
                     >
-                        {`${tag[0].toUpperCase()}${tag.slice(1)}`}
-                    </span>
+                        <span className="my-auto">{`${tag[0].toUpperCase()}${tag.slice(
+                            1
+                        )}`}</span>
+                    </button>
                 ))}
             </div>
             <DatasetAction
