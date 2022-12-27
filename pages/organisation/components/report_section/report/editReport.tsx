@@ -20,7 +20,6 @@ const EditReport = ({
         let html = convertToHTML(editorState.getCurrentContent());
         setConvertedContent(html);
     }, [editorState]);
-
     function uploadImageCallBack(file: any) {
         return new Promise((resolve, reject) => {
             resolve({
@@ -30,8 +29,6 @@ const EditReport = ({
             });
         });
     }
-    console.log(fromDate.getMonth(), "FromDate in Editor ");
-    console.log(toDate, "toDate in Editor ");
     return (
         <div className="min-w-[700px] min-h-[656px]  bg-white shadow-paper-shadow mt-4 w-2/3">
             {autoGenerate && (
@@ -44,26 +41,51 @@ const EditReport = ({
                             className={"absolute mt-14 "}
                         />
                     </div>
-                    <div className="flex absolute justify-start ">
-                        {selected.map((object: any, index: any) => (
-                            <span className="ml-1 mt-56" key={index}>
-                                {object.isChecked && object.label}
-                            </span>
-                        ))}
-                        <div className="mt-48">
+                    <div className="ml-2">
+                        <div className="flex justify-center absolute ml-60  mt-48">
                             {format(fromDate, "dd-MM-yyyy") ===
                             format(toDate, "dd-MM-yyyy") ? (
-                                <span>{format(fromDate, "dd-MM-yyyy")}</span>
+                                <span className="text-lg ml-10">
+                                    <span className="font-bold">
+                                        {fromDate.toLocaleString("default", {
+                                            month: "short",
+                                        })}
+                                    </span>
+                                    <span> {fromDate.getDate()}</span>,
+                                    <span>{fromDate.getFullYear()}</span>
+                                </span>
                             ) : (
-                                <div>
+                                <div className="text-lg">
                                     <span className=" pr-4">
-                                        {format(fromDate, "dd-MM-yyyy")}
+                                        <span className="font-bold">
+                                            {fromDate.toLocaleString(
+                                                "default",
+                                                {
+                                                    month: "short",
+                                                }
+                                            )}
+                                        </span>
+                                        <span> {fromDate.getDate()}</span>,
+                                        <span>{fromDate.getFullYear()}</span>
                                     </span>
                                     <span className="">
-                                        {format(toDate, "dd-MM-yyyy")}
+                                        <span className="font-bold">
+                                            {toDate.toLocaleString("default", {
+                                                month: "short",
+                                            })}
+                                        </span>
+                                        <span> {toDate.getDate()}</span>,
+                                        <span>{toDate.getFullYear()}</span>
                                     </span>
                                 </div>
                             )}
+                        </div>
+                        <div className="flex absolute justify-start flex-col mt-56">
+                            {selected.map((object: any, index: any) => (
+                                <span className="ml-1" key={index}>
+                                    {object.isChecked && object.label}
+                                </span>
+                            ))}
                         </div>
                     </div>
                 </div>
@@ -103,7 +125,7 @@ const EditReport = ({
                     },
                 }}
                 wrapperClassName="p-1"
-                editorClassName="pl-1 mt-44 !h-[476px]"
+                editorClassName="pl-1 mt-60 !h-[359px]"
                 toolbarClassName="!pt-4  mt-0"
                 onEditorStateChange={onEditorStateChange}
                 readOnly={false}
