@@ -8,7 +8,7 @@ import cascadeFolderOutline from "public/images/icons/cascade_folder_outline.svg
 import cascadeFolderFilled from "public/images/icons/cascade_folder_filled.svg";
 import listOutline from "public/images/icons/list_outline.svg";
 import listFilled from "public/images/icons/list_filled.svg";
-import TabHeader from "./tab_header";
+import TabIconHeader from "components/UI/tab_icon_header";
 import { useState } from "react";
 
 type Header = {
@@ -47,7 +47,10 @@ const TabHeaders = ({ selectedIndex = 0 }: { selectedIndex?: number }) => {
         <div>
             <Tab.List className="relative text-dtech-main-dark">
                 {HEADERS.map((header: Header, index: number) => (
-                    <TabHeader key={index} onClick={() => setSelected(index)}>
+                    <TabIconHeader
+                        key={index}
+                        onClick={() => setSelected(index)}
+                    >
                         <Image
                             src={
                                 selected === index
@@ -61,7 +64,7 @@ const TabHeaders = ({ selectedIndex = 0 }: { selectedIndex?: number }) => {
                         <span className="text-dtech-main-dark">
                             {header.name}
                         </span>
-                    </TabHeader>
+                    </TabIconHeader>
                 ))}
             </Tab.List>
         </div>

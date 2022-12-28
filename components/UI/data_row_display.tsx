@@ -1,9 +1,8 @@
 import { ReactNode, useState } from "react";
 import Dataset from "models/dataset.model";
 import Link from "next/link";
-import StarRating from "components/UI/star_rating";
-import InfoIcon from "components/UI/icons/info_icon";
 import clsx from "clsx";
+import MetaRating from "./metaRating";
 
 const DatasetRowDisplay = ({
     dataset,
@@ -29,27 +28,10 @@ const DatasetRowDisplay = ({
                             <a className="">{dataset.detail.name}</a>
                         </Link>
                     </h3>
-                    <div
-                        data-testid={displayContext}
-                        className={"flex space-x-1 flex-col ml-4"}
-                    >
-                        <span className="text-xs whitespace-nowrap relative">
-                            <span className="text-m">
-                                Metadata Quality
-                            </span>
-                            <InfoIcon
-                                oldIcon={false}
-                                iconClasses="absolute left-[100%] top-[-25%] ml-[1px] h-3.5 w-3.5 text-black"
-                                title={"Quality Rating"}
-                            />
-                        </span>
-                        <span className="text-xs">
-                            <StarRating
-                                starClassName="text-black h-4 w-4"
-                                rating={dataset.detail.dataQuality}
-                            />
-                        </span>
-                    </div>
+                    <MetaRating
+                        dataQuality={dataset.detail.dataQuality}
+                        displayContext={displayContext}
+                    />
                     <div className="px-1 text-[15px] border border-gray-800 rounded ml-8">
                         {dataset.detail.license.type}
                     </div>

@@ -33,7 +33,8 @@ class Dataset {
         }
 
         const { id, dataset } = json || {};
-        const { licence, metrics, data_owner, data_host, download_files } = dataset || {};
+        const { licence, metrics, data_owner, data_host, download_files } =
+            dataset || {};
         const { user, global } = metrics || {};
         const { contacts } = data_owner || {};
 
@@ -105,7 +106,7 @@ export type DatasetLicense = {
 };
 
 export type DatasetDetail = {
-    domain: string;
+    domain: string[];
     hostUrl: string;
     hostName: string;
     name: string;

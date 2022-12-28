@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import { createContext, useContext, useEffect, useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { SingleValue } from "react-select";
 import { updateCache } from "store/cache/cache.action";
 import useSWR from "swr";
@@ -13,6 +13,7 @@ import Dataset from "../../models/dataset.model.v4";
 import { usereventSearchQueryResults } from "services/usermetrics.service";
 import { useHttpCall } from "common/hooks";
 import DatasetStats from "models/dataset_stats.model";
+import { RootState } from "store";
 
 export type Filter = {
     domains?: string[];
@@ -88,11 +89,18 @@ const SearchVM = () => {
     /**
      * Fired when the term on the search input on the search page is changed
      */
-    const onSearchChange = (option: SingleValue<SearchOption>) => {
+    const onSearchChange = (
+        type: string,
+        option: SingleValue<SearchOption>
+    ) => {
         if (!option) return;
+        const searchType = type === "dataset" ? "" : type;
         dispatch(updateCache("last-search-query", option.value));
         setCurrentPageNo(1);
-        router.push({ pathname: "/search", query: { q: option.value } });
+        router.push({
+            pathname: `/search/${searchType}`,
+            query: { q: option.value },
+        });
     };
 
     /**
@@ -163,8 +171,12 @@ const SearchVM = () => {
                 .then((res) => {
                     setLoading(false);
                     // setCurrentPageNo(res[0]["user_search"][0]["pagenum"]);
+                    const totalRecords = res[0]["user_search"][0]["total"];
+
                     setTotalPages(
-                        Math.ceil(res[0]["user_search"][0]["total"] / pageSize)
+                        totalRecords
+                            ? Math.ceil(totalRecords / pageSize)
+                            : totalRecords
                     );
                     const resFitlerOptions =
                         res[0]["user_search"][0]["filter_options"];

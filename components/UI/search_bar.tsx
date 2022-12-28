@@ -8,22 +8,30 @@ import Http from "common/http";
 import { usereventSearchQuery } from "services/usermetrics.service";
 import { IoSearchOutline } from "react-icons/io5";
 import Dropdown, { MenuItemType } from "./drop_down";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "store";
+import { updateSearchType } from "store/search/search.action";
 
-export type SearchOption = { value: any; label: string };
+// export type SearchOption = { type: string; value: any; label: string };
 const ITEMS: MenuItemType[] = [
+    { label: "Dataset" },
     { label: "Topic" },
     { label: "Region" },
-    { label: "Organization" },
-    { label: "Dataset" },
+    { label: "Organisation" },
 ];
 
 const SearchBar = ({
     onChange,
     className = "",
+    selectClasses = "",
+    placeholder = "Search e.x.  “Covid in Scotland”",
 }: {
-    onChange: (option: SingleValue<SearchOption>) => void;
+    onChange: any;
     className?: string;
+    selectClasses?: string;
+    placeholder?: string;
 }) => {
+    const searchType = useSelector((state: RootState) => state.search.type);
     const loadAutoComplete = useMemo(
         () =>
             debounce(async (inputValue: string) => {
@@ -53,26 +61,33 @@ const SearchBar = ({
         <div className={clsx("mx-auto", className)}>
             <AsyncSelect
                 cacheOptions
-                loadOptions={loadAutoComplete}
+                loadOptions={
+                    searchType === "dataset" ? loadAutoComplete : () => {}
+                }
                 theme={(theme) => ({
                     ...theme,
                     borderRadius: 70,
                 })}
                 components={{
                     Menu,
-                    MenuList,
+                    MenuList: searchType === "dataset" ? MenuList : () => null,
                     Option,
                     Control,
-                    Placeholder,
+                    Placeholder: () => null,
                     IndicatorsContainer,
                     ValueContainer,
                 }}
                 // inputClassName="dataset-search-input"
-                className="dataset-search-input w-[584px]"
+                className={clsx(
+                    "dataset-search-input w-[584px] bg-[#F6EDFC] rounded-[42px]",
+                    selectClasses
+                )}
                 defaultOptions
                 instanceId="product-search"
-                placeholder=""
-                onChange={onChange}
+                placeholder={placeholder}
+                onChange={(option: any) => {
+                    onChange(searchType, option);
+                }}
                 inputValue={input}
                 onInputChange={(value, action) => {
                     // only set the input when the action that caused the
@@ -85,7 +100,7 @@ const SearchBar = ({
                         e.preventDefault();
                         e.stopPropagation();
                         usereventSearchQuery(input);
-                        onChange({
+                        onChange(searchType, {
                             label: "User input",
                             value: input,
                         });
@@ -97,23 +112,43 @@ const SearchBar = ({
 };
 
 const ValueContainer = ({ children, ...props }: any) => {
-    const [activeSearchCategory, setActiveSearchCategory] = useState<string>(
-        ITEMS[0].label
-    );
+    const { pathname } = useRouter();
+    const dispatch = useDispatch();
+    const [isHomePage, setIsHomePage] = useState(true);
+    const searchType = useSelector((state: RootState) => state.search.type);
+
+    const handleSearchTypeChange = (type: string) => {
+        dispatch(updateSearchType(type.toLowerCase()));
+    };
 
     const menuItems = ITEMS.map((item) => ({
         ...item,
-        onClick: () => setActiveSearchCategory(item.label),
+        onClick: () => handleSearchTypeChange(item.label),
     }));
+
+    useEffect(() => {
+        setIsHomePage(pathname === "/");
+    }, []);
+
     return (
         <components.ValueContainer {...props} className="!overflow-visible">
             <div className="flex items-center">
-                <IoSearchOutline className="rotate-[90deg] w-6 h-6 mx-3" />
+                <IoSearchOutline
+                    className={clsx(
+                        "rotate-[90deg]  mx-3 text-dtech-main-dark",
+                        isHomePage ? "w-8 h-8" : "w-6 h-6"
+                    )}
+                />
                 {children}
                 <Dropdown
-                    label={activeSearchCategory}
+                    label={`
+                            ${searchType[0]?.toUpperCase()}${searchType.slice(
+                        1
+                    )}
+                        `}
+                    labelClasses={isHomePage ? "!text-lg" : ""}
                     menuItems={menuItems}
-                    menuItemsClasses="translate-x-[-50%]"
+                    itemsClasses={isHomePage ? "!text-lg" : ""}
                 />
             </div>
         </components.ValueContainer>
@@ -124,7 +159,7 @@ const Control = (props: any) => {
     return (
         <components.Control
             {...props}
-            className="!border-0 !shadow-none !bg-[#F6EDFC]"
+            className="!border-0 !shadow-none !bg-inherit h-full"
         />
     );
 };
@@ -156,7 +191,6 @@ const Menu = (props: any) => {
     );
 };
 
-const Placeholder = () => null;
 const IndicatorsContainer = () => null;
 
 export default SearchBar;
