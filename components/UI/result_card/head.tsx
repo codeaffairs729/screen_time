@@ -62,6 +62,7 @@ const CardHead = ({
                 onFavourite={onFavourite}
                 handleBookmark={handleBookmark}
                 handleShare={handleShare}
+                href={href}
             />
         </div>
     );

@@ -11,6 +11,7 @@ import FavouriteBtn from "./buttons/favourite_btn.v4";
 import Popup from "./popup";
 import BookmarkBtn from "./user_bookmark/bookmark_btn";
 type DatasetActionProps = {
+    href?:String;
     dataset: any;
     favourite?: Boolean;
     bookmark?: Boolean;
@@ -23,6 +24,7 @@ const DatasetAction = ({
     onFavourite,
     handleBookmark,
     handleShare,
+    href=""
 }: DatasetActionProps) => {
     const [share, setShare] = useState(false);
     return (
@@ -40,7 +42,7 @@ const DatasetAction = ({
                 />
                 <BookmarkBtn className="mx-auto" dataset={dataset} />
             </div>
-            {share && <Popup />}
+            {share && <Popup href={href}/>}
         </div>
     );
 };
