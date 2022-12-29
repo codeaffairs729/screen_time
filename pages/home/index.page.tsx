@@ -28,8 +28,9 @@ const HomePage = () => {
                         <SearchBar
                             onChange={(type: string, option: any) => {
                                 if (!option) return;
-                                const searchType =
-                                    type === "dataset" ? "" : type;
+                                const searchType = ""; // type === "dataset" ? "" : type;
+                                // TODO After making the organisation page dynamic
+                                // Update the above code to show organisation page when selected from search bar
                                 router.push({
                                     pathname: `/search/${searchType}`,
                                     query: { q: option.value },

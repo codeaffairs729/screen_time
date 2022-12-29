@@ -7,7 +7,7 @@ import { BsMegaphone } from "react-icons/bs";
 import SearchVM, { SearchVMContext } from "pages/search/search.vm";
 import OrganizationSearchVM, {
     OrganizationSearchVMContext,
-} from "pages/search/organisation.vm";
+} from "pages/search/components/organization/organisation.vm";
 
 const DefaultLayout = ({
     children,

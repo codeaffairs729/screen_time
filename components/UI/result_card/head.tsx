@@ -1,25 +1,25 @@
 import Link from "next/link";
 import MetaRating from "components/UI/metaRating";
 import DatasetAction from "components/UI/dataset_action";
-import { Dataset } from ".";
+import { Data } from ".";
 import { useRouter } from "next/router";
 
 const CardHead = ({
     href = "",
-    dataset,
+    data,
     onFavourite,
     handleBookmark,
     handleShare,
     handleFAQClick,
 }: {
     href: string;
-    dataset: Dataset;
+    data: Data;
     onFavourite: Function;
     handleBookmark: Function;
     handleShare: Function;
     handleFAQClick?: Function;
 }) => {
-    const { title, dataQuality, buttonTags /*favourite, bookmark*/ } = dataset;
+    const { title, dataQuality, buttonTags /*favourite, bookmark*/ } = data;
     const router = useRouter();
     return (
         <div className="flex items-center justify-between w-full p-[10px]">
@@ -58,7 +58,7 @@ const CardHead = ({
                 ))}
             </div>
             <DatasetAction
-                dataset={dataset}
+                dataset={data}
                 onFavourite={onFavourite}
                 handleBookmark={handleBookmark}
                 handleShare={handleShare}

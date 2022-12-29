@@ -1,30 +1,33 @@
 import ErrorAlert from "components/UI/alerts/error_alert";
 import Loader from "components/UI/loader";
-import { useContext } from "react";
-import { SearchVMContext } from "../search.vm";
-import NoResults from "./no_results";
-import TableBody from "./table_body";
+import ResultCard, { Data } from "components/UI/result_card";
 import { useRouter } from "next/router";
+import NoResults from "./no_results";
 
-const ResultTable = () => {
+type ResultLayoutProps = {
+    error: any;
+    isLoading: boolean;
+    recordsData: Data[];
+};
+
+const ResultLayout = ({ error, isLoading, recordsData }: ResultLayoutProps) => {
     const router = useRouter();
     const {
         query: { q },
     } = router;
-    const vm = useContext(SearchVMContext);
 
-    if (vm.error) {
+    if (error) {
         return (
             <div className="w-full flex items-start justify-center">
                 <ErrorAlert
                     className="max-w-xl mx-auto"
-                    message="Something went wrong while fetching datasets. Please try again later."
+                    message="Something went wrong while fetching data. Please try again later."
                 />
             </div>
         );
     }
 
-    if (vm.isLoading) {
+    if (isLoading) {
         return (
             <div className="h-[calc(100vh-var(--nav-height))]  w-full flex items-center justify-center">
                 <Loader />
@@ -32,15 +35,14 @@ const ResultTable = () => {
         );
     }
 
-    if (!vm.datasets?.length) {
+    if (!recordsData?.length) {
         return (
             <div className="w-full flex items-start justify-center">
                 <NoResults
                     message={`No results found for ${q}.`}
                     subMessages={[
-                        "Try Different keywords",
+                        "Try different keywords.",
                         "Make sure that all words are spelled correctly.",
-                        "Consider changing the filters.",
                     ]}
                 />
             </div>
@@ -49,9 +51,17 @@ const ResultTable = () => {
 
     return (
         <div className="flex flex-col" data-test-id="results table">
-            <TableBody />
+            {recordsData.map((data: Data) => (
+                <ResultCard
+                    key={data.id}
+                    data={data}
+                    onFavourite={() => {}}
+                    handleBookmark={() => {}}
+                    handleShare={() => {}}
+                />
+            ))}
         </div>
     );
 };
 
-export default ResultTable;
+export default ResultLayout;

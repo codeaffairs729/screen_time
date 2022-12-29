@@ -39,8 +39,6 @@ const BookmarksSection = ({ datasetIDS }: { datasetIDS: any }) => {
         );
 
     useEffect(() => {
-        console.log("datasetIDS", datasetIDS);
-
         if (datasetIDS.length) {
             fectchStats(datasetIDS);
         }

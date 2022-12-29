@@ -14,6 +14,8 @@ import { usereventSearchQueryResults } from "services/usermetrics.service";
 import { useHttpCall } from "common/hooks";
 import DatasetStats from "models/dataset_stats.model";
 import { RootState } from "store";
+import Datasets from "pages/organisation/components/datasets";
+import { Data } from "components/UI/result_card";
 
 export type Filter = {
     domains?: string[];
@@ -48,6 +50,7 @@ const SearchVM = () => {
     const [currentPageNo, setCurrentPageNo] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [pageSize, setPageSize] = useState(20);
+    const [totalRecords, setTotalRecords] = useState<number>(0);
     const [isFilterActive, setIsFilterActive] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(false);
     /**
@@ -94,7 +97,9 @@ const SearchVM = () => {
         option: SingleValue<SearchOption>
     ) => {
         if (!option) return;
-        const searchType = type === "dataset" ? "" : type;
+        const searchType = ""; // type === "dataset" ? "" : type;
+        // TODO After making the organisation page dynamic
+        // Update the above code to show organisation page when selected from search bar
         dispatch(updateCache("last-search-query", option.value));
         setCurrentPageNo(1);
         router.push({
@@ -172,12 +177,12 @@ const SearchVM = () => {
                     setLoading(false);
                     // setCurrentPageNo(res[0]["user_search"][0]["pagenum"]);
                     const totalRecords = res[0]["user_search"][0]["total"];
-
                     setTotalPages(
                         totalRecords
                             ? Math.ceil(totalRecords / pageSize)
                             : totalRecords
                     );
+                    setTotalRecords(totalRecords);
                     const resFitlerOptions =
                         res[0]["user_search"][0]["filter_options"];
                     setFilterOptions({
@@ -242,6 +247,9 @@ const SearchVM = () => {
         isFilterActive,
         isFetchingStats,
         stats,
+        pageSize,
+        totalRecords,
+        setPageSize,
     };
 };
 
@@ -249,6 +257,7 @@ interface ISearchVMContext {
     datasets: Dataset[] | undefined | void;
     error: any;
     isLoading: boolean;
+    totalRecords: number;
     onSearchChange: Function;
     activeFilter: Filter;
     setActiveFilter: Function;
@@ -261,6 +270,8 @@ interface ISearchVMContext {
     isFilterActive: boolean;
     isFetchingStats: boolean;
     stats: { [key: string]: DatasetStats };
+    pageSize: number;
+    setPageSize: Function;
 }
 
 export default SearchVM;
@@ -315,4 +326,31 @@ export const useSearchFilter = ({
     }, [watch]);
 
     return { control, register, fields, replace };
+};
+
+export const datasetToResultCardData = (
+    datasets: Dataset[] | undefined | void
+): Data[] => {
+    if (!datasets?.length) {
+        return [];
+    }
+
+    return datasets?.map((dataset) => ({
+        id: dataset.id,
+        title: dataset.detail.name,
+        href: `/datasets/${dataset.id}`,
+        description: dataset.detail.description,
+        dataQuality: dataset.detail.dataQuality,
+        buttonTags: ["open"],
+        topics: dataset.detail.topics,
+        lastUpdate: dataset.detail.lastUpdate,
+        domains:
+            typeof dataset.detail.domain === "string"
+                ? [dataset.detail.domain]
+                : dataset.detail.domain, //Some dataset are fetching from older version api need to update it in future
+        dataProviders: {
+            organisation: dataset.owner.organisation,
+            hostName: dataset.detail.hostName,
+        },
+    }));
 };

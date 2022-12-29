@@ -10,7 +10,7 @@ const Pagination = ({
     currentPageNo,
 }: {
     totalPages: number;
-    setCurrentPageNo: (newPageNo: number) => void;
+    setCurrentPageNo: Function;
     currentPageNo: number;
 }) => {
     useEffect(() => {

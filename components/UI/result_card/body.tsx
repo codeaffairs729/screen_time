@@ -1,8 +1,8 @@
 import LabelledRow from "components/dataset/labelled_row";
-import { Dataset } from ".";
+import { Data } from ".";
 
-const CardBody = ({ dataset }: { dataset: Dataset }) => {
-    const { topics, domains, description } = dataset;
+const CardBody = ({ data }: { data: Data }) => {
+    const { topics, domains, description } = data;
 
     return (
         <div>

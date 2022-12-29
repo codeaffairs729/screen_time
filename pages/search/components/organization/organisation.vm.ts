@@ -1,3 +1,5 @@
+import { Data } from "components/UI/result_card";
+import { DateTime } from "luxon";
 import { createContext, useContext, useEffect, useState } from "react";
 export type Filter = {
     domains?: string[];
@@ -30,18 +32,20 @@ const DATASET = {
         downloadCount: 1,
     },
 };
+
+const TOTAL_RECORDS = 200;
 const OrganizationSearchVM = () => {
-    let datasets: any = Array(20)
+    let organisations: any = Array(TOTAL_RECORDS)
         .fill(1)
         .map((x, y) => x + y)
         .map((index) => ({
             id: index,
             ...DATASET,
         }));
-    const len = datasets.length;
-    const [pageSize, setPageSize] = useState(4); // number of table in page
-    const [currentPageNo, setCurrentPageNo] = useState(1);
-    const [totalPages, setTotalPages] = useState(2); // pagination total pages
+    const len = organisations.length;
+    const [pageSize, setPageSize] = useState(20); // number of table in page
+    const [currentPageNo, setCurrentPageNo] = useState<number>(1);
+    const [totalPages, setTotalPages] = useState<number>(2); // pagination total pages
     const [activeFilter, setActiveFilter] = useState<Filter>({
         sort_by: ["relevance"],
     });
@@ -52,29 +56,43 @@ const OrganizationSearchVM = () => {
     const lastindex = currentPageNo * pageSize;
     const firstindex = lastindex - pageSize;
 
-    datasets = datasets.slice(firstindex, lastindex);
+    organisations = organisations.slice(firstindex, lastindex);
 
     return {
         currentPageNo,
         setCurrentPageNo,
         totalPages,
-        datasets,
+        organisations,
         setPageSize,
         pageSize,
+        totalRecords: TOTAL_RECORDS,
     };
 };
 
 export default OrganizationSearchVM;
 
 interface IOrganizationSearchVMContext {
-    datasets: any;
+    organisations: any;
     currentPageNo: number;
     setCurrentPageNo: (pageNo: number) => void;
     totalPages: number;
     setPageSize: (pageNo: number) => void;
     pageSize: number;
+    totalRecords: number;
 }
 
 export const OrganizationSearchVMContext = createContext(
     {} as IOrganizationSearchVMContext
 );
+
+export const organisationToResultCardData = (organisations: any): Data[] => {
+    if (!organisations?.length) {
+        return [];
+    }
+
+    return organisations?.map((organisation: any) => ({
+        ...organisation,
+        href: `/organisation/${organisation.id}`,
+        lastUpdate: DateTime.fromISO(new Date("12-25-2022").toISOString()),
+    }));
+};

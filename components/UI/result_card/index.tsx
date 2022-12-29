@@ -4,55 +4,50 @@ import CardHead from "./head";
 import { DateTime } from "luxon";
 import { DataStats } from "./dataset_stat";
 
-export interface Dataset {
+export interface Data {
     id: number | string;
     title: string;
     description: string;
     dataQuality: number;
-    // favourite: boolean;
-    // bookmark: boolean;
     buttonTags: string[];
     topics: string[];
     domains: string[];
+    dataProviders?: DataProviders;
+    stats?: DataStats;
+    href: string;
+    lastUpdate: DateTime;
 }
 
-interface DatasetCardProps {
-    data: Dataset;
+interface ResultCardProps {
+    data: Data;
     onFavourite: Function;
     handleBookmark: Function;
     handleShare: Function;
-    lastUpdate: DateTime;
-    stats?: DataStats;
-    href: string;
     handleFAQClick?: Function;
-    dataProviders?: DataProviders;
 }
 
 //TODO update the object of data in props to have both stats and dataProviders
 
-const DatasetCard = ({
+const ResultCard = ({
     data,
-    stats,
-    href,
     onFavourite,
     handleBookmark,
     handleShare,
-    lastUpdate,
     handleFAQClick,
-    dataProviders,
-}: DatasetCardProps) => {
+}: ResultCardProps) => {
+    const { dataProviders, href, stats, lastUpdate } = data || {};
     return (
         <div className="rounded-lg sm:px-2 md:px-5 py-1 flex flex-row justify-between bg-dtech-light-grey hover:bg-dtech-main-light ml-2 mr-4 my-2">
             <div className="flex flex-col flex-1">
                 <CardHead
                     href={href}
                     handleFAQClick={handleFAQClick}
-                    dataset={data}
+                    data={data}
                     onFavourite={onFavourite}
                     handleBookmark={handleBookmark}
                     handleShare={handleShare}
                 />
-                <CardBody dataset={data} />
+                <CardBody data={data} />
                 <CardFooter
                     dataProviders={dataProviders}
                     stats={stats}
@@ -63,4 +58,4 @@ const DatasetCard = ({
     );
 };
 
-export default DatasetCard;
+export default ResultCard;

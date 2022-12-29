@@ -3,7 +3,7 @@ import DatasetAction from "components/UI/dataset_action";
 import Image from "next/image";
 import { BsHeartFill, BsFillEyeFill } from "react-icons/bs";
 import { MdFileDownload } from "react-icons/md";
-import DatasetStat from "components/UI/dataset_card/dataset_stat";
+import DatasetStat from "components/UI/result_card/dataset_stat";
 const OrganisationHead = () => {
     const title = "NatureScot Data Services";
     const description =
