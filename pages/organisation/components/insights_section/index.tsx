@@ -16,7 +16,7 @@ const Insights = () => {
 
     return (
         <div>
-            <div className="mb-6 ml-10">
+            <div className="mb-6">
                 {!loading && (
                     <Tab.Group selectedIndex={selectedInsightTab}>
                         <TabHeaders

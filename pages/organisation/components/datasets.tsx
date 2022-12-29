@@ -60,7 +60,7 @@ const Datasets = () => {
         <DisplayDataset title={data.title} description={data.description} />,
     ]);
     return (
-        <div>
+        <div className="ml-16">
             <div className="text-sm text-dtech-dark-grey">
                 All the datasets of this organisation are listed here.
             </div>
