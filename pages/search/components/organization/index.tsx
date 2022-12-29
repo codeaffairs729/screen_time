@@ -4,7 +4,7 @@ import {
     organisationToResultCardData,
     OrganizationSearchVMContext,
 } from "./organisation.vm";
-import SearchHeaders from "./search_headers";
+import SearchHeaders from "../search_headers";
 
 const Organisation = () => {
     const {

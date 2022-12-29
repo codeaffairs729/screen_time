@@ -1,5 +1,5 @@
-import RecordsSortBy from "./components/organization_sortby_field";
-import TotalRecords from "./components/total_records";
+import RecordsSortBy from "./organization/components/organization_sortby_field";
+import TotalRecords from "./organization/components/total_records";
 import Pagination from "components/UI/pagination";
 
 type SearchHeadersProps = {

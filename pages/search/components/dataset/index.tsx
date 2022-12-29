@@ -3,10 +3,9 @@ import {
     SearchVMContext,
 } from "pages/search/search.vm";
 import { useContext } from "react";
-import SearchHeaders from "../organization/search_headers";
+import SearchHeaders from "../search_headers";
 import ResultLayout from "../result_layout";
 import Sidebar from "../sidebar/sidebar";
-import SortbyField from "../sortby_field";
 
 const Dataset = () => {
     const {
