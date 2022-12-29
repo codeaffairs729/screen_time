@@ -1,9 +1,7 @@
 import MetaRating from "components/UI/metaRating";
-import DatasetAction from "components/UI/dataset_action";
-import Image from "next/image";
-import { BsHeartFill, BsFillEyeFill } from "react-icons/bs";
-import { MdFileDownload } from "react-icons/md";
+import ResultCardAction from "components/UI/result_card_action";
 import DatasetStat from "components/UI/result_card/dataset_stat";
+
 const OrganisationHead = () => {
     const title = "NatureScot Data Services";
     const description =
@@ -33,8 +31,8 @@ const OrganisationHead = () => {
                         </button>
                     </div>
                 </div>
-                <DatasetAction
-                    dataset={{ id: 1 }}
+                <ResultCardAction
+                    data={{ id: 1 }}
                     // onFavorite={() => {}}
                     // handleBookmark={() => {}}
                     handleShare={() => {}}

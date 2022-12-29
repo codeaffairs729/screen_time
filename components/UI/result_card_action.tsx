@@ -1,29 +1,17 @@
 import { useState } from "react";
-import toast from "react-hot-toast";
-import {
-    BsShareFill,
-    BsHeartFill,
-    BsFillBookmarkPlusFill,
-    BsHeart,
-    BsBookmarkPlus,
-} from "react-icons/bs";
+import { BsShareFill } from "react-icons/bs";
 import FavouriteBtn from "./buttons/favourite_btn.v4";
 import Popup from "./popup";
 import BookmarkBtn from "./user_bookmark/bookmark_btn";
-type DatasetActionProps = {
-    dataset: any;
+type ResultCardActionProps = {
+    data: any;
     favourite?: Boolean;
     bookmark?: Boolean;
     onFavourite?: Function;
     handleBookmark?: Function;
     handleShare: Function;
 };
-const DatasetAction = ({
-    dataset,
-    onFavourite,
-    handleBookmark,
-    handleShare,
-}: DatasetActionProps) => {
+const ResultCardAction = ({ data }: ResultCardActionProps) => {
     const [share, setShare] = useState(false);
     return (
         <div>
@@ -35,13 +23,14 @@ const DatasetAction = ({
                 />
                 <FavouriteBtn
                     className="mx-auto"
-                    datasetStats={dataset}
+                    datasetStats={data}
+                    recordType={data.recordType}
                     onFavouriteChange={() => {}}
                 />
-                <BookmarkBtn className="mx-auto" dataset={dataset} />
+                <BookmarkBtn className="mx-auto" dataset={data} />
             </div>
             {share && <Popup />}
         </div>
     );
 };
-export default DatasetAction;
+export default ResultCardAction;

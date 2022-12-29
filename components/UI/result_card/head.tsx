@@ -1,25 +1,29 @@
 import Link from "next/link";
 import MetaRating from "components/UI/metaRating";
-import DatasetAction from "components/UI/dataset_action";
+import ResultCardAction from "components/UI/result_card_action";
 import { Data } from ".";
 import { useRouter } from "next/router";
 
 const CardHead = ({
-    href = "",
     data,
     onFavourite,
     handleBookmark,
     handleShare,
     handleFAQClick,
 }: {
-    href: string;
     data: Data;
     onFavourite: Function;
     handleBookmark: Function;
     handleShare: Function;
     handleFAQClick?: Function;
 }) => {
-    const { title, dataQuality, buttonTags /*favourite, bookmark*/ } = data;
+    const {
+        title,
+        dataQuality,
+        buttonTags,
+        recordType /*favourite, bookmark*/,
+    } = data;
+    const href = `/${recordType ? recordType : "datasets"}/${data.id}`;
     const router = useRouter();
     return (
         <div className="flex items-center justify-between w-full p-[10px]">
@@ -57,8 +61,8 @@ const CardHead = ({
                     </button>
                 ))}
             </div>
-            <DatasetAction
-                dataset={data}
+            <ResultCardAction
+                data={data}
                 onFavourite={onFavourite}
                 handleBookmark={handleBookmark}
                 handleShare={handleShare}

@@ -14,7 +14,7 @@ export interface Data {
     domains: string[];
     dataProviders?: DataProviders;
     stats?: DataStats;
-    href: string;
+    recordType: string;
     lastUpdate: DateTime;
 }
 
@@ -35,12 +35,11 @@ const ResultCard = ({
     handleShare,
     handleFAQClick,
 }: ResultCardProps) => {
-    const { dataProviders, href, stats, lastUpdate } = data || {};
+    const { dataProviders, stats, lastUpdate } = data || {};
     return (
         <div className="rounded-lg sm:px-2 md:px-5 py-1 flex flex-row justify-between bg-dtech-light-grey hover:bg-dtech-main-light ml-2 mr-4 my-2">
             <div className="flex flex-col flex-1">
                 <CardHead
-                    href={href}
                     handleFAQClick={handleFAQClick}
                     data={data}
                     onFavourite={onFavourite}

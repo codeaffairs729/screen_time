@@ -92,7 +92,7 @@ export const organisationToResultCardData = (organisations: any): Data[] => {
 
     return organisations?.map((organisation: any) => ({
         ...organisation,
-        href: `/organisation/${organisation.id}`,
+        recordType: "organisation",
         lastUpdate: DateTime.fromISO(new Date("12-25-2022").toISOString()),
     }));
 };

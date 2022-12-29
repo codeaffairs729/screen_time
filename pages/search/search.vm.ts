@@ -338,7 +338,7 @@ export const datasetToResultCardData = (
     return datasets?.map((dataset) => ({
         id: dataset.id,
         title: dataset.detail.name,
-        href: `/datasets/${dataset.id}`,
+        recordType: "datasets",
         description: dataset.detail.description,
         dataQuality: dataset.detail.dataQuality,
         buttonTags: ["open"],
