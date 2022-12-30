@@ -1,14 +1,17 @@
 import Image from "next/image";
 import downloadIcon from "public/images/icons/download.svg";
+import DownloadReport from "./downloadReport";
 
 const Head = ({
     edit,
     setEdit,
     handleCancel,
+    id,
 }: {
     edit: boolean;
     setEdit: Function;
     handleCancel: Function;
+    id: string;
 }) => {
     return (
         <div className="flex justify-between items-center">
@@ -34,12 +37,7 @@ const Head = ({
                     Edit
                 </div>
             </div>
-            {!edit && (
-                <div className="flex items-center cursor-pointer">
-                    <Image src={downloadIcon} alt="" height={24} width={24} />
-                    <span className="ml-2">Download report</span>
-                </div>
-            )}
+            {!edit && <DownloadReport id={id} />}
         </div>
     );
 };
