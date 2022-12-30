@@ -40,8 +40,9 @@ const ReportFilter = ({
                         showFilter ? "max-h-[100vh]" : "max-h-0"
                     } overflow-hidden transition-all duration-300 m-3`}
                 >
-                    {HEADER.map((header: any) => (
+                    {HEADER.map((header: any, index: number) => (
                         <Input
+                            key={index}
                             label={header.label}
                             isChecked={header.isChecked}
                             handleCheck={handleCheck}

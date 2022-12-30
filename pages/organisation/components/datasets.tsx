@@ -57,7 +57,7 @@ const Datasets = () => {
     const tableData = ROW2.map((data, index) => [
         index,
         ROW1[index],
-        <DisplayDataset title={data.title} description={data.description} />,
+        <DisplayDataset key={index} title={data.title} description={data.description} />,
     ]);
     return (
         <div className="ml-16">
