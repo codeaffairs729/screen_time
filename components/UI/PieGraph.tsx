@@ -45,7 +45,7 @@ const renderLabel = ({
             <rect
                 fill={fill}
                 stroke={"black"}
-                stroke-width="1"
+                strokeWidth="1"
                 height="90"
                 width="150"
                 x={ex + (cos >= 0 ? 0 : -12.6) * 12}

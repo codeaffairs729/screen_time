@@ -101,7 +101,7 @@ const QualityInsightsBody = ({ selectedLabel }: { selectedLabel: number }) => {
     const tableData = ROW2.map((data, index) => [
         index,
         ROW1[index],
-        <DisplayDataset title={data.title} description={data.description} />,
+        <DisplayDataset key={index} title={data.title} description={data.description} />,
     ]);
     const barDataKey = Object.keys(STARS[0][0])[1];
     const labelListDatakey = Object.keys(STARS[0][0])[0];
