@@ -329,7 +329,8 @@ export const useSearchFilter = ({
 };
 
 export const datasetToResultCardData = (
-    datasets: Dataset[] | undefined | void
+    datasets: Dataset[] | undefined | void,
+    stats: any
 ): Data[] => {
     if (!datasets?.length) {
         return [];
@@ -343,6 +344,7 @@ export const datasetToResultCardData = (
         dataQuality: dataset.detail.dataQuality,
         buttonTags: ["open"],
         topics: dataset.detail.topics,
+        isFavourited: stats[dataset.id]?.isFavourited,
         lastUpdate: dataset.detail.lastUpdate,
         domains:
             typeof dataset.detail.domain === "string"
