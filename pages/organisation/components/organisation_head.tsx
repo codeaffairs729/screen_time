@@ -33,9 +33,10 @@ const OrganisationHead = () => {
                 </div>
                 <ResultCardAction
                     data={{ id: 1 }}
+                    setData={() => {}}
                     // onFavorite={() => {}}
                     // handleBookmark={() => {}}
-                    handleShare={() => {}}
+                    // handleShare={() => {}}
                 />
             </div>
             <div className="my-4">

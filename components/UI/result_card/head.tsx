@@ -6,15 +6,11 @@ import { useRouter } from "next/router";
 
 const CardHead = ({
     data,
-    onFavourite,
-    handleBookmark,
-    handleShare,
+    setData,
     handleFAQClick,
 }: {
     data: Data;
-    onFavourite: Function;
-    handleBookmark: Function;
-    handleShare: Function;
+    setData: Function;
     handleFAQClick?: Function;
 }) => {
     const {
@@ -25,6 +21,7 @@ const CardHead = ({
     } = data;
     const href = `/${recordType ? recordType : "datasets"}/${data.id}`;
     const router = useRouter();
+
     return (
         <div className="flex items-center justify-between w-full p-[10px]">
             <div className="flex items-center">
@@ -61,12 +58,7 @@ const CardHead = ({
                     </button>
                 ))}
             </div>
-            <ResultCardAction
-                data={data}
-                onFavourite={onFavourite}
-                handleBookmark={handleBookmark}
-                handleShare={handleShare}
-            />
+            <ResultCardAction data={data} setData={setData} />
         </div>
     );
 };

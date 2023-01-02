@@ -61,7 +61,8 @@ const FavouritesSection = () => {
         { revalidateOnFocus: false }
     );
 
-    const isFetchingFavourites = !favouriteDatasets && !error;
+    const isFetchingFavourites =
+        !favouriteDatasets && !error && isFetchingStats;
 
     if (error) {
         return (
@@ -86,12 +87,7 @@ const FavouritesSection = () => {
             {!isFetchingFavourites && (favouriteDatasets?.length ?? 0) == 0 && (
                 <InfoAlert message="No favourites found" className="mt-1" />
             )}
-            <DatasetList
-                datasets={favouriteDatasets}
-                onFavourite={() => {}}
-                handleBookmark={() => {}}
-                handleShare={() => {}}
-            />
+            <DatasetList datasets={favouriteDatasets} stats={stats} />
         </div>
     );
 };

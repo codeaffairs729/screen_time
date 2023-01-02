@@ -64,8 +64,7 @@ const MayAlsoLike = () => {
                     return datasets;
                 })
     );
-    const isLoading = !datasets && !error;
-    // console.log("isLoadingStats", isLoadingStats)
+    const isLoading = (!datasets && !error) || isFetchingStats;
 
     if (error) {
         return (
@@ -86,12 +85,7 @@ const MayAlsoLike = () => {
 
     return (
         <div>
-            <DatasetList
-                datasets={datasets}
-                onFavourite={() => {}}
-                handleBookmark={() => {}}
-                handleShare={() => {}}
-            />
+            <DatasetList datasets={datasets} stats={stats} />
         </div>
     );
 };

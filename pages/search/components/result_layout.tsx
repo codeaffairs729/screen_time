@@ -52,13 +52,7 @@ const ResultLayout = ({ error, isLoading, recordsData }: ResultLayoutProps) => {
     return (
         <div className="flex flex-col" data-test-id="results table">
             {recordsData.map((data: Data) => (
-                <ResultCard
-                    key={data.id}
-                    data={data}
-                    onFavourite={() => {}}
-                    handleBookmark={() => {}}
-                    handleShare={() => {}}
-                />
+                <ResultCard key={data.id} data={data} />
             ))}
         </div>
     );

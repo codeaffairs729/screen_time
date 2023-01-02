@@ -56,14 +56,17 @@ const BookmarksSection = ({ datasetIDS }: { datasetIDS: any }) => {
         datasetIDS.includes(dataset.id)
     );
 
+    if (isFetchingStats) {
+        return (
+            <div className="h-full w-full flex items-center justify-center">
+                <Loader />
+            </div>
+        );
+    }
+
     return (
         <div>
-            <DatasetList
-                datasets={datasets}
-                onFavourite={() => {}}
-                handleBookmark={() => {}}
-                handleShare={() => {}}
-            />
+            <DatasetList datasets={datasets} stats={stats} />
         </div>
     );
 };

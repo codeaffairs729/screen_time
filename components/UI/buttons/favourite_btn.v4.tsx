@@ -123,7 +123,7 @@ const getFavURL = (id: number, type = "datasets") => {
         case "datasets":
             return `/v1/datasets/${id}/favourite`;
         case "organisation":
-            return `/v1/datasets/${id}/favourite_organisation`;
+            return `/v1/organisations/${id}/favourite`;
         default:
             return `/v1/datasets/${id}/favourite`;
     }
