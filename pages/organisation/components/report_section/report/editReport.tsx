@@ -1,12 +1,10 @@
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { useEffect } from "react";
 import { convertToHTML } from "draft-convert";
+// import {Editor, EditorState} from 'draft-js'
 import { Editor } from "react-draft-wysiwyg";
 import { format } from "date-fns";
-// const Editor = dynamic(
-//     () => import("react-draft-wysiwyg").then((mod) => mod.Editor),
-//     { ssr: false }
-// );
+import BarGraph from "components/UI/BarGraph";
 const EditReport = ({
     editorState,
     onEditorStateChange,
@@ -15,6 +13,7 @@ const EditReport = ({
     selected,
     fromDate,
     toDate,
+    imgUrl,
 }: any) => {
     useEffect(() => {
         let html = convertToHTML(editorState.getCurrentContent());
@@ -30,12 +29,12 @@ const EditReport = ({
         });
     }
     return (
-        <div className="min-w-[700px] min-h-[656px]  bg-white shadow-paper-shadow mt-4 w-2/3">
+        <div className="min-w-[700px] bg-white shadow-paper-shadow mt-4 w-2/3 overflow-y-scroll ">
             {autoGenerate && (
-                <div>
+                <div className="flex flex-col abolute">
                     <div className="flex justify-center">
                         <img
-                            src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg"
+                            src={imgUrl}
                             width={200}
                             height={200}
                             className={"absolute mt-14 "}
@@ -82,10 +81,32 @@ const EditReport = ({
                         </div>
                         <div className="flex absolute justify-start flex-col mt-56">
                             {selected.map((object: any, index: any) => (
-                                <span className="ml-1" key={index}>
+                                <span className="ml-1 font-bold" key={index}>
                                     {object.isChecked && object.label}
                                 </span>
                             ))}
+                            <BarGraph
+                                data={[
+                                    { name: 1, rating: 10 },
+                                    { name: 2, rating: 30 },
+                                    { name: 3, rating: 20 },
+                                    { name: 4, rating: 40 },
+                                    { name: 5, rating: 10 },
+                                ]}
+                                width={400}
+                                height={200}
+                                strokeWidthAxis={2}
+                                strokeWidthLabelList={0}
+                                className="font-medium my-2"
+                                XleftPadding={20}
+                                XrightPadding={30}
+                                xLabel=""
+                                yLabel=""
+                                xvalue=""
+                                yvalue=""
+                                barDatakey={"rating"}
+                                labelListDatakey={"name"}
+                            />
                         </div>
                     </div>
                 </div>
@@ -124,9 +145,11 @@ const EditReport = ({
                         },
                     },
                 }}
-                wrapperClassName="p-1"
-                editorClassName="pl-1 mt-60 !h-[359px]"
-                toolbarClassName="!pt-4  mt-0"
+                wrapperClassName=""
+                editorClassName={
+                    autoGenerate ? "pl-1 mt-[28rem] !h-[175px]" : "pl-1 !h-[600px]"
+                }
+                toolbarClassName="!pt-2"
                 onEditorStateChange={onEditorStateChange}
                 readOnly={false}
                 spellCheck={true}

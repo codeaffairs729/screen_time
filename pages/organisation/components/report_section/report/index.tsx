@@ -19,9 +19,17 @@ const Report = ({
         EditorState.createEmpty()
     );
     const [convertedContent, setConvertedContent] = useState("");
+    const imgUrl =
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg";
+
     return (
         <div>
-            <Head edit={edit} setEdit={setEdit} handleCancel={handleCancel} />
+            <Head
+                edit={edit}
+                setEdit={setEdit}
+                handleCancel={handleCancel}
+                id={"download"}
+            />
             {edit ? (
                 <EditReport
                     editorState={editorState}
@@ -31,9 +39,18 @@ const Report = ({
                     selected={selected}
                     fromDate={fromDate}
                     toDate={toDate}
+                    imgUrl={imgUrl}
                 />
             ) : (
-                <Preview convertedContent={convertedContent} />
+                <Preview
+                    convertedContent={convertedContent}
+                    imgUrl={imgUrl}
+                    autoGenerate={autoGenerate}
+                    selected={selected}
+                    fromDate={fromDate}
+                    toDate={toDate}
+                    id={"download"}
+                />
             )}
         </div>
     );
