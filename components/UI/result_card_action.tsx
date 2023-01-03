@@ -31,7 +31,11 @@ const ResultCardAction = ({ data, setData }: ResultCardActionProps) => {
                     recordType={data.recordType}
                     onFavouriteChange={onFav}
                 />
-                <BookmarkBtn className="mx-auto" dataset={data} />
+                <BookmarkBtn
+                    className="mx-auto"
+                    data={data}
+                    recordType={data.recordType}
+                />
             </div>
             {share && <Popup />}
         </div>
