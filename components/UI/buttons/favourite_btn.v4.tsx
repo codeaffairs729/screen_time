@@ -52,7 +52,7 @@ const FavouriteBtn = ({
                 )}
             >
                 {!user ? (
-                    <BsHeart className="w-5 h-5 text-gray-600" />
+                    <BsHeart className="h-6 w-6 ml-4 text-dtech-main-dark cursor-pointer" />
                 ) : (
                     <>
                         {!isHandlingFavourite ? (

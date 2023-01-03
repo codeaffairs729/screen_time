@@ -38,7 +38,7 @@ const SummarySection = () => {
                         />
                     </div>
                     <div className="my-1">
-                        <BookmarkBtn className="mx-auto" dataset={vm.dataset} />
+                        <BookmarkBtn className="mx-auto" data={vm.dataset} />
                     </div>
                 </div>
             </div>

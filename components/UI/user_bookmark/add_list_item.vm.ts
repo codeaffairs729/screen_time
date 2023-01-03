@@ -4,17 +4,24 @@ import toast from "react-hot-toast";
 import User from "models/user.model";
 import UserService from "services/user.service";
 
+type Payload = {
+    datasetID?: number;
+    organisationId?: number;
+};
+
 const AddListItemVM = (user: User | null) => {
     // use the API for submitting the new list name
     const { execute: executeAddListItem, isLoading: isAddingListItem } =
         useHttpCall();
-    const addNewListItem = (listID: number, datasetID: number) => {
+    const addNewListItem = (listID: number, payload: Payload) => {
+        const { datasetID, organisationId } = payload;
         executeAddListItem(
             () =>
                 Http.post(`/v1/user-bookmarks/listadditem`, {
                     user_id: user?.id,
                     list_id: listID,
                     dataset_id: datasetID,
+                    organisation_id: organisationId,
                 }),
             {
                 onSuccess: (res) => {

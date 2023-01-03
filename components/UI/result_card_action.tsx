@@ -6,13 +6,14 @@ import BookmarkBtn from "./user_bookmark/bookmark_btn";
 type ResultCardActionProps = {
     data: any;
     setData: Function;
+    href: string;
     favourite?: Boolean;
     bookmark?: Boolean;
     onFavourite?: Function;
     handleBookmark?: Function;
     // handleShare: Function;
 };
-const ResultCardAction = ({ data, setData }: ResultCardActionProps) => {
+const ResultCardAction = ({ data, setData, href }: ResultCardActionProps) => {
     const [share, setShare] = useState(false);
 
     const onFav = () => setData({ ...data, isFavourited: !data.isFavourited });
@@ -37,7 +38,7 @@ const ResultCardAction = ({ data, setData }: ResultCardActionProps) => {
                     recordType={data.recordType}
                 />
             </div>
-            {share && <Popup />}
+            {share && <Popup href={href} />}
         </div>
     );
 };

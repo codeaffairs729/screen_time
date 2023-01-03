@@ -34,6 +34,7 @@ const OrganisationHead = () => {
                 <ResultCardAction
                     data={{ id: 1 }}
                     setData={() => {}}
+                    href={`/organisations/1`}
                     // onFavorite={() => {}}
                     // handleBookmark={() => {}}
                     // handleShare={() => {}}

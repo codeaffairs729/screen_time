@@ -22,33 +22,35 @@ class UserService {
                 itemID: item.item_id,
                 listID: item.list_id,
                 datasetID: item.dataset_id,
+                organisationID: item.organisation_id,
             };
         });
 
         const lists = bookmarkListsItems.lists.map((list: any) => {
             let listDatasets: any = [];
+            let listOrganisations: any = [];
 
             items.forEach((item: any, idx: any) => {
                 if (item.listID == list.list_id) {
                     listDatasets.push(item.datasetID);
+                    listOrganisations.push(item.organisationID);
                 }
             });
             return {
                 listName: list.list_name,
                 listID: list.list_id,
                 listDatasets: listDatasets,
+                listOrganisations: listOrganisations,
             };
         });
 
         store.dispatch(updateBookmarkListsItems(lists, items));
 
-        const all_dataset_ids = bookmarkListsItems.list_items.map(
-            (item: any) => item.dataset_id
-        );
+        const all_dataset_ids = bookmarkListsItems.list_items
+            .filter((item: any) => item.dataset_id)
+            .map((item: any) => item.dataset_id);
 
         let dataset_ids = Array.from(new Set(all_dataset_ids));
-
-        console.log(dataset_ids);
 
         // Fetch bookmark itsm dataset data
         // https://api.dtechtive.com/data_view/{ids}?li=193&li=194
@@ -69,6 +71,7 @@ class UserService {
             const bookmark_items_data = Dataset.fromJsonList(
                 res_itemsdata[0].user_search[0].results
             );
+
             store.dispatch(updateBookmarkItemsData(bookmark_items_data));
         } else {
             const bookmark_items_data: any = [];

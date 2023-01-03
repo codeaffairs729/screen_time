@@ -58,7 +58,7 @@ const CardHead = ({
                     </button>
                 ))}
             </div>
-            <ResultCardAction data={data} setData={setData} />
+            <ResultCardAction data={data} setData={setData} href={href} />
         </div>
     );
 };

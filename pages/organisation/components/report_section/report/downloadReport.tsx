@@ -24,37 +24,39 @@ const DownloadReport = ({ id }: { id: string }) => {
                     //         ? 1
                     //         : Math.floor(inputHeightMm / a4HeightMm) + 1;
 
-                    html2canvas(input, { useCORS: true }).then((canvas) => {
-                        const imgData = canvas.toDataURL("image/png");
-                        // const pdf = new jsPDF("p", "mm", "a4");
-                        const pdf =
-                            inputHeightMm > a4HeightMm
-                                ? new jsPDF("p", "mm", [
-                                      inputHeightMm + 16,
-                                      a4WidthMm,
-                                  ])
-                                : new jsPDF();
-                        const imgProps = pdf.getImageProperties(imgData);
-                        const pdfWidth = pdf.internal.pageSize.getWidth();
-                        const pdfHeight =
-                            (imgProps.height * pdfWidth) / imgProps.width;
+                    html2canvas(input, { useCORS: true }).then(
+                        (canvas: any) => {
+                            const imgData = canvas.toDataURL("image/png");
+                            // const pdf = new jsPDF("p", "mm", "a4");
+                            const pdf =
+                                inputHeightMm > a4HeightMm
+                                    ? new jsPDF("p", "mm", [
+                                          inputHeightMm + 16,
+                                          a4WidthMm,
+                                      ])
+                                    : new jsPDF();
+                            const imgProps = pdf.getImageProperties(imgData);
+                            const pdfWidth = pdf.internal.pageSize.getWidth();
+                            const pdfHeight =
+                                (imgProps.height * pdfWidth) / imgProps.width;
 
-                        // const pageHeight = pdf.internal.pageSize.height;
-                        // let y = 500;
-                        // if (y >= pageHeight) {
-                        //     pdf.addPage();
-                        //     y = 0; // Restart height position
-                        // }
-                        pdf.addImage(
-                            imgData,
-                            "png",
-                            10,
-                            4,
-                            pdfWidth - 20,
-                            pdfHeight
-                        );
-                        pdf.save(`${id}.pdf`);
-                    });
+                            // const pageHeight = pdf.internal.pageSize.height;
+                            // let y = 500;
+                            // if (y >= pageHeight) {
+                            //     pdf.addPage();
+                            //     y = 0; // Restart height position
+                            // }
+                            pdf.addImage(
+                                imgData,
+                                "png",
+                                10,
+                                4,
+                                pdfWidth - 20,
+                                pdfHeight
+                            );
+                            pdf.save(`${id}.pdf`);
+                        }
+                    );
                 }}
             >
                 <div id="myMm" style={{ height: "1mm" }} />
