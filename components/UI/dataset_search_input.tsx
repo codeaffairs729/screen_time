@@ -22,7 +22,7 @@ const DatasetSearchInput = ({
             debounce(async (inputValue: string) => {
                 if (!inputValue) return;
                 const res = await Http.get<[]>("", {
-                    baseUrl: `${process.env.NEXT_PUBLIC_SENTIMENT_API_ROOT}/completion/${inputValue}`,
+                    baseUrl: `${process.env.NEXT_PUBLIC_PUBLIC_API_ROOT}/completion/${inputValue}`,
                 });
                 return res.map((t) => ({
                     value: t[0],
