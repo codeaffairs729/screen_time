@@ -73,6 +73,7 @@ const SearchBar = ({
                     MenuList: searchType === "dataset" ? MenuList : () => null,
                     Option,
                     Control,
+                    Input,
                     Placeholder: () => null,
                     IndicatorsContainer,
                     ValueContainer,
@@ -181,6 +182,9 @@ const MenuList = (props: any) => {
             className="bg-[#FAFAFA] text-[17px] !rounded-none"
         />
     );
+};
+const Input = (props: any) => {
+    return <components.Input {...props} className=" w-0 overflow-x-hidden" />;
 };
 const Menu = (props: any) => {
     return (
