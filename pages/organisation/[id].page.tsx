@@ -38,7 +38,7 @@ const OrganisationDetailPage = () => {
                 </div>
                 <div className="w-full h-fit py-4 bg-dtech-light-grey rounded-[20px] shadow-container">
                     <OrganisationHead />
-                    <div className="flex border-t px-4 border-t shadow-container">
+                    <div className="flex border-t px-4 shadow-container">
                         {!loading && (
                             <Tab.Group defaultIndex={selectedIndex}>
                                 <OrganisationTabHeaders selectedIndex={selectedIndex} />

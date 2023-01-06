@@ -22,7 +22,6 @@ const renderLabel = ({
     value,
 }: any) => {
     const RADIAN = Math.PI / 180;
-    console.log("mid Angle : ", midAngle, "cx :", cx, "cy :", cy);
     const sin = Math.sin(-RADIAN * midAngle);
     const cos = Math.cos(-RADIAN * midAngle);
     const sx = cx + (outerRadius + 10) * cos;
@@ -45,7 +44,7 @@ const renderLabel = ({
             <rect
                 fill={fill}
                 stroke={"black"}
-                stroke-width="1"
+                strokeWidth="1"
                 height="90"
                 width="150"
                 x={ex + (cos >= 0 ? 0 : -12.6) * 12}
@@ -77,9 +76,21 @@ const renderLabel = ({
         </g>
     );
 };
-const PieGraph = ({ data }: { data: Array<Object> }) => {
+const PieGraph = ({
+    data,
+    width = 950,
+    height = 700,
+    radius = "60%",
+    isAnimationActive=true,
+}: {
+    data: Array<Object>;
+    width?: number;
+    height?: number;
+    radius?: string;
+    isAnimationActive?: boolean;
+}) => {
     return (
-        <PieChart width={950} height={700} >
+        <PieChart width={width} height={height}>
             <Pie
                 data={data}
                 dataKey={"value"}
@@ -88,7 +99,8 @@ const PieGraph = ({ data }: { data: Array<Object> }) => {
                 labelLine={true}
                 legendType="square"
                 label={renderLabel}
-                outerRadius={'60%'}
+                outerRadius={radius}
+                isAnimationActive={isAnimationActive}
             >
                 {data.map((_, index) => (
                     <Cell key={`cell-${index}`} fill={COLORS[index]} />

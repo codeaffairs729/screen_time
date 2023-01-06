@@ -1,16 +1,12 @@
-import Image from "next/image";
-import downloadIcon from "public/images/icons/download.svg";
 import DownloadReport from "./downloadReport";
 
 const Head = ({
     edit,
     setEdit,
-    handleCancel,
     id,
 }: {
     edit: boolean;
     setEdit: Function;
-    handleCancel: Function;
     id: string;
 }) => {
     return (
@@ -22,7 +18,7 @@ const Head = ({
                             ? "text-dtech-dark-grey"
                             : "border-b-2 border-b-dtech-main-dark text-dtech-main-dark"
                     } pb-2 w-12 cursor-pointer`}
-                    onClick={() => handleCancel()}
+                    onClick={() => setEdit(false)}
                 >
                     Preview
                 </div>

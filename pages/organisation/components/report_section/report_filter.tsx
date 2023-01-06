@@ -1,26 +1,19 @@
-import CalendarSelect from "components/UI/calendar_select";
 import RangeSelector from "components/UI/range_selector";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { VscTriangleDown } from "react-icons/vsc";
+import { ReportVMContext } from "./report.vm";
 
-const ReportFilter = ({
-    handleCheck,
-    handleAutoGenerate,
-    HEADER,
-    fromDate,
-    setFromDate,
-    toDate,
-    setToDate,
-}: {
-    handleCheck: any;
-    handleAutoGenerate: any;
-    HEADER: any;
-    fromDate: any;
-    setFromDate: any;
-    toDate: any;
-    setToDate: any;
-}) => {
+const ReportFilter = ({ imgUrl }: { imgUrl: string }) => {
     const [showFilter, setShowFilter] = useState<boolean>(true);
+    const [fromDate, setFromDate] = useState(new Date());
+    const [toDate, setToDate] = useState(new Date());
+
+    const { generateReportContent, activeHeaders, onHeaderSelect } =
+        useContext(ReportVMContext);
+
+    const handleGenerateReport = () =>
+        generateReportContent(imgUrl, fromDate, toDate);
+
     return (
         <div className="w-1/3 py-4 px-6 flex flex-col items-center mt-12 ml-6 mb-96 border-2 drop-shadow-lg rounded-[24px]">
             <div className="px-2">
@@ -40,17 +33,14 @@ const ReportFilter = ({
                         showFilter ? "max-h-[100vh]" : "max-h-0"
                     } overflow-hidden transition-all duration-300 m-3`}
                 >
-                    {HEADER.map((header: any) => (
+                    {activeHeaders.map((header: any) => (
                         <Input
                             label={header.label}
                             isChecked={header.isChecked}
-                            handleCheck={handleCheck}
+                            handleCheck={onHeaderSelect}
                             value={header.label}
                         />
                     ))}
-                    {/* <Input label="Insights" />
-                    <Input label="Dataset quality" />
-                    <Input label="User feedback" /> */}
                 </div>
             </div>
             <div className="px-4">
@@ -67,7 +57,7 @@ const ReportFilter = ({
                 />
             </div>
             <button
-                onClick={handleAutoGenerate}
+                onClick={handleGenerateReport}
                 data-selector="back-btn"
                 className="m-1 whitespace-nowrap bg-dtech-main-dark h-8 flex items-center justify-center rounded"
             >

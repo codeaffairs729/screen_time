@@ -1,59 +1,26 @@
 import ReportFilter from "./report_filter";
 import Report from "./report/";
-import { useState } from "react";
-const HEADER = [
-    { label: "Insights", isChecked: false },
-    { label: "Dataset quality", isChecked: false },
-    { label: "User feedback", isChecked: false },
-];
+import ReportVM, { ReportVMContext } from "./report.vm";
 
 const Index = () => {
-    const [selected, setSelected] = useState(HEADER);
-    const [autoGenerate, setAutoGenerate] = useState<Boolean>(false);
-    const [edit, setEdit] = useState<boolean>(false);
-    const [fromDate, setFromDate] = useState(new Date());
-    const [toDate, setToDate] = useState(new Date());
-    const handleCheck = (e: any) => {
-        HEADER.map((header) => {
-            if (header.label === e.target.value) {
-                header.isChecked = e.target.checked;
-            }
-        });
-        setSelected([...HEADER]);
-    };
-    const handleAutoGenerate = () => {
-        edit && setAutoGenerate(true);
-    };
-    const handleCancel = () => {
-        setEdit(false);
-    };
+    const imgUrl =
+        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg";
+
+    const vm = ReportVM();
+
     return (
-        <div className="mb-6 ml-10">
-            <div className="text-[17px] text-dtech-dark-grey my-4">
-                Generate reports on organisation level data usage insights and
-                user feedback.
+        <ReportVMContext.Provider value={vm}>
+            <div className="mb-6 ml-10">
+                <div className="text-[17px] text-dtech-dark-grey my-4">
+                    Generate reports on organisation level data usage insights
+                    and user feedback.
+                </div>
+                <div className="flex">
+                    <Report />
+                    <ReportFilter imgUrl={imgUrl} />
+                </div>
             </div>
-            <div className="flex">
-                <Report
-                    autoGenerate={autoGenerate}
-                    selected={selected}
-                    edit={edit}
-                    setEdit={setEdit}
-                    handleCancel={handleCancel}
-                    fromDate={fromDate}
-                    toDate={toDate}
-                />
-                <ReportFilter
-                    handleCheck={handleCheck}
-                    handleAutoGenerate={handleAutoGenerate}
-                    HEADER={HEADER}
-                    fromDate={fromDate}
-                    setFromDate={setFromDate}
-                    toDate={toDate}
-                    setToDate={setToDate}
-                />
-            </div>
-        </div>
+        </ReportVMContext.Provider>
     );
 };
 
