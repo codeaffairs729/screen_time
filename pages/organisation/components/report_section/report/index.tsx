@@ -7,14 +7,12 @@ const EditReport = dynamic(() => import("./editReport"), {
     ssr: false,
 });
 
-const DOWNLOAD_ID = "report_download";
-
 const Report = () => {
     const [edit, setEdit] = useState(false);
     return (
         <div>
-            <Head edit={edit} setEdit={setEdit} id={DOWNLOAD_ID} />
-            {edit ? <EditReport /> : <Preview id={DOWNLOAD_ID} />}
+            <Head edit={edit} setEdit={setEdit} />
+            {edit ? <EditReport /> : <Preview />}
         </div>
     );
 };

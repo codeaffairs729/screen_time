@@ -1,14 +1,6 @@
 import DownloadReport from "./downloadReport";
 
-const Head = ({
-    edit,
-    setEdit,
-    id,
-}: {
-    edit: boolean;
-    setEdit: Function;
-    id: string;
-}) => {
+const Head = ({ edit, setEdit }: { edit: boolean; setEdit: Function }) => {
     return (
         <div className="flex justify-between items-center">
             <div className="relative flex text-center w-32 justify-between">
@@ -33,7 +25,7 @@ const Head = ({
                     Edit
                 </div>
             </div>
-            {!edit && <DownloadReport id={id} />}
+            {!edit && <DownloadReport />}
         </div>
     );
 };

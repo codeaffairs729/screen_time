@@ -8,6 +8,7 @@ import {
 import html2canvas from "html2canvas";
 import { format } from "date-fns";
 import { convertToHTML } from "draft-convert";
+import jsPDF from "jspdf";
 
 type Header = {
     label: string;
@@ -19,6 +20,40 @@ const HEADER: Header[] = [
     { label: "Search terms used", isChecked: false },
     { label: "Download metrics", isChecked: false },
 ];
+
+const A4_WIDTH_MM = 210;
+const PAGE_Y_MARGIN = 160;
+const PAGE_X_MARGIN = 20;
+
+export const downloadPdf = (
+    input: any,
+    inputHeightMm: any,
+    fileName: string = "download.pdf"
+) => {
+    html2canvas(input, { useCORS: true }).then((canvas) => {
+        const imgData = canvas.toDataURL("image/png");
+        const pdf =
+            inputHeightMm > A4_WIDTH_MM
+                ? new jsPDF("p", "mm", [
+                      inputHeightMm + PAGE_Y_MARGIN,
+                      A4_WIDTH_MM,
+                  ])
+                : new jsPDF();
+        const imgProps = pdf.getImageProperties(imgData);
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+        pdf.addImage(
+            imgData,
+            "png",
+            10,
+            4,
+            pdfWidth - PAGE_X_MARGIN,
+            pdfHeight
+        );
+        pdf.save(fileName);
+    });
+};
 
 const imageTag = (src: string, index: any) => {
     return `<img  style='margin-left: auto;margin-right: auto;${
@@ -66,6 +101,7 @@ const headerSelected = (
         .join("");
 
 const ReportVM = () => {
+    const [downloadRef, setDownloadRef] = useState<any>();
     const [selectedHeaders, setSelectedHeaders] = useState<string[]>([]);
     const [activeHeaders, setActiveHeaders] = useState<Header[]>(HEADER);
     const [editorState, onEditorStateChange] = useState<EditorState>(
@@ -136,7 +172,7 @@ const ReportVM = () => {
 
     const formatPreviewData = () => {
         // console.log("Editor state",convertToHTML(editorState.getCurrentContent()).toString())
-        let html =  convertToHTML(editorState.getCurrentContent()).toString();
+        let html = convertToHTML(editorState.getCurrentContent()).toString();
         const images = convertToRaw(editorState.getCurrentContent()).entityMap;
 
         Object.values(images).forEach((image, index) => {
@@ -154,10 +190,12 @@ const ReportVM = () => {
         onEditorStateChange,
         setSelectedHeaders,
         setActiveHeaders,
+        setDownloadRef,
         onHeaderSelect,
         selectedHeaders,
         activeHeaders,
         editorState,
+        downloadRef,
         previewContent,
     };
 };
@@ -169,10 +207,12 @@ interface IReportVMContext {
     onEditorStateChange: any;
     setSelectedHeaders: Function;
     setActiveHeaders: Function;
+    setDownloadRef: Function;
     onHeaderSelect: Function;
     selectedHeaders: string[];
     activeHeaders: Header[];
     editorState: any;
+    downloadRef: any;
     previewContent: string;
 }
 
