@@ -33,8 +33,9 @@ const ReportFilter = ({ imgUrl }: { imgUrl: string }) => {
                         showFilter ? "max-h-[100vh]" : "max-h-0"
                     } overflow-hidden transition-all duration-300 m-3`}
                 >
-                    {activeHeaders.map((header: any) => (
+                    {activeHeaders.map((header: any, index:number) => (
                         <Input
+                            key={index}
                             label={header.label}
                             isChecked={header.isChecked}
                             handleCheck={onHeaderSelect}

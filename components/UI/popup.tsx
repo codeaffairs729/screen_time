@@ -16,18 +16,21 @@ const Popup = ({ href, dataset }: PopupProps) => {
             <a
                 href={`${LinkedinURL}${process.env.NEXT_PUBLIC_WEBCLIENT_ROOT}${href}`}
                 target="_blank"
+                rel="noreferrer"
             >
                 <BsLinkedin className="h-6 w-8 ml-2 my-2 cursor-pointer" />
             </a>
             <a
                 href={`${TwitterURL}${process.env.NEXT_PUBLIC_WEBCLIENT_ROOT}${href}`}
                 target="_blank"
+                rel="noreferrer"
             >
                 <BsTwitter className="h-6 w-8 ml-1 my-2 cursor-pointer" />
             </a>
             <a
                 href={`${FacebookURL}${process.env.NEXT_PUBLIC_WEBCLIENT_ROOT}${href}&t=${Message}`}
                 target="_blank"
+                rel="noreferrer"
             >
                 <BsFacebook className="h-6 w-8 ml-1 my-2 cursor-pointer" />
             </a>
