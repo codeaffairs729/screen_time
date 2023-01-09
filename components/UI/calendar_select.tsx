@@ -25,20 +25,21 @@ const CalendarSelect = ({
         setSelected(!select);
         setStartDate(e);
     };
-
-    if (label == "From") {
-        if (startDate <= toDate) {
-            setFromDate(startDate);
+    useEffect(() => {
+        if (label == "From") {
+            if (startDate <= toDate) {
+                setFromDate(startDate);
+            } else {
+                setFromDate(toDate);
+            }
         } else {
-            setFromDate(toDate);
+            if (fromDate <= startDate) {
+                setToDate(startDate);
+            } else {
+                setToDate(fromDate);
+            }
         }
-    } else {
-        if (fromDate <= startDate) {
-            setToDate(startDate);
-        } else {
-            setToDate(fromDate);
-        }
-    }
+    }, [startDate, toDate]);
 
     return (
         <div className="flex  pl-5">
