@@ -61,9 +61,7 @@ const ListsSection = () => {
                         </TabPanel>
                         {bookmark_lists.map((list: any, idx: any) => (
                             <TabPanel key={idx} className="bg-white">
-                                <BookmarksSection
-                                    datasetIDS={list.listDatasets}
-                                />
+                                <BookmarksSection list={list} />
                             </TabPanel>
                         ))}
                     </Tab.Panels>

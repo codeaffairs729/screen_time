@@ -10,7 +10,7 @@ export interface Data {
     title: string;
     description: string;
     dataQuality: number;
-    buttonTags: string[];
+    licenseTypes: string[];
     topics: string[];
     domains: string[];
     dataProviders?: DataProviders;

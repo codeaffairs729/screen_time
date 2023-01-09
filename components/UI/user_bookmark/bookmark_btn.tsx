@@ -78,7 +78,7 @@ const BookmarkBtn = ({
 /**
  * Bookmark a dataset
  */
-const useBookmarkDataset = (dataset: Dataset) => {
+const useBookmarkDataset = (data: any) => {
     const user = useSelector((state: RootState) => state.auth.user);
     const user_bookmarks = useSelector(
         (state: RootState) => state.user.bookmarkItems
@@ -87,7 +87,7 @@ const useBookmarkDataset = (dataset: Dataset) => {
     const isHandlingBookmark = false;
 
     user_bookmarks?.forEach((item: any) => {
-        if (item.datasetID === dataset.id) {
+        if (item.datasetID === data.id || item.organisationID === data.id) {
             isBookmarked = true;
         }
     });

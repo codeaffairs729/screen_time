@@ -21,7 +21,7 @@ const AddListItemVM = (user: User | null) => {
                     user_id: user?.id,
                     list_id: listID,
                     dataset_id: datasetID,
-                    organisation_id: organisationId,
+                    data_provider_id: organisationId,
                 }),
             {
                 onSuccess: (res) => {

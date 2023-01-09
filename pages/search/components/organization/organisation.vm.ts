@@ -22,7 +22,7 @@ const DATASET = {
     description:
         "Featured Public Health Scotland Metadata Quality Open Commercial The Scottish Health and Social Care open data platform gives access to statistics and ference data for information and re-use. This platform is managed by Public Health Scotland",
     dataQuality: 2,
-    buttonTags: ["open"],
+    licenseTypes: ["open"],
     topics: ["health"],
     domains: ["test"],
     stats: {
@@ -57,51 +57,51 @@ const OrganizationSearchVM = () => {
     const firstindex = lastindex - pageSize;
 
     organisations = organisations.slice(firstindex, lastindex);
-// const [organisationSearchData , setOrganisationSearchData] = useState<Organisation[]>()
-        // const { data , error } = useSWR(
-        //     q
-        //         ? `/v4/datasets/organisation/?search_query=${q}&page_size=${pageSize}&page_num=${currentPageNo}${queryParams}`
-        //         : null,
-        //     (url: string) => {
-        //         Http.get(url, {
-        //             baseUrl: `${process.env.NEXT_PUBLIC_PUBLIC_API_ROOT}`,
-        //         })
-        //             .catch((e) => {
-        //                 setLoading(false);
-        //                 toast.error(
-        //                     "Something went wrong while fetching search results"
-        //                 );
-        //                 throw e;
-        //             })
-        //             .finally(() => {
-        //                 let datasets = Array(20)
-        //                     .fill(1)
-        //                     .map((x, y) => x + y)
-        //                     .map((index) => ({
-        //                         id: index,
-        //                         ...DATASET,
-        //                     }));
-        //                 const totalRecords = datasets.length;
-        //                 setTotalPages(
-        //                     totalRecords
-        //                         ? Math.ceil(totalRecords / pageSize)
-        //                         : totalRecords
-        //                 );
-        //                 let organisationSearchData =
-        //                     Organisation.fromJsonList(datasets);
-        //                 const lastindex = currentPageNo * pageSize;
-        //                 const firstindex = lastindex - pageSize;
-        //                 organisationSearchData = organisationSearchData.slice(
-        //                     firstindex,
-        //                     lastindex
-        //                 );
-        //                 console.log("SWR is working", organisationSearchData);
-        //                 setOrganisationSearchData(organisationSearchData)
-        //                 return organisationSearchData;
-        //             });
-        //     }
-        // );
-        // console.log("organisationSearchData outside :", organisationSearchData);
+    // const [organisationSearchData , setOrganisationSearchData] = useState<Organisation[]>()
+    // const { data , error } = useSWR(
+    //     q
+    //         ? `/v4/datasets/organisation/?search_query=${q}&page_size=${pageSize}&page_num=${currentPageNo}${queryParams}`
+    //         : null,
+    //     (url: string) => {
+    //         Http.get(url, {
+    //             baseUrl: `${process.env.NEXT_PUBLIC_PUBLIC_API_ROOT}`,
+    //         })
+    //             .catch((e) => {
+    //                 setLoading(false);
+    //                 toast.error(
+    //                     "Something went wrong while fetching search results"
+    //                 );
+    //                 throw e;
+    //             })
+    //             .finally(() => {
+    //                 let datasets = Array(20)
+    //                     .fill(1)
+    //                     .map((x, y) => x + y)
+    //                     .map((index) => ({
+    //                         id: index,
+    //                         ...DATASET,
+    //                     }));
+    //                 const totalRecords = datasets.length;
+    //                 setTotalPages(
+    //                     totalRecords
+    //                         ? Math.ceil(totalRecords / pageSize)
+    //                         : totalRecords
+    //                 );
+    //                 let organisationSearchData =
+    //                     Organisation.fromJsonList(datasets);
+    //                 const lastindex = currentPageNo * pageSize;
+    //                 const firstindex = lastindex - pageSize;
+    //                 organisationSearchData = organisationSearchData.slice(
+    //                     firstindex,
+    //                     lastindex
+    //                 );
+    //                 console.log("SWR is working", organisationSearchData);
+    //                 setOrganisationSearchData(organisationSearchData)
+    //                 return organisationSearchData;
+    //             });
+    //     }
+    // );
+    // console.log("organisationSearchData outside :", organisationSearchData);
     return {
         currentPageNo,
         setCurrentPageNo,
@@ -137,6 +137,5 @@ export const organisationToResultCardData = (organisations: any): Data[] => {
     return organisations?.map((organisation: any) => ({
         ...organisation,
         recordType: "organisation",
-        lastUpdate: DateTime.fromISO(new Date("12-25-2022").toISOString()),
     }));
 };

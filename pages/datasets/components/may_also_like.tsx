@@ -8,6 +8,7 @@ import DatasetStats from "models/dataset_stats.model";
 import { useHttpCall } from "common/hooks";
 import Http from "common/http";
 import DatasetList from "components/UI/dataset_list";
+import SearchVM from "pages/search/search.vm";
 
 const MayAlsoLike = () => {
     const { dataset } = useContext(DatasetDetailVMContext);
@@ -15,31 +16,7 @@ const MayAlsoLike = () => {
     /**
      * Fetch stats for datasets to highlight favourite status
      */
-    const {
-        execute: excuteFectchStats,
-        data: stats,
-        isLoading: isFetchingStats,
-    } = useHttpCall<{ [key: string]: any }>({});
-    const fectchStats = (ids: number[]) =>
-        excuteFectchStats(
-            () =>
-                Http.post("/v1/datasets/stats", {
-                    meta_dataset_ids: ids,
-                }),
-            {
-                postProcess: (res) => {
-                    const o: { [key: string]: DatasetStats } = {};
-                    Object.keys(res).map(
-                        (id) =>
-                            (o[id] = DatasetStats.fromJson({
-                                ...res[id],
-                                dataset_id: id,
-                            }))
-                    );
-                    return o;
-                },
-            }
-        );
+    const { fectchStats, stats, isFetchingStats } = SearchVM();
 
     const searchTerm = dataset?.detail.topics
         .slice(0, 5)
@@ -57,7 +34,9 @@ const MayAlsoLike = () => {
                             .slice(0, 10)
                             .filter((ds: any) => ds["id"] != dataset?.["id"])
                     );
-                    const datasetIds = datasets.map((dataset) => dataset.id);
+                    const datasetIds = datasets
+                        .filter((id: any) => id)
+                        .map((dataset) => dataset.id);
                     if (datasetIds.length) {
                         fectchStats(datasetIds);
                     }

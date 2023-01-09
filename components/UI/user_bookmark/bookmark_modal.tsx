@@ -118,7 +118,11 @@ const ModelList = ({
     let thisItemID = 0;
 
     bookmark_items.forEach((list_item: any) => {
-        if (list_item.listID == list.listID && data.id == list_item.datasetID) {
+        if (
+            list_item.listID == list.listID &&
+            (data.id == list_item.datasetID ||
+                data.id == list_item.organisationID)
+        ) {
             thisList = true;
             thisItemID = list_item.itemID;
         }

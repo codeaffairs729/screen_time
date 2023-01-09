@@ -8,33 +8,10 @@ import useSWR, { useSWRConfig } from "swr";
 import { useHttpCall } from "common/hooks";
 import DatasetStats from "models/dataset_stats.model";
 import DatasetList from "components/UI/dataset_list";
+import SearchVM from "pages/search/search.vm";
 
 const FavouritesSection = () => {
-    const {
-        execute: excuteFectchStats,
-        data: stats,
-        isLoading: isFetchingStats,
-    } = useHttpCall<{ [key: string]: any }>({});
-    const fectchStats = (ids: number[]) =>
-        excuteFectchStats(
-            () =>
-                Http.post("/v1/datasets/stats", {
-                    meta_dataset_ids: ids,
-                }),
-            {
-                postProcess: (res) => {
-                    const o: { [key: string]: DatasetStats } = {};
-                    Object.keys(res).map(
-                        (id) =>
-                            (o[id] = DatasetStats.fromJson({
-                                ...res[id],
-                                dataset_id: id,
-                            }))
-                    );
-                    return o;
-                },
-            }
-        );
+    const { fectchStats, stats, isFetchingStats } = SearchVM();
 
     const { mutate } = useSWRConfig();
     const favEndpoint = `${process.env.NEXT_PUBLIC_WEBPORTAL_API_ROOT}/v1/users/favourites`;
