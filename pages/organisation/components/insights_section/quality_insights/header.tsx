@@ -3,7 +3,7 @@ import {
     formatLabel,
     getSelectedLabelIndex,
     qualityInsights,
-} from "pages/organisation/organisation.vm";
+} from "pages/organisation/organisation_detail.vm";
 import Label from "../label";
 import { useState } from "react";
 

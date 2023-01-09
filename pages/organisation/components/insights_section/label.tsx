@@ -1,4 +1,4 @@
-import { formatLabel } from "pages/organisation/organisation.vm";
+import { formatLabel } from "pages/organisation/organisation_detail.vm";
 
 const Label = ({
     labelPrefix,

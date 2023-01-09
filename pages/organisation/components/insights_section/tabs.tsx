@@ -6,7 +6,7 @@ import QualityInsightsHeader from "./quality_insights/header";
 import {
     getSelectedLabelIndex,
     insightTabIndex,
-} from "pages/organisation/organisation.vm";
+} from "pages/organisation/organisation_detail.vm";
 
 const TabHeaders = ({
     selectedInsightTab,
