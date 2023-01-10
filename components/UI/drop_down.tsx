@@ -2,7 +2,7 @@ import { Menu, Transition } from "@headlessui/react";
 import clsx from "clsx";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { Fragment, ReactNode, useState } from "react";
+import React, { Fragment, ReactNode, useState } from "react";
 import { VscTriangleDown } from "react-icons/vsc";
 
 export type MenuItemType = {
@@ -129,19 +129,34 @@ const MenuItem = ({
                     {label}
                 </button>
             ) : (
-                <Link href={link || "#"}>
-                    <a
-                        className={clsx(
-                            "hover:bg-dtech-main-light px-2.5 py-2 text-sm w-full shadow-underline text-left boder-b-1 shadow-dtech-dark-grey text-dtech-dark-grey",
-                            className
-                        )}
-                    >
-                        {label}
-                    </a>
-                </Link>
+                <LinkTag label={label} className={className} link={link} />
             )}
         </Menu.Item>
     );
 };
+
+const LinkTag = React.forwardRef(
+    (
+        {
+            link,
+            className,
+            label,
+        }: { link?: string; className?: string; label: string },
+        ref: any
+    ) => (
+        <Link href={link || "#"}>
+            <span
+                ref={ref}
+                className={clsx(
+                    "hover:bg-dtech-main-light px-2.5 py-2 text-sm w-full shadow-underline text-left boder-b-1 shadow-dtech-dark-grey text-dtech-dark-grey cursor-pointer",
+                    className
+                )}
+            >
+                {label}
+            </span>
+        </Link>
+    )
+);
+LinkTag.displayName = "LinkTag";
 
 export default Dropdown;

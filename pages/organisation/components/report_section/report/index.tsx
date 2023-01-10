@@ -5,6 +5,7 @@ import dynamic from "next/dynamic";
 import PieGraph from "components/UI/PieGraph";
 import BarGraph from "components/UI/BarGraph";
 import Table from "../../table";
+import { Tab } from "@headlessui/react";
 
 const EditReport = dynamic(() => import("./editReport"), {
     ssr: false,
@@ -66,8 +67,21 @@ const Report = () => {
                     radius="60%"
                 />
             </div>
-            <Head edit={edit} setEdit={setEdit} />
-            {edit ? <EditReport /> : <Preview />}
+            <Tab.Group>
+                <Tab.List>
+                    <Head />
+                </Tab.List>
+                <Tab.Panels>
+                    <Tab.Panel>
+                        <Preview />
+                    </Tab.Panel>
+                    <Tab.Panel>
+                        <EditReport />
+                    </Tab.Panel>
+                </Tab.Panels>
+            </Tab.Group>
+            {/* <Head edit={edit} setEdit={setEdit} />
+            {edit ? <EditReport /> : <Preview />} */}
         </div>
     );
 };
