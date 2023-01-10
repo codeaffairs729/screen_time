@@ -4,13 +4,19 @@ import FavouriteBtn from "./buttons/favourite_btn.v4";
 import Popup from "./popup";
 import BookmarkBtn from "./user_bookmark/bookmark_btn";
 import { Menu, Transition } from "@headlessui/react";
+import { Data } from "./result_card";
+
 type ResultCardActionProps = {
-    data: any;
+    data: Data | undefined;
     setData: Function;
     href: string;
 };
 const ResultCardAction = ({ data, setData, href }: ResultCardActionProps) => {
     const [share, setShare] = useState(false);
+
+    if (!data) {
+        return null;
+    }
 
     const onFav = () => setData({ ...data, isFavourited: !data.isFavourited });
     return (

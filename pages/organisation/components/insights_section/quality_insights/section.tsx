@@ -2,6 +2,9 @@ import Accordian from "components/UI/accordian";
 import Table from "../../table";
 import MetaRating from "components/UI/metaRating";
 import BarGraph from "components/UI/BarGraph";
+import Loader from "components/UI/loader";
+import { OrganisationDetailVMContext } from "pages/organisation/organisation_detail.vm";
+import { useContext } from "react";
 
 const METADATA_ITEMS = [
     "Overall score",
@@ -101,10 +104,37 @@ const QualityInsightsBody = ({ selectedLabel }: { selectedLabel: number }) => {
     const tableData = ROW2.map((data, index) => [
         index,
         ROW1[index],
-        <DisplayDataset key={index} title={data.title} description={data.description} />,
+        <DisplayDataset
+            key={index}
+            title={data.title}
+            description={data.description}
+        />,
     ]);
     const barDataKey = Object.keys(STARS[0][0])[1];
     const labelListDatakey = Object.keys(STARS[0][0])[0];
+
+    const {
+        isLoading,
+        dataFileQuality,
+        metaDataQulaity,
+        fectchDataFileQuality,
+        fectchDownloadMetrics,
+    } = useContext(OrganisationDetailVMContext);
+
+    if (isLoading) {
+        return (
+            <div className="h-[calc(100vh-var(--nav-height))]  w-full flex items-center justify-center">
+                <Loader />
+            </div>
+        );
+    }
+
+    /*TODO
+        - Create data structure for the same
+        - Create api for the same
+        - Fetch data through api
+     */
+
     return (
         <div className="ml-16">
             <div className="text-sm text-dtech-dark-grey my-4">

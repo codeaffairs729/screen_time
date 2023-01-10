@@ -2,8 +2,8 @@ import CardBody from "./body";
 import CardFooter, { DataProviders } from "./footer";
 import CardHead from "./head";
 import { DateTime } from "luxon";
-import { DataStats } from "./dataset_stat";
 import { useState } from "react";
+import { DataStats } from "models/organisation.model";
 
 export interface Data {
     id: number | string;

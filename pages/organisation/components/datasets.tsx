@@ -4,6 +4,9 @@ import { MdFileDownload } from "react-icons/md";
 import dataset from "public/images/icons/dataset.svg";
 import Table from "./table";
 import Image from "next/image";
+import { useContext } from "react";
+import { OrganisationDetailVMContext } from "../organisation_detail.vm";
+import Loader from "components/UI/loader";
 
 const LIST_ITEMS = [
     {
@@ -57,8 +60,29 @@ const Datasets = () => {
     const tableData = ROW2.map((data, index) => [
         index,
         ROW1[index],
-        <DisplayDataset key={index} title={data.title} description={data.description} />,
+        <DisplayDataset
+            key={index}
+            title={data.title}
+            description={data.description}
+        />,
     ]);
+    const { isLoading, organisationDatasets, fectchOrganisationDatasets } =
+        useContext(OrganisationDetailVMContext);
+
+    if (isLoading) {
+        return (
+            <div className="h-[calc(100vh-var(--nav-height))]  w-full flex items-center justify-center">
+                <Loader />
+            </div>
+        );
+    }
+
+    /*TODO
+        - Create data structure for the same
+        - Create api for the same
+        - Fetch data through api
+     */
+
     return (
         <div className="ml-16">
             <div className="text-sm text-dtech-dark-grey">

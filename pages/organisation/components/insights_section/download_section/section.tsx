@@ -5,7 +5,9 @@ import { LatLngExpression } from "leaflet";
 import Table from "../../table";
 import dynamic from "next/dynamic";
 import RangeSelector from "components/UI/range_selector";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import Loader from "components/UI/loader";
+import { OrganisationDetailVMContext } from "pages/organisation/organisation_detail.vm";
 const WorldMap = dynamic(() => import("components/UI/world_map"), {
     ssr: false,
 });
@@ -85,6 +87,24 @@ const DownloadSection = ({ selectedLabel }: { selectedLabel: number }) => {
         [52.536457, -90.985786],
         [60.328674, -90.664658],
     ];
+
+    const { isLoading, downloadMetrics, fectchDownloadMetrics } = useContext(
+        OrganisationDetailVMContext
+    );
+
+    if (isLoading) {
+        return (
+            <div className="h-[calc(100vh-var(--nav-height))]  w-full flex items-center justify-center">
+                <Loader />
+            </div>
+        );
+    }
+
+    /*TODO
+        - Create data structure for the same
+        - Create api for the same
+        - Fetch data through api
+     */
     return (
         <div>
             {selectedLabel == 0 && (

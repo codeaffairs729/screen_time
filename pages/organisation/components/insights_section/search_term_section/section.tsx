@@ -1,3 +1,6 @@
+import Loader from "components/UI/loader";
+import { OrganisationDetailVMContext } from "pages/organisation/organisation_detail.vm";
+import { useContext } from "react";
 import Table from "../../table";
 import TagsCloud from "./tagCloud";
 
@@ -83,6 +86,25 @@ const SearchTermSection = ({
         row2[index],
         row3[index],
     ]);
+
+    const { isLoading, searchTerms, fectchSearchTerms } = useContext(
+        OrganisationDetailVMContext
+    );
+
+    if (isLoading) {
+        return (
+            <div className="h-[calc(100vh-var(--nav-height))]  w-full flex items-center justify-center">
+                <Loader />
+            </div>
+        );
+    }
+
+    /*TODO
+        - Create data structure for the same
+        - Create api for the same
+        - Fetch data through api
+     */
+
     return (
         <div className="ml-8 mr-24 block h-[44rem] overflow-y-scroll no-scrollbar whitespace-nowrap">
             <TagsCloud row={row1} row2={row2} />

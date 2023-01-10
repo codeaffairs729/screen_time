@@ -1,7 +1,8 @@
 import clsx from "clsx";
 import LabelledRow from "components/dataset/labelled_row";
-import DatasetStat, { DataStats } from "./dataset_stat";
+import DataStat from "./data_stat";
 import { DateTime } from "luxon";
+import { DataStats } from "models/organisation.model";
 
 export interface DataProviders {
     organisation: string;
@@ -28,7 +29,7 @@ const CardFooter = ({
         >
             {stats && (
                 <div className="flex">
-                    <DatasetStat stats={stats} />
+                    <DataStat stats={stats} />
                 </div>
             )}
             {dataProviders && (

@@ -1,15 +1,16 @@
+import { DataStats } from "models/organisation.model";
 import Image from "next/image";
 import { BsFillEyeFill, BsHeartFill } from "react-icons/bs";
 import { MdFileDownload } from "react-icons/md";
 
-export interface DataStats {
-    datasetsCount: number;
-    favoritesCount: number;
-    viewCount: number;
-    downloadCount: number;
-}
+const DataStats = ({ stats }: { stats: DataStats | undefined }) => {
+    const {
+        datasetsCount = 0,
+        favoritesCount = 0,
+        viewCount = 0,
+        downloadCount = 0,
+    } = stats || {};
 
-const DatasetStat = ({ stats }: { stats: DataStats }) => {
     return (
         <div className="my-4">
             <div className="flex justify-between">
@@ -24,7 +25,7 @@ const DatasetStat = ({ stats }: { stats: DataStats }) => {
                             Datasets
                         </span>
                         <span className="ml-2 font-medium text-sm">
-                            {stats.datasetsCount}
+                            {datasetsCount}
                         </span>
                     </div>
                     <div className="flex justify-center items-center mr-6">
@@ -33,7 +34,7 @@ const DatasetStat = ({ stats }: { stats: DataStats }) => {
                             Added to favourites
                         </span>
                         <span className="ml-2 font-medium text-sm">
-                            {stats.favoritesCount}
+                            {favoritesCount}
                         </span>
                     </div>
                     <div className="flex justify-center items-center mr-6">
@@ -42,7 +43,7 @@ const DatasetStat = ({ stats }: { stats: DataStats }) => {
                             Viewed
                         </span>
                         <span className="ml-2 font-medium text-sm">
-                            {stats.viewCount}
+                            {viewCount}
                         </span>
                     </div>
                     <div className="flex justify-center items-center mr-6">
@@ -51,7 +52,7 @@ const DatasetStat = ({ stats }: { stats: DataStats }) => {
                             Downloaded
                         </span>
                         <span className="ml-2 font-medium text-sm">
-                            {stats.downloadCount}
+                            {downloadCount}
                         </span>
                     </div>
                 </div>
@@ -59,4 +60,4 @@ const DatasetStat = ({ stats }: { stats: DataStats }) => {
         </div>
     );
 };
-export default DatasetStat;
+export default DataStats;

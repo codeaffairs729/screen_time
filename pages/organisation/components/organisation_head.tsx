@@ -1,22 +1,32 @@
 import MetaRating from "components/UI/metaRating";
 import ResultCardAction from "components/UI/result_card_action";
-import DatasetStat from "components/UI/result_card/dataset_stat";
+import DatasetStat from "components/UI/result_card/data_stat";
+import { useContext } from "react";
+import { OrganisationDetailVMContext } from "../organisation_detail.vm";
+import { organisationToResultCardData } from "pages/search/components/organization/organisation.vm";
 
 const OrganisationHead = () => {
-    const title = "NatureScot Data Services";
-    const description =
-        "NatureScot collects data and information on many aspects of Scotland’s environment. Their online data services let people access this knowledge easily.";
-    const dataQuality = 3;
-    const imgUrl =
-        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg";
-    const domains = ["Health and care"];
-    const topics = ["Diseases"];
-    const stats = {
-        datasetsCount: 856,
-        favoritesCount: 123,
-        viewCount: 253,
-        downloadCount: 435,
-    };
+    const { organisation, setOrganisation } = useContext(
+        OrganisationDetailVMContext
+    );
+
+    if (!organisation) {
+        return null;
+    }
+
+    const {
+        title,
+        dataQuality,
+        description,
+        imgUrl,
+        domains,
+        topics,
+        stats,
+        lastUpdate,
+    } = organisation || {};
+
+    const cardActionData = organisationToResultCardData([organisation])[0];
+
     return (
         <div className="px-4">
             <div className="flex justify-between items-center">
@@ -25,19 +35,16 @@ const OrganisationHead = () => {
                         {title}
                     </div>
                     <div className="flex justify-between items-center">
-                        <MetaRating dataQuality={dataQuality} />
+                        <MetaRating dataQuality={dataQuality ?? 0} />
                         <button className="ml-8 text-m h-6 px-4 border cursor-pointer rounded border-[#5F5F63]">
                             <span className="my-auto">Open</span>
                         </button>
                     </div>
                 </div>
                 <ResultCardAction
-                    data={{ id: 1 }}
-                    setData={() => {}}
-                    href={`/organisations/1`}
-                    // onFavorite={() => {}}
-                    // handleBookmark={() => {}}
-                    // handleShare={() => {}}
+                    data={cardActionData}
+                    setData={setOrganisation}
+                    href={`/organisations/${organisation?.id}`}
                 />
             </div>
             <div className="my-4">
@@ -58,7 +65,7 @@ const OrganisationHead = () => {
                             Updated:{" "}
                         </span>
                         <span className="text-sm font-medium text-dtech-dark-grey">
-                            11 July 2021
+                            {lastUpdate}
                         </span>
                     </div>
                 </div>
@@ -72,11 +79,11 @@ const MetaInfoEntity = ({
     entities,
 }: {
     entityName: string;
-    entities: string[];
+    entities: string[] | undefined;
 }) => {
     return (
         <div className="flex mr-8">
-            {entities.length > 0 && (
+            {entities && entities.length > 0 && (
                 <div>
                     <span className="text-sm font-medium text-dtech-dark-grey mr-4">
                         {entityName}:{" "}
