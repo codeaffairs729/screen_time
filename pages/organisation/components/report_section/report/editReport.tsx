@@ -1,9 +1,6 @@
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { useContext, useEffect } from "react";
 import { Editor } from "react-draft-wysiwyg";
-import Table from "../../table";
-import BarGraph from "components/UI/BarGraph";
-import PieGraph from "components/UI/PieGraph";
 import { ReportVMContext } from "../report.vm";
 
 const TOOLBAR_OPTIONS = {
