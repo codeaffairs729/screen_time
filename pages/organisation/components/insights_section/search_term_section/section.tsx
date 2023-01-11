@@ -81,7 +81,6 @@ const SearchTermSection = ({
     const row2 = ROW2.slice(0, selectedSearchTerm);
     const row3 = ROW3.slice(0, selectedSearchTerm);
     const tableData = row2.map((data, index) => [
-        index,
         row1[index],
         row2[index],
         row3[index],

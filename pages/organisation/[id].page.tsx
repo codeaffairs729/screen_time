@@ -119,6 +119,7 @@ OrganisationDetailPage.getInitialProps = async ({
 };
 
 const ORGANISATION_DETAIL = {
+    id: 1,
     title: "NatureScot Data Services",
     description:
         "NatureScot collects data and information on many aspects of Scotland’s environment. Their online data services let people access this knowledge easily.",

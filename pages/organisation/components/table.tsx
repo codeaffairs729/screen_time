@@ -36,15 +36,17 @@ const Table = ({
                             key={index}
                             className="py-2 border border-dtech-middle-grey"
                         >
-                            <td className={clsx("px-3 flex", tableRow)}>
-                                {tableData[index][1]}
-                            </td>
-                            <td className={clsx("px-3", tableRow)}>
-                                {tableData[index][2]}
-                            </td>
-                            <td className={clsx("px-3", tableRow)}>
-                                {tableData[index][3]}
-                            </td>
+                            {data.map((col: any, index: number) => (
+                                <td
+                                    key={index}
+                                    className={clsx(
+                                        `px-3 ${!index && "flex"}`,
+                                        tableRow
+                                    )}
+                                >
+                                    {col}
+                                </td>
+                            ))}
                         </tr>
                     ))}
                 </tbody>

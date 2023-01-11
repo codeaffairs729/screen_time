@@ -102,7 +102,6 @@ const QualityInsightsBody = ({ selectedLabel }: { selectedLabel: number }) => {
     const items = selectedLabel == 0 ? DATAFILE_ITEMS : METADATA_ITEMS;
 
     const tableData = ROW2.map((data, index) => [
-        index,
         ROW1[index],
         <DisplayDataset
             key={index}

@@ -2,6 +2,7 @@ import { useHttpCall } from "common/hooks";
 import Http from "common/http";
 import Organisation from "models/organisation.model";
 import { createContext, useState, Dispatch, SetStateAction } from "react";
+import toast from "react-hot-toast";
 
 export enum insightTabIndex {
     dataset_quality,
@@ -38,11 +39,6 @@ const OrganisationDetailVM = (
     initialOrganisationData: Organisation | undefined
 ) => {
     const [organisation, setOrganisation] = useState(initialOrganisationData);
-    // const [organisationDatasets, setOrganisationDatasets] = useState({});
-    // const [metaDataQulaity, setMetaDataQulaity] = useState({});
-    // const [dataFileQuality, setDataFileQulaity] = useState({});
-    // const [searchTerms, setSearchTerms] = useState([]);
-    // const [downloadMetrics, setDownloadMetrics] = useState({});
 
     const {
         execute: excuteFectchOrganisationDatasets,
@@ -50,15 +46,19 @@ const OrganisationDetailVM = (
         isLoading: isFetchingOrganisationDatasets,
     } = useHttpCall<{ [key: string]: any }>({});
 
-    const fectchOrganisationDatasets = (ids: number[]) =>
+    const fectchOrganisationDatasets = (id: number) =>
         excuteFectchOrganisationDatasets(
-            () =>
-                Http.post("/v1/datasets/stats", {
-                    meta_dataset_ids: ids,
-                }),
+            () => {
+                // return Http.get(`/v1/data_provider/${1}/orgDatsets`);
+            },
             {
-                postProcess: (res) => {
-                    return res;
+                onSuccess: (res) => {
+                    return jsonToOrgDatasets(res);
+                },
+                onError: (e) => {
+                    toast.error(
+                        "Something went wrong while fetching organisation datasets."
+                    );
                 },
             }
         );
@@ -148,7 +148,7 @@ const OrganisationDetailVM = (
 
     return {
         organisation,
-        organisationDatasets,
+        organisationDatasets: jsonToOrgDatasets(orgDatasets), //Only for test purpose,
         metaDataQulaity,
         dataFileQuality,
         searchTerms,
@@ -185,3 +185,116 @@ export const OrganisationDetailVMContext =
     createContext<IOrganisationDetailVMContext>(
         {} as IOrganisationDetailVMContext
     );
+
+const jsonToOrgDatasets = (json: any) => {
+    const orgDatasets: any = {};
+    Object.keys(json)?.forEach((key: string) => {
+        orgDatasets[key] = json[key].map((dataset: any) => {
+            const data: any = {
+                id: dataset["id"],
+                title: dataset["title"],
+                description: dataset["description"],
+            };
+
+            if (dataset?.count) {
+                data["count"] = dataset["count"];
+            }
+
+            return data;
+        });
+    });
+
+    return orgDatasets;
+};
+
+const orgDatasets = {
+    all_datasets: [
+        {
+            id: 1,
+            title: "2011 Output Area code, old to new",
+            description:
+                "This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August 2013) and the new 2011 This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August",
+        },
+        {
+            id: 2,
+            title: "Frozen Postcode 2011 to Workplace Zone 2011",
+            description:
+                "This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August 2013) and the new 2011 This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August",
+        },
+        {
+            id: 3,
+            title: "2011 Output Area code, old to new",
+            description:
+                "This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August 2013) and the new 2011 This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August",
+        },
+    ],
+    downloaded: [
+        {
+            id: 1,
+            title: "2011 Output Area code, old to new",
+            description:
+                "This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August 2013) and the new 2011 This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August",
+            count: 125,
+        },
+        {
+            id: 2,
+            title: "Frozen Postcode 2011 to Workplace Zone 2011",
+            description:
+                "This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August 2013) and the new 2011 This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August",
+            count: 56,
+        },
+        {
+            id: 3,
+            title: "2011 Output Area code, old to new",
+            description:
+                "This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August 2013) and the new 2011 This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August",
+            count: 125,
+        },
+    ],
+    viewed: [
+        {
+            id: 1,
+            title: "2011 Output Area code, old to new",
+            description:
+                "This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August 2013) and the new 2011 This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August",
+            count: 125,
+        },
+        {
+            id: 2,
+            title: "Frozen Postcode 2011 to Workplace Zone 2011",
+            description:
+                "This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August 2013) and the new 2011 This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August",
+            count: 56,
+        },
+        {
+            id: 3,
+            title: "2011 Output Area code, old to new",
+            description:
+                "This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August 2013) and the new 2011 This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August",
+            count: 125,
+        },
+    ],
+    added_to_favourite: [
+        {
+            id: 1,
+            title: "2011 Output Area code, old to new",
+            description:
+                "This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August 2013) and the new 2011 This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August",
+            count: 125,
+        },
+        {
+            id: 2,
+            title: "Frozen Postcode 2011 to Workplace Zone 2011",
+            description:
+                "This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August 2013) and the new 2011 This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August",
+            count: 56,
+        },
+        {
+            id: 3,
+            title: "2011 Output Area code, old to new",
+            description:
+                "This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August 2013) and the new 2011 This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August",
+            count: 125,
+        },
+    ],
+};

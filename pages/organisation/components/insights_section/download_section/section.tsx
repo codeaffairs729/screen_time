@@ -61,21 +61,15 @@ const DownloadSection = ({ selectedLabel }: { selectedLabel: number }) => {
 
     const TIME_HEADERS = ["Count", "Month"];
     const tableData = ROW2.map((data, index) => [
-        index,
         ROW1[index],
         ROW2[index],
         ROW3[index],
     ]);
     const timeData = TIME.map((data, index) => [
-        index,
         [data.download_per_month],
         [data.month + " " + "2022"],
     ]);
-    const PieData = PIEDATA.map((data, index) => [
-        index,
-        [data.name],
-        [data.value],
-    ]);
+    const PieData = PIEDATA.map((data, index) => [[data.name], [data.value]]);
     const barDataKey = "download_per_month";
     const LOCATIONS: Array<LatLngExpression> = [
         [41.8819, -87.6278],

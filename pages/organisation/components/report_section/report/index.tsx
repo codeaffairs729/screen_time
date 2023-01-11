@@ -45,9 +45,9 @@ const Report = () => {
                 <Table
                     tableHeaders={["I column", "II column"]}
                     tableData={[
-                        [0, 2, 3],
-                        [1, 3, 2],
-                        [2, 4, 5],
+                        [2, 3],
+                        [3, 2],
+                        [4, 5],
                     ]}
                     cellPadding={3}
                     tableClass="ml-20"
