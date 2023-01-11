@@ -129,6 +129,7 @@ const ValueContainer = ({ children, ...props }: any) => {
 
     useEffect(() => {
         setIsHomePage(pathname === "/");
+        if (pathname === "/") handleSearchTypeChange("dataset");
     }, []);
 
     return (

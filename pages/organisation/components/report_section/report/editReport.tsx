@@ -1,5 +1,5 @@
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { Editor } from "react-draft-wysiwyg";
 import { ReportVMContext } from "../report.vm";
 

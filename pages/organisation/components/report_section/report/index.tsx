@@ -10,7 +10,39 @@ import { Tab } from "@headlessui/react";
 const EditReport = dynamic(() => import("./editReport"), {
     ssr: false,
 });
-
+const TIME_HEADERS = ["Count", "Month"];
+const TIME = [
+    { month: "Jan", download_per_month: 265 },
+    { month: "Feb", download_per_month: 475 },
+    { month: "Mar", download_per_month: 190 },
+    { month: "Apr", download_per_month: 465 },
+    { month: "May", download_per_month: 565 },
+    { month: "Jun", download_per_month: 465 },
+    { month: "Jul", download_per_month: 85 },
+    { month: "Aug", download_per_month: 195 },
+    { month: "Sep", download_per_month: 1225 },
+    { month: "Oct", download_per_month: 165 },
+    { month: "Nov", download_per_month: 365 },
+    { month: "Des", download_per_month: 265 },
+];
+const timeData = TIME.map((data, index) => [
+    index,
+    [data.download_per_month],
+    [data.month + " " + "2022"],
+]);
+const PIE_HEADER = ["name", "value"];
+const PIEDATA = [
+    { name: "Data modelling", value: 400 },
+    { name: "Publications", value: 300 },
+    { name: "Planning", value: 200 },
+    { name: "gov", value: 500 },
+    { name: "Plan", value: 300 },
+];
+const PieData = PIEDATA.map((data, index) => [
+    index,
+    [data.name],
+    [data.value],
+]);
 const Report = () => {
     const [edit, setEdit] = useState(false);
     return (
@@ -43,14 +75,12 @@ const Report = () => {
                     isAnimationActive={false}
                 />
                 <Table
-                    tableHeaders={["I column", "II column"]}
-                    tableData={[
-                        [0, 2, 3],
-                        [1, 3, 2],
-                        [2, 4, 5],
-                    ]}
-                    cellPadding={3}
-                    tableClass="ml-20"
+                    tableHeaders={PIE_HEADER}
+                    tableData={PieData}
+                    headerClass="text-[17px] font-medium bg-[#F5F5F5] "
+                    tableClass="w-[50%]"
+                    cellPadding={20}
+                    tableRow="text-[17px] "
                 />
             </div>
             <div
@@ -65,6 +95,14 @@ const Report = () => {
                     ]}
                     isAnimationActive={false}
                     radius="60%"
+                />
+                <Table
+                    tableHeaders={TIME_HEADERS}
+                    tableData={timeData}
+                    headerClass="text-[17px] font-medium bg-[#F5F5F5] "
+                    tableClass="w-[50%]"
+                    cellPadding={20}
+                    tableRow="text-[17px]"
                 />
             </div>
             <Tab.Group>
