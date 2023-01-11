@@ -28,7 +28,7 @@ const Head = () => {
                     Edit
                 </Tab>
             </div>
-            {<DownloadReport />}
+            {!edit && <DownloadReport />}
         </div>
     );
 };
