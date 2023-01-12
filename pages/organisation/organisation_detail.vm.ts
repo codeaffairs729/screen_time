@@ -232,7 +232,7 @@ const OrganisationDetailVM = (
         metaDataQulaity,
         dataFileQuality,
         searchTerms: jsonToSearchTerms(SearchTerms),
-        downloadMetrics: jsonToOrgDownloadMetrics(DownloadMetrics),
+        downloadMetrics,
         isLoading,
         setOrganisation,
         fectchOrganisationDatasets,
@@ -350,81 +350,3 @@ const SearchTerms = [
 ];
 
 const dates = [...Array(12)].map((_, key) => new Date(2022, key));
-const DownloadMetrics = {
-    regions: [
-        {
-            name: "Manchester",
-            location: {
-                lat: 41.8819,
-                long: -87.6278,
-            },
-            count: 125,
-            date: new Date(),
-        },
-        {
-            name: "Edinburgh",
-            location: {
-                lat: 45.89,
-                long: -87.6278,
-            },
-            count: 125,
-            date: new Date(),
-        },
-        {
-            name: "Bristol",
-            location: {
-                lat: 42.536457,
-                long: -70.985786,
-            },
-            count: 125,
-            date: new Date(),
-        },
-        {
-            name: "Manchester",
-            location: {
-                lat: 35.328674,
-                long: -90.664658,
-            },
-            count: 125,
-            date: new Date(),
-        },
-        {
-            name: "Edinburgh",
-            location: {
-                lat: 31.8819,
-                long: -87.6278,
-            },
-            count: 125,
-            date: new Date(),
-        },
-        {
-            name: "Bristol",
-            location: {
-                lat: 75.89,
-                long: -87.6279,
-            },
-            count: 125,
-            date: new Date(),
-        },
-        {
-            name: "London",
-            location: {
-                lat: 52.536457,
-                long: -90.985786,
-            },
-            count: 125,
-            date: new Date(),
-        },
-    ],
-    download_by_time: dates.map((date, index) => ({
-        date: date,
-        count: 10 + index,
-    })),
-    download_by_use_case: [
-        { name: "Data modelling", value: 400 },
-        { name: "Publications", value: 300 },
-        { name: "Planning", value: 200 },
-        { name: "gov", value: 500 },
-        { name: "Plan", value: 300 },
-    ],
-};

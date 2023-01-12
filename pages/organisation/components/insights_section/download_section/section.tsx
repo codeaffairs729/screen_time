@@ -35,6 +35,14 @@ const DownloadSection = () => {
     const [fromDate, setFromDate] = useState(new Date());
     const [toDate, setToDate] = useState(new Date());
 
+    if (isLoading || downloadMetrics.hasOwnProperty('downloadByTime')) {
+        return (
+            <div className="h-[calc(100vh-var(--nav-height))]  w-full flex items-center justify-center">
+                <Loader />
+            </div>
+        );
+    }
+
     const downloadByTimeData = downloadMetrics?.downloadByTime?.map(
         (data: DownloadByTime) => {
             const date = new Date(data?.date);
@@ -70,17 +78,9 @@ const DownloadSection = () => {
         (region: any) => region?.count
     );
 
-    const pieData = downloadMetrics?.downloadByUseCase.map(
+    const pieData = downloadMetrics?.downloadByUseCase?.map(
         (data: any, index: number) => [data.name, data.value]
     );
-
-    if (isLoading) {
-        return (
-            <div className="h-[calc(100vh-var(--nav-height))]  w-full flex items-center justify-center">
-                <Loader />
-            </div>
-        );
-    }
 
     return (
         <div>
