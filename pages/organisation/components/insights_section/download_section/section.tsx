@@ -11,7 +11,10 @@ import { OrganisationDetailVMContext } from "pages/organisation/organisation_det
 const WorldMap = dynamic(() => import("components/UI/world_map"), {
     ssr: false,
 });
-const DownloadSection = ({ selectedLabel }: { selectedLabel: number }) => {
+const DownloadSection = () => {
+    const { selectedDownload: selectedLabel } = useContext(
+        OrganisationDetailVMContext
+    );
     const [fromDate, setFromDate] = useState(new Date());
     const [toDate, setToDate] = useState(new Date());
     const TABLE_HEADERS = ["Region", "Count", "Last used"];

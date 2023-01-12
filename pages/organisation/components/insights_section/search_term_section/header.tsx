@@ -2,18 +2,18 @@ import Dropdown, { MenuItemType } from "components/UI/drop_down";
 import {
     formatLabel,
     getSelectedLabelIndex,
+    OrganisationDetailVMContext,
     searchTerms,
 } from "pages/organisation/organisation_detail.vm";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Label from "../label";
 
 const ITEMS: MenuItemType[] = [{ label: "top_10" }, { label: "top_25" }];
 
-type QualityProps = {
-    onChange?: Function;
-};
-
-const SearchTermHeader = ({ onChange }: QualityProps) => {
+const SearchTermHeader = () => {
+    const { setSelectedSearchTerm: onChange } = useContext(
+        OrganisationDetailVMContext
+    );
     const [selectedLabel, setSelectedLabel] = useState(ITEMS[0].label);
 
     const handleChange = (label: string) => {

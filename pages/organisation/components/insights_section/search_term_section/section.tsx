@@ -1,96 +1,34 @@
 import Loader from "components/UI/loader";
-import { OrganisationDetailVMContext } from "pages/organisation/organisation_detail.vm";
-import { useContext } from "react";
+import {
+    OrganisationDetailVMContext,
+    SearchTermType,
+} from "pages/organisation/organisation_detail.vm";
+import { useContext, useEffect, useMemo } from "react";
 import Table from "../../table";
 import TagsCloud from "./tagCloud";
 
-const SearchTermSection = ({
-    selectedSearchTerm,
-}: {
-    selectedSearchTerm: number;
-}) => {
-    const TABLE_HEADERS = ["Search term", "Count", "Last used"];
-    const ROW1 = [
-        "Nature",
-        "Biodiversity",
-        "Climate change",
-        "Species",
-        "Ecology",
-        "Indicators",
-        "Agroecology",
-        "Scotland",
-        "Environment",
-        "Health",
-        "Nature1",
-        "Biodiversity1",
-        "Climate change1",
-        "Species1",
-        "Ecology1",
-        "Indicators1",
-        "Agroecology1",
-        "Scotland1",
-        "Environment1",
-        "Health1",
-    ];
-    const ROW2 = [
-        "125",
-        "125",
-        "86",
-        "10",
-        "74",
-        "20",
-        "43",
-        "20",
-        "40",
-        "60",
-        "125",
-        "125",
-        "86",
-        "10",
-        "74",
-        "20",
-        "43",
-        "20",
-        "40",
-        "60",
-    ];
-    const ROW3 = [
-        "22 minutes ago",
-        "1 day ago",
-        "22 minutes ago",
-        "5 seconds ago",
-        "22 minutes ago",
-        "5 seconds ago",
-        "5 seconds ago",
-        "5 seconds ago",
-        "5 seconds ago",
-        "5 seconds ago",
-        "22 minutes ago",
-        "5 seconds ago",
-        "22 minutes ago",
-        "5 seconds ago",
-        "5 seconds ago",
-        "5 seconds ago",
-        "5 seconds ago",
-        "5 seconds ago",
-        "22 minutes ago",
-        "1 day ago",
-    ];
-    // const TABLE_DATA = [ROW1, ROW2, ROW3];
-    const row1 = ROW1.slice(0, selectedSearchTerm);
-    const row2 = ROW2.slice(0, selectedSearchTerm);
-    const row3 = ROW3.slice(0, selectedSearchTerm);
-    const tableData = row2.map((data, index) => [
-        row1[index],
-        row2[index],
-        row3[index],
-    ]);
+const TABLE_HEADERS = ["Search term", "Count", "Last used"];
+const SearchTermSection = () => {
+    const { selectedSearchTerm } = useContext(OrganisationDetailVMContext); // not required here as pagination will done on organisation vm api for search term
 
     const { isLoading, searchTerms, fectchSearchTerms } = useContext(
         OrganisationDetailVMContext
     );
 
-    if (isLoading) {
+    useEffect(() => {
+        fectchSearchTerms();
+    }, []);
+
+    const tagsItems = useMemo(
+        () => searchTerms.map((terms: SearchTermType) => terms.title),
+        [searchTerms]
+    );
+    const tagsCount = useMemo(
+        () => searchTerms.map((terms: SearchTermType) => terms.count),
+        [searchTerms]
+    );
+
+    if (isLoading && searchTerms && !searchTerms?.length) {
         return (
             <div className="h-[calc(100vh-var(--nav-height))]  w-full flex items-center justify-center">
                 <Loader />
@@ -98,19 +36,13 @@ const SearchTermSection = ({
         );
     }
 
-    /*TODO
-        - Create data structure for the same
-        - Create api for the same
-        - Fetch data through api
-     */
-
     return (
         <div className="ml-8 mr-24 block h-[44rem] overflow-y-scroll no-scrollbar whitespace-nowrap">
-            <TagsCloud row={row1} row2={row2} />
+            <TagsCloud row={tagsItems} row2={tagsCount} />
             <div className="text-sm text-dtech-dark-grey my-8 ">
                 <Table
                     tableHeaders={TABLE_HEADERS}
-                    tableData={tableData}
+                    tableData={getTableData(searchTerms)}
                     headerClass="text-[17px] font-medium bg-[#F5F5F5] "
                     tableClass="w-full text-sm text-left border table-fixed"
                     cellPadding={20}
@@ -120,5 +52,12 @@ const SearchTermSection = ({
         </div>
     );
 };
+
+const getTableData = (searchTerms: SearchTermType[]) =>
+    searchTerms.map((terms: SearchTermType) => [
+        terms.title,
+        terms.count,
+        terms.lastUsed,
+    ]);
 
 export default SearchTermSection;

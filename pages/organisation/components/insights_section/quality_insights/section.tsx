@@ -98,7 +98,10 @@ const DisplayDataset = ({ title, description }: any) => (
         </span>
     </div>
 );
-const QualityInsightsBody = ({ selectedLabel }: { selectedLabel: number }) => {
+const QualityInsightsBody = () => {
+    const { selectedQualityInsights: selectedLabel } = useContext(
+        OrganisationDetailVMContext
+    );
     const items = selectedLabel == 0 ? DATAFILE_ITEMS : METADATA_ITEMS;
 
     const tableData = ROW2.map((data, index) => [

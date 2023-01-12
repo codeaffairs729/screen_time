@@ -1,5 +1,6 @@
 import { useHttpCall } from "common/hooks";
 import Http from "common/http";
+import { DateTime } from "luxon";
 import Organisation from "models/organisation.model";
 import { createContext, useState, Dispatch, SetStateAction } from "react";
 import toast from "react-hot-toast";
@@ -26,6 +27,12 @@ export enum download {
     by_user_type,
 }
 
+export interface SearchTermType {
+    title: string;
+    count: number;
+    lastUsed: Date;
+}
+
 export const formatLabel = (label: string) => {
     const res = label.replaceAll("_", " ");
     return `${res[0].toUpperCase()}${res.slice(1)}`;
@@ -39,6 +46,10 @@ const OrganisationDetailVM = (
     initialOrganisationData: Organisation | undefined
 ) => {
     const [organisation, setOrganisation] = useState(initialOrganisationData);
+    const [selectedQualityInsights, setSelectedQualityInsights] =
+        useState<number>(0);
+    const [selectedSearchTerm, setSelectedSearchTerm] = useState<number>(10);
+    const [selectedDownload, setSelectedDownload] = useState<number>(0);
 
     const {
         execute: excuteFectchOrganisationDatasets,
@@ -49,7 +60,7 @@ const OrganisationDetailVM = (
     const fectchOrganisationDatasets = (id: number) =>
         excuteFectchOrganisationDatasets(
             () => {
-                // return Http.get(`/v1/data_provider/${1}/orgDatsets`);
+                // return Http.get(`/v1/data_provider/${1}/org_datsets`);
             },
             {
                 onSuccess: (res) => {
@@ -109,13 +120,17 @@ const OrganisationDetailVM = (
 
     const fectchSearchTerms = (ids: number[]) =>
         excuteFectchSearchTerms(
-            () =>
-                Http.post("/v1/datasets/stats", {
-                    meta_dataset_ids: ids,
-                }),
+            () => {
+                // return Http.get(`/v1/data_provider/${1}/search_terms`);
+            },
             {
-                postProcess: (res) => {
-                    return res;
+                onSuccess: (res) => {
+                    return jsonToSearchTerms(res);
+                },
+                onError: (e) => {
+                    toast.error(
+                        "Something went wrong while fetching organisation search terms insights."
+                    );
                 },
             }
         );
@@ -147,11 +162,14 @@ const OrganisationDetailVM = (
         isFetchingDownloadMetrics;
 
     return {
+        selectedQualityInsights,
+        selectedSearchTerm,
+        selectedDownload,
         organisation,
-        organisationDatasets: jsonToOrgDatasets(orgDatasets), //Only for test purpose,
+        organisationDatasets: jsonToOrgDatasets(orgDatasets), //TODO replace with organisationDatasets,
         metaDataQulaity,
         dataFileQuality,
-        searchTerms,
+        searchTerms: jsonToSearchTerms(SearchTerms), //TODO replace with searchTerms,
         downloadMetrics,
         isLoading,
         setOrganisation,
@@ -160,12 +178,18 @@ const OrganisationDetailVM = (
         fectchDataFileQuality,
         fectchSearchTerms,
         fectchDownloadMetrics,
+        setSelectedQualityInsights,
+        setSelectedSearchTerm,
+        setSelectedDownload,
     };
 };
 
 export default OrganisationDetailVM;
 
 export interface IOrganisationDetailVMContext {
+    selectedQualityInsights: number;
+    selectedSearchTerm: number;
+    selectedDownload: number;
     organisation: Organisation | undefined;
     organisationDatasets: any;
     metaDataQulaity: any;
@@ -178,6 +202,9 @@ export interface IOrganisationDetailVMContext {
     fectchDataFileQuality: Function;
     fectchSearchTerms: Function;
     fectchDownloadMetrics: Function;
+    setSelectedQualityInsights: Function;
+    setSelectedSearchTerm: Function;
+    setSelectedDownload: Function;
     setOrganisation: Dispatch<SetStateAction<Organisation | undefined>>;
 }
 
@@ -206,6 +233,13 @@ const jsonToOrgDatasets = (json: any) => {
 
     return orgDatasets;
 };
+
+const jsonToSearchTerms = (json: any): SearchTermType =>
+    json.map((term: any) => ({
+        title: term["title"],
+        count: term["count"],
+        lastUsed: DateTime.fromISO(term["updated_at"]),
+    }));
 
 const orgDatasets = {
     all_datasets: [
@@ -298,3 +332,26 @@ const orgDatasets = {
         },
     ],
 };
+
+const SearchTerms = [
+    { title: "Nature", count: 1, created_at: new Date() },
+    { title: "Biodiversity", count: 1, created_at: new Date() },
+    { title: "Climate change", count: 1, created_at: new Date() },
+    { title: "Species", count: 1, created_at: new Date() },
+    { title: "Ecology", count: 1, created_at: new Date() },
+    { title: "Indicators", count: 1, created_at: new Date() },
+    { title: "Agroecology", count: 1, created_at: new Date() },
+    { title: "Scotland", count: 1, created_at: new Date() },
+    { title: "Environment", count: 1, created_at: new Date() },
+    { title: "Health", count: 1, created_at: new Date() },
+    { title: "Nature1", count: 1, created_at: new Date() },
+    { title: "Biodiversity1", count: 1, created_at: new Date() },
+    { title: "Climate change1", count: 1, created_at: new Date() },
+    { title: "Species1", count: 1, created_at: new Date() },
+    { title: "Ecology1", count: 1, created_at: new Date() },
+    { title: "Indicators1", count: 1, created_at: new Date() },
+    { title: "Agroecology1", count: 1, created_at: new Date() },
+    { title: "Scotland1", count: 1, created_at: new Date() },
+    { title: "Environment1", count: 1, created_at: new Date() },
+    { title: "Health1", count: 1, created_at: new Date() },
+];

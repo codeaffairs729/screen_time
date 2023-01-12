@@ -3,8 +3,9 @@ import {
     formatLabel,
     getSelectedLabelIndex,
     download,
+    OrganisationDetailVMContext,
 } from "pages/organisation/organisation_detail.vm";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Label from "../label";
 
 const ITEMS: MenuItemType[] = [
@@ -13,13 +14,12 @@ const ITEMS: MenuItemType[] = [
     { label: "by_user_type" },
 ];
 
-type DownloadProps = {
-    onChange?: Function;
-};
-
-const DownloadHeader = ({ onChange }: DownloadProps) => {
+const DownloadHeader = () => {
     const [selectedLabel, setSelectedLabel] = useState(ITEMS[0].label);
 
+    const { setSelectedDownload: onChange } = useContext(
+        OrganisationDetailVMContext
+    );
     const handleChange = (label: string) => {
         setSelectedLabel(label);
         onChange && onChange(getSelectedLabelIndex(label, download));
