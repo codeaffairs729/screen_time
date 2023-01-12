@@ -5,9 +5,13 @@ import { LatLngExpression } from "leaflet";
 import Table from "../../table";
 import dynamic from "next/dynamic";
 import RangeSelector from "components/UI/range_selector";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import Loader from "components/UI/loader";
-import { OrganisationDetailVMContext } from "pages/organisation/organisation_detail.vm";
+import {
+    DownloadByTime,
+    OrganisationDetailVMContext,
+} from "pages/organisation/organisation_detail.vm";
+import { getNotificationAge } from "pages/workspace/notification.vm";
 const WorldMap = dynamic(() => import("components/UI/world_map"), {
     ssr: false,
 });
@@ -17,84 +21,58 @@ const PIE_HEADER = ["name", "value"];
 const TIME_HEADERS = ["Count", "Month"];
 
 const DownloadSection = () => {
-    const { selectedDownload: selectedLabel } = useContext(
-        OrganisationDetailVMContext
-    );
-    const [fromDate, setFromDate] = useState(new Date());
-    const [toDate, setToDate] = useState(new Date());
-    const ROW1 = [
-        "Manchester",
-        "London",
-        "Edinburgh",
-        "Bristol",
-        "Manchester",
-        "London",
-        "Edinburgh",
-        "Bristol",
-    ];
-    const ROW2 = ["125", "64", "87", "34", "125", "64", "87", "34"];
-    const ROW3 = [
-        "22 minutes ago",
-        "1 day ago",
-        "22 minutes ago",
-        "22 minutes ago",
-        "22 minutes ago",
-        "1 day ago",
-        "22 minutes ago",
-        "22 minutes ago",
-    ];
-    const TIME = [
-        { month: "Jan", download_per_month: 265 },
-        { month: "Feb", download_per_month: 475 },
-        { month: "Mar", download_per_month: 190 },
-        { month: "Apr", download_per_month: 465 },
-        { month: "May", download_per_month: 565 },
-        { month: "Jun", download_per_month: 465 },
-        { month: "Jul", download_per_month: 85 },
-        { month: "Aug", download_per_month: 195 },
-        { month: "Sep", download_per_month: 1225 },
-        { month: "Oct", download_per_month: 165 },
-        { month: "Nov", download_per_month: 365 },
-        { month: "Des", download_per_month: 265 },
-    ];
-
-    const PIEDATA = [
-        { name: "Data modelling", value: 400 },
-        { name: "Publications", value: 300 },
-        { name: "Planning", value: 200 },
-        { name: "gov", value: 500 },
-        { name: "Plan", value: 300 },
-    ];
-
-    const tableData = ROW2.map((data, index) => [
-        ROW1[index],
-        ROW2[index],
-        ROW3[index],
-    ]);
-    const timeData = TIME.map((data, index) => [
-        [data.download_per_month],
-        [data.month + " " + "2022"],
-    ]);
-    const PieData = PIEDATA.map((data, index) => [[data.name], [data.value]]);
-    const barDataKey = "download_per_month";
-    const LOCATIONS: Array<LatLngExpression> = [
-        [41.8819, -87.6278],
-        [45.89, -87.6279],
-        [42.536457, -70.985786],
-        [35.328674, -90.664658],
-        [31.8819, -87.6278],
-        [75.89, -87.6279],
-        [52.536457, -90.985786],
-        [60.328674, -90.664658],
-    ];
-
-    const { isLoading, downloadMetrics, fectchDownloadMetrics } = useContext(
-        OrganisationDetailVMContext
-    );
+    const {
+        selectedDownload: selectedLabel,
+        isLoading,
+        downloadMetrics,
+        fectchDownloadMetrics,
+    } = useContext(OrganisationDetailVMContext);
 
     useEffect(() => {
         fectchDownloadMetrics();
     }, []);
+
+    const [fromDate, setFromDate] = useState(new Date());
+    const [toDate, setToDate] = useState(new Date());
+
+    const downloadByTimeData = downloadMetrics?.downloadByTime?.map(
+        (data: DownloadByTime) => {
+            const date = new Date(data?.date);
+            const month = date.toLocaleString("en", { month: "short" });
+            const year = new Date().getFullYear();
+
+            return [[data.count], [`${month} ${year}`]];
+        }
+    );
+
+    const timeMetrics = downloadMetrics?.downloadByTime?.map(
+        (data: DownloadByTime) => ({
+            month: new Date(data?.date).toLocaleString("en", {
+                month: "short",
+            }),
+            download_per_month: data.count,
+        })
+    );
+
+    const barDataKey = "download_per_month";
+
+    const locations: Array<LatLngExpression> = downloadMetrics?.regions?.map(
+        (region: any) => [region?.location?.lat, region?.location?.long]
+    );
+
+    const tableData = downloadMetrics?.regions?.map((region: any) => [
+        region?.name,
+        region?.count,
+        getNotificationAge(region.date),
+    ]);
+
+    const downloadCounts = downloadMetrics?.regions?.map(
+        (region: any) => region?.count
+    );
+
+    const pieData = downloadMetrics?.downloadByUseCase.map(
+        (data: any, index: number) => [data.name, data.value]
+    );
 
     if (isLoading) {
         return (
@@ -104,16 +82,11 @@ const DownloadSection = () => {
         );
     }
 
-    /*TODO
-        - Create data structure for the same
-        - Create api for the same
-        - Fetch data through api
-     */
     return (
         <div>
             {selectedLabel == 0 && (
                 <div className="mt-12 ml-8 mr-24 block h-[44rem] overflow-y-scroll no-scrollbar whitespace-nowrap">
-                    <WorldMap locations={LOCATIONS} counts={ROW2} />
+                    <WorldMap locations={locations} counts={downloadCounts} />
                     <div className="mt-8">
                         <Table
                             tableHeaders={TABLE_HEADERS}
@@ -139,7 +112,7 @@ const DownloadSection = () => {
                     </div>
                     <div className="mt-8 block h-[44rem] overflow-y-scroll no-scrollbar whitespace-nowrap">
                         <BarGraph
-                            data={TIME}
+                            data={timeMetrics}
                             strokeWidthAxis={0.4}
                             strokeWidthLabelList={0}
                             xLabel="month"
@@ -162,7 +135,7 @@ const DownloadSection = () => {
                         <div className="mt-8">
                             <Table
                                 tableHeaders={TIME_HEADERS}
-                                tableData={timeData}
+                                tableData={downloadByTimeData}
                                 headerClass="text-[17px] font-medium bg-[#F5F5F5] "
                                 tableClass="w-[90%] text-sm text-left border table-fixed ml-12"
                                 cellPadding={20}
@@ -174,10 +147,10 @@ const DownloadSection = () => {
             )}
             {selectedLabel == 2 && (
                 <div className="mr-24 mt-8 block h-[44rem] overflow-y-scroll no-scrollbar whitespace-nowrap">
-                    <PieGraph data={PIEDATA} />
+                    <PieGraph data={downloadMetrics?.use_case} />
                     <Table
                         tableHeaders={PIE_HEADER}
-                        tableData={PieData}
+                        tableData={pieData}
                         headerClass="text-[17px] font-medium bg-[#F5F5F5] "
                         tableClass="w-[90%] text-sm text-left border table-fixed ml-12"
                         cellPadding={20}

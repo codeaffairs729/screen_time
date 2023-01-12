@@ -33,6 +33,32 @@ export interface SearchTermType {
     lastUsed: Date;
 }
 
+export type DownloadByRegion = {
+    name: string;
+    location: {
+        lat: number;
+        long: number;
+    };
+    count: number;
+    date: Date;
+};
+
+export type DownloadByTime = {
+    date: Date;
+    count: number;
+};
+
+export type DownloadByUseCase = {
+    name: string;
+    value: number;
+};
+
+export interface DownloadMetrics {
+    regions: DownloadByRegion[];
+    downloadByTime: DownloadByTime[];
+    downloadByUseCase: DownloadByUseCase[];
+}
+
 export const formatLabel = (label: string) => {
     const res = label.replaceAll("_", " ");
     return `${res[0].toUpperCase()}${res.slice(1)}`;
@@ -173,18 +199,24 @@ const OrganisationDetailVM = (
     const fectchDownloadMetrics = (ids: number[]) =>
         excuteFectchDownloadMetrics(
             () =>
-                Http.post("/v1/datasets/stats", {
-                    meta_dataset_ids: ids,
-                }),
+                Http.get(
+                    `/v1/data_sources/${organisation?.id}/download_metrics`
+                ),
             {
-                postProcess: (res) => {
+                onSuccess: (res) => {
                     return res;
+                },
+                onError: (e) => {
+                    toast.error(
+                        "Something went wrong while fetching organisation download metrics."
+                    );
                 },
             }
         );
 
     const isLoading =
         isFetchingOrganisationDatasets ||
+        isFetchingOrganisationRankedDatasets ||
         isFetchingMetaDataQulaity ||
         isFetchingDataFileQuality ||
         isFetchingSearchTerms ||
@@ -199,8 +231,8 @@ const OrganisationDetailVM = (
         organisationDatasets,
         metaDataQulaity,
         dataFileQuality,
-        searchTerms: jsonToSearchTerms(SearchTerms), //TODO replace with searchTerms,
-        downloadMetrics,
+        searchTerms: jsonToSearchTerms(SearchTerms),
+        downloadMetrics: jsonToOrgDownloadMetrics(DownloadMetrics),
         isLoading,
         setOrganisation,
         fectchOrganisationDatasets,
@@ -274,6 +306,26 @@ const jsonToSearchTerms = (json: any): SearchTermType =>
         // lastUsed: DateTime.fromISO(term["updated_at"]),
     }));
 
+const jsonToOrgDownloadMetrics = (json: any): DownloadMetrics => ({
+    regions: json["regions"]?.map((region: any) => ({
+        name: region["name"],
+        location: {
+            lat: region["location"]["lat"],
+            long: region["location"]["long"],
+        },
+        count: region["count"],
+        date: region["last_used"],
+    })),
+    downloadByTime: json["download_by_time"]?.map((data: any) => ({
+        date: data["date"],
+        count: data["count"],
+    })),
+    downloadByUseCase: json["download_by_use_case"]?.map((useCase: any) => ({
+        name: useCase["name"],
+        value: useCase["value"],
+    })),
+});
+
 const SearchTerms = [
     { title: "Nature", count: 1, created_at: new Date() },
     { title: "Biodiversity", count: 1, created_at: new Date() },
@@ -296,3 +348,83 @@ const SearchTerms = [
     { title: "Environment1", count: 1, created_at: new Date() },
     { title: "Health1", count: 1, created_at: new Date() },
 ];
+
+const dates = [...Array(12)].map((_, key) => new Date(2022, key));
+const DownloadMetrics = {
+    regions: [
+        {
+            name: "Manchester",
+            location: {
+                lat: 41.8819,
+                long: -87.6278,
+            },
+            count: 125,
+            date: new Date(),
+        },
+        {
+            name: "Edinburgh",
+            location: {
+                lat: 45.89,
+                long: -87.6278,
+            },
+            count: 125,
+            date: new Date(),
+        },
+        {
+            name: "Bristol",
+            location: {
+                lat: 42.536457,
+                long: -70.985786,
+            },
+            count: 125,
+            date: new Date(),
+        },
+        {
+            name: "Manchester",
+            location: {
+                lat: 35.328674,
+                long: -90.664658,
+            },
+            count: 125,
+            date: new Date(),
+        },
+        {
+            name: "Edinburgh",
+            location: {
+                lat: 31.8819,
+                long: -87.6278,
+            },
+            count: 125,
+            date: new Date(),
+        },
+        {
+            name: "Bristol",
+            location: {
+                lat: 75.89,
+                long: -87.6279,
+            },
+            count: 125,
+            date: new Date(),
+        },
+        {
+            name: "London",
+            location: {
+                lat: 52.536457,
+                long: -90.985786,
+            },
+            count: 125,
+            date: new Date(),
+        },
+    ],
+    download_by_time: dates.map((date, index) => ({
+        date: date,
+        count: 10 + index,
+    })),
+    download_by_use_case: [
+        { name: "Data modelling", value: 400 },
+        { name: "Publications", value: 300 },
+        { name: "Planning", value: 200 },
+        { name: "gov", value: 500 },
+        { name: "Plan", value: 300 },
+    ],
+};
