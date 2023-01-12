@@ -4,7 +4,7 @@ import { DateTime } from "luxon";
 import Organisation from "models/organisation.model";
 import { createContext, useState, Dispatch, SetStateAction } from "react";
 import toast from "react-hot-toast";
-
+import { getNotificationAge } from "pages/workspace/notification.vm";
 export enum insightTabIndex {
     dataset_quality,
     search_term,
@@ -156,13 +156,17 @@ const OrganisationDetailVM = (
 
     const fectchDataFileQuality = (ids: number[]) =>
         excuteFectchDataFileQuality(
-            () =>
-                Http.post("/v1/datasets/stats", {
-                    meta_dataset_ids: ids,
-                }),
+            () => {
+                // return  Http.post("/v1/datasets/stats", {meta_dataset_ids: ids,}),
+            },
             {
                 postProcess: (res) => {
                     return res;
+                },
+                onError: (e) => {
+                    toast.error(
+                        "Something went wrong while fetching organisation Data Quality insights."
+                    );
                 },
             }
         );
@@ -171,12 +175,13 @@ const OrganisationDetailVM = (
         execute: excuteFectchSearchTerms,
         data: searchTerms,
         isLoading: isFetchingSearchTerms,
-    } = useHttpCall<{ [key: string]: any }>({});
-
-    const fectchSearchTerms = (ids: number[]) =>
+    } = useHttpCall<{ [key: string]: any }>([]);
+    const fectchSearchTerms = () =>
         excuteFectchSearchTerms(
             () => {
-                // return Http.get(`/v1/data_provider/${1}/search_terms`);
+                return Http.get(
+                    `/v1/data_sources/${organisation?.id}/${selectedSearchTerm}/search_terms`
+                );
             },
             {
                 onSuccess: (res) => {
@@ -229,9 +234,9 @@ const OrganisationDetailVM = (
         organisation,
         organisationRankedDatasets,
         organisationDatasets,
-        metaDataQulaity,
-        dataFileQuality,
-        searchTerms: jsonToSearchTerms(SearchTerms),
+        metaDataQulaity: metaFile,
+        dataFileQuality: dataFile,
+        searchTerms,
         downloadMetrics,
         isLoading,
         setOrganisation,
@@ -299,12 +304,15 @@ const jsonToOrgDatasets = (json: any) => {
     return orgDatasets;
 };
 
-const jsonToSearchTerms = (json: any): SearchTermType =>
-    json.map((term: any) => ({
-        title: term["title"],
-        count: term["count"],
-        // lastUsed: DateTime.fromISO(term["updated_at"]),
-    }));
+const jsonToSearchTerms = (json: any): SearchTermType[] =>
+    json.map((term: any) => {
+        const date: any = DateTime.fromISO(term["created_at"]);
+        return {
+            title: term["title"],
+            count: term["count"],
+            lastUsed: date.ts,
+        };
+    });
 
 const jsonToOrgDownloadMetrics = (json: any): DownloadMetrics => ({
     regions: json["regions"]?.map((region: any) => ({
@@ -350,3 +358,94 @@ const SearchTerms = [
 ];
 
 const dates = [...Array(12)].map((_, key) => new Date(2022, key));
+
+const rating = [
+    [{ 1: 10 }, { 2: 20 }, { 3: 30 }, { 4: 20 }, { 5: 10 }],
+    [{ 1: 10 }, { 2: 20 }, { 3: 50 }, { 4: 20 }, { 5: 10 }],
+    [{ 1: 50 }, { 2: 20 }, { 3: 30 }, { 4: 20 }, { 5: 10 }],
+    [{ 1: 10 }, { 2: 20 }, { 3: 30 }, { 4: 20 }, { 5: 10 }],
+    [{ 1: 20 }, { 2: 10 }, { 3: 20 }, { 4: 20 }, { 5: 10 }],
+    [{ 1: 10 }, { 2: 10 }, { 3: 20 }, { 4: 20 }, { 5: 10 }],
+];
+const datasets = [
+    {
+        id: 1,
+        title: "2011 Output Area code, old to new",
+        description:
+            "This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August 2013) and the new 2011 This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August",
+        rating: 10,
+    },
+    {
+        id: 2,
+        title: "2011 Output Area code, old to new",
+        description:
+            "This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August 2013) and the new 2011 This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August",
+        rating: 30,
+    },
+    {
+        id: 3,
+        title: "2011 Output Area code, old to new",
+        description:
+            "This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August 2013) and the new 2011 This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August",
+        rating: 20,
+    },
+];
+const dataFile: any = {
+    overall_score: {
+        title: "Overall score",
+        rating: rating,
+        datasets: datasets,
+    },
+    accuracy: {
+        title: "accuracy",
+        rating: rating,
+        datasets: datasets,
+    },
+    consistency: {
+        title: "consistency",
+        rating: rating,
+        datasets: datasets,
+    },
+    clarity: {
+        title: "clarity",
+        rating: rating,
+        datasets: datasets,
+    },
+    readiness: {
+        title: "readiness",
+        rating: rating,
+        datasets: datasets,
+    },
+};
+const metaFile: any = {
+    overall_score: {
+        title: "Overall score",
+        rating: rating,
+        datasets: datasets,
+    },
+    findability: {
+        title: "findability",
+        rating: rating,
+        datasets: datasets,
+    },
+    accessibility: {
+        title: "accessibility",
+        rating: rating,
+        datasets: datasets,
+    },
+    reusability: {
+        title: "reusability",
+        rating: rating,
+        datasets: datasets,
+    },
+    contextuality: {
+        title: "contextuality",
+        rating: rating,
+        datasets: datasets,
+    },
+    interoperability: {
+        title: "interoperability",
+        rating: rating,
+        datasets: datasets,
+    },
+};
