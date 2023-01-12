@@ -175,24 +175,23 @@ const OrganisationDetailVM = (
         execute: excuteFectchSearchTerms,
         data: searchTerms,
         isLoading: isFetchingSearchTerms,
-    } = useHttpCall<{ [key: string]: any }>({});
-
-    const fectchSearchTerms = (ids: number[]) =>
-        excuteFectchSearchTerms(
-            () => {
-                // return Http.get(`/v1/data_provider/${1}/search_terms`);
+    } = useHttpCall<{ [key: string]: any }>([]);
+    const fectchSearchTerms = () =>
+    excuteFectchSearchTerms(
+        () => {
+            return Http.get(`/v1/data_sources/${organisation?.id}/${selectedSearchTerm}/search_terms`);
+        },
+        {
+            onSuccess: (res) => {
+                return jsonToSearchTerms(res);
             },
-            {
-                onSuccess: (res) => {
-                    return jsonToSearchTerms(res);
-                },
-                onError: (e) => {
-                    toast.error(
-                        "Something went wrong while fetching organisation search terms insights."
+            onError: (e) => {
+                toast.error(
+                    "Something went wrong while fetching organisation search terms insights."
                     );
                 },
             }
-        );
+            );
 
     const {
         execute: excuteFectchDownloadMetrics,
@@ -235,8 +234,8 @@ const OrganisationDetailVM = (
         organisationDatasets,
         metaDataQulaity: metaFile,
         dataFileQuality: dataFile,
-        searchTerms: jsonToSearchTerms(SearchTerms),
-        downloadMetrics: jsonToOrgDownloadMetrics(DownloadMetrics),
+        searchTerms, //TODO replace with searchTerms,
+        downloadMetrics,
         isLoading,
         setOrganisation,
         fectchOrganisationDatasets,
@@ -303,12 +302,14 @@ const jsonToOrgDatasets = (json: any) => {
     return orgDatasets;
 };
 
-const jsonToSearchTerms = (json: any): SearchTermType =>
-    json.map((term: any) => ({
+const jsonToSearchTerms = (json: any): SearchTermType[] =>
+    json.map((term: any) => {
+        const date:any=DateTime.fromISO(term["created_at"])
+        return {
         title: term["title"],
         count: term["count"],
-        lastUsed: getNotificationAge(term["created_at"]),
-    }));
+        lastUsed: date.ts
+    }});
 
 const jsonToOrgDownloadMetrics = (json: any): DownloadMetrics => ({
     regions: json["regions"]?.map((region: any) => ({
