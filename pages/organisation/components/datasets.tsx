@@ -31,10 +31,16 @@ const DisplayDataset = ({
 );
 
 const Datasets = () => {
-    const { isLoading, organisationDatasets, fectchOrganisationDatasets } =
-        useContext(OrganisationDetailVMContext);
+    const {
+        isLoading,
+        organisationDatasets,
+        organisationRankedDatasets,
+        fectchOrganisationDatasets,
+        fectchOrganisationRankedDatasets,
+    } = useContext(OrganisationDetailVMContext);
 
     useEffect(() => {
+        fectchOrganisationRankedDatasets();
         fectchOrganisationDatasets();
     }, []);
 
@@ -45,6 +51,10 @@ const Datasets = () => {
             </div>
         );
     }
+    const organisationDatasetTable = {
+        ...organisationDatasets,
+        ...organisationRankedDatasets,
+    };
 
     return (
         <div className="ml-16">
@@ -52,7 +62,7 @@ const Datasets = () => {
                 All the datasets of this organisation are listed here.
             </div>
             <div>
-                {Object.keys(organisationDatasets).map(
+                {Object.keys(organisationDatasetTable).map(
                     (key: string, index: number) => {
                         return (
                             <Accordian
@@ -68,7 +78,7 @@ const Datasets = () => {
                                         }
                                         tableData={getTableData(
                                             key,
-                                            organisationDatasets[key]
+                                            organisationDatasetTable[key]
                                         )}
                                         cellPadding={3}
                                     />

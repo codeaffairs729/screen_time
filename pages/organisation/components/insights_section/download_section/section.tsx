@@ -5,19 +5,23 @@ import { LatLngExpression } from "leaflet";
 import Table from "../../table";
 import dynamic from "next/dynamic";
 import RangeSelector from "components/UI/range_selector";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Loader from "components/UI/loader";
 import { OrganisationDetailVMContext } from "pages/organisation/organisation_detail.vm";
 const WorldMap = dynamic(() => import("components/UI/world_map"), {
     ssr: false,
 });
+
+const TABLE_HEADERS = ["Region", "Count", "Last used"];
+const PIE_HEADER = ["name", "value"];
+const TIME_HEADERS = ["Count", "Month"];
+
 const DownloadSection = () => {
     const { selectedDownload: selectedLabel } = useContext(
         OrganisationDetailVMContext
     );
     const [fromDate, setFromDate] = useState(new Date());
     const [toDate, setToDate] = useState(new Date());
-    const TABLE_HEADERS = ["Region", "Count", "Last used"];
     const ROW1 = [
         "Manchester",
         "London",
@@ -53,7 +57,7 @@ const DownloadSection = () => {
         { month: "Nov", download_per_month: 365 },
         { month: "Des", download_per_month: 265 },
     ];
-    const PIE_HEADER = ["name", "value"];
+
     const PIEDATA = [
         { name: "Data modelling", value: 400 },
         { name: "Publications", value: 300 },
@@ -62,7 +66,6 @@ const DownloadSection = () => {
         { name: "Plan", value: 300 },
     ];
 
-    const TIME_HEADERS = ["Count", "Month"];
     const tableData = ROW2.map((data, index) => [
         ROW1[index],
         ROW2[index],
@@ -88,6 +91,10 @@ const DownloadSection = () => {
     const { isLoading, downloadMetrics, fectchDownloadMetrics } = useContext(
         OrganisationDetailVMContext
     );
+
+    useEffect(() => {
+        fectchDownloadMetrics();
+    }, []);
 
     if (isLoading) {
         return (

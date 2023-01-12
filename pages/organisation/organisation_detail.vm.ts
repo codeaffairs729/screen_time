@@ -52,15 +52,44 @@ const OrganisationDetailVM = (
     const [selectedDownload, setSelectedDownload] = useState<number>(0);
 
     const {
+        execute: excuteFectchOrganisationRankedDatasets,
+        data: organisationRankedDatasets,
+        isLoading: isFetchingOrganisationRankedDatasets,
+    } = useHttpCall<{ [key: string]: any }>({});
+
+    const fectchOrganisationRankedDatasets = () =>
+        excuteFectchOrganisationRankedDatasets(
+            () => {
+                return Http.get(
+                    `/v1/data_sources/${organisation?.id}/provider_ranked_datasets`
+                );
+            },
+            {
+                onSuccess: (res) => {
+                    return jsonToOrgDatasets(res);
+                },
+                onError: (e) => {
+                    toast.error(
+                        "Something went wrong while fetching organisation datasets."
+                    );
+                },
+            }
+        );
+
+    const {
         execute: excuteFectchOrganisationDatasets,
         data: organisationDatasets,
         isLoading: isFetchingOrganisationDatasets,
     } = useHttpCall<{ [key: string]: any }>({});
 
-    const fectchOrganisationDatasets = (id: number) =>
+    const fectchOrganisationDatasets = () =>
         excuteFectchOrganisationDatasets(
             () => {
-                // return Http.get(`/v1/data_provider/${1}/org_datsets`);
+                return Http.get(
+                    `/v1/data_sources/${
+                        organisation?.id
+                    }/${1}/provider_datasets`
+                );
             },
             {
                 onSuccess: (res) => {
@@ -166,7 +195,8 @@ const OrganisationDetailVM = (
         selectedSearchTerm,
         selectedDownload,
         organisation,
-        organisationDatasets: jsonToOrgDatasets(orgDatasets), //TODO replace with organisationDatasets,
+        organisationRankedDatasets,
+        organisationDatasets,
         metaDataQulaity,
         dataFileQuality,
         searchTerms: jsonToSearchTerms(SearchTerms), //TODO replace with searchTerms,
@@ -177,6 +207,7 @@ const OrganisationDetailVM = (
         fectchMetaDataQulaity,
         fectchDataFileQuality,
         fectchSearchTerms,
+        fectchOrganisationRankedDatasets,
         fectchDownloadMetrics,
         setSelectedQualityInsights,
         setSelectedSearchTerm,
@@ -192,11 +223,13 @@ export interface IOrganisationDetailVMContext {
     selectedDownload: number;
     organisation: Organisation | undefined;
     organisationDatasets: any;
+    organisationRankedDatasets: any;
     metaDataQulaity: any;
     dataFileQuality: any;
     searchTerms: any;
     downloadMetrics: any;
     isLoading: boolean;
+    fectchOrganisationRankedDatasets: Function;
     fectchOrganisationDatasets: Function;
     fectchMetaDataQulaity: Function;
     fectchDataFileQuality: Function;
@@ -238,100 +271,8 @@ const jsonToSearchTerms = (json: any): SearchTermType =>
     json.map((term: any) => ({
         title: term["title"],
         count: term["count"],
-        lastUsed: DateTime.fromISO(term["updated_at"]),
+        // lastUsed: DateTime.fromISO(term["updated_at"]),
     }));
-
-const orgDatasets = {
-    all_datasets: [
-        {
-            id: 1,
-            title: "2011 Output Area code, old to new",
-            description:
-                "This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August 2013) and the new 2011 This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August",
-        },
-        {
-            id: 2,
-            title: "Frozen Postcode 2011 to Workplace Zone 2011",
-            description:
-                "This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August 2013) and the new 2011 This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August",
-        },
-        {
-            id: 3,
-            title: "2011 Output Area code, old to new",
-            description:
-                "This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August 2013) and the new 2011 This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August",
-        },
-    ],
-    downloaded: [
-        {
-            id: 1,
-            title: "2011 Output Area code, old to new",
-            description:
-                "This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August 2013) and the new 2011 This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August",
-            count: 125,
-        },
-        {
-            id: 2,
-            title: "Frozen Postcode 2011 to Workplace Zone 2011",
-            description:
-                "This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August 2013) and the new 2011 This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August",
-            count: 56,
-        },
-        {
-            id: 3,
-            title: "2011 Output Area code, old to new",
-            description:
-                "This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August 2013) and the new 2011 This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August",
-            count: 125,
-        },
-    ],
-    viewed: [
-        {
-            id: 1,
-            title: "2011 Output Area code, old to new",
-            description:
-                "This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August 2013) and the new 2011 This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August",
-            count: 125,
-        },
-        {
-            id: 2,
-            title: "Frozen Postcode 2011 to Workplace Zone 2011",
-            description:
-                "This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August 2013) and the new 2011 This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August",
-            count: 56,
-        },
-        {
-            id: 3,
-            title: "2011 Output Area code, old to new",
-            description:
-                "This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August 2013) and the new 2011 This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August",
-            count: 125,
-        },
-    ],
-    added_to_favourite: [
-        {
-            id: 1,
-            title: "2011 Output Area code, old to new",
-            description:
-                "This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August 2013) and the new 2011 This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August",
-            count: 125,
-        },
-        {
-            id: 2,
-            title: "Frozen Postcode 2011 to Workplace Zone 2011",
-            description:
-                "This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August 2013) and the new 2011 This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August",
-            count: 56,
-        },
-        {
-            id: 3,
-            title: "2011 Output Area code, old to new",
-            description:
-                "This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August 2013) and the new 2011 This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August",
-            count: 125,
-        },
-    ],
-};
 
 const SearchTerms = [
     { title: "Nature", count: 1, created_at: new Date() },
