@@ -306,11 +306,10 @@ const jsonToOrgDatasets = (json: any) => {
 
 const jsonToSearchTerms = (json: any): SearchTermType[] =>
     json.map((term: any) => {
-        const date: any = DateTime.fromISO(term["created_at"]);
         return {
             title: term["title"],
             count: term["count"],
-            lastUsed: date.ts,
+            lastUsed: term["created_at"],
         };
     });
 

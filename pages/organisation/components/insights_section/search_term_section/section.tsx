@@ -6,6 +6,8 @@ import {
 import { useContext, useEffect, useMemo } from "react";
 import Table from "../../table";
 import TagsCloud from "./tagCloud";
+import { DateTime } from "luxon";
+import { getNotificationAge } from "pages/workspace/notification.vm";
 
 const TABLE_HEADERS = ["Search term", "Count", "Last used"];
 const SearchTermSection = () => {
@@ -27,7 +29,6 @@ const SearchTermSection = () => {
         () => searchTerms.map((terms: SearchTermType) => terms.count),
         [searchTerms]
     );
-
     if (isLoading && searchTerms && !searchTerms?.length) {
         return (
             <div className="h-[calc(100vh-var(--nav-height))]  w-full flex items-center justify-center">
@@ -54,10 +55,9 @@ const SearchTermSection = () => {
 };
 
 const getTableData = (searchTerms: SearchTermType[]) =>
-    searchTerms.map((terms: SearchTermType) => [
-        terms.title,
-        terms.count,
-        terms.lastUsed,
-    ]);
+    searchTerms.map((terms: any) => {
+        const date: any = DateTime.fromISO(terms["created_at"]);
+        return [terms["title"], terms["count"], getNotificationAge(date.ts)];
+    });
 
 export default SearchTermSection;
