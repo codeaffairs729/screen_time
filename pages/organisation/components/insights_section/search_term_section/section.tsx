@@ -20,11 +20,11 @@ const SearchTermSection = () => {
     }, []);
 
     const tagsItems = useMemo(
-        () => searchTerms.map((terms: SearchTermType) => terms.title),
+        () => searchTerms?.map((terms: SearchTermType) => terms.title),
         [searchTerms]
     );
     const tagsCount = useMemo(
-        () => searchTerms.map((terms: SearchTermType) => terms.count),
+        () => searchTerms?.map((terms: SearchTermType) => terms.count),
         [searchTerms]
     );
 
