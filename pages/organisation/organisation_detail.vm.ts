@@ -177,21 +177,23 @@ const OrganisationDetailVM = (
         isLoading: isFetchingSearchTerms,
     } = useHttpCall<{ [key: string]: any }>([]);
     const fectchSearchTerms = () =>
-    excuteFectchSearchTerms(
-        () => {
-            return Http.get(`/v1/data_sources/${organisation?.id}/${selectedSearchTerm}/search_terms`);
-        },
-        {
-            onSuccess: (res) => {
-                return jsonToSearchTerms(res);
+        excuteFectchSearchTerms(
+            () => {
+                return Http.get(
+                    `/v1/data_sources/${organisation?.id}/${selectedSearchTerm}/search_terms`
+                );
             },
-            onError: (e) => {
-                toast.error(
-                    "Something went wrong while fetching organisation search terms insights."
+            {
+                onSuccess: (res) => {
+                    return jsonToSearchTerms(res);
+                },
+                onError: (e) => {
+                    toast.error(
+                        "Something went wrong while fetching organisation search terms insights."
                     );
                 },
             }
-            );
+        );
 
     const {
         execute: excuteFectchDownloadMetrics,
@@ -234,8 +236,8 @@ const OrganisationDetailVM = (
         organisationDatasets,
         metaDataQulaity: metaFile,
         dataFileQuality: dataFile,
-        searchTerms, //TODO replace with searchTerms,
-        downloadMetrics,
+        searchTerms,
+        downloadMetrics: jsonToOrgDownloadMetrics(DownloadMetrics),
         isLoading,
         setOrganisation,
         fectchOrganisationDatasets,
@@ -304,12 +306,13 @@ const jsonToOrgDatasets = (json: any) => {
 
 const jsonToSearchTerms = (json: any): SearchTermType[] =>
     json.map((term: any) => {
-        const date:any=DateTime.fromISO(term["created_at"])
+        const date: any = DateTime.fromISO(term["created_at"]);
         return {
-        title: term["title"],
-        count: term["count"],
-        lastUsed: date.ts
-    }});
+            title: term["title"],
+            count: term["count"],
+            lastUsed: date.ts,
+        };
+    });
 
 const jsonToOrgDownloadMetrics = (json: any): DownloadMetrics => ({
     regions: json["regions"]?.map((region: any) => ({
