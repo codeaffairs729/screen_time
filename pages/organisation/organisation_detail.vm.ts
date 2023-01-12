@@ -209,7 +209,7 @@ const OrganisationDetailVM = (
                 ),
             {
                 onSuccess: (res) => {
-                    return res;
+                    return jsonToOrgDownloadMetrics(res);
                 },
                 onError: (e) => {
                     toast.error(
