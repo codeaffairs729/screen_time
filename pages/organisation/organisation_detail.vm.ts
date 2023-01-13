@@ -336,27 +336,27 @@ const jsonToQualityMetrics = (json: any): any => ({
     },
     metaFileQuality: {
         overallScore: getQualityScore(
-            json["data_file_quality"]["overall_score"],
+            json["meta_file_quality"]["overall_score"],
             "overallScore"
         ),
         findability: getQualityScore(
-            json["data_file_quality"]["findability"],
+            json["meta_file_quality"]["findability"],
             "findability"
         ),
         accessibility: getQualityScore(
-            json["data_file_quality"]["accessibility"],
+            json["meta_file_quality"]["accessibility"],
             "accessibility"
         ),
         reusability: getQualityScore(
-            json["data_file_quality"]["reusability"],
+            json["meta_file_quality"]["reusability"],
             "reusability"
         ),
         contextuality: getQualityScore(
-            json["data_file_quality"]["contextuality"],
+            json["meta_file_quality"]["contextuality"],
             "contextuality"
         ),
         interoperability: getQualityScore(
-            json["data_file_quality"]["interoperability"],
+            json["meta_file_quality"]["interoperability"],
             "interoperability"
         ),
     },
@@ -364,8 +364,8 @@ const jsonToQualityMetrics = (json: any): any => ({
 
 const getQualityScore = (data: any, title: string) => ({
     title: title,
-    rating: data["rating"],
-    datatsets: data["datasets"].map((data: any) => getQualityDatasets(data)),
+    rating: data.rating,
+    datatsets: data.datasets.map((data: any) => getQualityDatasets(data)),
 });
 
 const getQualityDatasets = (dataset: any) => ({
