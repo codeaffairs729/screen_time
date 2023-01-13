@@ -101,7 +101,7 @@ const OrganisationDetailVM = (
                 );
             },
             {
-                onSuccess: (res) => {
+                postProcess: (res) => {
                     return jsonToOrgDatasets(res);
                 },
                 onError: (e) => {
@@ -128,7 +128,7 @@ const OrganisationDetailVM = (
                 );
             },
             {
-                onSuccess: (res) => {
+                postProcess: (res) => {
                     return jsonToOrgDatasets(res);
                 },
                 onError: (e) => {
@@ -153,7 +153,7 @@ const OrganisationDetailVM = (
                 // );
             },
             {
-                onSuccess: (res) => {
+                postProcess: (res) => {
                     return res;
                 },
                 onError: (e) => {
@@ -177,7 +177,7 @@ const OrganisationDetailVM = (
                 );
             },
             {
-                onSuccess: (res) => {
+                postProcess: (res) => {
                     return jsonToSearchTerms(res);
                 },
                 onError: (e) => {
@@ -201,8 +201,7 @@ const OrganisationDetailVM = (
                     `/v1/data_sources/${organisation?.id}/download_metrics`
                 ),
             {
-                onSuccess: (res) => {
-                    console.log(res);
+                postProcess: (res) => {
                     return jsonToOrgDownloadMetrics(res);
                 },
                 onError: (e) => {
