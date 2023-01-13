@@ -11,7 +11,7 @@ import {
     DownloadByTime,
     OrganisationDetailVMContext,
 } from "pages/organisation/organisation_detail.vm";
-import { getNotificationAge } from "pages/workspace/notification.vm";
+import { getAge } from "pages/workspace/notification.vm";
 const WorldMap = dynamic(() => import("components/UI/world_map"), {
     ssr: false,
 });
@@ -25,11 +25,11 @@ const DownloadSection = () => {
         selectedDownload: selectedLabel,
         isLoading,
         downloadMetrics,
-        fectchDownloadMetrics,
+        fetchDownloadMetrics,
     } = useContext(OrganisationDetailVMContext);
 
     useEffect(() => {
-        fectchDownloadMetrics();
+        fetchDownloadMetrics();
     }, []);
 
     const [fromDate, setFromDate] = useState(new Date());
@@ -74,7 +74,7 @@ const DownloadSection = () => {
     const tableData = regions.map((region: any) => [
         region?.name,
         region?.count,
-        getNotificationAge(region.date),
+        getAge(region.date),
     ]);
 
     const downloadCounts = regions.map((region: any) => region?.count);
