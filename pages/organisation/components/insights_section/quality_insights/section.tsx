@@ -117,14 +117,11 @@ const getTableData = (datasets: any) => {
 };
 
 const getRating = (ratings: any, index: any) => {
-    const rating = ratings.map((data: any, index: any) => {
-        const rateValue = data.map((rate: any, index: any) => ({
-            name: index + 1,
-            rating: rate[index + 1],
-        }));
-        return rateValue;
-    });
-    return rating[index];
+    const rating = ratings.map((rate: any, index: any) => ({
+        name: index + 1,
+        rating: rate[index + 1],
+    }));
+    return rating;
 };
 
 export default QualityInsightsBody;

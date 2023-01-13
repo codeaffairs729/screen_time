@@ -209,6 +209,7 @@ const OrganisationDetailVM = (
                 ),
             {
                 onSuccess: (res) => {
+                    console.log(res);
                     return jsonToOrgDownloadMetrics(res);
                 },
                 onError: (e) => {
@@ -358,14 +359,7 @@ const SearchTerms = [
 
 const dates = [...Array(12)].map((_, key) => new Date(2022, key));
 
-const rating = [
-    [{ 1: 10 }, { 2: 20 }, { 3: 30 }, { 4: 20 }, { 5: 10 }],
-    [{ 1: 10 }, { 2: 20 }, { 3: 50 }, { 4: 20 }, { 5: 10 }],
-    [{ 1: 50 }, { 2: 20 }, { 3: 30 }, { 4: 20 }, { 5: 10 }],
-    [{ 1: 10 }, { 2: 20 }, { 3: 30 }, { 4: 20 }, { 5: 10 }],
-    [{ 1: 20 }, { 2: 10 }, { 3: 20 }, { 4: 20 }, { 5: 10 }],
-    [{ 1: 10 }, { 2: 10 }, { 3: 20 }, { 4: 20 }, { 5: 10 }],
-];
+const rating = [{ 1: 10 }, { 2: 20 }, { 3: 30 }, { 4: 20 }, { 5: 10 }];
 const datasets = [
     {
         id: 1,
