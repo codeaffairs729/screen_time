@@ -51,7 +51,10 @@ const QualityInsightsBody = () => {
             {Object.keys(items).map((key, index) => (
                 <Accordian
                     label={
-                        <AccordianLabel label={getLabel(items[key].title)} />
+                        <AccordianLabel
+                            label={getLabel(items[key].title)}
+                            ratings={items[key].rating}
+                        />
                     }
                     key={index}
                 >
@@ -82,16 +85,39 @@ const QualityInsightsBody = () => {
     );
 };
 
-const AccordianLabel = ({ label }: { label: string }) => {
+const AccordianLabel = ({
+    label,
+    ratings,
+}: {
+    label: string;
+    ratings: any;
+}) => {
     return (
         <MetaRating
             label={label}
-            dataQuality={3}
+            dataQuality={getAvg(ratings)}
             className="!flex-row ml-0"
             labelClass="!text-lg text-dtech-dark-grey"
             starClassName="!w-6 !h-6 text-[#5F5F63]"
         />
     );
+};
+
+const getAvg = (ratings: any) => {
+    const ratingData = ratings.map(
+        (rate: any, index: number) => rate[index + 1]
+    );
+    const count = ratingData.reduce(
+        (accumulator: any, curValue: any) => accumulator + curValue,
+        0
+    );
+
+    const ratingSum = ratingData.reduce(
+        (accumulator: any, curValue: any, curIndex: any) =>
+            accumulator + curValue * (curIndex + 1),
+        0
+    );
+    return ratingSum / count;
 };
 
 const getLabel = (title: string) => {
