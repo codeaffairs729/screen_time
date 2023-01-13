@@ -22,7 +22,7 @@ export type Notification = {
     notification_type: string;
 };
 
-export const getNotificationAge = (date: string) => {
+export const getAge = (date: string) => {
     let seconds = Math.floor((+new Date() - +new Date(date)) / 1000);
     let interval = seconds / 31536000;
     if (interval > 1) {

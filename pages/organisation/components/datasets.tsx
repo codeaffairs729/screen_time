@@ -35,13 +35,13 @@ const Datasets = () => {
         isLoading,
         organisationDatasets,
         organisationRankedDatasets,
-        fectchOrganisationDatasets,
-        fectchOrganisationRankedDatasets,
+        fetchOrganisationDatasets,
+        fetchOrganisationRankedDatasets,
     } = useContext(OrganisationDetailVMContext);
 
     useEffect(() => {
-        fectchOrganisationRankedDatasets();
-        fectchOrganisationDatasets();
+        fetchOrganisationRankedDatasets();
+        fetchOrganisationDatasets();
     }, []);
 
     if (isLoading) {

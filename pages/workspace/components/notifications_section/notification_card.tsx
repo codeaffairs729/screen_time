@@ -2,7 +2,7 @@ import clsx from "clsx";
 import Link from "next/link";
 import {
     formatHeading,
-    getNotificationAge,
+    getAge,
     getNotificationSubHeading,
     notificationActionUrl,
 } from "../../notification.vm";
@@ -42,7 +42,7 @@ const NotificationCard = ({
                         id={"workspace-notification-age-" + index}
                         className="text-gray-600 text-sm"
                     >
-                        {getNotificationAge(created_at)}
+                        {getAge(created_at)}
                     </span>
                     {!read_status && (
                         <div

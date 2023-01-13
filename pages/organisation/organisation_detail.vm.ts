@@ -10,7 +10,7 @@ import {
     useEffect,
 } from "react";
 import toast from "react-hot-toast";
-import { getNotificationAge } from "pages/workspace/notification.vm";
+
 export enum insightTabIndex {
     dataset_quality,
     search_term,
@@ -84,7 +84,7 @@ const OrganisationDetailVM = (
     const [selectedDownload, setSelectedDownload] = useState<number>(0);
 
     const {
-        execute: excuteFectchOrganisationRankedDatasets,
+        execute: excuteFetchOrganisationRankedDatasets,
         data: organisationRankedDatasets,
         isLoading: isFetchingOrganisationRankedDatasets,
     } = useHttpCall<{ [key: string]: any }>({});
@@ -93,8 +93,8 @@ const OrganisationDetailVM = (
         fetchSearchTerms();
     }, [selectedSearchTerm]);
 
-    const fectchOrganisationRankedDatasets = () =>
-        excuteFectchOrganisationRankedDatasets(
+    const fetchOrganisationRankedDatasets = () =>
+        excuteFetchOrganisationRankedDatasets(
             () => {
                 return Http.get(
                     `/v1/data_sources/${organisation?.id}/provider_ranked_datasets`
@@ -113,13 +113,13 @@ const OrganisationDetailVM = (
         );
 
     const {
-        execute: excuteFectchOrganisationDatasets,
+        execute: excuteFetchOrganisationDatasets,
         data: organisationDatasets,
         isLoading: isFetchingOrganisationDatasets,
     } = useHttpCall<{ [key: string]: any }>({});
 
-    const fectchOrganisationDatasets = () =>
-        excuteFectchOrganisationDatasets(
+    const fetchOrganisationDatasets = () =>
+        excuteFetchOrganisationDatasets(
             () => {
                 return Http.get(
                     `/v1/data_sources/${
@@ -140,13 +140,13 @@ const OrganisationDetailVM = (
         );
 
     const {
-        execute: excuteFectchQualityMetrics,
+        execute: excuteFetchQualityMetrics,
         data: qualityMetrics,
         isLoading: isFetchingQualityMetrics,
     } = useHttpCall<{ [key: string]: any }>({});
 
-    const fetchQualityMetrics = (ids: number[]) =>
-        excuteFectchQualityMetrics(
+    const fetchQualityMetrics = () =>
+        excuteFetchQualityMetrics(
             () => {
                 // return Http.get(
                 //     `/v1/data_sources/${organisation?.id}/quality_metrics`
@@ -189,13 +189,13 @@ const OrganisationDetailVM = (
         );
 
     const {
-        execute: excuteFectchDownloadMetrics,
+        execute: excuteFetchDownloadMetrics,
         data: downloadMetrics,
         isLoading: isFetchingDownloadMetrics,
     } = useHttpCall<{ [key: string]: any }>({});
 
-    const fectchDownloadMetrics = (ids: number[]) =>
-        excuteFectchDownloadMetrics(
+    const fetchDownloadMetrics = () =>
+        excuteFetchDownloadMetrics(
             () =>
                 Http.get(
                     `/v1/data_sources/${organisation?.id}/download_metrics`
@@ -232,11 +232,11 @@ const OrganisationDetailVM = (
         downloadMetrics,
         isLoading,
         setOrganisation,
-        fectchOrganisationDatasets,
+        fetchOrganisationDatasets,
         fetchQualityMetrics,
         fetchSearchTerms,
-        fectchOrganisationRankedDatasets,
-        fectchDownloadMetrics,
+        fetchOrganisationRankedDatasets,
+        fetchDownloadMetrics,
         setSelectedQualityInsights,
         setSelectedSearchTerm,
         setSelectedDownload,
@@ -256,11 +256,11 @@ export interface IOrganisationDetailVMContext {
     searchTerms: any;
     downloadMetrics: any;
     isLoading: boolean;
-    fectchOrganisationRankedDatasets: Function;
-    fectchOrganisationDatasets: Function;
+    fetchOrganisationRankedDatasets: Function;
+    fetchOrganisationDatasets: Function;
     fetchQualityMetrics: Function;
     fetchSearchTerms: Function;
-    fectchDownloadMetrics: Function;
+    fetchDownloadMetrics: Function;
     setSelectedQualityInsights: Function;
     setSelectedSearchTerm: Function;
     setSelectedDownload: Function;
@@ -321,87 +321,3 @@ const jsonToOrgDownloadMetrics = (json: any): DownloadMetrics => ({
         value: useCase["value"],
     })),
 });
-
-// const rating = [{ 1: 10 }, { 2: 20 }, { 3: 30 }, { 4: 20 }, { 5: 10 }];
-// const datasets = [
-//     {
-//         id: 1,
-//         title: "2011 Output Area code, old to new",
-//         description:
-//             "This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August 2013) and the new 2011 This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August",
-//         rating: 10,
-//     },
-//     {
-//         id: 2,
-//         title: "2011 Output Area code, old to new",
-//         description:
-//             "This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August 2013) and the new 2011 This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August",
-//         rating: 30,
-//     },
-//     {
-//         id: 3,
-//         title: "2011 Output Area code, old to new",
-//         description:
-//             "This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August 2013) and the new 2011 This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August",
-//         rating: 20,
-//     },
-// ];
-// const dataFile: any = {
-//     overall_score: {
-//         title: "Overall score",
-//         rating: rating,
-//         datasets: datasets,
-//     },
-//     accuracy: {
-//         title: "accuracy",
-//         rating: rating,
-//         datasets: datasets,
-//     },
-//     consistency: {
-//         title: "consistency",
-//         rating: rating,
-//         datasets: datasets,
-//     },
-//     clarity: {
-//         title: "clarity",
-//         rating: rating,
-//         datasets: datasets,
-//     },
-//     readiness: {
-//         title: "readiness",
-//         rating: rating,
-//         datasets: datasets,
-//     },
-// };
-// const metaFile: any = {
-//     overall_score: {
-//         title: "Overall score",
-//         rating: rating,
-//         datasets: datasets,
-//     },
-//     findability: {
-//         title: "findability",
-//         rating: rating,
-//         datasets: datasets,
-//     },
-//     accessibility: {
-//         title: "accessibility",
-//         rating: rating,
-//         datasets: datasets,
-//     },
-//     reusability: {
-//         title: "reusability",
-//         rating: rating,
-//         datasets: datasets,
-//     },
-//     contextuality: {
-//         title: "contextuality",
-//         rating: rating,
-//         datasets: datasets,
-//     },
-//     interoperability: {
-//         title: "interoperability",
-//         rating: rating,
-//         datasets: datasets,
-//     },
-// };
