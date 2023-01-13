@@ -82,7 +82,7 @@ const OrganisationDetailVM = (
         useState<number>(0);
     const [selectedSearchTerm, setSelectedSearchTerm] = useState<number>(10);
     const [selectedDownload, setSelectedDownload] = useState<number>(0);
-
+    const [orgDatasetsCount, setOrgDatasetsCount] = useState(10);
     const {
         execute: excuteFetchOrganisationRankedDatasets,
         data: organisationRankedDatasets,
@@ -92,6 +92,15 @@ const OrganisationDetailVM = (
     useEffect(() => {
         fetchSearchTerms();
     }, [selectedSearchTerm]);
+
+    useEffect(() => {
+        if (orgDatasetsCount != 10) {
+            fetchOrganisationDatasets();
+        }
+    }, [orgDatasetsCount]);
+
+    const incrementOrgDatasetsCount = () =>
+        setOrgDatasetsCount(orgDatasetsCount + 10);
 
     const fetchOrganisationRankedDatasets = () =>
         excuteFetchOrganisationRankedDatasets(
@@ -122,9 +131,7 @@ const OrganisationDetailVM = (
         excuteFetchOrganisationDatasets(
             () => {
                 return Http.get(
-                    `/v1/data_sources/${
-                        organisation?.id
-                    }/${1}/provider_datasets`
+                    `/v1/data_sources/${organisation?.id}/${orgDatasetsCount}/provider_datasets`
                 );
             },
             {
@@ -232,6 +239,7 @@ const OrganisationDetailVM = (
         isLoading,
         setOrganisation,
         fetchOrganisationDatasets,
+        incrementOrgDatasetsCount,
         fetchQualityMetrics,
         fetchSearchTerms,
         fetchOrganisationRankedDatasets,
@@ -255,6 +263,7 @@ export interface IOrganisationDetailVMContext {
     searchTerms: any;
     downloadMetrics: any;
     isLoading: boolean;
+    incrementOrgDatasetsCount: Function;
     fetchOrganisationRankedDatasets: Function;
     fetchOrganisationDatasets: Function;
     fetchQualityMetrics: Function;

@@ -35,6 +35,7 @@ const Datasets = () => {
         isLoading,
         organisationDatasets,
         organisationRankedDatasets,
+        incrementOrgDatasetsCount,
         fetchOrganisationDatasets,
         fetchOrganisationRankedDatasets,
     } = useContext(OrganisationDetailVMContext);
@@ -71,6 +72,7 @@ const Datasets = () => {
                             >
                                 <div className="px-8 pb-4">
                                     <Table
+                                        onScrollEnd={incrementOrgDatasetsCount}
                                         tableHeaders={
                                             key == "all_datasets"
                                                 ? ["Dataset"]
@@ -80,6 +82,11 @@ const Datasets = () => {
                                             key,
                                             organisationDatasetTable[key]
                                         )}
+                                        tableBodyClasses={
+                                            key == "all_datasets"
+                                                ? "block h-[220px] overflow-auto"
+                                                : ""
+                                        }
                                         cellPadding={3}
                                     />
                                 </div>

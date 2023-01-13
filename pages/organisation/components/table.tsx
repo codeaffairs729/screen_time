@@ -4,9 +4,11 @@ import clsx from "clsx";
 const Table = ({
     tableHeaders,
     tableData,
-    headerClass,
-    tableClass,
+    headerClass = "",
+    tableClass = "",
+    tableBodyClasses = "",
     cellPadding,
+    onScrollEnd,
     tableRow,
 }: any) => {
     return (
@@ -21,7 +23,7 @@ const Table = ({
                             <th
                                 key={index}
                                 className={clsx(
-                                    "text-dtech-dark-grey text-[17px] font-medium p-3 pb-4",
+                                    "text-dtech-dark-grey text-[17px] font-medium p-3 pb-4 capitalize",
                                     headerClass
                                 )}
                             >
@@ -30,7 +32,7 @@ const Table = ({
                         ))}
                     </tr>
                 </thead>
-                <tbody>
+                <tbody className={tableBodyClasses}>
                     {tableData.map((data: any, index: any) => (
                         <tr
                             key={index}
