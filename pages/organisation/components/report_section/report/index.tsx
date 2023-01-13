@@ -10,7 +10,7 @@ import { Tab } from "@headlessui/react";
 const EditReport = dynamic(() => import("./editReport"), {
     ssr: false,
 });
-const TIME_HEADERS = ["Count", "Month"];
+const TIME_HEADERS = ["Count", "Download", "Month"];
 const TIME = [
     { month: "Jan", download_per_month: 265 },
     { month: "Feb", download_per_month: 475 },
@@ -45,7 +45,7 @@ const Report = () => {
         <div>
             <div
                 id="screenshot"
-                className="flex absolute justify-center flex-col  z-[-10]"
+                className="flex absolute justify-center items-center flex-col  z-[-10]"
             >
                 <BarGraph
                     data={[
@@ -71,17 +71,17 @@ const Report = () => {
                     isAnimationActive={false}
                 />
                 <Table
-                    tableHeaders={PIE_HEADER}
-                    tableData={PieData}
+                    tableHeaders={TIME_HEADERS}
+                    tableData={timeData}
                     headerClass="text-[17px] font-medium bg-[#F5F5F5] "
-                    tableClass="w-[50%]"
+                    tableClass="w-[80%] ml-[8rem] text-sm text-left table-fixed"
                     cellPadding={20}
                     tableRow="text-[17px] "
                 />
             </div>
             <div
                 id="pie"
-                className="flex absolute justify-center flex-col  z-[-10]"
+                className="flex absolute justify-center items-center flex-col z-[-10]"
             >
                 <PieGraph
                     data={[
@@ -93,12 +93,12 @@ const Report = () => {
                     radius="60%"
                 />
                 <Table
-                    tableHeaders={TIME_HEADERS}
-                    tableData={timeData}
+                    tableHeaders={PIE_HEADER}
+                    tableData={PieData}
                     headerClass="text-[17px] font-medium bg-[#F5F5F5] "
-                    tableClass="w-[50%]"
+                    tableClass="w-[50%] ml-[15rem] text-sm text-left table-fixed"
                     cellPadding={20}
-                    tableRow="text-[17px]"
+                    tableRow="text-[17px] font-normal "
                 />
             </div>
             <Tab.Group>

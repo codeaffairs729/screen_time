@@ -4,6 +4,8 @@ import DatasetStat from "components/UI/result_card/data_stat";
 import { useContext } from "react";
 import { OrganisationDetailVMContext } from "../organisation_detail.vm";
 import { organisationToResultCardData } from "pages/search/components/organization/organisation.vm";
+import { format } from "date-fns";
+import { DateTime } from "luxon";
 
 const OrganisationHead = () => {
     const { organisation, setOrganisation } = useContext(
@@ -65,7 +67,9 @@ const OrganisationHead = () => {
                             Updated:{" "}
                         </span>
                         <span className="text-sm font-medium text-dtech-dark-grey">
-                            {lastUpdate}
+                            {DateTime.fromISO(`${lastUpdate}`).toFormat(
+                                "dd MMM yyyy"
+                            )}
                         </span>
                     </div>
                 </div>
