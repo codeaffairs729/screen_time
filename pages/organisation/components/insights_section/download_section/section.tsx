@@ -35,7 +35,7 @@ const DownloadSection = () => {
     const [fromDate, setFromDate] = useState(new Date());
     const [toDate, setToDate] = useState(new Date());
 
-    if (isLoading || downloadMetrics.hasOwnProperty('downloadByTime')) {
+    if (isLoading) {
         return (
             <div className="h-[calc(100vh-var(--nav-height))]  w-full flex items-center justify-center">
                 <Loader />
@@ -43,50 +43,52 @@ const DownloadSection = () => {
         );
     }
 
-    const downloadByTimeData = downloadMetrics?.downloadByTime?.map(
-        (data: DownloadByTime) => {
-            const date = new Date(data?.date);
-            const month = date.toLocaleString("en", { month: "short" });
-            const year = new Date().getFullYear();
+    const {
+        downloadByTime = [],
+        regions = [],
+        downloadByUseCase = [],
+    } = downloadMetrics || {};
 
-            return [[data.count], [`${month} ${year}`]];
-        }
-    );
+    const downloadByTimeData = downloadByTime.map((data: DownloadByTime) => {
+        const date = new Date(data?.date);
+        const month = date.toLocaleString("en", { month: "short" });
+        const year = new Date().getFullYear();
 
-    const timeMetrics = downloadMetrics?.downloadByTime?.map(
-        (data: DownloadByTime) => ({
-            month: new Date(data?.date).toLocaleString("en", {
-                month: "short",
-            }),
-            download_per_month: data.count,
-        })
-    );
+        return [[data.count], [`${month} ${year}`]];
+    });
+
+    const timeMetrics = downloadByTime.map((data: DownloadByTime) => ({
+        month: new Date(data?.date).toLocaleString("en", {
+            month: "short",
+        }),
+        download_per_month: data.count,
+    }));
 
     const barDataKey = "download_per_month";
 
-    const locations: Array<LatLngExpression> = downloadMetrics?.regions?.map(
-        (region: any) => [region?.location?.lat, region?.location?.long]
-    );
+    const locations: Array<LatLngExpression> = regions.map((region: any) => [
+        region?.location?.lat,
+        region?.location?.long,
+    ]);
 
-    const tableData = downloadMetrics?.regions?.map((region: any) => [
+    const tableData = regions.map((region: any) => [
         region?.name,
         region?.count,
         getNotificationAge(region.date),
     ]);
 
-    const downloadCounts = downloadMetrics?.regions?.map(
-        (region: any) => region?.count
-    );
+    const downloadCounts = regions.map((region: any) => region?.count);
 
-    const pieData = downloadMetrics?.downloadByUseCase?.map(
-        (data: any, index: number) => [data.name, data.value]
-    );
+    const pieData = downloadByUseCase.map((data: any, index: number) => [
+        data.name,
+        data.value,
+    ]);
 
     return (
         <div>
             {selectedLabel == 0 && (
                 <div className="mt-12 ml-8 mr-24 block h-[44rem] overflow-y-scroll no-scrollbar whitespace-nowrap">
-                    {/* <WorldMap locations={locations} counts={downloadCounts} />
+                    <WorldMap locations={locations} counts={downloadCounts} />
                     <div className="mt-8">
                         <Table
                             tableHeaders={TABLE_HEADERS}
@@ -96,7 +98,7 @@ const DownloadSection = () => {
                             cellPadding={20}
                             tableRow="text-[17px] font-normal "
                         />
-                    </div> */}
+                    </div>
                 </div>
             )}
             {selectedLabel == 1 && (
@@ -133,29 +135,29 @@ const DownloadSection = () => {
                             className={"ml-[-10px]"}
                         />
                         <div className="mt-8">
-                            {/* <Table
+                            <Table
                                 tableHeaders={TIME_HEADERS}
                                 tableData={downloadByTimeData}
                                 headerClass="text-[17px] font-medium bg-[#F5F5F5] "
                                 tableClass="w-[90%] text-sm text-left border table-fixed ml-12"
                                 cellPadding={20}
                                 tableRow="text-[17px] font-normal "
-                            /> */}
+                            />
                         </div>
                     </div>
                 </div>
             )}
             {selectedLabel == 2 && (
                 <div className="mr-24 mt-8 block h-[44rem] overflow-y-scroll no-scrollbar whitespace-nowrap">
-                    {/* <PieGraph data={downloadMetrics?.use_case} /> */}
-                    {/* <Table
+                    <PieGraph data={downloadByUseCase} />
+                    <Table
                         tableHeaders={PIE_HEADER}
                         tableData={pieData}
                         headerClass="text-[17px] font-medium bg-[#F5F5F5] "
                         tableClass="w-[90%] text-sm text-left border table-fixed ml-12"
                         cellPadding={20}
                         tableRow="text-[17px] font-normal "
-                    /> */}
+                    />
                 </div>
             )}
         </div>
