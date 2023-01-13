@@ -86,7 +86,7 @@ const DownloadSection = () => {
         <div>
             {selectedLabel == 0 && (
                 <div className="mt-12 ml-8 mr-24 block h-[44rem] overflow-y-scroll no-scrollbar whitespace-nowrap">
-                    <WorldMap locations={locations} counts={downloadCounts} />
+                    {/* <WorldMap locations={locations} counts={downloadCounts} />
                     <div className="mt-8">
                         <Table
                             tableHeaders={TABLE_HEADERS}
@@ -96,7 +96,7 @@ const DownloadSection = () => {
                             cellPadding={20}
                             tableRow="text-[17px] font-normal "
                         />
-                    </div>
+                    </div> */}
                 </div>
             )}
             {selectedLabel == 1 && (
@@ -133,29 +133,29 @@ const DownloadSection = () => {
                             className={"ml-[-10px]"}
                         />
                         <div className="mt-8">
-                            <Table
+                            {/* <Table
                                 tableHeaders={TIME_HEADERS}
                                 tableData={downloadByTimeData}
                                 headerClass="text-[17px] font-medium bg-[#F5F5F5] "
                                 tableClass="w-[90%] text-sm text-left border table-fixed ml-12"
                                 cellPadding={20}
                                 tableRow="text-[17px] font-normal "
-                            />
+                            /> */}
                         </div>
                     </div>
                 </div>
             )}
             {selectedLabel == 2 && (
                 <div className="mr-24 mt-8 block h-[44rem] overflow-y-scroll no-scrollbar whitespace-nowrap">
-                    <PieGraph data={downloadMetrics?.use_case} />
-                    <Table
+                    {/* <PieGraph data={downloadMetrics?.use_case} /> */}
+                    {/* <Table
                         tableHeaders={PIE_HEADER}
                         tableData={pieData}
                         headerClass="text-[17px] font-medium bg-[#F5F5F5] "
                         tableClass="w-[90%] text-sm text-left border table-fixed ml-12"
                         cellPadding={20}
                         tableRow="text-[17px] font-normal "
-                    />
+                    /> */}
                 </div>
             )}
         </div>

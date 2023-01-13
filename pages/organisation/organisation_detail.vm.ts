@@ -130,37 +130,20 @@ const OrganisationDetailVM = (
         );
 
     const {
-        execute: excuteFectchMetaDataQulaity,
-        data: metaDataQulaity,
-        isLoading: isFetchingMetaDataQulaity,
+        execute: excuteFectchQualityMetrics,
+        data: qualityMetrics,
+        isLoading: isFetchingQualityMetrics,
     } = useHttpCall<{ [key: string]: any }>({});
 
-    const fectchMetaDataQulaity = (ids: number[]) =>
-        excuteFectchMetaDataQulaity(
-            () =>
-                Http.post("/v1/datasets/stats", {
-                    meta_dataset_ids: ids,
-                }),
-            {
-                postProcess: (res) => {
-                    return res;
-                },
-            }
-        );
-
-    const {
-        execute: excuteFectchDataFileQuality,
-        data: dataFileQuality,
-        isLoading: isFetchingDataFileQuality,
-    } = useHttpCall<{ [key: string]: any }>({});
-
-    const fectchDataFileQuality = (ids: number[]) =>
-        excuteFectchDataFileQuality(
+    const fetchQualityMetrics = (ids: number[]) =>
+        excuteFectchQualityMetrics(
             () => {
-                // return  Http.post("/v1/datasets/stats", {meta_dataset_ids: ids,}),
+                // return Http.get(
+                //     `/v1/data_sources/${organisation?.id}/quality_metrics`
+                // );
             },
             {
-                postProcess: (res) => {
+                onSuccess: (res) => {
                     return res;
                 },
                 onError: (e) => {
@@ -223,8 +206,7 @@ const OrganisationDetailVM = (
     const isLoading =
         isFetchingOrganisationDatasets ||
         isFetchingOrganisationRankedDatasets ||
-        isFetchingMetaDataQulaity ||
-        isFetchingDataFileQuality ||
+        isFetchingQualityMetrics ||
         isFetchingSearchTerms ||
         isFetchingDownloadMetrics;
 
@@ -235,15 +217,13 @@ const OrganisationDetailVM = (
         organisation,
         organisationRankedDatasets,
         organisationDatasets,
-        metaDataQulaity: metaFile,
-        dataFileQuality: dataFile,
+        qualityMetrics,
         searchTerms,
         downloadMetrics,
         isLoading,
         setOrganisation,
         fectchOrganisationDatasets,
-        fectchMetaDataQulaity,
-        fectchDataFileQuality,
+        fetchQualityMetrics,
         fectchSearchTerms,
         fectchOrganisationRankedDatasets,
         fectchDownloadMetrics,
@@ -262,15 +242,13 @@ export interface IOrganisationDetailVMContext {
     organisation: Organisation | undefined;
     organisationDatasets: any;
     organisationRankedDatasets: any;
-    metaDataQulaity: any;
-    dataFileQuality: any;
+    qualityMetrics: any;
     searchTerms: any;
     downloadMetrics: any;
     isLoading: boolean;
     fectchOrganisationRankedDatasets: Function;
     fectchOrganisationDatasets: Function;
-    fectchMetaDataQulaity: Function;
-    fectchDataFileQuality: Function;
+    fetchQualityMetrics: Function;
     fectchSearchTerms: Function;
     fectchDownloadMetrics: Function;
     setSelectedQualityInsights: Function;
@@ -334,111 +312,86 @@ const jsonToOrgDownloadMetrics = (json: any): DownloadMetrics => ({
     })),
 });
 
-const SearchTerms = [
-    { title: "Nature", count: 1, created_at: new Date() },
-    { title: "Biodiversity", count: 1, created_at: new Date() },
-    { title: "Climate change", count: 1, created_at: new Date() },
-    { title: "Species", count: 1, created_at: new Date() },
-    { title: "Ecology", count: 1, created_at: new Date() },
-    { title: "Indicators", count: 1, created_at: new Date() },
-    { title: "Agroecology", count: 1, created_at: new Date() },
-    { title: "Scotland", count: 1, created_at: new Date() },
-    { title: "Environment", count: 1, created_at: new Date() },
-    { title: "Health", count: 1, created_at: new Date() },
-    { title: "Nature1", count: 1, created_at: new Date() },
-    { title: "Biodiversity1", count: 1, created_at: new Date() },
-    { title: "Climate change1", count: 1, created_at: new Date() },
-    { title: "Species1", count: 1, created_at: new Date() },
-    { title: "Ecology1", count: 1, created_at: new Date() },
-    { title: "Indicators1", count: 1, created_at: new Date() },
-    { title: "Agroecology1", count: 1, created_at: new Date() },
-    { title: "Scotland1", count: 1, created_at: new Date() },
-    { title: "Environment1", count: 1, created_at: new Date() },
-    { title: "Health1", count: 1, created_at: new Date() },
-];
-
-const dates = [...Array(12)].map((_, key) => new Date(2022, key));
-
-const rating = [{ 1: 10 }, { 2: 20 }, { 3: 30 }, { 4: 20 }, { 5: 10 }];
-const datasets = [
-    {
-        id: 1,
-        title: "2011 Output Area code, old to new",
-        description:
-            "This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August 2013) and the new 2011 This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August",
-        rating: 10,
-    },
-    {
-        id: 2,
-        title: "2011 Output Area code, old to new",
-        description:
-            "This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August 2013) and the new 2011 This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August",
-        rating: 30,
-    },
-    {
-        id: 3,
-        title: "2011 Output Area code, old to new",
-        description:
-            "This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August 2013) and the new 2011 This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August",
-        rating: 20,
-    },
-];
-const dataFile: any = {
-    overall_score: {
-        title: "Overall score",
-        rating: rating,
-        datasets: datasets,
-    },
-    accuracy: {
-        title: "accuracy",
-        rating: rating,
-        datasets: datasets,
-    },
-    consistency: {
-        title: "consistency",
-        rating: rating,
-        datasets: datasets,
-    },
-    clarity: {
-        title: "clarity",
-        rating: rating,
-        datasets: datasets,
-    },
-    readiness: {
-        title: "readiness",
-        rating: rating,
-        datasets: datasets,
-    },
-};
-const metaFile: any = {
-    overall_score: {
-        title: "Overall score",
-        rating: rating,
-        datasets: datasets,
-    },
-    findability: {
-        title: "findability",
-        rating: rating,
-        datasets: datasets,
-    },
-    accessibility: {
-        title: "accessibility",
-        rating: rating,
-        datasets: datasets,
-    },
-    reusability: {
-        title: "reusability",
-        rating: rating,
-        datasets: datasets,
-    },
-    contextuality: {
-        title: "contextuality",
-        rating: rating,
-        datasets: datasets,
-    },
-    interoperability: {
-        title: "interoperability",
-        rating: rating,
-        datasets: datasets,
-    },
-};
+// const rating = [{ 1: 10 }, { 2: 20 }, { 3: 30 }, { 4: 20 }, { 5: 10 }];
+// const datasets = [
+//     {
+//         id: 1,
+//         title: "2011 Output Area code, old to new",
+//         description:
+//             "This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August 2013) and the new 2011 This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August",
+//         rating: 10,
+//     },
+//     {
+//         id: 2,
+//         title: "2011 Output Area code, old to new",
+//         description:
+//             "This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August 2013) and the new 2011 This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August",
+//         rating: 30,
+//     },
+//     {
+//         id: 3,
+//         title: "2011 Output Area code, old to new",
+//         description:
+//             "This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August 2013) and the new 2011 This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August",
+//         rating: 20,
+//     },
+// ];
+// const dataFile: any = {
+//     overall_score: {
+//         title: "Overall score",
+//         rating: rating,
+//         datasets: datasets,
+//     },
+//     accuracy: {
+//         title: "accuracy",
+//         rating: rating,
+//         datasets: datasets,
+//     },
+//     consistency: {
+//         title: "consistency",
+//         rating: rating,
+//         datasets: datasets,
+//     },
+//     clarity: {
+//         title: "clarity",
+//         rating: rating,
+//         datasets: datasets,
+//     },
+//     readiness: {
+//         title: "readiness",
+//         rating: rating,
+//         datasets: datasets,
+//     },
+// };
+// const metaFile: any = {
+//     overall_score: {
+//         title: "Overall score",
+//         rating: rating,
+//         datasets: datasets,
+//     },
+//     findability: {
+//         title: "findability",
+//         rating: rating,
+//         datasets: datasets,
+//     },
+//     accessibility: {
+//         title: "accessibility",
+//         rating: rating,
+//         datasets: datasets,
+//     },
+//     reusability: {
+//         title: "reusability",
+//         rating: rating,
+//         datasets: datasets,
+//     },
+//     contextuality: {
+//         title: "contextuality",
+//         rating: rating,
+//         datasets: datasets,
+//     },
+//     interoperability: {
+//         title: "interoperability",
+//         rating: rating,
+//         datasets: datasets,
+//     },
+// };

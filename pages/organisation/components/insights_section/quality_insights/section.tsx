@@ -4,7 +4,7 @@ import MetaRating from "components/UI/metaRating";
 import BarGraph from "components/UI/BarGraph";
 import Loader from "components/UI/loader";
 import { OrganisationDetailVMContext } from "pages/organisation/organisation_detail.vm";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 
 const TABLE_HEADERS = ["Score", "Dataset"];
 
@@ -21,15 +21,17 @@ const DisplayDataset = ({ title, description }: any) => (
 const QualityInsightsBody = () => {
     const {
         isLoading,
-        dataFileQuality,
-        metaDataQulaity,
-        fectchDataFileQuality,
-        fectchDownloadMetrics,
+        qualityMetrics,
+        fetchQualityMetrics,
+        selectedQualityInsights: selectedLabel,
     } = useContext(OrganisationDetailVMContext);
-    const { selectedQualityInsights: selectedLabel } = useContext(
-        OrganisationDetailVMContext
-    );
+
+    const { dataFileQuality = {}, metaDataQulaity = {} } = qualityMetrics || {};
     const items = selectedLabel == 0 ? dataFileQuality : metaDataQulaity;
+
+    useEffect(() => {
+        fetchQualityMetrics && fetchQualityMetrics();
+    }, []);
 
     if (isLoading) {
         return (
@@ -38,12 +40,6 @@ const QualityInsightsBody = () => {
             </div>
         );
     }
-
-    /*TODO
-        - Create data structure for the same
-        - Create api for the same
-        - Fetch data through api
-     */
 
     return (
         <div className="ml-16">
@@ -63,10 +59,7 @@ const QualityInsightsBody = () => {
                         <div className="px-8">
                             <Table
                                 tableHeaders={TABLE_HEADERS}
-                                tableData={
-                                    getTableData(items[key].datasets)
-                                    // tableData
-                                }
+                                tableData={getTableData(items[key].datasets)}
                                 cellPadding={3}
                             />
                         </div>
