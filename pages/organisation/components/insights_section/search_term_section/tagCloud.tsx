@@ -3,7 +3,7 @@ import { TagCloud } from "react-tagcloud";
 const displayCloud = (tag: any, size: any) => {
     return (
         <div
-            key={tag.value}
+            key={`${tag.value}_${size}`}
             style={{
                 fontSize: `${size / 30}em `,
             }}
@@ -16,7 +16,7 @@ const displayCloud = (tag: any, size: any) => {
 const TagsCloud = ({ row, row2 }: any) => {
     const data = row.map((r: string, index: any) => ({
         value: r,
-        count: (20 + index*5) % 80,
+        count: (20 + index * 5) % 80,
     }));
     return (
         <TagCloud

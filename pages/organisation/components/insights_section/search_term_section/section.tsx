@@ -13,12 +13,12 @@ const TABLE_HEADERS = ["Search term", "Count", "Last used"];
 const SearchTermSection = () => {
     const { selectedSearchTerm } = useContext(OrganisationDetailVMContext); // not required here as pagination will done on organisation vm api for search term
 
-    const { isLoading, searchTerms, fectchSearchTerms } = useContext(
+    const { isLoading, searchTerms, fetchSearchTerms } = useContext(
         OrganisationDetailVMContext
     );
 
     useEffect(() => {
-        fectchSearchTerms();
+        fetchSearchTerms();
     }, []);
 
     const tagsItems = useMemo(

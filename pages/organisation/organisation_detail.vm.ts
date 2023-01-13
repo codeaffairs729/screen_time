@@ -2,7 +2,13 @@ import { useHttpCall } from "common/hooks";
 import Http from "common/http";
 import { DateTime } from "luxon";
 import Organisation from "models/organisation.model";
-import { createContext, useState, Dispatch, SetStateAction } from "react";
+import {
+    createContext,
+    useState,
+    Dispatch,
+    SetStateAction,
+    useEffect,
+} from "react";
 import toast from "react-hot-toast";
 import { getNotificationAge } from "pages/workspace/notification.vm";
 export enum insightTabIndex {
@@ -83,6 +89,10 @@ const OrganisationDetailVM = (
         isLoading: isFetchingOrganisationRankedDatasets,
     } = useHttpCall<{ [key: string]: any }>({});
 
+    useEffect(() => {
+        fetchSearchTerms();
+    }, [selectedSearchTerm]);
+
     const fectchOrganisationRankedDatasets = () =>
         excuteFectchOrganisationRankedDatasets(
             () => {
@@ -155,12 +165,12 @@ const OrganisationDetailVM = (
         );
 
     const {
-        execute: excuteFectchSearchTerms,
+        execute: excuteFetchSearchTerms,
         data: searchTerms,
         isLoading: isFetchingSearchTerms,
     } = useHttpCall<{ [key: string]: any }>([]);
-    const fectchSearchTerms = () =>
-        excuteFectchSearchTerms(
+    const fetchSearchTerms = () =>
+        excuteFetchSearchTerms(
             () => {
                 return Http.get(
                     `/v1/data_sources/${organisation?.id}/${selectedSearchTerm}/search_terms`
@@ -224,7 +234,7 @@ const OrganisationDetailVM = (
         setOrganisation,
         fectchOrganisationDatasets,
         fetchQualityMetrics,
-        fectchSearchTerms,
+        fetchSearchTerms,
         fectchOrganisationRankedDatasets,
         fectchDownloadMetrics,
         setSelectedQualityInsights,
@@ -249,7 +259,7 @@ export interface IOrganisationDetailVMContext {
     fectchOrganisationRankedDatasets: Function;
     fectchOrganisationDatasets: Function;
     fetchQualityMetrics: Function;
-    fectchSearchTerms: Function;
+    fetchSearchTerms: Function;
     fectchDownloadMetrics: Function;
     setSelectedQualityInsights: Function;
     setSelectedSearchTerm: Function;
