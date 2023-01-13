@@ -32,7 +32,7 @@ const Table = ({
                         ))}
                     </tr>
                 </thead>
-                <tbody className={tableBodyClasses}>
+                <tbody className={tableBodyClasses} onScroll={onScrollEnd}>
                     {tableData.map((data: any, index: any) => (
                         <tr
                             key={index}

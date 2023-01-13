@@ -1,10 +1,7 @@
 import BarGraph from "components/UI/BarGraph";
 // import CalendarSelect from "components/UI/calendar_select";
-import PieGraph from "components/UI/PieGraph";
 import { LatLngExpression } from "leaflet";
-import Table from "../../table";
 import dynamic from "next/dynamic";
-import RangeSelector from "components/UI/range_selector";
 import { useContext, useEffect, useMemo, useState } from "react";
 import Loader from "components/UI/loader";
 import {
@@ -12,9 +9,9 @@ import {
     OrganisationDetailVMContext,
 } from "pages/organisation/organisation_detail.vm";
 import { getAge } from "pages/workspace/notification.vm";
-const WorldMap = dynamic(() => import("components/UI/world_map"), {
-    ssr: false,
-});
+import ByRegion from "./byRegion";
+import ByTime from "./byTime";
+import ByUsecase from "./byUsecase";
 
 const TABLE_HEADERS = ["Region", "Count", "Last used"];
 const PIE_HEADER = ["name", "value"];
@@ -87,78 +84,31 @@ const DownloadSection = () => {
     return (
         <div>
             {selectedLabel == 0 && (
-                <div className="mt-12 ml-8 mr-24 block h-[44rem] overflow-y-scroll no-scrollbar whitespace-nowrap">
-                    <WorldMap locations={locations} counts={downloadCounts} />
-                    <div className="mt-8">
-                        <Table
-                            tableHeaders={TABLE_HEADERS}
-                            tableData={tableData}
-                            headerClass="text-[17px] font-medium bg-[#F5F5F5] "
-                            tableClass="w-full text-sm text-left border table-fixed"
-                            cellPadding={20}
-                            tableRow="text-[17px] font-normal "
-                        />
-                    </div>
-                </div>
+                <ByRegion
+                    locations={locations}
+                    downloadCounts={downloadCounts}
+                    TABLE_HEADERS={TABLE_HEADERS}
+                    tableData={tableData}
+                />
             )}
             {selectedLabel == 1 && (
-                <div className="mt-12 w-full">
-                    <div className="flex ml-16">
-                        Please select your time frame:
-                        <RangeSelector
-                            fromDate={fromDate}
-                            setFromDate={setFromDate}
-                            toDate={toDate}
-                            setToDate={setToDate}
-                        />
-                    </div>
-                    <div className="mt-8 block h-[44rem] overflow-y-scroll no-scrollbar whitespace-nowrap">
-                        <BarGraph
-                            data={timeMetrics}
-                            strokeWidthAxis={0.4}
-                            strokeWidthLabelList={0}
-                            xLabel="month"
-                            showIntervalLabelX={true}
-                            barDatakey={barDataKey}
-                            labelListDatakey={barDataKey}
-                            hideY={false}
-                            height={500}
-                            width={1025}
-                            XleftPadding={30}
-                            XrightPadding={50}
-                            barColor={"#F0E2FA"}
-                            cellStrokeWidth={0}
-                            labelListColor={"#3F0068"}
-                            barSize={100}
-                            labelListPosition="insideTop"
-                            labellistTopPadding={6}
-                            className={"ml-[-10px]"}
-                        />
-                        <div className="mt-8">
-                            <Table
-                                tableHeaders={TIME_HEADERS}
-                                tableData={downloadByTimeData}
-                                headerClass="text-[17px] font-medium bg-[#F5F5F5] "
-                                tableClass="w-[90%] text-sm text-left border table-fixed ml-12"
-                                cellPadding={20}
-                                tableRow="text-[17px] font-normal "
-                            />
-                        </div>
-                    </div>
-                </div>
+                <ByTime
+                    fromDate={fromDate}
+                    setFromDate={setFromDate}
+                    toDate={toDate}
+                    setToDate={setToDate}
+                    timeMetrics={timeMetrics}
+                    barDataKey={barDataKey}
+                    TIME_HEADERS={TIME_HEADERS}
+                    downloadByTimeData={downloadByTimeData}
+                />
             )}
             {selectedLabel == 2 && (
-                <div className="mr-24 mt-8 block h-[44rem] overflow-y-scroll no-scrollbar whitespace-nowrap">
-                    <PieGraph data={downloadByUseCase} />
-                    <Table
-                        tableHeaders={PIE_HEADER}
-                        tableData={pieData}
-                        headerClass="text-[17px] font-medium bg-[#F5F5F5] "
-                        tableClass="w-[90%] text-sm text-left border table-fixed ml-12"
-                        cellPadding={20}
-                        tableRow="text-[17px] font-normal "
-                    />
-                </div>
+                <ByUsecase
+                    downloadByUseCase={downloadByUseCase}
+                    PIE_HEADER={PIE_HEADER}
+                    pieData={pieData}
+                />
             )}
         </div>
     );

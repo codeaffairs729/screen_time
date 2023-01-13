@@ -4,7 +4,7 @@ import { MdFileDownload } from "react-icons/md";
 import dataset from "public/images/icons/dataset.svg";
 import Table from "./table";
 import Image from "next/image";
-import { ReactNode, useContext, useEffect } from "react";
+import { ReactNode, useContext, useEffect, useState } from "react";
 import { OrganisationDetailVMContext } from "../organisation_detail.vm";
 import Loader from "components/UI/loader";
 import Link from "next/link";
@@ -44,8 +44,9 @@ const Datasets = () => {
         fetchOrganisationRankedDatasets();
         fetchOrganisationDatasets();
     }, []);
-
-    if (isLoading) {
+    const [inc, setInc] = useState(true)
+    if (isLoading && inc) {
+        setInc(false);
         return (
             <div className="h-[calc(100vh-var(--nav-height))]  w-full flex items-center justify-center">
                 <Loader />
@@ -57,6 +58,14 @@ const Datasets = () => {
         ...organisationRankedDatasets,
     };
 
+    const importOrgDatasets = (e: any) => {
+        const bottom =
+            e.target.scrollHeight - e.target.scrollTop ===
+            e.target.clientHeight;
+        if (bottom) {
+            incrementOrgDatasetsCount();
+        }
+    };
     return (
         <div className="ml-16">
             <div className="text-sm text-dtech-dark-grey">
@@ -72,7 +81,7 @@ const Datasets = () => {
                             >
                                 <div className="px-8 pb-4">
                                     <Table
-                                        onScrollEnd={incrementOrgDatasetsCount}
+                                        onScrollEnd={importOrgDatasets}
                                         tableHeaders={
                                             key == "all_datasets"
                                                 ? ["Dataset"]

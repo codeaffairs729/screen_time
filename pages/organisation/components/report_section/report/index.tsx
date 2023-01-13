@@ -40,7 +40,6 @@ const PIEDATA = [
 ];
 const PieData = PIEDATA.map((data, index) => [[data.name], [data.value]]);
 const Report = () => {
-    const [edit, setEdit] = useState(false);
     return (
         <div>
             <div
