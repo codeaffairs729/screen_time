@@ -125,10 +125,10 @@ const getLabel = (title: string) => {
 };
 
 const getTableData = (datasets: any) => {
-    return datasets.map((dataset: any, index: number) => [
+    return datasets.map((dataset: any) => [
         dataset.rating,
         <DisplayDataset
-            key={index}
+            key={dataset.id}
             title={dataset.title}
             description={dataset.description}
         />,

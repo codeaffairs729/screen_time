@@ -155,15 +155,16 @@ const OrganisationDetailVM = (
     const fetchQualityMetrics = () =>
         excuteFetchQualityMetrics(
             () => {
-                // return Http.get(
-                //     `/v1/data_sources/${organisation?.id}/quality_metrics`
-                // );
+                return Http.get(
+                    `/v1/data_sources/${organisation?.id}/quality_metrics`
+                );
             },
             {
                 postProcess: (res) => {
-                    return res;
+                    return jsonToQualityMetrics(res);
                 },
                 onError: (e) => {
+                    console.log(e);
                     toast.error(
                         "Something went wrong while fetching organisation Data Quality insights."
                     );
@@ -309,6 +310,70 @@ const jsonToSearchTerms = (json: any): SearchTermType[] =>
             lastUsed: term["created_at"],
         };
     });
+
+const jsonToQualityMetrics = (json: any): any => ({
+    datafileQuality: {
+        overallScore: getQualityScore(
+            json["data_file_quality"]["overall_score"],
+            "overallScore"
+        ),
+        accuracy: getQualityScore(
+            json["data_file_quality"]["accuracy"],
+            "accuracy"
+        ),
+        consistency: getQualityScore(
+            json["data_file_quality"]["consistency"],
+            "consistency"
+        ),
+        clarity: getQualityScore(
+            json["data_file_quality"]["clarity"],
+            "clarity"
+        ),
+        readiness: getQualityScore(
+            json["data_file_quality"]["readiness"],
+            "readiness"
+        ),
+    },
+    metaFileQuality: {
+        overallScore: getQualityScore(
+            json["data_file_quality"]["overall_score"],
+            "overallScore"
+        ),
+        findability: getQualityScore(
+            json["data_file_quality"]["findability"],
+            "findability"
+        ),
+        accessibility: getQualityScore(
+            json["data_file_quality"]["accessibility"],
+            "accessibility"
+        ),
+        reusability: getQualityScore(
+            json["data_file_quality"]["reusability"],
+            "reusability"
+        ),
+        contextuality: getQualityScore(
+            json["data_file_quality"]["contextuality"],
+            "contextuality"
+        ),
+        interoperability: getQualityScore(
+            json["data_file_quality"]["interoperability"],
+            "interoperability"
+        ),
+    },
+});
+
+const getQualityScore = (data: any, title: string) => ({
+    title: title,
+    rating: data["rating"],
+    datatsets: data["datasets"].map((data: any) => getQualityDatasets(data)),
+});
+
+const getQualityDatasets = (dataset: any) => ({
+    id: dataset["id"],
+    title: dataset["title"],
+    description: dataset["description"],
+    rating: dataset["rating"],
+});
 
 const jsonToOrgDownloadMetrics = (json: any): DownloadMetrics => ({
     regions: json["regions"]?.map((region: any) => ({
