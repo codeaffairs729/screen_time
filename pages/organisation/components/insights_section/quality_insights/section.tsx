@@ -26,9 +26,8 @@ const QualityInsightsBody = () => {
         selectedQualityInsights: selectedLabel,
     } = useContext(OrganisationDetailVMContext);
 
-    const { dataFileQuality = {}, metaDataQulaity = {} } = qualityMetrics || {};
-    const items = selectedLabel == 0 ? dataFileQuality : metaDataQulaity;
-
+    const { dataFileQuality = {}, metaFileQuality = {} } = qualityMetrics || {};
+    const items = selectedLabel == 0 ? dataFileQuality : metaFileQuality;
     useEffect(() => {
         fetchQualityMetrics && fetchQualityMetrics();
     }, []);
@@ -62,7 +61,7 @@ const QualityInsightsBody = () => {
                         <div className="px-8">
                             <Table
                                 tableHeaders={TABLE_HEADERS}
-                                tableData={getTableData(items[key].datasets)}
+                                tableData={getTableData(items[key].datatsets)}
                                 cellPadding={3}
                             />
                         </div>

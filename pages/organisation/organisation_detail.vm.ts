@@ -312,7 +312,7 @@ const jsonToSearchTerms = (json: any): SearchTermType[] =>
     });
 
 const jsonToQualityMetrics = (json: any): any => ({
-    datafileQuality: {
+    dataFileQuality: {
         overallScore: getQualityScore(
             json["data_file_quality"]["overall_score"],
             "overallScore"
