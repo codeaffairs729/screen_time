@@ -1,14 +1,31 @@
+import { LatLngExpression } from "leaflet";
 import dynamic from "next/dynamic";
+import { getAge } from "pages/workspace/notification.vm";
+import { OrganisationDetailVMContext } from "pages/organisation/organisation_detail.vm";
+import { useContext } from "react";
 import Table from "../../table";
 const WorldMap = dynamic(() => import("components/UI/world_map"), {
     ssr: false,
 });
-const ByRegion = ({
-    locations,
-    downloadCounts,
-    TABLE_HEADERS,
-    tableData,
-}: any) => {
+const TABLE_HEADERS = ["Region", "Count", "Last used"];
+const ByRegion = () => {
+    const { downloadMetrics } = useContext(OrganisationDetailVMContext);
+
+    const { regions = [] } = downloadMetrics || {};
+
+    const locations: Array<LatLngExpression> = regions.map((region: any) => [
+        region?.location?.lat,
+        region?.location?.long,
+    ]);
+
+    const tableData = regions.map((region: any) => [
+        region?.name,
+        region?.count,
+        getAge(region.date),
+    ]);
+
+    const downloadCounts = regions.map((region: any) => region?.count);
+
     return (
         <div className="mt-12 ml-8 mr-24 block h-[44rem] overflow-y-scroll no-scrollbar whitespace-nowrap">
             <WorldMap locations={locations} counts={downloadCounts} />

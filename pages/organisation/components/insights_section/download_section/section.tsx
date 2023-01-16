@@ -13,24 +13,16 @@ import ByRegion from "./byRegion";
 import ByTime from "./byTime";
 import ByUsecase from "./byUsecase";
 
-const TABLE_HEADERS = ["Region", "Count", "Last used"];
-const PIE_HEADER = ["name", "value"];
-const TIME_HEADERS = ["Count", "Month"];
-
 const DownloadSection = () => {
     const {
         selectedDownload: selectedLabel,
         isLoading,
-        downloadMetrics,
         fetchDownloadMetrics,
     } = useContext(OrganisationDetailVMContext);
 
     useEffect(() => {
         fetchDownloadMetrics();
     }, []);
-
-    const [fromDate, setFromDate] = useState(new Date());
-    const [toDate, setToDate] = useState(new Date());
 
     if (isLoading) {
         return (
@@ -40,76 +32,11 @@ const DownloadSection = () => {
         );
     }
 
-    const {
-        downloadByTime = [],
-        regions = [],
-        downloadByUseCase = [],
-    } = downloadMetrics || {};
-
-    const downloadByTimeData = downloadByTime.map((data: DownloadByTime) => {
-        const date = new Date(data?.date);
-        const month = date.toLocaleString("en", { month: "short" });
-        const year = new Date().getFullYear();
-
-        return [[data.count], [`${month} ${year}`]];
-    });
-
-    const timeMetrics = downloadByTime.map((data: DownloadByTime) => ({
-        month: new Date(data?.date).toLocaleString("en", {
-            month: "short",
-        }),
-        download_per_month: data.count,
-    }));
-
-    const barDataKey = "download_per_month";
-
-    const locations: Array<LatLngExpression> = regions.map((region: any) => [
-        region?.location?.lat,
-        region?.location?.long,
-    ]);
-
-    const tableData = regions.map((region: any) => [
-        region?.name,
-        region?.count,
-        getAge(region.date),
-    ]);
-
-    const downloadCounts = regions.map((region: any) => region?.count);
-
-    const pieData = downloadByUseCase.map((data: any, index: number) => [
-        data.name,
-        data.value,
-    ]);
-
     return (
         <div>
-            {selectedLabel == 0 && (
-                <ByRegion
-                    locations={locations}
-                    downloadCounts={downloadCounts}
-                    TABLE_HEADERS={TABLE_HEADERS}
-                    tableData={tableData}
-                />
-            )}
-            {selectedLabel == 1 && (
-                <ByTime
-                    fromDate={fromDate}
-                    setFromDate={setFromDate}
-                    toDate={toDate}
-                    setToDate={setToDate}
-                    timeMetrics={timeMetrics}
-                    barDataKey={barDataKey}
-                    TIME_HEADERS={TIME_HEADERS}
-                    downloadByTimeData={downloadByTimeData}
-                />
-            )}
-            {selectedLabel == 2 && (
-                <ByUsecase
-                    downloadByUseCase={downloadByUseCase}
-                    PIE_HEADER={PIE_HEADER}
-                    pieData={pieData}
-                />
-            )}
+            {selectedLabel == 0 && <ByRegion />}
+            {selectedLabel == 1 && <ByTime />}
+            {selectedLabel == 2 && <ByUsecase />}
         </div>
     );
 };
