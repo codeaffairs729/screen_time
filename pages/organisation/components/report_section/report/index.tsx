@@ -42,63 +42,65 @@ const PieData = PIEDATA.map((data, index) => [[data.name], [data.value]]);
 const Report = () => {
     return (
         <div>
-            <div
-                id="screenshot"
-                className="flex absolute justify-center items-center flex-col  z-[-10]"
-            >
-                <BarGraph
-                    data={[
-                        { name: 1, rating: 10 },
-                        { name: 2, rating: 30 },
-                        { name: 3, rating: 20 },
-                        { name: 4, rating: 40 },
-                        { name: 5, rating: 10 },
-                    ]}
-                    width={400}
-                    height={200}
-                    strokeWidthAxis={2}
-                    strokeWidthLabelList={0}
-                    className="font-medium my-2"
-                    XleftPadding={20}
-                    XrightPadding={30}
-                    xLabel=""
-                    yLabel=""
-                    xvalue=""
-                    yvalue=""
-                    barDatakey={"rating"}
-                    labelListDatakey={"name"}
-                    isAnimationActive={false}
-                />
-                <Table
-                    tableHeaders={TIME_HEADERS}
-                    tableData={timeData}
-                    headerClass="text-[17px] font-medium bg-[#F5F5F5] "
-                    tableClass="w-[80%] ml-[8rem] text-sm text-left table-fixed"
-                    cellPadding={20}
-                    tableRow="text-[17px] "
-                />
-            </div>
-            <div
-                id="pie"
-                className="flex absolute justify-center items-center flex-col z-[-10]"
-            >
-                <PieGraph
-                    data={[
-                        { name: "Data modelling", value: 400 },
-                        { name: "Publications", value: 300 },
-                        { name: "Planning", value: 200 },
-                    ]}
-                    isAnimationActive={false}
-                    radius="60%"
-                />
-                <Table
-                    tableHeaders={PIE_HEADER}
-                    tableData={PieData}
-                    headerClass="text-[17px] font-medium bg-[#F5F5F5] "
-                    tableClass="w-[50%] ml-[15rem] text-sm text-left table-fixed"
-                    cellPadding={20}
-                    tableRow="text-[17px] font-normal "
-                />
+            <div className=" h-[56rem] overflow-y-scroll no-scrollbar whitespace-nowrap absolute">
+                <div
+                    id="screenshot"
+                    className="flex absolute justify-center items-center flex-col z-[-10]"
+                >
+                    <BarGraph
+                        data={[
+                            { name: 1, rating: 10 },
+                            { name: 2, rating: 30 },
+                            { name: 3, rating: 20 },
+                            { name: 4, rating: 40 },
+                            { name: 5, rating: 10 },
+                        ]}
+                        width={400}
+                        height={200}
+                        strokeWidthAxis={2}
+                        strokeWidthLabelList={0}
+                        className="font-medium my-2"
+                        XleftPadding={20}
+                        XrightPadding={30}
+                        xLabel=""
+                        yLabel=""
+                        xvalue=""
+                        yvalue=""
+                        barDatakey={"rating"}
+                        labelListDatakey={"name"}
+                        isAnimationActive={false}
+                    />
+                    <Table
+                        tableHeaders={TIME_HEADERS}
+                        tableData={timeData}
+                        headerClass="text-[17px] font-medium bg-[#F5F5F5] "
+                        tableClass="w-[90%] ml-12 text-sm text-left table-fixed"
+                        cellPadding={20}
+                        tableRow="text-[17px]"
+                    />
+                </div>
+                <div
+                    id="pie"
+                    className="flex absolute justify-center items-center flex-col z-[-10]"
+                >
+                    <PieGraph
+                        data={[
+                            { name: "Data modelling", value: 400 },
+                            { name: "Publications", value: 300 },
+                            { name: "Planning", value: 200 },
+                        ]}
+                        isAnimationActive={false}
+                        radius="60%"
+                    />
+                    <Table
+                        tableHeaders={PIE_HEADER}
+                        tableData={PieData}
+                        headerClass="text-[17px] font-medium bg-[#F5F5F5] "
+                        tableClass="w-[90%] ml-12 text-sm text-left table-fixed"
+                        cellPadding={20}
+                        tableRow="text-[17px]"
+                    />
+                </div>
             </div>
             <Tab.Group>
                 <Tab.List>

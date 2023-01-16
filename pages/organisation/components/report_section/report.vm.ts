@@ -68,8 +68,8 @@ const formatDate = (date: Date) =>
 
 const getReportDate = (fromDate: Date, toDate: Date) => {
     return format(fromDate, "dd-MM-yyyy") === format(toDate, "dd-MM-yyyy")
-        ? `<strong>${formatDate(fromDate)}</strong><br/>`
-        : `<strong>${formatDate(fromDate)}</strong> - <strong>${formatDate(
+        ? `<strong>\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t${formatDate(fromDate)}</strong><br/>`
+        : `<strong>\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t${formatDate(fromDate)}</strong> - <strong>${formatDate(
               toDate
           )}</strong><br/>`;
 };
@@ -153,6 +153,7 @@ const ReportVM = () => {
 
         const data = `
                 <figure style='width: 200px;margin-left: auto;margin-right: auto;'><img src='${imgUrl}' /></figure>
+                .<br/>
                 ${getReportDate(fromDate, toDate)}
                 ${headerSelected(
                     selectedHeaders,

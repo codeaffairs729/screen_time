@@ -43,7 +43,7 @@ const ListsSection = () => {
                         >
                             <TabHeader>Favorites</TabHeader>
 
-                            {bookmark_lists.map((list: any, idx: any) => (
+                            {bookmark_lists?.map((list: any, idx: any) => (
                                 <TabHeader key={idx}>{list.listName}</TabHeader>
                             ))}
                         </div>
@@ -59,7 +59,7 @@ const ListsSection = () => {
                         <TabPanel className="bg-white">
                             <FavouritesSection />
                         </TabPanel>
-                        {bookmark_lists.map((list: any, idx: any) => (
+                        {bookmark_lists?.map((list: any, idx: any) => (
                             <TabPanel key={idx} className="bg-white">
                                 <BookmarksSection list={list} />
                             </TabPanel>
