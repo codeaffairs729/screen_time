@@ -1,4 +1,3 @@
-import { useState } from "react";
 import Head from "./head";
 import Preview from "./preview";
 import dynamic from "next/dynamic";
@@ -6,40 +5,36 @@ import PieGraph from "components/UI/PieGraph";
 import BarGraph from "components/UI/BarGraph";
 import Table from "../../table";
 import { Tab } from "@headlessui/react";
+import { useContext } from "react";
+import { DownloadByTime, OrganisationDetailVMContext } from "pages/organisation/organisation_detail.vm";
 
 const EditReport = dynamic(() => import("./editReport"), {
     ssr: false,
 });
-const TIME_HEADERS = ["Count", "Download", "Month"];
-const TIME = [
-    { month: "Jan", download_per_month: 265 },
-    { month: "Feb", download_per_month: 475 },
-    { month: "Mar", download_per_month: 190 },
-    { month: "Apr", download_per_month: 465 },
-    { month: "May", download_per_month: 565 },
-    { month: "Jun", download_per_month: 465 },
-    { month: "Jul", download_per_month: 85 },
-    { month: "Aug", download_per_month: 195 },
-    { month: "Sep", download_per_month: 1225 },
-    { month: "Oct", download_per_month: 165 },
-    { month: "Nov", download_per_month: 365 },
-    { month: "Des", download_per_month: 265 },
-];
-const timeData = TIME.map((data, index) => [
-    index,
-    [data.download_per_month],
-    [data.month + " " + "2022"],
-]);
+const TIME_HEADERS = ["Count", "Month"];
 const PIE_HEADER = ["name", "value"];
-const PIEDATA = [
-    { name: "Data modelling", value: 400 },
-    { name: "Publications", value: 300 },
-    { name: "Planning", value: 200 },
-    { name: "gov", value: 500 },
-    { name: "Plan", value: 300 },
-];
-const PieData = PIEDATA.map((data, index) => [[data.name], [data.value]]);
+
 const Report = () => {
+    const { downloadMetrics } = useContext(OrganisationDetailVMContext);
+
+    const { downloadByTime = [], downloadByUseCase = []  } = downloadMetrics || {};
+    const timeMetrics = downloadByTime.map((data: DownloadByTime) => ({
+        month: new Date(data?.date).toLocaleString("en", {
+            month: "short",
+        }),
+        download_per_month: data.count,
+    }));
+    const downloadByTimeData = downloadByTime.map((data: DownloadByTime) => {
+        const date = new Date(data?.date);
+        const month = date.toLocaleString("en", { month: "short" });
+        const year = new Date().getFullYear();
+
+        return [[data.count], [`${month} ${year}`]];
+    });
+    const pieData = downloadByUseCase.map((data: any, index: number) => [
+        data.name,
+        data.value,
+    ]);
     return (
         <div>
             <div className=" h-[56rem] overflow-y-scroll no-scrollbar whitespace-nowrap absolute">
@@ -48,13 +43,7 @@ const Report = () => {
                     className="flex absolute justify-center items-center flex-col z-[-10]"
                 >
                     <BarGraph
-                        data={[
-                            { name: 1, rating: 10 },
-                            { name: 2, rating: 30 },
-                            { name: 3, rating: 20 },
-                            { name: 4, rating: 40 },
-                            { name: 5, rating: 10 },
-                        ]}
+                        data={timeMetrics}
                         width={400}
                         height={200}
                         strokeWidthAxis={2}
@@ -62,17 +51,13 @@ const Report = () => {
                         className="font-medium my-2"
                         XleftPadding={20}
                         XrightPadding={30}
-                        xLabel=""
-                        yLabel=""
-                        xvalue=""
-                        yvalue=""
-                        barDatakey={"rating"}
-                        labelListDatakey={"name"}
+                        barDatakey={"download_per_month"}
+                        labelListPosition="insideTop"
                         isAnimationActive={false}
                     />
                     <Table
                         tableHeaders={TIME_HEADERS}
-                        tableData={timeData}
+                        tableData={downloadByTimeData}
                         headerClass="text-[17px] font-medium bg-[#F5F5F5] "
                         tableClass="w-[90%] ml-12 text-sm text-left table-fixed"
                         cellPadding={20}
@@ -84,19 +69,15 @@ const Report = () => {
                     className="flex absolute justify-center items-center flex-col z-[-10]"
                 >
                     <PieGraph
-                        data={[
-                            { name: "Data modelling", value: 400 },
-                            { name: "Publications", value: 300 },
-                            { name: "Planning", value: 200 },
-                        ]}
+                        data={downloadByUseCase}
                         isAnimationActive={false}
                         radius="60%"
                     />
                     <Table
                         tableHeaders={PIE_HEADER}
-                        tableData={PieData}
+                        tableData={pieData}
                         headerClass="text-[17px] font-medium bg-[#F5F5F5] "
-                        tableClass="w-[90%] ml-12 text-sm text-left table-fixed"
+                        tableClass="w-[80%] ml-20 text-left table-fixed"
                         cellPadding={20}
                         tableRow="text-[17px]"
                     />
