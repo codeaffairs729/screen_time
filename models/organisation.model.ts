@@ -55,7 +55,7 @@ class Organisation {
             title: json["title"],
             description: json["description"],
             dataQuality: 3, // Need to know where to fetch this.
-            buttonTags: ["open"], // Need to know where to fetch this.
+            buttonTags: json["license_types"], // Need to know where to fetch this.
             domains: domains,
             topics: topics,
             isFavourited: json["is_favourited"],

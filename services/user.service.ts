@@ -23,7 +23,7 @@ class UserService {
                 itemID: item.item_id,
                 listID: item.list_id,
                 datasetID: item.dataset_id,
-                organisationID: item.data_provider_id,
+                organisationID: item.provider_id,
             };
         });
 
@@ -63,8 +63,8 @@ class UserService {
             .map((item: any) => item.dataset_id);
 
         const all_organisation_ids = bookmarkListsItems.list_items
-            .filter((item: any) => item.data_provider_id)
-            .map((item: any) => item.data_provider_id);
+            .filter((item: any) => item.provider_id)
+            .map((item: any) => item.provider_id);
 
         const dataset_ids = Array.from(new Set(all_dataset_ids));
         const organisation_ids = Array.from(new Set(all_organisation_ids));
@@ -74,24 +74,7 @@ class UserService {
         // let item_req_param = "li=193&li=194";
 
         let datasets: Dataset[] = [];
-        let organisations: any = [
-            // {
-            //     id: 1,
-            //     title: "Public Health Scotland",
-            //     description:
-            //         "Featured Public Health Scotland Metadata Quality Open Commercial The Scottish Health and Social Care open data platform gives access to statistics and ference data for information and re-use. This platform is managed by Public Health Scotland",
-            //     dataQuality: 2,
-            //     buttonTags: ["open"],
-            //     topics: ["health"],
-            //     domains: ["test"],
-            //     stats: {
-            //         datasetsCount: 1,
-            //         favoritesCount: 2,
-            //         viewCount: 4,
-            //         downloadCount: 1,
-            //     },
-            // },
-        ];
+        let organisations: any = [];
 
         if (dataset_ids.length > 0) {
             let item_req_param = "";

@@ -102,35 +102,18 @@ OrganisationDetailPage.getInitialProps = async ({
         if (req?.headers.cookie) {
             authToken = getCookieFromServer(AUTH_TOKEN, req);
         }
-        // const datasetData = await Http.get(`/v4/datasets/${datasetId}`, {
-        //     baseUrl: process.env.NEXT_PUBLIC_PUBLIC_API_ROOT,
-        //     extraHeaders: authToken
-        //         ? { Authorization: `Bearer ${authToken}` }
-        //         : {},
-        // });
-        // const dataset = Dataset.fromJson(
-        //     datasetData[0]["user_search"][0]["results"][0]
-        // );
-        const organisation = Organisation.fromJson(ORGANISATION_DETAIL);
+        const res = await Http.get(`/v1/data_sources/provider/${orgId}`, {
+            extraHeaders: authToken
+                ? { Authorization: `Bearer ${authToken}` }
+                : {},
+        });
+
+        const organisation = Organisation.fromJson(res);
+
         return { organisation };
     } catch (error) {
         return { organisation: undefined };
     }
-};
-
-const ORGANISATION_DETAIL = {
-    id: 1,
-    title: "NatureScot Data Services",
-    description:
-        "NatureScot collects data and information on many aspects of Scotland’s environment. Their online data services let people access this knowledge easily.",
-    dataQuality: 3,
-    imgUrl: "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg",
-    domains: ["Health and care"],
-    topics: ["Diseases"],
-    dataset_count: 856,
-    favorites_count: 123,
-    view_count: 253,
-    download_count: 435,
 };
 
 export default OrganisationDetailPage;

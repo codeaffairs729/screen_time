@@ -1,6 +1,11 @@
+import Http from "common/http";
 import { Data } from "components/UI/result_card";
 import { DateTime } from "luxon";
+import Organisation from "models/organisation.model";
+import { useRouter } from "next/router";
 import { createContext, useContext, useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import useSWR from "swr";
 export type Filter = {
     domains?: string[];
     topics?: string[];
@@ -17,99 +22,59 @@ export type Filter = {
     end_date?: string[];
 };
 
-const DATASET = {
-    title: "Public Health Scotland",
-    description:
-        "Featured Public Health Scotland Metadata Quality Open Commercial The Scottish Health and Social Care open data platform gives access to statistics and ference data for information and re-use. This platform is managed by Public Health Scotland",
-    dataQuality: 2,
-    licenseTypes: ["open"],
-    topics: ["health"],
-    domains: ["test"],
-    stats: {
-        datasetsCount: 1,
-        favoritesCount: 2,
-        viewCount: 4,
-        downloadCount: 1,
-    },
-};
-
-const TOTAL_RECORDS = 200;
 const OrganizationSearchVM = () => {
-    let organisations: any = Array(TOTAL_RECORDS)
-        .fill(1)
-        .map((x, y) => x + y)
-        .map((index) => ({
-            id: index,
-            ...DATASET,
-        }));
-    const len = organisations.length;
+    const router = useRouter();
+    const {
+        query: { q },
+    } = router;
+
     const [pageSize, setPageSize] = useState(20); // number of table in page
     const [currentPageNo, setCurrentPageNo] = useState<number>(1);
-    const [totalPages, setTotalPages] = useState<number>(2); // pagination total pages
+    const [totalPages, setTotalPages] = useState<number>(10); // pagination total pages
     const [activeFilter, setActiveFilter] = useState<Filter>({
         sort_by: ["relevance"],
     });
+    const [organisations, setOrganisations] = useState<Organisation[]>([]);
+    const [totalRecords, setTotalRecords] = useState<number>(0);
+
+    const { data, error }: any = useSWR(
+        q
+            ? `/v1/data_sources/?search_query=${q}&page_size=${pageSize}&page_num=${currentPageNo}`
+            : null,
+        (url: string) => {
+            Http.get(url)
+                .then((res: any) => {
+                    const { data_providers = [], total_records = 0 } =
+                        res || {};
+
+                    setTotalRecords(total_records);
+                    setOrganisations(Organisation.fromJsonList(data_providers));
+
+                    return Organisation.fromJsonList(data_providers);
+                })
+                .catch((e: any) => {
+                    toast.error(
+                        "Something went wrong while fetching search results"
+                    );
+                }),
+                { revalidateOnFocus: false };
+        }
+    );
 
     useEffect(() => {
-        setTotalPages(Math.ceil(len / pageSize));
-    }, [pageSize]);
-    const lastindex = currentPageNo * pageSize;
-    const firstindex = lastindex - pageSize;
+        const len = organisations?.length || 0;
 
-    organisations = organisations.slice(firstindex, lastindex);
-    // const [organisationSearchData , setOrganisationSearchData] = useState<Organisation[]>()
-    // const { data , error } = useSWR(
-    //     q
-    //         ? `/v4/datasets/organisation/?search_query=${q}&page_size=${pageSize}&page_num=${currentPageNo}${queryParams}`
-    //         : null,
-    //     (url: string) => {
-    //         Http.get(url, {
-    //             baseUrl: `${process.env.NEXT_PUBLIC_PUBLIC_API_ROOT}`,
-    //         })
-    //             .catch((e) => {
-    //                 setLoading(false);
-    //                 toast.error(
-    //                     "Something went wrong while fetching search results"
-    //                 );
-    //                 throw e;
-    //             })
-    //             .finally(() => {
-    //                 let datasets = Array(20)
-    //                     .fill(1)
-    //                     .map((x, y) => x + y)
-    //                     .map((index) => ({
-    //                         id: index,
-    //                         ...DATASET,
-    //                     }));
-    //                 const totalRecords = datasets.length;
-    //                 setTotalPages(
-    //                     totalRecords
-    //                         ? Math.ceil(totalRecords / pageSize)
-    //                         : totalRecords
-    //                 );
-    //                 let organisationSearchData =
-    //                     Organisation.fromJsonList(datasets);
-    //                 const lastindex = currentPageNo * pageSize;
-    //                 const firstindex = lastindex - pageSize;
-    //                 organisationSearchData = organisationSearchData.slice(
-    //                     firstindex,
-    //                     lastindex
-    //                 );
-    //                 console.log("SWR is working", organisationSearchData);
-    //                 setOrganisationSearchData(organisationSearchData)
-    //                 return organisationSearchData;
-    //             });
-    //     }
-    // );
-    // console.log("organisationSearchData outside :", organisationSearchData);
+        setTotalPages(pageSize ? Math.ceil(len / pageSize) : 0);
+    }, [pageSize]);
+
     return {
         currentPageNo,
         setCurrentPageNo,
         totalPages,
-        organisations,
+        organisations: organisations || [],
         setPageSize,
         pageSize,
-        totalRecords: TOTAL_RECORDS,
+        totalRecords,
     };
 };
 
