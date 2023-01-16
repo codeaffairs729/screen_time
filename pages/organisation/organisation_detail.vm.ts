@@ -365,7 +365,7 @@ const jsonToQualityMetrics = (json: any): any => ({
 const getQualityScore = (data: any, title: string) => ({
     title: title,
     rating: data.rating,
-    datatsets: data.datasets.map((data: any) => getQualityDatasets(data)),
+    datasets: data.datasets.map((data: any) => getQualityDatasets(data)),
 });
 
 const getQualityDatasets = (dataset: any) => ({

@@ -61,7 +61,7 @@ const QualityInsightsBody = () => {
                         <div className="px-8">
                             <Table
                                 tableHeaders={TABLE_HEADERS}
-                                tableData={getTableData(items[key].datatsets)}
+                                tableData={getTableData(items[key].datasets)}
                                 cellPadding={3}
                             />
                         </div>
