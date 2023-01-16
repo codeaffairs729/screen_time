@@ -55,7 +55,7 @@ const QualityInsightsBody = () => {
                             ratings={items[key].rating}
                         />
                     }
-                    key={index}
+                    key={selectedLabel+key}
                 >
                     <div>
                         <div className="px-8">

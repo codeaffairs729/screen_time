@@ -1,14 +1,6 @@
-import BarGraph from "components/UI/BarGraph";
-// import CalendarSelect from "components/UI/calendar_select";
-import { LatLngExpression } from "leaflet";
-import dynamic from "next/dynamic";
-import { useContext, useEffect, useMemo, useState } from "react";
+import { useContext, useEffect} from "react";
 import Loader from "components/UI/loader";
-import {
-    DownloadByTime,
-    OrganisationDetailVMContext,
-} from "pages/organisation/organisation_detail.vm";
-import { getAge } from "pages/workspace/notification.vm";
+import { OrganisationDetailVMContext } from "pages/organisation/organisation_detail.vm";
 import ByRegion from "./byRegion";
 import ByTime from "./byTime";
 import ByUsecase from "./byUsecase";

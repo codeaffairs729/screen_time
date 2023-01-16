@@ -8,6 +8,7 @@ import { ReactNode, useContext, useEffect, useState } from "react";
 import { OrganisationDetailVMContext } from "../organisation_detail.vm";
 import Loader from "components/UI/loader";
 import Link from "next/link";
+import AllDatasets from "./all_datasets";
 
 const DisplayDataset = ({
     id,
@@ -33,18 +34,16 @@ const DisplayDataset = ({
 const Datasets = () => {
     const {
         isLoading,
-        organisationDatasets,
         organisationRankedDatasets,
-        incrementOrgDatasetsCount,
-        fetchOrganisationDatasets,
         fetchOrganisationRankedDatasets,
     } = useContext(OrganisationDetailVMContext);
 
     useEffect(() => {
         fetchOrganisationRankedDatasets();
-        fetchOrganisationDatasets();
     }, []);
-    const [inc, setInc] = useState(true)
+
+    const [inc, setInc] = useState(true);
+
     if (isLoading && inc) {
         setInc(false);
         return (
@@ -53,25 +52,18 @@ const Datasets = () => {
             </div>
         );
     }
+
     const organisationDatasetTable = {
-        ...organisationDatasets,
         ...organisationRankedDatasets,
     };
 
-    const importOrgDatasets = (e: any) => {
-        const bottom =
-            e.target.scrollHeight - e.target.scrollTop ===
-            e.target.clientHeight;
-        if (bottom) {
-            incrementOrgDatasetsCount();
-        }
-    };
     return (
         <div className="ml-16">
             <div className="text-sm text-dtech-dark-grey">
                 All the datasets of this organisation are listed here.
             </div>
             <div>
+                <AllDatasets />
                 {Object.keys(organisationDatasetTable).map(
                     (key: string, index: number) => {
                         return (
@@ -81,7 +73,7 @@ const Datasets = () => {
                             >
                                 <div className="px-8 pb-4">
                                     <Table
-                                        onScrollEnd={importOrgDatasets}
+                                        // onScrollEnd={importOrgDatasets}
                                         tableHeaders={
                                             key == "all_datasets"
                                                 ? ["Dataset"]

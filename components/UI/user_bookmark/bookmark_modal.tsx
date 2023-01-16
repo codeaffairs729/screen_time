@@ -50,7 +50,7 @@ export default function BookmarkModal({
                                 {/*body*/}
                                 <div className="flex flex-col h-36 m-3 px-5 justify-start text-left overflow-y-auto">
                                     <ul>
-                                        {bookmark_lists.length == 0 ? (
+                                        {bookmark_lists?.length == 0 ? (
                                             <>
                                                 <p>
                                                     You currently do not have
@@ -59,7 +59,7 @@ export default function BookmarkModal({
                                                 <p>Please create one.</p>
                                             </>
                                         ) : (
-                                            bookmark_lists.map((list: any) => (
+                                            bookmark_lists?.map((list: any) => (
                                                 <ModelList
                                                     key={list.listID}
                                                     bookmark_items={
