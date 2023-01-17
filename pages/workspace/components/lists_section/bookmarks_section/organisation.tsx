@@ -9,14 +9,14 @@ const OrganisationBookmarksSection = ({ orgIDS }: { orgIDS: any }) => {
     );
 
     const organisations = bookmarkItemsData?.organisations?.filter(
-        (organisation: any) => orgIDS.includes(organisation.id)
+        (organisation: any) => orgIDS.includes(organisation.uuid)
     );
 
     return (
         <div>
             {organisations.map((organisation: any) => (
                 <ResultCard
-                    key={organisation.id}
+                    key={organisation.uuid}
                     data={{
                         ...organisation,
                         recordType: "organisation",

@@ -2,7 +2,7 @@ import { DateTime } from "luxon";
 
 class Organisation {
     constructor({
-        id,
+        uuid,
         title,
         imgUrl,
         description,
@@ -14,7 +14,7 @@ class Organisation {
         isFavourited,
         lastUpdate,
     }: OrganisationDetail) {
-        this.id = id;
+        this.uuid = uuid;
         this.title = title;
         this.imgUrl = imgUrl;
         this.description = description;
@@ -26,7 +26,7 @@ class Organisation {
         this.isFavourited = isFavourited;
         this.lastUpdate = lastUpdate;
     }
-    id: number;
+    uuid: number;
     title: string;
     imgUrl: string;
     description: string;
@@ -50,8 +50,8 @@ class Organisation {
                 : json["topics"];
 
         return new Organisation({
-            id: Number(json["id"]),
-            imgUrl: json["imgUrl"],
+            uuid: Number(json["uuid"]),
+            imgUrl: json["logo_url"],
             title: json["title"],
             description: json["description"],
             dataQuality: 3, // Need to know where to fetch this.
@@ -76,7 +76,7 @@ class Organisation {
 }
 
 export type OrganisationDetail = {
-    id: number;
+    uuid: number;
     title: string;
     imgUrl: string;
     description: string;

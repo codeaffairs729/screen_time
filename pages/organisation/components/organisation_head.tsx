@@ -4,7 +4,6 @@ import DatasetStat from "components/UI/result_card/data_stat";
 import { useContext } from "react";
 import { OrganisationDetailVMContext } from "../organisation_detail.vm";
 import { organisationToResultCardData } from "pages/search/components/organization/organisation.vm";
-import { format } from "date-fns";
 import { DateTime } from "luxon";
 
 const OrganisationHead = () => {
@@ -46,7 +45,7 @@ const OrganisationHead = () => {
                 <ResultCardAction
                     data={cardActionData}
                     setData={setOrganisation}
-                    href={`/organisations/${organisation?.id}`}
+                    href={`/organisations/${organisation?.uuid}`}
                 />
             </div>
             <div className="my-4">

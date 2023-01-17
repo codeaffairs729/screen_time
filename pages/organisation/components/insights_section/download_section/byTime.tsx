@@ -11,19 +11,17 @@ const TIME_HEADERS = ["Count", "Month"];
 const barDataKey = "download_per_month";
 
 const ByTime = () => {
-    const [fromDate, setFromDate] = useState(new Date());
-    const [toDate, setToDate] = useState(new Date());
+    const { downloadMetrics, fromDate, toDate, setFromDate, setToDate } =
+        useContext(OrganisationDetailVMContext);
 
-    const { downloadMetrics } = useContext(OrganisationDetailVMContext);
+        const { downloadByTime = [] } = downloadMetrics || {};
 
-    const { downloadByTime = [] } = downloadMetrics || {};
+        const downloadByTimeData = downloadByTime.map((data: DownloadByTime) => {
+            const date = new Date(data?.date);
+            const month = date.toLocaleString("en", { month: "short" });
+            const year = new Date().getFullYear();
 
-    const downloadByTimeData = downloadByTime.map((data: DownloadByTime) => {
-        const date = new Date(data?.date);
-        const month = date.toLocaleString("en", { month: "short" });
-        const year = new Date().getFullYear();
-
-        return [[data.count], [`${month} ${year}`]];
+            return [[data.count], [`${month} ${year}`]];
     });
 
     const timeMetrics = downloadByTime.map((data: DownloadByTime) => ({

@@ -10,6 +10,7 @@ import {
     useEffect,
 } from "react";
 import toast from "react-hot-toast";
+import { format } from "date-fns";
 
 export enum insightTabIndex {
     dataset_quality,
@@ -83,6 +84,10 @@ const OrganisationDetailVM = (
     const [selectedSearchTerm, setSelectedSearchTerm] = useState<number>(10);
     const [selectedDownload, setSelectedDownload] = useState<number>(0);
     const [orgDatasetsCount, setOrgDatasetsCount] = useState(10);
+    const [fromDate, setFromDate] = useState(new Date());
+    const [toDate, setToDate] = useState(new Date());
+    const [downloadMetrics, setDownloadMetrics] = useState<any>();
+
     const {
         execute: excuteFetchOrganisationRankedDatasets,
         data: organisationRankedDatasets,
@@ -99,6 +104,9 @@ const OrganisationDetailVM = (
         }
     }, [orgDatasetsCount]);
 
+    useEffect(() => {
+        fetchDownloadMetricsByTime();
+    }, [fromDate, toDate]);
     const incrementOrgDatasetsCount = () =>
         setOrgDatasetsCount(orgDatasetsCount + 10);
 
@@ -106,7 +114,7 @@ const OrganisationDetailVM = (
         excuteFetchOrganisationRankedDatasets(
             () => {
                 return Http.get(
-                    `/v1/data_sources/${organisation?.id}/provider_ranked_datasets`
+                    `/v1/data_sources/${organisation?.uuid}/provider_ranked_datasets`
                 );
             },
             {
@@ -131,7 +139,7 @@ const OrganisationDetailVM = (
         excuteFetchOrganisationDatasets(
             () => {
                 return Http.get(
-                    `/v1/data_sources/${organisation?.id}/${orgDatasetsCount}/provider_datasets`
+                    `/v1/data_sources/${organisation?.uuid}/${orgDatasetsCount}/provider_datasets`
                 );
             },
             {
@@ -156,7 +164,7 @@ const OrganisationDetailVM = (
         excuteFetchQualityMetrics(
             () => {
                 return Http.get(
-                    `/v1/data_sources/${organisation?.id}/quality_metrics`
+                    `/v1/data_sources/${organisation?.uuid}/quality_metrics`
                 );
             },
             {
@@ -181,7 +189,7 @@ const OrganisationDetailVM = (
         excuteFetchSearchTerms(
             () => {
                 return Http.get(
-                    `/v1/data_sources/${organisation?.id}/${selectedSearchTerm}/search_terms`
+                    `/v1/data_sources/${organisation?.uuid}/${selectedSearchTerm}/search_terms`
                 );
             },
             {
@@ -198,7 +206,7 @@ const OrganisationDetailVM = (
 
     const {
         execute: excuteFetchDownloadMetrics,
-        data: downloadMetrics,
+        // data: downloadMetrics,
         isLoading: isFetchingDownloadMetrics,
     } = useHttpCall<{ [key: string]: any }>({});
 
@@ -206,11 +214,46 @@ const OrganisationDetailVM = (
         excuteFetchDownloadMetrics(
             () =>
                 Http.get(
-                    `/v1/data_sources/${organisation?.id}/download_metrics`
+                    `/v1/data_sources/${organisation?.uuid}/download_metrics`
                 ),
             {
                 postProcess: (res) => {
-                    return jsonToOrgDownloadMetrics(res);
+                    setDownloadMetrics(jsonToOrgDownloadMetrics(res));
+                    return [];
+                },
+                onError: (e) => {
+                    toast.error(
+                        "Something went wrong while fetching organisation download metrics."
+                    );
+                },
+            }
+        );
+
+    const {
+        execute: executeFetchDownloadMetricByTime,
+        // data: downloadMetricsByTime,
+        isLoading: isFetchDownloadMetricByTime,
+    } = useHttpCall<{ [key: string]: any }>({});
+
+    const fetchDownloadMetricsByTime = () =>
+        executeFetchDownloadMetricByTime(
+            () =>
+                Http.get(
+                    `/v1/data_sources/&from=${format(
+                        fromDate,
+                        "dd-MM-yyyy"
+                    )}&to=${format(
+                        toDate,
+                        "dd-MM-yyyy"
+                    )}/download_metrics_by_time`
+                ),
+            {
+                postProcess: (res: any) => {
+                    setDownloadMetrics({
+                        ...downloadMetrics,
+                        downloadByTime: jsonToOrgDownloadMetricByTime(res),
+                    });
+                    return [];
                 },
                 onError: (e) => {
                     toast.error(
@@ -238,6 +281,13 @@ const OrganisationDetailVM = (
         searchTerms,
         downloadMetrics,
         isLoading,
+        fromDate,
+        toDate,
+        isFetchingOrganisationDatasets,
+        isFetchingOrganisationRankedDatasets,
+        isFetchingQualityMetrics,
+        isFetchingSearchTerms,
+        isFetchingDownloadMetrics,
         setOrganisation,
         fetchOrganisationDatasets,
         incrementOrgDatasetsCount,
@@ -248,6 +298,8 @@ const OrganisationDetailVM = (
         setSelectedQualityInsights,
         setSelectedSearchTerm,
         setSelectedDownload,
+        setFromDate,
+        setToDate,
     };
 };
 
@@ -274,6 +326,15 @@ export interface IOrganisationDetailVMContext {
     setSelectedSearchTerm: Function;
     setSelectedDownload: Function;
     setOrganisation: Dispatch<SetStateAction<Organisation | undefined>>;
+    fromDate: Date;
+    toDate: Date;
+    setFromDate: Function;
+    setToDate: Function;
+    isFetchingOrganisationDatasets: boolean;
+    isFetchingOrganisationRankedDatasets: boolean;
+    isFetchingQualityMetrics: boolean;
+    isFetchingSearchTerms: boolean;
+    isFetchingDownloadMetrics: boolean;
 }
 
 export const OrganisationDetailVMContext =
@@ -286,7 +347,7 @@ const jsonToOrgDatasets = (json: any) => {
     Object.keys(json)?.forEach((key: string) => {
         orgDatasets[key] = json[key].map((dataset: any) => {
             const data: any = {
-                id: dataset["id"],
+                uuid: dataset["uuid"],
                 title: dataset["title"],
                 description: dataset["description"],
             };
@@ -369,7 +430,7 @@ const getQualityScore = (data: any, title: string) => ({
 });
 
 const getQualityDatasets = (dataset: any) => ({
-    id: dataset["id"],
+    uuid: dataset["uuid"],
     title: dataset["title"],
     description: dataset["description"],
     rating: dataset["rating"],
@@ -394,3 +455,9 @@ const jsonToOrgDownloadMetrics = (json: any): DownloadMetrics => ({
         value: useCase["value"],
     })),
 });
+
+const jsonToOrgDownloadMetricByTime = (json: any): any =>
+    json["download_by_time"]?.map((data: any) => ({
+        date: data["date"],
+        count: data["count"],
+    }));
