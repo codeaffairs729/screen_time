@@ -101,6 +101,7 @@ export const organisationToResultCardData = (organisations: any): Data[] => {
 
     return organisations?.map((organisation: any) => ({
         ...organisation,
+        id: organisation?.uuid,
         recordType: "organisation",
     }));
 };

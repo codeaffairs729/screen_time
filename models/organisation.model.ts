@@ -2,6 +2,7 @@ import { DateTime } from "luxon";
 
 class Organisation {
     constructor({
+        id,
         uuid,
         title,
         imgUrl,
@@ -14,6 +15,7 @@ class Organisation {
         isFavourited,
         lastUpdate,
     }: OrganisationDetail) {
+        this.id = id;
         this.uuid = uuid;
         this.title = title;
         this.imgUrl = imgUrl;
@@ -26,7 +28,8 @@ class Organisation {
         this.isFavourited = isFavourited;
         this.lastUpdate = lastUpdate;
     }
-    uuid: number;
+    id: number;
+    uuid: string;
     title: string;
     imgUrl: string;
     description: string;
@@ -50,7 +53,8 @@ class Organisation {
                 : json["topics"];
 
         return new Organisation({
-            uuid: Number(json["uuid"]),
+            id: Number(json["uuid"]),
+            uuid: json["uuid"],
             imgUrl: json["logo_url"],
             title: json["title"],
             description: json["description"],
@@ -76,7 +80,8 @@ class Organisation {
 }
 
 export type OrganisationDetail = {
-    uuid: number;
+    id: number;
+    uuid: string;
     title: string;
     imgUrl: string;
     description: string;
