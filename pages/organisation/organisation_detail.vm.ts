@@ -237,16 +237,18 @@ const OrganisationDetailVM = (
 
     const fetchDownloadMetricsByTime = () =>
         executeFetchDownloadMetricByTime(
-            () =>
-                Http.get(
-                    `/v1/data_sources/&from=${format(
-                        fromDate,
-                        "dd-MM-yyyy"
-                    )}&to=${format(
-                        toDate,
-                        "dd-MM-yyyy"
-                    )}/download_metrics_by_time`
-                ),
+            () => {
+
+                // return Http.get(
+                //     `/v1/data_sources/&from=${format(
+                //         fromDate,
+                //         "dd-MM-yyyy"
+                //     )}&to=${format(
+                //         toDate,
+                //         "dd-MM-yyyy"
+                //     )}/download_metrics_by_time`
+                // )
+            },
             {
                 postProcess: (res: any) => {
                     setDownloadMetrics({
