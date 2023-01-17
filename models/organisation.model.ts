@@ -65,7 +65,7 @@ class Organisation {
                 viewCount: json["view_count"],
                 downloadCount: json["download_count"],
             },
-            lastUpdate: DateTime.fromISO(new Date("12-25-2022").toISOString()),
+            lastUpdate: json["updated_at"],
         });
     }
 

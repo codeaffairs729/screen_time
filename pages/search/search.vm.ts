@@ -97,9 +97,8 @@ const SearchVM = () => {
         option: SingleValue<SearchOption>
     ) => {
         if (!option) return;
-        const searchType = ""; // type === "dataset" ? "" : type;
-        // TODO After making the organisation page dynamic
-        // Update the above code to show organisation page when selected from search bar
+        const searchType = type === "dataset" ? "" : type;
+
         dispatch(updateCache("last-search-query", option.value));
         setCurrentPageNo(1);
         router.push({
@@ -337,7 +336,7 @@ export const datasetToResultCardData = (
         return [];
     }
 
-    return datasets?.map((dataset) => ({ 
+    return datasets?.map((dataset) => ({
         id: dataset.id,
         title: dataset.detail.name,
         recordType: "datasets",
