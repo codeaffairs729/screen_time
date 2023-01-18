@@ -3,7 +3,7 @@ import { VscTriangleDown } from "react-icons/vsc";
 import "react-datepicker/dist/react-datepicker.css";
 import { format } from "date-fns";
 import Calander from "./calander";
-
+import toast from "react-hot-toast";
 const CalendarSelect = ({
     label = "Select",
     fromDate,
@@ -42,19 +42,26 @@ const CalendarSelect = ({
     };
     useEffect(() => {
         if (label == "From") {
-            if (startDate <= toDate) {
+            if (
+                format(startDate, "dd-MM-yyyy") <= format(toDate, "dd-MM-yyyy")
+            ) {
                 setFromDate(startDate);
             } else {
                 setFromDate(toDate);
+                toast.error("Please select correct From Date");
             }
         } else {
-            if (fromDate <= startDate) {
+            if (
+                format(fromDate, "dd-MM-yyyy") <=
+                format(startDate, "dd-MM-yyyy")
+            ) {
                 setToDate(startDate);
             } else {
                 setToDate(fromDate);
+                toast.error("Please select correct To Date");
             }
         }
-    }, [startDate, toDate]);
+    }, [startDate]);
     return (
         <div className="flex  pl-5" ref={myRef}>
             <div
