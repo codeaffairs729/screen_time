@@ -6,7 +6,7 @@ import UserService from "services/user.service";
 
 type Payload = {
     datasetID?: number;
-    organisationId?: number;
+    organisationUUID?: number;
 };
 
 const AddListItemVM = (user: User | null) => {
@@ -14,14 +14,14 @@ const AddListItemVM = (user: User | null) => {
     const { execute: executeAddListItem, isLoading: isAddingListItem } =
         useHttpCall();
     const addNewListItem = (listID: number, payload: Payload) => {
-        const { datasetID, organisationId } = payload;
+        const { datasetID, organisationUUID } = payload;
         executeAddListItem(
             () =>
                 Http.post(`/v1/user-bookmarks/listadditem`, {
                     user_id: user?.id,
                     list_id: listID,
                     dataset_id: datasetID,
-                    provider_id: organisationId,
+                    provider_uuid: organisationUUID,
                 }),
             {
                 onSuccess: (res) => {

@@ -1,23 +1,40 @@
 import LabelledRow from "components/dataset/labelled_row";
+import { useState } from "react";
 import { Data } from ".";
 
 const CardBody = ({ data }: { data: Data }) => {
     const { topics, domains, description } = data;
-
+    const [more, setMore] = useState(true);
     return (
         <div>
-            <p className="text-sm  text-gray-800 my-1.5">
-                {description.length > 300 ? (
-                    <span>
+            <div
+                className={`${
+                    more ? "max-h-16" : "max-h-[100vh] "
+                } overflow-hidden transition-all duration-1000 ease-in-out`}
+            >
+                <p className="text-sm  text-gray-800 my-1.5">
+                    {description.length > 300 ? (
                         <span>
-                            {description.replace(/^(.{200}[^\s]*).*/, "$1")}
+                            <span>
+                                {more
+                                    ? description.replace(
+                                          /^(.{200}[^\s]*).*/,
+                                          "$1"
+                                      )
+                                    : description}
+                                <span
+                                    onClick={() => setMore(!more)}
+                                    className=" cursor-pointer hover:text-black hover:font-bold"
+                                >
+                                    {more ? " ...more" : " ...less"}
+                                </span>
+                            </span>
                         </span>
-                        <span>...more</span>
-                    </span>
-                ) : (
-                    description
-                )}
-            </p>
+                    ) : (
+                        description
+                    )}
+                </p>
+            </div>
             <div className="flex my-1.5">
                 <LabelledRow
                     className="mr-10"
