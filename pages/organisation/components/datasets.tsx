@@ -33,25 +33,25 @@ const DisplayDataset = ({
 
 const Datasets = () => {
     const {
-        isLoading,
         organisationRankedDatasets,
         fetchOrganisationRankedDatasets,
+        isFetchingOrganisationRankedDatasets,
     } = useContext(OrganisationDetailVMContext);
 
     useEffect(() => {
         fetchOrganisationRankedDatasets();
     }, []);
 
-    const [inc, setInc] = useState(true);
+    // const [inc, setInc] = useState(true);
 
-    if (isLoading && inc) {
-        setInc(false);
-        return (
-            <div className="h-[calc(100vh-var(--nav-height))]  w-full flex items-center justify-center">
-                <Loader />
-            </div>
-        );
-    }
+    // if (isLoading && inc) {
+    //     setInc(false);
+    //     return (
+    //         <div className="h-[calc(100vh-var(--nav-height))]  w-full flex items-center justify-center">
+    //             <Loader />
+    //         </div>
+    //     );
+    // }
 
     const organisationDatasetTable = {
         ...organisationRankedDatasets,
@@ -72,24 +72,30 @@ const Datasets = () => {
                                 label={<ItemCard item={getItem(key)} />}
                             >
                                 <div className="px-8 pb-4">
-                                    <Table
-                                        // onScrollEnd={importOrgDatasets}
-                                        tableHeaders={
-                                            key == "all_datasets"
-                                                ? ["Dataset"]
-                                                : ["Count", "Dataset"]
-                                        }
-                                        tableData={getTableData(
-                                            key,
-                                            organisationDatasetTable[key]
-                                        )}
-                                        tableBodyClasses={
-                                            key == "all_datasets"
-                                                ? "block h-[220px] overflow-auto"
-                                                : ""
-                                        }
-                                        cellPadding={3}
-                                    />
+                                    {!isFetchingOrganisationRankedDatasets ? (
+                                        <Table
+                                            // onScrollEnd={importOrgDatasets}
+                                            tableHeaders={
+                                                key == "all_datasets"
+                                                    ? ["Dataset"]
+                                                    : ["Count", "Dataset"]
+                                            }
+                                            tableData={getTableData(
+                                                key,
+                                                organisationDatasetTable[key]
+                                            )}
+                                            tableBodyClasses={
+                                                key == "all_datasets"
+                                                    ? "block h-[220px] overflow-auto"
+                                                    : ""
+                                            }
+                                            cellPadding={3}
+                                        />
+                                    ) : (
+                                        <div className=" mx-80 my-36">
+                                            <Loader />
+                                        </div>
+                                    )}
                                 </div>
                             </Accordian>
                         );

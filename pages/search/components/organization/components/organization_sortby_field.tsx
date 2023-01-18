@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { Filter, SearchVMContext } from "pages/search/search.vm";
 import Dropdown from "components/UI/drop_down";
+import { OrganizationSearchVMContext } from "../organisation.vm";
 
 type Option = {
     value: string;
@@ -31,7 +32,7 @@ const OPTIONS = [
 ];
 
 const RecordsSortBy = () => {
-    const { setActiveFilter, activeFilter } = useContext(SearchVMContext);
+    const { setActiveFilter, activeFilter } = useContext(OrganizationSearchVMContext);
     const onChange = (value: string) =>
         setActiveFilter((state: Filter) => ({
             ...state,
@@ -55,7 +56,7 @@ const RecordsSortBy = () => {
         <div className="flex mr-2 ">
             <span className="text-sm font-medium mr-2 mt-2">Sort By: </span>
 
-            <div className="flex justify-center items-center  space-x-1 h-7 border border-dtech-main-dark rounded h-7 px-3 pr-1.5 mt-1">
+            <div className="flex justify-center items-center  space-x-1 h-7 border border-dtech-main-dark rounded px-3 pr-1.5 mt-1">
                 <Dropdown
                     label={`${activeOption ? activeOption.label : "Sort by"}`}
                     menuItems={options}

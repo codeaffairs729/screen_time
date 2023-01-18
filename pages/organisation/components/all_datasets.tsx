@@ -5,6 +5,7 @@ import dataset from "public/images/icons/dataset.svg";
 import { ReactNode, useContext, useEffect } from "react";
 import Link from "next/link";
 import { OrganisationDetailVMContext } from "../organisation_detail.vm";
+import Loader from "components/UI/loader";
 
 const DisplayDataset = ({
     id,
@@ -31,6 +32,7 @@ const AllDatasets = () => {
         organisationDatasets,
         incrementOrgDatasetsCount,
         fetchOrganisationDatasets,
+        isFetchingOrganisationDatasets,
     } = useContext(OrganisationDetailVMContext);
 
     useEffect(() => {
@@ -47,8 +49,9 @@ const AllDatasets = () => {
     };
     return (
         <Accordian label={<ItemCard item={getItem("all_datasets")} />}>
-            <div className="px-8 pb-4 h-[350px]">
-                {Object.keys(organisationDatasets).length !== 0 && (
+            <div className="px-8 pb-4 h-[350px] w-full">
+                {Object.keys(organisationDatasets).length !== 0 &&
+                !isFetchingOrganisationDatasets ? (
                     <Table
                         onScrollEnd={importOrgDatasets}
                         tableHeaders={["Dataset"]}
@@ -59,6 +62,10 @@ const AllDatasets = () => {
                         tableBodyClasses={"block h-[220px] overflow-auto"}
                         cellPadding={3}
                     />
+                ) : (
+                    <div className=" mx-80 my-36">
+                        <Loader />
+                    </div>
                 )}
             </div>
         </Accordian>

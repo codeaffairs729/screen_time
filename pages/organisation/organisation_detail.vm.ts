@@ -251,10 +251,10 @@ const OrganisationDetailVM = (
             },
             {
                 postProcess: (res: any) => {
-                    setDownloadMetrics({
-                        ...downloadMetrics,
-                        downloadByTime: jsonToOrgDownloadMetricByTime(res),
-                    });
+                    // setDownloadMetrics({
+                    //     ...downloadMetrics,
+                    //     downloadByTime: jsonToOrgDownloadMetricByTime(res),
+                    // });
                     return [];
                 },
                 onError: (e) => {
@@ -265,12 +265,12 @@ const OrganisationDetailVM = (
             }
         );
 
-    const isLoading =
-        isFetchingOrganisationDatasets ||
-        isFetchingOrganisationRankedDatasets ||
-        isFetchingQualityMetrics ||
-        isFetchingSearchTerms ||
-        isFetchingDownloadMetrics;
+    // const isLoading =
+    //     isFetchingOrganisationDatasets ||
+    //     isFetchingOrganisationRankedDatasets ||
+    //     isFetchingQualityMetrics ||
+    //     isFetchingSearchTerms ||
+    //     isFetchingDownloadMetrics;
 
     return {
         selectedQualityInsights,
@@ -282,7 +282,7 @@ const OrganisationDetailVM = (
         qualityMetrics,
         searchTerms,
         downloadMetrics,
-        isLoading,
+        // isLoading,
         fromDate,
         toDate,
         isFetchingOrganisationDatasets,
@@ -317,7 +317,7 @@ export interface IOrganisationDetailVMContext {
     qualityMetrics: any;
     searchTerms: any;
     downloadMetrics: any;
-    isLoading: boolean;
+    // isLoading: boolean;
     incrementOrgDatasetsCount: Function;
     fetchOrganisationRankedDatasets: Function;
     fetchOrganisationDatasets: Function;

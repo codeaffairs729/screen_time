@@ -31,7 +31,7 @@ const TotalRecords = ({
     return (
         <div className="flex">
             <span className="ml-2 mt-1 pr-2 font-medium text-sm">Display</span>
-            <div className="flex justify-center items-center space-x-1 h-[28px] border border-dtech-main-dark rounded  h-7 px-7 pr-1.5">
+            <div className="flex justify-center items-center space-x-1 border border-dtech-main-dark rounded  h-7 px-7 pr-1.5">
                 <Dropdown
                     label={`${pageSize} results`}
                     menuItems={options}

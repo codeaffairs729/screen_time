@@ -37,7 +37,7 @@ const ResultLayout = ({ error, isLoading, recordsData }: ResultLayoutProps) => {
 
     if (!recordsData?.length) {
         return (
-            <div className="w-full flex items-start justify-center">
+            <div className="h-[calc(100vh-var(--nav-height))] w-full flex items-start justify-center ">
                 <NoResults
                     message={`No results found for ${q}.`}
                     subMessages={[

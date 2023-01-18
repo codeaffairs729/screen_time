@@ -20,9 +20,9 @@ const DisplayDataset = ({ title, description }: any) => (
 );
 const QualityInsightsBody = () => {
     const {
-        isLoading,
         qualityMetrics,
         fetchQualityMetrics,
+        isFetchingQualityMetrics,
         selectedQualityInsights: selectedLabel,
     } = useContext(OrganisationDetailVMContext);
 
@@ -31,14 +31,6 @@ const QualityInsightsBody = () => {
     useEffect(() => {
         fetchQualityMetrics && fetchQualityMetrics();
     }, []);
-
-    if (isLoading) {
-        return (
-            <div className="h-[calc(100vh-var(--nav-height))]  w-full flex items-center justify-center">
-                <Loader />
-            </div>
-        );
-    }
 
     return (
         <div className="ml-16">
@@ -55,29 +47,37 @@ const QualityInsightsBody = () => {
                             ratings={items[key].rating}
                         />
                     }
-                    key={selectedLabel+key}
+                    key={selectedLabel + key}
                 >
-                    <div>
-                        <div className="px-8">
-                            <Table
-                                tableHeaders={TABLE_HEADERS}
-                                tableData={getTableData(items[key].datasets)}
-                                cellPadding={3}
+                    {!isFetchingQualityMetrics ? (
+                        <div>
+                            <div className="px-8">
+                                <Table
+                                    tableHeaders={TABLE_HEADERS}
+                                    tableData={getTableData(
+                                        items[key].datasets
+                                    )}
+                                    cellPadding={3}
+                                />
+                            </div>
+                            <BarGraph
+                                data={getRating(items[key].rating, index)}
+                                strokeWidthAxis={2}
+                                strokeWidthLabelList={0}
+                                className="font-medium mb-6 mt-6"
+                                xLabel=""
+                                yLabel=""
+                                xvalue="Star rating"
+                                yvalue="Datasets"
+                                barDatakey={"rating"}
+                                labelListDatakey={"name"}
                             />
                         </div>
-                        <BarGraph
-                            data={getRating(items[key].rating, index)}
-                            strokeWidthAxis={2}
-                            strokeWidthLabelList={0}
-                            className="font-medium mb-6 mt-6"
-                            xLabel=""
-                            yLabel=""
-                            xvalue="Star rating"
-                            yvalue="Datasets"
-                            barDatakey={"rating"}
-                            labelListDatakey={"name"}
-                        />
-                    </div>
+                    ) : (
+                        <div className="h-[calc(40vh-var(--nav-height))] w-full flex items-center justify-center">
+                            <Loader />
+                        </div>
+                    )}
                 </Accordian>
             ))}
         </div>

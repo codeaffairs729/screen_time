@@ -34,12 +34,44 @@ const OrganizationSearchVM = () => {
     const [activeFilter, setActiveFilter] = useState<Filter>({
         sort_by: ["relevance"],
     });
+    const [queryParams, setQueryParams] = useState<string>("&sort_by=relevance");
     const [organisations, setOrganisations] = useState<Organisation[]>([]);
     const [totalRecords, setTotalRecords] = useState<number>(0);
 
+    useEffect(() => {
+        const getQueryParam = (key: keyof Filter): string => {
+            if (
+                key &&
+                activeFilter[key] &&
+                (activeFilter[key] as Array<string>).length > 0
+            ) {
+                const paramValues = activeFilter[key] ?? [];
+                return paramValues
+                    .map(
+                        (v) =>
+                            `${encodeURIComponent(key)}=${encodeURIComponent(
+                                v
+                            )}`
+                    )
+                    .join("&");
+            }
+            return "";
+        };
+        const filterActive = Object.keys(activeFilter).some((key: string) =>
+            key === "sort_by"
+                ? !activeFilter[key]?.includes("relevance")
+                : activeFilter[key as keyof Filter]?.length
+        );
+        let cQueryParams = Object.keys(activeFilter)
+            .map((k) => getQueryParam(k as keyof Filter))
+            .filter((qp) => qp)
+            .join("&");
+
+        setQueryParams(cQueryParams ? `&${cQueryParams}` : "");
+    }, [activeFilter]);
     const { data, error }: any = useSWR(
         q
-            ? `/v1/data_sources/?search_query=${q}&page_size=${pageSize}&page_num=${currentPageNo}`
+            ? `/v1/data_sources/?search_query=${q}&page_size=${pageSize}&page_num=${currentPageNo}${queryParams}`
             : null,
         (url: string) => {
             Http.get(url)
@@ -75,6 +107,8 @@ const OrganizationSearchVM = () => {
         setPageSize,
         pageSize,
         totalRecords,
+        activeFilter,
+        setActiveFilter,
     };
 };
 
@@ -88,6 +122,8 @@ interface IOrganizationSearchVMContext {
     setPageSize: (pageNo: number) => void;
     pageSize: number;
     totalRecords: number;
+    activeFilter: any;
+    setActiveFilter: Function;
 }
 
 export const OrganizationSearchVMContext = createContext(
