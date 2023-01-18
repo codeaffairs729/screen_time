@@ -239,22 +239,22 @@ const OrganisationDetailVM = (
         executeFetchDownloadMetricByTime(
             () => {
 
-                // return Http.get(
-                //     `/v1/data_sources/&from=${format(
-                //         fromDate,
-                //         "dd-MM-yyyy"
-                //     )}&to=${format(
-                //         toDate,
-                //         "dd-MM-yyyy"
-                //     )}/download_metrics_by_time`
-                // )
+                return Http.get(
+                    `/v1/data_sources/download_metrics_by_time/?from=${format(
+                        fromDate,
+                        "dd-MM-yyyy"
+                    )}&to=${format(
+                        toDate,
+                        "dd-MM-yyyy"
+                    )}`
+                )
             },
             {
                 postProcess: (res: any) => {
-                    // setDownloadMetrics({
-                    //     ...downloadMetrics,
-                    //     downloadByTime: jsonToOrgDownloadMetricByTime(res),
-                    // });
+                    setDownloadMetrics({
+                        ...downloadMetrics,
+                        downloadByTime: jsonToOrgDownloadMetricByTime(res),
+                    });
                     return [];
                 },
                 onError: (e) => {
