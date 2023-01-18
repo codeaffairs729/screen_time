@@ -23,7 +23,7 @@ class UserService {
                 itemID: item.item_id,
                 listID: item.list_id,
                 datasetID: item.dataset_id,
-                organisationID: item.provider_id,
+                organisationID: item.provider_uuid,
             };
         });
 
@@ -63,8 +63,8 @@ class UserService {
             .map((item: any) => item.dataset_id);
 
         const all_organisation_ids = bookmarkListsItems.list_items
-            .filter((item: any) => item.provider_id)
-            .map((item: any) => item.provider_id);
+            .filter((item: any) => item.provider_uuid)
+            .map((item: any) => item.provider_uuid);
 
         const dataset_ids = Array.from(new Set(all_dataset_ids));
         const organisation_ids = Array.from(new Set(all_organisation_ids));

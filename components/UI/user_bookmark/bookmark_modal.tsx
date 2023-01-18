@@ -134,7 +134,7 @@ const ModelList = ({
                 return { datasetID: data.id };
 
             case "organisation":
-                return { organisationId: data.id };
+                return { organisationUUID: data.id };
             default:
                 return { datasetID: data.id };
         }
