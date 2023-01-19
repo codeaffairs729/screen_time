@@ -328,15 +328,12 @@ export const useSearchFilter = ({
     return { control, register, fields, replace };
 };
 
-export const datasetToResultCardData = (
-    datasets: Dataset[] | undefined | void,
-    stats: any
-): Data[] => {
+export const datasetToResultCardData = (datasets: any, stats: any): Data[] => {
     if (!datasets?.length) {
         return [];
     }
 
-    return datasets?.map((dataset) => ({
+    return datasets?.map((dataset: any) => ({
         id: dataset.id,
         title: dataset.detail.name,
         recordType: "datasets",
