@@ -240,7 +240,7 @@ const OrganisationDetailVM = (
             () => {
 
                 return Http.get(
-                    `/v1/data_sources/download_metrics_by_time/?from=${format(
+                    `/v1/data_sources/${organisation?.uuid}/download_metrics_by_time/?from=${format(
                         fromDate,
                         "dd-MM-yyyy"
                     )}&to=${format(
