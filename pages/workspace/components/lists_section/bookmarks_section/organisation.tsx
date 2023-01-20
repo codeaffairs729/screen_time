@@ -2,6 +2,7 @@ import ResultCard from "components/UI/result_card";
 import { useSelector } from "react-redux";
 import { RootState } from "store";
 import { DateTime } from "luxon";
+import { organisationToResultCardData } from "pages/search/components/organization/organisation.vm";
 
 const OrganisationBookmarksSection = ({ orgIDS }: { orgIDS: any }) => {
     const bookmarkItemsData = useSelector(
@@ -14,7 +15,7 @@ const OrganisationBookmarksSection = ({ orgIDS }: { orgIDS: any }) => {
 
     return (
         <div>
-            {organisations.map((organisation: any) => (
+            {organisationToResultCardData(organisations).map((organisation: any) => (
                 <ResultCard
                     key={organisation.uuid}
                     data={{
