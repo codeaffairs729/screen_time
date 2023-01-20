@@ -58,8 +58,8 @@ class Organisation {
             imgUrl: json["logo_url"],
             title: json["title"],
             description: json["description"],
-            dataQuality: 3, // Need to know where to fetch this.
-            buttonTags: json["license_types"], // Need to know where to fetch this.
+            dataQuality: json["data_quality"],
+            buttonTags: json["license_types"],
             domains: domains,
             topics: topics,
             isFavourited: json["is_favourited"],

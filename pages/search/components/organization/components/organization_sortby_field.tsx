@@ -18,10 +18,6 @@ const OPTIONS = [
         value: "quality",
     },
     {
-        label: "Most Popular",
-        value: "popularity",
-    },
-    {
         label: "Most Recently Updated",
         value: "updated",
     },
