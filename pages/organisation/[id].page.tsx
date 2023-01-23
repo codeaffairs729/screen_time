@@ -108,7 +108,7 @@ OrganisationDetailPage.getInitialProps = async ({
                 : {},
         });
 
-        const organisation = Organisation.fromJson(res);
+        const organisation = Organisation.fromJson(res[0]);
 
         return { organisation };
     } catch (error) {
