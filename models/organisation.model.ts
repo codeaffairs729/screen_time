@@ -69,7 +69,7 @@ class Organisation {
                 viewCount: json["view_count"],
                 downloadCount: json["download_count"],
             },
-            lastUpdate: json["updated_at"],
+            lastUpdate: json["last_updated"],
         });
     }
 
