@@ -1,5 +1,5 @@
 import Http from "common/http";
-import Dataset from "models/dataset.model.v4";
+import Dataset from "models/dataset.model";
 import SearchVM, { datasetToResultCardData } from "pages/search/search.vm";
 import useSWR from "swr";
 import toast from "react-hot-toast";
@@ -11,7 +11,7 @@ export const FavouriteVM = () => {
     const { fectchStats, stats, isFetchingStats } = SearchVM();
     const favDatasetEndpoint = `${process.env.NEXT_PUBLIC_WEBPORTAL_API_ROOT}/v1/users/favourites_datasets`;
     const favProviderEndpoint = `${process.env.NEXT_PUBLIC_WEBPORTAL_API_ROOT}/v1/users/favourites_providers`;
-    const { data: favouriteDatasets = [], error: datasetError } = useSWR(
+    const { data: favouriteDatasets, error: datasetError } = useSWR(
         favDatasetEndpoint,
         (url: string) =>
             Http.get("/v1/users/favourites_datasets", {
@@ -34,7 +34,7 @@ export const FavouriteVM = () => {
         { revalidateOnFocus: false }
     );
 
-    const { data: favouriteProviders = [], error: providerError } = useSWR(
+    const { data: favouriteProviders, error: providerError } = useSWR(
         favProviderEndpoint,
         (url: string) =>
             Http.get("/v1/users/favourites_providers", {
@@ -44,6 +44,7 @@ export const FavouriteVM = () => {
                     const organisations = Organisation.fromJsonList(res);
                     const recordsOrg =
                         organisationToResultCardData(organisations);
+                    console.log("org :", recordsOrg);
                     return recordsOrg;
                 })
                 .catch((e) => {
@@ -56,17 +57,26 @@ export const FavouriteVM = () => {
     );
 
     const isError = providerError || datasetError;
+    console.log("isFetchingStats :",isFetchingStats);
+    
     const isFetchingFavourites =
-        !favouriteDatasets &&
-        !favouriteProviders &&
-        !isError &&
-        isFetchingStats;
+        !(favouriteDatasets?.length == Object.keys(stats).length) || isFetchingStats || (favouriteDatasets === undefined || favouriteProviders === undefined) &&
+        !isError;
+
+
+    if (!isFetchingStats) {
+        console.log("stats", stats);
+    }
 
     const recordDatasets: any = datasetToResultCardData(
         favouriteDatasets,
         stats
     );
-    const favouritedRecords = [...recordDatasets, ...favouriteProviders];
+
+    const favouritedRecords =
+        favouriteProviders !== undefined && favouriteDatasets !== undefined
+            ? [...recordDatasets, ...favouriteProviders]
+            : null;
 
     return {
         stats,

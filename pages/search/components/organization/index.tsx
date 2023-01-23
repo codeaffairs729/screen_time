@@ -15,6 +15,7 @@ const Organisation = () => {
         pageSize,
         totalRecords,
         organisations,
+        isFetchingOrganisation
     } = useContext(OrganizationSearchVMContext);
 
     return (
@@ -29,7 +30,7 @@ const Organisation = () => {
             />
             <ResultLayout
                 error={false} //TODO to get from organisation vm
-                isLoading={false} //TODO to get from organisation vm
+                isLoading={isFetchingOrganisation} //TODO to get from organisation vm
                 recordsData={organisationToResultCardData(organisations)}
             />
         </div>

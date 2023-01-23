@@ -69,7 +69,7 @@ const OrganizationSearchVM = () => {
 
         setQueryParams(cQueryParams ? `&${cQueryParams}` : "");
     }, [activeFilter]);
-    const { data, error }: any = useSWR(
+    const { data, error : organisationError}: any = useSWR(
         q
             ? `/v1/data_sources/?search_query=${q}&page_size=${pageSize}&page_num=${currentPageNo}${queryParams}`
             : null,
@@ -92,7 +92,7 @@ const OrganizationSearchVM = () => {
                 { revalidateOnFocus: false };
         }
     );
-
+    const isFetchingOrganisation = !totalRecords && !organisationError;
     useEffect(() => {
         const len = organisations?.length || 0;
 
@@ -109,6 +109,7 @@ const OrganizationSearchVM = () => {
         totalRecords,
         activeFilter,
         setActiveFilter,
+        isFetchingOrganisation
     };
 };
 
@@ -124,6 +125,7 @@ interface IOrganizationSearchVMContext {
     totalRecords: number;
     activeFilter: any;
     setActiveFilter: Function;
+    isFetchingOrganisation: boolean;
 }
 
 export const OrganizationSearchVMContext = createContext(
