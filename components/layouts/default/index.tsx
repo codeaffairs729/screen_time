@@ -39,18 +39,18 @@ const DefaultLayout = ({
                             aria-hidden="true"
                         />
                         This is an <span className="font-semibold">Alpha</span>{" "}
-                        release.
+                        release. Click to
                         <a
                             href="https://f7xcuekc9xt.typeform.com/to/ff4rGkXc"
                             className="hover:underline text-blue-600 "
                         >
-                            Report Issues
-                        </a> &
+                            report a bug
+                        </a> or
                         <a
                             href="https://f7xcuekc9xt.typeform.com/to/Zpryygkm"
                             className="hover:underline text-blue-600 ml-1"
                         >
-                            Suggest Features
+                            suggest a new feature.
                         </a>
                         .
                     </div>
