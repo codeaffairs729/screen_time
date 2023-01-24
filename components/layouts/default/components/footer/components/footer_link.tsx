@@ -22,7 +22,7 @@ const FooterLink = ({
   if (href) {
     return (
       <Link href={href}>
-        <a>{content}</a>
+        <a target="_blank">{content}</a>
       </Link>
     );
   }
