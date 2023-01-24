@@ -39,7 +39,7 @@ const DefaultLayout = ({
                             aria-hidden="true"
                         />
                         This is an <span className="font-semibold">Alpha</span>{" "}
-                        release. Click to
+                        release. Click to .
                         <a
                             href="https://f7xcuekc9xt.typeform.com/to/ff4rGkXc"
                             className="hover:underline text-blue-600 "
@@ -50,7 +50,7 @@ const DefaultLayout = ({
                             href="https://f7xcuekc9xt.typeform.com/to/Zpryygkm"
                             className="hover:underline text-blue-600 ml-1"
                         >
-                            suggest a new feature.
+                            suggest a new feature
                         </a>
                         .
                     </div>
