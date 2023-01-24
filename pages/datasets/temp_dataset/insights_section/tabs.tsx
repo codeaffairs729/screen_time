@@ -22,14 +22,15 @@ const DatasetTabHeaders = ({
             getSelectedLabelIndex(selectedTab, insightTabIndex)
         );
     };
-    console.log("selectedInsightTab :",selectedInsightTab)
+
+    console.log("selectedInsightTab :",selectedInsightTab);
     return (
         <div className="ml-10 mr-28">
             <Tab.List className={"flex justify-between items-center "}>
                 <div>
                     <HeadTag
                         isSelected={selectedInsightTab == 0}
-                        label={"Data quality"}
+                        label={"data_quality"}
                         setSelected={onTabSelect}
                     ></HeadTag>
                     {selectedInsightTab == 0 && <DatasetQualityInsightsHead />}
@@ -37,7 +38,7 @@ const DatasetTabHeaders = ({
                 <div>
                     <HeadTag
                         isSelected={selectedInsightTab == 1}
-                        label={"Use cases"}
+                        label={"use_cases"}
                         setSelected={onTabSelect}
                     ></HeadTag>
                     {selectedInsightTab == 1 && <DatasetUseCasesHead />}
@@ -45,7 +46,7 @@ const DatasetTabHeaders = ({
                 <div>
                     <HeadTag
                         isSelected={selectedInsightTab == 2}
-                        label={"Download metrics"}
+                        label={"download_metrics"}
                         setSelected={onTabSelect}
                     ></HeadTag>
                     {selectedInsightTab == 2 && <DatasetDownloadMetricsHead />}
@@ -72,7 +73,7 @@ const HeadTag = ({
     return (
         <Tab onClick={() => setSelected(label)}>
             <div
-                className={`relative inline-block text-left select-none outline-none${
+                className={`relative inline-block text-left select-none outline-none ${
                     isSelected && "hidden"
                 }`}
             >

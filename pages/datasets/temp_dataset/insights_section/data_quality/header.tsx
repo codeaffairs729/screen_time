@@ -1,4 +1,6 @@
 import Dropdown, { MenuItemType } from "components/UI/drop_down";
+import { DatasetDetailVMContext, download, formatLabel } from "pages/datasets/dataset_detail.vm";
+import { getSelectedLabelIndex } from "pages/organisation/organisation_detail.vm";
 import { useContext, useState } from "react";
 import DatasetLabel from "../label";
 
@@ -6,13 +8,16 @@ const ITEMS: MenuItemType[] = [{ label: "data_file" }, { label: "metadata" }];
 
 const DatasetQualityInsightsHead = () => {
     const [selectedLabel, setSelectedLabel] = useState(ITEMS[0].label);
-
+    const { setSelectedDownload: onChange } = useContext(
+        DatasetDetailVMContext
+    );
     const handleChange = (label: string) => {
         setSelectedLabel(label);
+        onChange && onChange(getSelectedLabelIndex(label, download));
     };
 
     const menuItems = ITEMS.map((item) => ({
-        label: item.label,
+        label: formatLabel(item.label),
         onClick: () => handleChange(item.label),
     }));
 

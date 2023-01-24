@@ -18,11 +18,12 @@ const DataFilesSection = ({ goToPreview }: { goToPreview: () => void }) => {
     if (!vm.dataset) {
         return <div />;
     }
-
+    console.log("vm.dataset :",vm.dataset.urls.length);
+    
     return (
         <div>
             <div className="flex flex-row justify-between items-center mx-3 my-4 ">
-                <span>Total file : </span>
+                <span>Total file : {vm.dataset.urls.length}</span>
                 <div className="flex flex-row">
                     <span className="mr-2">Download all</span>
                     <Image src={downloadIcon} alt="" height={24} width={24} />

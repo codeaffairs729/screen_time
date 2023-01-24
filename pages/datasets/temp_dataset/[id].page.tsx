@@ -17,6 +17,7 @@ import FeedbackSection from "../components/feedback_section";
 import MayAlsoLike from "../components/may_also_like";
 import DataFilesSection from "./data_file";
 import DatasetInsights from "./insights_section";
+import DatasetFeedbackSection from "./user_feedback";
 
 enum tabIndex {
     data_files,
@@ -65,7 +66,7 @@ const DatasetDetail = ({ dataset }: { dataset: Dataset | undefined }) => {
                                             <DatasetInsights />
                                         </TabPanel>
                                         <TabPanel className="!bg-dtech-light-grey">
-                                            <FeedbackSection />
+                                            <DatasetFeedbackSection />
                                         </TabPanel>
                                         <TabPanel className="!bg-dtech-light-grey">
                                             <MayAlsoLike />
