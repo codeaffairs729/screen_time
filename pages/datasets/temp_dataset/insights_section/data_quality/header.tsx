@@ -1,7 +1,6 @@
 import Dropdown, { MenuItemType } from "components/UI/drop_down";
-
-import Label from "pages/organisation/components/insights_section/label";
 import { useContext, useState } from "react";
+import DatasetLabel from "../label";
 
 const ITEMS: MenuItemType[] = [{ label: "data_file" }, { label: "metadata" }];
 
@@ -23,7 +22,10 @@ const DatasetQualityInsightsHead = () => {
             labelClasses="!text-lg"
             menuItems={menuItems}
             label={
-                <Label labelPrefix="Data quality" label={selectedLabel} />
+                <DatasetLabel
+                    labelPrefix="Data quality"
+                    label={selectedLabel}
+                />
             }
         />
     );

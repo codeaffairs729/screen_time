@@ -5,8 +5,10 @@ import { Tab } from "@headlessui/react";
 import {
     getSelectedLabelIndex,
     insightTabIndex,
-} from "pages/organisation/organisation_detail.vm";
+} from "pages/datasets/dataset_detail.vm";
 import DatasetQualityInsightsHead from "./data_quality/header";
+import DatasetDownloadMetricsHead from "./download_metrics/header";
+import DatasetUseCasesHead from "./use_cases/header";
 
 const DatasetTabHeaders = ({
     selectedInsightTab,
@@ -20,7 +22,7 @@ const DatasetTabHeaders = ({
             getSelectedLabelIndex(selectedTab, insightTabIndex)
         );
     };
-
+    console.log("selectedInsightTab :",selectedInsightTab)
     return (
         <div className="ml-10 mr-28">
             <Tab.List className={"flex justify-between items-center "}>
@@ -38,7 +40,7 @@ const DatasetTabHeaders = ({
                         label={"Use cases"}
                         setSelected={onTabSelect}
                     ></HeadTag>
-                    {/* {selectedInsightTab == 1 && <SearchTermHeader />} */}
+                    {selectedInsightTab == 1 && <DatasetUseCasesHead />}
                 </div>
                 <div>
                     <HeadTag
@@ -46,7 +48,7 @@ const DatasetTabHeaders = ({
                         label={"Download metrics"}
                         setSelected={onTabSelect}
                     ></HeadTag>
-                    {/* {selectedInsightTab == 2 && <DownloadHeader />} */}
+                    {selectedInsightTab == 2 && <DatasetDownloadMetricsHead />}
                 </div>
             </Tab.List>
         </div>

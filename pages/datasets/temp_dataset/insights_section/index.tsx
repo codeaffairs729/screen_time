@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { Tab } from "@headlessui/react";
-import TabHeaders from "pages/workspace/components/tabs";
 import DatasetTabHeaders from "./tabs";
 import DatasetQualityInsightsBody from "./data_quality/section";
+import DatasetUseCasesBody from "./use_cases/section";
+import DatasetDownloadMetricsBody from "./download_metrics/section";
 
 
 const DatasetInsights = () => {
@@ -21,10 +22,10 @@ const DatasetInsights = () => {
                             <DatasetQualityInsightsBody />
                         </Tab.Panel>
                         <Tab.Panel>
-                            {/* <SearchTermSection /> */}
+                            <DatasetUseCasesBody />
                         </Tab.Panel>
                         <Tab.Panel>
-                            {/* <DownloadSection /> */}
+                            <DatasetDownloadMetricsBody />
                         </Tab.Panel>
                     </Tab.Panels>
                 </Tab.Group>
