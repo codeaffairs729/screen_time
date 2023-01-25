@@ -33,13 +33,9 @@ const DatasetQualityInsightsBody = () => {
     const items = selectedLabel == 0 ? dataFileQuality : metaFileQuality;
     return (
         <div className="flex flex-col">
-            {items.map((item: any, index: number) => {
-                return (
-                    <div className={''}>
-                        <FileQuality item={item} key={index}/>
-                    </div>
-                );
-            })}
+            {items.map((item: any, index: number) => (
+                <FileQuality item={item} key={index} />
+            ))}
         </div>
     );
 };
