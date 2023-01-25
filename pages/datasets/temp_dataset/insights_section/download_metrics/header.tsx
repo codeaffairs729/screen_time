@@ -11,7 +11,7 @@ import DatasetLabel from "../label";
 const ITEMS: MenuItemType[] = [
     { label: "by_region" },
     { label: "by_time" },
-    { label: "by_user_type" },
+    { label: "by_role" },
     { label: "by_sector" },
 ];
 const DatasetDownloadMetricsHead = () => {

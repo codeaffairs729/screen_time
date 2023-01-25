@@ -23,7 +23,6 @@ const DatasetTabHeaders = ({
         );
     };
 
-    console.log("selectedInsightTab :",selectedInsightTab);
     return (
         <div className="ml-10 mr-28">
             <Tab.List className={"flex justify-between items-center "}>

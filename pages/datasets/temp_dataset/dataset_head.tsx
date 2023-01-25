@@ -12,12 +12,12 @@ const DatasetHead = () => {
     if (!vm.dataset) {
         return <div />;
     }
-    console.log("vm", vm);
+
     let contactOwnerEmail = vm.dataset?.owner.contact.email;
     if ((contactOwnerEmail?.search(/^mailto:/) ?? -1) > -1) {
         contactOwnerEmail = contactOwnerEmail?.slice(7);
     }
-    console.log("Dataset :", vm.dataset);
+
     const { name, description, lastUpdate,downloads,views,favourites,displays } = vm.dataset.detail || {};
     const stats = {
         datasetsCount: displays,

@@ -11,13 +11,10 @@ import Http from "common/http";
 import { AUTH_TOKEN } from "common/constants/cookie.key";
 import { NextPageContext } from "next";
 import DatasetTabHeaders from "./dataset_tabs";
-
-import SummaryInsights from "../components/summary_insights";
-import FeedbackSection from "../components/feedback_section";
-import MayAlsoLike from "../components/may_also_like";
 import DataFilesSection from "./data_file";
 import DatasetInsights from "./insights_section";
 import DatasetFeedbackSection from "./user_feedback";
+import MayAlsoLike from "./may_also_like";
 
 enum tabIndex {
     data_files,

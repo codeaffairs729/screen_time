@@ -18,7 +18,6 @@ const DataFilesSection = ({ goToPreview }: { goToPreview: () => void }) => {
     if (!vm.dataset) {
         return <div />;
     }
-    console.log("vm.dataset :",vm.dataset.urls.length);
     
     return (
         <div>

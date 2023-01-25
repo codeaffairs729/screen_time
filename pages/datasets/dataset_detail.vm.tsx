@@ -21,7 +21,7 @@ export const getSelectedLabelIndex = (label: string, types: any) => {
 export enum download {
     by_region,
     by_time,
-    by_user_type,
+    by_role,
     by_sector,
 }
 export enum insightTabIndex {
@@ -29,9 +29,17 @@ export enum insightTabIndex {
     use_cases,
     download_metrics,
 }
+export enum qualityInsights {
+    data_quality,
+    metadata_quality,
+}
 const DatasetDetailVM = (initialDataset: Dataset | undefined) => {
     const [dataset, setDataset] = useState(initialDataset);
     const [selectedDownload, setSelectedDownload] = useState<number>(0);
+    const [selectedQualityInsights, setSelectedQualityInsights] =
+        useState<number>(0);
+    const [fromDate, setFromDate] = useState(new Date());
+    const [toDate, setToDate] = useState(new Date());
     useEffect(() => {
         // if (dataset?.id) {
         //     Http.post(`/v1/datasets/${dataset.id}/views`); // Increment view count on visiting dataset detail page
@@ -42,7 +50,18 @@ const DatasetDetailVM = (initialDataset: Dataset | undefined) => {
         // console.log('dataset vm', dataset);
     }, [dataset]);
 
-    return { dataset, setDataset, setSelectedDownload, selectedDownload };
+    return {
+        dataset,
+        setDataset,
+        setSelectedDownload,
+        selectedDownload,
+        selectedQualityInsights,
+        setSelectedQualityInsights,
+        fromDate,
+        setFromDate,
+        toDate,
+        setToDate,
+    };
 };
 
 interface IDatasetDetailVMContext {
@@ -50,6 +69,12 @@ interface IDatasetDetailVMContext {
     setDataset: Dispatch<SetStateAction<Dataset | undefined>>;
     selectedDownload: number;
     setSelectedDownload: Function;
+    selectedQualityInsights: number;
+    setSelectedQualityInsights: Function;
+    fromDate: Date;
+    setFromDate: Function;
+    toDate: Date;
+    setToDate: Function;
 }
 
 export const DatasetDetailVMContext = createContext<IDatasetDetailVMContext>(
