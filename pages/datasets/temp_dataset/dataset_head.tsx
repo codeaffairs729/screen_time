@@ -1,12 +1,14 @@
 import MetaRating from "components/UI/metaRating";
 import ResultCardAction from "components/UI/result_card_action";
-import DatasetStat from "components/UI/result_card/data_stat";
 import { useContext } from "react";
 import { DateTime } from "luxon";
 import { DatasetDetailVMContext } from "../dataset_detail.vm";
 import Dataset from "pages/search/components/dataset";
 import LabelledRow from "components/dataset/labelled_row";
-
+import { BsFillEyeFill, BsHeartFill } from "react-icons/bs";
+import { MdFileDownload } from "react-icons/md";
+import Image from "next/image";
+// import DisplaySearch from "public/"
 const DatasetHead = () => {
     const vm = useContext(DatasetDetailVMContext);
     if (!vm.dataset) {
@@ -18,9 +20,17 @@ const DatasetHead = () => {
         contactOwnerEmail = contactOwnerEmail?.slice(7);
     }
 
-    const { name, description, lastUpdate,downloads,views,favourites,displays } = vm.dataset.detail || {};
+    const {
+        name,
+        description,
+        lastUpdate,
+        downloads,
+        views,
+        favourites,
+        displays,
+    } = vm.dataset.detail || {};
     const stats = {
-        datasetsCount: displays,
+        displayCount: displays,
         favoritesCount: favourites,
         viewCount: views,
         downloadCount: downloads,
@@ -131,6 +141,65 @@ const MetaInfoEntity = ({
                     ))}
                 </div>
             )}
+        </div>
+    );
+};
+
+const DatasetStat = ({ stats }: { stats: any }) => {
+    const {
+        displayCount = 0,
+        favoritesCount = 0,
+        viewCount = 0,
+        downloadCount = 0,
+    } = stats || {};
+
+    return (
+        <div className="my-4">
+            <div className="flex justify-between">
+                <div className="flex">
+                    <div className="flex justify-center items-center mr-6">
+                        <BsHeartFill className="h-5 w-5 mr-2" />
+                        <span className=" max-w-24 text-m font-normal">
+                            Added to favourites
+                        </span>
+                        <span className="ml-2 font-medium text-sm">
+                            {favoritesCount}
+                        </span>
+                    </div>
+                    <div className="flex justify-center items-center mr-6">
+                        <BsFillEyeFill className="h-5 w-5 mr-2" />
+                        <span className="max-w-24 text-m font-normal">
+                            Viewed
+                        </span>
+                        <span className="ml-2 font-medium text-sm">
+                            {viewCount}
+                        </span>
+                    </div>
+                    <div className="flex justify-center items-center mr-6">
+                        <MdFileDownload className="h-5 w-5 mr-2" />
+                        <span className="max-w-24 text-m font-normal">
+                            Downloaded
+                        </span>
+                        <span className="ml-2 font-medium text-sm">
+                            {downloadCount}
+                        </span>
+                    </div>
+                    <div className="flex justify-center items-center mr-6">
+                        <Image
+                            src="/images/icons/dataset.svg"
+                            height={20}
+                            width={20}
+                        />
+                        <span className="max-w-24 text-m font-normal flex flex-col">
+                            Displayed in
+                            <span>search results</span>
+                        </span>
+                        <span className="ml-2 font-medium text-sm">
+                            {displayCount}
+                        </span>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 };

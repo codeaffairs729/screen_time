@@ -108,6 +108,7 @@ const ReportVM = () => {
         EditorState.createEmpty()
     );
     const [previewContent, setPreviewContent] = useState("");
+    const [loading , setLoading] = useState(false);
 
     useEffect(() => {
         setPreviewContent(formatPreviewData());
@@ -169,6 +170,7 @@ const ReportVM = () => {
                 )
             )
         );
+        setLoading(false);
     };
 
     const formatPreviewData = () => {
@@ -198,6 +200,8 @@ const ReportVM = () => {
         editorState,
         downloadRef,
         previewContent,
+        loading,
+        setLoading,
     };
 };
 
@@ -215,6 +219,8 @@ interface IReportVMContext {
     editorState: any;
     downloadRef: any;
     previewContent: string;
+    loading: Boolean;
+    setLoading: Function;
 }
 
 export const ReportVMContext = createContext<IReportVMContext>(

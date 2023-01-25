@@ -8,11 +8,13 @@ const ReportFilter = ({ imgUrl }: { imgUrl: string }) => {
     const [fromDate, setFromDate] = useState(new Date());
     const [toDate, setToDate] = useState(new Date());
 
-    const { generateReportContent, activeHeaders, onHeaderSelect } =
+    const { generateReportContent, activeHeaders, onHeaderSelect, setLoading } =
         useContext(ReportVMContext);
 
-    const handleGenerateReport = () =>
+    const handleGenerateReport = () =>{
+        setLoading(true);
         generateReportContent(imgUrl, fromDate, toDate);
+    }
 
     return (
         <div className="w-1/3 py-4 px-6 flex flex-col items-center mt-12 ml-6 mb-96 border-2 drop-shadow-lg rounded-[24px]">

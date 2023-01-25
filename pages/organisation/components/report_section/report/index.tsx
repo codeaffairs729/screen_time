@@ -6,7 +6,12 @@ import BarGraph from "components/UI/BarGraph";
 import Table from "../../table";
 import { Tab } from "@headlessui/react";
 import { useContext } from "react";
-import { DownloadByTime, OrganisationDetailVMContext } from "pages/organisation/organisation_detail.vm";
+import {
+    DownloadByTime,
+    OrganisationDetailVMContext,
+} from "pages/organisation/organisation_detail.vm";
+import Loader from "components/UI/loader";
+import { ReportVMContext } from "../report.vm";
 
 const EditReport = dynamic(() => import("./editReport"), {
     ssr: false,
@@ -16,8 +21,9 @@ const PIE_HEADER = ["name", "value"];
 
 const Report = () => {
     const { downloadMetrics } = useContext(OrganisationDetailVMContext);
-
-    const { downloadByTime = [], downloadByUseCase = []  } = downloadMetrics || {};
+    const { loading } = useContext(ReportVMContext);
+    const { downloadByTime = [], downloadByUseCase = [] } =
+        downloadMetrics || {};
     const timeMetrics = downloadByTime.map((data: DownloadByTime) => ({
         month: new Date(data?.date).toLocaleString("en", {
             month: "short",
@@ -37,6 +43,13 @@ const Report = () => {
     ]);
     return (
         <div>
+            {loading && (
+                <div className="flex absolute min-w-[700px] h-[656px]  mt-12 ml-1">
+                    <div className=" ml-auto mr-auto my-auto ">
+                        <Loader sizeClass="h-10 w-10" />
+                    </div>
+                </div>
+            )}
             <div className=" h-[56rem] overflow-y-scroll no-scrollbar whitespace-nowrap absolute">
                 <div
                     id="screenshot"

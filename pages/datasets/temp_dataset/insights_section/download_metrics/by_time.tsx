@@ -5,7 +5,7 @@ import { useContext } from "react";
 const ByTime = () => {
     const  {fromDate,toDate,setFromDate,setToDate} = useContext(DatasetDetailVMContext)
     return (
-        <div className="flex flex-row mx-5">
+        <div className="flex flex-row mx-20">
             <span>Please select your time frame:</span>
             <RangeSelector
                 fromDate={fromDate}
