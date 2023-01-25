@@ -39,13 +39,18 @@ const DefaultLayout = ({
                             aria-hidden="true"
                         />
                         This is an <span className="font-semibold">Alpha</span>{" "}
-                        release. If you wish to report any issues/bugs, please
-                        use this{" "}
+                        release. Click to .
                         <a
-                            href="https://docs.google.com/forms/d/e/1FAIpQLSfzVMws_whcmJFbjYtR63N9xBYWOW3yYKPzVr7ewHum-saLsw/viewform"
-                            className="underline italic"
+                            href="https://f7xcuekc9xt.typeform.com/to/ff4rGkXc"
+                            className="hover:underline text-blue-600 "
                         >
-                            form
+                            report a bug
+                        </a> or
+                        <a
+                            href="https://f7xcuekc9xt.typeform.com/to/Zpryygkm"
+                            className="hover:underline text-blue-600 ml-1"
+                        >
+                            suggest a new feature
                         </a>
                         .
                     </div>
@@ -56,7 +61,7 @@ const DefaultLayout = ({
                         onSearchChange={vm.onSearchChange}
                     />
                     {children}
-                    <Footer className="mt-auto" />
+                    <Footer className="mt-auto bg-[#F5F5F5]" />
                 </SearchVMContext.Provider>
             </OrganizationSearchVMContext.Provider>
         </div>
