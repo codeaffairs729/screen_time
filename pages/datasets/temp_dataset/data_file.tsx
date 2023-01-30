@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useRef } from "react";
 import { DatasetDetailVMContext } from "../dataset_detail.vm";
 import { DatasetUrl } from "models/dataset.model";
 import { BsCloudDownloadFill, BsEyeFill } from "react-icons/bs";
@@ -18,14 +18,25 @@ const DataFilesSection = ({ goToPreview }: { goToPreview: () => void }) => {
     if (!vm.dataset) {
         return <div />;
     }
-    
     return (
         <div>
             <div className="flex flex-row justify-between items-center mx-3 my-4 ">
                 <span>Total file : {vm.dataset.urls.length}</span>
                 <div className="flex flex-row">
                     <span className="mr-2">Download all</span>
+                    <a
+                    onClick={()=>{
+                        document.querySelectorAll("#downloadAll").forEach((element, index) => {
+                            setTimeout(() => {
+                                element.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+                            }, 1000 * (index + 1));
+                        });
+                    }}
+                    className="mx-auto text-lg cursor-pointer"
+                    download
+                >
                     <Image src={downloadIcon} alt="" height={24} width={24} />
+                </a>
                 </div>
             </div>
             <div className=" h-[40rem]  overflow-y-scroll ">
@@ -60,11 +71,11 @@ const DataFilesSection = ({ goToPreview }: { goToPreview: () => void }) => {
                                         url={url}
                                         key={i}
                                         goToPreview={goToPreview}
-                                        onDownload={() =>
+                                        onDownload={() =>{
                                             createFeedbackNotification(
                                                 vm.dataset,
                                                 user
-                                            )
+                                            )}
                                         }
                                     />
                                 );
@@ -91,6 +102,7 @@ const DataFileRow = ({
     onDownload: () => void;
 }) => {
     const [preview, setPreview] = useState(false);
+    const downloadRef = useRef(null)
     return (
         <tr className="border-b border-gray-200 bg-[#FEFEFE] hover:bg-dtech-main-light">
             <td className="py-3 px-6 text-left whitespace-nowrap">
@@ -116,6 +128,8 @@ const DataFileRow = ({
                     href={url.url?.replace(/["']/g, "")}
                     className="underline"
                     download
+                    ref={downloadRef}
+                    id="downloadAll"
                 >
                     <Image src={downloadIcon} alt="" height={24} width={24} />
                 </a>
