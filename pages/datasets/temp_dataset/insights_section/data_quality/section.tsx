@@ -15,7 +15,7 @@ const metaFileQuality = [
 const dataFileQuality = [
     { label: "overallScore", rating: 3, ratingLabel: "votes", total: 132 },
     {
-        label: "feedbackSentiment",
+        label: "feedback Sentiment",
         rating: 3,
         ratingLabel: "comments",
         total: 132,

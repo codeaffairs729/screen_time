@@ -1,20 +1,33 @@
 import RangeSelector from "components/UI/range_selector";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { VscTriangleDown } from "react-icons/vsc";
 import { ReportVMContext } from "./report.vm";
 
 const ReportFilter = ({ imgUrl }: { imgUrl: string }) => {
     const [showFilter, setShowFilter] = useState<boolean>(true);
-    const [fromDate, setFromDate] = useState(new Date());
-    const [toDate, setToDate] = useState(new Date());
 
-    const { generateReportContent, activeHeaders, onHeaderSelect, setLoading } =
-        useContext(ReportVMContext);
+    const {
+        generateReportContent,
+        activeHeaders,
+        onHeaderSelect,
+        setLoading,
+        editorState,
+        fromDate,
+        toDate,
+        setFromDate,
+        setToDate,
+    } = useContext(ReportVMContext);
 
-    const handleGenerateReport = () =>{
-        setLoading(true);
-        generateReportContent(imgUrl, fromDate, toDate);
-    }
+    const handleGenerateReport = () => {
+        const alert = "This will remove your previous Data";
+        if (
+            !editorState.getCurrentContent().hasText() ||
+            confirm(alert) == true
+        ) {
+            setLoading(true);
+            generateReportContent(imgUrl, fromDate, toDate);
+        }
+    };
 
     return (
         <div className="w-1/3 py-4 px-6 flex flex-col items-center mt-12 ml-6 mb-96 border-2 drop-shadow-lg rounded-[24px]">
@@ -35,7 +48,7 @@ const ReportFilter = ({ imgUrl }: { imgUrl: string }) => {
                         showFilter ? "max-h-[100vh]" : "max-h-0"
                     } overflow-hidden transition-all duration-300 m-3`}
                 >
-                    {activeHeaders.map((header: any, index:number) => (
+                    {activeHeaders.map((header: any, index: number) => (
                         <Input
                             key={index}
                             label={header.label}

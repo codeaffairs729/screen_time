@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import {
     ContentState,
     convertFromHTML,
@@ -9,6 +9,10 @@ import html2canvas from "html2canvas";
 import { format } from "date-fns";
 import { convertToHTML } from "draft-convert";
 import jsPDF from "jspdf";
+import { useHttpCall } from "common/hooks";
+import Http from "common/http";
+import toast from "react-hot-toast";
+import { OrganisationDetailVMContext } from "pages/organisation/organisation_detail.vm";
 
 type Header = {
     label: string;
@@ -68,12 +72,16 @@ const formatDate = (date: Date) =>
 
 const getReportDate = (fromDate: Date, toDate: Date) => {
     return format(fromDate, "dd-MM-yyyy") === format(toDate, "dd-MM-yyyy")
-        ? `<strong>\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t${formatDate(fromDate)}</strong><br/>`
-        : `<strong>\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t${formatDate(fromDate)}</strong> - <strong>${formatDate(
-              toDate
-          )}</strong><br/>`;
+        ? `<strong>\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t${formatDate(
+              fromDate
+          )}</strong><br/>`
+        : `<strong>\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t${formatDate(
+              fromDate
+          )}</strong> - <strong>${formatDate(toDate)}</strong><br/>`;
 };
-
+// const getReportTitle = () =>{
+//     return `\t\t\t\t\tDataset Insights Report<br/>`
+// }
 const getImageCanvas = (src: any) =>
     `<figure><img src="${src}"/></figure></br>`;
 
@@ -101,6 +109,7 @@ const headerSelected = (
         .join("");
 
 const ReportVM = () => {
+    const { organisation } = useContext(OrganisationDetailVMContext);
     const [downloadRef, setDownloadRef] = useState<any>();
     const [selectedHeaders, setSelectedHeaders] = useState<string[]>([]);
     const [activeHeaders, setActiveHeaders] = useState<Header[]>(HEADER);
@@ -108,11 +117,18 @@ const ReportVM = () => {
         EditorState.createEmpty()
     );
     const [previewContent, setPreviewContent] = useState("");
-    const [loading , setLoading] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [fromDate, setFromDate] = useState(new Date());
+    const [toDate, setToDate] = useState(new Date());
 
     useEffect(() => {
         setPreviewContent(formatPreviewData());
     }, [editorState]);
+
+    // useEffect(() => {
+    //     fetchApiFirst();
+    //     fetchApiSecond();
+    // }, [fromDate, toDate]);
 
     const onHeaderSelect = (e: any) => {
         let updatedActiveHeaders: Header[] = [];
@@ -187,6 +203,61 @@ const ReportVM = () => {
 
         return html;
     };
+    const {
+        execute: executeFetchApiFirst,
+        data: dataApiFirst,
+        isLoading: isFetchApiFirst,
+    } = useHttpCall<{ [key: string]: any }>({});
+
+    const fetchApiFirst = () =>
+        executeFetchApiFirst(
+            () => {
+                return Http.get(
+                    `/v1/data_sources/${organisation?.uuid}/?from=${format(
+                        fromDate,
+                        "dd-MM-yyyy"
+                    )}&to=${format(toDate, "dd-MM-yyyy")}`
+                );
+            },
+            {
+                postProcess: (res: any) => {
+                    return res;
+                },
+                onError: (e) => {
+                    toast.error(
+                        "Something went wrong while fetching organisation download metrics."
+                    );
+                },
+            }
+        );
+
+    const {
+        execute: executeFetchApiSecond,
+        data: dataApiSecond,
+        isLoading: isFetchApiSecond,
+    } = useHttpCall<{ [key: string]: any }>({});
+
+    const fetchApiSecond = () =>
+        executeFetchApiSecond(
+            () => {
+                return Http.get(
+                    `/v1/data_sources/${organisation?.uuid}/?from=${format(
+                        fromDate,
+                        "dd-MM-yyyy"
+                    )}&to=${format(toDate, "dd-MM-yyyy")}`
+                );
+            },
+            {
+                postProcess: (res: any) => {
+                    return res;
+                },
+                onError: (e) => {
+                    toast.error(
+                        "Something went wrong while fetching organisation download metrics."
+                    );
+                },
+            }
+        );
 
     return {
         generateReportContent,
@@ -202,6 +273,13 @@ const ReportVM = () => {
         previewContent,
         loading,
         setLoading,
+        fromDate,
+        setFromDate,
+        toDate,
+        setToDate,
+        isFetchApiFirst,
+        isFetchApiSecond,
+
     };
 };
 
@@ -221,6 +299,11 @@ interface IReportVMContext {
     previewContent: string;
     loading: Boolean;
     setLoading: Function;
+    fromDate: Date;
+    setFromDate: Function;
+    toDate: Date;
+    setToDate: Function;
+    fetchApiFirst: Function;
 }
 
 export const ReportVMContext = createContext<IReportVMContext>(

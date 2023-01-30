@@ -31,7 +31,7 @@ export enum qualityInsights {
 export enum download {
     by_region,
     by_time,
-    by_user_type,
+    by_role,
 }
 
 export interface SearchTermType {
