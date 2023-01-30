@@ -32,7 +32,7 @@ const DatasetQualityInsightsBody = () => {
     );
     const items = selectedLabel == 0 ? dataFileQuality : metaFileQuality;
     return (
-        <div className="flex flex-col">
+        <div className="grid grid-cols-2 gap-4 mt-10">
             {items.map((item: any, index: number) => (
                 <FileQuality item={item} key={index} />
             ))}
@@ -51,8 +51,12 @@ const FileQuality = ({ item }: { item: any }) => {
                 labelClass="!text-lg text-dtech-dark-grey"
                 starClassName="!w-6 !h-6 text-[#5F5F63]"
             />
-            <span className="mr-2">{item.total}</span>
-            <span>{item.ratingLabel}</span>
+            {item.total &&
+                <div>
+                    <span className="mx-2">({item.total}</span>
+                    <span>{item.ratingLabel})</span>
+                </div>
+            }
         </div>
     );
 };

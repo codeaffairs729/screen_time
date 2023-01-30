@@ -12,7 +12,6 @@ const ITEMS: MenuItemType[] = [
     { label: "by_region" },
     { label: "by_time" },
     { label: "by_role" },
-    { label: "by_sector" },
 ];
 const DatasetDownloadMetricsHead = () => {
     const [selectedLabel, setSelectedLabel] = useState(ITEMS[0].label);
@@ -34,7 +33,10 @@ const DatasetDownloadMetricsHead = () => {
             labelClasses="!text-lg"
             menuItems={menuItems}
             label={
-                <DatasetLabel labelPrefix="Download metrics:" label={selectedLabel} />
+                <DatasetLabel
+                    labelPrefix="Download metrics:"
+                    label={selectedLabel}
+                />
             }
         />
     );

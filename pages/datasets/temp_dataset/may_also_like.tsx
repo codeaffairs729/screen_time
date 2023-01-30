@@ -1,7 +1,7 @@
 import ErrorAlert from "components/UI/alerts/error_alert";
 import Loader from "components/UI/loader";
 import Dataset from "models/dataset.model.v4";
-import { ReactNode, useContext, useState } from "react";
+import { ReactNode, useContext} from "react";
 import useSWR from "swr";
 import { DatasetDetailVMContext } from "../dataset_detail.vm";
 import DatasetStats from "models/dataset_stats.model";
@@ -34,13 +34,33 @@ const MayAlsoLike = () => {
      */
     const { fectchStats, stats, isFetchingStats } = SearchVM();
 
-    const searchTerm = dataset?.detail.topics
-        .slice(0, 5)
-        .filter((t) => t)
-        .map((t) => encodeURIComponent(t))
-        .join(",");
-    const { data: datasets, error } = useSWR(
-        `${process.env.NEXT_PUBLIC_PUBLIC_API_ROOT}/v4/datasets/?search_query=${searchTerm}&page_size=20&page_num=1`,
+    // const searchTerm = dataset?.detail.topics
+    //     .slice(0, 5)
+    //     .filter((t) => t)
+    //     .map((t) => encodeURIComponent(t))
+    //     .join(",");
+    // const { data: datasets, error } = useSWR(
+    //     `${process.env.NEXT_PUBLIC_PUBLIC_API_ROOT}/v4/datasets/?search_query=${searchTerm}&page_size=20&page_num=1`,
+    //     (url: string) =>
+    //         fetch(url)
+    //             .then((res) => res.json())
+    //             .then((res) => {
+    //                 const datasets = Dataset.fromJsonList(
+    //                     res[0]["user_search"][0]["results"]
+    //                         .slice(0, 10)
+    //                         .filter((ds: any) => ds["id"] != dataset?.["id"])
+    //                 );
+    //                 const datasetIds = datasets
+    //                     .filter((id: any) => id)
+    //                     .map((dataset) => dataset.id);
+    //                 if (datasetIds.length) {
+    //                     fectchStats(datasetIds);
+    //                 }
+    //                 return datasets;
+    //             })
+    // );
+    const { data: datasetsByCategory, error: errorByCategory } = useSWR(
+        `${process.env.NEXT_PUBLIC_PUBLIC_API_V5_ROOT}/v5/datasets/related-by-jaccard-similarity/7`,
         (url: string) =>
             fetch(url)
                 .then((res) => res.json())
@@ -59,9 +79,30 @@ const MayAlsoLike = () => {
                     return datasets;
                 })
     );
-    const isLoading = (!datasets && !error) || isFetchingStats;
+    const { data: datasetsByDescription, error: errorByDescription } = useSWR(
+        `${process.env.NEXT_PUBLIC_PUBLIC_API_V5_ROOT}/v5/datasets/related-by-semantic-similarity/7`,
+        (url: string) =>
+            fetch(url)
+                .then((res) => res.json())
+                .then((res) => {
+                    const datasets = Dataset.fromJsonList(
+                        res[0]["user_search"][0]["results"]
+                            .slice(0, 10)
+                            .filter((ds: any) => ds["id"] != dataset?.["id"])
+                    );
+                    const datasetIds = datasets
+                        .filter((id: any) => id)
+                        .map((dataset) => dataset.id);
+                    if (datasetIds.length) {
+                        fectchStats(datasetIds);
+                    }
+                    return datasets;
+                })
+    );
 
-    if (error) {
+    const isLoading = (!datasetsByCategory && !datasetsByDescription && !errorByCategory && !errorByDescription) || isFetchingStats;
+
+    if (errorByCategory || errorByDescription) {
         return (
             <ErrorAlert
                 className="m-2"
@@ -87,11 +128,13 @@ const MayAlsoLike = () => {
                 </Tab.List>
                 <Tab.Panels>
                     <Tab.Panel>
-                        <div className=" mt-5 h-[44rem] overflow-auto"><DatasetList datasets={datasets} stats={stats} /></div>
+                        <div className=" mt-5 h-[44rem] overflow-auto">
+                            <DatasetList datasets={datasetsByCategory} stats={stats} />
+                        </div>
                     </Tab.Panel>
                     <Tab.Panel>
                         <div className=" mt-5 h-[44rem] overflow-auto">
-                                    Dataset list baased on Description
+                            <DatasetList datasets={datasetsByDescription} stats={stats} />
                         </div>
                     </Tab.Panel>
                 </Tab.Panels>

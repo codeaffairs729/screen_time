@@ -1,4 +1,3 @@
-import Http from "common/http";
 import Dataset from "models/dataset.model";
 import {
     createContext,
@@ -7,7 +6,6 @@ import {
     useState,
     Dispatch,
 } from "react";
-import useSWR from "swr";
 
 export const formatLabel = (label: string) => {
     const res = label.replaceAll("_", " ");
@@ -22,7 +20,6 @@ export enum download {
     by_region,
     by_time,
     by_role,
-    by_sector,
 }
 export enum insightTabIndex {
     data_quality,
