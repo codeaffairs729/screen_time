@@ -59,7 +59,7 @@ const MayAlsoLike = () => {
     //                 return datasets;
     //             })
     // );
-    const { data: datasetsByCategory, error: errorByCategory } = useSWR(
+    const { data: datasetsByCategory=[], error: errorByCategory } = useSWR(
         `${process.env.NEXT_PUBLIC_PUBLIC_API_V5_ROOT}/v5/datasets/related-by-jaccard-similarity/7`,
         (url: string) =>
             fetch(url)
@@ -79,7 +79,7 @@ const MayAlsoLike = () => {
                     return datasets;
                 })
     );
-    const { data: datasetsByDescription, error: errorByDescription } = useSWR(
+    const { data: datasetsByDescription=[] , error: errorByDescription } = useSWR(
         `${process.env.NEXT_PUBLIC_PUBLIC_API_V5_ROOT}/v5/datasets/related-by-semantic-similarity/7`,
         (url: string) =>
             fetch(url)
@@ -124,7 +124,7 @@ const MayAlsoLike = () => {
             <Tab.Group>
                 <Tab.List>
                     <TabHeader>Related by category</TabHeader>
-                    <TabHeader>Ralated by description</TabHeader>
+                    <TabHeader>Related by description</TabHeader>
                 </Tab.List>
                 <Tab.Panels>
                     <Tab.Panel>

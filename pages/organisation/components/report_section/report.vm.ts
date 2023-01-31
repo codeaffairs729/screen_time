@@ -213,7 +213,7 @@ const ReportVM = () => {
         executeFetchApiFirst(
             () => {
                 return Http.get(
-                    `/v1/data_sources/${organisation?.uuid}/?from=${format(
+                    `/v1/data_sources/${organisation?.uuid}/first/?from=${format(
                         fromDate,
                         "dd-MM-yyyy"
                     )}&to=${format(toDate, "dd-MM-yyyy")}`

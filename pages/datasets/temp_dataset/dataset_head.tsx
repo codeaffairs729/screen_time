@@ -3,12 +3,11 @@ import ResultCardAction from "components/UI/result_card_action";
 import { useContext } from "react";
 import { DateTime } from "luxon";
 import { DatasetDetailVMContext } from "../dataset_detail.vm";
-import Dataset from "pages/search/components/dataset";
 import LabelledRow from "components/dataset/labelled_row";
 import { BsFillEyeFill, BsHeartFill } from "react-icons/bs";
 import { MdFileDownload } from "react-icons/md";
 import Image from "next/image";
-// import DisplaySearch from "public/"
+import displaySearch from "public/images/icons/display_search_result.svg"
 const DatasetHead = () => {
     const vm = useContext(DatasetDetailVMContext);
     if (!vm.dataset) {
@@ -186,7 +185,7 @@ const DatasetStat = ({ stats }: { stats: any }) => {
                     </div>
                     <div className="flex justify-center items-center mr-6">
                         <Image
-                            src="/images/icons/dataset.svg"
+                            src={displaySearch}
                             height={20}
                             width={20}
                         />

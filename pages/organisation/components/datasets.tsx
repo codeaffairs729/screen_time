@@ -21,11 +21,11 @@ const DisplayDataset = ({
 }) => (
     <div>
         <Link href={`/datasets/${id}`}>
-            <span className="text-sm font-medium text-dtech-dark-grey cursor-pointer">
+            <span className="text-sm font-medium text-dtech-dark-grey cursor-pointer break-all">
                 {title}
             </span>
         </Link>
-        <span className="text-sm text-dtech-dark-grey limit-line">
+        <span className="text-sm text-dtech-dark-grey limit-line break-all">
             {description}
         </span>
     </div>
@@ -74,6 +74,7 @@ const Datasets = () => {
                                 <div className="px-8 pb-4">
                                     {!isFetchingOrganisationRankedDatasets ? (
                                         <Table
+                                            tableClass="w-[43rem]"
                                             // onScrollEnd={importOrgDatasets}
                                             tableHeaders={
                                                 key == "all_datasets"
