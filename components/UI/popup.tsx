@@ -5,8 +5,8 @@ type PopupProps = {
 };
 const Popup = ({ href, dataset }: PopupProps) => {
     const Message = `Checkout the datasets from ${dataset} listed on Dtechtive`;
-    const LinkedinURL = `http://www.linkedin.com/shareArticle?mini=true&title=${Message}&url=`;
-    const TwitterURL = `https://twitter.com/intent/tweet?text=${Message}&url=`;
+    const LinkedinURL = `http://www.linkedin.com/shareArticle?mini=true&url=`;
+    const TwitterURL = `https://twitter.com/intent/tweet?url=`;
     const FacebookURL = `https://www.facebook.com/sharer.php?display=page&u=`;
     return (
         <div
@@ -28,7 +28,7 @@ const Popup = ({ href, dataset }: PopupProps) => {
                 <BsTwitter className="h-6 w-8 ml-1 my-2 cursor-pointer" />
             </a>
             <a
-                href={`${FacebookURL}${process.env.NEXT_PUBLIC_WEBCLIENT_ROOT}${href}&t=${Message}`}
+                href={`${FacebookURL}${process.env.NEXT_PUBLIC_WEBCLIENT_ROOT}${href}`}
                 target="_blank"
                 rel="noreferrer"
             >
