@@ -17,7 +17,7 @@ const CalendarSelect = ({
     setFromDate?: any;
     setToDate?: any;
 }) => {
-    const [startDate, setStartDate] = useState(new Date());
+    // const [startDate, setStartDate] = useState(new Date());
     const [dateSelect, setDateSelect] = useState(false);
     const [select, setSelected] = useState(false);
     const myRef = useRef(null);
@@ -38,30 +38,39 @@ const CalendarSelect = ({
     }
     const handleChange = (e: any) => {
         setSelected(false);
-        setStartDate(e);
-    };
-    useEffect(() => {
         if (label == "From") {
-            if (
-                format(startDate, "dd-MM-yyyy") <= format(toDate, "dd-MM-yyyy")
-            ) {
-                setFromDate(startDate);
+            if ((toDate.getTime() - e.getTime()) / (1000 * 3600 * 24) >=0) {
+                setFromDate(e);
             } else {
                 setFromDate(toDate);
                 toast.error("Please select correct From Date");
             }
         } else {
-            if (
-                format(fromDate, "dd-MM-yyyy") <=
-                format(startDate, "dd-MM-yyyy")
-            ) {
-                setToDate(startDate);
+            if ((e.getTime() - fromDate.getTime()) / (1000 * 3600 * 24) >=0) {
+                setToDate(e);
             } else {
                 setToDate(fromDate);
                 toast.error("Please select correct To Date");
             }
         }
-    }, [startDate]);
+    };
+    // useEffect(() => {
+    //     if (label == "From") {
+    //         if (startDate.getTime() <= toDate.getTime()) {
+    //             setFromDate(startDate);
+    //         } else {
+    //             setFromDate(toDate);
+    //             toast.error("Please select correct From Date");
+    //         }
+    //     } else {
+    //         if (fromDate.getTime() <= startDate.getTime()) {
+    //             setToDate(startDate);
+    //         } else {
+    //             setToDate(fromDate);
+    //             toast.error("Please select correct To Date");
+    //         }
+    //     }
+    // }, [startDate]);
     return (
         <div className="flex  pl-5" ref={myRef}>
             <div
@@ -88,7 +97,7 @@ const CalendarSelect = ({
             {select && (
                 <div>
                     <Calander
-                        startDate={startDate}
+                        startDate={label == "From" ? fromDate : toDate}
                         handleChange={handleChange}
                         setDateSelect={setDateSelect}
                     />

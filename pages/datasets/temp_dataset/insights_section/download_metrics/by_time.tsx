@@ -1,32 +1,33 @@
 import BarGraph from "components/UI/BarGraph";
+import LineGraph from "components/UI/line_graph";
 import RangeSelector from "components/UI/range_selector";
 import { DatasetDetailVMContext } from "pages/datasets/dataset_detail.vm";
 import { useContext } from "react";
-const barDataKey = "download_per_month";
+
 const timeMetrics = [
     {
         month: "Aug",
-        download_per_month: 10,
+        download: 10,
     },
     {
         month: "Sep",
-        download_per_month: 12,
+        download: 12,
     },
     {
         month: "Oct",
-        download_per_month: 12,
+        download: 12,
     },
     {
         month: "Nov",
-        download_per_month: 13,
+        download: 13,
     },
     {
         month: "Dec",
-        download_per_month: 14,
+        download: 14,
     },
     {
         month: "Jan",
-        download_per_month: 15,
+        download: 15,
     },
 ];
 const ByTime = () => {
@@ -44,8 +45,16 @@ const ByTime = () => {
                     setToDate={setToDate}
                 />
             </div>
-            <div>
-                <BarGraph
+            <div className="mt-8 block h-[44rem] overflow-y-scroll no-scrollbar whitespace-nowrap">
+                <LineGraph
+                    data={timeMetrics}
+                    height={500}
+                    width={1025}
+                    datakeyX="month"
+                    datakeyY="download"
+                    className=""
+                />
+                {/* <BarGraph
                     data={timeMetrics}
                     strokeWidthAxis={0.4}
                     strokeWidthLabelList={0}
@@ -65,7 +74,7 @@ const ByTime = () => {
                     labelListPosition="insideTop"
                     labellistTopPadding={6}
                     className={"ml-[-10px]"}
-                />
+                /> */}
             </div>
         </div>
     );
