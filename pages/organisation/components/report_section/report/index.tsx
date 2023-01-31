@@ -5,7 +5,7 @@ import PieGraph from "components/UI/PieGraph";
 import BarGraph from "components/UI/BarGraph";
 import Table from "../../table";
 import { Tab } from "@headlessui/react";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import {
     DownloadByTime,
     OrganisationDetailVMContext,
@@ -20,8 +20,11 @@ const TIME_HEADERS = ["Count", "Month"];
 const PIE_HEADER = ["name", "value"];
 
 const Report = () => {
-    const { downloadMetrics } = useContext(OrganisationDetailVMContext);
+    const { downloadMetrics,fetchDownloadMetrics } = useContext(OrganisationDetailVMContext);
     const { loading } = useContext(ReportVMContext);
+    useEffect(() => {
+        fetchDownloadMetrics();
+    }, []);
     const { downloadByTime = [], downloadByUseCase = [] } =
         downloadMetrics || {};
     const timeMetrics = downloadByTime.map((data: DownloadByTime) => ({
@@ -81,19 +84,24 @@ const Report = () => {
                     id="pie"
                     className="flex absolute justify-center items-center flex-col z-[-10]"
                 >
-                    <PieGraph
-                        data={downloadByUseCase}
-                        isAnimationActive={false}
-                        radius="60%"
-                    />
-                    <Table
-                        tableHeaders={PIE_HEADER}
-                        tableData={pieData}
-                        headerClass="text-[17px] font-medium bg-[#F5F5F5] "
-                        tableClass="w-[80%] ml-20 text-left table-fixed"
-                        cellPadding={20}
-                        tableRow="text-[17px]"
-                    />
+                    {downloadByUseCase.length && (
+                        <>
+                            <PieGraph
+                                data={downloadByUseCase}
+                                isAnimationActive={false}
+                                radius="60%"
+                            />
+
+                            <Table
+                                tableHeaders={PIE_HEADER}
+                                tableData={pieData}
+                                headerClass="text-[17px] font-medium bg-[#F5F5F5] "
+                                tableClass="w-[80%] ml-20 text-left table-fixed"
+                                cellPadding={20}
+                                tableRow="text-[17px]"
+                            />
+                        </>
+                    )}
                 </div>
             </div>
             <Tab.Group>
