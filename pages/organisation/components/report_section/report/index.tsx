@@ -22,66 +22,78 @@ const TIME_HEADERS = ["Count", "Month"];
 const PIE_HEADER = ["name", "value"];
 
 const Report = () => {
-    const { downloadMetrics,fetchDownloadMetrics} = useContext(OrganisationDetailVMContext);
+    const { downloadMetrics,fetchDownloadMetrics,} = useContext(OrganisationDetailVMContext);
     const { loading, fromDate, toDate  } = useContext(ReportVMContext);
     useEffect(() => {
         fetchDownloadMetrics();
     }, []);
     const { downloadByTime = [], downloadByUseCase = [] } =
         downloadMetrics || {};
-        const timeMetrics = downloadByTime.map((data: DownloadByTime) => ({
+        const downloadByTimeData = downloadByTime
+        .filter(
+            (data: any) =>
+                new Date(data?.date) >= new Date(fromDate) &&
+                new Date(data?.date) <= new Date(toDate)
+        )
+        .map((data: DownloadByTime) => {
+            const date = new Date(data?.date);
+            const month = date.toLocaleString("en", { month: "short" });
+            const year = new Date(data?.date).getFullYear();
+            return [[data.count], [`${month} ${year}`]];
+        });
+
+    const timeMetrics = downloadByTime
+        .filter(
+            (data: any) =>
+                new Date(data?.date) >= new Date(fromDate) &&
+                new Date(data?.date) <= new Date(toDate)
+        )
+        .map((data: DownloadByTime) => ({
             month: new Date(data?.date).toLocaleString("en", {
                 month: "short",
-                year: "numeric"
+                year: "numeric",
             }),
             download: data.count,
         }));
-    
-        let startDate = fromDate;
-        let endDate = toDate;
-    
-        const getdatebetween = (startDate: any, endDate: any) => {
-            let dates = [];
-            let currentDate = new Date(startDate);
-            let i = 0;
-            while (currentDate <= new Date(endDate)) {
-                let downloadTime = new Date(downloadByTime[i]?.date);
-                if (downloadTime.getTime() === currentDate.getTime()) {
-                    dates.push({
-                        date: format(currentDate, "yyyy-MM-dd"),
-                        count: downloadByTime[i]?.count,
-                    });
-                    currentDate.setDate(currentDate.getDate() + 1);
-                    i++;
-                } else {
-                    dates.push({
-                        date: format(currentDate, "yyyy-MM-dd"),
-                        count: 0,
-                    });
-                    currentDate.setDate(currentDate.getDate() + 1);
-                }
-            }
-            return dates;
-        };
-        const lineMatrics = getdatebetween(startDate, endDate).map((data) => ({
-            weekDay: new Date(data?.date).toLocaleString("en", {
-                weekday: "long",
-                month: "short",
-                year: "numeric"
-            }),
-            download: data.count,
-        }));
-    
-        const differenceInDays: number =
-            (toDate.getTime() - fromDate.getTime()) / (1000 * 3600 * 24);
-    
-    const downloadByTimeData = downloadByTime.map((data: DownloadByTime) => {
-        const date = new Date(data?.date);
-        const month = date.toLocaleString("en", { month: "short" });
-        const year = new Date().getFullYear();
 
-        return [[data.count], [`${month} ${year}`]];
-    });
+    const startDate = fromDate;
+    const endDate = toDate;
+
+    const getdatebetween = (startDate: any, endDate: any) => {
+        let dates = [];
+        let currentDate = new Date(startDate);
+        let i = 0;
+        while (currentDate <= new Date(endDate)) {
+            let downloadTime = new Date(downloadByTime[i]?.date);
+            if (downloadTime.getTime() === currentDate.getTime()) {
+                dates.push({
+                    date: format(currentDate, "yyyy-MM-dd"),
+                    count: downloadByTime[i]?.count,
+                });
+                currentDate.setDate(currentDate.getDate() + 1);
+                i++;
+            } else {
+                dates.push({
+                    date: format(currentDate, "yyyy-MM-dd"),
+                    count: 0,
+                });
+                currentDate.setDate(currentDate.getDate() + 1);
+            }
+        }
+        return dates;
+    };
+    const lineMatrics = getdatebetween(startDate, endDate).map((data) => ({
+        weekDay: new Date(data?.date).toLocaleString("en", {
+            weekday: "long",
+            month: "short",
+            year: "numeric",
+        }),
+        download: data.count,
+    }));
+
+    const differenceInDays: number =
+        (toDate.getTime() - fromDate.getTime()) / (1000 * 3600 * 24);
+
     const pieData = downloadByUseCase.map((data: any, index: number) => [
         data.name,
         data.value,
@@ -107,20 +119,7 @@ const Report = () => {
                     datakeyX={differenceInDays > 90 ? "month" : "weekDay"}
                     datakeyY="download"
                     className=""
-                />
-                    {/* <BarGraph
-                        data={timeMetrics}
-                        width={400}
-                        height={200}
-                        strokeWidthAxis={2}
-                        strokeWidthLabelList={0}
-                        className="font-medium my-2"
-                        XleftPadding={20}
-                        XrightPadding={30}
-                        barDatakey={"download_per_month"}
-                        labelListPosition="insideTop"
-                        isAnimationActive={false}
-                    /> */}
+                    />
                     <Table
                         tableHeaders={TIME_HEADERS}
                         tableData={downloadByTimeData}

@@ -1,5 +1,6 @@
 import Dataset from "models/dataset.model";
 import clsx from "clsx";
+import InfoAlert from "components/UI/alerts/info_alert";
 
 const Table = ({
     tableHeaders,
@@ -12,11 +13,7 @@ const Table = ({
     tableRow,
 }: any) => {
     if (!tableData.length) {
-        return (
-            <div className="flex flex-row items-center bg-blue-200 p-5 rounded border-b-2 border-blue-300 ml-20 mr-20">
-                <span className=" ml-auto mr-auto">There is no data to show</span>
-            </div>
-        );
+        return <InfoAlert message="There is no data to show" className="mt-1 ml-20 mr-32" messageClassName="ml-56 font-semibold !text-lg !text-blue-800" divClassName="flex flex-row" />;
     }
     return (
         <div className="my-4">

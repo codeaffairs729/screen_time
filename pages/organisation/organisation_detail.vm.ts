@@ -79,14 +79,16 @@ export const getSelectedLabelIndex = (label: string, types: any) => {
 const OrganisationDetailVM = (
     initialOrganisationData: Organisation | undefined
 ) => {
+    const currentDate = new Date();
+    const oneYearAgoDate = new Date(currentDate.setFullYear(currentDate.getFullYear()-1));
     const [organisation, setOrganisation] = useState(initialOrganisationData);
     const [selectedQualityInsights, setSelectedQualityInsights] =
         useState<number>(0);
     const [selectedSearchTerm, setSelectedSearchTerm] = useState<number>(10);
     const [selectedDownload, setSelectedDownload] = useState<number>(0);
     const [orgDatasetsCount, setOrgDatasetsCount] = useState(10);
-    const [fromDate, setFromDate] = useState(new Date());
-    const [toDate, setToDate] = useState(new Date());
+    const [fromDate, setFromDate] = useState(oneYearAgoDate);
+    const [toDate, setToDate] = useState(currentDate);
     const [downloadMetrics, setDownloadMetrics] = useState<any>();
 
     // const {

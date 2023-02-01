@@ -3,9 +3,13 @@ import clsx from "clsx";
 const InfoAlert = ({
   message,
   className = "",
+  messageClassName ="",
+  divClassName = ""
 }: {
   message: string;
   className?: string;
+  messageClassName?: string;
+  divClassName?: string;
 }) => {
   return (
     <div
@@ -25,9 +29,9 @@ const InfoAlert = ({
           </svg>
         </span>
       </div>
-      <div className="ml-4">
+      <div className={clsx("ml-4",divClassName)}>
         <div className="font-semibold text-lg text-blue-800">Info</div>
-        <div className="text-sm text-blue-600">{message}</div>
+        <div className={clsx("text-sm text-blue-600",messageClassName)}>{message}</div>
       </div>
     </div>
   );
