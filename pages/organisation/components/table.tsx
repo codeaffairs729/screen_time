@@ -11,6 +11,13 @@ const Table = ({
     onScrollEnd,
     tableRow,
 }: any) => {
+    if (!tableData.length) {
+        return (
+            <div className="flex flex-row items-center bg-blue-200 p-5 rounded border-b-2 border-blue-300 ml-20 mr-20">
+                <span className=" ml-auto mr-auto">There is no data to show</span>
+            </div>
+        );
+    }
     return (
         <div className="my-4">
             <table
@@ -38,7 +45,7 @@ const Table = ({
                             key={index}
                             className="py-2 border border-dtech-middle-grey"
                         >
-                            {data.map((col: any, index: number) => (
+                            {data?.map((col: any, index: number) => (
                                 <td
                                     key={index}
                                     className={clsx(

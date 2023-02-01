@@ -229,7 +229,7 @@ const OrganisationDetailVM = (
                 return Http.get(
                     `/v1/metrics/provider/${
                         organisation?.uuid
-                    }/by_time/?from=${format(
+                    }/by_time?from=${format(
                         fromDate,
                         "yyyy-MM-dd"
                     )}&to=${format(toDate, "yyyy-MM-dd")}`
@@ -250,7 +250,6 @@ const OrganisationDetailVM = (
                 },
             }
         );
-    console.log(downloadMetrics, "downloadMetrics");
 
     const {
         data: topDownloaded,

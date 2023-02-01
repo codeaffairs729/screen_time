@@ -21,24 +21,35 @@ const ByTime = () => {
 
     const { downloadByTime = [] } = downloadMetrics || {};
 
-    const downloadByTimeData = downloadByTime.map((data: DownloadByTime) => {
-        const date = new Date(data?.date);
-        const month = date.toLocaleString("en", { month: "short" });
-        const year = new Date().getFullYear();
+    const downloadByTimeData = downloadByTime
+        .filter(
+            (data: any) =>
+                new Date(data?.date) >= new Date(fromDate) &&
+                new Date(data?.date) <= new Date(toDate)
+        )
+        .map((data: DownloadByTime) => {
+            const date = new Date(data?.date);
+            const month = date.toLocaleString("en", { month: "short" });
+            const year = new Date(data?.date).getFullYear();
+            return [[data.count], [`${month} ${year}`]];
+        });
 
-        return [[data.count], [`${month} ${year}`]];
-    });
-    console.log("downloadByTime :",downloadByTime)
-    const timeMetrics = downloadByTime.map((data: DownloadByTime) => ({
-        month: new Date(data?.date).toLocaleString("en", {
-            month: "short",
-            year: "numeric"
-        }),
-        download: data.count,
-    }));
+    const timeMetrics = downloadByTime
+        .filter(
+            (data: any) =>
+                new Date(data?.date) >= new Date(fromDate) &&
+                new Date(data?.date) <= new Date(toDate)
+        )
+        .map((data: DownloadByTime) => ({
+            month: new Date(data?.date).toLocaleString("en", {
+                month: "short",
+                year: "numeric",
+            }),
+            download: data.count,
+        }));
 
-    let startDate = fromDate;
-    let endDate = toDate;
+    const startDate = fromDate;
+    const endDate = toDate;
 
     const getdatebetween = (startDate: any, endDate: any) => {
         let dates = [];
@@ -67,7 +78,7 @@ const ByTime = () => {
         weekDay: new Date(data?.date).toLocaleString("en", {
             weekday: "long",
             month: "short",
-            year: "numeric"
+            year: "numeric",
         }),
         download: data.count,
     }));
@@ -116,7 +127,7 @@ const ByTime = () => {
                     labellistTopPadding={6}
                     className={"ml-[-10px]"}
                 /> */}
-                <div className="mt-8">
+<div className="mt-8">
                     <Table
                         tableHeaders={TIME_HEADERS}
                         tableData={downloadByTimeData}

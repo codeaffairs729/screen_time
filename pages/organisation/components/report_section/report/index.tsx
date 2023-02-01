@@ -12,6 +12,8 @@ import {
 } from "pages/organisation/organisation_detail.vm";
 import Loader from "components/UI/loader";
 import { ReportVMContext } from "../report.vm";
+import LineGraph from "components/UI/line_graph";
+import { format } from "date-fns";
 
 const EditReport = dynamic(() => import("./editReport"), {
     ssr: false,
@@ -20,19 +22,59 @@ const TIME_HEADERS = ["Count", "Month"];
 const PIE_HEADER = ["name", "value"];
 
 const Report = () => {
-    const { downloadMetrics,fetchDownloadMetrics } = useContext(OrganisationDetailVMContext);
-    const { loading } = useContext(ReportVMContext);
+    const { downloadMetrics,fetchDownloadMetrics} = useContext(OrganisationDetailVMContext);
+    const { loading, fromDate, toDate  } = useContext(ReportVMContext);
     useEffect(() => {
         fetchDownloadMetrics();
     }, []);
     const { downloadByTime = [], downloadByUseCase = [] } =
         downloadMetrics || {};
-    const timeMetrics = downloadByTime.map((data: DownloadByTime) => ({
-        month: new Date(data?.date).toLocaleString("en", {
-            month: "short",
-        }),
-        download_per_month: data.count,
-    }));
+        const timeMetrics = downloadByTime.map((data: DownloadByTime) => ({
+            month: new Date(data?.date).toLocaleString("en", {
+                month: "short",
+                year: "numeric"
+            }),
+            download: data.count,
+        }));
+    
+        let startDate = fromDate;
+        let endDate = toDate;
+    
+        const getdatebetween = (startDate: any, endDate: any) => {
+            let dates = [];
+            let currentDate = new Date(startDate);
+            let i = 0;
+            while (currentDate <= new Date(endDate)) {
+                let downloadTime = new Date(downloadByTime[i]?.date);
+                if (downloadTime.getTime() === currentDate.getTime()) {
+                    dates.push({
+                        date: format(currentDate, "yyyy-MM-dd"),
+                        count: downloadByTime[i]?.count,
+                    });
+                    currentDate.setDate(currentDate.getDate() + 1);
+                    i++;
+                } else {
+                    dates.push({
+                        date: format(currentDate, "yyyy-MM-dd"),
+                        count: 0,
+                    });
+                    currentDate.setDate(currentDate.getDate() + 1);
+                }
+            }
+            return dates;
+        };
+        const lineMatrics = getdatebetween(startDate, endDate).map((data) => ({
+            weekDay: new Date(data?.date).toLocaleString("en", {
+                weekday: "long",
+                month: "short",
+                year: "numeric"
+            }),
+            download: data.count,
+        }));
+    
+        const differenceInDays: number =
+            (toDate.getTime() - fromDate.getTime()) / (1000 * 3600 * 24);
+    
     const downloadByTimeData = downloadByTime.map((data: DownloadByTime) => {
         const date = new Date(data?.date);
         const month = date.toLocaleString("en", { month: "short" });
@@ -58,7 +100,15 @@ const Report = () => {
                     id="screenshot"
                     className="flex absolute justify-center items-center flex-col z-[-10]"
                 >
-                    <BarGraph
+                    <LineGraph
+                    data={differenceInDays > 90 ? timeMetrics : lineMatrics}
+                    height={500}
+                    width={1025}
+                    datakeyX={differenceInDays > 90 ? "month" : "weekDay"}
+                    datakeyY="download"
+                    className=""
+                />
+                    {/* <BarGraph
                         data={timeMetrics}
                         width={400}
                         height={200}
@@ -70,7 +120,7 @@ const Report = () => {
                         barDatakey={"download_per_month"}
                         labelListPosition="insideTop"
                         isAnimationActive={false}
-                    />
+                    /> */}
                     <Table
                         tableHeaders={TIME_HEADERS}
                         tableData={downloadByTimeData}
