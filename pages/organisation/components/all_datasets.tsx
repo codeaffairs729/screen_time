@@ -50,7 +50,7 @@ const AllDatasets = () => {
     return (
         <Accordian label={<ItemCard item={getItem("all_datasets")} />}>
             <div className="px-8 pb-4 h-[350px] w-full">
-                {Object.keys(organisationDatasets).length !== 0 &&
+                {organisationDatasets.length !== 0 &&
                 !isFetchingOrganisationDatasets ? (
                     <Table
                         onScrollEnd={importOrgDatasets}
@@ -59,7 +59,7 @@ const AllDatasets = () => {
                         tableHeaders={["Dataset"]}
                         tableData={getTableData(
                             "all_datasets",
-                            organisationDatasets["all_datasets"]
+                            organisationDatasets
                         )}
                         tableBodyClasses={"block h-[220px] overflow-auto"}
                         cellPadding={3}

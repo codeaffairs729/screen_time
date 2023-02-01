@@ -53,10 +53,6 @@ const Datasets = () => {
     //     );
     // }
 
-    const organisationDatasetTable = {
-        ...organisationRankedDatasets,
-    };
-
     return (
         <div className="ml-16">
             <div className="text-sm text-dtech-dark-grey">
@@ -64,7 +60,7 @@ const Datasets = () => {
             </div>
             <div>
                 <AllDatasets />
-                {Object.keys(organisationDatasetTable).map(
+                {Object.keys(organisationRankedDatasets).map(
                     (key: string, index: number) => {
                         return (
                             <Accordian
@@ -83,7 +79,7 @@ const Datasets = () => {
                                             }
                                             tableData={getTableData(
                                                 key,
-                                                organisationDatasetTable[key]
+                                                organisationRankedDatasets[key]
                                             )}
                                             tableBodyClasses={
                                                 key == "all_datasets"
@@ -117,7 +113,7 @@ const ItemCard = ({ item }: { item: { name: string; icon: ReactNode } }) => {
 };
 
 const getTableData = (key: string, datasets: any) =>
-    datasets.map((dataset: any, index: number) => {
+    datasets?.map((dataset: any, index: number) => {
         const datasetCell = (
             <DisplayDataset
                 id={dataset?.id}
