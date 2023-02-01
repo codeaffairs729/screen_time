@@ -27,7 +27,7 @@ const LineGraph = ({ width, height, data, datakeyX, datakeyY, className}: any) =
                 <XAxis dataKey={datakeyX} tick={false}>
                     <Label values="" />
                 </XAxis>
-                <YAxis tick={false}>
+                <YAxis tick={false} axisLine={false}>
                     <Label values="" />
                 </YAxis>
                 <Tooltip />
@@ -36,7 +36,10 @@ const LineGraph = ({ width, height, data, datakeyX, datakeyY, className}: any) =
                     type="monotone"
                     dataKey={datakeyY}
                     stroke="#3F0068"
-                    activeDot={{ r: 8 }}
+                    dot={{ stroke: '#3F0068', strokeWidth: 3, r: 4, strokeDasharray:''}}
+                    activeDot={{ r: 10 }}
+                    strokeWidth={2}
+                    isAnimationActive={false}
                 />
             </LineChart>
     );
