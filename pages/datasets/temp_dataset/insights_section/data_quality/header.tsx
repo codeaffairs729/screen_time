@@ -8,7 +8,7 @@ import {
 import { useContext, useState } from "react";
 import DatasetLabel from "../label";
 
-const ITEMS: MenuItemType[] = [{ label: "data_quality" }, { label: "metadata_quality" }];
+const ITEMS: MenuItemType[] = [{ label: "data_file" }, { label: "metadata_quality" }];
 
 const DatasetQualityInsightsHead = () => {
     const [selectedLabel, setSelectedLabel] = useState(ITEMS[0].label);

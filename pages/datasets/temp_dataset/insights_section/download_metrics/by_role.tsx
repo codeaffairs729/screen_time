@@ -1,13 +1,15 @@
 import PieGraph from "components/UI/PieGraph";
-const useCaseData = [
-    { name: "Data modelling", value: 400 },
-    { name: "Publications", value: 300 },
-    { name: "Planning", value: 200 },
-];
+import { DatasetDetailVMContext } from "pages/datasets/dataset_detail.vm";
+import { useContext } from "react";
+
 const ByRole = () => {
+    const { downloadMetrics } = useContext(DatasetDetailVMContext);
+
+    const { downloadByUseCase = [] } = downloadMetrics || {};
+    
     return (
         <div className="mr-24 mt-8 block h-[44rem] overflow-y-scroll no-scrollbar whitespace-nowrap">
-            <PieGraph data={useCaseData} />
+            <PieGraph data={downloadByUseCase} />
         </div>
     );
 };
