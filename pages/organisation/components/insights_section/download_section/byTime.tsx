@@ -1,5 +1,5 @@
 import BarGraph from "components/UI/BarGraph";
-import LineGraph from "components/UI/line_graph";
+// import LineGraph from "components/UI/line_graph";
 import RangeSelector from "components/UI/range_selector";
 import {
     DownloadByTime,
@@ -8,7 +8,10 @@ import {
 import { useContext, useState } from "react";
 import Table from "../../table";
 import { format } from "date-fns";
-
+import dynamic from "next/dynamic";
+const LineGraph = dynamic(() => import("components/UI/line_graph"), {
+    ssr: false,
+});
 const TIME_HEADERS = ["Count", "Month"];
 const barDataKey = "download_per_month";
 
@@ -25,16 +28,17 @@ const ByTime = () => {
 
         return [[data.count], [`${month} ${year}`]];
     });
-
+    console.log("downloadByTime :",downloadByTime)
     const timeMetrics = downloadByTime.map((data: DownloadByTime) => ({
         month: new Date(data?.date).toLocaleString("en", {
             month: "short",
+            year: "numeric"
         }),
         download: data.count,
     }));
 
-    let startDate = downloadByTime[0].date;
-    let endDate = downloadByTime[downloadByTime.length - 1].date;
+    let startDate = fromDate;
+    let endDate = toDate;
 
     const getdatebetween = (startDate: any, endDate: any) => {
         let dates = [];
@@ -61,7 +65,9 @@ const ByTime = () => {
     };
     const lineMatrics = getdatebetween(startDate, endDate).map((data) => ({
         weekDay: new Date(data?.date).toLocaleString("en", {
-            weekday: "short",
+            weekday: "long",
+            month: "short",
+            year: "numeric"
         }),
         download: data.count,
     }));

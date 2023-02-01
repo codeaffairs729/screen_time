@@ -189,7 +189,7 @@ const OrganisationDetailVM = (
         excuteFetchSearchTerms(
             () => {
                 return Http.get(
-                    `/v1/data_sources/${organisation?.uuid}/${selectedSearchTerm}/search_terms`
+                    `/v1/metrics/provider/${organisation?.uuid}/${selectedSearchTerm}`
                 );
             },
             {
@@ -214,7 +214,7 @@ const OrganisationDetailVM = (
         excuteFetchDownloadMetrics(
             () =>
                 Http.get(
-                    `/v1/data_sources/${organisation?.uuid}/download_metrics`
+                    `/v1/metrics/get_provider_metrics/${organisation?.uuid}`
                 ),
             {
                 postProcess: (res) => {
@@ -238,16 +238,14 @@ const OrganisationDetailVM = (
     const fetchDownloadMetricsByTime = () =>
         executeFetchDownloadMetricByTime(
             () => {
-
                 return Http.get(
-                    `/v1/data_sources/${organisation?.uuid}/download_metrics_by_time/?from=${format(
+                    `/v1/metrics/provider/${
+                        organisation?.uuid
+                    }/by_time/?from=${format(
                         fromDate,
-                        "dd-MM-yyyy"
-                    )}&to=${format(
-                        toDate,
-                        "dd-MM-yyyy"
-                    )}`
-                )
+                        "yyyy-MM-dd"
+                    )}&to=${format(toDate, "yyyy-MM-dd")}`
+                );
             },
             {
                 postProcess: (res: any) => {
@@ -264,6 +262,7 @@ const OrganisationDetailVM = (
                 },
             }
         );
+    console.log(downloadMetrics, "downloadMetrics");
 
     // const isLoading =
     //     isFetchingOrganisationDatasets ||
@@ -438,28 +437,30 @@ const getQualityDatasets = (dataset: any) => ({
     rating: dataset["rating"],
 });
 
-const jsonToOrgDownloadMetrics = (json: any): DownloadMetrics => ({
-    regions: json["regions"]?.map((region: any) => ({
+const jsonToOrgDownloadMetrics = (json: any): any => ({
+    regions: json["provider_downloads_by_location"]?.map((region: any) => ({
         name: region["name"],
-        location: {
-            lat: region["location"]["lat"],
-            long: region["location"]["long"],
-        },
-        count: region["count"],
-        date: region["last_used"],
+        location: region["locations"]?.map((location: any) => ({
+            lat: location["latitude"],
+            long: location["longitude"],
     })),
-    downloadByTime: json["download_by_time"]?.map((data: any) => ({
+        count: region["count"],
+        date: region["date"],
+    })),
+    downloadByTime: json["provider_downloads_by_time"]?.map((data: any) => ({
         date: data["date"],
         count: data["count"],
     })),
-    downloadByUseCase: json["download_by_use_case"]?.map((useCase: any) => ({
-        name: useCase["name"],
-        value: useCase["value"],
-    })),
+    downloadByUseCase: json["provider_downloads_by_role"]?.map(
+                (useCase: any) => ({
+                    name: useCase["name"],
+                    value: useCase["count"],
+                })
+            )
 });
 
 const jsonToOrgDownloadMetricByTime = (json: any): any =>
-    json["download_by_time"]?.map((data: any) => ({
+    json?.map((data: any) => ({
         date: data["date"],
         count: data["count"],
     }));

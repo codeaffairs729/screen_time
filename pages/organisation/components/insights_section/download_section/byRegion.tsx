@@ -13,22 +13,30 @@ const ByRegion = () => {
 
     const { regions = [] } = downloadMetrics || {};
 
-    const locations: Array<LatLngExpression> = regions.map((region: any) => [
-        region?.location?.lat,
-        region?.location?.long,
-    ]);
-
+    // const locations: Array<LatLngExpression> = regions.map((region: any) => [
+    //     region?.location?.lat,
+    //     region?.location?.long,
+    // ]);
+    const loc: any = [];
+    const downloadCounts :any =[];
+    regions?.map((region: any) => {
+        region["location"]?.map(
+            (location: any) => {
+                loc.push([location?.lat, location?.long])
+                downloadCounts.push(1);
+            }
+        );
+    });
     const tableData = regions.map((region: any) => [
         region?.name,
         region?.count,
         getAge(region.date),
     ]);
-
-    const downloadCounts = regions.map((region: any) => region?.count);
+    // const downloadCounts = regions.map((region: any) => region?.count);
 
     return (
         <div className="mt-12 ml-8 mr-24 block h-[44rem] overflow-y-scroll no-scrollbar whitespace-nowrap">
-            <WorldMap locations={locations} counts={downloadCounts} />
+            <WorldMap locations={loc} counts={downloadCounts} />
             <div className="mt-8">
                 <Table
                     tableHeaders={TABLE_HEADERS}
