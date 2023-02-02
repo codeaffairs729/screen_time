@@ -1,5 +1,4 @@
 import PrimaryBtn from "components/UI/form/primary_btn";
-import DataQualityFeedbackVM from "pages/datasets/components/feedback_section/data_quality_feedback.vm";
 import { DatasetDetailVMContext } from "pages/datasets/dataset_detail.vm";
 import { useContext } from "react";
 import Accuracy from "./components/accuracy";
@@ -8,6 +7,7 @@ import Comment from "./components/comments";
 import CommentAnonymous from "./components/comment_anonymous";
 import Consistency from "./components/consistency";
 import Readiness from "./components/readiness";
+import DataQualityFeedbackVM from "./data_quality_feedback.vm";
 
 const DataQualityFeedback = () => {
     const vmDataset = useContext(DatasetDetailVMContext);

@@ -3,9 +3,9 @@ import Http from "common/http";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useState } from "react";
-import { sanitizeDomainTopics } from "./components/domains_topics";
 import { useContext } from "react";
-import { DatasetDetailVMContext } from "../../dataset_detail.vm";
+import { DatasetDetailVMContext } from "../../../dataset_detail.vm";
+import { sanitizeDomainTopics } from "./domains_topics";
 
 const DataUseFeedbackVM = () => {
     const form = useForm();

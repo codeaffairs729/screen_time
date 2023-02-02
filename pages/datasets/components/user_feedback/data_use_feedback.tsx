@@ -3,9 +3,10 @@ import { DatasetDetailVMContext } from "../../dataset_detail.vm";
 import DomainsTopics from "./components/domains_topics";
 import PotentialUsecases from "./components/potential_usecases";
 import UsecaseDescription from "./components/usecase_description";
-import DataUseFeedbackVM from "./data_use_feedback.vm";
 import CommentAnonymous from "./components/comment_anonymous";
 import PrimaryBtn from "components/UI/form/primary_btn";
+import DataUseFeedbackVM from "./components/data_use_feedback.vm";
+
 
 const DataUseFeedback = () => {
     const vm = useContext(DatasetDetailVMContext);
@@ -24,20 +25,19 @@ const DataUseFeedback = () => {
             <div className="">
                 <div className="my-5 mx-3 px-5 py-3">
                     <DomainsTopics vm={vmForm} />
-                    
                     <PotentialUsecases vm={vmForm} />
-
                     <UsecaseDescription vm={vmForm} />
-                    <CommentAnonymous vm={vmForm} />
-
-                    <PrimaryBtn
-                        label="Submit"
-                        className="bg-dtech-primary-dark w-36 mt-5 mb-2 ml-32"
-                        isLoading={vmForm.isSubmitting}
-                        onClick={vmForm.form.handleSubmit(
-                            vmForm.submitDataUseFeedback
-                        )}
-                    />
+                    <div className="flex flex-row justify-between w-[92%]">
+                        <CommentAnonymous vm={vmForm} />
+                        <PrimaryBtn
+                            label="Submit"
+                            className="bg-dtech-main-dark w-36 mt-5 mb-2 ml-32"
+                            isLoading={vmForm.isSubmitting}
+                            onClick={vmForm.form.handleSubmit(
+                                vmForm.submitDataUseFeedback
+                            )}
+                        />
+                    </div>
                 </div>
             </div>
         </div>
