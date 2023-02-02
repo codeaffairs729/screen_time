@@ -21,7 +21,6 @@ const ByRegion = () => {
     return (
         <div className="w-[90%]">
             <WorldMap locations={loc} counts={downloadCounts} />
-            <span>By Region</span>
         </div>
     );
 };

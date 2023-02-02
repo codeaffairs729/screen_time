@@ -8,6 +8,7 @@ import { BsFillEyeFill, BsHeartFill } from "react-icons/bs";
 import { MdFileDownload } from "react-icons/md";
 import Image from "next/image";
 import displaySearch from "public/images/icons/display_search_result.svg"
+import SearchVM, { datasetToResultCardData, SearchVMContext } from "pages/search/search.vm";
 const DatasetHead = () => {
     const vm = useContext(DatasetDetailVMContext);
     if (!vm.dataset) {
@@ -18,7 +19,7 @@ const DatasetHead = () => {
     if ((contactOwnerEmail?.search(/^mailto:/) ?? -1) > -1) {
         contactOwnerEmail = contactOwnerEmail?.slice(7);
     }
-
+    const {stats} = useContext(SearchVMContext)
     const {
         name,
         description,
@@ -28,12 +29,14 @@ const DatasetHead = () => {
         favourites,
         displays,
     } = vm.dataset.detail || {};
-    const stats = {
+    const stat = {
         displayCount: displays,
         favoritesCount: favourites,
         viewCount: views,
         downloadCount: downloads,
     };
+
+    const cardActionData = datasetToResultCardData([vm.dataset], stats)[0]
     return (
         <div className="px-4">
             <div className="flex justify-between items-center">
@@ -50,11 +53,11 @@ const DatasetHead = () => {
                         </button>
                     </div>
                 </div>
-                {/* <ResultCardAction
+                <ResultCardAction
                     data={cardActionData}
-                    setData={vm.dataset.setDataset}
-                    href={`/datasets/${dataset?.id}`}
-                /> */}
+                    setData={vm.setDataset}
+                    href={`/datasets/${vm.dataset?.id}`}
+                />
             </div>
             <div className="my-4">
                 <div className="flex justify-between">
@@ -77,7 +80,7 @@ const DatasetHead = () => {
             </div>
             <div className="my-4">
                 <div className="flex justify-between items-center">
-                    <DatasetStat stats={stats} />
+                    <DatasetStat stats={stat} />
                     <LabelledRow
                         displayContext="data-host"
                         className=" flex-col justify-center items-center"
