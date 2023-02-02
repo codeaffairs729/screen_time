@@ -2,18 +2,16 @@ import Head from "./head";
 import Preview from "./preview";
 import dynamic from "next/dynamic";
 import PieGraph from "components/UI/PieGraph";
-import BarGraph from "components/UI/BarGraph";
 import Table from "../../table";
 import { Tab } from "@headlessui/react";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useMemo } from "react";
 import {
     DownloadByTime,
     OrganisationDetailVMContext,
 } from "pages/organisation/organisation_detail.vm";
 import Loader from "components/UI/loader";
-import { ReportVMContext } from "../report.vm";
+import { getDateRange, ReportVMContext } from "../report.vm";
 import LineGraph from "components/UI/line_graph";
-import { format } from "date-fns";
 
 const EditReport = dynamic(() => import("./editReport"), {
     ssr: false,
@@ -22,82 +20,47 @@ const TIME_HEADERS = ["Count", "Month"];
 const PIE_HEADER = ["name", "value"];
 
 const Report = () => {
-    const { downloadMetrics,fetchDownloadMetrics,} = useContext(OrganisationDetailVMContext);
-    const { loading, fromDate, toDate  } = useContext(ReportVMContext);
+    const { downloadMetrics, fetchDownloadMetrics } = useContext(
+        OrganisationDetailVMContext
+    );
+    const { loading, fromDate, toDate } = useContext(ReportVMContext);
     useEffect(() => {
         fetchDownloadMetrics();
     }, []);
     const { downloadByTime = [], downloadByUseCase = [] } =
         downloadMetrics || {};
-        const downloadByTimeData = downloadByTime
-        .filter(
-            (data: any) =>
-                new Date(data?.date) >= new Date(fromDate) &&
-                new Date(data?.date) <= new Date(toDate)
-        )
-        .map((data: DownloadByTime) => {
-            const date = new Date(data?.date);
-            const month = date.toLocaleString("en", { month: "short" });
-            const year = new Date(data?.date).getFullYear();
-            return [[data.count], [`${month} ${year}`]];
-        });
 
-    const timeMetrics = downloadByTime
-        .filter(
-            (data: any) =>
-                new Date(data?.date) >= new Date(fromDate) &&
-                new Date(data?.date) <= new Date(toDate)
-        )
-        .map((data: DownloadByTime) => ({
-            month: new Date(data?.date).toLocaleString("en", {
-                month: "short",
-                year: "numeric",
+    const filteredDates = useMemo(
+        () =>
+            downloadByTime.filter(
+                (data: any) =>
+                    new Date(data?.date) >= new Date(fromDate) &&
+                    new Date(data?.date) <= new Date(toDate)
+            ),
+        [fromDate, toDate]
+    );
+
+    const tableDataByTime = useMemo(
+        () =>
+            filteredDates.map((data: DownloadByTime) => {
+                const date = new Date(data?.date);
+                const month = date.toLocaleString("en", { month: "short" });
+                const year = new Date(data?.date).getFullYear();
+                return [[data.count], [`${month} ${year}`]];
             }),
-            download: data.count,
-        }));
+        [fromDate, toDate]
+    );
 
-    const startDate = fromDate;
-    const endDate = toDate;
+    const lineChartData = useMemo(
+        () => getDateRange(fromDate, toDate, filteredDates),
+        [fromDate, toDate]
+    );
 
-    const getdatebetween = (startDate: any, endDate: any) => {
-        let dates = [];
-        let currentDate = new Date(startDate);
-        let i = 0;
-        while (currentDate <= new Date(endDate)) {
-            let downloadTime = new Date(downloadByTime[i]?.date);
-            if (downloadTime.getTime() === currentDate.getTime()) {
-                dates.push({
-                    date: format(currentDate, "yyyy-MM-dd"),
-                    count: downloadByTime[i]?.count,
-                });
-                currentDate.setDate(currentDate.getDate() + 1);
-                i++;
-            } else {
-                dates.push({
-                    date: format(currentDate, "yyyy-MM-dd"),
-                    count: 0,
-                });
-                currentDate.setDate(currentDate.getDate() + 1);
-            }
-        }
-        return dates;
-    };
-    const lineMatrics = getdatebetween(startDate, endDate).map((data) => ({
-        weekDay: new Date(data?.date).toLocaleString("en", {
-            weekday: "long",
-            month: "short",
-            year: "numeric",
-        }),
-        download: data.count,
-    }));
+    const pieData = useMemo(
+        () => downloadByUseCase.map((data: any) => [data.name, data.value]),
+        [downloadByUseCase]
+    );
 
-    const differenceInDays: number =
-        (toDate.getTime() - fromDate.getTime()) / (1000 * 3600 * 24);
-
-    const pieData = downloadByUseCase.map((data: any, index: number) => [
-        data.name,
-        data.value,
-    ]);
     return (
         <div>
             {loading && (
@@ -113,16 +76,16 @@ const Report = () => {
                     className="flex absolute justify-center items-center flex-col z-[-10]"
                 >
                     <LineGraph
-                    data={differenceInDays > 90 ? timeMetrics : lineMatrics}
-                    height={500}
-                    width={1025}
-                    datakeyX={differenceInDays > 90 ? "month" : "weekDay"}
-                    datakeyY="download"
-                    className=""
+                        data={lineChartData}
+                        height={500}
+                        width={1025}
+                        datakeyX={"date"}
+                        datakeyY="download"
+                        className=""
                     />
                     <Table
                         tableHeaders={TIME_HEADERS}
-                        tableData={downloadByTimeData}
+                        tableData={tableDataByTime}
                         headerClass="text-[17px] font-medium bg-[#F5F5F5] "
                         tableClass="w-[90%] ml-12 text-sm text-left table-fixed"
                         cellPadding={20}
@@ -166,8 +129,6 @@ const Report = () => {
                     </Tab.Panel>
                 </Tab.Panels>
             </Tab.Group>
-            {/* <Head edit={edit} setEdit={setEdit} />
-            {edit ? <EditReport /> : <Preview />} */}
         </div>
     );
 };

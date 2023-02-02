@@ -3,10 +3,7 @@ import Report from "./report/";
 import ReportVM, { ReportVMContext } from "./report.vm";
 
 const Index = () => {
-    const imgUrl =
-        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg";
-
-    const vm = ReportVM();
+    const vm: any = ReportVM();
 
     return (
         <ReportVMContext.Provider value={vm}>
@@ -17,7 +14,7 @@ const Index = () => {
                 </div>
                 <div className="flex">
                     <Report />
-                    <ReportFilter imgUrl={imgUrl} />
+                    <ReportFilter />
                 </div>
             </div>
         </ReportVMContext.Provider>

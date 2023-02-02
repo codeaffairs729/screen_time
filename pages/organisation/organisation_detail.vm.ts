@@ -76,6 +76,8 @@ export const getSelectedLabelIndex = (label: string, types: any) => {
     return types[label];
 };
 
+const TempUUID = "test-1-2-3";
+
 const OrganisationDetailVM = (
     initialOrganisationData: Organisation | undefined
 ) => {
@@ -123,7 +125,7 @@ const OrganisationDetailVM = (
         excuteFetchOrganisationDatasets(
             () => {
                 return Http.get(
-                    `/v5/datasets/by-data-host/test-1-2-3?page_number=1&page_size=${orgDatasetsCount}`,
+                    `/v5/datasets/by-data-host/${TempUUID}?page_number=1&page_size=${orgDatasetsCount}`,
                     { baseUrl: process.env.NEXT_PUBLIC_PUBLIC_API_V5_ROOT }
                 );
             },
@@ -338,12 +340,10 @@ const GetRankedData = ({
         []
     );
 
-    const tempUUID = "test-1-2-3";
-
     const fetch = () => {
         execute(
             () => {
-                return Http.get(`/v5/datasets/${tempUUID}/ranked-by/${key}`, {
+                return Http.get(`/v5/datasets/${TempUUID}/ranked-by/${key}`, {
                     baseUrl: process.env.NEXT_PUBLIC_PUBLIC_API_V5_ROOT,
                 });
             },

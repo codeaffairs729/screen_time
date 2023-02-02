@@ -1,4 +1,4 @@
-import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
+import { Cell, Pie, PieChart } from "recharts";
 
 const COLORS = [
     "#ED95DA",
@@ -81,7 +81,7 @@ const PieGraph = ({
     width = 950,
     height = 700,
     radius = "60%",
-    isAnimationActive=true,
+    isAnimationActive = true,
 }: {
     data: Array<Object>;
     width?: number;

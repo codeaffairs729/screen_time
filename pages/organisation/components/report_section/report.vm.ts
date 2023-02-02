@@ -108,6 +108,13 @@ const headerSelected = (
         )
         .join("");
 
+const checkIfDateExists = (downloadDate: any, currDate: any) => {
+    const downloadDateString = new Date(downloadDate).toDateString();
+    const currDateString = new Date(currDate).toDateString();
+
+    return currDateString == downloadDateString;
+};
+
 const ReportVM = () => {
     const currentDate = new Date();
     const oneYearAgoDate = new Date(currentDate.setFullYear(currentDate.getFullYear()-1));
@@ -215,10 +222,12 @@ const ReportVM = () => {
         executeFetchApiFirst(
             () => {
                 return Http.get(
-                    `/v1/data_sources/${organisation?.uuid}/first/?from=${format(
-                        fromDate,
+                    `/v1/data_sources/${
+                        organisation?.uuid
+                    }/first/?from=${format(fromDate, "dd-MM-yyyy")}&to=${format(
+                        toDate,
                         "dd-MM-yyyy"
-                    )}&to=${format(toDate, "dd-MM-yyyy")}`
+                    )}`
                 );
             },
             {
@@ -281,11 +290,33 @@ const ReportVM = () => {
         setToDate,
         isFetchApiFirst,
         isFetchApiSecond,
-
     };
 };
 
 export default ReportVM;
+
+export const getDateRange = (fromDate: any, toDate: any, dates: any) => {
+    let datesList: any = [];
+    let currentDate = new Date(fromDate);
+    while (currentDate <= new Date(toDate)) {
+        const downloadDate = dates.filter((downDate: any) =>
+            checkIfDateExists(downDate, currentDate)
+        )[0];
+        const dateToShow = downloadDate
+            ? new Date(downloadDate?.date)
+            : currentDate;
+        datesList.push({
+            date: dateToShow.toLocaleString("en", {
+                weekday: "short",
+                month: "short",
+                year: "numeric",
+            }),
+            download: downloadDate?.count || 0,
+        });
+        currentDate.setDate(currentDate.getDate() + 1);
+    }
+    return datesList;
+};
 
 interface IReportVMContext {
     generateReportContent: any;

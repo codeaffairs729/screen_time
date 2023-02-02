@@ -1,11 +1,13 @@
 import RangeSelector from "components/UI/range_selector";
+import { OrganisationDetailVMContext } from "pages/organisation/organisation_detail.vm";
 import { useContext, useEffect, useState } from "react";
 import { VscTriangleDown } from "react-icons/vsc";
 import { ReportVMContext } from "./report.vm";
 
-const ReportFilter = ({ imgUrl }: { imgUrl: string }) => {
+const ReportFilter = () => {
     const [showFilter, setShowFilter] = useState<boolean>(true);
-
+    const { organisation } = useContext(OrganisationDetailVMContext);
+    const { imgUrl } = organisation || {};
     const {
         generateReportContent,
         activeHeaders,
