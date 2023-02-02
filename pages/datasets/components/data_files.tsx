@@ -67,14 +67,22 @@ const DataFileRow = ({
     goToPreview: () => void;
     onDownload: () => void;
 }) => {
+    let description = "Unknown";
+    if (url.description?.replace(/['"]+/g, "") && url.description != "null") {
+        description = url.description?.replace(/['"]+/g, "");
+    } else if (url.format?.replace(/['"]+/g, "")) {
+        description = url.format?.replace(/['"]+/g, "") + " data";
+    }
+    let sizemb = "Unknown";
+    if (url.sizemb && url.sizemb != "null") {
+        sizemb = url.sizemb;
+    }
     return (
         <tr className="border-b border-gray-200 bg-[#FEFEFE] hover:bg-gray-100">
             <td className="py-3 px-6 text-left whitespace-nowrap">
-                <div className="flex items-center font-medium">{`${
-                    url.description.replace(/['"]+/g, "")
-                        ? url.description.replace(/['"]+/g, "")
-                        : "Unknown"
-                }`}</div>
+                <div className="flex items-center font-medium">
+                    {description}
+                </div>
             </td>
             <td className="py-3 px-6 text-left">
                 <div className="flex items-center">
@@ -84,7 +92,7 @@ const DataFileRow = ({
                 </div>
             </td>
             <td className="py-3 px-6 text-center">
-                <div className="flex items-center justify-center">{`${url.sizemb} MB`}</div>
+                <div className="flex items-center justify-center">{`${sizemb} MB`}</div>
             </td>
             <td className="py-3 px-6 text-center">
                 <a
