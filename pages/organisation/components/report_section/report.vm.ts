@@ -109,6 +109,8 @@ const headerSelected = (
         .join("");
 
 const ReportVM = () => {
+    const currentDate = new Date();
+    const oneYearAgoDate = new Date(currentDate.setFullYear(currentDate.getFullYear()-1));
     const { organisation } = useContext(OrganisationDetailVMContext);
     const [downloadRef, setDownloadRef] = useState<any>();
     const [selectedHeaders, setSelectedHeaders] = useState<string[]>([]);
@@ -118,8 +120,8 @@ const ReportVM = () => {
     );
     const [previewContent, setPreviewContent] = useState("");
     const [loading, setLoading] = useState(false);
-    const [fromDate, setFromDate] = useState(new Date());
-    const [toDate, setToDate] = useState(new Date());
+    const [fromDate, setFromDate] = useState(oneYearAgoDate);
+    const [toDate, setToDate] = useState(currentDate);
 
     useEffect(() => {
         setPreviewContent(formatPreviewData());

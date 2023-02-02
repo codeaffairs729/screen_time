@@ -106,7 +106,7 @@ const DatasetDetailVM = (initialDataset: Dataset | undefined) => {
                 () => {
                     return Http.get(
                         `/v1/metrics/dataset/${dataset?.id
-                        }/by_time/?from_date=${format(
+                        }/by_time?from_date=${format(
                             fromDate,
                             "yyyy-MM-dd"
                         )}&to_date=${format(toDate, "yyyy-MM-dd")}`
@@ -199,7 +199,30 @@ const DatasetDetailVM = (initialDataset: Dataset | undefined) => {
                                 },
                             }
                         );
-
+                        const {
+                            execute: excuteFetchQualityMetrics,
+                            data: qualityMetrics,
+                            isLoading: isFetchingQualityMetrics,
+                        } = useHttpCall<{ [key: string]: any }>({});
+                        const fetchQualityMetrics = () =>
+                            excuteFetchQualityMetrics(
+                                () => {
+                                    return Http.get(
+                                        `/v1/datasets/quality_metric/${dataset?.id}`
+                                    );
+                                },
+                                {
+                                    postProcess: (res) => {
+                                        return jsonToQualityMetrics(res);
+                                    },
+                                    onError: (e) => {
+                                        console.log(e);
+                                        toast.error(
+                                            "Something went wrong while fetching organisation Data Quality insights."
+                                        );
+                                    },
+                                }
+                            );
     return {
         dataset,
         datasetMetrics,
@@ -213,6 +236,8 @@ const DatasetDetailVM = (initialDataset: Dataset | undefined) => {
         selectedSearchTerm,
         toDate,
         fromDate,
+        qualityMetrics,
+        isFetchingQualityMetrics,
         setDataset,
         setSelectedDownload,
         fetchDatasetMetrics,
@@ -224,6 +249,7 @@ const DatasetDetailVM = (initialDataset: Dataset | undefined) => {
         setSelectedQualityInsights,
         setFromDate,
         setToDate,
+        fetchQualityMetrics,
     };
 };
 
@@ -248,6 +274,9 @@ interface IDatasetDetailVMContext {
     fetchDatasetMetricsByLocation: Function;
     fetchDatasetMetricsByRole: Function;
     fetchSearchTerms: Function;
+    fetchQualityMetrics: Function;
+    qualityMetrics:any;
+    isFetchingQualityMetrics: any;
     setDataset: Dispatch<SetStateAction<Dataset | undefined>>;
 }
 const jsonToSearchTerms = (json: any): SearchTermType[] =>
@@ -285,6 +314,36 @@ const jsonToOrgDownloadMetrics = (json: any): any => ({
             )
 });
 
+const jsonToQualityMetrics = (json: any): any => ({
+    metaDataQuality: {
+        overallScore:getmetaQualityScore(json ['metadata_quality']['overall_score'],"overallScore"),
+        findability:getmetaQualityScore(json ['metadata_quality']['findability'],'findability') ,
+        reusability:getmetaQualityScore(json ['metadata_quality']['reusability'],'reusability'),
+        accessibility:getmetaQualityScore(json ['metadata_quality']['accessibility'],"accessibility"),
+        contextuality:getmetaQualityScore(json ['metadata_quality']['contextuality'],'contextuality'),
+        interoperability:getmetaQualityScore(json ['metadata_quality']['interoperability'],'interoperability'),
+    },
+    dataFileQuality:{
+        overallScore: getdataQualityScore(json ['datafile_quality']['overall_score'],"overallScore", "votes", 132 ),
+        feedbackSentiment: getdataQualityScore( json ['datafile_quality']['feedback_sentiment'],"feedback Sentiment" , "comments", 132),
+        accuracy: getdataQualityScore(json ['datafile_quality']['accuracy'],"accuracy", "votes", 132  ),
+        clarity:getdataQualityScore(json ['datafile_quality']['clarity'],"clarity", "votes", 132 ),
+        consistency: getdataQualityScore(json ['datafile_quality']['consistency'],"consistency", "votes", 132 ),
+        readiness: getdataQualityScore(json ['datafile_quality']['readiness'],"readiness", "votes", 132 )
+    }
+});
+
+
+const getmetaQualityScore =(data:any, title:string) =>({
+    label: title,
+    rating: data.rating,
+});
+const getdataQualityScore =(data:any, title:string, ratingLabel:string , total:number) =>({
+    label: title,
+    rating: data.rating,
+    ratingLabel: ratingLabel,
+    total: total,
+});
 export const DatasetDetailVMContext = createContext<IDatasetDetailVMContext>(
     {} as IDatasetDetailVMContext
 );
