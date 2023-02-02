@@ -70,7 +70,7 @@ function DtechtiveApp({ Component, pageProps }: AppProps) {
     }, [router.events]);
     useEffect(() => {
         const user = store.getState().auth.user;
-        if (document.cookie.includes(AUTH_TOKEN)) vm.fetchNotifications(user);
+        if (document.cookie.includes(AUTH_TOKEN) && user) vm.fetchNotifications(user);
     }, []);
     return (
         <>
