@@ -4,14 +4,11 @@ import dynamic from "next/dynamic";
 import PieGraph from "components/UI/PieGraph";
 import Table from "../../table";
 import { Tab } from "@headlessui/react";
-import { useContext, useEffect, useMemo } from "react";
-import {
-    DownloadByTime,
-    OrganisationDetailVMContext,
-} from "pages/organisation/organisation_detail.vm";
+import { useContext } from "react";
 import Loader from "components/UI/loader";
 import { getDateRange, ReportVMContext } from "../report.vm";
 import LineGraph from "components/UI/line_graph";
+import { DownloadByTime } from "../../insights_section/download_section/download_metric.vm";
 
 const EditReport = dynamic(() => import("./editReport"), {
     ssr: false,
@@ -20,9 +17,7 @@ const TIME_HEADERS = ["Count", "Month"];
 const PIE_HEADER = ["name", "value"];
 
 const Report = () => {
-    const { downloadMetrics, fetchDownloadMetrics } = useContext(
-        OrganisationDetailVMContext
-    );
+
     const {
         loading,
         fromDate,
@@ -30,9 +25,6 @@ const Report = () => {
         downloadByTime = [],
         downloadByRole = [],
     } = useContext(ReportVMContext);
-    useEffect(() => {
-        fetchDownloadMetrics();
-    }, []);
 
     const filteredDates = downloadByTime.filter(
         (data: any) =>

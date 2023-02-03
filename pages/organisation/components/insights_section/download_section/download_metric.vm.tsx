@@ -37,6 +37,13 @@ export interface DownloadMetrics {
     downloadByUseCase: DownloadByUseCase[];
 }
 
+const checkIfDateExists = (downloadDate: any, currDate: any) => {
+    const downloadDateString = new Date(downloadDate.date).toDateString();
+    const currDateString = new Date(currDate).toDateString();
+
+    return currDateString == downloadDateString;
+};
+
 const DownloadMetricVM = () => {
     const currentDate = new Date();
     const oneYearAgoDate = new Date(
@@ -45,7 +52,7 @@ const DownloadMetricVM = () => {
 
     const [downloadMetrics, setDownloadMetrics] = useState<any>();
     const [fromDate, setFromDate] = useState(oneYearAgoDate);
-    const [toDate, setToDate] = useState(currentDate);
+    const [toDate, setToDate] = useState(new Date());
     const [selectedDownload, setSelectedDownload] = useState<number>(0);
     const { organisation } = useContext(OrganisationDetailVMContext);
 
@@ -111,7 +118,7 @@ const DownloadMetricVM = () => {
         );
 
     const isFetchingDownloadMetrics =
-        fetchingDownloadMetrics || fetchingDownloadMetricByTime;
+        fetchingDownloadMetrics ;
 
     return {
         fromDate,
@@ -171,3 +178,29 @@ const jsonToOrgDownloadMetrics = (json: any): any => ({
         })
     ),
 });
+
+export const getDateRange = (fromDate: any, toDate: any, dates: any) => {
+    let datesList: any = [];
+    let currentDate = new Date(fromDate);
+    while (currentDate <= new Date(toDate)) {
+        const downloadDate = dates.filter((downDate: any) =>
+            checkIfDateExists(downDate, currentDate)
+        )[0];
+
+        // console.log("downloadDate :", checkIfDateExists(dates[2], currentDate))
+        const dateToShow = downloadDate
+            ? new Date(downloadDate?.date)
+            : currentDate;
+        datesList.push({
+            date: dateToShow.toLocaleString("en", {
+                day:"numeric",
+                weekday: "short",
+                month: "short",
+                year: "numeric",
+            }),
+            download: downloadDate?.count || 0,
+        });
+        currentDate.setDate(currentDate.getDate() + 1);
+    }
+    return datesList;
+};

@@ -4,7 +4,7 @@ import { useContext, useState } from "react";
 import Table from "../../table";
 import { format } from "date-fns";
 import dynamic from "next/dynamic";
-import { DownloadMetricVMContext, DownloadByTime } from "./download_metric.vm";
+import { DownloadMetricVMContext, DownloadByTime, getDateRange } from "./download_metric.vm";
 const LineGraph = dynamic(() => import("components/UI/line_graph"), {
     ssr: false,
 });
@@ -17,70 +17,21 @@ const ByTime = () => {
 
     const { downloadByTime = [] } = downloadMetrics || {};
 
-    const downloadByTimeData = downloadByTime
-        .filter(
-            (data: any) =>
-                new Date(data?.date) >= new Date(fromDate) &&
-                new Date(data?.date) <= new Date(toDate)
-        )
-        .map((data: DownloadByTime) => {
-            const date = new Date(data?.date);
-            const month = date.toLocaleString("en", { month: "short" });
-            const year = new Date(data?.date).getFullYear();
-            return [[data.count], [`${month} ${year}`]];
-        });
+    
+    const filteredDates = downloadByTime.filter(
+        (data: any) =>
+            new Date(data?.date) >= new Date(fromDate) &&
+            new Date(data?.date) <= new Date(toDate)
+    );
 
-    const timeMetrics = downloadByTime
-        .filter(
-            (data: any) =>
-                new Date(data?.date) >= new Date(fromDate) &&
-                new Date(data?.date) <= new Date(toDate)
-        )
-        .map((data: DownloadByTime) => ({
-            month: new Date(data?.date).toLocaleString("en", {
-                month: "short",
-                year: "numeric",
-            }),
-            download: data.count,
-        }));
+    const tableDataByTime = filteredDates.map((data: DownloadByTime) => {
+        const date = new Date(data?.date);
+        const month = date.toLocaleString("en", { month: "short" });
+        const year = new Date(data?.date).getFullYear();
+        return [[data.count], [`${month} ${year}`]];
+    });
 
-    const startDate = fromDate;
-    const endDate = toDate;
-
-    const getdatebetween = (startDate: any, endDate: any) => {
-        let dates = [];
-        let currentDate = new Date(startDate);
-        let i = 0;
-        while (currentDate <= new Date(endDate)) {
-            let downloadTime = new Date(downloadByTime[i]?.date);
-            if (downloadTime.getTime() === currentDate.getTime()) {
-                dates.push({
-                    date: format(currentDate, "yyyy-MM-dd"),
-                    count: downloadByTime[i]?.count,
-                });
-                currentDate.setDate(currentDate.getDate() + 1);
-                i++;
-            } else {
-                dates.push({
-                    date: format(currentDate, "yyyy-MM-dd"),
-                    count: 0,
-                });
-                currentDate.setDate(currentDate.getDate() + 1);
-            }
-        }
-        return dates;
-    };
-    const lineMatrics = getdatebetween(startDate, endDate).map((data) => ({
-        weekDay: new Date(data?.date).toLocaleString("en", {
-            weekday: "long",
-            month: "short",
-            year: "numeric",
-        }),
-        download: data.count,
-    }));
-
-    const differenceInDays: number =
-        (toDate.getTime() - fromDate.getTime()) / (1000 * 3600 * 24);
+    const lineChartData = getDateRange(fromDate, toDate, filteredDates);
 
     return (
         <div className="mt-12 w-full">
@@ -95,10 +46,10 @@ const ByTime = () => {
             </div>
             <div className="mt-8 block h-[44rem] overflow-y-scroll no-scrollbar whitespace-nowrap">
                 <LineGraph
-                    data={differenceInDays > 90 ? timeMetrics : lineMatrics}
+                    data={lineChartData}
                     height={500}
                     width={1025}
-                    datakeyX={differenceInDays > 90 ? "month" : "weekDay"}
+                    datakeyX={"date"}
                     datakeyY="download"
                     className=""
                 />
@@ -126,7 +77,7 @@ const ByTime = () => {
                 <div className="mt-8">
                     <Table
                         tableHeaders={TIME_HEADERS}
-                        tableData={downloadByTimeData}
+                        tableData={tableDataByTime}
                         headerClass="text-[17px] font-medium bg-[#F5F5F5] "
                         tableClass="w-[90%] text-sm text-left border table-fixed ml-12"
                         cellPadding={20}
