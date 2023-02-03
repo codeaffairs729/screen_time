@@ -14,16 +14,18 @@ const DefaultLayout = ({
     className = "",
     showLogo = true,
     showSearchBar = true,
+    page = "dataset",
     navContent,
 }: {
     children: ReactNode;
     className?: string;
     showLogo?: boolean;
+    page?: string;
     showSearchBar?: boolean;
     navContent?: ReactNode;
 }) => {
-    const vm = SearchVM();
-    const ovm = OrganizationSearchVM();
+    const vm = SearchVM(page == "dataset");
+    const ovm = OrganizationSearchVM(page == "organisation");
     return (
         <div
             className={clsx(

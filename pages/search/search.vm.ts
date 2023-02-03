@@ -33,12 +33,11 @@ export type Filter = {
     end_date?: string[];
 };
 
-const SearchVM = () => {
+const SearchVM = (search = true) => {
     const router = useRouter();
     const {
         query: { q },
     } = router;
-
     const dispatch = useDispatch();
 
     const [activeFilter, setActiveFilter] = useState<Filter>({
@@ -158,7 +157,7 @@ const SearchVM = () => {
      * TODO: uriencode searchquery, pagenum and pagesize
      */
     const { data: datasets, error } = useSWR(
-        q
+        q && search
             ? `/v4/datasets/?search_query=${q}&page_size=${pageSize}&page_num=${currentPageNo}${queryParams}`
             : null,
         (url: string) =>

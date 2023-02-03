@@ -22,7 +22,7 @@ export type Filter = {
     end_date?: string[];
 };
 
-const OrganizationSearchVM = () => {
+const OrganizationSearchVM = (search = true) => {
     const router = useRouter();
     const {
         query: { q },
@@ -69,8 +69,8 @@ const OrganizationSearchVM = () => {
 
         setQueryParams(cQueryParams ? `&${cQueryParams}` : "");
     }, [activeFilter]);
-    const { data, error : organisationError}: any = useSWR(
-        q
+    const { data, error: organisationError }: any = useSWR(
+        q && search
             ? `/v1/data_sources/?search_query=${q}&page_size=${pageSize}&page_num=${currentPageNo}${queryParams}`
             : null,
         (url: string) => {
