@@ -128,7 +128,7 @@ const ModelList = ({
         }
     });
 
-    const getNewItemPayload = () => {
+    const getItemPayload = () => {
         switch (recordType) {
             case "dataset":
                 return { datasetID: data.id };
@@ -154,8 +154,8 @@ const ModelList = ({
                             onClick={() => {
                                 delOldListItem(
                                     list.listID,
-                                    data.id,
-                                    thisItemID
+                                    thisItemID,
+                                    getItemPayload()
                                 );
                             }}
                         >
@@ -170,7 +170,7 @@ const ModelList = ({
                     <button
                         className="px-2 py-0.5"
                         onClick={() => {
-                            addNewListItem(list.listID, getNewItemPayload());
+                            addNewListItem(list.listID, getItemPayload());
                         }}
                     >
                         <BsBookmark className="text-dtech-secondary-dark hover:text-dtech-secondary-light" />

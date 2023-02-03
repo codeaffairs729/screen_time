@@ -264,6 +264,7 @@ interface ISearchVMContext {
     filterOptions: Filter;
     setFilterOptions: Function;
     currentPageNo: number;
+    fectchStats: Function;
     setCurrentPageNo: (pageNo: number) => void;
     totalPages: number;
     resetAllFilters: Function;
