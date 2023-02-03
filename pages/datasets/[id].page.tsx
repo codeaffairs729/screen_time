@@ -15,10 +15,10 @@ import DataFilesSection from "./components/data_file";
 import DatasetInsights from "./components/insights_section";
 import DatasetFeedbackSection from "./components/user_feedback";
 import MayAlsoLike from "./components/may_also_like";
+import ErrorAlert from "components/UI/alerts/error_alert";
 
 enum tabIndex {
     data_files,
-    preview,
     insights,
     feedback,
     related_datasets,
@@ -33,6 +33,18 @@ const DatasetDetail = ({ dataset }: { dataset: Dataset | undefined }) => {
         setSelectedIndex(tabIndex[hashParam as any]);
         setLoading(false);
     }, []);
+
+    if (!dataset) {
+        return (
+            <DefaultLayout>
+                <ErrorAlert
+                    className="max-w-xl mx-auto"
+                    message="Something went wrong while fetching organisation data. Please try again later."
+                />
+            </DefaultLayout>
+        );
+    }
+
     return (
         <DefaultLayout>
             <DatasetDetailVMContext.Provider value={vm}>

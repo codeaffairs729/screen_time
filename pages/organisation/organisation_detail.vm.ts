@@ -34,7 +34,7 @@ const OrganisationDetailVM = (
     const [orgDatasetsCount, setOrgDatasetsCount] = useState(10);
 
     useEffect(() => {
-        if (orgDatasetsCount != 10) {
+        if (orgDatasetsCount > 10) {
             fetchOrganisationDatasets();
         }
     }, [orgDatasetsCount]);
