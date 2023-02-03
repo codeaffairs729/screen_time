@@ -6,13 +6,10 @@ import { ReportVMContext } from "./report.vm";
 
 const ReportFilter = () => {
     const [showFilter, setShowFilter] = useState<boolean>(true);
-    const { organisation } = useContext(OrganisationDetailVMContext);
-    const { imgUrl } = organisation || {};
     const {
-        generateReportContent,
+        fetchData,
         activeHeaders,
         onHeaderSelect,
-        setLoading,
         editorState,
         fromDate,
         toDate,
@@ -26,8 +23,7 @@ const ReportFilter = () => {
             !editorState.getCurrentContent().hasText() ||
             confirm(alert) == true
         ) {
-            setLoading(true);
-            generateReportContent(imgUrl, fromDate, toDate);
+            fetchData();
         }
     };
 

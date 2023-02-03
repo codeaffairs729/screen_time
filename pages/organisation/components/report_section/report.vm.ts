@@ -117,8 +117,11 @@ const checkIfDateExists = (downloadDate: any, currDate: any) => {
 
 const ReportVM = () => {
     const currentDate = new Date();
-    const oneYearAgoDate = new Date(currentDate.setFullYear(currentDate.getFullYear()-1));
+    const [toDate, setToDate] = useState(currentDate);
+    currentDate.setFullYear(currentDate.getFullYear() - 1);
+    const [fromDate, setFromDate] = useState(currentDate);
     const { organisation } = useContext(OrganisationDetailVMContext);
+    const { imgUrl } = organisation || {};
     const [downloadRef, setDownloadRef] = useState<any>();
     const [selectedHeaders, setSelectedHeaders] = useState<string[]>([]);
     const [activeHeaders, setActiveHeaders] = useState<Header[]>(HEADER);
@@ -126,18 +129,11 @@ const ReportVM = () => {
         EditorState.createEmpty()
     );
     const [previewContent, setPreviewContent] = useState("");
-    const [loading, setLoading] = useState(false);
-    const [fromDate, setFromDate] = useState(oneYearAgoDate);
-    const [toDate, setToDate] = useState(currentDate);
+    const [isGeneratingReport, setIsGeneratingReport] = useState(false);
 
     useEffect(() => {
         setPreviewContent(formatPreviewData());
     }, [editorState]);
-
-    // useEffect(() => {
-    //     fetchApiFirst();
-    //     fetchApiSecond();
-    // }, [fromDate, toDate]);
 
     const onHeaderSelect = (e: any) => {
         let updatedActiveHeaders: Header[] = [];
@@ -162,11 +158,8 @@ const ReportVM = () => {
         setActiveHeaders(updatedActiveHeaders);
     };
 
-    const generateReportContent = async (
-        imgUrl: string,
-        fromDate: Date,
-        toDate: Date
-    ) => {
+    const generateReportContent = async () => {
+        setIsGeneratingReport(true);
         const metricByTime: any = document.getElementById("screenshot");
         const metricByUseCase: any = document.getElementById("pie");
 
@@ -195,7 +188,7 @@ const ReportVM = () => {
                 )
             )
         );
-        setLoading(false);
+        setIsGeneratingReport(false);
     };
 
     const formatPreviewData = () => {
@@ -212,63 +205,85 @@ const ReportVM = () => {
 
         return html;
     };
-    const {
-        execute: executeFetchApiFirst,
-        data: dataApiFirst,
-        isLoading: isFetchApiFirst,
-    } = useHttpCall<{ [key: string]: any }>({});
 
-    const fetchApiFirst = () =>
-        executeFetchApiFirst(
+    const {
+        execute: executeFetchByRoles,
+        data: downloadByRole,
+        isLoading: isFetchingByRoles,
+    } = useHttpCall<{ [key: string]: any }>([]);
+
+    const fetchMetricDataByRoles = (from: string, to: string) =>
+        executeFetchByRoles(
             () => {
                 return Http.get(
-                    `/v1/data_sources/${
-                        organisation?.uuid
-                    }/first/?from=${format(fromDate, "dd-MM-yyyy")}&to=${format(
-                        toDate,
-                        "dd-MM-yyyy"
-                    )}`
+                    `/v1/metrics/provider/${organisation?.uuid}/by_time?from_date=${from}&to_date=${to}`
                 );
             },
             {
                 postProcess: (res: any) => {
+                    console.log(res);
                     return res;
                 },
                 onError: (e) => {
                     toast.error(
-                        "Something went wrong while fetching organisation download metrics."
+                        "Something went wrong while fetching organisation metrics by roles."
                     );
                 },
             }
         );
 
     const {
-        execute: executeFetchApiSecond,
-        data: dataApiSecond,
-        isLoading: isFetchApiSecond,
-    } = useHttpCall<{ [key: string]: any }>({});
+        execute: executeFetchByTime,
+        data: downloadByTime,
+        isLoading: isFetchingByTime,
+    } = useHttpCall<{ [key: string]: any }>([]);
 
-    const fetchApiSecond = () =>
-        executeFetchApiSecond(
+    const fetchMetricDataByTime = (from: string, to: string) =>
+        executeFetchByTime(
             () => {
                 return Http.get(
-                    `/v1/data_sources/${organisation?.uuid}/?from=${format(
-                        fromDate,
-                        "dd-MM-yyyy"
-                    )}&to=${format(toDate, "dd-MM-yyyy")}`
+                    `/v1/metrics/provider/${organisation?.uuid}/by_role?from_date=${from}&to_date=${to}`
                 );
             },
             {
                 postProcess: (res: any) => {
+                    console.log(res);
                     return res;
                 },
                 onError: (e) => {
                     toast.error(
-                        "Something went wrong while fetching organisation download metrics."
+                        "Something went wrong while fetching organisation metrics by Time."
                     );
                 },
             }
         );
+
+    const fetchData = () => {
+        let from: string = format(new Date(), "yyyy-MM-dd");
+        let to: string = format(new Date(), "yyyy-MM-dd");
+
+        if (!fromDate && !toDate) {
+            const currentDate = new Date();
+            to = format(currentDate, "yyyy-MM-dd");
+            currentDate.setFullYear(currentDate.getFullYear() - 1);
+            from = format(currentDate, "yyyy-MM-dd");
+        } else if (fromDate || toDate) {
+            from = format(fromDate ? fromDate : toDate, "yyyy-MM-dd");
+            to = format(toDate ? toDate : fromDate, "yyyy-MM-dd");
+        }
+
+        setFromDate(new Date(from));
+        setToDate(new Date(to));
+        //Check if option selected
+        const promise1 = fetchMetricDataByTime(from, to);
+        const promise2 = fetchMetricDataByRoles(from, to);
+
+        Promise.all([promise1, promise2]).then(() => {
+            generateReportContent();
+        });
+    };
+    const isFetching = isFetchingByTime || isFetchingByRoles;
+    const loading = isGeneratingReport || isFetching;
 
     return {
         generateReportContent,
@@ -283,13 +298,13 @@ const ReportVM = () => {
         downloadRef,
         previewContent,
         loading,
-        setLoading,
         fromDate,
         setFromDate,
         toDate,
+        fetchData,
         setToDate,
-        isFetchApiFirst,
-        isFetchApiSecond,
+        downloadByTime,
+        downloadByRole,
     };
 };
 
@@ -335,8 +350,10 @@ interface IReportVMContext {
     fromDate: Date;
     setFromDate: Function;
     toDate: Date;
+    fetchData: Function;
     setToDate: Function;
-    fetchApiFirst: Function;
+    downloadByTime: any;
+    downloadByRole: any;
 }
 
 export const ReportVMContext = createContext<IReportVMContext>(

@@ -7,10 +7,14 @@ import LabelledRow from "components/dataset/labelled_row";
 import { BsFillEyeFill, BsHeartFill } from "react-icons/bs";
 import { MdFileDownload } from "react-icons/md";
 import Image from "next/image";
-import displaySearch from "public/images/icons/display_search_result.svg"
-import SearchVM, { datasetToResultCardData, SearchVMContext } from "pages/search/search.vm";
+import displaySearch from "public/images/icons/display_search_result.svg";
+import SearchVM, {
+    datasetToResultCardData,
+    SearchVMContext,
+} from "pages/search/search.vm";
 const DatasetHead = () => {
     const vm = useContext(DatasetDetailVMContext);
+    const { stats } = useContext(SearchVMContext);
     if (!vm.dataset) {
         return <div />;
     }
@@ -19,7 +23,6 @@ const DatasetHead = () => {
     if ((contactOwnerEmail?.search(/^mailto:/) ?? -1) > -1) {
         contactOwnerEmail = contactOwnerEmail?.slice(7);
     }
-    const {stats} = useContext(SearchVMContext)
     const {
         name,
         description,
@@ -36,7 +39,7 @@ const DatasetHead = () => {
         downloadCount: downloads,
     };
 
-    const cardActionData = datasetToResultCardData([vm.dataset], stats)[0]
+    const cardActionData = datasetToResultCardData([vm.dataset], stats)[0];
     return (
         <div className="px-4">
             <div className="flex justify-between items-center">
@@ -187,11 +190,7 @@ const DatasetStat = ({ stats }: { stats: any }) => {
                         </span>
                     </div>
                     <div className="flex justify-center items-center mr-6">
-                        <Image
-                            src={displaySearch}
-                            height={20}
-                            width={20}
-                        />
+                        <Image src={displaySearch} height={20} width={20} />
                         <span className="max-w-24 text-m font-normal flex flex-col">
                             Displayed in
                             <span>search results</span>

@@ -23,12 +23,17 @@ const Report = () => {
     const { downloadMetrics, fetchDownloadMetrics } = useContext(
         OrganisationDetailVMContext
     );
-    const { loading, fromDate, toDate } = useContext(ReportVMContext);
+    const {
+        loading,
+        fromDate,
+        toDate,
+        downloadByTime = [],
+        downloadByRole = [],
+    } = useContext(ReportVMContext);
     useEffect(() => {
         fetchDownloadMetrics();
     }, []);
-    const { downloadByTime = [], downloadByUseCase = [] } =
-        downloadMetrics || {};
+    // const { downloadByTime = [], downloadByRole = [] } = downloadMetrics || {};
 
     const filteredDates = useMemo(
         () =>
@@ -57,8 +62,8 @@ const Report = () => {
     );
 
     const pieData = useMemo(
-        () => downloadByUseCase.map((data: any) => [data.name, data.value]),
-        [downloadByUseCase]
+        () => downloadByRole.map((data: any) => [data.name, data.value]),
+        [downloadByRole]
     );
 
     return (
@@ -96,10 +101,10 @@ const Report = () => {
                     id="pie"
                     className="flex absolute justify-center items-center flex-col z-[-10]"
                 >
-                    {downloadByUseCase.length && (
+                    {downloadByRole.length && (
                         <>
                             <PieGraph
-                                data={downloadByUseCase}
+                                data={downloadByRole}
                                 isAnimationActive={false}
                                 radius="60%"
                             />
