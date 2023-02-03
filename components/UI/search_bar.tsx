@@ -15,8 +15,8 @@ import { updateSearchType } from "store/search/search.action";
 // export type SearchOption = { type: string; value: any; label: string };
 const ITEMS: MenuItemType[] = [
     { label: "Dataset" },
-    { label: "Topic" },
-    { label: "Region" },
+    // { label: "Topic" },
+    // { label: "Region" },
     { label: "Organisation" },
 ];
 
