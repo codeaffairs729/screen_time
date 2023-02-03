@@ -7,7 +7,7 @@ import TabPanel from "components/UI/tabbed/panel";
 import { getCookieFromServer } from "common/utils/cookie.util";
 import OrganisationTabHeaders from "./components/organisation_tabs";
 import { useRouter } from "next/router";
-import Datasets from "./components/datasets";
+import Datasets from "./components/datasets/";
 import Insights from "./components/insights_section";
 import Report from "./components/report_section";
 import { NextPageContext } from "next";
@@ -15,7 +15,6 @@ import { AUTH_TOKEN } from "common/constants/cookie.key";
 import Http from "common/http";
 import Organisation from "models/organisation.model";
 import OrganisationDetailVM, {
-    IOrganisationDetailVMContext,
     OrganisationDetailVMContext,
 } from "./organisation_detail.vm";
 import ErrorAlert from "components/UI/alerts/error_alert";
