@@ -37,7 +37,7 @@ const ResultLayout = ({ error, isLoading, recordsData }: ResultLayoutProps) => {
 
     if (!recordsData?.length) {
         return (
-            <div className="w-full flex items-start justify-center">
+            <div className="h-[calc(100vh-var(--nav-height))] w-full flex items-start justify-center ">
                 <NoResults
                     message={`No results found for ${q}.`}
                     subMessages={[
@@ -52,13 +52,7 @@ const ResultLayout = ({ error, isLoading, recordsData }: ResultLayoutProps) => {
     return (
         <div className="flex flex-col" data-test-id="results table">
             {recordsData.map((data: Data) => (
-                <ResultCard
-                    key={data.id}
-                    data={data}
-                    onFavourite={() => {}}
-                    handleBookmark={() => {}}
-                    handleShare={() => {}}
-                />
+                <ResultCard key={data.id} data={data} />
             ))}
         </div>
     );

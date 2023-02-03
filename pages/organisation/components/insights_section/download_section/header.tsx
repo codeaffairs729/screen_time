@@ -2,27 +2,26 @@ import Dropdown, { MenuItemType } from "components/UI/drop_down";
 import {
     formatLabel,
     getSelectedLabelIndex,
-    download,
-} from "pages/organisation/organisation.vm";
-import { useState } from "react";
+} from "pages/organisation/organisation_detail.vm";
+import { useContext, useState } from "react";
 import Label from "../label";
+import { DownloadMetricVMContext, downloadHeaders } from "./download_metric.vm";
 
 const ITEMS: MenuItemType[] = [
     { label: "by_region" },
     { label: "by_time" },
-    { label: "by_user_type" },
+    { label: "by_role" },
 ];
 
-type DownloadProps = {
-    onChange?: Function;
-};
-
-const DownloadHeader = ({ onChange }: DownloadProps) => {
+const DownloadHeader = () => {
     const [selectedLabel, setSelectedLabel] = useState(ITEMS[0].label);
 
+    const { setSelectedDownload: onChange } = useContext(
+        DownloadMetricVMContext
+    );
     const handleChange = (label: string) => {
         setSelectedLabel(label);
-        onChange && onChange(getSelectedLabelIndex(label, download));
+        onChange && onChange(getSelectedLabelIndex(label, downloadHeaders));
     };
     const menuItems = ITEMS.map((item) => ({
         ...item,

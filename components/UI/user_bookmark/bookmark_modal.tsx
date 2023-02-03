@@ -1,4 +1,3 @@
-import Dataset from "models/dataset.model";
 import CreateNewList from "./create_new_list";
 import { useSelector } from "react-redux";
 import { RootState } from "store";
@@ -19,11 +18,13 @@ import { useState } from "react";
 export default function BookmarkModal({
     showModal,
     setShowModal,
-    dataset,
+    data,
+    recordType,
 }: {
     showModal: any;
     setShowModal: any;
-    dataset: any;
+    data: any;
+    recordType: string;
 }) {
     const bookmark_items = useSelector(
         (state: RootState) => state.user.bookmarkItems
@@ -49,7 +50,7 @@ export default function BookmarkModal({
                                 {/*body*/}
                                 <div className="flex flex-col h-36 m-3 px-5 justify-start text-left overflow-y-auto">
                                     <ul>
-                                        {bookmark_lists.length == 0 ? (
+                                        {bookmark_lists?.length == 0 ? (
                                             <>
                                                 <p>
                                                     You currently do not have
@@ -58,14 +59,15 @@ export default function BookmarkModal({
                                                 <p>Please create one.</p>
                                             </>
                                         ) : (
-                                            bookmark_lists.map((list: any) => (
+                                            bookmark_lists?.map((list: any) => (
                                                 <ModelList
                                                     key={list.listID}
                                                     bookmark_items={
                                                         bookmark_items
                                                     }
                                                     list={list}
-                                                    dataset={dataset}
+                                                    data={data}
+                                                    recordType={recordType}
                                                 />
                                             ))
                                         )}
@@ -96,11 +98,13 @@ export default function BookmarkModal({
 const ModelList = ({
     list,
     bookmark_items,
-    dataset,
+    data,
+    recordType,
 }: {
     list: any;
     bookmark_items: any;
-    dataset: any;
+    data: any;
+    recordType: string;
 }) => {
     const user = useSelector((state: RootState) => state.auth.user);
     const { deleteUserList, isDeletingList } = DeleteListVM(user);
@@ -116,12 +120,26 @@ const ModelList = ({
     bookmark_items.forEach((list_item: any) => {
         if (
             list_item.listID == list.listID &&
-            dataset.id == list_item.datasetID
+            (data.id == list_item.datasetID ||
+                data.id == list_item.organisationID)
         ) {
             thisList = true;
             thisItemID = list_item.itemID;
         }
     });
+
+    const getItemPayload = () => {
+        switch (recordType) {
+            case "dataset":
+                return { datasetID: data.id };
+
+            case "organisation":
+                return { organisationUUID: data.id };
+            default:
+                return { datasetID: data.id };
+        }
+    };
+
     return (
         <li className="items-center my-1 py-0.5 w-full bg-gray-100 hover:bg-gray-200 border-radius-md flex justify-between">
             <div className="flex items-center">
@@ -136,8 +154,8 @@ const ModelList = ({
                             onClick={() => {
                                 delOldListItem(
                                     list.listID,
-                                    dataset.id,
-                                    thisItemID
+                                    thisItemID,
+                                    getItemPayload()
                                 );
                             }}
                         >
@@ -152,7 +170,7 @@ const ModelList = ({
                     <button
                         className="px-2 py-0.5"
                         onClick={() => {
-                            addNewListItem(list.listID, dataset.id);
+                            addNewListItem(list.listID, getItemPayload());
                         }}
                     >
                         <BsBookmark className="text-dtech-secondary-dark hover:text-dtech-secondary-light" />

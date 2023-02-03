@@ -2,88 +2,11 @@ import Accordian from "components/UI/accordian";
 import Table from "../../table";
 import MetaRating from "components/UI/metaRating";
 import BarGraph from "components/UI/BarGraph";
-
-const METADATA_ITEMS = [
-    "Overall score",
-    "Findability",
-    "Accessibility",
-    "Reusability",
-    "Contextuality",
-    "Interoperability",
-];
-
-const DATAFILE_ITEMS = [
-    "Overall score",
-    "Accuracy",
-    "Consistency",
-    "Clarity",
-    "Readiness",
-];
+import Loader from "components/UI/loader";
+import { useContext, useEffect } from "react";
+import { QualityMetricVMContext } from "./quality_metric.vm";
 
 const TABLE_HEADERS = ["Score", "Dataset"];
-const ROW1 = ["1", "2", "3"];
-const ROW2 = [
-    {
-        title: "2011 Output Area code, old to new",
-        description:
-            "This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August 2013) and the new 2011 This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August",
-    },
-    {
-        title: "2011 Output Area code, old to new",
-        description:
-            "This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August 2013) and the new 2011 This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August",
-    },
-    {
-        title: "2011 Output Area code, old to new",
-        description:
-            "This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August 2013) and the new 2011 This file provides a look-up between the archived 2011 Output Area (OA) code (published 15 August",
-    },
-];
-// const TABLE_DATA = [ROW1, ROW2];
-const STARS = [
-    [
-        { name: 1, rating: 10 },
-        { name: 2, rating: 20 },
-        { name: 3, rating: 30 },
-        { name: 4, rating: 20 },
-        { name: 5, rating: 10 },
-    ],
-    [
-        { name: 1, rating: 10 },
-        { name: 2, rating: 20 },
-        { name: 3, rating: 50 },
-        { name: 4, rating: 20 },
-        { name: 5, rating: 10 },
-    ],
-    [
-        { name: 1, rating: 50 },
-        { name: 2, rating: 20 },
-        { name: 3, rating: 30 },
-        { name: 4, rating: 20 },
-        { name: 5, rating: 10 },
-    ],
-    [
-        { name: 1, rating: 10 },
-        { name: 2, rating: 20 },
-        { name: 3, rating: 30 },
-        { name: 4, rating: 20 },
-        { name: 5, rating: 10 },
-    ],
-    [
-        { name: 1, rating: 20 },
-        { name: 2, rating: 10 },
-        { name: 3, rating: 20 },
-        { name: 4, rating: 20 },
-        { name: 5, rating: 10 },
-    ],
-    [
-        { name: 1, rating: 10 },
-        { name: 2, rating: 10 },
-        { name: 3, rating: 20 },
-        { name: 4, rating: 20 },
-        { name: 5, rating: 10 },
-    ],
-];
 
 const DisplayDataset = ({ title, description }: any) => (
     <div>
@@ -95,16 +18,20 @@ const DisplayDataset = ({ title, description }: any) => (
         </span>
     </div>
 );
-const QualityInsightsBody = ({ selectedLabel }: { selectedLabel: number }) => {
-    const items = selectedLabel == 0 ? DATAFILE_ITEMS : METADATA_ITEMS;
+const QualityInsightsBody = () => {
+    const {
+        qualityMetrics,
+        fetchQualityMetrics,
+        isFetchingQualityMetrics,
+        selectedQualityInsights: selectedLabel,
+    } = useContext(QualityMetricVMContext);
 
-    const tableData = ROW2.map((data, index) => [
-        index,
-        ROW1[index],
-        <DisplayDataset key={index} title={data.title} description={data.description} />,
-    ]);
-    const barDataKey = Object.keys(STARS[0][0])[1];
-    const labelListDatakey = Object.keys(STARS[0][0])[0];
+    const { dataFileQuality = {}, metaFileQuality = {} } = qualityMetrics || {};
+    const items = selectedLabel == 0 ? dataFileQuality : metaFileQuality;
+    useEffect(() => {
+        fetchQualityMetrics && fetchQualityMetrics();
+    }, []);
+
     return (
         <div className="ml-16">
             <div className="text-sm text-dtech-dark-grey my-4">
@@ -112,45 +39,107 @@ const QualityInsightsBody = ({ selectedLabel }: { selectedLabel: number }) => {
                     ? "These scores are determined based on feedback gathered from users."
                     : "These values are determined based on the Metadata Quality Assessment methodology and calculated using algorithms."}
             </div>
-            {items.map((label, index) => (
-                <Accordian label={<AccordianLabel label={label} />} key={index}>
-                    <div>
-                        <div className="px-8">
-                            <Table
-                                tableHeaders={TABLE_HEADERS}
-                                tableData={tableData}
-                                cellPadding={3}
+            {Object.keys(items).map((key, index) => (
+                <Accordian
+                    label={
+                        <AccordianLabel
+                            label={getLabel(items[key].title)}
+                            ratings={items[key].rating}
+                        />
+                    }
+                    key={selectedLabel + key}
+                >
+                    {!isFetchingQualityMetrics ? (
+                        <div>
+                            <div className="px-8">
+                                <Table
+                                    tableHeaders={TABLE_HEADERS}
+                                    tableData={getTableData(
+                                        items[key].datasets
+                                    )}
+                                    cellPadding={3}
+                                />
+                            </div>
+                            <BarGraph
+                                data={getRating(items[key].rating, index)}
+                                strokeWidthAxis={2}
+                                strokeWidthLabelList={0}
+                                className="font-medium mb-6 mt-6"
+                                xLabel=""
+                                yLabel=""
+                                xvalue="Star rating"
+                                yvalue="Datasets"
+                                barDatakey={"rating"}
+                                labelListDatakey={"name"}
                             />
                         </div>
-                        <BarGraph
-                            data={STARS[index]}
-                            strokeWidthAxis={2}
-                            strokeWidthLabelList={0}
-                            className="font-medium mb-6 mt-6"
-                            xLabel=""
-                            yLabel=""
-                            xvalue="Star rating"
-                            yvalue="Datasets"
-                            barDatakey={barDataKey}
-                            labelListDatakey={labelListDatakey}
-                        />
-                    </div>
+                    ) : (
+                        <div className="h-[calc(40vh-var(--nav-height))] w-full flex items-center justify-center">
+                            <Loader />
+                        </div>
+                    )}
                 </Accordian>
             ))}
         </div>
     );
 };
 
-const AccordianLabel = ({ label }: { label: string }) => {
+const AccordianLabel = ({
+    label,
+    ratings,
+}: {
+    label: string;
+    ratings: any;
+}) => {
     return (
         <MetaRating
             label={label}
-            dataQuality={3}
+            dataQuality={getAvg(ratings)}
             className="!flex-row ml-0"
             labelClass="!text-lg text-dtech-dark-grey"
             starClassName="!w-6 !h-6 text-[#5F5F63]"
         />
     );
+};
+
+const getAvg = (ratings: any) => {
+    const ratingData = ratings.map(
+        (rate: any, index: number) => rate[index + 1]
+    );
+    const count = ratingData.reduce(
+        (accumulator: any, curValue: any) => accumulator + curValue,
+        0
+    );
+
+    const ratingSum = ratingData.reduce(
+        (accumulator: any, curValue: any, curIndex: any) =>
+            accumulator + curValue * (curIndex + 1),
+        0
+    );
+    return ratingSum / count;
+};
+
+const getLabel = (title: string) => {
+    return `${title[0].toUpperCase()}${title.slice(1)}`;
+};
+
+const getTableData = (datasets: any) => {
+    return datasets.map((dataset: any) => [
+        dataset.rating,
+        <DisplayDataset
+            key={dataset.id}
+            title={dataset.title}
+            description={dataset.description}
+        />,
+    ]);
+};
+
+const getRating = (ratings: any, index: any) => {
+    const rating = ratings.map((rate: any, index: any) => ({
+        name: index + 1,
+        rating: rate[index + 1],
+    }));
+    return rating;
 };
 
 export default QualityInsightsBody;

@@ -23,7 +23,8 @@ const BarGraph = ({
     labelListColor = "#3F0068",
     barSize = 40,
     labelListPosition = "insideBottom",
-    labellistTopPadding= 0,
+    labellistTopPadding = 0,
+    isAnimationActive=true,
 }: {
     data?: Array<Object>;
     strokeWidthAxis?: number;
@@ -47,7 +48,8 @@ const BarGraph = ({
     labelListColor?: string;
     barSize?: number;
     labelListPosition?: any;
-    labellistTopPadding?:number;
+    labellistTopPadding?: number;
+    isAnimationActive?: boolean;
 }) => {
     return (
         <BarChart
@@ -86,7 +88,7 @@ const BarGraph = ({
                     dy={30}
                 />
             </YAxis>
-            <Bar dataKey={barDatakey} fill={barColor} barSize={barSize}>
+            <Bar dataKey={barDatakey} fill={barColor} barSize={barSize} isAnimationActive={isAnimationActive}>
                 {data.map((_, index) => (
                     <Cell
                         key={`cell-${index}}`}

@@ -1,39 +1,33 @@
 import DefaultLayout from "components/layouts/default";
-import SummarySection from "./components/summary_section";
 import DatasetDetailVM, { DatasetDetailVMContext } from "./dataset_detail.vm";
 import { Tab } from "@headlessui/react";
-import TabHeader from "components/UI/tabbed/header";
-import TabPanel from "components/UI/tabbed/panel";
-import FeedbackSection from "./components/feedback_section";
-import PreviewSection from "./components/preview_section";
-import SummaryInsights from "./components/summary_insights";
-import { NextPageContext } from "next";
-import Http from "common/http";
 import Dataset from "models/dataset.model.v4";
-import ErrorAlert from "components/UI/alerts/error_alert";
-import MayAlsoLike from "./components/may_also_like";
-import DataFilesSection from "./components/data_files";
-import BackBtn from "components/UI/buttons/back_btn";
-import { getCookieFromServer } from "common/utils/cookie.util";
-import { AUTH_TOKEN } from "common/constants/cookie.key";
+import TabPanel from "components/UI/tabbed/panel";
+import DatasetHead from "./components/dataset_head";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import Loader from "components/UI/loader";
+import { getCookieFromServer } from "common/utils/cookie.util";
+import Http from "common/http";
+import { AUTH_TOKEN } from "common/constants/cookie.key";
+import { NextPageContext } from "next";
+import DatasetTabHeaders from "./components/dataset_tabs";
+import DataFilesSection from "./components/data_file";
+import DatasetInsights from "./components/insights_section";
+import DatasetFeedbackSection from "./components/user_feedback";
+import MayAlsoLike from "./components/may_also_like";
+import ErrorAlert from "components/UI/alerts/error_alert";
 
 enum tabIndex {
     data_files,
-    preview,
     insights,
     feedback,
     related_datasets,
 }
-
-const DatasetDetailPage = ({ dataset }: { dataset: Dataset | undefined }) => {
+const DatasetDetail = ({ dataset }: { dataset: Dataset | undefined }) => {
+    const [loading, setLoading] = useState<boolean>(false);
     const [selectedIndex, setSelectedIndex] = useState<any>(0);
-    const [loading, setLoading] = useState<boolean>(true);
     const { asPath } = useRouter();
     const vm = DatasetDetailVM(dataset);
-
     useEffect(() => {
         const hashParam: string = asPath.split("#")[1];
         setSelectedIndex(tabIndex[hashParam as any]);
@@ -45,7 +39,7 @@ const DatasetDetailPage = ({ dataset }: { dataset: Dataset | undefined }) => {
             <DefaultLayout>
                 <ErrorAlert
                     className="max-w-xl mx-auto"
-                    message="Something went wrong while fetching dataset data. Please try again later."
+                    message="Something went wrong while fetching organisation data. Please try again later."
                 />
             </DefaultLayout>
         );
@@ -54,63 +48,50 @@ const DatasetDetailPage = ({ dataset }: { dataset: Dataset | undefined }) => {
     return (
         <DefaultLayout>
             <DatasetDetailVMContext.Provider value={vm}>
-                <div className="flex flex-row justify-between mb-4">
-                    <BackBtn />
-                    <p className="text-center text-lg font-semibold">Dataset</p>
-                    <span></span>
-                </div>
-                <div className="flex">
-                    <div className="w-1/3">
-                        <SummarySection />
+                <div className="px-4">
+                    <div className="flex flex-row justify-between mb-4 my-2 ml-4">
+                        <p className="text-center text-2xl font-semibold">
+                            Dataset
+                        </p>
+                        <span></span>
                     </div>
-                    {loading ? (
-                        <div className="w-full h-full flex items-center justify-center">
-                            <Loader />
+                    <div className="w-full h-fit py-4 bg-dtech-light-grey rounded-[20px] shadow-container">
+                        <DatasetHead />
+                        <div className="flex border-t px-4 shadow-container">
+                            {!loading && (
+                                <Tab.Group defaultIndex={selectedIndex}>
+                                    <DatasetTabHeaders
+                                        selectedIndex={selectedIndex}
+                                    />
+                                    <Tab.Panels className="h-[calc(100%-var(--dataset-detail-tab-header-height))] w-full flex">
+                                        <TabPanel className="!bg-dtech-light-grey">
+                                            <DataFilesSection
+                                                goToPreview={() => {
+                                                    setSelectedIndex(1);
+                                                }}
+                                            />
+                                        </TabPanel>
+                                        <TabPanel className="!bg-dtech-light-grey">
+                                            <DatasetInsights />
+                                        </TabPanel>
+                                        <TabPanel className="!bg-dtech-light-grey">
+                                            <DatasetFeedbackSection />
+                                        </TabPanel>
+                                        <TabPanel className="!bg-dtech-light-grey">
+                                            <MayAlsoLike />
+                                        </TabPanel>
+                                    </Tab.Panels>
+                                </Tab.Group>
+                            )}
                         </div>
-                    ) : (
-                        <div className="w-2/3 border">
-                            <Tab.Group
-                                defaultIndex={selectedIndex}
-                                onChange={setSelectedIndex}
-                            >
-                                <Tab.List className="flex flex-row justify-between">
-                                    <TabHeader>Data files</TabHeader>
-                                    <TabHeader>Preview</TabHeader>
-                                    <TabHeader>Insights</TabHeader>
-                                    <TabHeader>Feedback</TabHeader>
-                                    <TabHeader>Related datasets</TabHeader>
-                                </Tab.List>
-                                <Tab.Panels className="h-[calc(100%-var(--dataset-detail-tab-header-height))] w-full flex">
-                                    <TabPanel>
-                                        <DataFilesSection
-                                            goToPreview={() => {
-                                                setSelectedIndex(1);
-                                            }}
-                                        />
-                                    </TabPanel>
-                                    <TabPanel>
-                                        <PreviewSection />
-                                    </TabPanel>
-                                    <TabPanel>
-                                        <SummaryInsights />
-                                    </TabPanel>
-                                    <TabPanel>
-                                        <FeedbackSection />
-                                    </TabPanel>
-                                    <TabPanel>
-                                        <MayAlsoLike />
-                                    </TabPanel>
-                                </Tab.Panels>
-                            </Tab.Group>
-                        </div>
-                    )}
+                    </div>
                 </div>
             </DatasetDetailVMContext.Provider>
         </DefaultLayout>
     );
 };
 
-DatasetDetailPage.getInitialProps = async ({ query, req }: NextPageContext) => {
+DatasetDetail.getInitialProps = async ({ query, req }: NextPageContext) => {
     try {
         const datasetId = query["id"];
         let authToken;
@@ -131,5 +112,4 @@ DatasetDetailPage.getInitialProps = async ({ query, req }: NextPageContext) => {
         return { dataset: undefined };
     }
 };
-
-export default DatasetDetailPage;
+export default DatasetDetail;

@@ -3,7 +3,7 @@ import Dataset from "./components/dataset";
 
 const SearchPage = () => {
     return (
-        <DefaultLayout>
+        <DefaultLayout page="dataset">
             <Dataset />
         </DefaultLayout>
     );

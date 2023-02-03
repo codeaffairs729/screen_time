@@ -18,6 +18,8 @@ const Dataset = () => {
         isLoading,
         totalRecords,
         datasets,
+        stats,
+        isFetchingStats,
     } = useContext(SearchVMContext);
     return (
         <div className="flex">
@@ -31,11 +33,13 @@ const Dataset = () => {
                     totalPages={totalPages}
                     pageSize={pageSize}
                 />
-                <ResultLayout
-                    error={error}
-                    isLoading={isLoading}
-                    recordsData={datasetToResultCardData(datasets)}
-                />
+                {!isFetchingStats && (
+                    <ResultLayout
+                        error={error}
+                        isLoading={isLoading}
+                        recordsData={datasetToResultCardData(datasets, stats)}
+                    />
+                )}
             </div>
         </div>
     );

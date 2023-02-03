@@ -33,12 +33,11 @@ export type Filter = {
     end_date?: string[];
 };
 
-const SearchVM = () => {
+const SearchVM = (search = true) => {
     const router = useRouter();
     const {
         query: { q },
     } = router;
-
     const dispatch = useDispatch();
 
     const [activeFilter, setActiveFilter] = useState<Filter>({
@@ -97,9 +96,8 @@ const SearchVM = () => {
         option: SingleValue<SearchOption>
     ) => {
         if (!option) return;
-        const searchType = ""; // type === "dataset" ? "" : type;
-        // TODO After making the organisation page dynamic
-        // Update the above code to show organisation page when selected from search bar
+        const searchType = type === "dataset" ? "" : type;
+
         dispatch(updateCache("last-search-query", option.value));
         setCurrentPageNo(1);
         router.push({
@@ -159,7 +157,7 @@ const SearchVM = () => {
      * TODO: uriencode searchquery, pagenum and pagesize
      */
     const { data: datasets, error } = useSWR(
-        q
+        q && search
             ? `/v4/datasets/?search_query=${q}&page_size=${pageSize}&page_num=${currentPageNo}${queryParams}`
             : null,
         (url: string) =>
@@ -247,6 +245,7 @@ const SearchVM = () => {
         isFilterActive,
         isFetchingStats,
         stats,
+        fectchStats,
         pageSize,
         totalRecords,
         setPageSize,
@@ -264,6 +263,7 @@ interface ISearchVMContext {
     filterOptions: Filter;
     setFilterOptions: Function;
     currentPageNo: number;
+    fectchStats: Function;
     setCurrentPageNo: (pageNo: number) => void;
     totalPages: number;
     resetAllFilters: Function;
@@ -328,21 +328,20 @@ export const useSearchFilter = ({
     return { control, register, fields, replace };
 };
 
-export const datasetToResultCardData = (
-    datasets: Dataset[] | undefined | void
-): Data[] => {
+export const datasetToResultCardData = (datasets: any, stats: any): Data[] => {
     if (!datasets?.length) {
         return [];
     }
 
-    return datasets?.map((dataset) => ({ 
+    return datasets?.map((dataset: any) => ({
         id: dataset.id,
         title: dataset.detail.name,
-        href: `/datasets/${dataset.id}`,
+        recordType: "datasets",
         description: dataset.detail.description,
         dataQuality: dataset.detail.dataQuality,
-        buttonTags: ["open"],
+        licenseTypes: ["open"],
         topics: dataset.detail.topics,
+        isFavourited: stats[dataset.id]?.isFavourited,
         lastUpdate: dataset.detail.lastUpdate,
         domains:
             typeof dataset.detail.domain === "string"

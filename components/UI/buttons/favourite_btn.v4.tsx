@@ -14,16 +14,23 @@ import DatasetStats from "models/dataset_stats.model";
 const FavouriteBtn = ({
     className = "",
     datasetStats,
+    recordType = "datasets",
     isLoading = false,
     onFavouriteChange,
 }: {
     className?: string;
     datasetStats: any;
     isLoading?: Boolean;
+    recordType?: string;
     onFavouriteChange?: () => void;
 }) => {
     const { handleFavourite, isFavourited, isHandlingFavourite, user } =
-        useFavouriteDataset(datasetStats, isLoading, onFavouriteChange);
+        useFavouriteDataset(
+            datasetStats,
+            isLoading,
+            onFavouriteChange,
+            recordType
+        );
 
     return (
         <div
@@ -45,7 +52,7 @@ const FavouriteBtn = ({
                 )}
             >
                 {!user ? (
-                    <BsHeart className="w-5 h-5 text-gray-600" />
+                    <BsHeart className="h-6 w-6 ml-4 text-dtech-main-dark cursor-pointer" />
                 ) : (
                     <>
                         {!isHandlingFavourite ? (
@@ -57,7 +64,7 @@ const FavouriteBtn = ({
                                 )}
                             </>
                         ) : (
-                            <Loader className="m-0.5" />
+                            <Loader className="ml-4" />
                         )}
                     </>
                 )}
@@ -73,7 +80,8 @@ const FavouriteBtn = ({
 const useFavouriteDataset = (
     datasetStats: any,
     isLoading: Boolean,
-    onFavouriteChange?: () => void
+    onFavouriteChange?: () => void,
+    recordType?: string
 ) => {
     const user = useSelector((state: RootState) => state.auth.user);
     const [isFavourited, setIsFavourited] = useState(
@@ -87,17 +95,11 @@ const useFavouriteDataset = (
     const handleFavourite = () =>
         executeHandleFavourite(
             async () => {
-                if (!isFavourited) {
-                    const res = await Http.put(
-                        `/v1/datasets/${datasetStats.id}/favourite`
-                    );
-                    setIsFavourited(true);
-                } else {
-                    const res = await Http.delete(
-                        `/v1/datasets/${datasetStats.id}/favourite`
-                    );
-                    setIsFavourited(false);
-                }
+                const url = getFavURL(datasetStats?.id, recordType);
+                const res = !isFavourited
+                    ? await Http.put(url)
+                    : await Http.delete(url);
+                setIsFavourited(!isFavourited);
             },
             {
                 onError: (res) =>
@@ -115,3 +117,14 @@ const useFavouriteDataset = (
 };
 
 export default FavouriteBtn;
+
+const getFavURL = (id: number, type = "datasets") => {
+    switch (type) {
+        case "datasets":
+            return `/v1/datasets/${id}/favourite`;
+        case "organisation":
+            return `/v1/data_sources/${id}/favourite_data_provider`;
+        default:
+            return `/v1/datasets/${id}/favourite`;
+    }
+};

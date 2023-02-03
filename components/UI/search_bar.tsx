@@ -15,8 +15,8 @@ import { updateSearchType } from "store/search/search.action";
 // export type SearchOption = { type: string; value: any; label: string };
 const ITEMS: MenuItemType[] = [
     { label: "Dataset" },
-    { label: "Topic" },
-    { label: "Region" },
+    // { label: "Topic" },
+    // { label: "Region" },
     { label: "Organisation" },
 ];
 
@@ -73,6 +73,7 @@ const SearchBar = ({
                     MenuList: searchType === "dataset" ? MenuList : () => null,
                     Option,
                     Control,
+                    Input,
                     Placeholder: () => null,
                     IndicatorsContainer,
                     ValueContainer,
@@ -128,6 +129,7 @@ const ValueContainer = ({ children, ...props }: any) => {
 
     useEffect(() => {
         setIsHomePage(pathname === "/");
+        if (pathname === "/") handleSearchTypeChange("dataset");
     }, []);
 
     return (
@@ -181,6 +183,9 @@ const MenuList = (props: any) => {
             className="bg-[#FAFAFA] text-[17px] !rounded-none"
         />
     );
+};
+const Input = (props: any) => {
+    return <components.Input {...props} className=" w-0 overflow-x-hidden" />;
 };
 const Menu = (props: any) => {
     return (

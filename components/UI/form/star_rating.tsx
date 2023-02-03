@@ -1,16 +1,18 @@
 import { useState } from "react";
-import { BsStarFill } from "react-icons/bs";
+import { BsStar, BsStarFill } from "react-icons/bs";
 import { FieldProps } from "common/type";
 import { useController } from "react-hook-form";
 
 const StarRatingInput = ({
     className = "",
+    starClassName="",
     formControl,
     dataSelector,
     dontKnow = false,
 }: {
     dontKnow?: boolean;
     className?: string;
+    starClassName?: string;
 } & FieldProps) => {
     const [rating, setRating] = useState<any>(0);
     const [hover, setHover] = useState(0);
@@ -42,10 +44,10 @@ const StarRatingInput = ({
                             <button
                                 type="button"
                                 key={index}
-                                className={` bg-transparent border-none outline-none cursor-pointer mx-[0.7px] text-m ${
+                                className={` bg-transparent border-none outline-none cursor-pointer mx-[0.7px] text-m  ${
                                     index <= (hover || rating) && !dk
-                                        ? "text-dtech-secondary-dark"
-                                        : "text-gray-300"
+                                        ? "text-gray-500"
+                                        : "text-gray-500"
                                 }`}
                                 onClick={() => {
                                     setRating(index);
@@ -56,7 +58,7 @@ const StarRatingInput = ({
                                 onMouseLeave={() => setHover(rating)}
                             >
                                 {/* <span className="star">&#9733;</span> */}
-                                <BsStarFill />
+                                {index <= (hover || rating)? <BsStarFill className={starClassName}/> : <BsStar className={starClassName}/> }
                             </button>
                         );
                     })}
@@ -64,7 +66,7 @@ const StarRatingInput = ({
                         <div className="mx-4 mb-0.5">
                             <input
                                 type="checkbox"
-                                className="w-3 h-3 border-0 bg-gray-300 text-dtech-secondary-dark outline-none focus-none"
+                                className="w-4 h-4 border-1 bg-gray-100 text-dtech-main-dark outline-none focus-none"
                                 onChange={(e) => {
                                     if (e.target.checked) {
                                         setRating(0);
@@ -78,7 +80,7 @@ const StarRatingInput = ({
                                 }}
                                 checked={dk}
                             />
-                            <span className="text-xs text-dtech-secondary-dark ml-2">
+                            <span className="text-sm  ml-2">
                                 {"Don't know"}
                             </span>
                         </div>

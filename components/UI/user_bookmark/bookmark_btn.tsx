@@ -10,18 +10,19 @@ import { BsBookmarkPlus, BsFillBookmarkPlusFill } from "react-icons/bs";
 
 const BookmarkBtn = ({
     className = "",
-    dataset,
+    data,
+    recordType = "dataset",
     onBookmarkChange,
 }: {
     className?: string;
-    dataset: any;
+    data: any;
+    recordType?: string;
     onBookmarkChange?: () => void;
 }) => {
     // const { handleBookmark, isBookmarked, isHandlingBookmark, user } =
     //     useBookmarkDataset(dataset, onBookmarkChange);
 
-    const { isBookmarked, isHandlingBookmark, user } =
-        useBookmarkDataset(dataset);
+    const { isBookmarked, isHandlingBookmark, user } = useBookmarkDataset(data);
 
     const [showModal, setShowModal] = useState(false);
 
@@ -30,7 +31,8 @@ const BookmarkBtn = ({
             <BookmarkModal
                 showModal={showModal}
                 setShowModal={setShowModal}
-                dataset={dataset}
+                data={data}
+                recordType={recordType}
             />
             <div
                 className="inline-block"
@@ -50,7 +52,7 @@ const BookmarkBtn = ({
                     )}
                 >
                     {!user ? (
-                        <BsBookmarkPlus className="w-5 h-5 text-gray-600" />
+                        <BsBookmarkPlus className="h-6 w-6 ml-4 text-dtech-main-dark cursor-pointer" />
                     ) : (
                         <>
                             {!isHandlingBookmark ? (
@@ -76,7 +78,7 @@ const BookmarkBtn = ({
 /**
  * Bookmark a dataset
  */
-const useBookmarkDataset = (dataset: Dataset) => {
+const useBookmarkDataset = (data: any) => {
     const user = useSelector((state: RootState) => state.auth.user);
     const user_bookmarks = useSelector(
         (state: RootState) => state.user.bookmarkItems
@@ -85,7 +87,7 @@ const useBookmarkDataset = (dataset: Dataset) => {
     const isHandlingBookmark = false;
 
     user_bookmarks?.forEach((item: any) => {
-        if (item.datasetID === dataset.id) {
+        if (item.datasetID === data.id || item.organisationID === data.id) {
             isBookmarked = true;
         }
     });

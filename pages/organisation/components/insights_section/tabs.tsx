@@ -1,24 +1,17 @@
 import { Tab } from "@headlessui/react";
-import { ReactNode, useState } from "react";
 import SearchTermHeader from "./search_term_section/header";
 import DownloadHeader from "./download_section/header";
 import QualityInsightsHeader from "./quality_insights/header";
 import {
     getSelectedLabelIndex,
     insightTabIndex,
-} from "pages/organisation/organisation.vm";
+} from "pages/organisation/organisation_detail.vm";
 
 const TabHeaders = ({
     selectedInsightTab,
-    setSelectedQualityInsights,
-    setSelectedSearchTerm,
-    setSelectedDownload,
     setSelectedInsightTab,
 }: {
     selectedInsightTab: number;
-    setSelectedQualityInsights: Function;
-    setSelectedSearchTerm: Function;
-    setSelectedDownload: Function;
     setSelectedInsightTab: Function;
 }) => {
     const onTabSelect = (selectedTab: string) => {
@@ -30,42 +23,41 @@ const TabHeaders = ({
     return (
         <div className="ml-10 mr-28">
             <Tab.List className={"flex justify-between items-center "}>
-                <HeadTag
-                    isSelected={selectedInsightTab == 0}
-                    label={"dataset_quality"}
-                    setSelected={onTabSelect}
-                >
-                    <QualityInsightsHeader
-                        onChange={setSelectedQualityInsights}
-                    />
-                </HeadTag>
-                <HeadTag
-                    isSelected={selectedInsightTab == 1}
-                    label={"search_term"}
-                    setSelected={onTabSelect}
-                >
-                    <SearchTermHeader onChange={setSelectedSearchTerm} />
-                </HeadTag>
-                <HeadTag
-                    isSelected={selectedInsightTab == 2}
-                    label={"download_metrics"}
-                    setSelected={onTabSelect}
-                >
-                    <DownloadHeader onChange={setSelectedDownload} />
-                </HeadTag>
+                <div>
+                    <HeadTag
+                        isSelected={selectedInsightTab == 0}
+                        label={"dataset_quality"}
+                        setSelected={onTabSelect}
+                    ></HeadTag>
+                    {selectedInsightTab == 0 && <QualityInsightsHeader />}
+                </div>
+                <div>
+                    <HeadTag
+                        isSelected={selectedInsightTab == 1}
+                        label={"search_term"}
+                        setSelected={onTabSelect}
+                    ></HeadTag>
+                    {selectedInsightTab == 1 && <SearchTermHeader />}
+                </div>
+                <div>
+                    <HeadTag
+                        isSelected={selectedInsightTab == 2}
+                        label={"download_metrics"}
+                        setSelected={onTabSelect}
+                    ></HeadTag>
+                    {selectedInsightTab == 2 && <DownloadHeader />}
+                </div>
             </Tab.List>
         </div>
     );
 };
 
 const HeadTag = ({
-    children,
     isSelected = false,
     label,
     setSelected,
 }: {
     label: string;
-    children: ReactNode;
     isSelected?: boolean;
     setSelected: Function;
 }) => {
@@ -76,7 +68,6 @@ const HeadTag = ({
 
     return (
         <Tab onClick={() => setSelected(label)}>
-            <span className={`${!isSelected && "hidden"}`}>{children}</span>
             <div
                 className={`relative inline-block text-left select-none outline-none ${
                     isSelected && "hidden"

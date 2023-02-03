@@ -11,7 +11,7 @@ const Calander = ({
 }) => {
     return (
         <div
-            className="z-10 absolute mt-10"
+            className="z-10 absolute mt-10 ml-[-140px]"
             onClick={() => {
                 setDateSelect(true);
             }}
@@ -21,11 +21,6 @@ const Calander = ({
                 onChange={handleChange}
                 calendarClassName="!border !border-red"
                 formatWeekDay={(nameOfDay) => nameOfDay.substring(0, 1)}
-                // timeClassName={() => "bg-blue"}
-                // popperClassName="bg-lightBlue"
-                // wrapperClassName={"bg-blue"}
-                // weekDayClassName={() => "bg-red"}
-                // dayClassName={() => "bg-darkGreen"}
                 inline
             />
         </div>

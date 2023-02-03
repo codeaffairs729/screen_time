@@ -39,11 +39,11 @@ const ListsSection = () => {
                         <div
                             ref={scrollableDiv}
                             id="scrollable-div"
-                            className="scroll-smooth no-scrollbar flex gap-10 items-center w-2/3 overflow-x-auto overflow-y-hidden justify-between whitespace-nowrap"
+                            className="scroll-smooth no-scrollbar flex flex-start gap-10 items-center w-2/3 overflow-x-auto overflow-y-hidden whitespace-nowrap"
                         >
                             <TabHeader>Favorites</TabHeader>
 
-                            {bookmark_lists.map((list: any, idx: any) => (
+                            {bookmark_lists?.map((list: any, idx: any) => (
                                 <TabHeader key={idx}>{list.listName}</TabHeader>
                             ))}
                         </div>
@@ -59,11 +59,9 @@ const ListsSection = () => {
                         <TabPanel className="bg-white">
                             <FavouritesSection />
                         </TabPanel>
-                        {bookmark_lists.map((list: any, idx: any) => (
+                        {bookmark_lists?.map((list: any, idx: any) => (
                             <TabPanel key={idx} className="bg-white">
-                                <BookmarksSection
-                                    datasetIDS={list.listDatasets}
-                                />
+                                <BookmarksSection list={list} />
                             </TabPanel>
                         ))}
                     </Tab.Panels>

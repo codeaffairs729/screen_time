@@ -47,6 +47,7 @@ const DataPrivacyPolicy = () => {
           <a
             href="www.aboutcookies.org"
             target="_blank"
+            rel="noreferrer"
             className="text-dtech-secondary-light hover:underline"
           >
             www.aboutcookies.org
