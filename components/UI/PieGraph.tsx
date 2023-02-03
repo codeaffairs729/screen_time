@@ -81,19 +81,21 @@ const PieGraph = ({
     width = 950,
     height = 700,
     radius = "60%",
+    dataKey= "value",
     isAnimationActive = true,
 }: {
     data: Array<Object>;
     width?: number;
     height?: number;
     radius?: string;
+    dataKey?: string;
     isAnimationActive?: boolean;
 }) => {
     return (
         <PieChart width={width} height={height}>
             <Pie
                 data={data}
-                dataKey={"value"}
+                dataKey={dataKey}
                 nameKey="name"
                 fill="#302D2D"
                 labelLine={true}

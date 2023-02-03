@@ -100,16 +100,16 @@ const headerSelected = (
                 <br/><strong id=label_${index}>&#09${object}</strong><br/></br>
                 ${formatSubHeading("Region")}
                 ${formatSubHeading("Time")}
-                ${getImageCanvas(byTimeImageData)}
+                ${byTimeImageData ? getImageCanvas(byTimeImageData) : '<I>&emsp;&emsp; &emsp;&emsp; &emsp;&emsp;&emsp;&emsp; &emsp;&emsp; &emsp;&emsp; No Data Presents for Time.</I><br/>'}
                 ${formatSubHeading("Use case")}
-                ${getImageCanvas(imagePie)}
+                ${imagePie ? getImageCanvas(imagePie) : '<I>&emsp;&emsp;&emsp;&emsp; &emsp;&emsp;&emsp;&emsp; &emsp;&emsp; &emsp;&emsp; No Data Presents for Role.</I> <br/>'}
                 <p>...</p>`
                 : `<br/><strong id=label_${index}>&#09${object}</strong><br/>`
         )
         .join("");
 
 const checkIfDateExists = (downloadDate: any, currDate: any) => {
-    const downloadDateString = new Date(downloadDate).toDateString();
+    const downloadDateString = new Date(downloadDate.date).toDateString();
     const currDateString = new Date(currDate).toDateString();
 
     return currDateString == downloadDateString;
@@ -117,7 +117,7 @@ const checkIfDateExists = (downloadDate: any, currDate: any) => {
 
 const ReportVM = () => {
     const currentDate = new Date();
-    const [toDate, setToDate] = useState(currentDate);
+    const [toDate, setToDate] = useState(new Date());
     currentDate.setFullYear(currentDate.getFullYear() - 1);
     const [fromDate, setFromDate] = useState(currentDate);
     const { organisation } = useContext(OrganisationDetailVMContext);
@@ -163,10 +163,10 @@ const ReportVM = () => {
         const metricByTime: any = document.getElementById("screenshot");
         const metricByUseCase: any = document.getElementById("pie");
 
-        const byTimeCanvas = (await html2canvas(metricByTime)).toDataURL(
+        const byTimeCanvas = metricByTime && (await html2canvas(metricByTime)).toDataURL(
             "image/png"
         );
-        const byUseCaseCanvas = (await html2canvas(metricByUseCase)).toDataURL(
+        const byUseCaseCanvas = metricByUseCase && (await html2canvas(metricByUseCase)).toDataURL(
             "image/png"
         );
 
@@ -216,12 +216,11 @@ const ReportVM = () => {
         executeFetchByRoles(
             () => {
                 return Http.get(
-                    `/v1/metrics/provider/${organisation?.uuid}/by_time?from_date=${from}&to_date=${to}`
+                    `/v1/metrics/provider/${organisation?.uuid}/by_role?from_date=${from}&to_date=${to}`
                 );
             },
             {
                 postProcess: (res: any) => {
-                    console.log(res);
                     return res;
                 },
                 onError: (e) => {
@@ -242,12 +241,11 @@ const ReportVM = () => {
         executeFetchByTime(
             () => {
                 return Http.get(
-                    `/v1/metrics/provider/${organisation?.uuid}/by_role?from_date=${from}&to_date=${to}`
+                    `/v1/metrics/provider/${organisation?.uuid}/by_time?from_date=${from}&to_date=${to}`
                 );
             },
             {
                 postProcess: (res: any) => {
-                    console.log(res);
                     return res;
                 },
                 onError: (e) => {
@@ -283,7 +281,7 @@ const ReportVM = () => {
         });
     };
     const isFetching = isFetchingByTime || isFetchingByRoles;
-    const loading = isGeneratingReport || isFetching;
+    const loading = isGeneratingReport || isFetching || isFetchingByTime || isFetchingByRoles;
 
     return {
         generateReportContent,
@@ -317,11 +315,14 @@ export const getDateRange = (fromDate: any, toDate: any, dates: any) => {
         const downloadDate = dates.filter((downDate: any) =>
             checkIfDateExists(downDate, currentDate)
         )[0];
+
+        // console.log("downloadDate :", checkIfDateExists(dates[2], currentDate))
         const dateToShow = downloadDate
             ? new Date(downloadDate?.date)
             : currentDate;
         datesList.push({
             date: dateToShow.toLocaleString("en", {
+                day:"numeric",
                 weekday: "short",
                 month: "short",
                 year: "numeric",

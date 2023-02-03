@@ -33,38 +33,23 @@ const Report = () => {
     useEffect(() => {
         fetchDownloadMetrics();
     }, []);
-    // const { downloadByTime = [], downloadByRole = [] } = downloadMetrics || {};
 
-    const filteredDates = useMemo(
-        () =>
-            downloadByTime.filter(
-                (data: any) =>
-                    new Date(data?.date) >= new Date(fromDate) &&
-                    new Date(data?.date) <= new Date(toDate)
-            ),
-        [fromDate, toDate]
+    const filteredDates = downloadByTime.filter(
+        (data: any) =>
+            new Date(data?.date) >= new Date(fromDate) &&
+            new Date(data?.date) <= new Date(toDate)
     );
 
-    const tableDataByTime = useMemo(
-        () =>
-            filteredDates.map((data: DownloadByTime) => {
-                const date = new Date(data?.date);
-                const month = date.toLocaleString("en", { month: "short" });
-                const year = new Date(data?.date).getFullYear();
-                return [[data.count], [`${month} ${year}`]];
-            }),
-        [fromDate, toDate]
-    );
+    const tableDataByTime = filteredDates.map((data: DownloadByTime) => {
+        const date = new Date(data?.date);
+        const month = date.toLocaleString("en", { month: "short" });
+        const year = new Date(data?.date).getFullYear();
+        return [[data.count], [`${month} ${year}`]];
+    });
 
-    const lineChartData = useMemo(
-        () => getDateRange(fromDate, toDate, filteredDates),
-        [fromDate, toDate]
-    );
+    const lineChartData = getDateRange(fromDate, toDate, filteredDates);
 
-    const pieData = useMemo(
-        () => downloadByRole.map((data: any) => [data.name, data.value]),
-        [downloadByRole]
-    );
+    const pieData = downloadByRole.map((data: any) => [data.name, data.count]);
 
     return (
         <div>
@@ -76,37 +61,40 @@ const Report = () => {
                 </div>
             )}
             <div className=" h-[56rem] overflow-y-scroll no-scrollbar whitespace-nowrap absolute">
-                <div
-                    id="screenshot"
-                    className="flex absolute justify-center items-center flex-col z-[-10]"
-                >
-                    <LineGraph
-                        data={lineChartData}
-                        height={500}
-                        width={1025}
-                        datakeyX={"date"}
-                        datakeyY="download"
-                        className=""
-                    />
-                    <Table
-                        tableHeaders={TIME_HEADERS}
-                        tableData={tableDataByTime}
-                        headerClass="text-[17px] font-medium bg-[#F5F5F5] "
-                        tableClass="w-[90%] ml-12 text-sm text-left table-fixed"
-                        cellPadding={20}
-                        tableRow="text-[17px]"
-                    />
-                </div>
-                <div
-                    id="pie"
-                    className="flex absolute justify-center items-center flex-col z-[-10]"
-                >
-                    {downloadByRole.length && (
+                {downloadByTime.length > 0 && (
+                    <div
+                        id="screenshot"
+                        className="flex absolute justify-center items-center flex-col z-[-10]"
+                    >
+                        <LineGraph
+                            data={lineChartData}
+                            height={500}
+                            width={1025}
+                            datakeyX={"date"}
+                            datakeyY="download"
+                            className=""
+                        />
+                        <Table
+                            tableHeaders={TIME_HEADERS}
+                            tableData={tableDataByTime}
+                            headerClass="text-[17px] font-medium bg-[#F5F5F5] "
+                            tableClass="w-[90%] ml-12 text-sm text-left table-fixed"
+                            cellPadding={20}
+                            tableRow="text-[17px]"
+                        />
+                    </div>
+                )}
+                {downloadByRole.length > 0 && (
+                    <div
+                        id="pie"
+                        className="flex absolute justify-center items-center flex-col z-[-10]"
+                    >
                         <>
                             <PieGraph
                                 data={downloadByRole}
                                 isAnimationActive={false}
                                 radius="60%"
+                                dataKey="count"
                             />
 
                             <Table
@@ -118,8 +106,8 @@ const Report = () => {
                                 tableRow="text-[17px]"
                             />
                         </>
-                    )}
-                </div>
+                    </div>
+                )}
             </div>
             <Tab.Group>
                 <Tab.List>
