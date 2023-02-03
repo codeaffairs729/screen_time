@@ -1,7 +1,4 @@
 import { Tab } from "@headlessui/react";
-// import SearchTermHeader from "./search_term_section/header";
-// import DownloadHeader from "./download_section/header";
-// import QualityInsightsHeader from "./quality_insights/header";
 import {
     getSelectedLabelIndex,
     insightTabIndex,

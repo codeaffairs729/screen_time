@@ -1,21 +1,15 @@
 import Loader from "components/UI/loader";
-import {
-    OrganisationDetailVMContext,
-    SearchTermType,
-} from "pages/organisation/organisation_detail.vm";
 import { useContext, useEffect, useMemo } from "react";
 import Table from "../../table";
 import TagsCloud from "./tagCloud";
 import { DateTime } from "luxon";
 import { getAge } from "pages/workspace/notification.vm";
+import { SearchTermType, SearchTermVMContext } from "./search_term.vm";
 
 const TABLE_HEADERS = ["Search term", "Count", "Last used"];
 const SearchTermSection = () => {
-    const { selectedSearchTerm } = useContext(OrganisationDetailVMContext); // not required here as pagination will done on organisation vm api for search term
-
-    const { searchTerms, fetchSearchTerms, isFetchingSearchTerms } = useContext(
-        OrganisationDetailVMContext
-    );
+    const { searchTerms, fetchSearchTerms, isFetchingSearchTerms } =
+        useContext(SearchTermVMContext);
 
     useEffect(() => {
         fetchSearchTerms();
