@@ -18,6 +18,7 @@ const DataStats = ({ stats }: { stats: DataStats | undefined }) => {
                     <div className="flex justify-center items-center mr-6">
                         <Image
                             src="/images/icons/dataset.svg"
+                            alt=""
                             height={20}
                             width={20}
                         />
