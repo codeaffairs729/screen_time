@@ -2,11 +2,10 @@ import Dropdown, { MenuItemType } from "components/UI/drop_down";
 import {
     formatLabel,
     getSelectedLabelIndex,
-    download,
-    OrganisationDetailVMContext,
 } from "pages/organisation/organisation_detail.vm";
 import { useContext, useState } from "react";
 import Label from "../label";
+import { DownloadMetricVMContext, downloadHeaders } from "./download_metric.vm";
 
 const ITEMS: MenuItemType[] = [
     { label: "by_region" },
@@ -18,11 +17,11 @@ const DownloadHeader = () => {
     const [selectedLabel, setSelectedLabel] = useState(ITEMS[0].label);
 
     const { setSelectedDownload: onChange } = useContext(
-        OrganisationDetailVMContext
+        DownloadMetricVMContext
     );
     const handleChange = (label: string) => {
         setSelectedLabel(label);
-        onChange && onChange(getSelectedLabelIndex(label, download));
+        onChange && onChange(getSelectedLabelIndex(label, downloadHeaders));
     };
     const menuItems = ITEMS.map((item) => ({
         ...item,

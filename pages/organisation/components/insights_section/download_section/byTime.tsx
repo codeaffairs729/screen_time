@@ -1,14 +1,10 @@
-import BarGraph from "components/UI/BarGraph";
-// import LineGraph from "components/UI/line_graph";
+// import BarGraph from "components/UI/BarGraph";
 import RangeSelector from "components/UI/range_selector";
-import {
-    DownloadByTime,
-    OrganisationDetailVMContext,
-} from "pages/organisation/organisation_detail.vm";
 import { useContext, useState } from "react";
 import Table from "../../table";
 import { format } from "date-fns";
 import dynamic from "next/dynamic";
+import { DownloadMetricVMContext, DownloadByTime } from "./download_metric.vm";
 const LineGraph = dynamic(() => import("components/UI/line_graph"), {
     ssr: false,
 });
@@ -17,7 +13,7 @@ const barDataKey = "download_per_month";
 
 const ByTime = () => {
     const { downloadMetrics, fromDate, toDate, setFromDate, setToDate } =
-        useContext(OrganisationDetailVMContext);
+        useContext(DownloadMetricVMContext);
 
     const { downloadByTime = [] } = downloadMetrics || {};
 
@@ -127,7 +123,7 @@ const ByTime = () => {
                     labellistTopPadding={6}
                     className={"ml-[-10px]"}
                 /> */}
-<div className="mt-8">
+                <div className="mt-8">
                     <Table
                         tableHeaders={TIME_HEADERS}
                         tableData={downloadByTimeData}

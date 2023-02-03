@@ -1,14 +1,14 @@
 import PieGraph from "components/UI/PieGraph";
-import { OrganisationDetailVMContext } from "pages/organisation/organisation_detail.vm";
 import { useContext } from "react";
 import Table from "../../table";
+import { DownloadMetricVMContext } from "./download_metric.vm";
 const PIE_HEADER = ["name", "value"];
 const ByUsecase = () => {
-    const { downloadMetrics } = useContext(OrganisationDetailVMContext);
+    const { downloadMetrics } = useContext(DownloadMetricVMContext);
 
     const { downloadByUseCase = [] } = downloadMetrics || {};
 
-    const pieData = downloadByUseCase.map((data: any, index: number) => [
+    const pieData = downloadByUseCase.map((data: any) => [
         data.name,
         data.value,
     ]);

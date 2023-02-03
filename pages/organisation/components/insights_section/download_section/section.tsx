@@ -1,16 +1,16 @@
 import { useContext, useEffect } from "react";
 import Loader from "components/UI/loader";
-import { OrganisationDetailVMContext } from "pages/organisation/organisation_detail.vm";
 import ByRegion from "./byRegion";
 import ByTime from "./byTime";
 import ByUsecase from "./byUsecase";
+import { DownloadMetricVMContext } from "./download_metric.vm";
 
 const DownloadSection = () => {
     const {
         selectedDownload: selectedLabel,
         fetchDownloadMetrics,
         isFetchingDownloadMetrics,
-    } = useContext(OrganisationDetailVMContext);
+    } = useContext(DownloadMetricVMContext);
 
     useEffect(() => {
         fetchDownloadMetrics();
