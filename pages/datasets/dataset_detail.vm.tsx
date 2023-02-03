@@ -60,9 +60,9 @@ const DatasetDetailVM = (initialDataset: Dataset | undefined) => {
     const [downloadMetrics, setDownloadMetrics] = useState<any>();
 
     useEffect(() => {
-        // if (dataset?.id) {
-        //     Http.post(`/v1/datasets/${dataset.id}/views`); // Increment view count on visiting dataset detail page
-        // }
+        if (dataset?.id) {
+            Http.post(`/v1/datasets/${dataset.id}/views`); // Increment view count on visiting dataset detail page
+        }
     }, [dataset?.id]);
     useEffect(() => {
         fetchSearchTerms();
