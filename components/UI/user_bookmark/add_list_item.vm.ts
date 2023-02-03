@@ -6,7 +6,7 @@ import UserService from "services/user.service";
 
 type Payload = {
     datasetID?: number;
-    organisationUUID?: number;
+    organisationUUID?: string;
 };
 
 const AddListItemVM = (user: User | null) => {

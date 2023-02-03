@@ -10,6 +10,8 @@ import previewIcon from "public/images/icons/preview.svg";
 import doNotPreview from "public/images/icons/do_not_preview.svg";
 import Image from "next/image";
 
+const META_FILE_HEADERS = ["Name", "Format", "Size", "Download", "Preview"];
+
 const DataFilesSection = ({ goToPreview }: { goToPreview: () => void }) => {
     const vm = useContext(DatasetDetailVMContext);
     const user = useSelector((state: RootState) => state.auth.user);
@@ -18,46 +20,54 @@ const DataFilesSection = ({ goToPreview }: { goToPreview: () => void }) => {
     if (!vm.dataset) {
         return <div />;
     }
+
+    const onDowloadAll = () => {
+        createFeedbackNotification(vm.dataset, user);
+        document.querySelectorAll("#downloadAll").forEach((element, index) => {
+            setTimeout(() => {
+                element.dispatchEvent(
+                    new MouseEvent("click", {
+                        bubbles: true,
+                    })
+                );
+            }, 1000 * (index + 1));
+        });
+    };
+
     return (
         <div>
             <div className="flex flex-row justify-between items-center mx-3 my-4 ">
                 <span>Total file : {vm.dataset.urls.length}</span>
                 <div className="flex flex-row">
-                    <span className="mr-2">Download all</span>
                     <a
-                    onClick={()=>{
-                        document.querySelectorAll("#downloadAll").forEach((element, index) => {
-                            setTimeout(() => {
-                                element.dispatchEvent(new MouseEvent("click", { bubbles: true }));
-                            }, 1000 * (index + 1));
-                        });
-                    }}
-                    className="mx-auto text-lg cursor-pointer"
-                    download
-                >
-                    <Image src={downloadIcon} alt="" height={24} width={24} />
-                </a>
+                        onClick={() => onDowloadAll()}
+                        className="mx-auto text-lg cursor-pointer flex"
+                        download
+                    >
+                        <span className="mr-2">Download all</span>
+                        <Image
+                            src={downloadIcon}
+                            alt=""
+                            height={24}
+                            width={24}
+                        />
+                    </a>
                 </div>
             </div>
             <div className=" h-[40rem]  overflow-y-scroll ">
                 <table className="min-w-max w-full table-auto text-sm text-left border">
                     <thead>
                         <tr className="text-[17px] font-normal ">
-                            <th className="py-3 px-6 text-left text-[17px] font-medium bg-[#F5F5F5] ">
-                                Name
-                            </th>
-                            <th className="py-3 px-6 text-left text-[17px] font-medium bg-[#F5F5F5] ">
-                                Format
-                            </th>
-                            <th className="py-3 px-6 text-center text-[17px] font-medium bg-[#F5F5F5] ">
-                                Size
-                            </th>
-                            <th className="py-3 px-6 text-center text-[17px] font-medium bg-[#F5F5F5] ">
-                                Download
-                            </th>
-                            <th className="py-3 px-6 text-center text-[17px] font-medium bg-[#F5F5F5] ">
-                                Preview
-                            </th>
+                            {META_FILE_HEADERS.map(
+                                (headName: string, index: number) => (
+                                    <th
+                                        key={index}
+                                        className="py-3 px-6 text-left text-[17px] font-medium bg-[#F5F5F5] "
+                                    >
+                                        {headName}
+                                    </th>
+                                )
+                            )}
                         </tr>
                     </thead>
                     <tbody
@@ -71,12 +81,12 @@ const DataFilesSection = ({ goToPreview }: { goToPreview: () => void }) => {
                                         url={url}
                                         key={i}
                                         goToPreview={goToPreview}
-                                        onDownload={() =>{
+                                        onDownload={() => {
                                             createFeedbackNotification(
                                                 vm.dataset,
                                                 user
-                                            )}
-                                        }
+                                            );
+                                        }}
                                     />
                                 );
                             })
@@ -102,7 +112,7 @@ const DataFileRow = ({
     onDownload: () => void;
 }) => {
     const [preview, setPreview] = useState(false);
-    const downloadRef = useRef(null)
+    const downloadRef = useRef(null);
     return (
         <tr className="border-b border-gray-200 bg-[#FEFEFE] hover:bg-dtech-main-light">
             <td className="py-3 px-6 text-left whitespace-nowrap">
