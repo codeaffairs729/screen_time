@@ -2,13 +2,13 @@ import Accordian from "components/UI/accordian";
 import { BsHeartFill, BsFillEyeFill } from "react-icons/bs";
 import { MdFileDownload } from "react-icons/md";
 import dataset from "public/images/icons/dataset.svg";
-import Table from "./table";
+import Table from "../table";
 import Image from "next/image";
 import { ReactNode, useContext, useEffect, useState } from "react";
-import { OrganisationDetailVMContext } from "../organisation_detail.vm";
 import Loader from "components/UI/loader";
 import Link from "next/link";
 import AllDatasets from "./all_datasets";
+import { OrganisationDetailVMContext } from "pages/organisation/organisation_detail.vm";
 
 const DisplayDataset = ({
     id,
@@ -41,17 +41,6 @@ const Datasets = () => {
     useEffect(() => {
         fetchOrganisationRankedDatasets();
     }, []);
-
-    // const [inc, setInc] = useState(true);
-
-    // if (isLoading && inc) {
-    //     setInc(false);
-    //     return (
-    //         <div className="h-[calc(100vh-var(--nav-height))]  w-full flex items-center justify-center">
-    //             <Loader />
-    //         </div>
-    //     );
-    // }
 
     return (
         <div className="ml-16">

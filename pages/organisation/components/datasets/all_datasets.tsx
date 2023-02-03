@@ -1,11 +1,11 @@
 import Accordian from "components/UI/accordian";
 import Image from "next/image";
-import Table from "./table";
+import Table from "../table";
 import dataset from "public/images/icons/dataset.svg";
 import { ReactNode, useContext, useEffect } from "react";
 import Link from "next/link";
-import { OrganisationDetailVMContext } from "../organisation_detail.vm";
 import Loader from "components/UI/loader";
+import { OrganisationDetailVMContext } from "pages/organisation/organisation_detail.vm";
 
 const DisplayDataset = ({
     id,
