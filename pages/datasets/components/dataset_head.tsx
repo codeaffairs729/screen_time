@@ -1,6 +1,6 @@
 import MetaRating from "components/UI/metaRating";
 import ResultCardAction from "components/UI/result_card_action";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { DateTime } from "luxon";
 import { DatasetDetailVMContext } from "../dataset_detail.vm";
 import LabelledRow from "components/dataset/labelled_row";
@@ -8,21 +8,29 @@ import { BsFillEyeFill, BsHeartFill } from "react-icons/bs";
 import { MdFileDownload } from "react-icons/md";
 import Image from "next/image";
 import displaySearch from "public/images/icons/display_search_result.svg";
-import SearchVM, {
+import {
     datasetToResultCardData,
     SearchVMContext,
 } from "pages/search/search.vm";
 const DatasetHead = () => {
-    const vm = useContext(DatasetDetailVMContext);
-    const { stats } = useContext(SearchVMContext);
-    if (!vm.dataset) {
+    // const vm = useContext(DatasetDetailVMContext);
+    const { stats, fectchStats, isFetchingStats } = useContext(SearchVMContext);
+    const { dataset, headDataset,setHeadDataset } = useContext(DatasetDetailVMContext);
+    
+    useEffect(() => {
+        fectchStats([dataset?.id]);
+        setHeadDataset(datasetToResultCardData([dataset], stats)[0])
+    }, []);
+    if (!dataset) {
         return <div />;
     }
 
-    let contactOwnerEmail = vm.dataset?.owner.contact.email;
+
+    let contactOwnerEmail = dataset?.owner?.contact?.email;
     if ((contactOwnerEmail?.search(/^mailto:/) ?? -1) > -1) {
         contactOwnerEmail = contactOwnerEmail?.slice(7);
     }
+
     const {
         name,
         description,
@@ -31,7 +39,8 @@ const DatasetHead = () => {
         views,
         favourites,
         displays,
-    } = vm.dataset.detail || {};
+    } = dataset.detail || {};
+
     const stat = {
         displayCount: displays,
         favoritesCount: favourites,
@@ -39,7 +48,6 @@ const DatasetHead = () => {
         downloadCount: downloads,
     };
 
-    const cardActionData = datasetToResultCardData([vm.dataset], stats)[0];
     return (
         <div className="px-4">
             <div className="flex justify-between items-center">
@@ -56,11 +64,13 @@ const DatasetHead = () => {
                         </button>
                     </div>
                 </div>
-                <ResultCardAction
-                    data={cardActionData}
-                    setData={vm.setDataset}
-                    href={`/datasets/${vm.dataset?.id}`}
-                />
+                {!isFetchingStats && (
+                    <ResultCardAction
+                        data={headDataset}
+                        setData={setHeadDataset}
+                        href={`/datasets/${dataset?.id}`}
+                    />
+                )}
             </div>
             <div className="my-4">
                 <div className="flex justify-between">
@@ -91,12 +101,12 @@ const DatasetHead = () => {
                     >
                         <strong>
                             <a
-                                href={vm.dataset.detail.hostUrl}
+                                href={dataset.detail.hostUrl}
                                 target="_blank"
                                 rel="noreferrer"
                                 className="text-xs underline"
                             >
-                                {vm.dataset.detail.hostName}
+                                {dataset.detail.hostName}
                             </a>
                         </strong>
                     </LabelledRow>
@@ -104,7 +114,7 @@ const DatasetHead = () => {
                         className=" flex-col justify-center items-center"
                         label="Data Owner"
                     >
-                        {vm.dataset.owner.organisation}
+                        {dataset.owner.organisation}
                     </LabelledRow>
                     <div>
                         <span className="text-sm text-dtech-dark-grey">

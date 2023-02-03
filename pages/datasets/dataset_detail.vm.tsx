@@ -8,8 +8,10 @@ import {
     useEffect,
     useState,
     Dispatch,
+    useContext,
 } from "react";
 import { format } from "date-fns";
+import { datasetToResultCardData, SearchVMContext } from "pages/search/search.vm";
 
 export const formatLabel = (label: string) => {
     const res = label.replaceAll("_", " ");
@@ -48,6 +50,7 @@ export enum qualityInsights {
 }
 const DatasetDetailVM = (initialDataset: Dataset | undefined) => {
     const [dataset, setDataset] = useState(initialDataset);
+    const [headDataset , setHeadDataset] = useState<any>();
     const [selectedSearchTerm, setSelectedSearchTerm] = useState<number>(10);
     const [selectedDownload, setSelectedDownload] = useState<number>(0);
     const [selectedQualityInsights, setSelectedQualityInsights] =
@@ -238,6 +241,8 @@ const DatasetDetailVM = (initialDataset: Dataset | undefined) => {
         fromDate,
         qualityMetrics,
         isFetchingQualityMetrics,
+        headDataset,
+        setHeadDataset,
         setDataset,
         setSelectedDownload,
         fetchDatasetMetrics,
@@ -277,6 +282,8 @@ interface IDatasetDetailVMContext {
     fetchQualityMetrics: Function;
     qualityMetrics:any;
     isFetchingQualityMetrics: any;
+    headDataset: any;
+    setHeadDataset: Function;
     setDataset: Dispatch<SetStateAction<Dataset | undefined>>;
 }
 const jsonToSearchTerms = (json: any): SearchTermType[] =>
@@ -347,5 +354,9 @@ const getdataQualityScore =(data:any, title:string, ratingLabel:string , total:n
 export const DatasetDetailVMContext = createContext<IDatasetDetailVMContext>(
     {} as IDatasetDetailVMContext
 );
+
+const setUpdatedDatasets = () =>{
+        
+}
 
 export default DatasetDetailVM;
