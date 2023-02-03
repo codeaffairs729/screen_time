@@ -4,6 +4,11 @@ import { OrganisationDetailVMContext } from "pages/organisation/organisation_det
 import { createContext, useContext, useState } from "react";
 import toast from "react-hot-toast";
 
+export enum qualityInsights {
+    data_file,
+    metadata,
+}
+
 const QualityMetricVM = () => {
     const { organisation } = useContext(OrganisationDetailVMContext);
     const [selectedQualityInsights, setSelectedQualityInsights] =
@@ -45,7 +50,13 @@ const QualityMetricVM = () => {
 
 export default QualityMetricVM;
 
-interface IQualityMetricVM {}
+interface IQualityMetricVM {
+    selectedQualityInsights: number;
+    qualityMetrics: any;
+    fetchQualityMetrics: Function;
+    setSelectedQualityInsights: Function;
+    isFetchingQualityMetrics: boolean;
+}
 
 export const QualityMetricVMContext = createContext<IQualityMetricVM>(
     {} as IQualityMetricVM

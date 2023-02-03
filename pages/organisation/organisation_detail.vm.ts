@@ -19,11 +19,6 @@ export enum insightTabIndex {
     download_metrics,
 }
 
-export enum qualityInsights {
-    data_file,
-    metadata,
-}
-
 export enum download {
     by_region,
     by_time,
@@ -75,8 +70,6 @@ const OrganisationDetailVM = (
         currentDate.setFullYear(currentDate.getFullYear() - 1)
     );
     const [organisation, setOrganisation] = useState(initialOrganisationData);
-    const [selectedQualityInsights, setSelectedQualityInsights] =
-        useState<number>(0);
     const [selectedDownload, setSelectedDownload] = useState<number>(0);
     const [orgDatasetsCount, setOrgDatasetsCount] = useState(10);
     const [fromDate, setFromDate] = useState(oneYearAgoDate);
@@ -118,32 +111,6 @@ const OrganisationDetailVM = (
                 onError: (e) => {
                     toast.error(
                         "Something went wrong while fetching organisation datasets."
-                    );
-                },
-            }
-        );
-
-    const {
-        execute: excuteFetchQualityMetrics,
-        data: qualityMetrics,
-        isLoading: isFetchingQualityMetrics,
-    } = useHttpCall<{ [key: string]: any }>({});
-
-    const fetchQualityMetrics = () =>
-        excuteFetchQualityMetrics(
-            () => {
-                return Http.get(
-                    `/v1/data_sources/${organisation?.uuid}/quality_metrics`
-                );
-            },
-            {
-                postProcess: (res) => {
-                    return jsonToQualityMetrics(res);
-                },
-                onError: (e) => {
-                    console.log(e);
-                    toast.error(
-                        "Something went wrong while fetching organisation Data Quality insights."
                     );
                 },
             }
@@ -248,26 +215,21 @@ const OrganisationDetailVM = (
     };
 
     return {
-        selectedQualityInsights,
         selectedDownload,
         organisation,
         organisationRankedDatasets,
         organisationDatasets,
-        qualityMetrics,
         downloadMetrics,
         fromDate,
         toDate,
         isFetchingOrganisationDatasets,
         isFetchingOrganisationRankedDatasets,
-        isFetchingQualityMetrics,
         isFetchingDownloadMetrics,
         setOrganisation,
         fetchOrganisationDatasets,
         incrementOrgDatasetsCount,
-        fetchQualityMetrics,
         fetchOrganisationRankedDatasets,
         fetchDownloadMetrics,
-        setSelectedQualityInsights,
         setSelectedDownload,
         setFromDate,
         setToDate,
@@ -327,21 +289,17 @@ const GetRankedData = ({
 export default OrganisationDetailVM;
 
 export interface IOrganisationDetailVMContext {
-    selectedQualityInsights: number;
     selectedSearchTerm: number;
     selectedDownload: number;
     organisation: Organisation | undefined;
     organisationDatasets: any;
     organisationRankedDatasets: any;
-    qualityMetrics: any;
     searchTerms: any;
     downloadMetrics: any;
     incrementOrgDatasetsCount: Function;
     fetchOrganisationRankedDatasets: Function;
     fetchOrganisationDatasets: Function;
-    fetchQualityMetrics: Function;
     fetchDownloadMetrics: Function;
-    setSelectedQualityInsights: Function;
     setSelectedDownload: Function;
     setOrganisation: Dispatch<SetStateAction<Organisation | undefined>>;
     fromDate: Date;
@@ -350,7 +308,6 @@ export interface IOrganisationDetailVMContext {
     setToDate: Function;
     isFetchingOrganisationDatasets: boolean;
     isFetchingOrganisationRankedDatasets: boolean;
-    isFetchingQualityMetrics: boolean;
     isFetchingDownloadMetrics: boolean;
 }
 
@@ -378,70 +335,6 @@ const jsonToOrgDatasets = (jsons: any, isRanked = false, countKey = "views") =>
 
         return data;
     });
-
-const jsonToQualityMetrics = (json: any): any => ({
-    dataFileQuality: {
-        overallScore: getQualityScore(
-            json["data_file_quality"]["overall_score"],
-            "overallScore"
-        ),
-        accuracy: getQualityScore(
-            json["data_file_quality"]["accuracy"],
-            "accuracy"
-        ),
-        consistency: getQualityScore(
-            json["data_file_quality"]["consistency"],
-            "consistency"
-        ),
-        clarity: getQualityScore(
-            json["data_file_quality"]["clarity"],
-            "clarity"
-        ),
-        readiness: getQualityScore(
-            json["data_file_quality"]["readiness"],
-            "readiness"
-        ),
-    },
-    metaFileQuality: {
-        overallScore: getQualityScore(
-            json["meta_file_quality"]["overall_score"],
-            "overallScore"
-        ),
-        findability: getQualityScore(
-            json["meta_file_quality"]["findability"],
-            "findability"
-        ),
-        accessibility: getQualityScore(
-            json["meta_file_quality"]["accessibility"],
-            "accessibility"
-        ),
-        reusability: getQualityScore(
-            json["meta_file_quality"]["reusability"],
-            "reusability"
-        ),
-        contextuality: getQualityScore(
-            json["meta_file_quality"]["contextuality"],
-            "contextuality"
-        ),
-        interoperability: getQualityScore(
-            json["meta_file_quality"]["interoperability"],
-            "interoperability"
-        ),
-    },
-});
-
-const getQualityScore = (data: any, title: string) => ({
-    title: title,
-    rating: data.rating,
-    datasets: data.datasets.map((data: any) => getQualityDatasets(data)),
-});
-
-const getQualityDatasets = (dataset: any) => ({
-    uuid: dataset["uuid"],
-    title: dataset["title"],
-    description: dataset["description"],
-    rating: dataset["rating"],
-});
 
 const jsonToOrgDownloadMetrics = (json: any): any => ({
     regions: json["provider_downloads_by_location"]?.map((region: any) => ({

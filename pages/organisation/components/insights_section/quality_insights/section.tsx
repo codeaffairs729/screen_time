@@ -3,8 +3,8 @@ import Table from "../../table";
 import MetaRating from "components/UI/metaRating";
 import BarGraph from "components/UI/BarGraph";
 import Loader from "components/UI/loader";
-import { OrganisationDetailVMContext } from "pages/organisation/organisation_detail.vm";
 import { useContext, useEffect } from "react";
+import { QualityMetricVMContext } from "./quality_metric.vm";
 
 const TABLE_HEADERS = ["Score", "Dataset"];
 
@@ -24,7 +24,7 @@ const QualityInsightsBody = () => {
         fetchQualityMetrics,
         isFetchingQualityMetrics,
         selectedQualityInsights: selectedLabel,
-    } = useContext(OrganisationDetailVMContext);
+    } = useContext(QualityMetricVMContext);
 
     const { dataFileQuality = {}, metaFileQuality = {} } = qualityMetrics || {};
     const items = selectedLabel == 0 ? dataFileQuality : metaFileQuality;

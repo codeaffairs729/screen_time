@@ -2,18 +2,17 @@ import Dropdown, { MenuItemType } from "components/UI/drop_down";
 import {
     formatLabel,
     getSelectedLabelIndex,
-    OrganisationDetailVMContext,
-    qualityInsights,
 } from "pages/organisation/organisation_detail.vm";
 import Label from "../label";
 import { useContext, useState } from "react";
+import { qualityInsights, QualityMetricVMContext } from "./quality_metric.vm";
 
 const ITEMS: MenuItemType[] = [{ label: "data_file" }, { label: "metadata" }];
 
 const QualityInsightsHead = () => {
     const [selectedLabel, setSelectedLabel] = useState(ITEMS[0].label);
     const { setSelectedQualityInsights: onChange } = useContext(
-        OrganisationDetailVMContext
+        QualityMetricVMContext
     );
     const handleChange = (label: string) => {
         setSelectedLabel(label);
