@@ -19,11 +19,6 @@ export enum insightTabIndex {
     download_metrics,
 }
 
-export enum searchTerms {
-    top_10 = 10,
-    top_25 = 25,
-}
-
 export enum qualityInsights {
     data_file,
     metadata,
@@ -33,12 +28,6 @@ export enum download {
     by_region,
     by_time,
     by_role,
-}
-
-export interface SearchTermType {
-    title: string;
-    count: number;
-    lastUsed: Date;
 }
 
 export type DownloadByRegion = {
@@ -82,26 +71,17 @@ const OrganisationDetailVM = (
     initialOrganisationData: Organisation | undefined
 ) => {
     const currentDate = new Date();
-    const oneYearAgoDate = new Date(currentDate.setFullYear(currentDate.getFullYear()-1));
+    const oneYearAgoDate = new Date(
+        currentDate.setFullYear(currentDate.getFullYear() - 1)
+    );
     const [organisation, setOrganisation] = useState(initialOrganisationData);
     const [selectedQualityInsights, setSelectedQualityInsights] =
         useState<number>(0);
-    const [selectedSearchTerm, setSelectedSearchTerm] = useState<number>(10);
     const [selectedDownload, setSelectedDownload] = useState<number>(0);
     const [orgDatasetsCount, setOrgDatasetsCount] = useState(10);
     const [fromDate, setFromDate] = useState(oneYearAgoDate);
     const [toDate, setToDate] = useState(currentDate);
     const [downloadMetrics, setDownloadMetrics] = useState<any>();
-
-    // const {
-    //     execute: excuteFetchOrganisationRankedDatasets,
-    //     data: organisationRankedDatasets,
-    //     isLoading: isFetchingOrganisationRankedDatasets,
-    // } = useHttpCall<{ [key: string]: any }>({});
-
-    useEffect(() => {
-        fetchSearchTerms();
-    }, [selectedSearchTerm]);
 
     useEffect(() => {
         if (orgDatasetsCount != 10) {
@@ -131,12 +111,9 @@ const OrganisationDetailVM = (
             },
             {
                 postProcess: (res) => {
-                    //TODO Replace mark api with dashboard after db schema update
-                    //Mark API datasets
                     return jsonToOrgDatasets(
                         res[0]["user_search"][0]["results"]
                     );
-                    //Mark API
                 },
                 onError: (e) => {
                     toast.error(
@@ -173,32 +150,7 @@ const OrganisationDetailVM = (
         );
 
     const {
-        execute: excuteFetchSearchTerms,
-        data: searchTerms,
-        isLoading: isFetchingSearchTerms,
-    } = useHttpCall<{ [key: string]: any }>([]);
-    const fetchSearchTerms = () =>
-        excuteFetchSearchTerms(
-            () => {
-                return Http.get(
-                    `/v1/metrics/provider/${organisation?.uuid}/${selectedSearchTerm}`
-                );
-            },
-            {
-                postProcess: (res) => {
-                    return jsonToSearchTerms(res);
-                },
-                onError: (e) => {
-                    toast.error(
-                        "Something went wrong while fetching organisation search terms insights."
-                    );
-                },
-            }
-        );
-
-    const {
         execute: excuteFetchDownloadMetrics,
-        // data: downloadMetrics,
         isLoading: isFetchingDownloadMetrics,
     } = useHttpCall<{ [key: string]: any }>({});
 
@@ -223,7 +175,6 @@ const OrganisationDetailVM = (
 
     const {
         execute: executeFetchDownloadMetricByTime,
-        // data: downloadMetricsByTime,
         isLoading: isFetchDownloadMetricByTime,
     } = useHttpCall<{ [key: string]: any }>({});
 
@@ -298,31 +249,25 @@ const OrganisationDetailVM = (
 
     return {
         selectedQualityInsights,
-        selectedSearchTerm,
         selectedDownload,
         organisation,
         organisationRankedDatasets,
         organisationDatasets,
         qualityMetrics,
-        searchTerms,
         downloadMetrics,
-        // isLoading,
         fromDate,
         toDate,
         isFetchingOrganisationDatasets,
         isFetchingOrganisationRankedDatasets,
         isFetchingQualityMetrics,
-        isFetchingSearchTerms,
         isFetchingDownloadMetrics,
         setOrganisation,
         fetchOrganisationDatasets,
         incrementOrgDatasetsCount,
         fetchQualityMetrics,
-        fetchSearchTerms,
         fetchOrganisationRankedDatasets,
         fetchDownloadMetrics,
         setSelectedQualityInsights,
-        setSelectedSearchTerm,
         setSelectedDownload,
         setFromDate,
         setToDate,
@@ -391,15 +336,12 @@ export interface IOrganisationDetailVMContext {
     qualityMetrics: any;
     searchTerms: any;
     downloadMetrics: any;
-    // isLoading: boolean;
     incrementOrgDatasetsCount: Function;
     fetchOrganisationRankedDatasets: Function;
     fetchOrganisationDatasets: Function;
     fetchQualityMetrics: Function;
-    fetchSearchTerms: Function;
     fetchDownloadMetrics: Function;
     setSelectedQualityInsights: Function;
-    setSelectedSearchTerm: Function;
     setSelectedDownload: Function;
     setOrganisation: Dispatch<SetStateAction<Organisation | undefined>>;
     fromDate: Date;
@@ -409,7 +351,6 @@ export interface IOrganisationDetailVMContext {
     isFetchingOrganisationDatasets: boolean;
     isFetchingOrganisationRankedDatasets: boolean;
     isFetchingQualityMetrics: boolean;
-    isFetchingSearchTerms: boolean;
     isFetchingDownloadMetrics: boolean;
 }
 
@@ -436,15 +377,6 @@ const jsonToOrgDatasets = (jsons: any, isRanked = false, countKey = "views") =>
         // }
 
         return data;
-    });
-
-const jsonToSearchTerms = (json: any): SearchTermType[] =>
-    json.map((term: any) => {
-        return {
-            title: term["title"],
-            count: term["count"],
-            lastUsed: term["created_at"],
-        };
     });
 
 const jsonToQualityMetrics = (json: any): any => ({

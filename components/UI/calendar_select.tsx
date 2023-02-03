@@ -54,23 +54,7 @@ const CalendarSelect = ({
             }
         }
     };
-    // useEffect(() => {
-    //     if (label == "From") {
-    //         if (startDate.getTime() <= toDate.getTime()) {
-    //             setFromDate(startDate);
-    //         } else {
-    //             setFromDate(toDate);
-    //             toast.error("Please select correct From Date");
-    //         }
-    //     } else {
-    //         if (fromDate.getTime() <= startDate.getTime()) {
-    //             setToDate(startDate);
-    //         } else {
-    //             setToDate(fromDate);
-    //             toast.error("Please select correct To Date");
-    //         }
-    //     }
-    // }, [startDate]);
+
     return (
         <div className="flex  pl-5" ref={myRef}>
             <div
