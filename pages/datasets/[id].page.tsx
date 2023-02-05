@@ -14,8 +14,11 @@ import DatasetTabHeaders from "./components/dataset_tabs";
 import DataFilesSection from "./components/data_file";
 import DatasetInsights from "./components/insights_section";
 import DatasetFeedbackSection from "./components/user_feedback";
-import MayAlsoLike from "./components/may_also_like";
+import RelatedDatasets from "./components/related_datasets";
 import ErrorAlert from "components/UI/alerts/error_alert";
+import RelatedDatasetsVM, {
+    RelatedDatasetsVMContext,
+} from "./components/related_datasets/related_datasets.vm";
 
 enum tabIndex {
     data_files,
@@ -28,6 +31,7 @@ const DatasetDetail = ({ dataset }: { dataset: Dataset | undefined }) => {
     const [selectedIndex, setSelectedIndex] = useState<any>(0);
     const { asPath } = useRouter();
     const vm = DatasetDetailVM(dataset);
+    const relatedVM = RelatedDatasetsVM();
     useEffect(() => {
         const hashParam: string = asPath.split("#")[1];
         setSelectedIndex(tabIndex[hashParam as any]);
@@ -78,7 +82,11 @@ const DatasetDetail = ({ dataset }: { dataset: Dataset | undefined }) => {
                                             <DatasetFeedbackSection />
                                         </TabPanel>
                                         <TabPanel className="!bg-dtech-light-grey">
-                                            <MayAlsoLike />
+                                            <RelatedDatasetsVMContext.Provider
+                                                value={relatedVM}
+                                            >
+                                                <RelatedDatasets />
+                                            </RelatedDatasetsVMContext.Provider>
                                         </TabPanel>
                                     </Tab.Panels>
                                 </Tab.Group>
