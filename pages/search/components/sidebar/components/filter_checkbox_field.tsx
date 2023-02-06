@@ -19,17 +19,17 @@ const FilterCheckboxField = ({
 	return (
 		<div
 			data-selector={dataSelector}
-			className={clsx("flex items-center mb-1.5", className)}
+			className={clsx("flex items-start mb-1.5", className)}
 		>
 			<input
 				type="checkbox"
 				{...register}
-				className="focus:ring-0 rounded-sm border-dtech-primary-light"
+				className="focus:ring-0 rounded-sm border-dtech-main-dark text-dtech-main-dark"
 				value={value}
 				defaultChecked={defaultChecked}
 			/>
 			{label && (
-				<span className="ml-2 text-xs text-gray-700">{label}</span>
+				<span className="ml-2 text-sm">{label}</span>
 			)}
 		</div>
 	);
