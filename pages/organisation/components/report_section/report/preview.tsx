@@ -10,7 +10,7 @@ const Preview = () => {
                     ref={(ref) => setDownloadRef(ref)}
                     className="editor_preview"
                     dangerouslySetInnerHTML={{
-                        __html: previewContent.replace('<strong>','<strong style="margin-left: 230px;">'),
+                        __html: previewContent.replace('<strong>','<strong style="margin-left: 220px;">').replace('<strong>','<strong style="margin-left: 230px;">'),
                     }}
                 ></div>
             }

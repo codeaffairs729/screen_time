@@ -23,7 +23,7 @@ const Dataset = () => {
     } = useContext(SearchVMContext);
     return (
         <div className="flex">
-            <Sidebar className="w-40 shrink-0" />
+            <Sidebar className="w-48 shrink-0" />
             <div className="overflow-x-auto w-full">
                 <SearchHeaders
                     setCurrentPageNo={setCurrentPageNo}
