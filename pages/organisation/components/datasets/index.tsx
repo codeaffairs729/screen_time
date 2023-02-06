@@ -9,6 +9,7 @@ import Loader from "components/UI/loader";
 import Link from "next/link";
 import AllDatasets from "./all_datasets";
 import { OrganisationDetailVMContext } from "pages/organisation/organisation_detail.vm";
+import ErrorAlert from "components/UI/alerts/error_alert";
 
 const DisplayDataset = ({
     id,
@@ -21,7 +22,7 @@ const DisplayDataset = ({
 }) => (
     <div>
         <Link href={`/datasets/${id}`}>
-            <span className="text-sm font-medium text-dtech-dark-grey cursor-pointer break-all">
+            <span className="text-sm font-medium text-dtech-dark-grey cursor-pointer underline underline-offset-2 break-all">
                 {title}
             </span>
         </Link>
@@ -36,11 +37,21 @@ const Datasets = () => {
         organisationRankedDatasets,
         fetchOrganisationRankedDatasets,
         isFetchingOrganisationRankedDatasets,
+        error,
     } = useContext(OrganisationDetailVMContext);
 
     useEffect(() => {
         fetchOrganisationRankedDatasets();
     }, []);
+
+    if (error) {
+        return (
+            <ErrorAlert
+                className="m-12"
+                message="Something went wrong while fetching Organisation Ranked Datasetss data. Please try again later"
+            />
+        );
+    }
 
     return (
         <div className="ml-16">
@@ -61,20 +72,12 @@ const Datasets = () => {
                                         <Table
                                             tableClass="w-[43rem]"
                                             // onScrollEnd={importOrgDatasets}
-                                            tableHeaders={
-                                                key == "all_datasets"
-                                                    ? ["Dataset"]
-                                                    : ["Count", "Dataset"]
-                                            }
+                                            tableHeaders={["Count", "Dataset"]}
                                             tableData={getTableData(
                                                 key,
                                                 organisationRankedDatasets[key]
                                             )}
-                                            tableBodyClasses={
-                                                key == "all_datasets"
-                                                    ? "block h-[220px] overflow-auto"
-                                                    : ""
-                                            }
+                                            tableBodyClasses={""}
                                             cellPadding={3}
                                         />
                                     ) : (
@@ -107,14 +110,12 @@ const getTableData = (key: string, datasets: any) =>
             <DisplayDataset
                 id={dataset?.id}
                 key={dataset?.id}
-                title={dataset.title}
-                description={dataset.description}
+                title={dataset?.title}
+                description={dataset?.description}
             />
         );
 
-        return key == "all_datasets"
-            ? [datasetCell]
-            : [dataset.count, datasetCell];
+        return [dataset?.count, datasetCell];
     });
 
 const getItem = (key: string) => {

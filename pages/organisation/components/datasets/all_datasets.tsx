@@ -6,6 +6,7 @@ import { ReactNode, useContext, useEffect } from "react";
 import Link from "next/link";
 import Loader from "components/UI/loader";
 import { OrganisationDetailVMContext } from "pages/organisation/organisation_detail.vm";
+import ErrorAlert from "components/UI/alerts/error_alert";
 
 const DisplayDataset = ({
     id,
@@ -33,12 +34,21 @@ const AllDatasets = () => {
         incrementOrgDatasetsCount,
         fetchOrganisationDatasets,
         isFetchingOrganisationDatasets,
+        errorOrganisationDatasets,
     } = useContext(OrganisationDetailVMContext);
 
     useEffect(() => {
         fetchOrganisationDatasets();
     }, []);
 
+    if (errorOrganisationDatasets) {
+        return (
+            <ErrorAlert
+                className="m-12"
+                message="Something went wrong while fetching Organisation Datasets data. Please try again later"
+            />
+        );
+    }
     const importOrgDatasets = (e: any) => {
         const bottom =
             e.target.scrollHeight - e.target.scrollTop ===
