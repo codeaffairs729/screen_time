@@ -75,7 +75,7 @@ const DataFileRow = ({
     }
     let sizemb = "Unknown";
     if (url.sizemb && url.sizemb != "null") {
-        sizemb = url.sizemb;
+        sizemb = url.sizemb + " MB";
     }
     return (
         <tr className="border-b border-gray-200 bg-[#FEFEFE] hover:bg-gray-100">
@@ -92,7 +92,7 @@ const DataFileRow = ({
                 </div>
             </td>
             <td className="py-3 px-6 text-center">
-                <div className="flex items-center justify-center">{`${sizemb} MB`}</div>
+                <div className="flex items-center justify-center">{`${sizemb}`}</div>
             </td>
             <td className="py-3 px-6 text-center">
                 <a
