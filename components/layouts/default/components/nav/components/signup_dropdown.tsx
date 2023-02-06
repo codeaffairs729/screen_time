@@ -28,11 +28,11 @@ const SignupDropdown = () => {
                 >
                     <MenuItem
                         label="Individual"
-                        link="signup?signup_type=individual"
+                        link="/signup?signup_type=individual"
                     />
                     <MenuItem
                         label="Organisation Admin"
-                        link="signup?signup_type=org_admin"
+                        link="/signup?signup_type=org_admin"
                     />
                 </Menu.Items>
             </Transition>

@@ -70,21 +70,40 @@ const SignupPage = () => {
                                 name: "password",
                                 rules: {
                                     validate: (val: string) => {
+                                        const prefix = "Password should contain atleast";
+                                        const specialChars = /[ !@#$%^&*]/;
+                                        const err_msgs = [];
                                         if (val.length < 8) {
-                                            return "Password should be atleast of length 8.";
+                                            err_msgs.push(
+                                                "8 charachters"
+                                            );
                                         }
                                         if (val.search(/[A-Z]/) < 0) {
-                                            return "Password should contain atleast 1 uppercase character.";
+                                            err_msgs.push(
+                                                "1 uppercase character"
+                                            );
                                         }
                                         if (val.search(/[0-9]/) < 0) {
-                                            return "Password should contain atleast 1 number.";
+                                            err_msgs.push(
+                                                "1 number"
+                                            );
                                         }
                                         if (
-                                            val.search(
-                                                /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/
-                                            )
+                                            !specialChars.test(val)
                                         ) {
-                                            return "Password should contain atleast 1 special character.";
+                                            err_msgs.push(
+                                                "1 special character[!@#$%^&*]"
+                                            );
+                                        }
+                                        if (err_msgs.length) {
+                                            let suffix =
+                                                err_msgs[err_msgs.length - 1];
+                                            if (err_msgs.length > 1) {
+                                                suffix = `${err_msgs
+                                                    .slice(0, err_msgs.length-1)
+                                                    .join(", ")} and ${suffix}`;
+                                            }
+                                            return `${prefix} ${suffix}`;
                                         }
                                     },
                                 },

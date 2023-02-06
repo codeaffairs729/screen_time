@@ -129,7 +129,9 @@ const AdminTabPanelVM = () => {
                 },
                 onSuccess: (res) => {
                     toast.success(
-                        `${user.name} was successfully promoted to ${role}.`
+                        `${user.name} was successfully ${
+                            role == "admin" ? "promoted" : "demoted"
+                        } to ${role}.`
                     );
                     // toast.success("Role was updated successfully");
                     fetchOrgUsers();
