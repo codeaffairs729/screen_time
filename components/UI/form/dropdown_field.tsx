@@ -37,16 +37,16 @@ const DropdownField = ({
 
     useEffect(() => {
         const newValue = value || formControl["defaultValue"];
+        
         if (![undefined, null].includes(newValue)) {
-            const option = options.find(
-                (o) => o.value == newValue
-            );
-            console.log("option", options, option);
+            const option = options.find((o) => o.value == newValue);
             if (option) {
                 setSelected(option);
                 onChange(option?.value);
-                console.log("option", option);
             }
+        } else {
+            setSelected(undefined);
+            onChange(null);
         }
     }, [value, formControl["defaultValue"]]);
 

@@ -16,10 +16,9 @@ function AddMemberModal({
     isOpen: boolean;
     setIsOpen: (isOpen: boolean) => void;
 }) {
-    console.log("isOpen", isOpen);
-    const { control, handleSubmit, reset } = useForm();
     const vm = useContext(AdminTabPanelVMContext);
-
+    console.log('AddMemberModal');
+    
     return (
         <Transition appear show={isOpen} as={Fragment}>
             <Dialog
@@ -50,18 +49,17 @@ function AddMemberModal({
                             leaveFrom="opacity-100 scale-100"
                             leaveTo="opacity-0 scale-95"
                         >
-                            <Dialog.Panel className="w-full max-w-xl transform overflow-hidden rounded bg-white p-6 px-12 text-left align-middle shadow-xl transition-all border border-dtech-secondary-dark">
-                                <Dialog.Title>
-                                    <h3 className="w-min mx-auto text-gray-700 whitespace-nowrap mb-4 font-semibold">
+                            <Dialog.Panel className="w-full max-w-xl transform rounded bg-white p-6 px-12 text-left align-middle shadow-xl transition-all border border-dtech-secondary-dark">
+                                <Dialog.Title className="w-min mx-auto text-gray-700 whitespace-nowrap mb-4 font-semibold">
+                                    {/* <h3 className="w-min mx-auto text-gray-700 whitespace-nowrap mb-4 font-semibold"> */}
                                         Add member
-                                    </h3>
+                                    {/* </h3> */}
                                 </Dialog.Title>
 
                                 <FormRow label="Email">
                                     <TextField
-                                        // className="w-60"
                                         formControl={{
-                                            control: control,
+                                            control: vm.control,
                                             name: "email",
                                             rules: {
                                                 required: "Email is required",
@@ -72,27 +70,26 @@ function AddMemberModal({
                                                 },
                                             },
                                         }}
-                                        placeholder="Email"
+                                        placeholder="Example: jane@company.com"
                                         type="email"
                                     />
                                 </FormRow>
                                 <FormRow label="Permission">
                                     <DropdownField
-                                        // className="w-60"
-                                        placeholder="Choose whether data owner"
+                                        placeholder="Choose whether member or admin"
                                         options={[
                                             {
-                                                label: "Organization Member",
+                                                label: "Member",
                                                 value: "Organization Member",
                                             },
-                                            // {
-                                            //     label: "Registered User",
-                                            //     value: "Registered User",
-                                            // },
+                                            {
+                                                label: "Admin",
+                                                value: "Organization Admin",
+                                            },
                                         ]}
                                         dataSelector="data-owner-dropdown"
                                         formControl={{
-                                            control: control,
+                                            control: vm.control,
                                             name: "roles",
                                             rules: {
                                                 required:
@@ -105,13 +102,14 @@ function AddMemberModal({
                                     <PrimaryBtn
                                         className="bg-dtech-secondary-dark w-min mx-auto"
                                         label="Invite"
-                                        onClick={handleSubmit(async (data) => {
-                                            await vm.inviteMember({
-                                                ...data,
-                                                roles: [data["roles"]],
-                                            });
-                                            // reset();
-                                        })}
+                                        onClick={vm.handleSubmit(
+                                            async (data: any) => {
+                                                await vm.inviteMember({
+                                                    ...data,
+                                                    roles: [data["roles"]],
+                                                });
+                                            }
+                                        )}
                                     />
                                     {/* <p className="text-center text-xs text-red-700 mt-4">
                                         An email invite has been sent.
