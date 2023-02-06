@@ -11,7 +11,7 @@ import Http from "common/http";
 import { AUTH_TOKEN } from "common/constants/cookie.key";
 import { NextPageContext } from "next";
 import DatasetTabHeaders from "./components/dataset_tabs";
-import DataFilesSection from "./components/data_file";
+import DataFilesSection from "./components/data_files_section";
 import DatasetInsights from "./components/insights_section";
 import DatasetFeedbackSection from "./components/user_feedback";
 import MayAlsoLike from "./components/may_also_like";

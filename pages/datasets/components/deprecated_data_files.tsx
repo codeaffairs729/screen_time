@@ -92,7 +92,7 @@ const DataFileRow = ({
                 </div>
             </td>
             <td className="py-3 px-6 text-center">
-                <div className="flex items-center justify-center">{`${sizemb}`}</div>
+                <div className="flex items-center justify-center">{sizemb}</div>
             </td>
             <td className="py-3 px-6 text-center">
                 <a

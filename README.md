@@ -31,7 +31,9 @@ The general folder structure remains same as the default nextjs folder structure
 
 ### Naming convention
 
-- filenames are camel_cased
+- Filenames are camel_cased
+- React component filenames will be the camel cased name of the component name; file named `react_component.tsx` will hold the compnent `ReactComponent`
+- Unused files will be deleted or renamed to have the work `deprecated_` prefixed to the name
 
 ## Code Formating
 
