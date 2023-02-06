@@ -4,7 +4,13 @@ import { useContext, useState } from "react";
 import Table from "../../table";
 import { format } from "date-fns";
 import dynamic from "next/dynamic";
-import { DownloadMetricVMContext, DownloadByTime, getDateRange } from "./download_metric.vm";
+import {
+    DownloadMetricVMContext,
+    DownloadByTime,
+    getDateRange,
+} from "./download_metric.vm";
+import ErrorAlert from "components/UI/alerts/error_alert";
+import Loader from "components/UI/loader";
 const LineGraph = dynamic(() => import("components/UI/line_graph"), {
     ssr: false,
 });
@@ -12,12 +18,34 @@ const TIME_HEADERS = ["Count", "Month"];
 const barDataKey = "download_per_month";
 
 const ByTime = () => {
-    const { downloadMetrics, fromDate, toDate, setFromDate, setToDate } =
-        useContext(DownloadMetricVMContext);
+    const {
+        downloadMetrics,
+        fromDate,
+        toDate,
+        setFromDate,
+        setToDate,
+        error,
+        isFetchingDownloadMetrics,
+    } = useContext(DownloadMetricVMContext);
 
     const { downloadByTime = [] } = downloadMetrics || {};
 
-    
+    if (error) {
+        return (
+            <ErrorAlert
+                className="m-12"
+                message="Something went wrong while fetching download metrics data. Please try again later"
+            />
+        );
+    }
+    if (isFetchingDownloadMetrics) {
+        return (
+            <div className="h-[calc(100vh-var(--nav-height))]  w-full flex items-center justify-center">
+                <Loader />
+            </div>
+        );
+    }
+
     const filteredDates = downloadByTime.filter(
         (data: any) =>
             new Date(data?.date) >= new Date(fromDate) &&

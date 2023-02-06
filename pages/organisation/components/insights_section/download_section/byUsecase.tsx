@@ -1,12 +1,32 @@
+import ErrorAlert from "components/UI/alerts/error_alert";
+import Loader from "components/UI/loader";
 import PieGraph from "components/UI/PieGraph";
 import { useContext } from "react";
 import Table from "../../table";
 import { DownloadMetricVMContext } from "./download_metric.vm";
 const PIE_HEADER = ["name", "value"];
 const ByUsecase = () => {
-    const { downloadMetrics } = useContext(DownloadMetricVMContext);
+    const { downloadMetrics, error, isFetchingDownloadMetrics } = useContext(
+        DownloadMetricVMContext
+    );
 
     const { downloadByUseCase = [] } = downloadMetrics || {};
+
+    if (error) {
+        return (
+            <ErrorAlert
+                className="m-12"
+                message="Something went wrong while fetching download metrics data. Please try again later"
+            />
+        );
+    }
+    if (isFetchingDownloadMetrics) {
+        return (
+            <div className="h-[calc(100vh-var(--nav-height))]  w-full flex items-center justify-center">
+                <Loader />
+            </div>
+        );
+    }
 
     const pieData = downloadByUseCase.map((data: any) => [
         data.name,

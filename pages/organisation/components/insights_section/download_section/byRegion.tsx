@@ -1,3 +1,5 @@
+import ErrorAlert from "components/UI/alerts/error_alert";
+import Loader from "components/UI/loader";
 import dynamic from "next/dynamic";
 import { getAge } from "pages/workspace/notification.vm";
 import { useContext } from "react";
@@ -8,9 +10,27 @@ const WorldMap = dynamic(() => import("components/UI/world_map"), {
 });
 const TABLE_HEADERS = ["Region", "Count", "Last used"];
 const ByRegion = () => {
-    const { downloadMetrics } = useContext(DownloadMetricVMContext);
+    const { downloadMetrics, error, isFetchingDownloadMetrics } = useContext(
+        DownloadMetricVMContext
+    );
 
     const { regions = [] } = downloadMetrics || {};
+
+    if (error) {
+        return (
+            <ErrorAlert
+                className="m-12"
+                message="Something went wrong while fetching download metrics data. Please try again later"
+            />
+        );
+    }
+    if (isFetchingDownloadMetrics) {
+        return (
+            <div className="h-[calc(100vh-var(--nav-height))]  w-full flex items-center justify-center">
+                <Loader />
+            </div>
+        );
+    }
 
     const loc: any = [];
     const downloadCounts: any = [];
