@@ -3,6 +3,7 @@ import Http from "common/http";
 import { getHttpErrorMsg } from "common/util";
 import User, { Role } from "models/user.model";
 import { createContext, useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "store";
@@ -11,6 +12,7 @@ import { updateUser } from "store/auth/auth.action";
 const AdminTabPanelVM = () => {
     const adminUser = useSelector((state: RootState) => state.auth.user);
     const dispatch = useDispatch();
+    const { control, handleSubmit, reset, clearErrors } = useForm();
     const organisationId = adminUser?.organisations?.[0].organisation_id;
     let [isAddMemberModalOpen, setIsAddMemberModalOpen] = useState(false);
 
@@ -56,6 +58,10 @@ const AdminTabPanelVM = () => {
                     toast.error(await getHttpErrorMsg(error)),
                 onSuccess: async (res) => {
                     toast.success("An email invite has been sent.");
+                    reset({
+                        email: "",
+                        roles: "",
+                    });
                     setIsAddMemberModalOpen(false);
                 },
             }
@@ -106,21 +112,15 @@ const AdminTabPanelVM = () => {
 
     const { execute: executeChangeRole, isLoading: isChangingRole } =
         useHttpCall();
-    const changeRole = ({
-        userId,
-        action,
-    }: {
-        userId: number;
-        action: string;
-    }) =>
+    const changeRole = ({ user, role }: { user: User; role: string }) =>
         executeChangeRole(
             () =>
                 Http.put(
                     `/v1/iam/org/${
                         User.getOrg(adminUser)?.organisation_id
-                    }/${action}`,
+                    }/make_${role}`,
                     {
-                        user_id: userId,
+                        user_id: user.id,
                     }
                 ),
             {
@@ -128,7 +128,12 @@ const AdminTabPanelVM = () => {
                     toast.error(await getHttpErrorMsg(error));
                 },
                 onSuccess: (res) => {
-                    toast.success("Role was updated successfully");
+                    toast.success(
+                        `${user.name} was successfully ${
+                            role == "admin" ? "promoted" : "demoted"
+                        } to ${role}.`
+                    );
+                    // toast.success("Role was updated successfully");
                     fetchOrgUsers();
                 },
             }
@@ -139,15 +144,15 @@ const AdminTabPanelVM = () => {
     const makeOrgAdmin = (user: User) => {
         setChangingRoleUserId(user.id);
         changeRole({
-            userId: user.id,
-            action: "make_admin",
+            user: user,
+            role: "admin",
         });
     };
     const makeOrgMember = (user: User) => {
         setChangingRoleUserId(user.id);
         changeRole({
-            userId: user.id,
-            action: "make_member",
+            user: user,
+            role: "member",
         });
     };
 
@@ -167,6 +172,8 @@ const AdminTabPanelVM = () => {
         makeOrgAdmin,
         makeOrgMember,
         changingRoleUserId,
+        control,
+        handleSubmit,
     };
 };
 
