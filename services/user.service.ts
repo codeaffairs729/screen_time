@@ -87,6 +87,7 @@ class UserService {
                     `/data_view/{ids}?${item_req_param}`,
                     {
                         baseUrl: process.env.NEXT_PUBLIC_PUBLIC_API_ROOT,
+                        redirectToLoginPageIfAuthRequired: false,
                     }
                 );
 
@@ -109,6 +110,7 @@ class UserService {
                     `/v1/data_sources/display_providers${item_req_param}`,
                     {
                         baseUrl: process.env.NEXT_PUBLIC_WEBPORTAL_API_ROOT,
+                        redirectToLoginPageIfAuthRequired: false,
                     }
                 );
 
