@@ -14,7 +14,7 @@ const DataStats = ({ stats }: { stats: DataStats | undefined }) => {
     return (
         <div className="my-4">
             <div className="flex justify-between">
-                <div className="flex">
+                <div className="flex flex-wrap">
                     <div className="flex justify-center items-center mr-6">
                         <Image
                             src="/images/icons/dataset.svg"
