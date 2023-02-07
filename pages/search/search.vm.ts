@@ -163,6 +163,7 @@ const SearchVM = (search = true) => {
         (url: string) =>
             Http.get(url, {
                 baseUrl: `${process.env.NEXT_PUBLIC_PUBLIC_API_ROOT}`,
+                redirectToLoginPageIfAuthRequired: false,
             })
                 .catch((e) => {
                     setLoading(false);
