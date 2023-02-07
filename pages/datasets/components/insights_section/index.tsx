@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Tab } from "@headlessui/react";
 import DatasetTabHeaders from "./tabs";
 import DatasetQualityInsightsBody from "./data_quality/section";
@@ -13,16 +13,29 @@ import UseCaseMetricsVM, {
 import DownloadMetricsVM, {
     DownloadMetricsVMContext,
 } from "./download_metrics/download_metric.vm";
+import Loader from "components/UI/loader";
 
 const DatasetInsights = () => {
     const [selectedInsightTab, setSelectedInsightTab] = useState<number>(0);
+    const [loading, Setloading] = useState(true);
     const qualityMetricVM = QualityMetricsVM();
     const useCaseMetricVM = UseCaseMetricsVM();
     const downloadMetricVM = DownloadMetricsVM();
+    useEffect(() => {
+        Setloading(false);
+        return ()=> { Setloading(true);}
+    }, []);
 
+    if (loading) {
+        return (
+            <div className="h-[calc(40vh-var(--nav-height))] w-full flex items-center justify-center">
+                <Loader />
+            </div>
+        );
+    }
     return (
         <div>
-            <QualityMetricsVMContext.Provider value={qualityMetricVM}>
+           {!loading &&<QualityMetricsVMContext.Provider value={qualityMetricVM}>
                 <UseCaseMetricsVMContext.Provider value={useCaseMetricVM}>
                     <DownloadMetricsVMContext.Provider value={downloadMetricVM}>
                         <div className="mb-6">
@@ -48,7 +61,7 @@ const DatasetInsights = () => {
                         </div>
                     </DownloadMetricsVMContext.Provider>
                 </UseCaseMetricsVMContext.Provider>
-            </QualityMetricsVMContext.Provider>
+            </QualityMetricsVMContext.Provider>}
         </div>
     );
 };
