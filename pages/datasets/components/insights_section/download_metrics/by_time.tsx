@@ -23,7 +23,7 @@ const ByTime = () => {
     } = useContext(DownloadMetricsVMContext);
     const { downloadByTime = [] } = downloadMetrics || {};
 
-    if (isFetchingDatasetMetrics || isFetchingDatasetMetricsByTime) {
+    if (isFetchingDatasetMetrics) {
         return (
             <div className="h-full w-full flex items-center justify-center mt-24">
                 <Loader />

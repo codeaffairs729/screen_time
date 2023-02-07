@@ -35,7 +35,7 @@ const DatasetQualityInsightsBody = () => {
     }
     const items = selectedLabel == 0 ? dataFileQuality : metaDataQuality;
     return (
-        <div className="grid grid-cols-2 gap-4 mt-10">
+        <div className="grid lg:grid-cols-2 gap-4 mt-10 sm:grid-cols-1 ">
             {Object.keys(items)?.map((item: any, index: number) => (
                 <FileQuality items={items} item={item} key={index} />
             ))}

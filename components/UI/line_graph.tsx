@@ -4,13 +4,15 @@ import {
     Legend,
     Line,
     LineChart,
+    ResponsiveContainer,
     Tooltip,
     XAxis,
     YAxis,
 } from "recharts";
 
-const LineGraph = ({ width, height, data, datakeyX, datakeyY, className}: any) => {
+const LineGraph = ({ width, height, data, datakeyX, datakeyY, className,hideX}: any) => {
     return (
+        <ResponsiveContainer width="95%" height={600}>
             <LineChart
                 width={width}
                 height={height}
@@ -24,7 +26,7 @@ const LineGraph = ({ width, height, data, datakeyX, datakeyY, className}: any) =
                 }}
             >
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey={datakeyX} tick={false}>
+                <XAxis dataKey={datakeyX} tick={false} axisLine={hideX}>
                     <Label values="" />
                 </XAxis>
                 <YAxis tick={false} axisLine={false}>
@@ -42,6 +44,7 @@ const LineGraph = ({ width, height, data, datakeyX, datakeyY, className}: any) =
                     isAnimationActive={false}
                 />
             </LineChart>
+            </ResponsiveContainer>
     );
 };
 export default LineGraph;
