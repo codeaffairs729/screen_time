@@ -40,7 +40,7 @@ const Footer = ({ className = "" }: { className?: string }) => {
                 <div className="flex flex-row justify-end items-start ">
                     <div className="flex flex-col mx-4">
                         <FooterLink
-                            label="Report bug"
+                            label="Report a bug"
                             href="https://f7xcuekc9xt.typeform.com/to/ff4rGkXc"
                         />
                         <FooterLink label="FAQs" href="/faq" />
