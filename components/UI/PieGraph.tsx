@@ -92,25 +92,23 @@ const PieGraph = ({
     isAnimationActive?: boolean;
 }) => {
     return (
-        <ResponsiveContainer width="90%" height={700}>
-            <PieChart width={width} height={height}>
-                <Pie
-                    data={data}
-                    dataKey={dataKey}
-                    nameKey="name"
-                    fill="#302D2D"
-                    labelLine={true}
-                    legendType="square"
-                    label={renderLabel}
-                    outerRadius={radius}
-                    isAnimationActive={isAnimationActive}
-                >
-                    {data.map((_, index) => (
-                        <Cell key={`cell-${index}`} fill={COLORS[index]} />
-                    ))}
-                </Pie>
-            </PieChart>
-        </ResponsiveContainer>
+        <PieChart width={width} height={height}>
+            <Pie
+                data={data}
+                dataKey={dataKey}
+                nameKey="name"
+                fill="#302D2D"
+                labelLine={true}
+                legendType="square"
+                label={renderLabel}
+                outerRadius={radius}
+                isAnimationActive={isAnimationActive}
+            >
+                {data.map((_, index) => (
+                    <Cell key={`cell-${index}`} fill={COLORS[index]} />
+                ))}
+            </Pie>
+        </PieChart>
     );
 };
 export default PieGraph;

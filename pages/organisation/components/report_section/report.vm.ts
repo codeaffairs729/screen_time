@@ -72,21 +72,20 @@ const formatDate = (date: Date) =>
 
 const getReportDate = (fromDate: Date, toDate: Date) => {
     return format(fromDate, "dd-MM-yyyy") === format(toDate, "dd-MM-yyyy")
-        ? `<strong>\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t${formatDate(
+        ? `<h6><strong style="padding-left: 100px;">${formatDate(
               fromDate
-          )}</strong><br/>`
-        : `<strong>\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t${formatDate(
-              fromDate
-          )}</strong> - <strong>${formatDate(toDate)}</strong><br/>`;
+          )}</strong></h6><br/>`
+        : `<h6><strong>${formatDate(fromDate)}</strong> - <strong>${formatDate(
+              toDate
+          )}</strong></h6><br/>`;
 };
-const getReportTitle = (title :any) =>{
-    return `<strong>\t\t\t\t\t\t\t\t\t\t\t\t\t\t &nbsp;${title}</strong><br/>`
-}
+const getReportTitle = (title: any) => {
+    return `<h1><strong>Dataset Insights Report</strong></h1><br/><h2><strong>${title}</strong></h2><br/>`;
+};
 const getImageCanvas = (src: any) =>
     `<figure><img src="${src}"/></figure></br>`;
 
-const formatSubHeading = (text: string) =>
-    `<I>&emsp;&emsp; ${text}</I><br/><br/>`;
+const formatSubHeading = (text: string) => `<h4> ${text}</h4><br/><br/>`;
 
 const headerSelected = (
     selected: Array<Object>,
@@ -97,14 +96,22 @@ const headerSelected = (
         .map((object: any, index: any) =>
             object === "Download metrics"
                 ? `
-                <br/><strong id=label_${index}>&#09${object}</strong><br/></br>
-                ${formatSubHeading("Region")}
-                ${formatSubHeading("Time")}
-                ${byTimeImageData ? getImageCanvas(byTimeImageData) : '<I>&emsp;&emsp; &emsp;&emsp; &emsp;&emsp;&emsp;&emsp; &emsp;&emsp; &emsp;&emsp; No Data Presents for Time.</I><br/>'}
-                ${formatSubHeading("Use case")}
-                ${imagePie ? getImageCanvas(imagePie) : '<I>&emsp;&emsp;&emsp;&emsp; &emsp;&emsp;&emsp;&emsp; &emsp;&emsp; &emsp;&emsp; No Data Presents for Role.</I> <br/>'}
+                <br/><h5><strong id=label_${index}>&#09${object}</strong></h5><br/></br>
+                ${formatSubHeading("Downloads by region")}
+                ${formatSubHeading("Downloads by time")}
+                ${
+                    byTimeImageData
+                        ? getImageCanvas(byTimeImageData)
+                        : "<I>&emsp;&emsp; &emsp;&emsp; &emsp;&emsp;&emsp;&emsp; &emsp;&emsp; &emsp;&emsp; No Data Presents for Time.</I><br/><br/>"
+                }
+                ${formatSubHeading("Downloads by role")}
+                ${
+                    imagePie
+                        ? getImageCanvas(imagePie)
+                        : "<I>&emsp;&emsp;&emsp;&emsp;&emsp; &emsp;&emsp; No Data Presents for Role.</I> <br/>"
+                }
                 <p>...</p>`
-                : `<br/><strong id=label_${index}>&#09${object}</strong><br/>`
+                : `<br/><h5><strong id=label_${index}>${object}</strong></h5><br/>`
         )
         .join("");
 
@@ -163,16 +170,16 @@ const ReportVM = () => {
         const metricByTime: any = document.getElementById("screenshot");
         const metricByUseCase: any = document.getElementById("pie");
 
-        const byTimeCanvas = metricByTime && (await html2canvas(metricByTime)).toDataURL(
-            "image/png"
-        );
-        const byUseCaseCanvas = metricByUseCase && (await html2canvas(metricByUseCase)).toDataURL(
-            "image/png"
-        );
+        const byTimeCanvas =
+            metricByTime &&
+            (await html2canvas(metricByTime)).toDataURL("image/png");
+        const byUseCaseCanvas =
+            metricByUseCase &&
+            (await html2canvas(metricByUseCase)).toDataURL("image/png");
 
         const data = `
                 <figure style='width: 200px;margin-left: auto;margin-right: auto;'><img src='${imgUrl}' /></figure>
-                .<br/>
+                <br/>
                 ${getReportTitle(organisation?.title)}
                 ${getReportDate(fromDate, toDate)}
                 ${headerSelected(
@@ -282,7 +289,11 @@ const ReportVM = () => {
         });
     };
     const isFetching = isFetchingByTime || isFetchingByRoles;
-    const loading = isGeneratingReport || isFetching || isFetchingByTime || isFetchingByRoles;
+    const loading =
+        isGeneratingReport ||
+        isFetching ||
+        isFetchingByTime ||
+        isFetchingByRoles;
 
     return {
         generateReportContent,
@@ -323,7 +334,7 @@ export const getDateRange = (fromDate: any, toDate: any, dates: any) => {
             : currentDate;
         datesList.push({
             date: dateToShow.toLocaleString("en", {
-                day:"numeric",
+                day: "numeric",
                 weekday: "short",
                 month: "short",
                 year: "numeric",

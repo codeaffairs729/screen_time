@@ -4,7 +4,6 @@ import {
     Legend,
     Line,
     LineChart,
-    ResponsiveContainer,
     Tooltip,
     XAxis,
     YAxis,
@@ -12,7 +11,6 @@ import {
 
 const LineGraph = ({ width, height, data, datakeyX, datakeyY, className,hideX}: any) => {
     return (
-        <ResponsiveContainer width="95%" height={600}>
             <LineChart
                 width={width}
                 height={height}
@@ -44,7 +42,6 @@ const LineGraph = ({ width, height, data, datakeyX, datakeyY, className,hideX}: 
                     isAnimationActive={false}
                 />
             </LineChart>
-            </ResponsiveContainer>
     );
 };
 export default LineGraph;
