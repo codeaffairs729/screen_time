@@ -9,6 +9,7 @@ import {
 } from "./download_metric.vm";
 import ErrorAlert from "components/UI/alerts/error_alert";
 import Loader from "components/UI/loader";
+import { ResponsiveContainer } from "recharts";
 
 const ByTime = () => {
     const {
@@ -94,14 +95,16 @@ const ByTime = () => {
                 />
             </div>
             <div className="mt-8 block h-[44rem] overflow-y-scroll no-scrollbar whitespace-nowrap">
-                <LineGraph
-                    data={differenceInDays > 90 ? timeMetrics : lineMatrics}
-                    height={500}
-                    width={1025}
-                    datakeyX={differenceInDays > 90 ? "month" : "weekDay"}
-                    datakeyY="download"
-                    className=""
-                />
+                <ResponsiveContainer width="95%" height={600}>
+                    <LineGraph
+                        data={differenceInDays > 90 ? timeMetrics : lineMatrics}
+                        height={500}
+                        width={1025}
+                        datakeyX={differenceInDays > 90 ? "month" : "weekDay"}
+                        datakeyY="download"
+                        className=""
+                    />
+                </ResponsiveContainer>
                 {/* <BarGraph
                     data={timeMetrics}
                     strokeWidthAxis={0.4}

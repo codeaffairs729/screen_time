@@ -2,6 +2,7 @@ import ErrorAlert from "components/UI/alerts/error_alert";
 import Loader from "components/UI/loader";
 import PieGraph from "components/UI/PieGraph";
 import { useContext } from "react";
+import { ResponsiveContainer } from "recharts";
 import Table from "../../table";
 import { DownloadMetricVMContext } from "./download_metric.vm";
 const PIE_HEADER = ["name", "value"];
@@ -35,7 +36,9 @@ const ByUsecase = () => {
 
     return (
         <div className="mr-24 mt-8 block h-[44rem] overflow-y-scroll no-scrollbar whitespace-nowrap">
-            <PieGraph data={downloadByUseCase} />
+            <ResponsiveContainer width="90%" height={700}>
+                <PieGraph data={downloadByUseCase} />
+            </ResponsiveContainer>
             <Table
                 tableHeaders={PIE_HEADER}
                 tableData={pieData}

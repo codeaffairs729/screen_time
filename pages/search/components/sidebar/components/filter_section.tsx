@@ -18,8 +18,8 @@ const FilterSection = ({
         <div data-selector={dataSelector}>
             <div
                 className={`${
-                    disable ? "cursor-not-allowed" : " cursor-pointer"
-                } bg-dtech-main-light rounded`}
+                    disable ? "cursor-not-allowed bg-dtech-light-grey" : hideFilters ?" cursor-pointer bg-dtech-light-grey" : "cursor-pointer bg-dtech-main-light"
+                }  rounded`}
                 onClick={() => setHideFilters(!hideFilters)}
             >
                 <div className=" flex justify-between items-center mx-3">

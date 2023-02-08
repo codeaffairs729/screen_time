@@ -20,7 +20,7 @@ const Calander = ({
                 selected={startDate}
                 onChange={handleChange}
                 calendarClassName="!border !border-red"
-                formatWeekDay={(nameOfDay) => nameOfDay.substring(0, 1)}
+                // formatWeekDay={(nameOfDay) => nameOfDay.substring(0, 1)}
                 inline
             />
         </div>

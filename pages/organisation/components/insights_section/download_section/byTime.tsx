@@ -11,6 +11,7 @@ import {
 } from "./download_metric.vm";
 import ErrorAlert from "components/UI/alerts/error_alert";
 import Loader from "components/UI/loader";
+import { ResponsiveContainer } from "recharts";
 const LineGraph = dynamic(() => import("components/UI/line_graph"), {
     ssr: false,
 });
@@ -73,6 +74,7 @@ const ByTime = () => {
                 />
             </div>
             <div className="mt-8 block h-[44rem] overflow-y-scroll no-scrollbar whitespace-nowrap">
+            <ResponsiveContainer width="95%" height={600}>
                 <LineGraph
                     data={lineChartData}
                     height={500}
@@ -81,6 +83,7 @@ const ByTime = () => {
                     datakeyY="download"
                     className=""
                 />
+                </ ResponsiveContainer >
                 {/* <BarGraph
                     data={timeMetrics}
                     strokeWidthAxis={0.4}
