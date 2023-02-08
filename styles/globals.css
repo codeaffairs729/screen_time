@@ -57,3 +57,23 @@ figure{
   margin-right: auto;
   margin-bottom: 20px;
 }
+
+.DraftEditor-editorContainer > div >div > h1 {
+  font-size: 30px;
+  padding-left: 160px;
+}  
+.DraftEditor-editorContainer > div >div > h2 {
+  font-size: 20px;
+  padding-left: 200px;
+} 
+.DraftEditor-editorContainer > div >div > h6 {
+  padding-left: 230px;
+
+}  
+.DraftEditor-editorContainer > div >div > h5 {
+  padding-left: 10px;
+}  
+.DraftEditor-editorContainer > div >div > h4{
+  padding-left: 40px;
+  font-style: italic;
+}
