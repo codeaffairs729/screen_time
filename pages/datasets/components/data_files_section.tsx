@@ -1,8 +1,7 @@
 import { useContext, useState, useRef } from "react";
 import { DatasetDetailVMContext } from "../dataset_detail.vm";
 import { DatasetUrl } from "models/dataset.model";
-import { BsCloudDownloadFill, BsEyeFill } from "react-icons/bs";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "store";
 import { NotificationsVMContext } from "pages/workspace/notification.vm";
 import downloadIcon from "public/images/icons/download.svg";
@@ -37,7 +36,7 @@ const DataFilesSection = ({ goToPreview }: { goToPreview: () => void }) => {
     return (
         <div>
             <div className="flex flex-row justify-between items-center mx-3 my-4 ">
-                <span>Total file : {vm.dataset.urls.length}</span>
+                <span>Total file : {vm.dataset.urls?.length}</span>
                 <div className="flex flex-row">
                     <a
                         onClick={() => onDowloadAll()}
@@ -74,8 +73,8 @@ const DataFilesSection = ({ goToPreview }: { goToPreview: () => void }) => {
                         className="text-gray-600 text-sm font-light"
                         data-testid="data-files"
                     >
-                        {vm.dataset.urls.length > 0 ? (
-                            vm.dataset.urls.map((url, i) => {
+                        {vm.dataset.urls?.length > 0 ? (
+                            vm.dataset.urls?.map((url, i) => {
                                 return (
                                     <DataFileRow
                                         url={url}

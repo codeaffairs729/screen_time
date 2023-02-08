@@ -5,10 +5,11 @@ import TagsCloud from "./tagCloud";
 import { DateTime } from "luxon";
 import { getAge } from "pages/workspace/notification.vm";
 import { SearchTermType, SearchTermVMContext } from "./search_term.vm";
+import ErrorAlert from "components/UI/alerts/error_alert";
 
 const TABLE_HEADERS = ["Search term", "Count", "Last used"];
 const SearchTermSection = () => {
-    const { searchTerms, fetchSearchTerms, isFetchingSearchTerms } =
+    const { searchTerms, fetchSearchTerms, isFetchingSearchTerms, error } =
         useContext(SearchTermVMContext);
 
     useEffect(() => {
@@ -24,6 +25,14 @@ const SearchTermSection = () => {
         [searchTerms]
     );
 
+    if (error) {
+        return (
+            <ErrorAlert
+                className="m-12"
+                message="Something went wrong while fetching searchTerms data. Please try again later"
+            />
+        );
+    }
     return (
         <div className="ml-8 mr-24 block h-[44rem] overflow-y-scroll no-scrollbar whitespace-nowrap">
             {!isFetchingSearchTerms && searchTerms && searchTerms?.length ? (

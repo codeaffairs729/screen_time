@@ -17,6 +17,7 @@ const QualityMetricVM = () => {
         execute: excuteFetchQualityMetrics,
         data: qualityMetrics,
         isLoading: isFetchingQualityMetrics,
+        error,
     } = useHttpCall<{ [key: string]: any }>({});
 
     const fetchQualityMetrics = () =>
@@ -40,6 +41,7 @@ const QualityMetricVM = () => {
         );
 
     return {
+        error,
         qualityMetrics,
         selectedQualityInsights,
         isFetchingQualityMetrics,
@@ -51,6 +53,7 @@ const QualityMetricVM = () => {
 export default QualityMetricVM;
 
 interface IQualityMetricVM {
+    error:any;
     selectedQualityInsights: number;
     qualityMetrics: any;
     fetchQualityMetrics: Function;

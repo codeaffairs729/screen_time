@@ -5,6 +5,7 @@ import BarGraph from "components/UI/BarGraph";
 import Loader from "components/UI/loader";
 import { useContext, useEffect } from "react";
 import { QualityMetricVMContext } from "./quality_metric.vm";
+import ErrorAlert from "components/UI/alerts/error_alert";
 
 const TABLE_HEADERS = ["Score", "Dataset"];
 
@@ -23,14 +24,25 @@ const QualityInsightsBody = () => {
         qualityMetrics,
         fetchQualityMetrics,
         isFetchingQualityMetrics,
+        error,
         selectedQualityInsights: selectedLabel,
     } = useContext(QualityMetricVMContext);
 
     const { dataFileQuality = {}, metaFileQuality = {} } = qualityMetrics || {};
     const items = selectedLabel == 0 ? dataFileQuality : metaFileQuality;
+
     useEffect(() => {
         fetchQualityMetrics && fetchQualityMetrics();
     }, []);
+    
+    if (error) {
+        return (
+            <ErrorAlert
+                className="m-12"
+                message="Something went wrong while fetching Quality Metrics data. Please try again later"
+            />
+        );
+    }
 
     return (
         <div className="ml-16">

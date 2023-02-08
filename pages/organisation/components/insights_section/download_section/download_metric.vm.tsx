@@ -68,6 +68,7 @@ const DownloadMetricVM = () => {
     const {
         execute: excuteFetchDownloadMetrics,
         isLoading: fetchingDownloadMetrics,
+        error,
     } = useHttpCall<{ [key: string]: any }>({});
 
     const fetchDownloadMetrics = () =>
@@ -121,6 +122,7 @@ const DownloadMetricVM = () => {
         fetchingDownloadMetrics ;
 
     return {
+        error,
         fromDate,
         toDate,
         setFromDate,
@@ -136,6 +138,7 @@ const DownloadMetricVM = () => {
 export default DownloadMetricVM;
 
 interface IDownloadMetricVM {
+    error: any;
     fromDate: Date;
     toDate: Date;
     setFromDate: Function;

@@ -1,23 +1,25 @@
 import Dropdown, { MenuItemType } from "components/UI/drop_down";
 import {
-    DatasetDetailVMContext,
     getSelectedLabelIndex,
     formatLabel,
-    qualityInsights,
 } from "pages/datasets/dataset_detail.vm";
 import { useContext, useState } from "react";
 import DatasetLabel from "../label";
+import { QualityInsightsENUM, QualityMetricsVMContext } from "./quality_metric.vm";
 
-const ITEMS: MenuItemType[] = [{ label: "data_file" }, { label: "metadata_quality" }];
+const ITEMS: MenuItemType[] = [
+    { label: "data_file" },
+    { label: "metadata_quality" },
+];
 
 const DatasetQualityInsightsHead = () => {
     const [selectedLabel, setSelectedLabel] = useState(ITEMS[0].label);
     const { setSelectedQualityInsights: onChange } = useContext(
-        DatasetDetailVMContext
+        QualityMetricsVMContext
     );
     const handleChange = (label: string) => {
         setSelectedLabel(label);
-        onChange && onChange(getSelectedLabelIndex(label, qualityInsights));
+        onChange && onChange(getSelectedLabelIndex(label, QualityInsightsENUM));
     };
 
     const menuItems = ITEMS.map((item) => ({

@@ -171,7 +171,7 @@ const DatasetStat = ({ stats }: { stats: any }) => {
     return (
         <div className="my-4">
             <div className="flex justify-between">
-                <div className="flex">
+                <div className="flex flex-wrap">
                     <div className="flex justify-center items-center mr-6">
                         <BsHeartFill className="h-5 w-5 mr-2" />
                         <span className=" max-w-24 text-m font-normal">
