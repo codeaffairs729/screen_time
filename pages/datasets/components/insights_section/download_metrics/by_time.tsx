@@ -1,19 +1,47 @@
-import BarGraph from "components/UI/BarGraph";
+// import BarGraph from "components/UI/BarGraph";
 import LineGraph from "components/UI/line_graph";
 import RangeSelector from "components/UI/range_selector";
-import { DatasetDetailVMContext, DownloadByTime } from "pages/datasets/dataset_detail.vm";
 import { useContext } from "react";
 import { format } from "date-fns";
+import {
+    DownloadMetricsVMContext,
+    DownloadByTimeEnum,
+} from "./download_metric.vm";
+import ErrorAlert from "components/UI/alerts/error_alert";
+import Loader from "components/UI/loader";
 
 const ByTime = () => {
-    const { fromDate, toDate, setFromDate, setToDate, downloadMetrics } = useContext(
-        DatasetDetailVMContext
-    );
+    const {
+        error,
+        isFetchingDatasetMetrics,
+        isFetchingDatasetMetricsByTime,
+        fromDate,
+        toDate,
+        setFromDate,
+        setToDate,
+        downloadMetrics,
+    } = useContext(DownloadMetricsVMContext);
     const { downloadByTime = [] } = downloadMetrics || {};
-    const timeMetrics = downloadByTime.map((data: DownloadByTime) => ({
+
+    if (isFetchingDatasetMetrics) {
+        return (
+            <div className="h-full w-full flex items-center justify-center mt-24">
+                <Loader />
+            </div>
+        );
+    }
+    if (error) {
+        return (
+            <ErrorAlert
+                className="m-12"
+                message="Something went wrong while fetching download metrics data. Please try again later"
+            />
+        );
+    }
+    const timeMetrics = downloadByTime.map((data: DownloadByTimeEnum) => ({
         month: new Date(data?.date).toLocaleString("en", {
             month: "short",
-            year: "numeric"
+            year: "numeric",
         }),
         download: data.count,
     }));
@@ -48,7 +76,7 @@ const ByTime = () => {
         weekDay: new Date(data?.date).toLocaleString("en", {
             weekday: "long",
             month: "short",
-            year: "numeric"
+            year: "numeric",
         }),
         download: data.count,
     }));
@@ -66,7 +94,7 @@ const ByTime = () => {
                 />
             </div>
             <div className="mt-8 block h-[44rem] overflow-y-scroll no-scrollbar whitespace-nowrap">
-            <LineGraph
+                <LineGraph
                     data={differenceInDays > 90 ? timeMetrics : lineMatrics}
                     height={500}
                     width={1025}

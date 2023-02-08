@@ -1,21 +1,41 @@
+import ErrorAlert from "components/UI/alerts/error_alert";
+import Loader from "components/UI/loader";
 import MetaRating from "components/UI/metaRating";
-import { DatasetDetailVMContext } from "pages/datasets/dataset_detail.vm";
 import { useContext, useEffect } from "react";
-import { IoTimeSharp } from "react-icons/io5";
+import { QualityMetricsVMContext } from "./quality_metric.vm";
 
 const DatasetQualityInsightsBody = () => {
-    const { selectedQualityInsights: selectedLabel,fetchQualityMetrics,qualityMetrics,isFetchingQualityMetrics } = useContext(
-        DatasetDetailVMContext
-    );
+    const {
+        error,
+        selectedQualityInsights: selectedLabel,
+        fetchQualityMetrics,
+        qualityMetrics,
+        isFetchingQualityMetrics,
+    } = useContext(QualityMetricsVMContext);
     const { dataFileQuality = {}, metaDataQuality = {} } = qualityMetrics || {};
 
-    useEffect(()=>{
+    useEffect(() => {
         fetchQualityMetrics && fetchQualityMetrics();
-    },[])
+    }, []);
 
+    if (isFetchingQualityMetrics) {
+        return (
+            <div className="h-full w-full flex items-center justify-center mt-24">
+                <Loader />
+            </div>
+        );
+    }
+    if (error) {
+        return (
+            <ErrorAlert
+                className="m-12"
+                message="Something went wrong while fetching qulaity metrics data. Please try again later"
+            />
+        );
+    }
     const items = selectedLabel == 0 ? dataFileQuality : metaDataQuality;
     return (
-        <div className="grid grid-cols-2 gap-4 mt-10">
+        <div className="grid lg:grid-cols-2 gap-4 mt-10 sm:grid-cols-1 ">
             {Object.keys(items)?.map((item: any, index: number) => (
                 <FileQuality items={items} item={item} key={index} />
             ))}
@@ -23,7 +43,7 @@ const DatasetQualityInsightsBody = () => {
     );
 };
 
-const FileQuality = ({ item, items }: { item: any, items: any }) => {
+const FileQuality = ({ item, items }: { item: any; items: any }) => {
     return (
         <div className="flex flex-row justify-center items-center mt-10">
             <span>{getLabel(items[item].label)}</span>
@@ -34,12 +54,12 @@ const FileQuality = ({ item, items }: { item: any, items: any }) => {
                 labelClass="!text-lg text-dtech-dark-grey"
                 starClassName="!w-6 !h-6 text-[#5F5F63]"
             />
-            {items[item].total &&
+            {items[item].total && (
                 <div>
                     <span className="mx-2">({items[item].total}</span>
                     <span>{items[item].ratingLabel})</span>
                 </div>
-            }
+            )}
         </div>
     );
 };

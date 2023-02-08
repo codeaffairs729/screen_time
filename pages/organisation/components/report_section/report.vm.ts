@@ -79,9 +79,9 @@ const getReportDate = (fromDate: Date, toDate: Date) => {
               fromDate
           )}</strong> - <strong>${formatDate(toDate)}</strong><br/>`;
 };
-// const getReportTitle = () =>{
-//     return `\t\t\t\t\tDataset Insights Report<br/>`
-// }
+const getReportTitle = (title :any) =>{
+    return `<strong>\t\t\t\t\t\t\t\t\t\t\t\t\t\t &nbsp;${title}</strong><br/>`
+}
 const getImageCanvas = (src: any) =>
     `<figure><img src="${src}"/></figure></br>`;
 
@@ -173,6 +173,7 @@ const ReportVM = () => {
         const data = `
                 <figure style='width: 200px;margin-left: auto;margin-right: auto;'><img src='${imgUrl}' /></figure>
                 .<br/>
+                ${getReportTitle(organisation?.title)}
                 ${getReportDate(fromDate, toDate)}
                 ${headerSelected(
                     selectedHeaders,

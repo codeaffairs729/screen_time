@@ -1,17 +1,17 @@
-import {useEffect} from 'react'
-import { DatasetDetailVMContext } from "pages/datasets/dataset_detail.vm";
+import { useEffect } from "react";
 import { useContext } from "react";
 import ByRegion from "./by_region";
 import ByRole from "./by_role";
 import ByTime from "./by_time";
+import { DownloadMetricsVMContext } from "./download_metric.vm";
 
 const DatasetDownloadMetricsBody = () => {
     const { selectedDownload: selectedLabel, fetchDatasetMetrics } = useContext(
-        DatasetDetailVMContext
+        DownloadMetricsVMContext
     );
-useEffect(() => {
-    fetchDatasetMetrics()
-}, [])
+    useEffect(() => {
+        fetchDatasetMetrics();
+    }, []);
 
     return (
         <div className=" mt-20">

@@ -81,28 +81,43 @@ class UserService {
             dataset_ids.forEach((id: any) => {
                 item_req_param = `${item_req_param}li=${id}&`;
             });
-            const res_itemsdata = await Http.get(
-                `/data_view/{ids}?${item_req_param}`,
-                {
-                    baseUrl: process.env.NEXT_PUBLIC_PUBLIC_API_ROOT,
-                }
-            );
 
-            datasets = Dataset.fromJsonList(
-                res_itemsdata[0].user_search[0].results
-            );
+            try {
+                const res_itemsdata = await Http.get(
+                    `/data_view/{ids}?${item_req_param}`,
+                    {
+                        baseUrl: process.env.NEXT_PUBLIC_PUBLIC_API_ROOT,
+                        redirectToLoginPageIfAuthRequired: false,
+                    }
+                );
+
+                datasets = Dataset.fromJsonList(
+                    res_itemsdata[0].user_search[0].results
+                );
+            } catch (error) {
+                console.log(error);
+            }
         }
 
         if (organisation_ids?.length > 0) {
-            const resOrgData = await Http.get(
-                `/v1/data_sources/display_providers`,
-                {
-                    params: organisation_ids,
-                    baseUrl: process.env.NEXT_PUBLIC_WEBPORTAL_API_ROOT,
-                }
-            );
+            let item_req_param = "?";
+            organisation_ids.forEach((id: any) => {
+                item_req_param = `${item_req_param}providers_uuids=${id}&`;
+            });
 
-            organisations = Organisation.fromJsonList(resOrgData);
+            try {
+                const resOrgData = await Http.get(
+                    `/v1/data_sources/display_providers${item_req_param}`,
+                    {
+                        baseUrl: process.env.NEXT_PUBLIC_WEBPORTAL_API_ROOT,
+                        redirectToLoginPageIfAuthRequired: false,
+                    }
+                );
+
+                organisations = Organisation.fromJsonList(resOrgData);
+            } catch (error) {
+                console.log(error);
+            }
         }
 
         store.dispatch(

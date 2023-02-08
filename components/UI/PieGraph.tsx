@@ -1,4 +1,4 @@
-import { Cell, Pie, PieChart } from "recharts";
+import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
 
 const COLORS = [
     "#ED95DA",
@@ -81,7 +81,7 @@ const PieGraph = ({
     width = 950,
     height = 700,
     radius = "60%",
-    dataKey= "value",
+    dataKey = "value",
     isAnimationActive = true,
 }: {
     data: Array<Object>;
@@ -92,23 +92,25 @@ const PieGraph = ({
     isAnimationActive?: boolean;
 }) => {
     return (
-        <PieChart width={width} height={height}>
-            <Pie
-                data={data}
-                dataKey={dataKey}
-                nameKey="name"
-                fill="#302D2D"
-                labelLine={true}
-                legendType="square"
-                label={renderLabel}
-                outerRadius={radius}
-                isAnimationActive={isAnimationActive}
-            >
-                {data.map((_, index) => (
-                    <Cell key={`cell-${index}`} fill={COLORS[index]} />
-                ))}
-            </Pie>
-        </PieChart>
+        <ResponsiveContainer width="90%" height={700}>
+            <PieChart width={width} height={height}>
+                <Pie
+                    data={data}
+                    dataKey={dataKey}
+                    nameKey="name"
+                    fill="#302D2D"
+                    labelLine={true}
+                    legendType="square"
+                    label={renderLabel}
+                    outerRadius={radius}
+                    isAnimationActive={isAnimationActive}
+                >
+                    {data.map((_, index) => (
+                        <Cell key={`cell-${index}`} fill={COLORS[index]} />
+                    ))}
+                </Pie>
+            </PieChart>
+        </ResponsiveContainer>
     );
 };
 export default PieGraph;

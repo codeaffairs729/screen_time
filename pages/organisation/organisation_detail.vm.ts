@@ -46,6 +46,7 @@ const OrganisationDetailVM = (
         execute: excuteFetchOrganisationDatasets,
         data: organisationDatasets,
         isLoading: isFetchingOrganisationDatasets,
+        error: errorOrganisationDatasets,
     } = useHttpCall<{ [key: string]: any }>([]);
 
     const fetchOrganisationDatasets = () =>
@@ -74,6 +75,7 @@ const OrganisationDetailVM = (
         data: topDownloaded,
         isLoading: isFetchingtopDownloaded,
         fetch: fetchTopDownloaded,
+        error: errorTopDownloaded,
     } = GetRankedData({
         key: "download_count",
         orgUUID: organisation?.uuid,
@@ -83,6 +85,7 @@ const OrganisationDetailVM = (
         data: topViewed,
         isLoading: isFetchingTopViewed,
         fetch: fetchTopViewed,
+        error: errorTopViewed,
     } = GetRankedData({
         key: "view_count",
         orgUUID: organisation?.uuid,
@@ -92,6 +95,7 @@ const OrganisationDetailVM = (
         data: topFavourited,
         isLoading: isFetchingTopFavourited,
         fetch: fetchTopFavourited,
+        error: errorTopFavourited,
     } = GetRankedData({ key: "favourite_count", orgUUID: organisation?.uuid });
 
     const isFetchingOrganisationRankedDatasets =
@@ -104,6 +108,7 @@ const OrganisationDetailVM = (
         viewed: topViewed,
         added_to_favourite: topFavourited,
     };
+    const error = errorTopDownloaded || errorTopViewed || errorTopFavourited;
 
     const fetchOrganisationRankedDatasets = () => {
         fetchTopDownloaded();
@@ -112,6 +117,8 @@ const OrganisationDetailVM = (
     };
 
     return {
+        errorOrganisationDatasets,
+        error,
         organisation,
         organisationRankedDatasets,
         organisationDatasets,
@@ -131,9 +138,9 @@ const GetRankedData = ({
     key: string;
     orgUUID: string | undefined;
 }) => {
-    const { execute, data, isLoading } = useHttpCall<{ [key: string]: any }>(
-        []
-    );
+    const { execute, data, isLoading, error } = useHttpCall<{
+        [key: string]: any;
+    }>([]);
 
     const fetch = () => {
         execute(
@@ -145,7 +152,11 @@ const GetRankedData = ({
             },
             {
                 postProcess: (res) => {
-                    return jsonToOrgDatasets(res, true, getCountKey());
+                    return jsonToOrgDatasets(
+                        res[0]["user_search"][0]["results"],
+                        true,
+                        getCountKey()
+                    );
                 },
                 onError: (e) => {
                     toast.error(
@@ -173,11 +184,14 @@ const GetRankedData = ({
         data,
         isLoading,
         fetch,
+        error,
     };
 };
 export default OrganisationDetailVM;
 
 export interface IOrganisationDetailVMContext {
+    errorOrganisationDatasets: any;
+    error: any;
     organisation: Organisation | undefined;
     organisationDatasets: any;
     organisationRankedDatasets: any;
@@ -207,9 +221,9 @@ const jsonToOrgDatasets = (jsons: any, isRanked = false, countKey = "views") =>
         const { metrics } = dataset || {};
         const { global } = metrics || {};
 
-        // if (isRanked) {
-        //     data["count"] = global[countKey];
-        // }
+        if (isRanked) {
+            data["count"] = global[countKey];
+        }
 
         return data;
     });

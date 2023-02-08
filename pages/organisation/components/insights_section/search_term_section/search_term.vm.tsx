@@ -27,6 +27,7 @@ const SearchTermVM = () => {
         execute: excuteFetchSearchTerms,
         data: searchTerms,
         isLoading: isFetchingSearchTerms,
+        error,
     } = useHttpCall<{ [key: string]: any }>([]);
     const fetchSearchTerms = () =>
         excuteFetchSearchTerms(
@@ -48,6 +49,7 @@ const SearchTermVM = () => {
         );
 
     return {
+        error,
         searchTerms,
         isFetchingSearchTerms,
         fetchSearchTerms,
@@ -58,6 +60,7 @@ const SearchTermVM = () => {
 export default SearchTermVM;
 
 interface ISearchTermVM {
+    error: any;
     searchTerms: any;
     isFetchingSearchTerms: boolean;
     fetchSearchTerms: Function;

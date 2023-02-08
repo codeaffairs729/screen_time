@@ -1,12 +1,14 @@
 import Dropdown, { MenuItemType } from "components/UI/drop_down";
 import {
-    DatasetDetailVMContext,
     getSelectedLabelIndex,
     formatLabel,
-    download,
 } from "pages/datasets/dataset_detail.vm";
 import { useContext, useState } from "react";
 import DatasetLabel from "../label";
+import {
+    DownloadMetricsVMContext,
+    DownloadSectionEnum,
+} from "./download_metric.vm";
 
 const ITEMS: MenuItemType[] = [
     { label: "by_region" },
@@ -16,11 +18,11 @@ const ITEMS: MenuItemType[] = [
 const DatasetDownloadMetricsHead = () => {
     const [selectedLabel, setSelectedLabel] = useState(ITEMS[0].label);
     const { setSelectedDownload: onChange } = useContext(
-        DatasetDetailVMContext
+        DownloadMetricsVMContext
     );
     const handleChange = (label: string) => {
         setSelectedLabel(label);
-        onChange && onChange(getSelectedLabelIndex(label, download));
+        onChange && onChange(getSelectedLabelIndex(label, DownloadSectionEnum));
     };
     const menuItems = ITEMS.map((item) => ({
         ...item,
