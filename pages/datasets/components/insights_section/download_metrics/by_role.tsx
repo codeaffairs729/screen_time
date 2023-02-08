@@ -2,6 +2,7 @@ import ErrorAlert from "components/UI/alerts/error_alert";
 import Loader from "components/UI/loader";
 import PieGraph from "components/UI/PieGraph";
 import { useContext } from "react";
+import { ResponsiveContainer } from "recharts";
 import { DownloadMetricsVMContext } from "./download_metric.vm";
 
 const ByRole = () => {
@@ -29,7 +30,9 @@ const ByRole = () => {
 
     return (
         <div className="mr-24 mt-8 block h-[44rem] overflow-y-scroll no-scrollbar whitespace-nowrap">
-            <PieGraph data={downloadByUseCase} />
+            <ResponsiveContainer width="90%" height={700}>
+                <PieGraph data={downloadByUseCase} />
+            </ResponsiveContainer>
         </div>
     );
 };
