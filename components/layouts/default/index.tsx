@@ -63,7 +63,9 @@ const DefaultLayout = ({
                         onSearchChange={vm.onSearchChange}
                     />
                     {children}
-                    <Footer className="mt-52 bg-[#F5F5F5]" />
+                    <div className="mt-auto">
+                        <Footer className="mt-52 bg-[#F5F5F5]" />
+                    </div>
                 </SearchVMContext.Provider>
             </OrganizationSearchVMContext.Provider>
         </div>
