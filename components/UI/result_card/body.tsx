@@ -13,7 +13,7 @@ const CardBody = ({ data }: { data: Data }) => {
                 } overflow-hidden transition-all duration-1000 ease-in-out`}
             >
                 <p className="text-sm  text-gray-800 my-1.5">
-                    {description.length > 300 ? (
+                    {description?.length > 300 ? (
                         <span>
                             <span>
                                 {more
