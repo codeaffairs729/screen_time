@@ -92,7 +92,7 @@ const OrganizationSearchVM = (search = true) => {
                 { revalidateOnFocus: false };
         }
     );
-    const isFetchingOrganisation = !totalRecords && !organisationError;
+    const isFetchingOrganisation = !totalRecords && !organisationError && organisations?.length;
     useEffect(() => {
         const len = organisations?.length || 0;
 
