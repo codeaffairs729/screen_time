@@ -25,7 +25,7 @@ const DefaultLayout = ({
     navContent?: ReactNode;
 }) => {
     const vm = SearchVM(page == "dataset");
-    const ovm = OrganizationSearchVM(page == "organisation");
+    const ovm: any = OrganizationSearchVM(page == "organisation");
     return (
         <div
             className={clsx(
@@ -47,7 +47,8 @@ const DefaultLayout = ({
                             className="hover:underline text-blue-600 "
                         >
                             report a bug
-                        </a> or
+                        </a>{" "}
+                        or
                         <a
                             href="https://f7xcuekc9xt.typeform.com/to/Zpryygkm"
                             className="hover:underline text-blue-600 ml-1"
