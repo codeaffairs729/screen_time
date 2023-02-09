@@ -37,6 +37,7 @@ const OrganizationSearchVM = (search = true) => {
     const [queryParams, setQueryParams] = useState<string>("&sort_by=relevance");
     const [organisations, setOrganisations] = useState<Organisation[]>([]);
     const [totalRecords, setTotalRecords] = useState<number>(0);
+    const [loading , setLoading] = useState<boolean>(false)
 
     useEffect(() => {
         const getQueryParam = (key: keyof Filter): string => {
@@ -68,6 +69,7 @@ const OrganizationSearchVM = (search = true) => {
             .join("&");
 
         setQueryParams(cQueryParams ? `&${cQueryParams}` : "");
+        setLoading(true);
     }, [activeFilter]);
     const { data, error: organisationError }: any = useSWR(
         q && search
@@ -76,6 +78,7 @@ const OrganizationSearchVM = (search = true) => {
         (url: string) => {
             Http.get(url)
                 .then((res: any) => {
+                    setLoading(false);
                     const { data_providers = [], total_records = 0 } =
                         res || {};
 
@@ -85,6 +88,7 @@ const OrganizationSearchVM = (search = true) => {
                     return Organisation.fromJsonList(data_providers);
                 })
                 .catch((e: any) => {
+                    setLoading(false);
                     toast.error(
                         "Something went wrong while fetching search results"
                     );
@@ -92,7 +96,7 @@ const OrganizationSearchVM = (search = true) => {
                 { revalidateOnFocus: false };
         }
     );
-    const isFetchingOrganisation = !totalRecords && !organisationError;
+    const isFetchingOrganisation = !totalRecords && !organisationError && organisations?.length || loading;
     useEffect(() => {
         const len = organisations?.length || 0;
 
@@ -109,7 +113,8 @@ const OrganizationSearchVM = (search = true) => {
         totalRecords,
         activeFilter,
         setActiveFilter,
-        isFetchingOrganisation
+        isFetchingOrganisation,
+        setLoading,
     };
 };
 
@@ -126,6 +131,7 @@ interface IOrganizationSearchVMContext {
     activeFilter: any;
     setActiveFilter: Function;
     isFetchingOrganisation: boolean;
+    setLoading: Function;
 }
 
 export const OrganizationSearchVMContext = createContext(

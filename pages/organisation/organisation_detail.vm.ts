@@ -25,7 +25,7 @@ export const getSelectedLabelIndex = (label: string, types: any) => {
     return types[label];
 };
 
-const TempUUID = "test-1-2-3";
+const TempUUID = "eb71822d-e53f-54fc-afc0-a578f40343ec";
 
 const OrganisationDetailVM = (
     initialOrganisationData: Organisation | undefined

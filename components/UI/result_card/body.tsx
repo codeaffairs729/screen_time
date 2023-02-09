@@ -41,28 +41,32 @@ const CardBody = ({ data }: { data: Data }) => {
                     label="Domains"
                     labelClasses="!text-sm"
                 >
-                    {domains.map((domain: any, index: number) => (
-                        <span
-                            key={index}
-                            className="w-14 h-4 text-sm underline decoration-1 p-1.5"
-                        >
-                            {createTag(domain)}
-                        </span>
-                    ))}
+                    <div className="flex flex-wrap">
+                        {domains.map((domain: any, index: number) => (
+                            <span
+                                key={index}
+                                className="text-sm underline decoration-1 p-1.5 !pt-0 "
+                            >
+                                {createTag(domain)}
+                            </span>
+                        ))}
+                    </div>
                 </LabelledRow>
                 <LabelledRow
                     className="mr-10"
                     label="Topics"
                     labelClasses="!text-sm"
                 >
-                    {topics.map((topic: any, index: number) => (
-                        <span
-                            key={index}
-                            className="w-14 h-4 text-sm underline decoration-1 p-1.5"
-                        >
-                            {createTag(topic)}
-                        </span>
-                    ))}
+                    <div className="flex flex-wrap">
+                        {topics.map((topic: any, index: number) => (
+                            <span
+                                key={index}
+                                className="text-sm underline decoration-1 p-1.5 !pt-0"
+                            >
+                                {createTag(topic)}
+                            </span>
+                        ))}
+                    </div>
                 </LabelledRow>
             </div>
         </div>
