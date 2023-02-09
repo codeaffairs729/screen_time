@@ -14,7 +14,7 @@ const RelatedDatasetsVM = () => {
     const { dataset } = useContext(DatasetDetailVMContext);
     const { fectchStats, stats, isFetchingStats } = SearchVM();
     const { data: datasetsByCategory = [], error: errorByCategory } = useSWR(
-        `${process.env.NEXT_PUBLIC_PUBLIC_API_V5_ROOT}/v5/datasets/related-by-jaccard-similarity/7`,
+        `${process.env.NEXT_PUBLIC_PUBLIC_API_V5_ROOT}/v5/datasets/related-by-domains-and-topics/7`,
         (url: string) =>
             fetch(url)
                 .then((res) => res.json())
@@ -36,7 +36,7 @@ const RelatedDatasetsVM = () => {
 
     const { data: datasetsByDescription = [], error: errorByDescription } =
         useSWR(
-            `${process.env.NEXT_PUBLIC_PUBLIC_API_V5_ROOT}/v5/datasets/related-by-semantic-similarity/7`,
+            `${process.env.NEXT_PUBLIC_PUBLIC_API_V5_ROOT}/v5/datasets/related-by-description/7`,
             (url: string) =>
                 fetch(url)
                     .then((res) => res.json())
