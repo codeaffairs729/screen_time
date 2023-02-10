@@ -16,6 +16,7 @@ import {
     NotificationsVMContext,
     // NotificationsVMContext,
 } from "./workspace/notification.vm";
+import Head from "next/head";
 
 function DtechtiveApp({ Component, pageProps }: AppProps) {
     const router = useRouter();
@@ -74,6 +75,9 @@ function DtechtiveApp({ Component, pageProps }: AppProps) {
     }, []);
     return (
         <>
+        <Head>
+        <link rel="shortcut icon" href="/Dtechtive_Favicon.ico" />
+        </Head>
             <Provider store={store}>
                 <PersistGate
                     loading={

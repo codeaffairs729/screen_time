@@ -14,15 +14,15 @@ const HomePage = () => {
                 <div className="max-w-3xl mx-auto flex flex-col items-center">
                     <span>
                         <Image
-                            src="/images/logo/dtechtive_without_tagline.svg"
+                            src="/images/logo/dtechtive_with_tagline.svg"
                             width="315"
                             height="155"
                             alt="Dtechtive logo"
                         />
-                        <p className="text-[#c1c1c1] text-[11px] font-medium select-none mt-[-10px]">
+                        {/* <p className="text-[#c1c1c1] text-[11px] font-medium select-none mt-[-10px]">
                             Discovering the data that other search engines
                             cannot reach
-                        </p>
+                        </p> */}
                     </span>
                     <div className="mt-6 max-w-xl mx-auto w-[575px]">
                         <SearchBar
