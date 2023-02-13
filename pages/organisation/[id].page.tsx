@@ -33,7 +33,7 @@ const OrganisationDetailPage = ({
     const [loading, setLoading] = useState<boolean>(false);
     const [selectedIndex, setSelectedIndex] = useState<any>(0);
     const { asPath } = useRouter();
-    const vm: any = OrganisationDetailVM(organisation);
+    const vm: any = OrganisationDetailVM(organisation,asPath.split('/')[2]);
 
     useEffect(() => {
         const hashParam: string = asPath.split("#")[1];

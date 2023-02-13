@@ -25,10 +25,11 @@ export const getSelectedLabelIndex = (label: string, types: any) => {
     return types[label];
 };
 
-const TempUUID = "eb71822d-e53f-54fc-afc0-a578f40343ec";
+// const TempUUID = "eb71822d-e53f-54fc-afc0-a578f40343ec";
 
 const OrganisationDetailVM = (
-    initialOrganisationData: Organisation | undefined
+    initialOrganisationData: Organisation | undefined,
+    orgUUID: String | undefined
 ) => {
     const [organisation, setOrganisation] = useState(initialOrganisationData);
     const [orgDatasetsCount, setOrgDatasetsCount] = useState(10);
@@ -53,7 +54,7 @@ const OrganisationDetailVM = (
         excuteFetchOrganisationDatasets(
             () => {
                 return Http.get(
-                    `/v5/datasets/by-data-host/${TempUUID}?page_number=1&page_size=${orgDatasetsCount}`,
+                    `/v5/datasets/by-data-host/${orgUUID}?page_number=1&page_size=${orgDatasetsCount}`,
                     { baseUrl: process.env.NEXT_PUBLIC_PUBLIC_API_V5_ROOT }
                 );
             },
@@ -146,7 +147,7 @@ const GetRankedData = ({
         execute(
             () => {
                 //TODO replace TempUUID with orgUUID when working with orginal providers related data instead of dummy data
-                return Http.get(`/v5/datasets/${TempUUID}/ranked-by/${key}`, {
+                return Http.get(`/v5/datasets/${orgUUID}/ranked-by/${key}`, {
                     baseUrl: process.env.NEXT_PUBLIC_PUBLIC_API_V5_ROOT,
                 });
             },
