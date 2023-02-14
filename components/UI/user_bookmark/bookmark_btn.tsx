@@ -37,7 +37,7 @@ const BookmarkBtn = ({
             <div
                 className="inline-block"
                 data-tip={
-                    !user ? "Please login to bookmark this dataset." : null
+                    !user ? "Please login to bookmark this dataset." : "Add to lists"
                 }
             >
                 <button

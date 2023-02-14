@@ -35,18 +35,24 @@ const ByUsecase = () => {
     ]);
 
     return (
-        <div className="mr-24 mt-8 block h-[44rem] overflow-y-scroll no-scrollbar whitespace-nowrap">
-            <ResponsiveContainer width="90%" height={700}>
-                <PieGraph data={downloadByUseCase} />
-            </ResponsiveContainer>
-            <Table
-                tableHeaders={PIE_HEADER}
-                tableData={pieData}
-                headerClass="text-[17px] font-medium bg-[#F5F5F5] "
-                tableClass="w-[90%] text-sm text-left border table-fixed ml-12"
-                cellPadding={20}
-                tableRow="text-[17px] font-normal "
-            />
+        <div>
+            <div className="ml-16 my-4 text-base text-dtech-dark-grey">
+                Dataset downloads aggregated on the basis of user roles for the
+                whole organisation.
+            </div>
+            <div className="mr-24 mt-8 block h-[44rem] overflow-y-scroll no-scrollbar whitespace-nowrap">
+                <ResponsiveContainer width="90%" height={700}>
+                    <PieGraph data={downloadByUseCase} />
+                </ResponsiveContainer>
+                <Table
+                    tableHeaders={PIE_HEADER}
+                    tableData={pieData}
+                    headerClass="text-[17px] font-medium bg-[#F5F5F5] "
+                    tableClass="w-[90%] text-sm text-left border table-fixed ml-12"
+                    cellPadding={20}
+                    tableRow="text-[17px] font-normal "
+                />
+            </div>
         </div>
     );
 };

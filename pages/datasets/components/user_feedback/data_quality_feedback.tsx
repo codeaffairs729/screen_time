@@ -20,8 +20,8 @@ const DataQualityFeedback = () => {
     return (
         <div>
             <div className="text-sm text-gray-600 w-full ml-10">
-                The scores are calculated from the user feedback on quality of
-                the data files.
+                We are gathering this information from users to help data
+                providers improve the quality of their data files.
             </div>
             <div className="">
                 <div className="my-5 mx-3 px-5 py-4 mr-32">

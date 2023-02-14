@@ -38,6 +38,8 @@ const FavouriteBtn = ({
             data-tip={
                 !user
                     ? "Please login to add this dataset to your favourites"
+                    : !isFavourited
+                    ? "Add to favourites"
                     : null
             }
         >

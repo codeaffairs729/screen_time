@@ -10,19 +10,19 @@ type Option = {
 
 const OPTIONS = [
     {
-        label: "Most Relevant",
+        label: "Relevance",
         value: "relevance",
     },
     {
-        label: "High Quality",
+        label: "Metadata Quality",
         value: "quality",
     },
     {
-        label: "Most Recently Updated",
+        label: "Last Updated",
         value: "updated",
     },
     {
-        label: "Most Recently Downloaded",
+        label: "Last Downloaded",
         value: "downloaded",
     },
 ];

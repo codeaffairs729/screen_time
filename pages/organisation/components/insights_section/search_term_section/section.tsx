@@ -35,6 +35,10 @@ const SearchTermSection = () => {
     }
     return (
         <div className="ml-8 mr-24 block h-[44rem] overflow-y-scroll no-scrollbar whitespace-nowrap">
+            <div className="ml-4 my-6 text-sm text-dtech-dark-grey">
+                Search terms used to discover the organisation&#39;s datasets are
+                shown below as a tag cloud as well as a table.
+            </div>
             {!isFetchingSearchTerms && searchTerms && searchTerms?.length ? (
                 <>
                     <TagsCloud row={tagsItems} row2={tagsCount} />

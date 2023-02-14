@@ -18,7 +18,7 @@ const DataUseFeedback = () => {
 
     return (
         <div>
-            <div className="text-xs font-light text-gray-500">
+            <div className="text-sm text-gray-600 w-full ml-10">
                 We are gathering this information from users to help data
                 providers understand what the user needs are.
             </div>

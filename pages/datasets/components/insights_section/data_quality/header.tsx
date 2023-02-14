@@ -8,8 +8,8 @@ import DatasetLabel from "../label";
 import { QualityInsightsENUM, QualityMetricsVMContext } from "./quality_metric.vm";
 
 const ITEMS: MenuItemType[] = [
-    { label: "data_file" },
-    { label: "metadata_quality" },
+    { label: "data" },
+    { label: "metadata" },
 ];
 
 const DatasetQualityInsightsHead = () => {
@@ -34,7 +34,7 @@ const DatasetQualityInsightsHead = () => {
             menuItems={menuItems}
             label={
                 <DatasetLabel
-                    labelPrefix="Data quality"
+                    labelPrefix="Dataset quality"
                     label={selectedLabel}
                 />
             }

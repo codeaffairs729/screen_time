@@ -14,6 +14,7 @@ import AddListItemVM from "./add_list_item.vm";
 import DelListItemVM from "./del_list_item.vm";
 import EditListNameVM from "./edit_list_name.vm";
 import { useState } from "react";
+import ReactTooltip from "react-tooltip";
 
 export default function BookmarkModal({
     showModal,
@@ -44,7 +45,7 @@ export default function BookmarkModal({
                                 {/*header*/}
                                 <div className="flex items-start justify-between px-5 py-3 border-b border-solid border-slate-200 rounded-t">
                                     <p className="text-lg font-semibold">
-                                        Bookmarks
+                                        Lists
                                     </p>
                                 </div>
                                 {/*body*/}
@@ -166,7 +167,7 @@ const ModelList = ({
                     <button className="px-2">
                         <Loader />
                     </button>
-                ) : (
+                ) : (<div data-tip ="Select list">
                     <button
                         className="px-2 py-0.5"
                         onClick={() => {
@@ -175,6 +176,8 @@ const ModelList = ({
                     >
                         <BsBookmark className="text-dtech-secondary-dark hover:text-dtech-secondary-light" />
                     </button>
+                    <ReactTooltip uuid="dtechtive-list-selected-btn-tooltip" />
+                    </div>
                 )}
 
                 <>
@@ -211,7 +214,7 @@ const ModelList = ({
                                 >
                                     <BsCheck className="text-gray-600 hover:text-red-600" />
                                 </button>
-                            ) : (
+                            ) : (<div data-tip="Edit">
                                 <button
                                     className="px-2 py-0.5"
                                     onClick={() => {
@@ -220,6 +223,8 @@ const ModelList = ({
                                 >
                                     <BsPencil className="text-gray-600 hover:text-red-600" />
                                 </button>
+                                <ReactTooltip uuid="dtechtive-edit-btn-tooltip" />
+                                </div>
                             )}
                         </>
                     )}
@@ -231,7 +236,7 @@ const ModelList = ({
                                 <button className="px-2">
                                     <Loader />
                                 </button>
-                            ) : (
+                            ) : (<div data-tip="Delete">
                                 <button
                                     className="px-2 py-0.5"
                                     onClick={() => {
@@ -243,6 +248,8 @@ const ModelList = ({
                                 >
                                     <BsTrash className="text-gray-600 hover:text-red-600" />
                                 </button>
+                                <ReactTooltip uuid="dtechtive-delete-btn-tooltip" />
+                                </div>
                             )}
                         </>
                     )}

@@ -53,22 +53,22 @@ const WorkspacePage = () => {
                 <span className="text-left text-[26px] font-semibold">
                     My Workspace
                 </span>
-                <Dropdown label={workspace} menuItems={menuItems} />
+                {/* <Dropdown label={workspace} menuItems={menuItems} /> */}
             </div>
             <div className="flex mx-4 md:mx-20 border-t bg-white">
                 {!loading && (
                     <Tab.Group defaultIndex={selectedIndex}>
                         <TabHeaders selectedIndex={selectedIndex} />
                         <Tab.Panels className="h-[calc(100%-var(--dataset-detail-tab-header-height))] w-full flex">
-                            <TabPanel className="bg-white">
+                            {/* <TabPanel className="bg-white">
                                 <p>Work in progress.</p>
-                            </TabPanel>
+                            </TabPanel> */}
                             <TabPanel className="bg-white">
                                 <ListsSection />
                             </TabPanel>
-                            <TabPanel className="bg-white">
+                            {/* <TabPanel className="bg-white">
                                 <p>Work in progress.</p>
-                            </TabPanel>
+                            </TabPanel> */}
                             <TabPanel className="bg-white">
                                 <Notifications />
                             </TabPanel>

@@ -8,6 +8,7 @@ type MetaRatingProps = {
     className?: String;
     labelClass?: String;
     starClassName?: String;
+    title?: string;
     handleFAQClick?: Function;
 };
 const MetaRating = ({
@@ -17,6 +18,7 @@ const MetaRating = ({
     className = "",
     labelClass = "",
     starClassName = "",
+    title = "",
     handleFAQClick,
 }: MetaRatingProps) => {
     return (
@@ -30,7 +32,7 @@ const MetaRating = ({
                     onClick={handleFAQClick}
                     oldIcon={false}
                     iconClasses="absolute left-[100%] top-[-25%] ml-[1px] h-3.5 w-3.5 text-black outline-none cursor-pointer"
-                    title={"Quality Rating"}
+                    title={title}
                 />
             </span>
             <span className="text-xs">

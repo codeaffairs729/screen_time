@@ -34,10 +34,16 @@ const DatasetUseCasesBody = () => {
     }
 
     return (
-        <div className="mr-24 mt-8 block h-[44rem] overflow-y-scroll no-scrollbar whitespace-nowrap">
-            <ResponsiveContainer width="90%" height={700}>
-                <PieGraph data={useCaseMetrics} />
-            </ResponsiveContainer>
+        <div>
+            <div className="ml-10 my-4 text-sm text-dtech-dark-grey">
+                The use cases for this dataset summarised in the chart below has
+                been gathered through user feedback.
+            </div>
+            <div className="mr-24 mt-8 block h-[44rem] overflow-y-scroll no-scrollbar whitespace-nowrap">
+                <ResponsiveContainer width="90%" height={700}>
+                    <PieGraph data={useCaseMetrics} />
+                </ResponsiveContainer>
+            </div>
         </div>
     );
 };

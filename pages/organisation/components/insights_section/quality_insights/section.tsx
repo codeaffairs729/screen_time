@@ -47,9 +47,28 @@ const QualityInsightsBody = () => {
     return (
         <div className="ml-16">
             <div className="text-sm text-dtech-dark-grey my-4">
-                {selectedLabel == 0
-                    ? "These scores are determined based on feedback gathered from users."
-                    : "These values are determined based on the Metadata Quality Assessment methodology and calculated using algorithms."}
+                {selectedLabel == 0 ? (
+                    <div className="my-4 text-sm text-dtech-dark-grey">
+                        The data quality of datasets of this organisation has
+                        been estimated based on user feedback (where available).
+                        Datasets rated based on overall data quality and
+                        individual dimensions are listed below.
+                    </div>
+                ) : (
+                    <div className="ml-4 my-4 text-sm text-dtech-dark-grey">
+                        The metadata quality of all datasets of this
+                        organisation has been algorithmically estimated based on
+                        the &nbsp;
+                        <a
+                            href="https://data.europa.eu/mqa/methodology"
+                            className=" text-dtech-main-dark underline "
+                        >
+                            EU Metadata Quality Assessment method
+                        </a>
+                        . Datasets rated based on overall metadata quality and
+                        individual dimensions are listed below.
+                    </div>
+                )}
             </div>
             {Object.keys(items).map((key, index) => (
                 <Accordian

@@ -57,6 +57,10 @@ const ListsSection = () => {
                     </Tab.List>
                     <Tab.Panels className="w-full flex">
                         <TabPanel className="bg-white">
+                            <div className="text-sm text-dtech-dark-grey my-4 mx-4">
+                                Your favourite and other custom lists of
+                                datasets and data providers.
+                            </div>
                             <FavouritesSection />
                         </TabPanel>
                         {bookmark_lists?.map((list: any, idx: any) => (

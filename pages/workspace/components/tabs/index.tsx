@@ -18,21 +18,21 @@ type Header = {
 };
 
 const HEADERS: Header[] = [
-    {
-        name: "Datasets",
-        outlineIcon: cascadeFolderOutline,
-        filledIcon: cascadeFolderFilled,
-    },
+    // {
+    //     name: "Datasets",
+    //     outlineIcon: cascadeFolderOutline,
+    //     filledIcon: cascadeFolderFilled,
+    // },
     {
         name: "Lists",
         outlineIcon: listOutline,
         filledIcon: listFilled,
     },
-    {
-        name: "History",
-        outlineIcon: historyOutline,
-        filledIcon: historyFilled,
-    },
+    // {
+    //     name: "History",
+    //     outlineIcon: historyOutline,
+    //     filledIcon: historyFilled,
+    // },
     {
         name: "Notifications",
         outlineIcon: bellOutline,

@@ -14,7 +14,7 @@ const DatasetDownloadMetricsBody = () => {
     }, []);
 
     return (
-        <div className=" mt-20">
+        <div className=" mt-10">
             {selectedLabel == 0 && <ByRegion />}
             {selectedLabel == 1 && <ByTime />}
             {selectedLabel == 2 && <ByRole />}

@@ -5,8 +5,8 @@ import { createContext, useContext, useState } from "react";
 import toast from "react-hot-toast";
 
 export enum QualityInsightsENUM {
-    data_file,
-    metadata_quality,
+    data,
+    metadata,
 }
 
 const QualityMetricsVM = () => {
@@ -66,27 +66,33 @@ const jsonToQualityMetrics = (json: any): any => ({
     metaDataQuality: {
         overallScore: getmetaQualityScore(
             json["metadata_quality"]["overall_score"],
-            "overallScore"
+            "overallScore",
+            "Average of all dimensions listed."
         ),
         findability: getmetaQualityScore(
             json["metadata_quality"]["findability"],
-            "findability"
+            "findability",
+            "Does this dataset contain metadata that enables its findability for humans and computers?"
         ),
         reusability: getmetaQualityScore(
             json["metadata_quality"]["reusability"],
-            "reusability"
+            "reusability",
+            "How well-described is this dataset so it can be replicated and/or combined in different settings, to help optimise its reuse?"
         ),
         accessibility: getmetaQualityScore(
             json["metadata_quality"]["accessibility"],
-            "accessibility"
+            "accessibility",
+            "Are the dataset and data file download URLs available and working?"
         ),
         contextuality: getmetaQualityScore(
             json["metadata_quality"]["contextuality"],
-            "contextuality"
+            "contextuality",
+            "Does this dataset have contextual information to aid in deciding if a dataset is fit-for-purpose or not?"
         ),
         interoperability: getmetaQualityScore(
             json["metadata_quality"]["interoperability"],
-            "interoperability"
+            "interoperability",
+            "How well can this dataset work in conjunction with applications or workflows for analysis, storage, and processing?"
         ),
     },
     dataFileQuality: {
@@ -96,12 +102,12 @@ const jsonToQualityMetrics = (json: any): any => ({
             "votes",
             132
         ),
-        feedbackSentiment: getdataQualityScore(
-            json["datafile_quality"]["feedback_sentiment"],
-            "feedback Sentiment",
-            "comments",
-            132
-        ),
+        // feedbackSentiment: getdataQualityScore(
+        //     json["datafile_quality"]["feedback_sentiment"],
+        //     "feedback Sentiment",
+        //     "comments",
+        //     132
+        // ),
         accuracy: getdataQualityScore(
             json["datafile_quality"]["accuracy"],
             "accuracy",
@@ -129,9 +135,14 @@ const jsonToQualityMetrics = (json: any): any => ({
     },
 });
 
-const getmetaQualityScore = (data: any, title: string) => ({
+const getmetaQualityScore = (
+    data: any,
+    title: string,
+    tooltipTitle: string
+) => ({
     label: title,
     rating: data.rating,
+    tooltipTitle: tooltipTitle,
 });
 const getdataQualityScore = (
     data: any,
