@@ -35,10 +35,30 @@ const DatasetQualityInsightsBody = () => {
     }
     const items = selectedLabel == 0 ? dataFileQuality : metaDataQuality;
     return (
-        <div className="grid lg:grid-cols-2 gap-4 mt-10 sm:grid-cols-1 ">
-            {Object.keys(items)?.map((item: any, index: number) => (
-                <FileQuality items={items} item={item} key={index} />
-            ))}
+        <div>
+            {selectedLabel == 0 ? (
+                <div className="ml-20 my-4 text-sm text-dtech-dark-grey">
+                    The data file quality has been estimated based on user
+                    feedback.
+                </div>
+            ) : (
+                <div className="ml-20 my-4 text-sm text-dtech-dark-grey">
+                    The metadata quality of this dataset has been
+                    algorithmically estimated based on the &nbsp;
+                    <a
+                        href="https://data.europa.eu/mqa/methodology?locale=en"
+                        className=" text-dtech-main-dark underline "
+                    >
+                        EU Metadata Quality Assessment method
+                    </a>
+                    .
+                </div>
+            )}
+            <div className="grid lg:grid-cols-2 gap-4 mt-10 sm:grid-cols-1 ">
+                {Object.keys(items)?.map((item: any, index: number) => (
+                    <FileQuality items={items} item={item} key={index} />
+                ))}
+            </div>
         </div>
     );
 };
@@ -53,6 +73,7 @@ const FileQuality = ({ item, items }: { item: any; items: any }) => {
                 className="!flex-row ml-0"
                 labelClass="!text-lg text-dtech-dark-grey"
                 starClassName="!w-6 !h-6 text-[#5F5F63]"
+                title={items[item].tooltipTitle}
             />
             {items[item].total && (
                 <div>

@@ -16,6 +16,32 @@ export enum DownloadSectionEnum {
     by_role,
 }
 
+export type DownloadByRegion = {
+    name: string;
+    location: {
+        lat: number;
+        long: number;
+    };
+    count: number;
+    date: Date;
+};
+
+export type DownloadByTime = {
+    date: Date;
+    count: number;
+};
+
+export type DownloadByUseCase = {
+    name: string;
+    value: number;
+};
+
+const checkIfDateExists = (downloadDate: any, currDate: any) => {
+    const downloadDateString = new Date(downloadDate.date).toDateString();
+    const currDateString = new Date(currDate).toDateString();
+
+    return currDateString == downloadDateString;
+};
 const DownloadMetricsVM = () => {
     const { dataset } = useContext(DatasetDetailVMContext);
     const [fromDate, setFromDate] = useState(new Date());
@@ -154,3 +180,65 @@ const jsonToOrgDownloadMetrics = (json: any): any => ({
     downloadByTime: jsonToOrgDownloadMetricByTime(json["downloads_by_time"]),
     downloadByUseCase: jsonToOrgDownloadMetricByRole(json["downloads_by_role"]),
 });
+
+const getDifferenceInDays = (fromDate: any, toDate: any) =>
+    (toDate.getTime() - fromDate.getTime()) / (1000 * 3600 * 24);
+
+const getDataByMonth = (dates: any) => {
+    const tempDate = dates.map((data: DownloadByTime) => {
+        const date = new Date(data?.date);
+        const month = date.toLocaleString("en", { month: "short" });
+        const year = new Date(data?.date).getFullYear();
+        return { count: data.count, month: `${month} ${year}` };
+    });
+
+    const aggregated = tempDate.reduce((acc: any, curr: any) => {
+        const existingMonth = acc.find(
+            (monthObj: any) => monthObj.month === curr.month
+        );
+        if (existingMonth) {
+            existingMonth.count += curr.count;
+        } else {
+            acc.push({
+                month: curr.month,
+                count: curr.count,
+            });
+        }
+        return acc;
+    }, []);
+    return aggregated;
+};
+
+export const getDateRange = (fromDate: any, toDate: any, dates: any) => {
+    const differenceInDays: number = getDifferenceInDays(fromDate, toDate);
+    if (differenceInDays >= 90) {
+        const lineChartByMonth = getDataByMonth(dates).map((data: any) => ({
+            month: data.month,
+            download: data.count,
+        }));
+        return lineChartByMonth;
+    } else {
+        let datesList: any = [];
+        let currentDate = new Date(fromDate);
+        while (currentDate <= new Date(toDate)) {
+            const downloadDate = dates.filter((downDate: any) =>
+                checkIfDateExists(downDate, currentDate)
+            )[0];
+            const dateToShow = downloadDate
+                ? new Date(downloadDate?.date)
+                : currentDate;
+            datesList.push({
+                date: dateToShow.toLocaleString("en", {
+                    day: "numeric",
+                    weekday: "short",
+                    month: "short",
+                    year: "numeric",
+                }),
+                download: downloadDate?.count || 0,
+            });
+            currentDate.setDate(currentDate.getDate() + 1);
+        }
+        return datesList;
+    }
+};
+

@@ -19,6 +19,7 @@ import ErrorAlert from "components/UI/alerts/error_alert";
 import RelatedDatasetsVM, {
     RelatedDatasetsVMContext,
 } from "./components/related_datasets/related_datasets.vm";
+import BackBtn from "components/UI/buttons/back_btn";
 
 enum tabIndex {
     data_files,
@@ -43,7 +44,7 @@ const DatasetDetail = ({ dataset }: { dataset: Dataset | undefined }) => {
             <DefaultLayout>
                 <ErrorAlert
                     className="max-w-xl mx-auto"
-                    message="Something went wrong while fetching organisation data. Please try again later."
+                    message="Something went wrong while fetching Datasets data. Please try again later."
                 />
             </DefaultLayout>
         );
@@ -53,14 +54,15 @@ const DatasetDetail = ({ dataset }: { dataset: Dataset | undefined }) => {
         <DefaultLayout>
             <DatasetDetailVMContext.Provider value={vm}>
                 <div className="px-4">
-                    <div className="flex flex-row justify-between mb-4 my-2 ml-4">
-                        <p className="text-center text-2xl font-semibold">
-                            Dataset
+                    <div className="flex flex-col justify-between mb-4 my-2 ml-4">
+                            <BackBtn />
+                        <p className="text-start text-2xl font-semibold mt-2">
+                            DATASET
                         </p>
                         <span></span>
                     </div>
                     <div className="w-full h-fit py-4 bg-dtech-light-grey rounded-[20px] shadow-container">
-                        <DatasetHead />
+                        <DatasetHead dataset={dataset}/>
                         <div className="flex border-t px-4 shadow-container">
                             {!loading && (
                                 <Tab.Group defaultIndex={selectedIndex}>

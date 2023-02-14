@@ -36,7 +36,10 @@ const OrganisationHead = () => {
                         {title}
                     </div>
                     <div className="flex justify-between items-center">
-                        <MetaRating dataQuality={dataQuality ?? 0} />
+                        <MetaRating
+                            dataQuality={dataQuality ?? 0}
+                            title="Estimated based on the EU Metadata Quality Assessment method."
+                        />
                         <button className="ml-8 text-m h-6 px-4 border cursor-pointer rounded border-[#5F5F63]">
                             <span className="my-auto">Open</span>
                         </button>
@@ -51,9 +54,17 @@ const OrganisationHead = () => {
             <div className="my-4">
                 <div className="flex justify-between">
                     <span className="text-sm w-2/3">{description}</span>
-                    <img src={imgUrl} alt="" className="h-[100px] w-[140px]" />
+                    {/* Add Website Url */}
+                    <a href="#" target="_blank">
+                        <img
+                            data-tip={"Click to open website"}
+                            src={imgUrl}
+                            alt=""
+                            className="h-[100px] w-[140px]"
+                        />
+                    </a>
                 </div>
-                <div className="flex justify-start items-end">
+                <div className="flex justify-start items-end my-3">
                     <MetaInfoEntity entityName="Domains" entities={domains} />
                     <MetaInfoEntity entityName="Topics" entities={topics} />
                 </div>
@@ -85,16 +96,16 @@ const MetaInfoEntity = ({
     entities: string[] | undefined;
 }) => {
     return (
-        <div className="flex mr-8">
+        <div className="flex mr-10">
             {entities && entities.length > 0 && (
-                <div>
+                <div className="flex flex-wrap">
                     <span className="text-sm font-medium text-dtech-dark-grey mr-4">
                         {entityName}:{" "}
                     </span>
                     {entities.map((entity, index) => (
                         <span
                             key={index}
-                            className="text-sm text-dtech-dark-grey"
+                            className="text-sm text-dtech-dark-grey p-1.5 !pt-0"
                         >
                             #{entity}
                         </span>

@@ -29,10 +29,15 @@ const ByRole = () => {
     }
 
     return (
-        <div className="mr-24 mt-8 block h-[44rem] overflow-y-scroll no-scrollbar whitespace-nowrap">
-            <ResponsiveContainer width="90%" height={700}>
-                <PieGraph data={downloadByUseCase} />
-            </ResponsiveContainer>
+        <div>
+            <div className="ml-16 text-sm text-dtech-dark-grey">
+                Dataset downloads aggregated on the basis of user roles.
+            </div>
+            <div className="mr-24 mt-8 block h-[44rem] overflow-y-scroll no-scrollbar whitespace-nowrap">
+                <ResponsiveContainer width="90%" height={700}>
+                    <PieGraph data={downloadByUseCase} />
+                </ResponsiveContainer>
+            </div>
         </div>
     );
 };

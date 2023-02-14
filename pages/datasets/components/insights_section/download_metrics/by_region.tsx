@@ -42,6 +42,9 @@ const ByRegion = () => {
     });
     return (
         <div className="w-[90%]">
+            <div className="ml-16 my-2 text-sm text-dtech-dark-grey">
+                Dataset downloads aggregated on the basis of locations.
+            </div>
             <WorldMap locations={loc} counts={downloadCounts} />
         </div>
     );

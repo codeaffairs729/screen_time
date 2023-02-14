@@ -118,8 +118,7 @@ const DownloadMetricVM = () => {
             }
         );
 
-    const isFetchingDownloadMetrics =
-        fetchingDownloadMetrics ;
+    const isFetchingDownloadMetrics = fetchingDownloadMetrics;
 
     return {
         error,
@@ -181,29 +180,83 @@ const jsonToOrgDownloadMetrics = (json: any): any => ({
         })
     ),
 });
+const getDifferenceInDays = (fromDate: any, toDate: any) =>
+    (toDate.getTime() - fromDate.getTime()) / (1000 * 3600 * 24);
+
+const getDataByMonth = (dates: any) => {
+    const tempDate = dates.map((data: DownloadByTime) => {
+        const date = new Date(data?.date);
+        const month = date.toLocaleString("en", { month: "short" });
+        const year = new Date(data?.date).getFullYear();
+        return { count: data.count, month: `${month} ${year}` };
+    });
+
+    const aggregated = tempDate.reduce((acc: any, curr: any) => {
+        const existingMonth = acc.find(
+            (monthObj: any) => monthObj.month === curr.month
+        );
+        if (existingMonth) {
+            existingMonth.count += curr.count;
+        } else {
+            acc.push({
+                month: curr.month,
+                count: curr.count,
+            });
+        }
+        return acc;
+    }, []);
+    return aggregated;
+};
 
 export const getDateRange = (fromDate: any, toDate: any, dates: any) => {
-    let datesList: any = [];
-    let currentDate = new Date(fromDate);
-    while (currentDate <= new Date(toDate)) {
-        const downloadDate = dates.filter((downDate: any) =>
-            checkIfDateExists(downDate, currentDate)
-        )[0];
-
-        // console.log("downloadDate :", checkIfDateExists(dates[2], currentDate))
-        const dateToShow = downloadDate
-            ? new Date(downloadDate?.date)
-            : currentDate;
-        datesList.push({
-            date: dateToShow.toLocaleString("en", {
-                day:"numeric",
-                weekday: "short",
-                month: "short",
-                year: "numeric",
-            }),
-            download: downloadDate?.count || 0,
-        });
-        currentDate.setDate(currentDate.getDate() + 1);
+    const differenceInDays: number = getDifferenceInDays(fromDate, toDate);
+    if (differenceInDays >= 90) {
+        const lineChartByMonth = getDataByMonth(dates).map((data: any) => ({
+            month: data.month,
+            download: data.count,
+        }));
+        return lineChartByMonth;
+    } else {
+        let datesList: any = [];
+        let currentDate = new Date(fromDate);
+        while (currentDate <= new Date(toDate)) {
+            const downloadDate = dates.filter((downDate: any) =>
+                checkIfDateExists(downDate, currentDate)
+            )[0];
+            const dateToShow = downloadDate
+                ? new Date(downloadDate?.date)
+                : currentDate;
+            datesList.push({
+                date: dateToShow.toLocaleString("en", {
+                    day: "numeric",
+                    weekday: "short",
+                    month: "short",
+                    year: "numeric",
+                }),
+                download: downloadDate?.count || 0,
+            });
+            currentDate.setDate(currentDate.getDate() + 1);
+        }
+        return datesList;
     }
-    return datesList;
+};
+
+export const getTableData = (fromDate: any, toDate: any, dates: any) => {
+    const differenceInDays: number = getDifferenceInDays(fromDate, toDate);
+    if (differenceInDays >= 90) {
+        const tableDataByMonth = getDataByMonth(dates).map((data: any) => [
+            [data.count],
+            [data.month],
+        ]);
+        return tableDataByMonth;
+    } else {
+        const tableDataByTime = dates.map((data: DownloadByTime) => {
+            const date = new Date(data?.date);
+            const month = date.toLocaleString("en", { month: "short" });
+            const year = new Date(data?.date).getFullYear();
+            return [[data.count], [`${month} ${year}`]];
+        });
+
+        return tableDataByTime;
+    }
 };

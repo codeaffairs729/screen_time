@@ -5,6 +5,7 @@ import Popup from "./popup";
 import BookmarkBtn from "./user_bookmark/bookmark_btn";
 import { Menu, Transition } from "@headlessui/react";
 import { Data } from "./result_card";
+import ReactTooltip from "react-tooltip";
 
 type ResultCardActionProps = {
     data: Data | undefined;
@@ -26,11 +27,14 @@ const ResultCardAction = ({ data, setData, href }: ResultCardActionProps) => {
                     {({ open }) => (
                         <>
                             <Menu.Button>
-                                <BsShareFill
-                                    className="h-6 w-6 ml-4 text-dtech-main-dark cursor-pointer "
-                                    data-modal-toggle="popup"
-                                    onClick={() => setShare(!share)}
-                                />
+                                <div data-tip="Share on social media">
+                                    <BsShareFill
+                                        className="h-6 w-6 ml-4 text-dtech-main-dark cursor-pointer "
+                                        data-modal-toggle="popup"
+                                        onClick={() => setShare(!share)}
+                                    />
+                                </div>
+                                <ReactTooltip uuid="dtechtive-share-btn-tooltip" />
                             </Menu.Button>
                             <Transition show={open}>
                                 <Menu.Items static className="mt-6">

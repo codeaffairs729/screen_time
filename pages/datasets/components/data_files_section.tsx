@@ -35,8 +35,13 @@ const DataFilesSection = ({ goToPreview }: { goToPreview: () => void }) => {
 
     return (
         <div>
+            <div className="mx-3 my-4   text-sm text-dtech-dark-grey">
+                All the data files available for this dataset are listed in the
+                table below.
+            </div>
             <div className="flex flex-row justify-between items-center mx-3 my-4 ">
-                <span>Total file : {vm.dataset.urls?.length}</span>
+                <span>Total files : {vm.dataset.urls?.length}</span>
+
                 <div className="flex flex-row">
                     <a
                         onClick={() => onDowloadAll()}
@@ -53,15 +58,19 @@ const DataFilesSection = ({ goToPreview }: { goToPreview: () => void }) => {
                     </a>
                 </div>
             </div>
+
             <div className=" h-[40rem]  overflow-y-scroll ">
-                <table className="min-w-max w-full table-auto text-sm text-left border">
+                <table
+                    className="min-w-max w-full table-auto text-sm text-center border"
+                    cellPadding={5}
+                >
                     <thead>
-                        <tr className="text-[17px] font-normal ">
+                        <tr className="border border-dtech-middle-grey p-3">
                             {META_FILE_HEADERS.map(
                                 (headName: string, index: number) => (
                                     <th
                                         key={index}
-                                        className="py-3 px-6 text-left text-[17px] font-medium bg-[#F5F5F5] "
+                                        className="py-3 px-6 text-center text-[17px] font-medium bg-[#F5F5F5] "
                                     >
                                         {headName}
                                     </th>
@@ -124,20 +133,20 @@ const DataFileRow = ({
     }
     return (
         <tr className="border-b border-gray-200 bg-[#FEFEFE] hover:bg-dtech-main-light">
-            <td className="py-3 px-6 text-left whitespace-nowrap">
-                <div className="flex items-center font-normal text-sm">{`${
-                    description
-                }`}</div>
+            <td className="py-3 px-6 text-center whitespace-nowrap">
+                <div className="flex justify-center items-center font-normal text-sm text-center">{`${description}`}</div>
             </td>
-            <td className="py-3 px-6 text-left">
-                <div className="flex items-center">
+            <td className="py-3 px-6 text-center">
+                <div className="flex justify-center items-center">
                     <span className="py-1 px-3 rounded-full text-sm font-normal">
                         {`${url.format}`}
                     </span>
                 </div>
             </td>
             <td className="py-3 px-6 text-center">
-                <div className="flex items-center justify-center font-normal">{sizemb}</div>
+                <div className="flex items-center justify-center font-normal">
+                    {sizemb}
+                </div>
             </td>
             <td className="py-3 px-6 text-center">
                 <a

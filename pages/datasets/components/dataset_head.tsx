@@ -12,14 +12,14 @@ import {
     datasetToResultCardData,
     SearchVMContext,
 } from "pages/search/search.vm";
-const DatasetHead = () => {
+const DatasetHead = ({ dataset }: any) => {
     // const vm = useContext(DatasetDetailVMContext);
     const { stats, fectchStats, isFetchingStats } = useContext(SearchVMContext);
-    const { dataset, headDataset,setHeadDataset } = useContext(DatasetDetailVMContext);
-    
+    const { headDataset, setHeadDataset } = useContext(DatasetDetailVMContext);
+
     useEffect(() => {
         fectchStats([dataset?.id]);
-        setHeadDataset(datasetToResultCardData([dataset], stats)[0])
+        setHeadDataset(datasetToResultCardData([dataset], stats)[0]);
     }, []);
     if (!dataset) {
         return <div />;
@@ -39,6 +39,9 @@ const DatasetHead = () => {
         views,
         favourites,
         displays,
+        domain,
+        topics,
+        keywords,
     } = dataset.detail || {};
 
     const stat = {
@@ -56,7 +59,7 @@ const DatasetHead = () => {
                         {name}
                     </div>
                     <div className="flex justify-between items-center">
-                        <MetaRating dataQuality={3} />
+                        <MetaRating dataQuality={3} title="Estimated based on the EU Metadata Quality Assessment method." />
                         <button className="ml-8 text-m h-6 px-4 border cursor-pointer rounded border-[#5F5F63]">
                             <span className="my-auto">
                                 Open Goverment Licence{" "}
@@ -75,20 +78,11 @@ const DatasetHead = () => {
             <div className="my-4">
                 <div className="flex justify-between">
                     <span className="text-sm w-2/3">{description}</span>
-                    <div className="flex flex-col justify-center items-center">
-                        <MetaInfoEntity
-                            entityName="Domains"
-                            entities={["domains"]}
-                        />
-                        <MetaInfoEntity
-                            entityName="Topics"
-                            entities={["topics"]}
-                        />
-                        <MetaInfoEntity
-                            entityName="Keywords"
-                            entities={["keywords"]}
-                        />
-                    </div>
+                </div>
+                <div className="flex justify-start items-end my-3">
+                    <MetaInfoEntity entityName="Domains" entities={domain} />
+                    <MetaInfoEntity entityName="Topics" entities={topics} />
+                    <MetaInfoEntity entityName="Keywords" entities={keywords} />
                 </div>
             </div>
             <div className="my-4">
@@ -142,14 +136,14 @@ const MetaInfoEntity = ({
     return (
         <div className="flex mr-8">
             {entities && entities.length > 0 && (
-                <div>
+                <div className="flex flex-wrap">
                     <span className="text-sm font-medium text-dtech-dark-grey mr-4">
                         {entityName}:{" "}
                     </span>
                     {entities.map((entity, index) => (
                         <span
                             key={index}
-                            className="text-sm text-dtech-dark-grey"
+                            className="text-sm text-dtech-dark-grey p-1.5 !pt-0"
                         >
                             #{entity}
                         </span>

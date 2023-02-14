@@ -44,6 +44,9 @@ const Notifications = () => {
                     </span>
                 </div>
             </Link>
+            <div className="text-sm text-dtech-dark-grey">
+                All your notifications can be found here.
+            </div>
             {notifications.length > 0 ? (
                 notifications.map((notification, index) => (
                     <NotificationCard

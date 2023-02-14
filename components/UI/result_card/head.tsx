@@ -31,7 +31,7 @@ const CardHead = ({
                     </span>
                 )} */}
                 <Link href={href}>
-                    <a className="font-medium font-roboto text-md my-3 text-dtech-main-dark text-[17px] ml-[-8px] cursor-pointer">
+                    <a className="font-medium font-roboto text-md my-3 text-dtech-main-dark text-[17px] ml-[-8px] cursor-pointer hover:underline underline-offset-4">
                         {title}
                     </a>
                 </Link>
@@ -39,6 +39,7 @@ const CardHead = ({
                     dataQuality={dataQuality}
                     displayContext={"displayContext"}
                     labelClass="font-normal"
+                    title={"Estimated based on the EU Metadata Quality Assessment method."}
                     handleFAQClick={() => {
                         handleFAQClick
                             ? handleFAQClick()
