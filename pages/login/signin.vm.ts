@@ -10,9 +10,11 @@ import { useContext, useState } from "react";
 import { getHttpErrorMsg } from "common/util";
 import { usereventLogin } from "services/usermetrics.service";
 import { NotificationsVMContext } from "pages/workspace/notification.vm";
+import { useRouter } from "next/router";
 
 const SigninVM = () => {
     const form = useForm();
+    const router = useRouter();
     const cache = useSelector((state: RootState) => state.cache);
     const { fetchNotifications } = useContext(NotificationsVMContext);
     const lastSearchQuery = cache["last-search-query"];
@@ -39,8 +41,25 @@ const SigninVM = () => {
                     );
                     usereventLogin(User.fromJson(res["user"]));
                 },
-                onError: async (error: any) =>
-                    setSigninErrorMsg(await getHttpErrorMsg(error)),
+                onError: async (error: any) => {
+                    const res = error.response.clone();
+                    setSigninErrorMsg(await getHttpErrorMsg(error));
+                    const body = await res.json();
+                    if (body["action"] == "redirect_verify_email") {
+                        toast.error(
+                            "You will now be redirected to request verification email page."
+                        );
+                        setTimeout(() => {
+                            router.push({
+                                pathname: encodeURI(`/login/verify-email`),
+                                query: {
+                                    email: data["email"],
+                                    action: "send_email",
+                                },
+                            });
+                        }, 3000);
+                    }
+                },
             }
         );
 

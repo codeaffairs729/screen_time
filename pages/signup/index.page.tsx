@@ -6,6 +6,7 @@ import FormRow from "./components/form_row";
 import SignupVM from "./signup.vm";
 import isEmail from "validator/lib/isEmail";
 import ErrorAlert from "components/UI/alerts/error_alert";
+import SuccessAlert from "components/UI/alerts/success_alert";
 
 const SignupPage = () => {
     const vm = SignupVM();
@@ -29,6 +30,12 @@ const SignupPage = () => {
                     {vm.signupErrorMsg && (
                         <ErrorAlert
                             message={vm.signupErrorMsg}
+                            className="max-w-[450px] w-full mb-4"
+                        />
+                    )}
+                    {vm.signupSuccessMsg && (
+                        <SuccessAlert
+                            message={vm.signupSuccessMsg}
                             className="max-w-[450px] w-full mb-4"
                         />
                     )}
