@@ -46,10 +46,9 @@ const Datasets = () => {
 
     if (error) {
         return (
-            <ErrorAlert
-                className="m-12"
-                message="Something went wrong while fetching Organisation Ranked Datasetss data. Please try again later"
-            />
+            <div className="text-sm text-dtech-dark-grey">
+                No datasets to show currently
+            </div>
         );
     }
 
