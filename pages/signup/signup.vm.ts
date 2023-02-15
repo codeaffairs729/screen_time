@@ -7,11 +7,13 @@ import { useRouter } from "next/router";
 import { NotificationsVMContext } from "pages/workspace/notification.vm";
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import AuthService from "services/auth.service";
 
 const SignupVM = () => {
     const form = useForm();
     const [signupErrorMsg, setSignupErrorMsg] = useState<string | null>();
+    const [signupSuccessMsg, setSignupSuccessMsg] = useState<string | null>();
     const {
         execute: executeHandleSignup,
         isLoading: isSigningUp,
@@ -32,12 +34,14 @@ const SignupVM = () => {
             },
             {
                 onSuccess: (res) => {
-                    AuthService.signin(
-                        User.fromJson(res["user"]),
-                        res["token"],
-                        "/",
-                        fetchNotifications
-                    );
+                    // AuthService.signin(
+                    //     User.fromJson(res["user"]),
+                    //     res["token"],
+                    //     "/",
+                    //     fetchNotifications
+                    // );
+                    toast.success("You have signed up successfully.")
+                    setSignupSuccessMsg("Verification email has been sent, please use the link in the email to verify your account. After which you can login into your account.")
                 },
                 onError: async (error: any) =>
                     setSignupErrorMsg(await getHttpErrorMsg(error)),
@@ -62,6 +66,7 @@ const SignupVM = () => {
         dataOwnerOptions,
         signupErrorMsg,
         signupType,
+        signupSuccessMsg,
     };
 };
 
