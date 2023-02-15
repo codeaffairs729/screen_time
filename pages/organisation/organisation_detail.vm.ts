@@ -160,9 +160,9 @@ const GetRankedData = ({
                     );
                 },
                 onError: (e) => {
-                    toast.error(
-                        "Something went wrong while fetching organisation datasets."
-                    );
+                    // toast.error(
+                    //     "Something went wrong while fetching organisation datasets."
+                    // );
                 },
             }
         );
