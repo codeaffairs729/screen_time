@@ -28,7 +28,7 @@ const UserSection = () => {
                     onClick={() => {
                         uploadImage();
                     }}
-                >  
+                >
                     <input
                         id="image-upload"
                         ref={fileInputRef}
@@ -108,21 +108,27 @@ const UserSection = () => {
                     </FormRow>
                 </div>
             </div>
-            {vm.form.watch("role") == "other" && (
-                <FormRow label="Role Other" labelClass="text-dtech-main-dark">
-                    <TextField
-                        className="bg-gray-100"
-                        formControl={{
-                            control: vm.form.control,
-                            name: "role_other",
-                            rules: {
-                                required: "Role Other is required",
-                            },
-                        }}
-                        placeholder="Role Other"
-                    />
-                </FormRow>
-            )}
+            <div className="flex flex-row justify-end">
+                {vm.form.watch("role") == "other" && (
+                    <FormRow
+                        label="Role Other"
+                        labelClass=" !bg-[#F8F8F8] !w-auto z-10 mx-5 absolute mb-10 text-dtech-main-dark !py-1"
+                    >
+                        <TextField
+                            className="bg-gray-50"
+                            formControl={{
+                                control: vm.form.control,
+                                name: "role_other",
+                                rules: {
+                                    required: "Role Other is required",
+                                },
+                            }}
+                            placeholder="Role Other"
+                            textfieldClassName="w-[300px] !focus:ring-dtech-main-dark border-2 !border-dtech-main-dark !focus:border-dtech-main-dark"
+                        />
+                    </FormRow>
+                )}
+            </div>
             <div className="flex flex-row justify-end items-center">
                 <span className="hover:underline underline-offset-4 mr-4 text-dtech-main-dark text-xl cursor-pointer">
                     Cancel

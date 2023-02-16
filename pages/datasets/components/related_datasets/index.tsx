@@ -56,6 +56,7 @@ const RelatedDatasets = () => {
                 <Tab.Panels>
                     <Tab.Panel>
                         <div className=" mt-5 h-[44rem] overflow-auto">
+                        <div className="text-sm text-gray-600 w-full ml-8 mt-3">Datasets displayed here share the same domains and topics - this gives a broader set of related datasets.</div>
                             <DatasetList
                                 datasets={datasetsByCategory}
                                 stats={stats}
@@ -64,6 +65,7 @@ const RelatedDatasets = () => {
                     </Tab.Panel>
                     <Tab.Panel>
                         <div className=" mt-5 h-[44rem] overflow-auto">
+                        <div className="text-sm text-gray-600 w-full ml-8 mt-3">Datasets displayed here are based on the semantic similarity of their title and summary - this gives a narrower set of related datasets.</div>
                             <DatasetList
                                 datasets={datasetsByDescription}
                                 stats={stats}
