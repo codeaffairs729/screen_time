@@ -5,8 +5,8 @@ import { BsSearch } from "react-icons/bs";
 import clsx from "clsx";
 import Loader from "components/UI/loader";
 import TextBtn from "components/UI/buttons/text_btn";
-import { AdminTabPanelVMContext } from "../../admin_tab_panel.vm";
 import User, { Role } from "models/user.model";
+import { AdminTabPanelVMContext } from "../../admin_tab_panel.vm";
 
 const MembersTable = () => {
     const { control } = useForm();
@@ -28,27 +28,33 @@ const MembersTable = () => {
             <div className="shadow-sm mb-8 mt-6">
                 {!adminPanelVm.isFetchingOrgUsers &&
                     adminPanelVm.orgusers?.length > 0 && (
-                        <table className="border-collapse table-auto w-full text-sm">
+                        <table
+                            className="min-w-max w-full table-auto text-sm text-center border"
+                            cellPadding={5}
+                        >
                             <thead>
                                 <tr>
-                                    <th className="border-b dark:border-slate-600 font-medium p-4 pl-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">
+                                    <th className="py-3 px-6 text-[17px] font-medium bg-[#F5F5F5]  text-left">
                                         Name
                                     </th>
-                                    <th className="border-b dark:border-slate-600 font-medium p-4 pl-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">
+                                    <th className="py-3 px-6 text-[17px] font-medium bg-[#F5F5F5]  text-left">
                                         Email
                                     </th>
-                                    <th className="border-b dark:border-slate-600 font-medium p-4 pl-8  pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">
+                                    <th className="py-3 px-6 text-[17px] font-medium bg-[#F5F5F5]  text-left">
                                         Permission
                                     </th>
-                                    <th className="border-b dark:border-slate-600 font-medium p-4 pl-8  pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">
+                                    <th className="py-3 px-6 text-[17px] font-medium bg-[#F5F5F5]  text-left">
                                         Action
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody className="bg-white dark:bg-slate-800">
+                            <tbody className="text-gray-600 text-sm font-light">
                                 {adminPanelVm.orgusers.map((user: User) => {
                                     return (
-                                        <tr key={user.email}>
+                                        <tr
+                                            key={user.email}
+                                            className="border-b border-gray-200 bg-[#FEFEFE] hover:bg-dtech-main-light"
+                                        >
                                             <TD>{user.name}</TD>
                                             <TD>{user.email}</TD>
                                             <TD>{User.getRole(user)?.name}</TD>
@@ -134,7 +140,7 @@ const TD = ({
     return (
         <td
             className={clsx(
-                "border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400",
+                "py-3 px-6 text-center whitespace-nowrap",
                 className
             )}
         >
