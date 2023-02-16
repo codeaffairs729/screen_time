@@ -17,9 +17,11 @@ const DropdownField = ({
     placeholder,
     formControl,
     dataSelector,
+    inputClass = "",
 }: {
     className?: string;
     options: Option[];
+    inputClass?: string;
 } & FieldProps) => {
     const [selected, setSelected] = useState<Option>();
     const [query, setQuery] = useState("");
@@ -37,7 +39,7 @@ const DropdownField = ({
 
     useEffect(() => {
         const newValue = value || formControl["defaultValue"];
-        
+
         if (![undefined, null].includes(newValue)) {
             const option = options.find((o) => o.value == newValue);
             if (option) {
@@ -78,7 +80,8 @@ const DropdownField = ({
                     <Combobox.Input
                         className={clsx(
                             "w-full rounded-lg focus:ring-dtech-secondary-light border-2 border-dtech-secondary-light focus:border-dtech-secondary-light disabled:border-gray-300 disabled:bg-gray-50 py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 placeholder:text-gray-500 placeholder:text-sm placeholder:font-bold",
-                            { "border-red-700": hasError }
+                            { "border-red-700": hasError },
+                            inputClass
                         )}
                         displayValue={(option: Option) => option?.label}
                         onChange={(event) => setQuery(event.target.value)}

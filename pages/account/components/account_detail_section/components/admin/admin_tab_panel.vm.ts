@@ -13,7 +13,7 @@ const AdminTabPanelVM = () => {
     const adminUser = useSelector((state: RootState) => state.auth.user);
     const dispatch = useDispatch();
     const { control, handleSubmit, reset, clearErrors } = useForm();
-    const organisationId = adminUser?.organisations?.[0].organisation_id;
+    const organisationId = adminUser?.organisations?.[0]?.organisation_id;
     let [isAddMemberModalOpen, setIsAddMemberModalOpen] = useState(false);
 
     // Fetch users belonging to the current organisation
