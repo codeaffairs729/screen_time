@@ -16,6 +16,15 @@ const DataUseFeedbackVM = () => {
 
     const { execute: executeSubmit, isLoading: isSubmitting } = useHttpCall();
     const submitDataUseFeedback = (data: any) => {
+        if (
+            !(
+                data.comment ||
+                data.domains.length ||
+                data.potential_usecases.length
+            )
+        ) {
+            return toast.error("Please fill in the form before submission");
+        }
         const payload = {
             comment: data.comment,
             comment_anonymous: data.comment_anonymous,
@@ -24,15 +33,21 @@ const DataUseFeedbackVM = () => {
         };
 
         return executeSubmit(
-          () => Http.post(`/v1/datasets/${dataset?.id}/usecase_feedback`, payload),
-          {
-            onSuccess: (res) =>{
-              toast.success("The data source was successfully added.");
-              setIsSubmissionSuccess(true);
-            },
-            onError: (e) =>
-              toast.error("Something went wrong while adding the data source."),
-          }
+            () =>
+                Http.post(
+                    `/v1/datasets/${dataset?.id}/usecase_feedback`,
+                    payload
+                ),
+            {
+                onSuccess: (res) => {
+                    toast.success("The data source was successfully added.");
+                    setIsSubmissionSuccess(true);
+                },
+                onError: (e) =>
+                    toast.error(
+                        "Something went wrong while adding the data source."
+                    ),
+            }
         );
     };
 

@@ -25,7 +25,6 @@ const DatasetHead = ({ dataset }: any) => {
         return <div />;
     }
 
-
     let contactOwnerEmail = dataset?.owner?.contact?.email;
     if ((contactOwnerEmail?.search(/^mailto:/) ?? -1) > -1) {
         contactOwnerEmail = contactOwnerEmail?.slice(7);
@@ -42,6 +41,7 @@ const DatasetHead = ({ dataset }: any) => {
         domain,
         topics,
         keywords,
+        license,
     } = dataset.detail || {};
 
     const stat = {
@@ -59,11 +59,12 @@ const DatasetHead = ({ dataset }: any) => {
                         {name}
                     </div>
                     <div className="flex justify-between items-center">
-                        <MetaRating dataQuality={3} title="Estimated based on the EU Metadata Quality Assessment method." />
+                        <MetaRating
+                            dataQuality={3}
+                            title="Estimated based on the EU Metadata Quality Assessment method."
+                        />
                         <button className="ml-8 text-m h-6 px-4 border cursor-pointer rounded border-[#5F5F63]">
-                            <span className="my-auto">
-                                Open Goverment Licence{" "}
-                            </span>
+                            <span className="my-auto">{license?.type}</span>
                         </button>
                     </div>
                 </div>
