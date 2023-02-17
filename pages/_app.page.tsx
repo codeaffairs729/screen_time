@@ -75,9 +75,14 @@ function DtechtiveApp({ Component, pageProps }: AppProps) {
     }, []);
     return (
         <>
-        <Head>
-        <link rel="shortcut icon" href="/Dtechtive_Favicon.ico" />
-        </Head>
+            <Head>
+                <link rel="shortcut icon" href="/Dtechtive_Favicon.ico" />
+                <title>Dtechtive | Delivering Multiple Types of Datasets</title>
+                <meta
+                    name="description"
+                    content="Dtechtive is a website that delivers a wide range of datasets, including data on finance, health, education, and more. Discover new insights and make informed decisions with our high-quality, reliable data."
+                />
+            </Head>
             <Provider store={store}>
                 <PersistGate
                     loading={

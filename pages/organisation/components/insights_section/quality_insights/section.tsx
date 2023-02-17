@@ -76,6 +76,7 @@ const QualityInsightsBody = () => {
                         <AccordianLabel
                             label={getLabel(items[key].title)}
                             ratings={items[key].rating}
+                            tooltipTitle={items[key].tooltipTitle}
                         />
                     }
                     key={selectedLabel + key}
@@ -118,9 +119,11 @@ const QualityInsightsBody = () => {
 const AccordianLabel = ({
     label,
     ratings,
+    tooltipTitle,
 }: {
     label: string;
     ratings: any;
+    tooltipTitle: string;
 }) => {
     return (
         <MetaRating
@@ -129,6 +132,7 @@ const AccordianLabel = ({
             className="!flex-row ml-0"
             labelClass="!text-lg text-dtech-dark-grey"
             starClassName="!w-6 !h-6 text-[#5F5F63]"
+            title={tooltipTitle}
         />
     );
 };

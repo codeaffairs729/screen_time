@@ -69,56 +69,63 @@ const jsonToQualityMetrics = (json: any): any => ({
     dataFileQuality: {
         overallScore: getQualityScore(
             json["data_file_quality"]["overall_score"],
-            "overallScore"
+            "overallScore",""
         ),
         accuracy: getQualityScore(
             json["data_file_quality"]["accuracy"],
-            "accuracy"
+            "accuracy", ""
         ),
         consistency: getQualityScore(
             json["data_file_quality"]["consistency"],
-            "consistency"
+            "consistency", ""
         ),
         clarity: getQualityScore(
             json["data_file_quality"]["clarity"],
-            "clarity"
+            "clarity", ""
         ),
         readiness: getQualityScore(
             json["data_file_quality"]["readiness"],
-            "readiness"
+            "readiness", ""
         ),
     },
     metaFileQuality: {
         overallScore: getQualityScore(
             json["meta_file_quality"]["overall_score"],
-            "overallScore"
+            "overallScore",
+            "Average of all dimensions listed."
         ),
         findability: getQualityScore(
             json["meta_file_quality"]["findability"],
-            "findability"
+            "findability",
+            "Does this dataset contain metadata that enables its findability for humans and computers?"
         ),
         accessibility: getQualityScore(
             json["meta_file_quality"]["accessibility"],
-            "accessibility"
+            "accessibility",
+            "Are the dataset and data file download URLs available and working?"
         ),
         reusability: getQualityScore(
             json["meta_file_quality"]["reusability"],
-            "reusability"
+            "reusability",
+            "How well-described is this dataset so it can be replicated and/or combined in different settings, to help optimise its reuse?"
         ),
         contextuality: getQualityScore(
             json["meta_file_quality"]["contextuality"],
-            "contextuality"
+            "contextuality",
+            "Does this dataset have contextual information to aid in deciding if a dataset is fit-for-purpose or not?"
         ),
         interoperability: getQualityScore(
             json["meta_file_quality"]["interoperability"],
-            "interoperability"
+            "interoperability",
+            "How well can this dataset work in conjunction with applications or workflows for analysis, storage, and processing?"
         ),
     },
 });
 
-const getQualityScore = (data: any, title: string) => ({
+const getQualityScore = (data: any, title: string, tooltipTitle: string) => ({
     title: title,
     rating: data.rating,
+    tooltipTitle: tooltipTitle,
     datasets: data.datasets.map((data: any) => getQualityDatasets(data)),
 });
 
