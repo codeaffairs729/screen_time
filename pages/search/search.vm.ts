@@ -340,7 +340,7 @@ export const datasetToResultCardData = (datasets: any, stats: any): Data[] => {
         recordType: "datasets",
         description: dataset.detail.description,
         dataQuality: dataset.detail.dataQuality,
-        licenseTypes: ["open"],
+        licenseTypes: [dataset.detail.license.type],
         topics: dataset.detail.topics,
         isFavourited: stats[dataset.id]?.isFavourited,
         lastUpdate: dataset.detail.lastUpdate,

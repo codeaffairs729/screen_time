@@ -5,7 +5,7 @@ const Preview = () => {
     const { previewContent, setDownloadRef } = useContext(ReportVMContext);
     console.log("previewContent :", previewContent);
     return (
-        <div className="min-w-[700px] h-[656px] shadow-paper-shadow mt-4 w-2/3 bg-white border-none p-4 overflow-y-scroll">
+        <div className="shadow-paper-shadow mt-4 h-[656px] bg-white border-none p-4 overflow-y-scroll">
             {
                 <div
                     ref={(ref) => setDownloadRef(ref)}
@@ -14,23 +14,27 @@ const Preview = () => {
                         __html: previewContent
                             .replace(
                                 "<h1>",
-                                '<h1 style="padding-left: 160px;font-size: 30px;">'
+                                '<h1 style="text-align: center;font-size: 30px; margin-top:10px;">'
                             )
                             .replaceAll(
                                 "<h6>",
-                                '<h6 style="margin-left: 230px;"><br />'
+                                '<h6 style="text-align: center;"><br />'
                             )
                             .replace(
                                 "<h2>",
-                                '<h2 style="margin-left: 222px;"><br />'
+                                '<h2 style="text-align: center;"><br />'
                             )
                             .replaceAll(
                                 "<h5>",
-                                '<h5 style="padding-bottom:3px;padding-top:3px;">'
+                                '<h5 style="padding-bottom:4px;padding-top:4px;">'
                             )
                             .replaceAll(
                                 "<h4>",
-                                '<h4 style="padding-left: 40px;padding-bottom:4px;padding-top:4px;  font-style: italic;">'
+                                '<h4 style="padding-left: 40px;padding-bottom:5px;padding-top:5px;font-style: italic;">'
+                            )
+                            .replaceAll(
+                                "<h3>",
+                                '<h3 style="text-align: center;font-style: italic;">'
                             ),
                     }}
                 ></div>

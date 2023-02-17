@@ -102,13 +102,13 @@ const headerSelected = (
                 ${
                     byTimeImageData
                         ? getImageCanvas(byTimeImageData)
-                        : "<I>&emsp;&emsp; &emsp;&emsp; &emsp;&emsp;&emsp;&emsp; &emsp;&emsp; &emsp;&emsp; No Data Presents for Time.</I><br/><br/>"
+                        : "<h3>No Data Presents for Time.</h3><br/><br/>"
                 }
                 ${formatSubHeading("Downloads by role")}
                 ${
                     imagePie
                         ? getImageCanvas(imagePie)
-                        : "<I>&emsp;&emsp;&emsp;&emsp;&emsp; &emsp;&emsp; No Data Presents for Role.</I> <br/>"
+                        : "<h3>No Data Presents for Role.</h3> <br/>"
                 }
                 <p>...</p>`
                 : `<br/><h5><strong id=label_${index}>${object}</strong></h5><br/>`
@@ -178,7 +178,7 @@ const ReportVM = () => {
             (await html2canvas(metricByUseCase)).toDataURL("image/png");
 
         const data = `
-                <figure style='width: 200px;margin-left: auto;margin-right: auto;'><img src='${imgUrl}' /></figure>
+                <figure style='width:200px;margin-left:auto;margin-right:auto;'><img src='${imgUrl}' /></figure>
                 <br/>
                 ${getReportTitle(organisation?.title)}
                 ${getReportDate(fromDate, toDate)}

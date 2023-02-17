@@ -44,9 +44,9 @@ const Report = () => {
     const pieData = downloadByRole.map((data: any) => [data.name, data.count]);
 
     return (
-        <div>
+        <div className="w-full relative">
             {loading && (
-                <div className="flex absolute min-w-[700px] h-[656px]  mt-12 ml-1 bg-black bg-opacity-10 z-20 ">
+                <div className="flex absolute mt-12 w-full h-[90%] bg-black bg-opacity-10 z-20 ">
                     <div className="ml-auto mr-auto my-auto">
                         <Loader sizeClass="h-10 w-10" />
                     </div>
