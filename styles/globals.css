@@ -60,11 +60,11 @@ figure{
 
 .DraftEditor-editorContainer > div >div > h1 {
   font-size: 30px;
-  padding-left: 160px;
+  padding-left: 170px;
 }  
 .DraftEditor-editorContainer > div >div > h2 {
   font-size: 20px;
-  padding-left: 200px;
+  padding-left: 280px;
 } 
 .DraftEditor-editorContainer > div >div > h6 {
   padding-left: 230px;
@@ -76,4 +76,12 @@ figure{
 .DraftEditor-editorContainer > div >div > h4{
   padding-left: 40px;
   font-style: italic;
+}
+.DraftEditor-editorContainer > div >div > h3{
+  padding-left: 250px;
+  font-style: italic;
+}
+
+.DraftEditor-editorContainer>div>div> figure > span > .rdw-image-imagewrapper{
+  width:200px;
 }

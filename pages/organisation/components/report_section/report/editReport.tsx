@@ -23,7 +23,7 @@ const EditReport = () => {
     const { editorState, onEditorStateChange } = useContext(ReportVMContext);
 
     return (
-        <div className="min-w-[700px] bg-white shadow-paper-shadow mt-4 w-2/3 overflow-y-scroll ">
+        <div className="bg-white shadow-paper-shadow mt-4 overflow-y-scroll">
             <Editor
                 editorState={editorState}
                 toolbar={TOOLBAR_OPTIONS}
