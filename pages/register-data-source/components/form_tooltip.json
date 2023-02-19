@@ -1,18 +1,18 @@
 {
-    "site_url": "URL of the page where the datasets are listed.",
+    "site_url": "Web page where the datasets are available.",
     "site_name": "Name of the data provider organisation.",
     "sitemap_exists": "Website blueprint to assist search engines find, crawl and index website's content.",
-    "sitemap_url": "Sitemap URL tool-tip",
+    "sitemap_url": "Web page where the sitemap is available.",
     "metadata_standards": "Standards and schemas for structuring and understanding data.",
     "metadata_level": "Metadata may be readily available and accessible.",
     "downloadable_status": "Available for immediate download to user's device.",
-    "domain": "Discipline or area of expertise you most relate with.",
-    "domain_other": "Other Domains tool-tip",
+    "domain": "High-level domains that the datasets belong to.",
+    "domain_other": "Other Domains separated by comma",
     "data_type": "Based on the types of values variables in the dataset have.",
-    "data_management_system": "System for collecting and analysing data.",
-    "data_duplication": "Chance of same data or files are stored in two or more locations.",
-    "contact_email": "Email address for further communication.",
-    "comment": "Any comments or questions you may have.",
+    "data_management_system": "Systems that help data portals catalogue, manage, store, publish and share data.",
+    "data_duplication": "Possibility of finding a significant number of same datasets from another source.",
+    "contact_email": "Email address of the data provider organisation.",
+    "comment": "Any additional information.",
     "usage_rights": "Legal permissions, conditions and limitations on usage.",
-    "update_frequency": "How often the data source website is updated?"
+    "update_frequency": "Frequency of updating the datasets in the data source."
 }
