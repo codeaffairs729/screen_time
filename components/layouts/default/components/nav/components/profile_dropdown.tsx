@@ -38,6 +38,7 @@ const ProfileDropdown = () => {
             label={nameInitial}
             menuItems={user ? menuItems : []}
             labelClasses="text-inherit text-sm w-[50px] h-[50px] flex justify-center items-center bg-[#f5f5f5] rounded-full text-[#e2e2e2] font-medium text-[24px] mr-[-1rem]"
+            // itemsClasses="rounded-[10px]"
         />
     );
 };

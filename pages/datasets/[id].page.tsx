@@ -29,10 +29,13 @@ enum tabIndex {
 }
 const DatasetDetail = ({ dataset }: { dataset: Dataset | undefined }) => {
     const [loading, setLoading] = useState<boolean>(false);
-    const [selectedIndex, setSelectedIndex] = useState<any>(0);
     const { asPath } = useRouter();
+    const [selectedIndex, setSelectedIndex] = useState<any>(
+        tabIndex[asPath.split("#")[1] as any] || 0
+    );
     const vm = DatasetDetailVM(dataset);
-    const relatedVM = RelatedDatasetsVM();
+    const relatedVM = RelatedDatasetsVM(dataset);
+
     useEffect(() => {
         const hashParam: string = asPath.split("#")[1];
         setSelectedIndex(tabIndex[hashParam as any]);

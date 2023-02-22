@@ -7,14 +7,14 @@ import { createContext, useContext } from "react";
 import toast from "react-hot-toast";
 import useSWR from "swr";
 
-const RelatedDatasetsVM = () => {
+const RelatedDatasetsVM = (dataset: any) => {
     /**
      * Fetch stats for datasets to highlight favourite status
      */
-    const { dataset } = useContext(DatasetDetailVMContext);
+
     const { fectchStats, stats, isFetchingStats } = SearchVM();
     const { data: datasetsByCategory = [], error: errorByCategory } = useSWR(
-        `${process.env.NEXT_PUBLIC_PUBLIC_API_V5_ROOT}/v5/datasets/related-by-domains-and-topics/7`,
+        `${process.env.NEXT_PUBLIC_PUBLIC_API_V5_ROOT}/v5/datasets/related-by-domains-and-topics/${dataset?.id}`,
         (url: string) =>
             fetch(url)
                 .then((res) => res.json())
@@ -36,7 +36,7 @@ const RelatedDatasetsVM = () => {
 
     const { data: datasetsByDescription = [], error: errorByDescription } =
         useSWR(
-            `${process.env.NEXT_PUBLIC_PUBLIC_API_V5_ROOT}/v5/datasets/related-by-description/7`,
+            `${process.env.NEXT_PUBLIC_PUBLIC_API_V5_ROOT}/v5/datasets/related-by-description/${dataset?.id}`,
             (url: string) =>
                 fetch(url)
                     .then((res) => res.json())

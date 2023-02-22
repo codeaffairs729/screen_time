@@ -57,10 +57,10 @@ const Nav = ({
                                     label: "Data Source Registration",
                                     link: "/register-data-source",
                                 },
-                                {
-                                    label: "Domain Vocabulary Generator",
-                                    link: "/user-vocabulary-generator",
-                                },
+                                // {
+                                //     label: "Domain Vocabulary Generator",
+                                //     link: "/user-vocabulary-generator",
+                                // },
                             ]}
                         />
                     )}

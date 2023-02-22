@@ -30,7 +30,7 @@ const RelatedDatasets = () => {
         errorByDescription,
     } = useContext(RelatedDatasetsVMContext);
 
-    if (isLoading) {
+    if (isLoading || datasetsByCategory.length == 0 || datasetsByDescription.length == 0) {
         return (
             <div className="h-full w-full flex items-center justify-center">
                 <Loader />
@@ -50,7 +50,7 @@ const RelatedDatasets = () => {
         <div className="flex flex-col">
             <Tab.Group>
                 <Tab.List>
-                    <TabHeader>Related by Domains and Topics </TabHeader>
+                    <TabHeader>Related by Domains & Topics </TabHeader>
                     <TabHeader>Related by description</TabHeader>
                 </Tab.List>
                 <Tab.Panels>

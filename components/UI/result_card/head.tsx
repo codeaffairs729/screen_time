@@ -51,7 +51,7 @@ const CardHead = ({
                 {licenseTypes?.map((tag: string, index: number) => (
                     <button
                         key={index}
-                        className="ml-8 text-m h-6 px-4 border cursor-pointer rounded border-[#5F5F63]"
+                        className="ml-8 text-m h-6 px-4 border cursor-default rounded border-[#5F5F63]"
                     >
                         <span className="my-auto">{`${tag[0].toUpperCase()}${tag.slice(
                             1

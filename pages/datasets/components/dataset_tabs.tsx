@@ -1,10 +1,7 @@
 import { Tab } from "@headlessui/react";
 import TabIconHeader from "components/UI/tab_icon_header";
 import Image from "next/image";
-import { useState } from "react";
-import reportOutline from "public/images/icons/report_outline.svg";
-import reportFilled from "public/images/icons/report_filled.svg";
-import cascadeFolderFilled from "public/images/icons/cascade_folder_filled.svg";
+import { useEffect, useState } from "react";
 import barGraphOutline from "public/images/icons/bar_graph_outline.svg";
 import barGraphFilled from "public/images/icons/bar_graph_filled.svg";
 import DataFileOutline from "public/images/icons/data_file_outline.svg"
@@ -47,6 +44,9 @@ const DatasetTabHeaders = ({
     selectedIndex?: number;
 }) => {
     const [selected, setSelected] = useState<number>(selectedIndex);
+    useEffect(()=>{
+        setSelected(selectedIndex)
+    },[selectedIndex])
     return (
         <div>
             <Tab.List className="relative text-dtech-main-dark">
