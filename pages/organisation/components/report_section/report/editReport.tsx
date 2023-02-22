@@ -10,6 +10,9 @@ const TOOLBAR_OPTIONS = {
     },
     link: {
         options: ["link"],
+        link:{
+            title:"HyperLink"
+        }
     },
     list: {
         options: ["unordered", "ordered"],
