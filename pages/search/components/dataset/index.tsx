@@ -32,6 +32,7 @@ const Dataset = () => {
                     currentPageNo={currentPageNo}
                     totalPages={totalPages}
                     pageSize={pageSize}
+                    recordType={"datasets"}
                 />
                 {!isFetchingStats && (
                     <ResultLayout

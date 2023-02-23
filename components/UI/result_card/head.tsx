@@ -39,7 +39,9 @@ const CardHead = ({
                     dataQuality={dataQuality}
                     displayContext={"displayContext"}
                     labelClass="font-normal"
-                    title={"Estimated based on the EU Metadata Quality Assessment method."}
+                    title={
+                        "Estimated based on the EU Metadata Quality Assessment method https://data.europa.eu/mqa/methodology?locale=en"
+                    }
                     handleFAQClick={() => {
                         handleFAQClick
                             ? handleFAQClick()

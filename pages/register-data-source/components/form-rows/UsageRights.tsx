@@ -27,12 +27,16 @@ const UsageRights = ({ vm }: { vm: any }) => {
                         label: "Open",
                     },
                     {
-                        value: "commercial",
-                        label: "Commercial",
+                        value: "semi-open",
+                        label: "Semi-open",
                     },
                     {
-                        value: "unknown",
-                        label: "Don't know",
+                        value: "restricted",
+                        label: "Restricted",
+                    },
+                    {
+                        value: "closed",
+                        label: "Closed",
                     },
                 ]}
                 placeholder=""

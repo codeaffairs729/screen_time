@@ -40,7 +40,7 @@ const FavouriteBtn = ({
                     ? "Please login to add this dataset to your favourites"
                     : !isFavourited
                     ? "Add to favourites"
-                    : null
+                    : "Remove from favourites"
             }
         >
             <button

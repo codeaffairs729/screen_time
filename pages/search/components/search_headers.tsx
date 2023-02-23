@@ -1,6 +1,7 @@
 import RecordsSortBy from "./organization/components/organization_sortby_field";
 import TotalRecords from "./organization/components/total_records";
 import Pagination from "components/UI/pagination";
+import SortbyField from "./sortby_field";
 
 type SearchHeadersProps = {
     setCurrentPageNo: Function;
@@ -9,6 +10,7 @@ type SearchHeadersProps = {
     currentPageNo: number;
     totalPages: number;
     pageSize: number;
+    recordType?: string;
 };
 
 const SearchHeaders = ({
@@ -18,6 +20,7 @@ const SearchHeaders = ({
     currentPageNo,
     totalPages,
     pageSize,
+    recordType,
 }: SearchHeadersProps) => {
     return (
         <div className="flex items-center justify-between w-full p-2.5">
@@ -31,7 +34,7 @@ const SearchHeaders = ({
                 setCurrentPageNo={setCurrentPageNo}
                 totalPages={totalPages}
             />
-            <RecordsSortBy />
+            {recordType == "datasets" ? <SortbyField /> : <RecordsSortBy />}
         </div>
     );
 };

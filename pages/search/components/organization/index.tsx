@@ -27,6 +27,7 @@ const Organisation = () => {
                 currentPageNo={currentPageNo}
                 totalPages={totalPages}
                 pageSize={pageSize}
+                recordType={"organisation"}
             />
             <ResultLayout
                 error={false} //TODO to get from organisation vm
