@@ -25,7 +25,7 @@ const DatasetSearchInput = ({
                     baseUrl: `${process.env.NEXT_PUBLIC_PUBLIC_API_ROOT}/completion/${inputValue}`,
                     extraHeaders: {
                         "Content-type": "application/json",
-                        "x-api-key": process.env.NEXT_PUBLIC_MARK_KEY,
+                        "x-api-key": "qN/VcEUtCwEuIxWWq93UrVOiiXJfMGdoUz9hMtclGDJhW4GJWezD5xsnAMNR",
                     },
                 });
                 return res.map((t) => ({
