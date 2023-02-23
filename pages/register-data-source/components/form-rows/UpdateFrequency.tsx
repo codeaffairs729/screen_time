@@ -19,8 +19,16 @@ const UpdateFrequency = ({ vm }: { vm: any }) => {
                 }}
                 options={[
                     {
-                        value: "continually",
-                        label: "Continually",
+                        value: "once",
+                        label: "Once",
+                    },
+                    {
+                        value: "ad hoc",
+                        label: "Ad hoc",
+                    },
+                    {
+                        value: "within",
+                        label: "Within",
                     },
                     {
                         value: "daily",
@@ -30,10 +38,7 @@ const UpdateFrequency = ({ vm }: { vm: any }) => {
                         value: "weekly",
                         label: "Weekly",
                     },
-                    {
-                        value: "fortnightly",
-                        label: "Fortnightly",
-                    },
+
                     {
                         value: "monthly",
                         label: "Monthly",
@@ -43,28 +48,12 @@ const UpdateFrequency = ({ vm }: { vm: any }) => {
                         label: "Quarterly",
                     },
                     {
-                        value: "biannually",
-                        label: "Bi-annually",
+                        value: "semi-annual",
+                        label: "Semi-annual",
                     },
                     {
                         value: "annually",
                         label: "Annually",
-                    },
-                    {
-                        value: "as-needed",
-                        label: "As needed",
-                    },
-                    {
-                        value: "irregular",
-                        label: "Irregular",
-                    },
-                    {
-                        value: "not-planned",
-                        label: "Not planned",
-                    },
-                    {
-                        value: "unknown",
-                        label: "Unknown",
                     },
                 ]}
                 placeholder=""

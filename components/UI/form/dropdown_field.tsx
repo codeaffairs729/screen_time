@@ -161,6 +161,59 @@ const ComboOption = ({ option }: { option: Option }) => {
                         Available on a commercial basis only (whether the
                         commercial model is a one-time fee or a subscription).
                     </ReactTooltip>
+                    <ReactTooltip id="Open" place="top" effect="solid">
+                        Available to use, free of charge, without a user
+                        account.
+                    </ReactTooltip>
+                    <ReactTooltip id="Static" place="top" effect="solid">
+                        Data observations recorded, stored and made available as
+                        data files. These data files are typically not updated
+                        in real-time. E.g. Survey results.csv, Car sale
+                        trends.xlsx.
+                    </ReactTooltip>
+
+                    <ReactTooltip id="Mixed" place="top" effect="solid">
+                        A combination of Static and Streaming data.
+                    </ReactTooltip>
+
+                    <ReactTooltip id="Streaming" place="top" effect="solid">
+                        Data observations that are continuously generated in
+                        real-time or near real-time and not necessarily recored
+                        and stored in databases or files. These are typically
+                        made available via APIs. E.g. Telemetry data, Feeds from
+                        social networks, In-game player activity, Stock market
+                        prices.
+                    </ReactTooltip>
+                    <ReactTooltip id="Once" place="top" effect="solid">
+                        A one-off static dataset, no updates expected.
+                    </ReactTooltip>
+                    <ReactTooltip id="Ad hoc" place="top" effect="solid">
+                        Dataset updated as and when required, no fixed schedule.
+                    </ReactTooltip>
+                    <ReactTooltip id="Within" place="top" effect="solid">
+                        Dataset updated multiple times a day.
+                    </ReactTooltip>
+                    <ReactTooltip id="Daily" place="top" effect="solid">
+                        Dataset updated once a day.
+                    </ReactTooltip>
+                    <ReactTooltip id="Weekly" place="top" effect="solid">
+                        Dataset updated once a week.
+                    </ReactTooltip>
+                    <ReactTooltip id="Monthly" place="top" effect="solid">
+                        Dataset updated once a month.
+                    </ReactTooltip>
+
+                    <ReactTooltip id="Quarterly" place="top" effect="solid">
+                        Dataset updated once every 3 months.
+                    </ReactTooltip>
+
+                    <ReactTooltip id="Semi-annual" place="top" effect="solid">
+                        Dataset updated once every 6 months.
+                    </ReactTooltip>
+                    <ReactTooltip id="Annually" place="top" effect="solid">
+                        Dataset updated once every 12 months.
+                    </ReactTooltip>
+
                     {selected ? (
                         <span
                             className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
