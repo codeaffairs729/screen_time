@@ -100,7 +100,7 @@ const jsonToQualityMetrics = (json: any): any => ({
             json["datafile_quality"]["overall_score"],
             "overallScore",
             "votes",
-            132
+            json["datafile_quality"]["overall_score"]["total"]
         ),
         // feedbackSentiment: getdataQualityScore(
         //     json["datafile_quality"]["feedback_sentiment"],
@@ -112,25 +112,25 @@ const jsonToQualityMetrics = (json: any): any => ({
             json["datafile_quality"]["accuracy"],
             "accuracy",
             "votes",
-            132
+            json["datafile_quality"]["accuracy"]["total"]
         ),
         clarity: getdataQualityScore(
             json["datafile_quality"]["clarity"],
             "clarity",
             "votes",
-            132
+            json["datafile_quality"]["clarity"]["total"]
         ),
         consistency: getdataQualityScore(
             json["datafile_quality"]["consistency"],
             "consistency",
             "votes",
-            132
+            json["datafile_quality"]["consistency"]["total"]
         ),
         readiness: getdataQualityScore(
             json["datafile_quality"]["readiness"],
             "readiness",
             "votes",
-            132
+            json["datafile_quality"]["readiness"]["total"]
         ),
     },
 });
