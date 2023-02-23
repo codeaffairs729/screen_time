@@ -10,7 +10,74 @@ export type Option = {
     value: any;
     label: string;
 };
+const TOOLTIP_VALUE = [
+    {
+        id: "Open",
+        value: "Available to use, free of charge, without a user account.",
+    },
+    {
+        id: "Semi-open",
+        value: "Available to use, free of charge, via a free user account.",
+    },
+    {
+        id: "Restricted",
+        value: " Access to the data involves an application process,possibly for reasons of security or sensitivity of the subject matter (application fees may apply).",
+    },
+    {
+        id: "Closed",
+        value: "Available on a commercial basis only (whether the commercial model is a one-time fee or a subscription).",
+    },
 
+    {
+        id: "Static",
+        value: "Data observations recorded, stored and made available as data files. These data files are typically not updated in real-time. E.g. Survey results.csv, Car sale trends.xlsx.",
+    },
+    {
+        id: "Mixed",
+        value: " A combination of Static and Streaming data.",
+    },
+    {
+        id: "Streaming",
+        value: "Data observations that are continuously generated in real-time or near real-time and not necessarily recored and stored in databases or files. These are typically made available via APIs. E.g. Telemetry data, Feeds from social networks, In-game player activity, Stock market prices.",
+    },
+    {
+        id: "Once",
+        value: "A one-off static dataset, no updates expected.",
+    },
+    {
+        id: "Ad hoc",
+        value: "Dataset updated as and when required, no fixed schedule.",
+    },
+    {
+        id: "Within",
+        value: "Dataset updated multiple times a day.",
+    },
+    {
+        id: "Daily",
+        value: "Dataset updated once a day.",
+    },
+    {
+        id: "Weekly",
+        value: "Dataset updated once a week.",
+    },
+
+    {
+        id: "Monthly",
+        value: "Dataset updated once a month.",
+    },
+    {
+        id: "Quarterly",
+        value: "Dataset updated once every 3 months.",
+    },
+    {
+        id: "Semi-annual",
+        value: "Dataset updated once every 6 months.",
+    },
+    {
+        id: "Annually",
+        value: "Dataset updated once every 12 months.",
+    },
+];
 const DropdownField = ({
     options,
     className = "",
@@ -144,75 +211,16 @@ const ComboOption = ({ option }: { option: Option }) => {
                     >
                         {option.label}
                     </span>
-                    <ReactTooltip id="Open" place="top" effect="solid">
-                        Available to use, free of charge, without a user
-                        account.
-                    </ReactTooltip>
-                    <ReactTooltip id="Semi-open" place="top" effect="solid">
-                        Available to use, free of charge, via a free user
-                        account.
-                    </ReactTooltip>
-                    <ReactTooltip id="Restricted" place="top" effect="solid">
-                        Access to the data involves an application process,
-                        possibly for reasons of security or sensitivity of the
-                        subject matter (application fees may apply).
-                    </ReactTooltip>
-                    <ReactTooltip id="Closed" place="top" effect="solid">
-                        Available on a commercial basis only (whether the
-                        commercial model is a one-time fee or a subscription).
-                    </ReactTooltip>
-                    <ReactTooltip id="Open" place="top" effect="solid">
-                        Available to use, free of charge, without a user
-                        account.
-                    </ReactTooltip>
-                    <ReactTooltip id="Static" place="top" effect="solid">
-                        Data observations recorded, stored and made available as
-                        data files. These data files are typically not updated
-                        in real-time. E.g. Survey results.csv, Car sale
-                        trends.xlsx.
-                    </ReactTooltip>
-
-                    <ReactTooltip id="Mixed" place="top" effect="solid">
-                        A combination of Static and Streaming data.
-                    </ReactTooltip>
-
-                    <ReactTooltip id="Streaming" place="top" effect="solid">
-                        Data observations that are continuously generated in
-                        real-time or near real-time and not necessarily recored
-                        and stored in databases or files. These are typically
-                        made available via APIs. E.g. Telemetry data, Feeds from
-                        social networks, In-game player activity, Stock market
-                        prices.
-                    </ReactTooltip>
-                    <ReactTooltip id="Once" place="top" effect="solid">
-                        A one-off static dataset, no updates expected.
-                    </ReactTooltip>
-                    <ReactTooltip id="Ad hoc" place="top" effect="solid">
-                        Dataset updated as and when required, no fixed schedule.
-                    </ReactTooltip>
-                    <ReactTooltip id="Within" place="top" effect="solid">
-                        Dataset updated multiple times a day.
-                    </ReactTooltip>
-                    <ReactTooltip id="Daily" place="top" effect="solid">
-                        Dataset updated once a day.
-                    </ReactTooltip>
-                    <ReactTooltip id="Weekly" place="top" effect="solid">
-                        Dataset updated once a week.
-                    </ReactTooltip>
-                    <ReactTooltip id="Monthly" place="top" effect="solid">
-                        Dataset updated once a month.
-                    </ReactTooltip>
-
-                    <ReactTooltip id="Quarterly" place="top" effect="solid">
-                        Dataset updated once every 3 months.
-                    </ReactTooltip>
-
-                    <ReactTooltip id="Semi-annual" place="top" effect="solid">
-                        Dataset updated once every 6 months.
-                    </ReactTooltip>
-                    <ReactTooltip id="Annually" place="top" effect="solid">
-                        Dataset updated once every 12 months.
-                    </ReactTooltip>
+                    {TOOLTIP_VALUE?.map((tooltip, index) => (
+                        <ReactTooltip
+                            id={tooltip?.id}
+                            place="top"
+                            effect="solid"
+                            key={index}
+                        >
+                            {tooltip?.value}
+                        </ReactTooltip>
+                    ))}
 
                     {selected ? (
                         <span
