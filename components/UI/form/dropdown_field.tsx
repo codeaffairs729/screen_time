@@ -5,7 +5,7 @@ import { Fragment, useEffect, useState } from "react";
 import { HiOutlineSelector } from "react-icons/hi";
 import { BsCheck } from "react-icons/bs";
 import { useController } from "react-hook-form";
-
+import ReactTooltip from "react-tooltip";
 export type Option = {
     value: any;
     label: string;
@@ -139,9 +139,28 @@ const ComboOption = ({ option }: { option: Option }) => {
                         className={`block truncate ${
                             selected ? "font-medium" : "font-normal"
                         }`}
+                        data-tip
+                        data-for={option.label}
                     >
                         {option.label}
                     </span>
+                    <ReactTooltip id="Open" place="top" effect="solid">
+                        Available to use, free of charge, without a user
+                        account.
+                    </ReactTooltip>
+                    <ReactTooltip id="Semi-open" place="top" effect="solid">
+                        Available to use, free of charge, via a free user
+                        account.
+                    </ReactTooltip>
+                    <ReactTooltip id="Restricted" place="top" effect="solid">
+                        Access to the data involves an application process,
+                        possibly for reasons of security or sensitivity of the
+                        subject matter (application fees may apply).
+                    </ReactTooltip>
+                    <ReactTooltip id="Closed" place="top" effect="solid">
+                        Available on a commercial basis only (whether the
+                        commercial model is a one-time fee or a subscription).
+                    </ReactTooltip>
                     {selected ? (
                         <span
                             className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
