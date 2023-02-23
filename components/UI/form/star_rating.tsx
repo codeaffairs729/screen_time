@@ -70,6 +70,7 @@ const StarRatingInput = ({
                                 onChange={(e) => {
                                     if (e.target.checked) {
                                         setRating(0);
+                                        setHover(0);
                                         onChange(0);
                                         setDK(true);
                                     } else {
