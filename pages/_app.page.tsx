@@ -76,7 +76,7 @@ function DtechtiveApp({ Component, pageProps }: AppProps) {
     return (
         <>
             <Head>
-                <link rel="shortcut icon" href="/Dtechtive_Favicon.ico" />
+                <link rel="shortcut icon" href="/Dtechtive_Favicon.svg" />
                 <title>Dtechtive | Delivering Multiple Types of Datasets</title>
                 <meta
                     name="description"
