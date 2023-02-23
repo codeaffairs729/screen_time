@@ -59,7 +59,7 @@ const OrganisationDetailVM = (
                         baseUrl: process.env.NEXT_PUBLIC_PUBLIC_API_V5_ROOT,
                         extraHeaders: {
                             "Content-type": "application/json",
-                            "x-api-key": process.env.NEXT_PUBLIC_MARK_KEY,
+                            "x-api-key": "qN/VcEUtCwEuIxWWq93UrVOiiXJfMGdoUz9hMtclGDJhW4GJWezD5xsnAMNR",
                         },
                     }
                 );
@@ -157,7 +157,7 @@ const GetRankedData = ({
                     baseUrl: process.env.NEXT_PUBLIC_PUBLIC_API_V5_ROOT,
                     extraHeaders: {
                         "Content-type": "application/json",
-                        "x-api-key": process.env.NEXT_PUBLIC_MARK_KEY,
+                        "x-api-key": "qN/VcEUtCwEuIxWWq93UrVOiiXJfMGdoUz9hMtclGDJhW4GJWezD5xsnAMNR"
                     },
                 });
             },
