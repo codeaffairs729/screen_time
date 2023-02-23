@@ -38,6 +38,10 @@ const SearchBar = ({
                 if (!inputValue) return;
                 const res = await Http.get<[]>("", {
                     baseUrl: `${process.env.NEXT_PUBLIC_PUBLIC_API_ROOT}/completion/${inputValue}`,
+                    extraHeaders: {
+                        "Content-type": "application/json",
+                        "x-api-key": process.env.NEXT_PUBLIC_MARK_KEY,
+                    },
                 });
                 return res.map((t) => ({
                     value: t[0],
@@ -150,7 +154,12 @@ const ValueContainer = ({ children, ...props }: any) => {
                         `}
                     labelClasses={isHomePage ? "!text-lg" : ""}
                     menuItems={menuItems}
-                    itemsClasses={isHomePage ? "!text-lg" : ""}
+                    itemsClasses={
+                        isHomePage
+                            ? "!text-lg rounded-[10px] shadow-none"
+                            : "rounded-[10px] shadow-none"
+                    }
+                    menuItemsClasses="rounded-[10px]"
                 />
             </div>
         </components.ValueContainer>
@@ -191,7 +200,7 @@ const Menu = (props: any) => {
     return (
         <components.Menu
             {...props}
-            className="!w-[90%] left-[50%] translate-x-[-50%] shadow-list-shdaow bg-[#FAFAFA] !top-[80%] !rounded-none"
+            className="!w-[90%] left-[50%] translate-x-[-50%]  bg-[#FAFAFA] !top-[80%] rounded-[10px] shadow-none"
         />
     );
 };
