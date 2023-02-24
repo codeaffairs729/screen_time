@@ -112,9 +112,9 @@ DatasetDetail.getInitialProps = async ({ query, req }: NextPageContext) => {
         }
         const datasetData = await Http.get(`/v4/datasets/${datasetId}`, {
             baseUrl: process.env.NEXT_PUBLIC_PUBLIC_API_ROOT,
-            // extraHeaders: authToken
-            //     ? { Authorization: `Bearer ${authToken}` }
-            //     : {},
+            extraHeaders: authToken
+                ? { Authorization: `Bearer ${authToken}` }
+                : {},
         });
         const dataset = Dataset.fromJson(
             datasetData[0]["user_search"][0]["results"][0]
