@@ -12,6 +12,7 @@ import {
     datasetToResultCardData,
     SearchVMContext,
 } from "pages/search/search.vm";
+import Link from "next/link";
 const DatasetHead = ({ dataset }: any) => {
     // const vm = useContext(DatasetDetailVMContext);
     const { stats, fectchStats, isFetchingStats } = useContext(SearchVMContext);
@@ -89,10 +90,19 @@ const DatasetHead = ({ dataset }: any) => {
             <div className="my-4">
                 <div className="flex justify-between items-center">
                     <DatasetStat stats={stat} />
+                    <Link href={"#"}>
+                        <a
+                            target="_blank"
+                            rel="noreferrer"
+                            className="text-xs underline mr-5"
+                        >
+                            Source
+                        </a>
+                    </Link>
                     <LabelledRow
                         displayContext="data-host"
                         className=" flex-col justify-center items-center"
-                        label="Data Host"
+                        label="Host"
                     >
                         <strong>
                             <a
@@ -107,7 +117,7 @@ const DatasetHead = ({ dataset }: any) => {
                     </LabelledRow>
                     <LabelledRow
                         className=" flex-col justify-center items-center"
-                        label="Data Owner"
+                        label="Owner"
                     >
                         {dataset.owner.organisation}
                     </LabelledRow>
