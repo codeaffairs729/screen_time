@@ -15,16 +15,16 @@ const OPTIONS = [
     },
     {
         label: "Metadata Quality",
-        value: "quality",
+        value: "metadata_quality",
     },
     {
         label: "Last Updated",
-        value: "updated",
+        value: "last_updated_timestamp",
     },
-    {
-        label: "Last Downloaded",
-        value: "downloaded",
-    },
+    // {
+    //     label: "Last Downloaded",
+    //     value: "downloaded",
+    // },
 ];
 
 const RecordsSortBy = () => {

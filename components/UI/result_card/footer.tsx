@@ -3,6 +3,7 @@ import LabelledRow from "components/dataset/labelled_row";
 import DataStat from "./data_stat";
 import { DateTime } from "luxon";
 import { DataStats } from "models/organisation.model";
+import Link from "next/link";
 
 export interface DataProviders {
     organisation: string;
@@ -34,8 +35,17 @@ const CardFooter = ({
             )}
             {dataProviders && (
                 <div className="flex flex-row w-1/2 justify-start">
+                    <Link href={"#"}>
+                        <a
+                            target="_blank"
+                            rel="noreferrer"
+                            className="text-xs underline mr-5"
+                        >
+                            Source
+                        </a>
+                    </Link>
                     <LabelledRow
-                        label="Data Owner"
+                        label="Owner"
                         className="mr-12"
                         labelClasses="font-normal text-m"
                         childClasses="font-medium text-m"
@@ -44,7 +54,7 @@ const CardFooter = ({
                             dataProviders.organisation}
                     </LabelledRow>
                     <LabelledRow
-                        label="Data Host"
+                        label="Host"
                         labelClasses="font-normal text-m"
                         childClasses="font-medium text-m"
                     >
