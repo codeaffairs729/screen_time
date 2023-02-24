@@ -31,17 +31,16 @@ const DatasetDetail = ({ dataset }: { dataset: Dataset | undefined }) => {
     const [loading, setLoading] = useState<boolean>(false);
     const { asPath } = useRouter();
     const [selectedIndex, setSelectedIndex] = useState<any>(
-        tabIndex[asPath.split("#")[1] as any] || 0
+        tabIndex[asPath.split("#")[1]?.split("/")[0] as any] || 0
     );
     const vm = DatasetDetailVM(dataset);
     const relatedVM = RelatedDatasetsVM(dataset);
 
     useEffect(() => {
-        const hashParam: string = asPath.split("#")[1];
+        const hashParam: string = asPath.split("#")[1]?.split("/")[0];
         setSelectedIndex(tabIndex[hashParam as any]);
         setLoading(false);
     }, []);
-
     if (!dataset) {
         return (
             <DefaultLayout>
@@ -113,9 +112,9 @@ DatasetDetail.getInitialProps = async ({ query, req }: NextPageContext) => {
         }
         const datasetData = await Http.get(`/v4/datasets/${datasetId}`, {
             baseUrl: process.env.NEXT_PUBLIC_PUBLIC_API_ROOT,
-            extraHeaders: authToken
-                ? { Authorization: `Bearer ${authToken}` }
-                : {},
+            // extraHeaders: authToken
+            //     ? { Authorization: `Bearer ${authToken}` }
+            //     : {},
         });
         const dataset = Dataset.fromJson(
             datasetData[0]["user_search"][0]["results"][0]

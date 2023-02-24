@@ -65,10 +65,10 @@ export const notificationActionUrl = (notification: Notification) => {
     const type = notification_type.replace("test_", "");
 
     switch (type?.toLowerCase()) {
-        case "feedback_request":
-            return `/datasets/${datasetId}#feedback`;
+        case "quality_feedback_request":
+            return `/datasets/${datasetId}#feedback/quality`;
         default:
-            return `/datasets/${datasetId}#feedback`;
+            return `/datasets/${datasetId}#feedback/usecase`;
     }
 };
 
