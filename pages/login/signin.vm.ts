@@ -22,10 +22,10 @@ const SigninVM = () => {
         ? `?q=${encodeURI(lastSearchQuery)}`
         : "";
     const [signinErrorMsg, setSigninErrorMsg] = useState<string | null>();
-    const path: string | null =
-        localStorage.getItem("previous_path") === null
-            ? "/"
-            : localStorage.getItem("previous_path");
+    // const path: string | null =
+    //     localStorage.getItem("previous_path") === null
+    //         ? "/"
+    //         : localStorage.getItem("previous_path");
     const { isLoading: isSigningIn, execute: executePerformLogin } =
         useHttpCall();
     const performLogin = (data: any) =>
@@ -39,7 +39,7 @@ const SigninVM = () => {
                     AuthService.signin(
                         User.fromJson(res["user"]),
                         res["token"],
-                        path === null ? "/" : path.slice(1),
+                        "/",
                         fetchNotifications
                     );
                     usereventLogin(User.fromJson(res["user"]));
