@@ -39,9 +39,9 @@ function DtechtiveApp({ Component, pageProps }: AppProps) {
             window.location.reload();
         }
     }
-    useEffect(() => {
-        localStorage.setItem("previous_path", router.asPath);
-    }, [router.asPath]);
+    // useEffect(() => {
+    //     localStorage.setItem("previous_path", router.asPath);
+    // }, [router.asPath]);
 
     useScript("/js/acctoolbar.min.js");
 
