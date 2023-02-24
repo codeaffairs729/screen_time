@@ -57,7 +57,7 @@ const DatasetDetail = ({ dataset }: { dataset: Dataset | undefined }) => {
             <DatasetDetailVMContext.Provider value={vm}>
                 <div className="px-4">
                     <div className="flex flex-col justify-between mb-4 my-2 ml-4">
-                            <BackBtn />
+                            {/* <BackBtn /> */}
                         <p className="text-start text-2xl font-semibold mt-2">
                             DATASET
                         </p>
