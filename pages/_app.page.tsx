@@ -39,6 +39,9 @@ function DtechtiveApp({ Component, pageProps }: AppProps) {
             window.location.reload();
         }
     }
+    useEffect(() => {
+        localStorage.setItem("previous_path", router.asPath);
+    }, [router.asPath]);
 
     useScript("/js/acctoolbar.min.js");
 
@@ -80,7 +83,7 @@ function DtechtiveApp({ Component, pageProps }: AppProps) {
                 <title>Dtechtive | Delivering Multiple Types of Datasets</title>
                 <meta
                     name="description"
-                    content="Dtechtive is a website that delivers a wide range of datasets, including data on finance, health, education, and more. Discover new insights and make informed decisions with our high-quality, reliable data."
+                    content="Dtechtive discovers the datasets other search engines cannot reach. It also provides insights on dataset quality and usage, to help both data users and data providers."
                 />
             </Head>
             <Provider store={store}>
