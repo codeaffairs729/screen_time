@@ -54,7 +54,7 @@ const Nav = ({
                             label="User contributions"
                             menuItems={[
                                 {
-                                    label: "Data Source Registration",
+                                    label: "Register a data source",
                                     link: "/register-data-source",
                                 },
                                 // {
