@@ -64,9 +64,12 @@ const DatasetHead = ({ dataset }: any) => {
                             dataQuality={3}
                             title="Estimated based on the EU Metadata Quality Assessment method."
                         />
-                        <button className="ml-8 text-m h-6 px-4 border cursor-pointer rounded border-[#5F5F63]">
-                            <span className="my-auto">{license?.type}</span>
-                        </button>
+                        <fieldset className=" min-h-full px-4 border rounded border-[#5F5F63]  text-xs pb-0.5">
+                            <legend className="text-xs mr-8">License</legend>
+                            <div>
+                                <label>{license?.type}</label>
+                            </div>
+                        </fieldset>
                     </div>
                 </div>
                 {!isFetchingStats && (

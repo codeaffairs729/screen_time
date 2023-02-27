@@ -51,14 +51,20 @@ const CardHead = ({
                     }}
                 />
                 {licenseTypes?.map((tag: string, index: number) => (
-                    <button
-                        key={index}
-                        className="ml-8 text-m h-6 px-4 border cursor-default rounded border-[#5F5F63]"
-                    >
-                        <span className="my-auto">{`${tag[0].toUpperCase()}${tag.slice(
+                    // <button
+                    //     key={index}
+                    //     className="ml-8 text-m h-6 px-4 border cursor-default rounded border-[#5F5F63]"
+                    // >
+                    //     <span className="my-auto"></span>
+                    // </button>
+                       <fieldset className=" min-h-full px-4 border rounded border-[#5F5F63]  text-xs pb-0.5" key={index}>
+                       <legend className="text-xs mr-8">License</legend>
+                       <div>
+                           <label>{`${tag[0].toUpperCase()}${tag.slice(
                             1
-                        )}`}</span>
-                    </button>
+                        )}`}</label>
+                       </div>
+                   </fieldset>
                 ))}
             </div>
             <ResultCardAction data={data} setData={setData} href={href} />
