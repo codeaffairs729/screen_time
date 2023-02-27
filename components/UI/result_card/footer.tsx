@@ -24,7 +24,7 @@ const CardFooter = ({
     lastUpdate: DateTime;
     className?: string;
 }) => {
-    console.log("dataProviders :",dataProviders)
+
     return (
         <div
             className={clsx(
@@ -38,12 +38,12 @@ const CardFooter = ({
                 </div>
             )}
             {dataProviders && (
-                <div className="flex flex-row w-1/2 justify-start">
+                <div className="flex flex-row w-1/2 justify-start items-center">
                     <Link href={`${dataProviders.hostUrl}`}>
                         <a
                             target="_blank"
                             rel="noreferrer"
-                            className="text-m underline mr-5 text-dtech-main-dark"
+                            className="text-m font-semibold hover:underline underline-offset-2 mr-5 text-dtech-main-dark"
                         >
                             Source
                         </a>
@@ -52,7 +52,7 @@ const CardFooter = ({
                         label="Owner"
                         className="mr-12"
                         labelClasses="font-normal text-m"
-                        childClasses="font-medium text-m"
+                        childClasses="font-medium text-m hover:underline underline-offset-2"
                     >
                         <Link href={`/organisation/${dataProviders?.ownerUuid}`}>
                             {dataProviders.organisation &&
@@ -62,7 +62,7 @@ const CardFooter = ({
                     <LabelledRow
                         label="Host"
                         labelClasses="font-normal text-m"
-                        childClasses="font-medium text-m"
+                        childClasses="font-medium text-m hover:underline underline-offset-2"
                     >
                         <Link href={`/organisation/${dataProviders?.hostUuid}`}>
                             {dataProviders.hostName}

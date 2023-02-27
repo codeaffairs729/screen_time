@@ -154,7 +154,7 @@ export type DatasetUrl = {
     version: string;
     sizemb: string;
     url: string;
-    lastUpdated: string;
+    lastUpdated?: string;
 };
 
 export default Dataset;

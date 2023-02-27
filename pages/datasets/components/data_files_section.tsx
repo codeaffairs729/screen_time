@@ -1,6 +1,6 @@
 import { useContext, useState, useRef } from "react";
 import { DatasetDetailVMContext } from "../dataset_detail.vm";
-import { DatasetUrl } from "models/dataset.model";
+import { DatasetUrl } from "models/dataset.model.v4";
 import { useSelector } from "react-redux";
 import { RootState } from "store";
 import { NotificationsVMContext } from "pages/workspace/notification.vm";
