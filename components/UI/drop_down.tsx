@@ -148,7 +148,7 @@ const LinkTag = React.forwardRef(
             <span
                 ref={ref}
                 className={clsx(
-                    "hover:bg-dtech-main-light px-2.5 py-2 text-sm w-full shadow-underline text-left boder-b-1 shadow-dtech-dark-grey text-dtech-dark-grey cursor-pointer",
+                    "hover:bg-dtech-main-light px-2.5 py-2 text-sm w-full text-left boder-b-1 shadow-dtech-dark-grey text-dtech-dark-grey cursor-pointer",
                     className
                 )}
             >
