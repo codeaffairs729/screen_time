@@ -40,10 +40,11 @@ const TotalRecords = ({
                 <Dropdown
                     label={`${pageSize} results`}
                     menuItems={options}
-                    menuItemsClasses="!w-32 border border-dtech-main-dark"
+                    menuItemsClasses="!w-32  rounded-[10px]"
                     labelClasses=" text-m font-normal pr-2.5 "
                     className="!ml-0 "
                     iconClass="text-dtech-main-dark !ml-2.5"
+                    itemsClasses="rounded-[10px] shadow-none "
                 />
             </div>
             <div className="text-sm mt-1 ml-1">

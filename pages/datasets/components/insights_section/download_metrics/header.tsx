@@ -40,6 +40,8 @@ const DatasetDownloadMetricsHead = () => {
                     label={selectedLabel}
                 />
             }
+            itemsClasses="rounded-[10px] shadow-none "
+            menuItemsClasses="rounded-[10px]"
         />
     );
 };
