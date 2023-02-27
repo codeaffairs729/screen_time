@@ -75,7 +75,7 @@ const DatasetDetail = ({ dataset }: { dataset: Dataset | undefined }) => {
                                         <TabPanel className="!bg-dtech-light-grey">
                                             <DataFilesSection
                                                 goToPreview={() => {
-                                                    setSelectedIndex(1);
+                                                    setSelectedIndex(0);
                                                 }}
                                             />
                                         </TabPanel>
