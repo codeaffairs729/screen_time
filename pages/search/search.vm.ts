@@ -202,7 +202,6 @@ const SearchVM = (search = true) => {
                     const datasets = Dataset.fromJsonList(
                         res[0]["user_search"][0]["results"]
                     );
-                    console.log("dataset :", datasets);
                     const datasetIds = datasets.map((dataset) => dataset.id);
                     if (datasetIds.length) {
                         fectchStats(datasetIds);
@@ -220,7 +219,6 @@ const SearchVM = (search = true) => {
                 })
                 .catch((e) => {
                     setLoading(false);
-                    console.error(e);
                     throw e;
                 }),
         { revalidateOnFocus: false }
