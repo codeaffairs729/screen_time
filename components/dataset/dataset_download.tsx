@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import Http from "common/http";
-import Dataset from "models/dataset.model";
+import Dataset from "models/dataset.model.v4";
 import Image from "next/image";
 import { RootState } from "store";
 import { useSelector } from "react-redux";
