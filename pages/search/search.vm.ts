@@ -353,7 +353,8 @@ export const datasetToResultCardData = (datasets: any, stats: any): Data[] => {
             organisation: dataset.owner.organisation,
             hostName: dataset.detail.hostName,
             hostUuid: dataset.detail.hostUuid,
-            ownerUuid: dataset.owner.uuid
+            ownerUuid: dataset.owner.uuid,
+            hostUrl: dataset.detail.hostUrl
         },
     }));
 };

@@ -10,6 +10,7 @@ export interface DataProviders {
     hostName: string;
     hostUuid?: string;
     ownerUuid?: string;
+    hostUrl?: string;
 }
 
 const CardFooter = ({
@@ -23,7 +24,7 @@ const CardFooter = ({
     lastUpdate: DateTime;
     className?: string;
 }) => {
-    console.log("dataProviders :", dataProviders)
+    console.log("dataProviders :",dataProviders)
     return (
         <div
             className={clsx(
@@ -38,11 +39,11 @@ const CardFooter = ({
             )}
             {dataProviders && (
                 <div className="flex flex-row w-1/2 justify-start">
-                    <Link href={"#"}>
+                    <Link href={`${dataProviders.hostUrl}`}>
                         <a
                             target="_blank"
                             rel="noreferrer"
-                            className="text-xs underline mr-5"
+                            className="text-m underline mr-5 text-dtech-main-dark"
                         >
                             Source
                         </a>
@@ -53,15 +54,19 @@ const CardFooter = ({
                         labelClasses="font-normal text-m"
                         childClasses="font-medium text-m"
                     >
-                        {dataProviders.organisation &&
-                            dataProviders.organisation}
+                        <Link href={`/organisation/${dataProviders?.ownerUuid}`}>
+                            {dataProviders.organisation &&
+                                dataProviders.organisation}
+                        </Link>
                     </LabelledRow>
                     <LabelledRow
                         label="Host"
                         labelClasses="font-normal text-m"
                         childClasses="font-medium text-m"
                     >
-                        {dataProviders.hostName}
+                        <Link href={`/organisation/${dataProviders?.hostUuid}`}>
+                            {dataProviders.hostName}
+                        </Link>
                     </LabelledRow>
                 </div>
             )}
