@@ -44,6 +44,7 @@ class Dataset {
                 domain: dataset["domains"],
                 hostUrl: data_host["url"], // url -> dataset/data_host/url
                 hostName: data_host["organisation"], // organisation -> /data_host/organisation
+                hostUuid: data_host["uuid"],
                 name: dataset["title"], // name -> title
                 description: dataset["description"],
                 lastUpdate: DateTime.fromISO(dataset["last_updated"]),
@@ -71,6 +72,7 @@ class Dataset {
             },
             owner: {
                 name: contacts[0]["name"],
+                uuid: data_owner["uuid"],
                 organisation: data_owner["organisation"],
                 contact: {
                     email: contacts[0]["email"],
@@ -109,6 +111,7 @@ export type DatasetDetail = {
     domain: string[];
     hostUrl: string;
     hostName: string;
+    hostUuid: string;
     name: string;
     description: string;
     lastUpdate: DateTime;
@@ -134,6 +137,7 @@ export type DatasetDetail = {
 export type DatasetOwner = {
     name: string;
     organisation: string;
+    uuid: string;
     contact: {
         email: string;
         phone: string;
@@ -150,7 +154,7 @@ export type DatasetUrl = {
     version: string;
     sizemb: string;
     url: string;
-    lastUpdated: string;
+    lastUpdated?: string;
 };
 
 export default Dataset;

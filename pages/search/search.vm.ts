@@ -184,6 +184,10 @@ const SearchVM = (search = true) => {
                     setTotalRecords(totalRecords);
                     const resFitlerOptions =
                         res[0]["user_search"][0]["filter_options"];
+                    for (const filterOptions in resFitlerOptions) {
+                        resFitlerOptions[filterOptions].sort();
+                    }
+
                     setFilterOptions({
                         domains: resFitlerOptions["domains"],
                         file_formats: resFitlerOptions["file_formats"],
@@ -215,7 +219,6 @@ const SearchVM = (search = true) => {
                 })
                 .catch((e) => {
                     setLoading(false);
-                    console.error(e);
                     throw e;
                 }),
         { revalidateOnFocus: false }
@@ -351,6 +354,9 @@ export const datasetToResultCardData = (datasets: any, stats: any): Data[] => {
         dataProviders: {
             organisation: dataset.owner.organisation,
             hostName: dataset.detail.hostName,
+            hostUuid: dataset.detail.hostUuid,
+            ownerUuid: dataset.owner.uuid,
+            hostUrl: dataset.detail.hostUrl,
         },
     }));
 };

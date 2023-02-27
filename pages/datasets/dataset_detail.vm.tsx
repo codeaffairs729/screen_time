@@ -1,4 +1,4 @@
-import Dataset from "models/dataset.model";
+import Dataset from "models/dataset.model.v4";
 import Http from "common/http";
 import {
     createContext,

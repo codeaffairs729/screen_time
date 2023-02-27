@@ -75,7 +75,9 @@ const FileQuality = ({ item, items }: { item: any; items: any }) => {
                 starClassName="!w-6 !h-6 text-[#5F5F63]"
                 title={items[item].tooltipTitle}
             />
-            {items[item].total && (
+            {items[item].total === undefined ? (
+                " "
+            ) : (
                 <div>
                     <span className="mx-2">({items[item].total}</span>
                     <span>{items[item].ratingLabel})</span>

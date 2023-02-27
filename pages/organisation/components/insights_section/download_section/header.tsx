@@ -36,6 +36,8 @@ const DownloadHeader = () => {
             label={
                 <Label labelPrefix="Download metrics:" label={selectedLabel} />
             }
+            itemsClasses="rounded-[10px] shadow-none "
+            menuItemsClasses="rounded-[10px]"
         />
     );
 };

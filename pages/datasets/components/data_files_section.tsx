@@ -1,6 +1,6 @@
 import { useContext, useState, useRef } from "react";
 import { DatasetDetailVMContext } from "../dataset_detail.vm";
-import { DatasetUrl } from "models/dataset.model";
+import { DatasetUrl } from "models/dataset.model.v4";
 import { useSelector } from "react-redux";
 import { RootState } from "store";
 import { NotificationsVMContext } from "pages/workspace/notification.vm";
@@ -8,6 +8,8 @@ import downloadIcon from "public/images/icons/download.svg";
 import previewIcon from "public/images/icons/preview.svg";
 import doNotPreview from "public/images/icons/do_not_preview.svg";
 import Image from "next/image";
+import PreviewSection from "./preview_section";
+import { usereventDatasetDownload } from "services/usermetrics.service";
 
 const META_FILE_HEADERS = ["Name", "Format", "Size", "Download", "Preview"];
 
@@ -32,7 +34,7 @@ const DataFilesSection = ({ goToPreview }: { goToPreview: () => void }) => {
             }, 1000 * (index + 1));
         });
     };
-
+    console.log("vm.dataset :",vm.dataset)
     return (
         <div>
             <div className="mx-3 my-4   text-sm text-dtech-dark-grey">
@@ -90,6 +92,7 @@ const DataFilesSection = ({ goToPreview }: { goToPreview: () => void }) => {
                                         key={i}
                                         goToPreview={goToPreview}
                                         onDownload={() => {
+                                            vm.dataset !== undefined && usereventDatasetDownload(vm.dataset,url.url)
                                             createFeedbackNotification(
                                                 vm.dataset,
                                                 user
@@ -132,63 +135,77 @@ const DataFileRow = ({
         sizemb = url.sizemb + " KB";
     }
     return (
-        <tr className="border-b border-gray-200 bg-[#FEFEFE] hover:bg-dtech-main-light">
-            <td className="py-3 px-6 text-center whitespace-nowrap">
-                <div className="flex justify-center items-center font-normal text-sm text-center">{`${description}`}</div>
-            </td>
-            <td className="py-3 px-6 text-center">
-                <div className="flex justify-center items-center">
-                    <span className="py-1 px-3 rounded-full text-sm font-normal">
-                        {`${url.format}`}
-                    </span>
-                </div>
-            </td>
-            <td className="py-3 px-6 text-center">
-                <div className="flex items-center justify-center font-normal">
-                    {sizemb}
-                </div>
-            </td>
-            <td className="py-3 px-6 text-center">
-                <a
-                    onClick={() => onDownload()}
-                    href={url.url?.replace(/["']/g, "")}
-                    className="underline"
-                    download
-                    ref={downloadRef}
-                    id="downloadAll"
-                >
-                    <Image src={downloadIcon} alt="" height={24} width={24} />
-                </a>
-            </td>
-            <td className="py-3 px-6 text-center">
-                <div className="flex item-center justify-center">
-                    {!preview ? (
+        <>
+            <tr className="border-b border-gray-200 bg-[#FEFEFE] hover:bg-dtech-main-light">
+                <td className="py-3 px-6 text-center whitespace-nowrap">
+                    <div className="flex justify-center items-center font-normal text-sm text-center">{`${description}`}</div>
+                </td>
+                <td className="py-3 px-6 text-center">
+                    <div className="flex justify-center items-center">
+                        <span className="py-1 px-3 rounded-full text-sm font-normal">
+                            {`${url.format}`}
+                        </span>
+                    </div>
+                </td>
+                <td className="py-3 px-6 text-center">
+                    <div className="flex items-center justify-center font-normal">
+                        {sizemb}
+                    </div>
+                </td>
+                <td className="py-3 px-6 text-center">
+                    <a
+                        onClick={() => onDownload()}
+                        href={url.url?.replace(/["']/g, "")}
+                        className="underline"
+                        download
+                        ref={downloadRef}
+                        id="downloadAll"
+                    >
                         <Image
-                            src={previewIcon}
+                            src={downloadIcon}
                             alt=""
                             height={24}
                             width={24}
-                            onClick={() => {
-                                goToPreview();
-                                setPreview(!preview);
-                            }}
-                            className="mx-auto text-lg cursor-pointer"
                         />
-                    ) : (
-                        <Image
-                            src={doNotPreview}
-                            alt=""
-                            height={24}
-                            width={24}
-                            onClick={() => {
-                                setPreview(!preview);
-                            }}
-                            className="mx-auto text-lg cursor-pointer"
-                        />
-                    )}
-                </div>
-            </td>
-        </tr>
+                    </a>
+                </td>
+                <td className="py-3 px-6 text-center">
+                    <div className="flex item-center justify-center">
+                        {!preview ? (
+                            <Image
+                                src={previewIcon}
+                                alt=""
+                                height={24}
+                                width={24}
+                                onClick={() => {
+                                    goToPreview();
+                                    setPreview(!preview);
+                                }}
+                                className="mx-auto text-lg cursor-pointer"
+                            />
+                        ) : (
+                            <Image
+                                src={doNotPreview}
+                                alt=""
+                                height={24}
+                                width={24}
+                                onClick={() => {
+                                    setPreview(!preview);
+                                }}
+                                className="mx-auto text-lg cursor-pointer"
+                            />
+                        )}
+                    </div>
+                </td>
+            </tr>
+            {preview && (
+                <tr className="border-b border-gray-200 bg-[#FEFEFE] hover:bg-dtech-main-light">
+                    <td colSpan={5}>
+                        <PreviewSection />
+                    </td>
+                </tr>
+            )}{" "}
+        </>
     );
 };
 

@@ -8,6 +8,9 @@ import Link from "next/link";
 export interface DataProviders {
     organisation: string;
     hostName: string;
+    hostUuid?: string;
+    ownerUuid?: string;
+    hostUrl?: string;
 }
 
 const CardFooter = ({
@@ -21,6 +24,7 @@ const CardFooter = ({
     lastUpdate: DateTime;
     className?: string;
 }) => {
+
     return (
         <div
             className={clsx(
@@ -34,12 +38,12 @@ const CardFooter = ({
                 </div>
             )}
             {dataProviders && (
-                <div className="flex flex-row w-1/2 justify-start">
-                    <Link href={"#"}>
+                <div className="flex flex-row w-1/2 justify-start items-center">
+                    <Link href={`${dataProviders.hostUrl}`}>
                         <a
                             target="_blank"
                             rel="noreferrer"
-                            className="text-xs underline mr-5"
+                            className="text-m font-semibold hover:underline underline-offset-2 mr-5 text-dtech-main-dark"
                         >
                             Source
                         </a>
@@ -48,17 +52,25 @@ const CardFooter = ({
                         label="Owner"
                         className="mr-12"
                         labelClasses="font-normal text-m"
-                        childClasses="font-medium text-m"
+                        childClasses="font-medium text-m hover:underline underline-offset-2"
                     >
-                        {dataProviders.organisation &&
-                            dataProviders.organisation}
+                        <Link
+                            href={`/organisation/${dataProviders?.ownerUuid}`}
+                        >
+                            <a target="_blank">
+                                {dataProviders.organisation &&
+                                    dataProviders.organisation}
+                            </a>
+                        </Link>
                     </LabelledRow>
                     <LabelledRow
                         label="Host"
                         labelClasses="font-normal text-m"
-                        childClasses="font-medium text-m"
+                        childClasses="font-medium text-m hover:underline underline-offset-2"
                     >
-                        {dataProviders.hostName}
+                        <Link href={`/organisation/${dataProviders?.hostUuid}`}>
+                            <a target="_blank">{dataProviders.hostName}</a>
+                        </Link>
                     </LabelledRow>
                 </div>
             )}

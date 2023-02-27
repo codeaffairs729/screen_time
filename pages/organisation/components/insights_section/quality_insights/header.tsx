@@ -32,6 +32,8 @@ const QualityInsightsHead = () => {
             label={
                 <Label labelPrefix="Dataset quality:" label={selectedLabel} />
             }
+            itemsClasses="rounded-[10px] shadow-none "
+            menuItemsClasses="rounded-[10px]"
         />
     );
 };

@@ -43,7 +43,7 @@ const Notification = () => {
             >
                 <Menu.Items
                     aria-label="profile dropdown menu"
-                    className="shadow-custom-1 top-[25px] py-2 px-2.5 mt-1 select-none max-h-[80vh] overflow-auto absolute z-30 right-0 w-80 origin-top-right bg-white"
+                    className="shadow-custom-1 top-[25px] py-2 px-2.5 mt-1 select-none max-h-[80vh] overflow-auto absolute z-30 right-0 w-80 origin-top-right bg-white  rounded-[10px] "
                 >
                     <div className="flex px-2.5 pt-2 justify-between items-center">
                         <span className="text-sm font-medium text-gray-800">

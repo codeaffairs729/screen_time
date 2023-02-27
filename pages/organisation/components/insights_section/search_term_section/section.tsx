@@ -6,6 +6,7 @@ import { DateTime } from "luxon";
 import { getAge } from "pages/workspace/notification.vm";
 import { SearchTermType, SearchTermVMContext } from "./search_term.vm";
 import ErrorAlert from "components/UI/alerts/error_alert";
+import InfoAlert from "components/UI/alerts/info_alert";
 
 const TABLE_HEADERS = ["Search term", "Count", "Last used"];
 const SearchTermSection = () => {
@@ -33,11 +34,22 @@ const SearchTermSection = () => {
             />
         );
     }
+
+    if (!searchTerms.length) {
+        return (
+            <InfoAlert
+                message="There is no data to show"
+                className="mt-5 ml-20 mr-32"
+                messageClassName="ml-56 font-semibold !text-lg !text-blue-800"
+                divClassName="flex flex-row"
+            />
+        );
+    }
     return (
         <div className="ml-8 mr-24 block h-[44rem] overflow-y-scroll no-scrollbar whitespace-nowrap">
             <div className="ml-4 my-6 text-sm text-dtech-dark-grey">
-                Search terms used to discover the organisation&#39;s datasets are
-                shown below as a tag cloud as well as a table.
+                Search terms used to discover the organisation&#39;s datasets
+                are shown below as a tag cloud as well as a table.
             </div>
             {!isFetchingSearchTerms && searchTerms && searchTerms?.length ? (
                 <>

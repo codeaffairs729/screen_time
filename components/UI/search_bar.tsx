@@ -159,7 +159,9 @@ const ValueContainer = ({ children, ...props }: any) => {
                             ? "!text-lg rounded-[10px] shadow-none"
                             : "rounded-[10px] shadow-none"
                     }
-                    menuItemsClasses="rounded-[10px]"
+                    menuItemsClasses={
+                        isHomePage ? "rounded-[10px] !mt-5 mr-[-5px]" : "rounded-[10px] !mt-3"
+                    }
                 />
             </div>
         </components.ValueContainer>
