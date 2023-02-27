@@ -30,11 +30,11 @@ const CardHead = ({
                         Featured
                     </span>
                 )} */}
-                <Link href={href}>
-                    <a className="font-medium font-roboto text-md my-3 text-dtech-main-dark text-[17px] ml-[-8px] cursor-pointer hover:underline underline-offset-4">
+                {/* <Link href={href}> */}
+                    <a href={href} className="font-medium font-roboto text-md my-3 text-dtech-main-dark text-[17px] ml-[-8px] cursor-pointer hover:underline underline-offset-4">
                         {title}
                     </a>
-                </Link>
+                {/* </Link> */}
                 <MetaRating
                     dataQuality={dataQuality}
                     displayContext={"displayContext"}

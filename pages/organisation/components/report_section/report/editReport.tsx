@@ -10,6 +10,7 @@ const TOOLBAR_OPTIONS = {
     },
     link: {
         options: ["link"],
+        showOpenOptionOnHover: false,
         link:{
             title:"HyperLink"
         }
@@ -26,7 +27,7 @@ const EditReport = () => {
     const { editorState, onEditorStateChange } = useContext(ReportVMContext);
 
     return (
-        <div className="bg-white shadow-paper-shadow mt-4 overflow-y-scroll">
+        <div className="bg-white shadow-paper-shadow mt-4 overflow-y-scroll editor-custom-link">
             <Editor
                 editorState={editorState}
                 toolbar={TOOLBAR_OPTIONS}
