@@ -54,9 +54,13 @@ const CardFooter = ({
                         labelClasses="font-normal text-m"
                         childClasses="font-medium text-m hover:underline underline-offset-2"
                     >
-                        <Link href={`/organisation/${dataProviders?.ownerUuid}`}>
-                            {dataProviders.organisation &&
-                                dataProviders.organisation}
+                        <Link
+                            href={`/organisation/${dataProviders?.ownerUuid}`}
+                        >
+                            <a target="_blank">
+                                {dataProviders.organisation &&
+                                    dataProviders.organisation}
+                            </a>
                         </Link>
                     </LabelledRow>
                     <LabelledRow
@@ -65,7 +69,7 @@ const CardFooter = ({
                         childClasses="font-medium text-m hover:underline underline-offset-2"
                     >
                         <Link href={`/organisation/${dataProviders?.hostUuid}`}>
-                            {dataProviders.hostName}
+                            <a target="_blank">{dataProviders.hostName}</a>
                         </Link>
                     </LabelledRow>
                 </div>

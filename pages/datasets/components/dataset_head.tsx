@@ -90,7 +90,7 @@ const DatasetHead = ({ dataset }: any) => {
             <div className="my-4">
                 <div className="flex justify-between items-center">
                     <DatasetStat stats={stat} />
-                    <Link href={"#"}>
+                    <Link href={`${dataset.detail.hostUrl}`}>
                         <a
                             target="_blank"
                             rel="noreferrer"
@@ -105,21 +105,33 @@ const DatasetHead = ({ dataset }: any) => {
                         label="Host"
                     >
                         <strong>
-                            <a
-                                href={dataset.detail.hostUrl}
-                                target="_blank"
-                                rel="noreferrer"
-                                className="text-xs underline"
+                            <Link
+                                href={`/organisation/${dataset.detail.hostUuid}`}
                             >
-                                {dataset.detail.hostName}
-                            </a>
+                                <a
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    className="text-xs underline"
+                                >
+                                    {dataset.detail.hostName}
+                                </a>
+                            </Link>
                         </strong>
                     </LabelledRow>
                     <LabelledRow
                         className=" flex-col justify-center items-center"
                         label="Owner"
                     >
-                        {dataset.owner.organisation}
+                        <strong>
+                            <a
+                                href={`/organisation/${dataset.owner.uuid}`}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="text-xs underline"
+                            >
+                                {dataset.owner.organisation}
+                            </a>
+                        </strong>
                     </LabelledRow>
                     <div>
                         <span className="text-sm text-dtech-dark-grey">
