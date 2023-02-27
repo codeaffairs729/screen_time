@@ -184,6 +184,10 @@ const SearchVM = (search = true) => {
                     setTotalRecords(totalRecords);
                     const resFitlerOptions =
                         res[0]["user_search"][0]["filter_options"];
+                    for (const filterOptions in resFitlerOptions) {
+                        resFitlerOptions[filterOptions].sort();
+                    }
+
                     setFilterOptions({
                         domains: resFitlerOptions["domains"],
                         file_formats: resFitlerOptions["file_formats"],
@@ -198,7 +202,7 @@ const SearchVM = (search = true) => {
                     const datasets = Dataset.fromJsonList(
                         res[0]["user_search"][0]["results"]
                     );
-                    console.log("dataset :",datasets)
+                    console.log("dataset :", datasets);
                     const datasetIds = datasets.map((dataset) => dataset.id);
                     if (datasetIds.length) {
                         fectchStats(datasetIds);
@@ -354,7 +358,7 @@ export const datasetToResultCardData = (datasets: any, stats: any): Data[] => {
             hostName: dataset.detail.hostName,
             hostUuid: dataset.detail.hostUuid,
             ownerUuid: dataset.owner.uuid,
-            hostUrl: dataset.detail.hostUrl
+            hostUrl: dataset.detail.hostUrl,
         },
     }));
 };
