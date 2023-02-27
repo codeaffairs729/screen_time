@@ -1,5 +1,5 @@
 import { posthog } from "posthog-js";
-import Dataset from "models/dataset.model";
+import Dataset from "models/dataset.model.v4";
 import User from "models/user.model";
 
 export const usereventLogin = (user: User) => {

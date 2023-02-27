@@ -9,6 +9,7 @@ import previewIcon from "public/images/icons/preview.svg";
 import doNotPreview from "public/images/icons/do_not_preview.svg";
 import Image from "next/image";
 import PreviewSection from "./preview_section";
+import { usereventDatasetDownload } from "services/usermetrics.service";
 
 const META_FILE_HEADERS = ["Name", "Format", "Size", "Download", "Preview"];
 
@@ -33,7 +34,7 @@ const DataFilesSection = ({ goToPreview }: { goToPreview: () => void }) => {
             }, 1000 * (index + 1));
         });
     };
-
+    console.log("vm.dataset :",vm.dataset)
     return (
         <div>
             <div className="mx-3 my-4   text-sm text-dtech-dark-grey">
@@ -91,6 +92,7 @@ const DataFilesSection = ({ goToPreview }: { goToPreview: () => void }) => {
                                         key={i}
                                         goToPreview={goToPreview}
                                         onDownload={() => {
+                                            vm.dataset !== undefined && usereventDatasetDownload(vm.dataset,url.url)
                                             createFeedbackNotification(
                                                 vm.dataset,
                                                 user
