@@ -29,7 +29,6 @@ const QualityMetricsVM = () => {
                     return jsonToQualityMetrics(res);
                 },
                 onError: (e) => {
-                    console.log(e);
                     toast.error(
                         "Something went wrong while fetching organisation Data Quality insights."
                     );
@@ -65,7 +64,7 @@ export const QualityMetricsVMContext = createContext<IQualityMetricsVMContext>(
 const jsonToQualityMetrics = (json: any): any => ({
     metaDataQuality: {
         overallScore: getmetaQualityScore(
-            json["metadata_quality"]["overall_score"],
+            json["metadata_quality"]["overall"],
             "overallScore",
             "Average of all dimensions listed."
         ),
@@ -97,10 +96,10 @@ const jsonToQualityMetrics = (json: any): any => ({
     },
     dataFileQuality: {
         overallScore: getdataQualityScore(
-            json["datafile_quality"]["overall_score"],
+            json["datafile_quality"]["overall"],
             "overallScore",
             "votes",
-            json["datafile_quality"]["overall_score"]["total"]
+            json["datafile_quality"]["overall"]["total"]
         ),
         // feedbackSentiment: getdataQualityScore(
         //     json["datafile_quality"]["feedback_sentiment"],
@@ -144,6 +143,7 @@ const getmetaQualityScore = (
     rating: data.rating,
     tooltipTitle: tooltipTitle,
 });
+
 const getdataQualityScore = (
     data: any,
     title: string,
