@@ -72,7 +72,7 @@ class Dataset {
             },
             owner: {
                 name: contacts[0]["name"],
-                ownerUuid: data_owner["uuid"],
+                uuid: data_owner["uuid"],
                 organisation: data_owner["organisation"],
                 contact: {
                     email: contacts[0]["email"],
@@ -137,7 +137,7 @@ export type DatasetDetail = {
 export type DatasetOwner = {
     name: string;
     organisation: string;
-    ownerUuid: string;
+    uuid: string;
     contact: {
         email: string;
         phone: string;

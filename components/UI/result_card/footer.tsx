@@ -8,6 +8,8 @@ import Link from "next/link";
 export interface DataProviders {
     organisation: string;
     hostName: string;
+    hostUuid?: string;
+    ownerUuid?: string;
 }
 
 const CardFooter = ({
@@ -21,6 +23,7 @@ const CardFooter = ({
     lastUpdate: DateTime;
     className?: string;
 }) => {
+    console.log("dataProviders :", dataProviders)
     return (
         <div
             className={clsx(
