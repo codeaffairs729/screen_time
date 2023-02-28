@@ -27,10 +27,10 @@ const RelatedDatasetsVM = (dataset: any) => {
                     `/v5/datasets/related-by-domains-and-topics/${dataset?.id}`,
                     {
                         baseUrl: process.env.NEXT_PUBLIC_PUBLIC_API_V5_ROOT,
-                        // extraHeaders: {
-                        //     "Content-type": "application/json",
-                        //     "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2Nzc2NTQxODEsImlhdCI6MTY3NzU2Nzc4MSwic3ViIjo0Njd9.aOQOK-sWUXk6rnZObZKvOCReT4hEQ-4yUs01NLHniLs"
-                        // },
+                        extraHeaders: {
+                            "Content-type": "application/json",
+                            "x-api-key": process.env.NEXT_PUBLIC_MARK_KEY,
+                        },
                     }
                 );
             },
@@ -73,10 +73,10 @@ const RelatedDatasetsVM = (dataset: any) => {
                     `/v5/datasets/related-by-description/${dataset?.id}`,
                     {
                         baseUrl: process.env.NEXT_PUBLIC_PUBLIC_API_V5_ROOT,
-                        // extraHeaders: {
-                        //     "Content-type": "application/json",
-                        //     "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2Nzc2NTQxODEsImlhdCI6MTY3NzU2Nzc4MSwic3ViIjo0Njd9.aOQOK-sWUXk6rnZObZKvOCReT4hEQ-4yUs01NLHniLs"
-                        // },
+                        extraHeaders: {
+                            "Content-type": "application/json",
+                            "x-api-key": process.env.NEXT_PUBLIC_MARK_KEY,
+                        },
                     }
                 );
             },
