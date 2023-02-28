@@ -65,7 +65,7 @@ const DatasetHead = ({ dataset }: any) => {
                             title="Estimated based on the EU Metadata Quality Assessment method."
                         />
                         <fieldset className=" min-h-full px-4 border rounded border-[#5F5F63]  text-xs pb-0.5">
-                            <legend className="text-xs mr-8">License</legend>
+                            <legend className="text-xs mr-8">Licence</legend>
                             <div>
                                 <label>{license?.type}</label>
                             </div>

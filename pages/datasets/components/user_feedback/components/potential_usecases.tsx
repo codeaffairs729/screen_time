@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Select, { components } from "react-select";
 import { useController } from "react-hook-form";
+import CreatableSelect from 'react-select/creatable';
 
 interface SelectOption {
     value: string;
@@ -38,7 +39,7 @@ const PotentialUsecases = ({ vm }: { vm: any }) => {
             <p className="font-light text-xl w-[70%] mb-2 ">
                 2.What are the potential use cases for this data?
             </p>
-            <Select
+            <CreatableSelect
                 isMulti
                 name={name}
                 options={usecaseOptions}

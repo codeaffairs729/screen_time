@@ -26,7 +26,7 @@ const DatasetTabHeaders = ({
                 <div>
                     <HeadTag
                         isSelected={selectedInsightTab == 0}
-                        label={"data_quality"}
+                        label={"dataset_quality"}
                         setSelected={onTabSelect}
                     ></HeadTag>
                     {selectedInsightTab == 0 && <DatasetQualityInsightsHead />}

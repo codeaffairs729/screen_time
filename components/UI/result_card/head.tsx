@@ -58,7 +58,7 @@ const CardHead = ({
                     //     <span className="my-auto"></span>
                     // </button>
                        <fieldset className=" min-h-full px-4 border rounded border-[#5F5F63]  text-xs pb-0.5" key={index}>
-                       <legend className="text-xs mr-8">License</legend>
+                       <legend className="text-xs mr-8">Licence</legend>
                        <div>
                            <label>{`${tag[0].toUpperCase()}${tag.slice(
                             1
