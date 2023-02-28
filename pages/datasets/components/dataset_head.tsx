@@ -43,6 +43,7 @@ const DatasetHead = ({ dataset }: any) => {
         topics,
         keywords,
         license,
+        dataQuality
     } = dataset.detail || {};
 
     const stat = {
@@ -61,7 +62,7 @@ const DatasetHead = ({ dataset }: any) => {
                     </div>
                     <div className="flex justify-between items-center">
                         <MetaRating
-                            dataQuality={3}
+                            dataQuality={dataQuality}
                             title="Estimated based on the EU Metadata Quality Assessment method."
                         />
                         <fieldset className=" min-h-full px-4 border rounded border-[#5F5F63]  text-xs pb-0.5">
