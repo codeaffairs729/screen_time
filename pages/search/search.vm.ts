@@ -184,9 +184,9 @@ const SearchVM = (search = true) => {
                     setTotalRecords(totalRecords);
                     const resFitlerOptions =
                         res[0]["user_search"][0]["filter_options"];
-                    for (const filterOptions in resFitlerOptions) {
-                        resFitlerOptions[filterOptions].sort();
-                    }
+                    Object.keys(resFitlerOptions).map((filterOption: any) => {
+                        resFitlerOptions[filterOption].sort();
+                    });
 
                     setFilterOptions({
                         domains: resFitlerOptions["domains"],

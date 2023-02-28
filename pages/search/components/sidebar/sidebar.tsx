@@ -19,7 +19,7 @@ const Sidebar = ({ className = "" }: { className?: string }) => {
 
     return (
         <div
-            className={clsx("border-0 rounded overflow-hidden mx-3 ", className)}
+            className={clsx("border-0 rounded overflow-hidden mx-3 mt-[6.50px] ", className)}
         >
             <div className="flex justify-between text-black text-lg font-medium pr-2 py-0.5 rounded overflow-hidden my-2 mt-4">
                 <span>Filters</span>

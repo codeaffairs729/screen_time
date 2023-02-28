@@ -8,7 +8,6 @@ const UsecaseDescription = ({ vm }: { vm: any }) => {
             label="Describe your data use case briefly"
             isTwoRow={true}
             className="flex-col w-[92%]"
-            tooltip={"Additional comments on data quality"}
         >
             <TextField
                 rows={6}

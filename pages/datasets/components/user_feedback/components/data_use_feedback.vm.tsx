@@ -40,7 +40,7 @@ const DataUseFeedbackVM = () => {
                 ),
             {
                 onSuccess: (res) => {
-                    toast.success("The data source was successfully added.");
+                    toast.success("The form was successfully submitted.");
                     setIsSubmissionSuccess(true);
                 },
                 onError: (e) =>
