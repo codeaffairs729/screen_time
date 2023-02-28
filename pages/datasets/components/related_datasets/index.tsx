@@ -1,6 +1,6 @@
 import ErrorAlert from "components/UI/alerts/error_alert";
 import Loader from "components/UI/loader";
-import { ReactNode, useContext } from "react";
+import { ReactNode, useContext, useEffect } from "react";
 import DatasetList from "components/UI/dataset_list";
 import { Tab } from "@headlessui/react";
 import { RelatedDatasetsVMContext } from "./related_datasets.vm";
@@ -28,9 +28,21 @@ const RelatedDatasets = () => {
         datasetsByDescription,
         errorByCategory,
         errorByDescription,
+        fetchDatasetsByCategory,
+        fetchDatasetsByDescription,
     } = useContext(RelatedDatasetsVMContext);
 
-    if (isLoading || datasetsByCategory.length == 0 || datasetsByDescription.length == 0) {
+    useEffect(() => {
+        fetchDatasetsByCategory();
+        fetchDatasetsByDescription();
+    }, []);
+
+    if (
+        isLoading
+        //  ||
+        // datasetsByCategory.length == 0 ||
+        // datasetsByDescription.length == 0
+    ) {
         return (
             <div className="h-full w-full flex items-center justify-center">
                 <Loader />

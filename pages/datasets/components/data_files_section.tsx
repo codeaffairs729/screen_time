@@ -34,7 +34,6 @@ const DataFilesSection = ({ goToPreview }: { goToPreview: () => void }) => {
             }, 1000 * (index + 1));
         });
     };
-    console.log("vm.dataset :",vm.dataset)
     return (
         <div>
             <div className="mx-3 my-4   text-sm text-dtech-dark-grey">
