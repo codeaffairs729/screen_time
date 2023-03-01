@@ -50,10 +50,11 @@ const StarRatingInput = ({
                                         : "text-gray-500"
                                 }`}
                                 onClick={() => {
-                                    rating == index
-                                        ? setRating(0)
-                                        : setRating(index);
                                     onChange(index);
+                                    rating == index
+                                        ? (setRating(undefined),
+                                          onChange(undefined))
+                                        : setRating(index);
                                     setDK(false);
                                 }}
                                 onMouseEnter={() => setHover(index)}
