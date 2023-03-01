@@ -26,7 +26,7 @@ const OrganisationHead = () => {
         lastUpdate,
         buttonTags,
     } = organisation || {};
-    console.log("organisation", organisation.buttonTags);
+
 
     const cardActionData = organisationToResultCardData([organisation])[0];
 

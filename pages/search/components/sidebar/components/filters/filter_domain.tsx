@@ -26,7 +26,6 @@ const FilterDomain = () => {
             checkbox: false,
         }));
         setFilterOptionItems(domains);
-        console.log("vm.filterOptions", vm.filterOptions);
     }, [vm.filterOptions]);
 
     const { register, fields } = useSearchFilter({
