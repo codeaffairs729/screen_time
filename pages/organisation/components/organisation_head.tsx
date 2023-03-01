@@ -24,7 +24,9 @@ const OrganisationHead = () => {
         topics,
         stats,
         lastUpdate,
+        buttonTags,
     } = organisation || {};
+    console.log("organisation", organisation.buttonTags);
 
     const cardActionData = organisationToResultCardData([organisation])[0];
 
@@ -40,9 +42,21 @@ const OrganisationHead = () => {
                             dataQuality={dataQuality ?? 0}
                             title="Estimated based on the EU Metadata Quality Assessment method."
                         />
-                        <button className="ml-8 text-m h-6 px-4 border cursor-pointer rounded border-[#5F5F63]">
-                            <span className="my-auto">Open</span>
-                        </button>
+                        {buttonTags?.map((tag: string, index: number) => (
+                            <fieldset
+                                className=" min-h-full px-4 border rounded border-[#5F5F63]  text-xs pb-0.5"
+                                key={index}
+                            >
+                                <legend className="text-xs mr-8">
+                                    Licence
+                                </legend>
+                                <div>
+                                    <label>{`${tag[0].toUpperCase()}${tag.slice(
+                                        1
+                                    )}`}</label>
+                                </div>
+                            </fieldset>
+                        ))}
                     </div>
                 </div>
                 <ResultCardAction
