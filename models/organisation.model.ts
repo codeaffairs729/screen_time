@@ -14,6 +14,7 @@ class Organisation {
         stats,
         isFavourited,
         lastUpdate,
+        url,
     }: OrganisationDetail) {
         this.id = id;
         this.uuid = uuid;
@@ -27,6 +28,7 @@ class Organisation {
         this.stats = stats;
         this.isFavourited = isFavourited;
         this.lastUpdate = lastUpdate;
+        this.url = url;
     }
     id: number;
     uuid: string;
@@ -40,6 +42,7 @@ class Organisation {
     stats: DataStats;
     isFavourited: boolean;
     lastUpdate: DateTime;
+    url: string;
 
     static fromJson(json: { [key: string]: any }) {
         const domains =
@@ -70,6 +73,7 @@ class Organisation {
                 downloadCount: json["download_count"],
             },
             lastUpdate: json["last_updated"],
+            url: json["url"],
         });
     }
 
@@ -92,6 +96,7 @@ export type OrganisationDetail = {
     lastUpdate: DateTime;
     stats: DataStats;
     isFavourited: boolean;
+    url: string;
 };
 
 export type DataStats = {

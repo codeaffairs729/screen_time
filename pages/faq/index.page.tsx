@@ -57,8 +57,14 @@ const FAQPage = () => {
                             transferred into editable reports to help Data
                             Providers easily create business cases. 💡 If you
                             are an open or commercial Data Provider who would
-                            like to arrange a call with us, please use this
-                            link.
+                            like to arrange a call with us, please
+                            <a
+                                className="text-blue-600"
+                                href="https://calendly.com/d/dmc-3n6-p55/dtechtive?month=2023-03"
+                            >
+                                {" "}
+                                use this link.
+                            </a>
                         </span>
                     </Accordian>
                     <Accordian
@@ -78,7 +84,13 @@ const FAQPage = () => {
                             with data and help accelerate data-informed decision
                             making with the organisation. 💡 If you are
                             representing an Enterprise with custom needs, please
-                            use this link to arrange a call with us.
+                            <a
+                                className="text-blue-600"
+                                href="https://calendly.com/d/dmc-3n6-p55/dtechtive?month=2023-03"
+                            >
+                                use this link
+                            </a>{" "}
+                            to arrange a call with us.
                         </span>
                     </Accordian>
                     <Accordian
@@ -93,14 +105,38 @@ const FAQPage = () => {
                             creating a free account will help you unlock a lot
                             of useful features and improve data discoverability
                             for all. 💡 If you are an individual Data User, we
-                            encourage you to create a free account using this
-                            link. 💡 If you are representing an Organisation
-                            with one or more Data Users, you may use this link.
+                            encourage you to create a free account{" "}
+                            <a
+                                className="text-blue-600"
+                                href="https://dtechtive.com/signup?signup_type=individual"
+                            >
+                                using this link.
+                            </a>{" "}
+                            💡 If you are representing an Organisation with one
+                            or more Data Users, you may{" "}
+                            <a
+                                className="text-blue-600"
+                                href="https://dtechtive.com/signup?signup_type=org_admin"
+                            >
+                                use this link.
+                            </a>{" "}
                             💡 If you are an open or commercial Data Provider,
                             we encourage you to create a free account on
-                            Dtechtive using this link and submit your data
-                            source website details using this form to help us
-                            start the dataset onboarding process.
+                            Dtechtive{" "}
+                            <a
+                                className="text-blue-600"
+                                href="https://dtechtive.com/signup?signup_type=org_admin"
+                            >
+                                using this link
+                            </a>{" "}
+                            and submit your data source website details{" "}
+                            <a
+                                className="text-blue-600"
+                                href="https://dtechtive.com/login"
+                            >
+                                using this form
+                            </a>{" "}
+                            to help us start the dataset onboarding process.
                         </span>
                     </Accordian>
                     <Accordian
@@ -122,10 +158,22 @@ const FAQPage = () => {
                             day, etc.) to those who have created accounts.
                             Whenever they are introduced to sustain the product,
                             the paid plans will provide unlimited access to all
-                            features. 💡 If you are an early adopter, please use
-                            this link to report any issues/bugs with the current
-                            version. 💡 If you would like to get on a call with
-                            us, please use this link.
+                            features. 💡 If you are an early adopter, please{" "}
+                            <a
+                                className="text-blue-600"
+                                href="https://docs.google.com/forms/d/e/1FAIpQLSfzVMws_whcmJFbjYtR63N9xBYWOW3yYKPzVr7ewHum-saLsw/viewform"
+                            >
+                                use this link
+                            </a>{" "}
+                            to report any issues/bugs with the current version.
+                            💡 If you would like to get on a call with us,
+                            please{" "}
+                            <a
+                                className="text-blue-600"
+                                href="https://calendly.com/d/dmc-3n6-p55/dtechtive?month=2023-03"
+                            >
+                                use this link.
+                            </a>
                         </span>
                     </Accordian>
                     <Accordian
@@ -135,11 +183,35 @@ const FAQPage = () => {
                         <span className="px-4 py-2 w-full text-sm">
                             Dtechtive assesses metadata quality and data file
                             quality using different approaches. Metadata quality
-                            is assessed algorithmically based on the Metadata
-                            Quality Assessment (MQA) methodology of the European
-                            Commission inspired by the FAIR principles of the GO
-                            FAIR initiative. Data file quality is assessed based
-                            on user feedback gathered through Dtechtive.
+                            is assessed algorithmically based on the{" "}
+                            <a
+                                className="text-blue-600"
+                                href="https://data.europa.eu/mqa/methodology?locale=en"
+                            >
+                                Metadata Quality Assessment (MQA) methodology{" "}
+                            </a>{" "}
+                            of the European Commission inspired by the FAIR
+                            principles of the GO{" "}
+                            <a
+                                className="text-blue-600"
+                                href="https://www.go-fair.org/fair-principles/"
+                            >
+                                FAIR principles{" "}
+                            </a>{" "}
+                            Data file quality is assessed based on user feedback
+                            gathered through Dtechtive.
+                        </span>
+                    </Accordian>
+                    <Accordian
+                        className="!bg-dtech-main-light"
+                        label={"How does Dtechtive assess dataset quality?"}
+                    >
+                        <span className="px-4 py-2 w-full text-sm">
+                            Yes, we are developing a feature that will enable
+                            any registered user to upload their datasets to
+                            Dtechtive and publish them for better
+                            discoverability. This feature will be available in
+                            the My Workspace page.
                         </span>
                     </Accordian>
                 </div>

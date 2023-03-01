@@ -24,7 +24,10 @@ const OrganisationHead = () => {
         topics,
         stats,
         lastUpdate,
+        buttonTags,
+        url,
     } = organisation || {};
+
 
     const cardActionData = organisationToResultCardData([organisation])[0];
 
@@ -40,9 +43,21 @@ const OrganisationHead = () => {
                             dataQuality={dataQuality ?? 0}
                             title="Estimated based on the EU Metadata Quality Assessment method."
                         />
-                        <button className="ml-8 text-m h-6 px-4 border cursor-pointer rounded border-[#5F5F63]">
-                            <span className="my-auto">Open</span>
-                        </button>
+                        {buttonTags?.map((tag: string, index: number) => (
+                            <fieldset
+                                className=" min-h-full px-4 border rounded border-[#5F5F63]  text-xs pb-0.5"
+                                key={index}
+                            >
+                                <legend className="text-xs mr-8">
+                                    Licence
+                                </legend>
+                                <div>
+                                    <label>{`${tag[0].toUpperCase()}${tag.slice(
+                                        1
+                                    )}`}</label>
+                                </div>
+                            </fieldset>
+                        ))}
                     </div>
                 </div>
                 <ResultCardAction
@@ -55,7 +70,7 @@ const OrganisationHead = () => {
                 <div className="flex justify-between">
                     <span className="text-sm w-2/3">{description}</span>
                     {/* Add Website Url */}
-                    <a href="#" target="_blank">
+                    <a href={`${url}`} target="_blank" rel="noreferrer">
                         <img
                             data-tip={"Click to open website"}
                             src={imgUrl}

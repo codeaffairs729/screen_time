@@ -80,7 +80,7 @@ function DtechtiveApp({ Component, pageProps }: AppProps) {
         <>
             <Head>
                 <link rel="shortcut icon" href="/Dtechtive_Favicon.svg" />
-                <title>Dtechtive | Delivering Multiple Types of Datasets</title>
+                <title>Dtechtive | Making datasets discoverable</title>
                 <meta
                     name="description"
                     content="Dtechtive discovers the datasets other search engines cannot reach. It also provides insights on dataset quality and usage, to help both data users and data providers."

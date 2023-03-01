@@ -15,31 +15,34 @@ type Header = {
     filledIcon: string;
 };
 
-const HEADERS: Header[] = [
-    {
-        name: "Datasets",
-        outlineIcon: cascadeFolderOutline,
-        filledIcon: cascadeFolderFilled,
-    },
-    {
-        name: "Insights",
-        outlineIcon: barGraphOutline,
-        filledIcon: barGraphFilled,
-    },
-    {
-        name: "Report",
-        outlineIcon: reportOutline,
-        filledIcon: reportFilled,
-    },
-];
+const ORGANIZATION_ADMIN = "Organization Admin";
+const ORGANIZATION_MEMBER = "Organization Member";
 
-const OrganisationTabHeaders = ({ selectedIndex = 0 }: { selectedIndex?: number }) => {
+// const HEADERS: Header[] = [
+//     {
+//         name: "Datasets",
+//         outlineIcon: cascadeFolderOutline,
+//         filledIcon: cascadeFolderFilled,
+//     },
+//     {
+//         name: "Insights",
+//         outlineIcon: barGraphOutline,
+//         filledIcon: barGraphFilled,
+//     },
+//     {
+//         name: "Report",
+//         outlineIcon: reportOutline,
+//         filledIcon: reportFilled,
+//     },
+// ];
+
+const OrganisationTabHeaders = ({ selectedIndex = 0, user = "", }: { selectedIndex?: number, user?: string; }) => {
     const [selected, setSelected] = useState<number>(selectedIndex);
 
     return (
         <div>
             <Tab.List className="relative text-dtech-main-dark">
-                {HEADERS.map((header: Header, index: number) => (
+                {getHeader(user).map((header: Header, index: number) => (
                     <TabIconHeader
                         key={index}
                         onClick={() => setSelected(index)}
@@ -63,5 +66,44 @@ const OrganisationTabHeaders = ({ selectedIndex = 0 }: { selectedIndex?: number 
         </div>
     );
 };
+
+const getHeader = (user: string) =>{
+    if(user === ORGANIZATION_ADMIN || user === ORGANIZATION_MEMBER){
+        return (
+            [
+                {
+                    name: "Datasets",
+                    outlineIcon: cascadeFolderOutline,
+                    filledIcon: cascadeFolderFilled,
+                },
+                {
+                    name: "Insights",
+                    outlineIcon: barGraphOutline,
+                    filledIcon: barGraphFilled,
+                },
+                {
+                    name: "Report",
+                    outlineIcon: reportOutline,
+                    filledIcon: reportFilled,
+                },
+            ]
+        )
+    }else{
+        return(
+            [
+                {
+                    name: "Datasets",
+                    outlineIcon: cascadeFolderOutline,
+                    filledIcon: cascadeFolderFilled,
+                },
+                {
+                    name: "Insights",
+                    outlineIcon: barGraphOutline,
+                    filledIcon: barGraphFilled,
+                },
+            ]
+        )
+    }
+}
 
 export default OrganisationTabHeaders;

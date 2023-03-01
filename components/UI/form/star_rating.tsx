@@ -5,7 +5,7 @@ import { useController } from "react-hook-form";
 
 const StarRatingInput = ({
     className = "",
-    starClassName="",
+    starClassName = "",
     formControl,
     dataSelector,
     dontKnow = false,
@@ -50,15 +50,22 @@ const StarRatingInput = ({
                                         : "text-gray-500"
                                 }`}
                                 onClick={() => {
-                                    setRating(index);
                                     onChange(index);
+                                    rating == index
+                                        ? (setRating(undefined),
+                                          onChange(undefined))
+                                        : setRating(index);
                                     setDK(false);
                                 }}
                                 onMouseEnter={() => setHover(index)}
                                 onMouseLeave={() => setHover(rating)}
                             >
                                 {/* <span className="star">&#9733;</span> */}
-                                {index <= (hover || rating)? <BsStarFill className={starClassName}/> : <BsStar className={starClassName}/> }
+                                {index <= (hover || rating) ? (
+                                    <BsStarFill className={starClassName} />
+                                ) : (
+                                    <BsStar className={starClassName} />
+                                )}
                             </button>
                         );
                     })}

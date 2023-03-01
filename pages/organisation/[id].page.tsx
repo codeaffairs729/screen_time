@@ -18,6 +18,12 @@ import OrganisationDetailVM, {
     OrganisationDetailVMContext,
 } from "./organisation_detail.vm";
 import ErrorAlert from "components/UI/alerts/error_alert";
+import User from "models/user.model";
+import { useSelector } from "react-redux";
+import { RootState } from "store";
+
+const ORGANIZATION_ADMIN = "Organization Admin";
+const ORGANIZATION_MEMBER = "Organization Member";
 
 enum tabIndex {
     datasets,
@@ -33,8 +39,8 @@ const OrganisationDetailPage = ({
     const [loading, setLoading] = useState<boolean>(false);
     const [selectedIndex, setSelectedIndex] = useState<any>(0);
     const { asPath } = useRouter();
-    const vm: any = OrganisationDetailVM(organisation,asPath.split('/')[2]);
-
+    const vm: any = OrganisationDetailVM(organisation, asPath.split("/")[2]);
+    const user = useSelector((state: RootState) => state.auth.user);
     useEffect(() => {
         const hashParam: string = asPath.split("#")[1];
         setSelectedIndex(tabIndex[hashParam as any]);
@@ -69,6 +75,7 @@ const OrganisationDetailPage = ({
                                 <Tab.Group defaultIndex={selectedIndex}>
                                     <OrganisationTabHeaders
                                         selectedIndex={selectedIndex}
+                                        user={User.getRole(user)?.name}
                                     />
                                     <Tab.Panels className="h-[calc(100%-var(--dataset-detail-tab-header-height))] w-full flex">
                                         <TabPanel className="!bg-dtech-light-grey">
@@ -78,7 +85,12 @@ const OrganisationDetailPage = ({
                                             <Insights />
                                         </TabPanel>
                                         <TabPanel className="!bg-dtech-light-grey">
-                                            <Report />
+                                            {(User.getRole(user)?.name ===
+                                                ORGANIZATION_ADMIN ||
+                                                User.getRole(user)?.name ===
+                                                    ORGANIZATION_MEMBER) && (
+                                                <Report />
+                                            )}
                                         </TabPanel>
                                     </Tab.Panels>
                                 </Tab.Group>
