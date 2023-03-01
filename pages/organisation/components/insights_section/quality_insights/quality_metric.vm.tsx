@@ -68,7 +68,7 @@ export const QualityMetricVMContext = createContext<IQualityMetricVM>(
 const jsonToQualityMetrics = (json: any): any => ({
     dataFileQuality: {
         overallScore: getQualityScore(
-            json["data_file_quality"]["overall_score"],
+            json["data_file_quality"]["overall"],
             "overallScore",""
         ),
         accuracy: getQualityScore(
@@ -90,7 +90,7 @@ const jsonToQualityMetrics = (json: any): any => ({
     },
     metaFileQuality: {
         overallScore: getQualityScore(
-            json["meta_file_quality"]["overall_score"],
+            json["meta_file_quality"]["overall"],
             "overallScore",
             "Average of all dimensions listed."
         ),
@@ -124,9 +124,9 @@ const jsonToQualityMetrics = (json: any): any => ({
 
 const getQualityScore = (data: any, title: string, tooltipTitle: string) => ({
     title: title,
-    rating: data.rating,
+    rating: data?.rating,
     tooltipTitle: tooltipTitle,
-    datasets: data.datasets.map((data: any) => getQualityDatasets(data)),
+    datasets: data?.datasets.map((data: any) => getQualityDatasets(data)),
 });
 
 const getQualityDatasets = (dataset: any) => ({
