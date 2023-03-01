@@ -25,6 +25,7 @@ const OrganisationHead = () => {
         stats,
         lastUpdate,
         buttonTags,
+        url,
     } = organisation || {};
 
 
@@ -69,7 +70,7 @@ const OrganisationHead = () => {
                 <div className="flex justify-between">
                     <span className="text-sm w-2/3">{description}</span>
                     {/* Add Website Url */}
-                    <a href="#" target="_blank">
+                    <a href={`${url}`} target="_blank" rel="noreferrer">
                         <img
                             data-tip={"Click to open website"}
                             src={imgUrl}
