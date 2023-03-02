@@ -43,8 +43,10 @@ export const usereventDatasetView = (
 };
 
 export const usereventDatasetDownload = (dataset: Dataset, url: string) => {
+    console.log(dataset.owner.uuid,'dataset.owner.uuid')
     posthog.capture("datafile download", {
         dataset_id: dataset.id,
         datafile_id: url,
+        provider_uuid: dataset.owner.uuid
     });
 };
