@@ -34,7 +34,7 @@ const QualityInsightsBody = () => {
     useEffect(() => {
         fetchQualityMetrics && fetchQualityMetrics();
     }, []);
-    
+
     if (error) {
         return (
             <ErrorAlert
@@ -70,7 +70,7 @@ const QualityInsightsBody = () => {
                     </div>
                 )}
             </div>
-            {Object.keys(items).map((key, index) => (
+            {Object.keys(items)?.map((key, index) => (
                 <Accordian
                     label={
                         <AccordianLabel
@@ -86,10 +86,13 @@ const QualityInsightsBody = () => {
                             <div className="px-8">
                                 <Table
                                     tableHeaders={TABLE_HEADERS}
-                                    tableData={getTableData(
+                                    tableData={getTableData(key,
                                         items[key].datasets
                                     )}
                                     cellPadding={3}
+                                    tableBodyClasses={
+                                        "block h-[220px] overflow-auto"
+                                    }
                                 />
                             </div>
                             <BarGraph
@@ -158,16 +161,19 @@ const getLabel = (title: string) => {
     return `${title[0].toUpperCase()}${title.slice(1)}`;
 };
 
-const getTableData = (datasets: any) => {
-    return datasets.map((dataset: any) => [
-        dataset.rating,
-        <DisplayDataset
-            key={dataset.id}
-            title={dataset.title}
-            description={dataset.description}
-        />,
-    ]);
-};
+const getTableData = (key: string, datasets: any) =>
+    datasets?.map((dataset: any, index: number) => {
+        const datasetCell = (
+            <DisplayDataset
+                id={dataset?.id}
+                key={dataset?.id}
+                title={dataset?.title}
+                description={dataset?.description}
+            />
+        );
+
+        return [dataset?.rating, datasetCell];
+    });
 
 const getRating = (ratings: any, index: any) => {
     const rating = ratings.map((rate: any, index: any) => ({

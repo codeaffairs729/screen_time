@@ -133,5 +133,5 @@ const getQualityDatasets = (dataset: any) => ({
     uuid: dataset["uuid"],
     title: dataset["title"],
     description: dataset["description"],
-    rating: dataset["rating"],
+    rating: dataset["ratings"],
 });
