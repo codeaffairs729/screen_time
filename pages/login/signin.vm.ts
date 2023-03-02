@@ -6,12 +6,24 @@ import AuthService from "services/auth.service";
 import User from "models/user.model";
 import { useSelector } from "react-redux";
 import { RootState } from "store";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { getHttpErrorMsg } from "common/util";
 import { usereventLogin } from "services/usermetrics.service";
 import { NotificationsVMContext } from "pages/workspace/notification.vm";
 import { useRouter } from "next/router";
 
+const getPathBool =(previousPath :any) =>{
+    switch (previousPath) {
+        case "/search/organisation":
+            return true;
+        case "/datasets/[id]":
+            return true;
+        case "/search":
+            return true;
+        default:
+            return false;
+    }
+}
 const SigninVM = () => {
     const form = useForm();
     const router = useRouter();
@@ -22,10 +34,18 @@ const SigninVM = () => {
         ? `?q=${encodeURI(lastSearchQuery)}`
         : "";
     const [signinErrorMsg, setSigninErrorMsg] = useState<string | null>();
-    // const path: string | null =
-    //     localStorage.getItem("previous_path") === null
-    //         ? "/"
-    //         : localStorage.getItem("previous_path");
+    const [previousPath, setPreviousPath] = useState<string | null>();
+    
+    useEffect(() => {
+        if (
+            localStorage.getItem("previous_path") === null ||
+            localStorage.getItem("previous_path") === ""
+        ) {
+            setPreviousPath("/");
+        } else {
+            setPreviousPath(localStorage.getItem("previous_path"));
+        }
+    }, []);
     const { isLoading: isSigningIn, execute: executePerformLogin } =
         useHttpCall();
     const performLogin = (data: any) =>
@@ -39,6 +59,7 @@ const SigninVM = () => {
                     AuthService.signin(
                         User.fromJson(res["user"]),
                         res["token"],
+                        getPathBool(previousPath),
                         "/",
                         fetchNotifications
                     );
@@ -74,5 +95,6 @@ const SigninVM = () => {
         signinErrorMsg,
     };
 };
+
 
 export default SigninVM;

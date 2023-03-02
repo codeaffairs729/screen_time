@@ -12,6 +12,7 @@ class AuthService {
     static async signin(
         user: User,
         token: string,
+        redirectback:boolean,
         redirectUrl: string,
         fetchNotifications: Function
     ) {
@@ -26,7 +27,8 @@ class AuthService {
         const store = initializeStore();
         store.dispatch(updateUser(user));
         store.dispatch(updateToken(token));
-        Router.push(redirectUrl);
+        // Router.push(redirectUrl);
+        // redirectback ? Router.back() : Router.push(redirectUrl);
         // 2. add token and role to cookie
         saveCookie(AUTH_TOKEN, token);
         // 3. Fetch user service APIs data after login
@@ -37,7 +39,7 @@ class AuthService {
         // 4. Fetch user notifications
         fetchNotifications(user);
         // 5. redirect
-        Router.push(redirectUrl);
+        redirectback ? Router.back() : Router.push(redirectUrl);
         toast.success("You have successfully signed in");
     }
 
