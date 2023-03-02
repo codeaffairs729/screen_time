@@ -7,7 +7,7 @@ import { AppProps } from "next/app";
 import { Toaster } from "react-hot-toast";
 import Loader from "components/UI/loader";
 import { useScript } from "common/hooks";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import posthog from "posthog-js";
 import { AUTH_TOKEN } from "common/constants/cookie.key";
@@ -39,9 +39,9 @@ function DtechtiveApp({ Component, pageProps }: AppProps) {
             window.location.reload();
         }
     }
-    // useEffect(() => {
-    //     localStorage.setItem("previous_path", router.asPath);
-    // }, [router.asPath]);
+    useEffect(() => {
+        localStorage.setItem("previous_path", router.route);
+    }, [router.asPath]);
 
     useScript("/js/acctoolbar.min.js");
 

@@ -36,7 +36,7 @@ const CardHead = ({
                     </a>
                 {/* </Link> */}
                 <MetaRating
-                    dataQuality={dataQuality}
+                    dataQuality={Math.round(dataQuality)}
                     displayContext={"displayContext"}
                     labelClass="font-normal"
                     title={
