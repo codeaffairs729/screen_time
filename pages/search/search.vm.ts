@@ -357,6 +357,8 @@ export const datasetToResultCardData = (datasets: any, stats: any): Data[] => {
             hostUuid: dataset.detail.hostUuid,
             ownerUuid: dataset.owner.uuid,
             hostUrl: dataset.detail.hostUrl,
+            ownerUrl: dataset.owner.ownerUrl,
+            datasetSource: dataset.detail.datasetUrl,
         },
     }));
 };

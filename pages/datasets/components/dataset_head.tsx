@@ -43,7 +43,10 @@ const DatasetHead = ({ dataset }: any) => {
         topics,
         keywords,
         license,
-        dataQuality
+        dataQuality,
+        datasetUrl,
+        hostUrl,
+
     } = dataset.detail || {};
 
     const stat = {
@@ -94,7 +97,7 @@ const DatasetHead = ({ dataset }: any) => {
             <div className="my-4">
                 <div className="flex justify-between items-center">
                     <DatasetStat stats={stat} />
-                    <Link href={`${dataset.detail.hostUrl}`}>
+                    <Link href={`${datasetUrl}`}>
                         <a
                             target="_blank"
                             rel="noreferrer"
@@ -110,7 +113,7 @@ const DatasetHead = ({ dataset }: any) => {
                     >
                         <strong>
                             <Link
-                                href={`/organisation/${dataset.detail.hostUuid}`}
+                                href={`${hostUrl}`}
                             >
                                 <a
                                     target="_blank"
@@ -128,7 +131,7 @@ const DatasetHead = ({ dataset }: any) => {
                     >
                         <strong>
                             <a
-                                href={`/organisation/${dataset.owner.uuid}`}
+                                href={`${dataset.owner.ownerUrl}`}
                                 target="_blank"
                                 rel="noreferrer"
                                 className="text-xs underline"

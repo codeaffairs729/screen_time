@@ -6,6 +6,8 @@ import { DataStats } from "models/organisation.model";
 import Link from "next/link";
 
 export interface DataProviders {
+    datasetSource: string;
+    ownerUrl: string;
     organisation: string;
     hostName: string;
     hostUuid?: string;
@@ -39,7 +41,7 @@ const CardFooter = ({
             )}
             {dataProviders && (
                 <div className="flex flex-row w-1/2 justify-start items-center">
-                    <Link href={`${dataProviders.hostUrl}`}>
+                    <Link href={`${dataProviders?.datasetSource}`}>
                         <a
                             target="_blank"
                             rel="noreferrer"
@@ -55,7 +57,7 @@ const CardFooter = ({
                         childClasses="font-medium text-m hover:underline underline-offset-2"
                     >
                         <Link
-                            href={`/organisation/${dataProviders?.ownerUuid}`}
+                            href={`${dataProviders.ownerUrl}`}
                         >
                             <a target="_blank">
                                 {dataProviders.organisation &&
@@ -68,7 +70,7 @@ const CardFooter = ({
                         labelClasses="font-normal text-m"
                         childClasses="font-medium text-m hover:underline underline-offset-2"
                     >
-                        <Link href={`/organisation/${dataProviders?.hostUuid}`}>
+                        <Link href={`${dataProviders.hostUrl}`}>
                             <a target="_blank">{dataProviders.hostName}</a>
                         </Link>
                     </LabelledRow>

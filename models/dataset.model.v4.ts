@@ -42,6 +42,7 @@ class Dataset {
             id: Number(id),
             detail: {
                 domain: dataset["domains"],
+                datasetUrl: dataset["dataset_url"],
                 hostUrl: data_host["url"], // url -> dataset/data_host/url
                 hostName: data_host["organisation"], // organisation -> /data_host/organisation
                 hostUuid: data_host["uuid"],
@@ -72,6 +73,7 @@ class Dataset {
             },
             owner: {
                 name: contacts[0]["name"],
+                ownerUrl: data_owner["url"],
                 uuid: data_owner["uuid"],
                 organisation: data_owner["organisation"],
                 contact: {
@@ -109,6 +111,7 @@ export type DatasetLicense = {
 
 export type DatasetDetail = {
     domain: string[];
+    datasetUrl: string;
     hostUrl: string;
     hostName: string;
     hostUuid: string;
@@ -136,6 +139,7 @@ export type DatasetDetail = {
 
 export type DatasetOwner = {
     name: string;
+    ownerUrl: string;
     organisation: string;
     uuid: string;
     contact: {
