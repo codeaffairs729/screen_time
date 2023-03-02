@@ -43,7 +43,7 @@ const QualityInsightsBody = () => {
             />
         );
     }
-
+    console.log("items :",items)
     return (
         <div className="ml-16">
             <div className="text-sm text-dtech-dark-grey my-4">
@@ -167,8 +167,8 @@ const getTableData = (key: string, datasets: any) =>
             <DisplayDataset
                 id={dataset?.id}
                 key={dataset?.id}
-                title={dataset?.title}
-                description={dataset?.description}
+                title={(dataset?.title) ? dataset?.title : 'NA' }
+                description={(dataset?.description) ? dataset?.description : 'NA'}
             />
         );
 

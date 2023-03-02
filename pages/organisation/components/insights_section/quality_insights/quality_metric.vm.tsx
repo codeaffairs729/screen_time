@@ -130,7 +130,7 @@ const getQualityScore = (data: any, title: string, tooltipTitle: string) => ({
 });
 
 const getQualityDatasets = (dataset: any) => ({
-    uuid: dataset["uuid"],
+    id: dataset["id"],
     title: dataset["title"],
     description: dataset["description"],
     rating: dataset["ratings"],
