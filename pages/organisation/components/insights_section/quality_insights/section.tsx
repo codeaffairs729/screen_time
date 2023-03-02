@@ -103,11 +103,7 @@ const QualityInsightsBody = () => {
                                 />
                             </div>
                             <BarGraph
-                                data={getRating(
-                                    items[key].rating,
-                                    selectedLabel,
-                                    index
-                                )}
+                                data={getRating(items[key].rating, index)}
                                 strokeWidthAxis={2}
                                 strokeWidthLabelList={0}
                                 className="font-medium mb-6 mt-6"
@@ -142,7 +138,7 @@ const AccordianLabel = ({
     return (
         <MetaRating
             label={label}
-            dataQuality={getAvg(ratings,label)}
+            dataQuality={getAvg(ratings, label)}
             className="!flex-row ml-0"
             labelClass="!text-lg text-dtech-dark-grey"
             starClassName="!w-6 !h-6 text-[#5F5F63]"
@@ -151,7 +147,7 @@ const AccordianLabel = ({
     );
 };
 
-const getAvg = (ratings: any,label:any) => {
+const getAvg = (ratings: any, label: any) => {
     let ratingSum;
     let count;
     if (ratings.length == 6) {
@@ -183,7 +179,7 @@ const getAvg = (ratings: any,label:any) => {
             0
         );
     }
- 
+
     return ratingSum / count;
 };
 
@@ -205,9 +201,9 @@ const getTableData = (key: string, datasets: any) =>
         return [dataset?.rating, datasetCell];
     });
 
-const getRating = (ratings: any, selectedLabel: any, index: any) => {
+const getRating = (ratings: any, index: any) => {
     let rating;
-    if (selectedLabel == 0) {
+    if (ratings.length == 6) {
         rating = ratings.slice(1).map((rate: any, index: any) => ({
             name: index + 1,
             rating: rate[index + 1],
