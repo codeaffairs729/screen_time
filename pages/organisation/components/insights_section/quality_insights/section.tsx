@@ -11,7 +11,7 @@ const TABLE_HEADERS = ["Score", "Dataset"];
 
 const DisplayDataset = ({ title, description }: any) => (
     <div>
-        <span className="text-sm font-medium text-dtech-dark-grey">
+        <span className="text-sm font-medium text-dtech-dark-grey limit-line">
             {title}
         </span>
         <span className="text-sm text-dtech-dark-grey limit-line">
@@ -43,7 +43,7 @@ const QualityInsightsBody = () => {
             />
         );
     }
-    console.log("items :",items)
+
     return (
         <div className="ml-16">
             <div className="text-sm text-dtech-dark-grey my-4">
@@ -167,8 +167,8 @@ const getTableData = (key: string, datasets: any) =>
             <DisplayDataset
                 id={dataset?.id}
                 key={dataset?.id}
-                title={(dataset?.title) ? dataset?.title : 'NA' }
-                description={(dataset?.description) ? dataset?.description : 'NA'}
+                title={dataset?.title ? dataset?.title : "NA"}
+                description={dataset?.description ? dataset?.description : "NA"}
             />
         );
 
