@@ -11,10 +11,10 @@ const TABLE_HEADERS = ["Score", "Dataset"];
 
 const DisplayDataset = ({ title, description }: any) => (
     <div>
-        <span className="text-sm font-medium text-dtech-dark-grey limit-line">
+        <span className="text-sm font-medium text-dtech-dark-grey limit-line break-words">
             {title}
         </span>
-        <span className="text-sm text-dtech-dark-grey limit-line">
+        <span className="text-sm text-dtech-dark-grey limit-line break-words">
             {description}
         </span>
     </div>
@@ -43,7 +43,13 @@ const QualityInsightsBody = () => {
             />
         );
     }
-
+    if (isFetchingQualityMetrics) {
+        return (
+            <div className="h-[calc(40vh-var(--nav-height))] w-full flex items-center justify-center">
+                <Loader />
+            </div>
+        );
+    }
     return (
         <div className="ml-16">
             <div className="text-sm text-dtech-dark-grey my-4">
@@ -77,6 +83,7 @@ const QualityInsightsBody = () => {
                             label={getLabel(items[key].title)}
                             ratings={items[key].rating}
                             tooltipTitle={items[key].tooltipTitle}
+                            selectedLabel={selectedLabel}
                         />
                     }
                     key={selectedLabel + key}
@@ -86,17 +93,22 @@ const QualityInsightsBody = () => {
                             <div className="px-8">
                                 <Table
                                     tableHeaders={TABLE_HEADERS}
-                                    tableData={getTableData(key,
+                                    tableData={getTableData(
+                                        key,
                                         items[key].datasets
                                     )}
                                     cellPadding={3}
-                                    tableBodyClasses={
-                                        "block h-[220px] overflow-auto"
+                                    tableClass={
+                                        "block h-[220px] overflow-y-scroll w-[690px]"
                                     }
                                 />
                             </div>
                             <BarGraph
-                                data={getRating(items[key].rating, index)}
+                                data={getRating(
+                                    items[key].rating,
+                                    selectedLabel,
+                                    index
+                                )}
                                 strokeWidthAxis={2}
                                 strokeWidthLabelList={0}
                                 className="font-medium mb-6 mt-6"
@@ -123,15 +135,17 @@ const AccordianLabel = ({
     label,
     ratings,
     tooltipTitle,
+    selectedLabel,
 }: {
     label: string;
     ratings: any;
     tooltipTitle: string;
+    selectedLabel: number;
 }) => {
     return (
         <MetaRating
             label={label}
-            dataQuality={getAvg(ratings)}
+            dataQuality={getAvg(ratings, selectedLabel)}
             className="!flex-row ml-0"
             labelClass="!text-lg text-dtech-dark-grey"
             starClassName="!w-6 !h-6 text-[#5F5F63]"
@@ -140,20 +154,38 @@ const AccordianLabel = ({
     );
 };
 
-const getAvg = (ratings: any) => {
-    const ratingData = ratings.map(
-        (rate: any, index: number) => rate[index + 1]
-    );
-    const count = ratingData.reduce(
-        (accumulator: any, curValue: any) => accumulator + curValue,
-        0
-    );
+const getAvg = (ratings: any, selectedLabel: any) => {
+    let ratingSum;
+    let count;
+    if (selectedLabel == 0) {
+        const ratingData = ratings.map(
+            (rate: any, index: number) => rate[index]
+        );
+        count = ratingData.reduce(
+            (accumulator: any, curValue: any) => accumulator + curValue,
+            0
+        );
 
-    const ratingSum = ratingData.reduce(
-        (accumulator: any, curValue: any, curIndex: any) =>
-            accumulator + curValue * (curIndex + 1),
-        0
-    );
+        ratingSum = ratingData.reduce(
+            (accumulator: any, curValue: any, curIndex: any) =>
+                accumulator + curValue * curIndex,
+            0
+        );
+    } else {
+        const ratingData = ratings.map(
+            (rate: any, index: number) => rate[index + 1]
+        );
+        count = ratingData.reduce(
+            (accumulator: any, curValue: any) => accumulator + curValue,
+            0
+        );
+
+        ratingSum = ratingData.reduce(
+            (accumulator: any, curValue: any, curIndex: any) =>
+                accumulator + curValue * (curIndex + 1),
+            0
+        );
+    }
     return ratingSum / count;
 };
 
@@ -175,11 +207,19 @@ const getTableData = (key: string, datasets: any) =>
         return [dataset?.rating, datasetCell];
     });
 
-const getRating = (ratings: any, index: any) => {
-    const rating = ratings.map((rate: any, index: any) => ({
-        name: index + 1,
-        rating: rate[index + 1],
-    }));
+const getRating = (ratings: any, selectedLabel: any, index: any) => {
+    let rating;
+    if (selectedLabel == 0) {
+        rating = ratings.slice(1).map((rate: any, index: any) => ({
+            name: index + 1,
+            rating: rate[index + 1],
+        }));
+    } else {
+        rating = ratings.map((rate: any, index: any) => ({
+            name: index + 1,
+            rating: rate[index + 1],
+        }));
+    }
     return rating;
 };
 
