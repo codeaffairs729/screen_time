@@ -83,7 +83,6 @@ const QualityInsightsBody = () => {
                             label={getLabel(items[key].title)}
                             ratings={items[key].rating}
                             tooltipTitle={items[key].tooltipTitle}
-                            selectedLabel={selectedLabel}
                         />
                     }
                     key={selectedLabel + key}
@@ -135,17 +134,15 @@ const AccordianLabel = ({
     label,
     ratings,
     tooltipTitle,
-    selectedLabel,
 }: {
     label: string;
     ratings: any;
     tooltipTitle: string;
-    selectedLabel: number;
 }) => {
     return (
         <MetaRating
             label={label}
-            dataQuality={getAvg(ratings, selectedLabel)}
+            dataQuality={getAvg(ratings,label)}
             className="!flex-row ml-0"
             labelClass="!text-lg text-dtech-dark-grey"
             starClassName="!w-6 !h-6 text-[#5F5F63]"
@@ -154,10 +151,10 @@ const AccordianLabel = ({
     );
 };
 
-const getAvg = (ratings: any, selectedLabel: any) => {
+const getAvg = (ratings: any,label:any) => {
     let ratingSum;
     let count;
-    if (selectedLabel == 0) {
+    if (ratings.length == 6) {
         const ratingData = ratings.map(
             (rate: any, index: number) => rate[index]
         );
@@ -186,6 +183,7 @@ const getAvg = (ratings: any, selectedLabel: any) => {
             0
         );
     }
+ 
     return ratingSum / count;
 };
 
