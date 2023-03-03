@@ -36,7 +36,6 @@ const RelatedDatasetsVM = (dataset: any) => {
             },
             {
                 postProcess: (res) => {
-                    console.log("res : ", res);
                     const datasets = Dataset.fromJsonList(
                         res[0]["user_search"][0]["results"]
                             .slice(0, 10)
@@ -46,7 +45,6 @@ const RelatedDatasetsVM = (dataset: any) => {
                         .filter((id: any) => id)
                         .map((dataset) => dataset.id);
                     if (datasetIds.length) {
-                        console.log("Stats hit");
                         fectchStats(datasetIds);
                     }
                     return datasets;

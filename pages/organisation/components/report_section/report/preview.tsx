@@ -3,7 +3,6 @@ import { ReportVMContext } from "../report.vm";
 
 const Preview = () => {
     const { previewContent, setDownloadRef } = useContext(ReportVMContext);
-    console.log("previewContent :", previewContent);
     return (
         <div className="shadow-paper-shadow mt-4 h-[656px] bg-white border-none p-4 overflow-y-scroll">
             {

@@ -6,6 +6,7 @@ import Loader from "components/UI/loader";
 import { useContext, useEffect } from "react";
 import { QualityMetricVMContext } from "./quality_metric.vm";
 import ErrorAlert from "components/UI/alerts/error_alert";
+import { OrganisationDetailVMContext } from "pages/organisation/organisation_detail.vm";
 
 const TABLE_HEADERS = ["Score", "Dataset"];
 
@@ -28,6 +29,8 @@ const QualityInsightsBody = () => {
         selectedQualityInsights: selectedLabel,
     } = useContext(QualityMetricVMContext);
 
+    /**  Adding metaQuality same as overscore for metaFileQuality */
+    const { organisation } = useContext(OrganisationDetailVMContext);
     const { dataFileQuality = {}, metaFileQuality = {} } = qualityMetrics || {};
     const items = selectedLabel == 0 ? dataFileQuality : metaFileQuality;
 
@@ -83,6 +86,8 @@ const QualityInsightsBody = () => {
                             label={getLabel(items[key].title)}
                             ratings={items[key].rating}
                             tooltipTitle={items[key].tooltipTitle}
+                            selectedLabel = {selectedLabel}
+                            orgQuality={(!organisation)? 0:Math.ceil(organisation.dataQuality)}
                         />
                     }
                     key={selectedLabel + key}
@@ -130,15 +135,19 @@ const AccordianLabel = ({
     label,
     ratings,
     tooltipTitle,
+    selectedLabel,
+    orgQuality,
 }: {
     label: string;
     ratings: any;
     tooltipTitle: string;
+    selectedLabel: number;
+    orgQuality: number;
 }) => {
     return (
         <MetaRating
             label={label}
-            dataQuality={getAvg(ratings, label)}
+            dataQuality={(selectedLabel==1 && label == "OverallScore") ? orgQuality :getAvg(ratings, label)}
             className="!flex-row ml-0"
             labelClass="!text-lg text-dtech-dark-grey"
             starClassName="!w-6 !h-6 text-[#5F5F63]"

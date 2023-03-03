@@ -1,6 +1,7 @@
 import ErrorAlert from "components/UI/alerts/error_alert";
 import Loader from "components/UI/loader";
 import MetaRating from "components/UI/metaRating";
+import { DatasetDetailVMContext } from "pages/datasets/dataset_detail.vm";
 import { useContext, useEffect } from "react";
 import { QualityMetricsVMContext } from "./quality_metric.vm";
 
@@ -12,6 +13,8 @@ const DatasetQualityInsightsBody = () => {
         qualityMetrics,
         isFetchingQualityMetrics,
     } = useContext(QualityMetricsVMContext);
+
+    const { dataset } =useContext(DatasetDetailVMContext)
     const { dataFileQuality = {}, metaDataQuality = {} } = qualityMetrics || {};
 
     useEffect(() => {
@@ -56,20 +59,20 @@ const DatasetQualityInsightsBody = () => {
             )}
             <div className="grid lg:grid-cols-2 gap-4 mt-10 sm:grid-cols-1 ">
                 {Object.keys(items)?.map((item: any, index: number) => (
-                    <FileQuality items={items} item={item} key={index} />
+                    <FileQuality items={items} item={item} key={index} selectedLabel={selectedLabel} quality={dataset?.detail.dataQuality}/>
                 ))}
             </div>
         </div>
     );
 };
 
-const FileQuality = ({ item, items }: { item: any; items: any }) => {
+const FileQuality = ({ item, items, selectedLabel, quality }: { item: any; items: any; selectedLabel: any, quality:any }) => {
     return (
         <div className="flex flex-row justify-center items-center mt-10">
             <span>{getLabel(items[item].label)}</span>
             <MetaRating
                 label={""}
-                dataQuality={items[item].rating}
+                dataQuality={(selectedLabel == 1 && items[item].label == "overallScore" )? quality :items[item].rating}
                 className="!flex-row ml-0"
                 labelClass="!text-lg text-dtech-dark-grey"
                 starClassName="!w-6 !h-6 text-[#5F5F63]"
