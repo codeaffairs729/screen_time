@@ -200,7 +200,6 @@ const ReportVM = () => {
     };
 
     const formatPreviewData = () => {
-        // console.log("Editor state",convertToHTML(editorState.getCurrentContent()).toString())
         let html = convertToHTML(editorState.getCurrentContent()).toString();
         const images = convertToRaw(editorState.getCurrentContent()).entityMap;
 
@@ -328,7 +327,6 @@ export const getDateRange = (fromDate: any, toDate: any, dates: any) => {
             checkIfDateExists(downDate, currentDate)
         )[0];
 
-        // console.log("downloadDate :", checkIfDateExists(dates[2], currentDate))
         const dateToShow = downloadDate
             ? new Date(downloadDate?.date)
             : currentDate;
