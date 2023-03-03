@@ -174,7 +174,7 @@ const DomainsTopics = ({ vm }: { vm: any }) => {
         <div className="flex flex-row justify-between">
             <div className="flex flex-col">
                 <p className="font-light text-xl w-[80%] mb-2">
-                    1.What are the domains related to your use case of this
+                    What are the domains related to your use case of this
                     dataset?
                 </p>
                 <Select
