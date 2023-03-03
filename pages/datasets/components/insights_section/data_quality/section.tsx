@@ -15,7 +15,6 @@ const DatasetQualityInsightsBody = () => {
     } = useContext(QualityMetricsVMContext);
 
     const { dataset } =useContext(DatasetDetailVMContext)
-    console.log("dataset :",dataset?.detail.dataQuality)
     const { dataFileQuality = {}, metaDataQuality = {} } = qualityMetrics || {};
 
     useEffect(() => {
