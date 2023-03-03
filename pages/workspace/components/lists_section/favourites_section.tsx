@@ -13,7 +13,7 @@ const FavouritesSection = () => {
             <div className="w-full flex items-start justify-center">
                 <ErrorAlert
                     className="max-w-xl mx-auto"
-                    message="Something went wrong while fetching favourite data. Please try again later."
+                    message="Something went wrong while fetching your favourites. Please try again later."
                 />
             </div>
         );
@@ -30,7 +30,7 @@ const FavouritesSection = () => {
     return (
         <div>
             {!isFetchingFavourites && (favouritedRecords?.length ?? 0) == 0 && (
-                <InfoAlert message="No favourites found" className="mt-1" />
+                <InfoAlert message="No favourites found." className="mt-1" />
             )}
             <div className="flex flex-col" data-test-id="results table">
                 {favouritedRecords?.map((data) => (

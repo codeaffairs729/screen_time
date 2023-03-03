@@ -63,7 +63,7 @@ const RelatedDatasets = () => {
             <Tab.Group>
                 <Tab.List>
                     <TabHeader>Related by Domains & Topics </TabHeader>
-                    <TabHeader>Related by description</TabHeader>
+                    <TabHeader>Related by Description</TabHeader>
                 </Tab.List>
                 <Tab.Panels>
                     <Tab.Panel>
