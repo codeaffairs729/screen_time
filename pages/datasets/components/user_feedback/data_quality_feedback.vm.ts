@@ -15,17 +15,7 @@ const DataQualityFeedbackVM = () => {
 
     const { execute: executeSubmit, isLoading: isSubmitting } = useHttpCall();
     const submitDataQualityFeedback = (data: any) => {
-        if (
-            !(
-                data.accuracy ||
-                data.clarity ||
-                data.comment ||
-                data.consistency ||
-                data.readiness
-            )
-        ) {
-            return toast.error("Please fill in the form before submission");
-        }
+
         return executeSubmit(
             () =>
                 Http.post(`/v1/datasets/${dataset?.id}/quality_feedback`, data),
