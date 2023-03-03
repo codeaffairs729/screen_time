@@ -5,7 +5,7 @@ import PotentialUsecases from "./components/potential_usecases";
 import UsecaseDescription from "./components/usecase_description";
 import CommentAnonymous from "./components/comment_anonymous";
 import PrimaryBtn from "components/UI/form/primary_btn";
-import DataUseFeedbackVM from "./components/data_use_feedback.vm";
+import DataUseFeedbackVM from "./data_use_feedback.vm";
 
 
 const DataUseFeedback = () => {
