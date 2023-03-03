@@ -18,7 +18,7 @@ export const getSelectedLabelIndex = (label: string, types: any) => {
 };
 
 export enum insightTabIndex {
-    data_quality,
+    dataset_quality,
     use_cases,
     download_metrics,
 }
