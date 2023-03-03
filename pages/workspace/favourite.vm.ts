@@ -1,5 +1,5 @@
 import Http from "common/http";
-import Dataset from "models/dataset.model";
+import Dataset from "models/dataset.model.v4";
 import SearchVM, { datasetToResultCardData } from "pages/search/search.vm";
 import useSWR from "swr";
 import toast from "react-hot-toast";
@@ -19,6 +19,7 @@ export const FavouriteVM = () => {
             })
                 .then((res) => {
                     const datasets = Dataset.fromJsonList(res);
+
                     const datasetIds = datasets.map((dataset) => dataset.id);
                     if (datasetIds.length) {
                         fectchStats(datasetIds);
