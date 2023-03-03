@@ -27,7 +27,7 @@ export const FavouriteVM = () => {
                 })
                 .catch((e) => {
                     toast.error(
-                        "Something went wrong while fetching favourites datasets"
+                        "Something went wrong while fetching your favourites."
                     );
                     throw e;
                 }),
