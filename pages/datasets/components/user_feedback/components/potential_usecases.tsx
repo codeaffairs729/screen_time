@@ -37,7 +37,7 @@ const PotentialUsecases = ({ vm }: { vm: any }) => {
     return (
         <div className="my-7">
             <p className="font-light text-xl w-[70%] mb-2 ">
-                2.What are the potential use cases for this data?
+                What are the potential use cases for this data?
             </p>
             <CreatableSelect
                 isMulti
