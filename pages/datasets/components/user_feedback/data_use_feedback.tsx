@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { DatasetDetailVMContext } from "../../dataset_detail.vm";
 import DomainsTopics from "./components/domains_topics";
 import PotentialUsecases from "./components/potential_usecases";
@@ -14,6 +14,10 @@ const DataUseFeedback = () => {
 
     const vmForm = DataUseFeedbackVM();
 
+    useEffect(()=>{
+        vmForm.fetchUsecaseFeedback();
+    },[])
+
     if (!dataset) return <div />;
 
     return (
@@ -22,15 +26,15 @@ const DataUseFeedback = () => {
                 We are gathering this information from users to help data
                 providers understand what the user needs are.
             </div>
-            {/* <div className="text-sm text-gray-600 w-full ml-10">
+            {!vmForm.isFetchingUsecaseFeedback && <div className="text-sm text-gray-600 w-full ml-10">
                 You{" "}
-                {false ? (
+                {vmForm.usecaseFeedback ? (
                     <p className="inline font-bold"> have</p>
                     ) : (
                         <p className="inline font-bold">have not</p>
                         )}{" "}
                 submitted a data use case feedback previously.
-            </div> */}
+            </div>}
             <div className="">
                 <div className="my-5 mx-3 px-5 py-3">
                     <DomainsTopics vm={vmForm} />

@@ -27,12 +27,15 @@ const OPTIONS = [
 ];
 
 const RecordsSortBy = () => {
-    const { setActiveFilter, activeFilter } = useContext(SearchVMContext);
-    const onChange = (value: string) =>
+    const { setActiveFilter, activeFilter, setCurrentPageNo } =
+        useContext(SearchVMContext);
+    const onChange = (value: string) => {
+        setCurrentPageNo(1);
         setActiveFilter((state: Filter) => ({
             ...state,
             sort_by: [value],
         }));
+    };
     const options = OPTIONS.map((option) => ({
         ...option,
         onClick: () => onChange(option.value),

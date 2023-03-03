@@ -50,12 +50,36 @@ const DataUseFeedbackVM = () => {
             }
         );
     };
-
+    const {
+        error,
+        execute: excuteFetchUsecaseFeedback,
+        data: usecaseFeedback,
+        isLoading: isFetchingUsecaseFeedback,
+    } = useHttpCall<{ [key: string]: any }>({});
+    const fetchUsecaseFeedback = () =>
+        excuteFetchUsecaseFeedback(
+            () => {
+                return Http.get(`/v1/datasets/${dataset?.id}/is_usecase_feedback_given`);
+            },
+            {
+                postProcess: (res) => {
+                    return res;
+                },
+                onError: (e) => {
+                    toast.error(
+                        "Something wrong in Usecase Feedback."
+                    );
+                },
+            }
+        );
     return {
         form,
         submitDataUseFeedback,
         isSubmitting,
         isSubmissionSuccess,
+        usecaseFeedback,
+        isFetchingUsecaseFeedback,
+        fetchUsecaseFeedback
     };
 };
 

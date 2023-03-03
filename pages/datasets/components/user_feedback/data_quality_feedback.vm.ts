@@ -15,7 +15,6 @@ const DataQualityFeedbackVM = () => {
 
     const { execute: executeSubmit, isLoading: isSubmitting } = useHttpCall();
     const submitDataQualityFeedback = (data: any) => {
-
         return executeSubmit(
             () =>
                 Http.post(`/v1/datasets/${dataset?.id}/quality_feedback`, data),
@@ -34,11 +33,38 @@ const DataQualityFeedbackVM = () => {
         );
     };
 
+    const {
+        error,
+        execute: excuteFetchQualityFeedback,
+        data: qualityFeedback,
+        isLoading: isFetchingQualityFeedback,
+    } = useHttpCall<{ [key: string]: any }>({});
+    const fetchQualityFeedback = () =>
+        excuteFetchQualityFeedback(
+            () => {
+                return Http.get(`/v1/datasets/${dataset?.id}/is_quality_feedback_given`);
+            },
+            {
+                postProcess: (res) => {
+                    return res;
+                },
+                onError: (e) => {
+                    toast.error(
+                        "Something wrong in Quality Feedback."
+                    );
+                },
+            }
+        );
+
     return {
         form,
         submitDataQualityFeedback,
         isSubmitting,
         isSubmissionSuccess,
+        qualityFeedback,
+        isFetchingQualityFeedback,
+        fetchQualityFeedback
+
     };
 };
 
