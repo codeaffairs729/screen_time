@@ -5,7 +5,7 @@ import {
 } from "store/user/user.action";
 import { initializeStore } from "store";
 import Http from "common/http";
-import Dataset from "models/dataset.model";
+import Dataset from "models/dataset.model.v4";
 import Organisation from "models/organisation.model";
 
 class UserService {
