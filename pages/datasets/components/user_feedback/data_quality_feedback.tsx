@@ -1,6 +1,6 @@
 import PrimaryBtn from "components/UI/form/primary_btn";
 import { DatasetDetailVMContext } from "pages/datasets/dataset_detail.vm";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import Accuracy from "./components/accuracy";
 import Clarity from "./components/clarity";
 import Comment from "./components/comments";
@@ -14,6 +14,9 @@ const DataQualityFeedback = () => {
     const dataset = vmDataset.dataset;
 
     const vmForm = DataQualityFeedbackVM();
+    useEffect(()=>{
+        vmForm.fetchQualityFeedback();
+    },[])
 
     if (!dataset) return <div />;
 
@@ -23,6 +26,15 @@ const DataQualityFeedback = () => {
                 We are gathering this information from users to help data
                 providers improve the quality of their data files.
             </div>
+            {!vmForm.isFetchingQualityFeedback && <div className="text-sm text-gray-600 w-full ml-10">
+                You{" "}
+                {vmForm.qualityFeedback ? (
+                    <p className="inline font-bold"> have</p>
+                    ) : (
+                        <p className="inline font-bold">have not</p>
+                        )}{" "}
+                submitted a data quality feedback previously.
+            </div>}
             <div className="">
                 <div className="my-5 mx-3 px-5 py-4 mr-32">
                     <div className="flex flex-row justify-between">

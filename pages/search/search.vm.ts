@@ -46,7 +46,9 @@ const SearchVM = (search = true) => {
     const [filterOptions, setFilterOptions] = useState<Filter>({});
     const [queryParams, setQueryParams] =
         useState<string>("&sort_by=relevance");
-    const [currentPageNo, setCurrentPageNo] = useState(1);
+    const [currentPageNo, setCurrentPageNo] = useState<number>(
+        router.query.page ? parseInt(router.query.page as string) : 1
+    );
     const [totalPages, setTotalPages] = useState(1);
     const [pageSize, setPageSize] = useState(20);
     const [totalRecords, setTotalRecords] = useState<number>(0);
@@ -91,6 +93,18 @@ const SearchVM = (search = true) => {
     /**
      * Fired when the term on the search input on the search page is changed
      */
+    useEffect(() => {
+        if (router.pathname === "/search") {
+            const url = new URL(window.location.href);
+            const params = new URLSearchParams(url.search);
+
+            params.set("page", `${currentPageNo}`);
+
+            // Replace the current URL with the updated URL
+            window.history.replaceState({}, "", `${url.pathname}?${params}`);
+        }
+    }, [currentPageNo]);
+
     const onSearchChange = (
         type: string,
         option: SingleValue<SearchOption>
@@ -102,7 +116,7 @@ const SearchVM = (search = true) => {
         setCurrentPageNo(1);
         router.push({
             pathname: `/search/${searchType}`,
-            query: { q: option.value },
+            query: { q: option.value, page: currentPageNo },
         });
     };
 
