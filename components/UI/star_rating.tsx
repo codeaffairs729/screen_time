@@ -2,7 +2,7 @@ import Image from "next/image";
 import { BsStar, BsStarHalf, BsStarFill } from "react-icons/bs";
 
 const StarRating = ({ rating, starClassName = "" }: { rating: number, starClassName?: string}) => {
-    const roundedStars = Math.round((rating || 0) * 2) / 2;
+    const roundedStars = Math.ceil((rating || 0) * 2) / 2;
 
     const fullStarsNo = Math.floor(roundedStars);
     const fullStars = [...Array(fullStarsNo)].map((_, i) => (
