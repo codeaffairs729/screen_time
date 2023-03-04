@@ -72,7 +72,7 @@ const FileQuality = ({ item, items, selectedLabel, quality }: { item: any; items
             <span>{getLabel(items[item].label)}</span>
             <MetaRating
                 label={""}
-                dataQuality={(selectedLabel == 1 && items[item].label == "overallScore" )? quality :items[item].rating}
+                dataQuality={(selectedLabel == 1 && items[item].label == "overallScore" )? Math.ceil(quality) :Math.ceil(items[item].rating)}
                 className="!flex-row ml-0"
                 labelClass="!text-lg text-dtech-dark-grey"
                 starClassName="!w-6 !h-6 text-[#5F5F63]"
