@@ -13,9 +13,9 @@ const Pagination = ({
     setCurrentPageNo: Function;
     currentPageNo: number;
 }) => {
-    useEffect(() => {
-        setCurrentPageNo(1);
-    }, [totalPages]);
+    // useEffect(() => {
+    //     setCurrentPageNo(1);
+    // }, [totalPages]);
 
     if (totalPages < 1) return null;
 

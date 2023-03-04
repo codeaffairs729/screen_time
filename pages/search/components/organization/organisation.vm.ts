@@ -29,7 +29,9 @@ const OrganizationSearchVM = (search = true) => {
     } = router;
 
     const [pageSize, setPageSize] = useState(20); // number of table in page
-    const [currentPageNo, setCurrentPageNo] = useState<number>(1);
+    const [currentPageNo, setCurrentPageNo] = useState<number>(
+        router.query.page ? parseInt(router.query.page as string) : 1
+    );
     const [totalPages, setTotalPages] = useState<number>(10); // pagination total pages
     const [activeFilter, setActiveFilter] = useState<Filter>({
         sort_by: ["relevance"],
@@ -102,6 +104,18 @@ const OrganizationSearchVM = (search = true) => {
 
         setTotalPages(pageSize ? Math.ceil(len / pageSize) : 0);
     }, [pageSize]);
+
+    useEffect(() => {
+        if (router.pathname === "/search/organisation") {
+            const url = new URL(window.location.href);
+            const params = new URLSearchParams(url.search);
+
+            params.set("page", `${currentPageNo}`);
+
+            // Replace the current URL with the updated URL
+            window.history.replaceState({}, "", `${url.pathname}?${params}`);
+        }
+    }, [currentPageNo]);
 
     return {
         currentPageNo,
