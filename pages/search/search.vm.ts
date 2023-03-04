@@ -38,6 +38,8 @@ const SearchVM = (search = true) => {
     const {
         query: { q },
     } = router;
+    const page = router.query.page ? parseInt(router.query.page as string) : 1;
+    console.log(router.query);
     const dispatch = useDispatch();
 
     const [activeFilter, setActiveFilter] = useState<Filter>({
@@ -46,9 +48,7 @@ const SearchVM = (search = true) => {
     const [filterOptions, setFilterOptions] = useState<Filter>({});
     const [queryParams, setQueryParams] =
         useState<string>("&sort_by=relevance");
-    const [currentPageNo, setCurrentPageNo] = useState<number>(
-        router.query.page ? parseInt(router.query.page as string) : 1
-    );
+    const [currentPageNo, setCurrentPageNo] = useState<number>(page);
     const [totalPages, setTotalPages] = useState(1);
     const [pageSize, setPageSize] = useState(20);
     const [totalRecords, setTotalRecords] = useState<number>(0);
