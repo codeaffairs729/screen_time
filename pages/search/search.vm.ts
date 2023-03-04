@@ -38,7 +38,7 @@ const SearchVM = (search = true) => {
     const {
         query: { q },
     } = router;
-    const page = router.query.page ? parseInt(router.query.page as string) : 1;
+    // const page = parseInt(router.query.page as string) ? parseInt(router.query.page as string) : 1;
     console.log(router.query);
     const dispatch = useDispatch();
 
@@ -48,7 +48,7 @@ const SearchVM = (search = true) => {
     const [filterOptions, setFilterOptions] = useState<Filter>({});
     const [queryParams, setQueryParams] =
         useState<string>("&sort_by=relevance");
-    const [currentPageNo, setCurrentPageNo] = useState<number>(page);
+    const [currentPageNo, setCurrentPageNo] = useState<number>(1);
     const [totalPages, setTotalPages] = useState(1);
     const [pageSize, setPageSize] = useState(20);
     const [totalRecords, setTotalRecords] = useState<number>(0);
@@ -90,6 +90,9 @@ const SearchVM = (search = true) => {
         setQueryParams(cQueryParams ? `&${cQueryParams}` : "");
     }, [activeFilter]);
 
+    useEffect(()=>{
+        setCurrentPageNo(parseInt(router.query.page as string) || 1)
+    },[router.query.page])
     /**
      * Fired when the term on the search input on the search page is changed
      */
