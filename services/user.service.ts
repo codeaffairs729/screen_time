@@ -5,7 +5,7 @@ import {
 } from "store/user/user.action";
 import { initializeStore } from "store";
 import Http from "common/http";
-import Dataset from "models/dataset.model";
+import Dataset from "models/dataset.model.v4";
 import Organisation from "models/organisation.model";
 
 class UserService {
@@ -84,7 +84,7 @@ class UserService {
 
             try {
                 const res_itemsdata = await Http.get(
-                    `/data_view/{ids}?${item_req_param}`,
+                    `/v4/data_view/{ids}?${item_req_param}`,
                     {
                         baseUrl: process.env.NEXT_PUBLIC_PUBLIC_API_ROOT,
                         redirectToLoginPageIfAuthRequired: false,
