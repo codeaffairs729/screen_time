@@ -93,11 +93,11 @@ function AddMemberModal({
                                                 options={[
                                                     {
                                                         label: "Member",
-                                                        value: "Organisation Member",
+                                                        value: "Organization Member",
                                                     },
                                                     {
                                                         label: "Admin",
-                                                        value: "Organisation Admin",
+                                                        value: "Organization Admin",
                                                     },
                                                 ]}
                                                 dataSelector="data-owner-dropdown"
