@@ -16,22 +16,22 @@ build:
     - ls -lah
     - cat .env
     - >
-      if [ "$build_type" == "waf" ]; then
-        echo "building waf type"
-        gcloud builds submit . --tag gcr.io/epsilon1-dev/portal-webclient
-      else
+      if [ "$build_type" == "nonwaf" ]; then
         echo "building non waf type"
         gcloud builds submit . --tag gcr.io/epsilon1-dev/dashboard-webclient
+      else
+        echo "building waf type"
+        gcloud builds submit . --tag gcr.io/epsilon1-dev/portal-webclient
       fi
 
 deploy:
   stage: deploy
   script:
     - >
-      if [ "$build_type" == "waf" ]; then
-        echo "deploying waf type"
-        gcloud run deploy portal-webclient --image gcr.io/epsilon1-dev/portal-webclient --platform managed --region us-central1 --allow-unauthenticated
-      else
+      if [ "$build_type" == "nonwaf" ]; then
         echo "deploying non waf type"
         gcloud run deploy dashboard-webclient --image gcr.io/epsilon1-dev/dashboard-webclient --platform managed --region us-central1 --allow-unauthenticated
+      else
+        echo "deploying waf type"
+        gcloud run deploy portal-webclient --image gcr.io/epsilon1-dev/portal-webclient --platform managed --region us-central1 --allow-unauthenticated
       fi

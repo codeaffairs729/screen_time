@@ -24,7 +24,7 @@ const AdminTabPanelVM = () => {
     } = useHttpCall<User[]>([]);
     const fetchOrgUsers = () =>
         executeFetchOrgUsers(
-            () => Http.get(`/v1/users/org/${organisationId}`),
+            () => Http.get(`/v1/users/org`),
             {
                 onError: async (error) =>
                     toast.error(await getHttpErrorMsg(error)),
@@ -71,7 +71,7 @@ const AdminTabPanelVM = () => {
         useHttpCall();
     const deleteOrgMember = (userId: number) =>
         executeDeleteOrgMember(
-            () => Http.delete(`/v1/users/${userId}/org/${organisationId}`),
+            () => Http.delete(`/v1/users/${userId}/org`),
             {
                 onSuccess: (res) => {
                     toast.success(
@@ -116,9 +116,7 @@ const AdminTabPanelVM = () => {
         executeChangeRole(
             () =>
                 Http.put(
-                    `/v1/iam/org/${
-                        User.getOrg(adminUser)?.organisation_id
-                    }/make_${role}`,
+                    `/v1/iam/org/make_${role}`,
                     {
                         user_id: user.id,
                     }

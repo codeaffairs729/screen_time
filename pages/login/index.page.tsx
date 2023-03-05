@@ -73,11 +73,11 @@ const SigninPage = () => {
                         </a>
                     </Link>
                     <div className="flex space-x-4 mt-12">
-                        <PrimaryBtn
+                        {/* <PrimaryBtn
                             className="bg-dtech-primary-dark min-w-[150px]"
                             label="Sign Up"
                             onClick={() => router.push("/signup")}
-                        />
+                        /> */}
                         <PrimaryBtn
                             className="bg-dtech-primary-dark min-w-[150px]"
                             dataSelector="signin-button"
