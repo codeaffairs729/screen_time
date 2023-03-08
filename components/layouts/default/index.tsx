@@ -40,20 +40,20 @@ const DefaultLayout = ({
                             className="h-4 w-4 text-gray-700 inline mr-2 mb-1"
                             aria-hidden="true"
                         />
-                        This is an <span className="font-semibold">Alpha</span>{" "}
-                        release. Click to .
+                        This is a <span className="font-semibold">Pre-Beta</span>{" "}
+                        release. Click to:
                         <a
                             href="https://f7xcuekc9xt.typeform.com/to/ff4rGkXc"
                             className="hover:underline text-blue-600 "
                         >
-                            report a bug
+                             Report a Bug
                         </a>{" "}
                         or
                         <a
                             href="https://f7xcuekc9xt.typeform.com/to/Zpryygkm"
                             className="hover:underline text-blue-600 ml-1"
                         >
-                            suggest a new feature
+                            Suggest a Feature
                         </a>
                         .
                     </div>
