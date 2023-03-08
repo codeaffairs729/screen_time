@@ -41,20 +41,20 @@ const WorkspacePage = () => {
                     </p>
                     <span></span>
                 </div>
-                <div className=" bg-dtech-light-grey border-2 ">
+                <div className=" bg-white border-1 ">
                     <div className="flex px-4">
                         <Tab.Group defaultIndex={selectedIndex}>
                             <AccountTabHeaders selectedIndex={selectedIndex} />
                             <Tab.Panels className="h-[calc(100%-var(--dataset-detail-tab-header-height))] w-full flex">
-                                <TabPanel className="!bg-dtech-light-grey">
+                                <TabPanel className="!bg-white">
                                     <AccountDetails />
                                 </TabPanel>
-                                <TabPanel className="!bg-dtech-light-grey">
+                                <TabPanel className="!bg-white">
                                     <div className="my-20">
                                         <SubscriptionSection />
                                     </div>
                                 </TabPanel>
-                                <TabPanel className="!bg-dtech-light-grey">
+                                <TabPanel className="!bg-white">
                                     <div className="my-20">
                                         Work in Progress
                                     </div>
