@@ -41,7 +41,7 @@ const DefaultLayout = ({
                             aria-hidden="true"
                         />
                         This is a <span className="font-semibold">Pre-Beta</span>{" "}
-                        release. Click to:
+                        release. Click to: 
                         <a
                             href="https://f7xcuekc9xt.typeform.com/to/ff4rGkXc"
                             className="hover:underline text-blue-600 "
