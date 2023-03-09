@@ -17,11 +17,11 @@ const Footer = ({ className = "" }: { className?: string }) => {
                         <div className="space-x-2 ">
                             <FooterSocialMediaItem
                                 icon={<FaLinkedinIn />}
-                                link="https://www.linkedin.com/company/dtime-ai/"
+                                link="https://www.linkedin.com/showcase/dtechtive/"
                             />
                             <FooterSocialMediaItem
                                 icon={<FaTwitter />}
-                                link="https://twitter.com/dtime_ai"
+                                link="https://twitter.com/dtechtive"
                             />
                         </div>
                     </div>
