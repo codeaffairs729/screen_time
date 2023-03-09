@@ -46,7 +46,7 @@ const DatasetDetail = ({ dataset }: { dataset: Dataset | undefined }) => {
             <DefaultLayout>
                 <ErrorAlert
                     className="max-w-xl mx-auto"
-                    message="Something went wrong while fetching Datasets data. Please try again later."
+                    message="Something went wrong while fetching the datasets. Please try again later."
                 />
             </DefaultLayout>
         );
@@ -63,7 +63,7 @@ const DatasetDetail = ({ dataset }: { dataset: Dataset | undefined }) => {
                         </p>
                         <span></span>
                     </div>
-                    <div className="w-full h-fit py-4 bg-dtech-light-grey rounded-[20px] shadow-container">
+                    <div className="w-full h-fit py-4 bg-white rounded-[20px] shadow-container">
                         <DatasetHead dataset={dataset}/>
                         <div className="flex border-t px-4 shadow-container">
                             {!loading && (
@@ -72,7 +72,7 @@ const DatasetDetail = ({ dataset }: { dataset: Dataset | undefined }) => {
                                         selectedIndex={selectedIndex}
                                     />
                                     <Tab.Panels className="h-[calc(100%-var(--dataset-detail-tab-header-height))] w-full flex">
-                                        <TabPanel className="!bg-dtech-light-grey">
+                                        <TabPanel className="!bg-white">
                                             <DataFilesSection
                                                 goToPreview={() => {
                                                     setSelectedIndex(0);
