@@ -79,13 +79,13 @@ const DatasetDetail = ({ dataset }: { dataset: Dataset | undefined }) => {
                                                 }}
                                             />
                                         </TabPanel>
-                                        <TabPanel className="!bg-dtech-light-grey">
+                                        <TabPanel className="!bg-white">
                                             <DatasetInsights />
                                         </TabPanel>
-                                        <TabPanel className="!bg-dtech-light-grey">
+                                        <TabPanel className="!bg-white">
                                             <DatasetFeedbackSection />
                                         </TabPanel>
-                                        <TabPanel className="!bg-dtech-light-grey">
+                                        <TabPanel className="!bg-white">
                                             <RelatedDatasetsVMContext.Provider
                                                 value={relatedVM}
                                             >
