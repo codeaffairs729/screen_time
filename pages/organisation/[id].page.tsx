@@ -52,7 +52,7 @@ const OrganisationDetailPage = ({
             <DefaultLayout>
                 <ErrorAlert
                     className="max-w-xl mx-auto"
-                    message="Something went wrong while fetching organisation data. Please try again later."
+                    message="Something went wrong while fetching organisation details. Please try again later."
                 />
             </DefaultLayout>
         );
@@ -68,7 +68,7 @@ const OrganisationDetailPage = ({
                         </p>
                         <span></span>
                     </div>
-                    <div className="w-full h-fit py-4 bg-dtech-light-grey rounded-[20px] shadow-container">
+                    <div className="w-full h-fit py-4 bg-white rounded-[20px] shadow-container">
                         <OrganisationHead />
                         <div className="flex border-t px-4 shadow-container">
                             {!loading && (
@@ -78,13 +78,13 @@ const OrganisationDetailPage = ({
                                         user={User.getRole(user)?.name}
                                     />
                                     <Tab.Panels className="h-[calc(100%-var(--dataset-detail-tab-header-height))] w-full flex">
-                                        <TabPanel className="!bg-dtech-light-grey">
+                                        <TabPanel className="!bg-white">
                                             <Datasets />
                                         </TabPanel>
-                                        <TabPanel className="!bg-dtech-light-grey">
+                                        <TabPanel className="!bg-white">
                                             <Insights />
                                         </TabPanel>
-                                        <TabPanel className="!bg-dtech-light-grey">
+                                        <TabPanel className="!bg-white">
                                             {(User.getRole(user)?.name ===
                                                 ORGANIZATION_ADMIN ||
                                                 User.getRole(user)?.name ===
