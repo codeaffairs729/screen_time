@@ -34,11 +34,7 @@ const RegisterDataSourcePage = () => {
                         Register a Data Source
                     </h1>
                     <span className="inline-flex space-x-1">
-                        <i className="mr-1 text-sm underline">Need help?</i>{" "}
-                        <InfoIcon
-                            className="ml-1"
-                            title="Register a new data source"
-                        />
+                        <i className="mr-1 text-sm">If you would like to see the datasets from a data source website in the Dtechtive search results, we recommend you to register the website using the form provided below. We will do the hard work to get them onto Dtechtive.</i>{" "}
                     </span>
                 </div>
                 {vm.isSubmissionSuccess && <SuccessScreen />}
@@ -50,7 +46,7 @@ const RegisterDataSourcePage = () => {
                             </span>{" "}
                             <span className="text-gray-500">
                                 These fields are necessary for us to start the
-                                indexing process.
+                                metadata scraping process.
                             </span>
                         </div>
                         <SiteUrl vm={vm} />
@@ -78,7 +74,7 @@ const RegisterDataSourcePage = () => {
                                     </span>{" "}
                                     <span className="text-gray-500">
                                         The additional information will help us
-                                        index the data source websites faster
+                                        scrape the metadata faster.
                                     </span>
                                 </span>
                                 <span>
