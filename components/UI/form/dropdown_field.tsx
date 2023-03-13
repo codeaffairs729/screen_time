@@ -139,7 +139,7 @@ const DropdownField = ({
                 value={selected}
                 onChange={(o) => {
                     onChange(o?.value);
-                    setSelected(o);
+                    setSelected(o as any);
                 }}
                 nullable
             >
