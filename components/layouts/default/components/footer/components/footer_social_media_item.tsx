@@ -12,7 +12,7 @@ const FooterSocialMediaItem = ({
       href={link}
       target="_blank"
       rel="noreferrer"
-      className="p-1 bg-gray-500 hover:bg-dtech-secondary-dark inline-block text-white rounded"
+      className="p-1 bg-dtech-main-grey w-5 h-5 hover:bg-dtech-secondary-dark inline-block text-white rounded"
     >
       {icon}
     </a>

@@ -9,6 +9,7 @@ module.exports = {
                 dtech: {
                     "main-dark": "#3F0068",
                     "main-light": "#F0E2FA",
+                    "main-grey": "#5F5F63",
                     "light-grey": "#F8F8F8",
                     "dark-grey": "#302D2D",
                     "additional-dark": "#9A65C4",

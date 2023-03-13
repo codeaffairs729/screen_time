@@ -10,7 +10,7 @@ const FooterLink = ({
   onClick?: () => void;
 }) => {
   const content = (
-    <span className=" text-gray-600 hover:underline text-sm">{label}</span>
+    <span className=" text-dtech-main-grey hover:underline text-[17px]">{label}</span>
   );
   if (onClick) {
     return (
