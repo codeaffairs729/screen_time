@@ -14,7 +14,7 @@ const RegisterDataSourceVM = () => {
         isLoading: isRegisteringDataSource,
     } = useHttpCall();
     const registerDataSource = (data: any) => {
-        const sanitizedValues = pickBy(data, (value) => value.length > 0);
+        const sanitizedValues = pickBy(data, (value) => value?.length > 0);
         console.log(sanitizedValues);
         return executeRegisterDataSource(
             () =>

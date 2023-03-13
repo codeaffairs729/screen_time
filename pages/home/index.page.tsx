@@ -3,14 +3,14 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import DefaultLayout from "../../components/layouts/default";
 import { usereventSearchQuery } from "services/usermetrics.service";
-import SearchBar from "components/UI/search_bar";
+import SearchBar from "components/UI/search_bar_new";
 
 const HomePage = () => {
     const router = useRouter();
 
     return (
         <DefaultLayout showLogo={false} showSearchBar={false}>
-            <div className="h-[calc(60vh-var(--nav-height))] flex items-center justify-center mx-2">
+            <div className="h-[calc(60vh-var(--nav-height))] flex flex-col items-center justify-center mx-2 my-20">
                 <div className="max-w-3xl mx-auto flex flex-col items-center">
                     <span>
                         <Image
@@ -25,7 +25,7 @@ const HomePage = () => {
                         </p>
                     </span>
                     <div className="mt-6 max-w-xl mx-auto w-[575px]">
-                        <SearchBar
+                        {/* <SearchBar
                             onChange={(type: string, option: any) => {
                                 if (!option) return;
                                 const searchType =
@@ -37,6 +37,17 @@ const HomePage = () => {
                                 });
                             }}
                             selectClasses="border border-dtech-main-dark !bg-transparent h-15"
+                        /> */}
+                        <SearchBar
+                            className="h-15"
+                            onChange={(searchType, searchOption) => {
+                                const searchTypeQ =
+                                    searchType === "dataset" ? "" : searchType;
+                                router.push({
+                                    pathname: `/search/${searchTypeQ}`,
+                                    query: { q: searchOption.value },
+                                });
+                            }}
                         />
                     </div>
                 </div>
