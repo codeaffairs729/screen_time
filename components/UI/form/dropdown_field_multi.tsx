@@ -53,7 +53,7 @@ const DropdownFieldMulti = ({
         >
             <Combobox
                 value={selected}
-                onChange={(o) => {
+                onChange={(o: any) => {
                     let values = o.map((option: Option) => {
                         return option.value;
                     });

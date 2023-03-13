@@ -25,7 +25,6 @@ const SearchBar = ({
 }) => {
     const [selected, setSelected] = useState<Option>();
     const [query, setQuery] = useState("");
-    // const router = useRouter();
     const {
         data: options,
         error,
@@ -65,11 +64,6 @@ const SearchBar = ({
     const searchType = useSelector((state: RootState) => state.search.type);
     useEffect(() => {
         if (!selected) return;
-        // const searchTypeQ = searchType === "dataset" ? "" : searchType;
-        // router.push({
-        //     pathname: `/search/${searchTypeQ}`,
-        //     query: { q: selected.name },
-        // });
         onChange(searchType, { label: "User input", value: selected.name });
     }, [selected]);
 

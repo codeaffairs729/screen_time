@@ -11,7 +11,7 @@ const HomePage = () => {
     return (
         <DefaultLayout showLogo={false} showSearchBar={false}>
             <div className="h-[calc(60vh-var(--nav-height))] flex flex-col items-center justify-center mx-2 my-20">
-                <div className="max-w-3xl mx-auto flex flex-col items-center">
+                <div className="max-w-[575px] mx-auto w-full flex flex-col items-center">
                     <span>
                         <Image
                             src="/images/logo/dtechtive_without_tagline.svg"
@@ -24,7 +24,7 @@ const HomePage = () => {
                             reach
                         </p>
                     </span>
-                    <div className="mt-6 max-w-xl mx-auto w-[575px]">
+                    {/* <div className="mt-6 mx-auto w-full max-w-[575px]"> */}
                         {/* <SearchBar
                             onChange={(type: string, option: any) => {
                                 if (!option) return;
@@ -39,7 +39,7 @@ const HomePage = () => {
                             selectClasses="border border-dtech-main-dark !bg-transparent h-15"
                         /> */}
                         <SearchBar
-                            className="h-15"
+                            className="h-15 w-full mt-6"
                             onChange={(searchType, searchOption) => {
                                 const searchTypeQ =
                                     searchType === "dataset" ? "" : searchType;
@@ -49,7 +49,7 @@ const HomePage = () => {
                                 });
                             }}
                         />
-                    </div>
+                    {/* </div> */}
                 </div>
             </div>
         </DefaultLayout>
