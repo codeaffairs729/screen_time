@@ -10,7 +10,7 @@
   --dataset-detail-tab-header-height: 46px; /* height of the tab header on the dataset detail page */
 }
 
-input[type='text']:focus { box-shadow: none; }
+/* input[type='text']:focus { box-shadow: none; } why was this added to the global stylesheet???? */
 
 /* Hide scrollbar for Chrome, Safari and Opera */
 .no-scrollbar::-webkit-scrollbar {

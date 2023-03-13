@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import SearchBar from "components/UI/search_bar";
+import SearchBar from "components/UI/search_bar_new";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -40,12 +40,13 @@ const Nav = ({
                 </Link>
             )}
             {content}
-            <div className="flex items-center justify-end ml-auto">
+            <div className="flex items-center justify-end grow">
                 {showSearchBar && (
-                    <SearchBar
-                        onChange={onSearchChange}
-                        className="mr-24 ml-auto"
-                    />
+                    // <SearchBar
+                    //     onChange={onSearchChange}
+                    //     className="mr-24 ml-auto"
+                    // />
+                    <SearchBar onChange={onSearchChange} className="h-9 max-w-xl grow mx-auto" />
                 )}
                 <div className="flex items-center">
                     <NavItem label="Home" link="/" />

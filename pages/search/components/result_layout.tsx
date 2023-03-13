@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import ErrorAlert from "components/UI/alerts/error_alert";
 import Loader from "components/UI/loader";
 import ResultCard, { Data } from "components/UI/result_card";
@@ -8,9 +9,10 @@ type ResultLayoutProps = {
     error: any;
     isLoading: boolean;
     recordsData: Data[];
+    className?: string;
 };
 
-const ResultLayout = ({ error, isLoading, recordsData }: ResultLayoutProps) => {
+const ResultLayout = ({ error, isLoading, recordsData, className="" }: ResultLayoutProps) => {
     const router = useRouter();
     const {
         query: { q },
@@ -50,7 +52,7 @@ const ResultLayout = ({ error, isLoading, recordsData }: ResultLayoutProps) => {
     }
 
     return (
-        <div className="flex flex-col" data-test-id="results table">
+        <div className={clsx("flex flex-col -mt-4", className)} data-test-id="results table">
             {recordsData.map((data: Data) => (
                 <ResultCard key={data.id} data={data} />
             ))}

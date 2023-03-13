@@ -15,7 +15,7 @@ const Organisation = () => {
         pageSize,
         totalRecords,
         organisations,
-        isFetchingOrganisation
+        isFetchingOrganisation,
     } = useContext(OrganizationSearchVMContext);
 
     return (

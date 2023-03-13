@@ -12,7 +12,7 @@ const SignupPage = () => {
     const vm = SignupVM();
 
     return (
-        <DefaultLayout>
+        <DefaultLayout showSearchBar={false}>
             <div className="min-h-[calc(100vh-var(--nav-height))] flex flex-col justify-between">
                 <div className="text-center mt-8 mb-4">
                     <h1 className="font-semibold text-lg">
