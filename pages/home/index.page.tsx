@@ -10,7 +10,7 @@ const HomePage = () => {
 
     return (
         <DefaultLayout showLogo={false} showSearchBar={false}>
-            <div className="h-[calc(60vh-var(--nav-height))] flex flex-col items-center justify-center mx-2 my-20">
+            <div className="min-h-[calc(100vh-var(--nav-height))] flex flex-col items-center justify-center mx-2 my-2">
                 <div className="max-w-[575px] mx-auto w-full flex flex-col items-center">
                     <span>
                         <Image
