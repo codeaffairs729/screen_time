@@ -39,6 +39,7 @@ const Dataset = () => {
                         error={error}
                         isLoading={isLoading}
                         recordsData={datasetToResultCardData(datasets, stats)}
+                        className="-mt-[18px]"
                     />
                 )}
             </div>
