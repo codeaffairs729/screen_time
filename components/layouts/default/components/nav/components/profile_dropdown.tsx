@@ -10,7 +10,7 @@ import { usereventLogout } from "services/usermetrics.service";
 import { BsPersonCircle } from "react-icons/bs";
 import Dropdown from "components/UI/drop_down";
 
-const ProfileDropdown = () => {
+const ProfileDropdown = ({ className = "" }) => {
     const user = useSelector((state: RootState) => state.auth.user);
     const name = user ? user.name : "Guest";
     const menuItems = [
@@ -34,6 +34,7 @@ const ProfileDropdown = () => {
 
     return (
         <Dropdown
+            className={className}
             menuTitle={`Hi, ${name}!`}
             label={nameInitial}
             menuItems={user ? menuItems : []}

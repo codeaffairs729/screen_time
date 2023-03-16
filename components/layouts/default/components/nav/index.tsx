@@ -4,9 +4,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import SearchVM from "pages/search/search.vm";
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "store";
+import { RxHamburgerMenu } from "react-icons/rx";
 import NavMenuDropdown from "./components/nav_menu_dropdown";
 import Notification from "./components/notification";
 import ProfileDropdown from "./components/profile_dropdown";
@@ -24,9 +25,10 @@ const Nav = ({
     onSearchChange: any;
 }) => {
     const user = useSelector((state: RootState) => state.auth.user);
+    const [showResponsiveMenu, setShowResponsiveMenu] = useState(false);
 
     return (
-        <nav className="flex p-2 h-[var(--nav-height)] items-center ">
+        <nav className="flex p-2 h-[var(--nav-height)] items-center relative mb-12 sm:mb-0">
             {showLogo && (
                 <Link href="/">
                     <a className="block max-w-[200px] p-2.5">
@@ -46,35 +48,53 @@ const Nav = ({
                     //     onChange={onSearchChange}
                     //     className="mr-24 ml-auto"
                     // />
-                    <SearchBar onChange={onSearchChange} className="h-9 max-w-xl grow mx-auto" />
-                )}
-                <div className="flex items-center">
-                    <NavItem label="Home" link="/" />
-                    {user && (
-                        <NavMenuDropdown
-                            label="User contributions"
-                            menuItems={[
-                                {
-                                    label: "Register a data source",
-                                    link: "/register-data-source",
-                                },
-                                // {
-                                //     label: "Domain Vocabulary Generator",
-                                //     link: "/user-vocabulary-generator",
-                                // },
-                            ]}
-                        />
-                    )}
-
-                    <NavItem
-                        label="API"
-                        link="https://api.dtechtive.com/docs"
-                        openInNewTab={true}
+                    <SearchBar
+                        onChange={onSearchChange}
+                        className="h-9 max-w-xl grow absolute sm:relative top-20 sm:top-0 mx-4 sm:mx-auto"
                     />
-                    {user && <Notification />}
-                    {!user && <SignupDropdown />}
-                    {!user && <NavItem label="Log In" link="/login" />}
-                    <ProfileDropdown />
+                )}
+                <div className="flex md:items-center flex-row-reverse md:flex-row relative">
+                    <button
+                        className="md:hidden w-10 h-10 text-dtech-dark-grey"
+                        onClick={() =>
+                            setShowResponsiveMenu(!showResponsiveMenu)
+                        }
+                    >
+                        <RxHamburgerMenu />
+                    </button>
+                    <div
+                        className={clsx(
+                            "flex md:flex flex-col md:flex-row items-center absolute md:relative top-full bg-white md:bg-transparent px-5 md:px-0 shadow-lg md:shadow-none",
+                            { hidden: !showResponsiveMenu }
+                        )}
+                    >
+                        <NavItem label="Home" link="/" />
+                        {user && (
+                            <NavMenuDropdown
+                                label="User contributions"
+                                menuItems={[
+                                    {
+                                        label: "Register a data source",
+                                        link: "/register-data-source",
+                                    },
+                                    // {
+                                    //     label: "Domain Vocabulary Generator",
+                                    //     link: "/user-vocabulary-generator",
+                                    // },
+                                ]}
+                            />
+                        )}
+
+                        <NavItem
+                            label="API"
+                            link="https://api.dtechtive.com/docs"
+                            openInNewTab={true}
+                        />
+                        {user && <Notification />}
+                        {!user && <SignupDropdown />}
+                        {!user && <NavItem label="Log In" link="/login" />}
+                    </div>
+                    <ProfileDropdown className="mx-4 md:mx-0" />
                 </div>
             </div>
         </nav>

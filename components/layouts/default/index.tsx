@@ -65,7 +65,7 @@ const DefaultLayout = ({
                     />
                     {children}
                     {/* <div className="mt-auto"> */}
-                        <Footer className="mt-auto bg-[#F5F5F5]" />
+                        <Footer className="mt-8 bg-[#F5F5F5]" />
                     {/* </div> */}
                 </SearchVMContext.Provider>
             </OrganizationSearchVMContext.Provider>
