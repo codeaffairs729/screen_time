@@ -8,7 +8,7 @@ import FooterSocialMediaItem from "./components/footer_social_media_item";
 const Footer = ({ className = "" }: { className?: string }) => {
     return (
         <footer className={clsx("px-8 pt-11 pb-2",className)}>
-            <div className="md:flex text-left justify-between items-center">
+            <div className="md:flex text-left justify-between items-center max-w-site mx-auto">
                 <div className="flex justify-start items-center">
                     <div className="flex flex-col justify-center items-center mr-6">
                         <span className="text-lg text-dtech-main-grey mb-1">

@@ -28,7 +28,7 @@ const Nav = ({
     const [showResponsiveMenu, setShowResponsiveMenu] = useState(false);
 
     return (
-        <nav className="flex p-2 h-[var(--nav-height)] items-center relative mb-12 sm:mb-0">
+        <nav className="flex p-2 h-[var(--nav-height)] items-center relative mb-12 sm:mb-0 w-full max-w-site mx-auto">
             {showLogo && (
                 <Link href="/">
                     <a className="block max-w-[200px] p-2.5">
@@ -50,7 +50,7 @@ const Nav = ({
                     // />
                     <SearchBar
                         onChange={onSearchChange}
-                        className="h-9 max-w-xl grow absolute sm:relative top-20 sm:top-0 mx-4 sm:mx-auto"
+                        className="h-9 max-w-xl grow absolute inset-x-0 sm:relative top-20 sm:top-0 mx-4 sm:mx-auto"
                     />
                 )}
                 <div className="flex md:items-center flex-row-reverse md:flex-row relative">
