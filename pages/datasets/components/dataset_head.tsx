@@ -46,7 +46,6 @@ const DatasetHead = ({ dataset }: any) => {
         dataQuality,
         datasetUrl,
         hostUrl,
-
     } = dataset.detail || {};
 
     const stat = {
@@ -58,35 +57,36 @@ const DatasetHead = ({ dataset }: any) => {
 
     return (
         <div className="px-4">
-            <div className="flex justify-between items-center">
-                <div className="flex justify-between items-center">
-                    <div className="text-dtech-dark-grey text-lg font-semibold">
-                        {name}
-                    </div>
-                    <div className="flex justify-between items-center">
-                        <MetaRating
-                            dataQuality={dataQuality}
-                            title="Estimated based on the EU Metadata Quality Assessment method."
-                        />
-                        <fieldset className=" min-h-full px-4 border rounded border-[#5F5F63]  text-xs pb-0.5">
-                            <legend className="text-xs mr-8">Licence</legend>
-                            <div>
-                                <label>{license?.type}</label>
-                            </div>
-                        </fieldset>
-                    </div>
+            {/* <div className="flex justify-between items-center"> */}
+            <div className="lg:flex justify-between items-center">
+                <div className="text-dtech-dark-grey text-lg font-semibold">
+                    {name}
                 </div>
-                {!isFetchingStats && (
-                    <ResultCardAction
-                        data={headDataset}
-                        setData={setHeadDataset}
-                        href={`/datasets/${dataset?.id}`}
+                <div className="md:flex justify-between items-center">
+                    <MetaRating
+                        className="w-min mb-2"
+                        dataQuality={dataQuality}
+                        title="Estimated based on the EU Metadata Quality Assessment method."
                     />
-                )}
+                    <fieldset className=" min-h-full px-4 border rounded border-[#5F5F63] w-min text-xs pb-0.5 mb-2">
+                        <legend className="text-xs mr-8">Licence</legend>
+                        <div>
+                            <label>{license?.type}</label>
+                        </div>
+                    </fieldset>
+                    {!isFetchingStats && (
+                        <ResultCardAction
+                            data={headDataset}
+                            setData={setHeadDataset}
+                            href={`/datasets/${dataset?.id}`}
+                        />
+                    )}
+                </div>
             </div>
+            {/* </div> */}
             <div className="my-4">
                 <div className="flex justify-between">
-                    <span className="text-sm w-2/3">{description}</span>
+                    <span className="text-sm lg:w-2/3">{description}</span>
                 </div>
                 <div className="flex justify-start items-end my-3">
                     <MetaInfoEntity entityName="Domains" entities={domain} />
@@ -95,7 +95,7 @@ const DatasetHead = ({ dataset }: any) => {
                 </div>
             </div>
             <div className="my-4">
-                <div className="flex justify-between items-center">
+                <div className="flex flex-wrap justify-between items-center">
                     <DatasetStat stats={stat} />
                     <Link href={`${datasetUrl}`}>
                         <a
@@ -112,9 +112,7 @@ const DatasetHead = ({ dataset }: any) => {
                         label="Host"
                     >
                         <strong>
-                            <Link
-                                href={`${hostUrl}`}
-                            >
+                            <Link href={`${hostUrl}`}>
                                 <a
                                     target="_blank"
                                     rel="noreferrer"

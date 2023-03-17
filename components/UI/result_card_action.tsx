@@ -6,13 +6,15 @@ import BookmarkBtn from "./user_bookmark/bookmark_btn";
 import { Menu, Transition } from "@headlessui/react";
 import { Data } from "./result_card";
 import ReactTooltip from "react-tooltip";
+import clsx from "clsx";
 
 type ResultCardActionProps = {
     data: Data | undefined;
     setData: Function;
     href: string;
+    className?: string;
 };
-const ResultCardAction = ({ data, setData, href }: ResultCardActionProps) => {
+const ResultCardAction = ({ data, setData, href, className="" }: ResultCardActionProps) => {
     const [share, setShare] = useState(false);
 
     if (!data) {
@@ -21,15 +23,15 @@ const ResultCardAction = ({ data, setData, href }: ResultCardActionProps) => {
 
     const onFav = () => setData({ ...data, isFavourited: !data.isFavourited });
     return (
-        <div>
-            <div className="flex">
+        // <div>
+            <div className={clsx("flex", className)}>
                 <Menu>
                     {({ open }) => (
                         <>
                             <Menu.Button>
                                 <div data-tip="Share on social media">
                                     <BsShareFill
-                                        className="h-6 w-6 ml-4 text-dtech-main-dark cursor-pointer "
+                                        className="h-6 w-6 text-dtech-main-dark cursor-pointer "
                                         data-modal-toggle="popup"
                                         onClick={() => setShare(!share)}
                                     />
@@ -56,7 +58,7 @@ const ResultCardAction = ({ data, setData, href }: ResultCardActionProps) => {
                     recordType={data.recordType}
                 />
             </div>
-        </div>
+        // </div>
     );
 };
 export default ResultCardAction;

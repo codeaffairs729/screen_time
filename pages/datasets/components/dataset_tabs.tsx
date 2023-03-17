@@ -49,7 +49,7 @@ const DatasetTabHeaders = ({
     },[selectedIndex])
     return (
         <div>
-            <Tab.List className="relative text-dtech-main-dark">
+            <Tab.List className="relative text-dtech-main-dark flex overflow-x-auto lg:block">
                 {HEADERS.map((header: Header, index: number) => (
                     <TabIconHeader
                         key={index}
@@ -61,8 +61,8 @@ const DatasetTabHeaders = ({
                                     ? header.filledIcon
                                     : header.outlineIcon
                             }
-                            width="36px"
-                            height="36px"
+                            // width="36px"
+                            // height="36px"
                             alt={header.name}
                         />
                         <span className="text-dtech-main-dark">
