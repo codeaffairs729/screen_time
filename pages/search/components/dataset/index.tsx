@@ -2,7 +2,7 @@ import {
     datasetToResultCardData,
     SearchVMContext,
 } from "pages/search/search.vm";
-import { useContext } from "react";
+import { useContext, useLayoutEffect } from "react";
 import SearchHeaders from "../search_headers";
 import ResultLayout from "../result_layout";
 import Sidebar from "../sidebar/sidebar";
@@ -21,8 +21,10 @@ const Dataset = () => {
         stats,
         isFetchingStats,
     } = useContext(SearchVMContext);
+    
+    
     return (
-        <div className="flex">
+        <div className="flex relative">
             <Sidebar className="w-48 shrink-0" />
             <div className="overflow-x-auto w-full">
                 <SearchHeaders
@@ -39,7 +41,7 @@ const Dataset = () => {
                         error={error}
                         isLoading={isLoading}
                         recordsData={datasetToResultCardData(datasets, stats)}
-                        className="-mt-[18px]"
+                        className="-mt-[18px] mx-4"
                     />
                 )}
             </div>

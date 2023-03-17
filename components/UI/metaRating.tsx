@@ -24,7 +24,7 @@ const MetaRating = ({
     return (
         <div
             data-testid={displayContext}
-            className={clsx(className, "flex space-x-1 flex-col ml-4")}
+            className={clsx(className, "flex space-x-1 flex-col")}
         >
             <span className="text-xs whitespace-nowrap relative mr-6">
                 <span className={clsx(labelClass, "text-m")}>{label}</span>

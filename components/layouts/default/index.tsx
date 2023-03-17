@@ -29,7 +29,7 @@ const DefaultLayout = ({
     return (
         <div
             className={clsx(
-                "w-full min-h-screen max-w-site mx-auto flex flex-col",
+                "w-full min-h-screen mx-auto flex flex-col",
                 className
             )}
         >
@@ -40,13 +40,14 @@ const DefaultLayout = ({
                             className="h-4 w-4 text-gray-700 inline mr-2 mb-1"
                             aria-hidden="true"
                         />
-                        This is a <span className="font-semibold">Pre-Beta</span>{" "}
-                        release. Click to: 
+                        This is a{" "}
+                        <span className="font-semibold">Pre-Beta</span> release.
+                        Click to:
                         <a
                             href="https://f7xcuekc9xt.typeform.com/to/ff4rGkXc"
                             className="hover:underline text-blue-600 "
                         >
-                             Report a Bug
+                            Report a Bug
                         </a>{" "}
                         or
                         <a
@@ -63,9 +64,9 @@ const DefaultLayout = ({
                         content={navContent}
                         onSearchChange={vm.onSearchChange}
                     />
-                    {children}
+                    <div className="max-w-site mx-auto w-full">{children}</div>
                     {/* <div className="mt-auto"> */}
-                        <Footer className="mt-8 bg-[#F5F5F5]" />
+                    <Footer className="mt-8 bg-[#F5F5F5]" />
                     {/* </div> */}
                 </SearchVMContext.Provider>
             </OrganizationSearchVMContext.Provider>

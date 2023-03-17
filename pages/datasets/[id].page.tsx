@@ -65,14 +65,14 @@ const DatasetDetail = ({ dataset }: { dataset: Dataset | undefined }) => {
                     </div>
                     <div className="w-full h-fit py-4 bg-white rounded-[20px] shadow-container">
                         <DatasetHead dataset={dataset}/>
-                        <div className="flex border-t px-4 shadow-container">
+                        <div className="lg:flex border-t px-4 shadow-container">
                             {!loading && (
                                 <Tab.Group defaultIndex={selectedIndex}>
                                     <DatasetTabHeaders
                                         selectedIndex={selectedIndex}
                                     />
                                     <Tab.Panels className="h-[calc(100%-var(--dataset-detail-tab-header-height))] w-full flex">
-                                        <TabPanel className="!bg-white">
+                                        <TabPanel className="!bg-white !p-0 lg:p-6">
                                             <DataFilesSection
                                                 goToPreview={() => {
                                                     setSelectedIndex(0);

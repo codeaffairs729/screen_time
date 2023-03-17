@@ -4,29 +4,26 @@ import DataStat from "./data_stat";
 import { DateTime } from "luxon";
 import { DataStats } from "models/organisation.model";
 import Link from "next/link";
+import { Data } from ".";
 
-export interface DataProviders {
-    datasetSource: string;
-    ownerUrl: string;
-    organisation: string;
-    hostName: string;
-    hostUuid?: string;
-    ownerUuid?: string;
-    hostUrl?: string;
-}
+// export interface DataProviders {
+//     datasetSource: string;
+//     ownerUrl: string;
+//     organisation: string;
+//     hostName: string;
+//     hostUuid?: string;
+//     ownerUuid?: string;
+//     hostUrl?: string;
+// }
 
 const CardFooter = ({
-    stats,
-    dataProviders,
-    lastUpdate,
+    data,
     className = "",
 }: {
-    stats?: DataStats;
-    dataProviders?: DataProviders;
-    lastUpdate: DateTime;
+    data: Data;
     className?: string;
 }) => {
-
+    const { dataProviders, stats, lastUpdate, domains, topics } = data;
     return (
         <div
             className={clsx(
@@ -39,53 +36,112 @@ const CardFooter = ({
                     <DataStat stats={stats} />
                 </div>
             )}
-            {dataProviders && (
-                <div className="flex flex-row w-1/2 justify-start items-center">
-                    <Link href={`${dataProviders?.datasetSource}`}>
-                        <a
-                            target="_blank"
-                            rel="noreferrer"
-                            className="text-m font-semibold hover:underline underline-offset-2 mr-5 text-dtech-main-dark"
-                        >
-                            Source
-                        </a>
-                    </Link>
-                    <LabelledRow
-                        label="Owner"
-                        className="mr-12"
-                        labelClasses="font-normal text-m"
-                        childClasses="font-medium text-m hover:underline underline-offset-2"
-                    >
-                        <Link
-                            href={`${dataProviders.ownerUrl}`}
-                        >
-                            <a target="_blank">
-                                {dataProviders.organisation &&
-                                    dataProviders.organisation}
+            <div className="flex flex-wrap justify-start items-center">
+                {dataProviders && (
+                    <>
+                        <Link href={`${dataProviders?.datasetSource}`}>
+                            <a
+                                target="_blank"
+                                rel="noreferrer"
+                                className="text-sm font-medium hover:underline underline-offset-2 text-dtech-main-dark"
+                            >
+                                Source
                             </a>
                         </Link>
-                    </LabelledRow>
+                        <LabelledRow
+                            className="mr-10"
+                            label="Host"
+                            labelClasses="!text-sm font-medium mr-1"
+                            childClasses="hover:underline underline-offset-2"
+                        >
+                            <Link href={`${dataProviders.hostUrl}`}>
+                                <a
+                                    className="text-sm text-dtech-main-dark"
+                                    target="_blank"
+                                >
+                                    {dataProviders.hostName}
+                                </a>
+                            </Link>
+                        </LabelledRow>
+                        <LabelledRow
+                            className="mr-10"
+                            label="Owner"
+                            labelClasses="!text-sm font-medium mr-1"
+                            childClasses="hover:underline underline-offset-2"
+                        >
+                            <Link href={`${dataProviders.ownerUrl}`}>
+                                <a
+                                    className="text-sm text-dtech-main-dark"
+                                    target="_blank"
+                                >
+                                    {dataProviders.organisation &&
+                                        dataProviders.organisation}
+                                </a>
+                            </Link>
+                        </LabelledRow>
+                    </>
+                )}
+                <LabelledRow
+                    className="mr-10"
+                    label="Domains"
+                    labelClasses="!text-sm mr-1"
+                >
+                    <div className="flex flex-wrap">
+                        {domains.map((domain: any, index: number) => (
+                            <span
+                                key={index}
+                                className="text-sm underline decoration-1 mr-1"
+                            >
+                                {createTag(domain)}
+                            </span>
+                        ))}
+                    </div>
+                </LabelledRow>
+                <LabelledRow
+                    className="mr-10"
+                    label="Topics"
+                    labelClasses="!text-sm mr-1"
+                >
+                    <div className="flex flex-wrap">
+                        {topics.map((topic: any, index: number) => (
+                            <span
+                                key={index}
+                                className="text-sm underline decoration-1 mr-1 truncate"
+                            >
+                                {createTag(topic)}
+                            </span>
+                        ))}
+                    </div>
+                </LabelledRow>
+                {lastUpdate?.isValid && (
+                    // <div className="flex my-1.5">
+                    //     <span className="text-sm mr-1">Updated</span>
+                    //     <span className="text-sm font-medium">
+                    //         {lastUpdate.toRelative()}
+                    //     </span>
+                    // </div>
                     <LabelledRow
-                        label="Host"
-                        labelClasses="font-normal text-m"
-                        childClasses="font-medium text-m hover:underline underline-offset-2"
+                        className="mr-10"
+                        label="Updated"
+                        labelClasses="!text-sm mr-1"
                     >
-                        <Link href={`${dataProviders.hostUrl}`}>
-                            <a target="_blank">{dataProviders.hostName}</a>
-                        </Link>
+                        <span className="text-sm">
+                            {lastUpdate.toRelative()}
+                        </span>
                     </LabelledRow>
-                </div>
-            )}
-            {lastUpdate?.isValid && (
-                <div className="flex my-1.5">
-                    <span className="text-sm mr-1">Updated</span>
-                    <span className="text-sm font-medium">
-                        {lastUpdate.toRelative()}
-                    </span>
-                </div>
-            )}
+                )}
+            </div>
         </div>
     );
+};
+
+const createTag = (topic: string) => {
+    const tag = topic
+        .split(/[_\s]/g)
+        .map((tag: string) => `${tag[0].toUpperCase()}${tag.slice(1)}`)
+        .join("");
+
+    return `#${tag}`;
 };
 
 export default CardFooter;
