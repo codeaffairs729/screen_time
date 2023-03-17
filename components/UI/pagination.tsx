@@ -43,8 +43,8 @@ const Pagination = ({
     };
 
     return (
-        <div className="flex items-center justify-center my-4 text-xs text-gray-700 font-light">
-            <span className="font-medium text-[17px] mr-4">Page</span>
+        <div className="flex items-center lg:justify-center text-xs text-gray-700 font-light">
+            <span className="font-medium text-sm mr-4">Page</span>
             {pageNumbers.map((index) =>
                 isValidPageNumber(index) ? (
                     <a

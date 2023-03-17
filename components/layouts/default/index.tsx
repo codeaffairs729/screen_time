@@ -64,7 +64,7 @@ const DefaultLayout = ({
                         content={navContent}
                         onSearchChange={vm.onSearchChange}
                     />
-                    <div className="max-w-site mx-auto">{children}</div>
+                    <div className="max-w-site mx-auto w-full">{children}</div>
                     {/* <div className="mt-auto"> */}
                     <Footer className="mt-8 bg-[#F5F5F5]" />
                     {/* </div> */}

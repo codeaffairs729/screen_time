@@ -1,9 +1,19 @@
 import CardBody from "./body";
-import CardFooter, { DataProviders } from "./footer";
+import CardFooter from "./footer";
 import CardHead from "./head";
 import { DateTime } from "luxon";
 import { useState } from "react";
 import { DataStats } from "models/organisation.model";
+
+export interface DataProviders {
+    datasetSource: string;
+    ownerUrl: string;
+    organisation: string;
+    hostName: string;
+    hostUuid?: string;
+    ownerUuid?: string;
+    hostUrl?: string;
+}
 
 export interface Data {
     id: number | string;
@@ -32,8 +42,8 @@ const ResultCard = ({ data, handleFAQClick }: ResultCardProps) => {
     const { dataProviders, stats, lastUpdate } = data || {};
 
     return (
-        <div className="rounded-lg sm:px-2 md:px-5 py-1 flex flex-row justify-between bg-dtech-light-grey hover:bg-dtech-main-light ml-2 mr-4 my-2">
-            <div className="flex flex-col flex-1">
+        <div className="rounded-lg px-5 py-1.5 flex flex-row justify-between bg-dtech-light-grey hover:bg-dtech-main-light w-full my-2">
+            <div className="flex flex-col flex-1 w-full">
                 <CardHead
                     handleFAQClick={handleFAQClick}
                     data={resultRecord}
@@ -41,9 +51,9 @@ const ResultCard = ({ data, handleFAQClick }: ResultCardProps) => {
                 />
                 <CardBody data={resultRecord} />
                 <CardFooter
-                    dataProviders={dataProviders}
-                    stats={stats}
-                    lastUpdate={lastUpdate}
+                    data={data}
+                    // stats={stats}
+                    // lastUpdate={lastUpdate}
                 />
             </div>
         </div>

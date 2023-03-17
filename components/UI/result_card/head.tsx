@@ -23,21 +23,23 @@ const CardHead = ({
     const router = useRouter();
 
     return (
-        <div className="flex items-center justify-between w-full p-[10px]">
-            <div className="flex items-center">
-                {/* {dataset.featured && (
+        <div className="lg:flex items-center justify-between w-full mb-3">
+            {/* <div className="flex items-center"> */}
+            {/* {dataset.featured && (
                     <span className="border border-1 bg-dtech-notification-alert-secondary text-sm px-1 h-6 text-white mr-4 ml-[-12px] rounded-md  ">
                         Featured
                     </span>
                 )} */}
-                {/* <Link href={href}> */}
-                    <a href={href} className="font-medium font-roboto text-md my-3 text-dtech-main-dark text-[17px] ml-[-8px] cursor-pointer hover:underline underline-offset-4">
-                        {title}
-                    </a>
-                {/* </Link> */}
+            <Link href={href}>
+                <a className="font-medium font-roboto text-md my-3 text-dtech-main-dark text-[17px] cursor-pointer hover:underline underline-offset-4">
+                    {title}
+                </a>
+            </Link>
+            <div className="sm:flex items-center">
                 <MetaRating
                     dataQuality={Math.ceil(dataQuality)}
                     displayContext={"displayContext"}
+                    className="lg:ml-4 w-min"
                     labelClass="font-normal"
                     title={
                         "Estimated based on the EU Metadata Quality Assessment method https://data.europa.eu/mqa/methodology?locale=en"
@@ -57,17 +59,21 @@ const CardHead = ({
                     // >
                     //     <span className="my-auto"></span>
                     // </button>
-                       <fieldset className=" min-h-full px-4 border rounded border-[#5F5F63]  text-xs pb-0.5" key={index}>
-                       <legend className="text-xs mr-8">Licence</legend>
-                       <div>
-                           <label>{`${tag[0].toUpperCase()}${tag.slice(
-                            1
-                        )}`}</label>
-                       </div>
-                   </fieldset>
+                    <fieldset
+                        className="px-4 border rounded border-[#5F5F63] text-xs pb-0.5 my-2"
+                        key={index}
+                    >
+                        <legend className="text-xs mr-8">Licence</legend>
+                        <div>
+                            <label>{`${tag[0].toUpperCase()}${tag.slice(
+                                1
+                            )}`}</label>
+                        </div>
+                    </fieldset>
                 ))}
+                {/* </div> */}
+                <ResultCardAction data={data} setData={setData} href={href} />
             </div>
-            <ResultCardAction data={data} setData={setData} href={href} />
         </div>
     );
 };

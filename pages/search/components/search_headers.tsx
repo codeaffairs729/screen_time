@@ -23,7 +23,7 @@ const SearchHeaders = ({
     recordType,
 }: SearchHeadersProps) => {
     return (
-        <div className="flex items-center justify-between w-full p-2.5">
+        <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between space-y-2 lg:space-y-0 px-4 m-4">
             <TotalRecords
                 totalRecords={totalRecords}
                 setPageSize={setPageSize}
