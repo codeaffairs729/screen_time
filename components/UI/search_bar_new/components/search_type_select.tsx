@@ -6,8 +6,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "store";
 import { updateSearchType } from "store/search/search.action";
 
+export const SearchTypes = {
+    DATASET: { label: "Dataset", value: "dataset" },
+    ORGANISATION: { label: "Organisation", value: "organisation" },
+};
+
 const SearchTypeSelect = () => {
-    const searchTypes = [{ label: "Dataset" }, { label: "Organisation" }];
+    const searchTypes = [
+        { label: SearchTypes.DATASET.label, value: SearchTypes.DATASET.value },
+        {
+            label: SearchTypes.ORGANISATION.label,
+            value: SearchTypes.ORGANISATION.value,
+        },
+    ];
     const [selected, setSelected] = useState(searchTypes[0]);
     const savedSearchType = useSelector(
         (state: RootState) => state.search.type
@@ -29,7 +40,7 @@ const SearchTypeSelect = () => {
                 value={selected}
                 onChange={(searchType) => {
                     setSelected(searchType);
-                    dispatch(updateSearchType(searchType.label.toLowerCase()));
+                    dispatch(updateSearchType(searchType.value));
                 }}
             >
                 <div className="relative">
