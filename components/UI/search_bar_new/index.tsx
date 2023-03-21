@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useMemo, useState } from "react";
+import { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import { Combobox, Listbox, Transition } from "@headlessui/react";
 import Http from "common/http";
 import debounce from "debounce-promise";
@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "store";
 import { updateSearchType } from "store/search/search.action";
 import { useRouter } from "next/router";
-import SearchTypeSelect from "./components/search_type_select";
+import SearchTypeSelect, { SearchTypes } from "./components/search_type_select";
 import SearchIcon from "./components/search_icon";
 import EmptyResults from "./components/empty_results";
 import ComboboxOption, { Option } from "./components/combobox_option";
@@ -25,6 +25,9 @@ const SearchBar = ({
 }) => {
     const [selected, setSelected] = useState<Option>();
     const [query, setQuery] = useState("");
+    const openAutoCompleteBtn = useRef(null);
+
+    const searchType = useSelector((state: RootState) => state.search.type);
     const {
         data: options,
         error,
@@ -61,14 +64,16 @@ const SearchBar = ({
         []
     );
 
-    const searchType = useSelector((state: RootState) => state.search.type);
     useEffect(() => {
         if (!selected) return;
         onChange(searchType, { label: "User input", value: selected.name });
     }, [selected]);
 
     useEffect(() => {
-        if (query.trim() == "") {
+        if (
+            query.trim() == "" ||
+            searchType == SearchTypes.ORGANISATION.value
+        ) {
             return;
         }
         lodAutocomplete(query);
@@ -89,16 +94,19 @@ const SearchBar = ({
                 <div className="relative w-full h-full">
                     <div className="relative flex w-full h-full border border-dtech-main-dark focus-within:border-dtech-secondary-dark focus-within:ring-2 focus-within:ring-dtech-secondary-dark cursor-default rounded-full bg-white text-left focus-within:outline-none sm:text-sm">
                         <SearchIcon isLoading={isLoading} />
-                        <Combobox.Button as="div" className="h-full grow">
-                            <Combobox.Input
-                                className="w-full border-none px-2 align-middle text-gray-900 h-full focus:ring-0 text-[19px] leading-[22px]"
-                                displayValue={(option: Option) => query}
-                                value={query}
-                                onChange={(event) =>
-                                    setQuery(event.target.value)
-                                }
-                            />
-                        </Combobox.Button>
+                        <Combobox.Input
+                            className="w-full border-none px-2 align-middle text-gray-900 h-full focus:ring-0 text-[19px] leading-[22px]"
+                            onFocus={() =>
+                                (openAutoCompleteBtn.current as any)?.click()
+                            }
+                            displayValue={(option: Option) => query}
+                            value={query}
+                            onChange={(event) => setQuery(event.target.value)}
+                        />
+                        <Combobox.Button
+                            ref={openAutoCompleteBtn}
+                            className=""
+                        ></Combobox.Button>
                         <SearchTypeSelect />
                     </div>
                     <Transition
