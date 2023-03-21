@@ -9,7 +9,7 @@ const TabHeader = ({ children, className="" }: { children: ReactNode, className?
                 clsx(
                     "flex text-sm font-semibold p-3 outline-none w-full",
                     selected
-                        ? "text-dtech-primary-dark bg-gray-100 border-l-5 border-dtech-main-dark"
+                        ? "text-dtech-primary-dark bg-gray-100 border-l-5 border-dtech-main-dark bg-fuchsia-900 text-white"
                         : "text-gray-500"
                 )
             }

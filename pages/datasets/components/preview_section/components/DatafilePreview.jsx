@@ -82,44 +82,54 @@ const DatafilePreview = ({ previewData }) => {
     };
 
     return (
-        <div className="mt-6 border-t-2 border-t-gray-300">
-            <SheetTab tabList={previewTabList} setActive={setActive} />
+        <div className="bg-dtech-main-light ">
+            <div className=" border-t-gray-300 bg-dtech-main-light ">
+                {/*  <SheetTab tabList={previewTabList} setActive={setActive} /> */}
 
-            <div className="my-8">
-                <p className="text-sm font-bold mb-4 ml-5">Datafile Sample</p>
-                {/* <PreviewTable data={previewHead[previewActiveTab]} /> */}
-                {previewHead[previewActiveTab] && (
-                    <PreviewTable
-                        data={previewHead[previewActiveTab]}
-                        id={"tableSample"}
-                    />
-                )}
-            </div>
+                <div className="my-4 bg-dtech-main-light flex ml-16">
+                    <div className="w-11/12 ">
+                        <div className=" text-left  border-solid bg-fuchsia-900  ">
+                            <span className="text-sm  font-bold m-2  text-white   ">
+                                Datafile Sample
+                            </span>
 
-            <div className="my-8">
-                <p className="text-sm font-bold mb-4 ml-5">Datafile Summary</p>
+                            {/* <PreviewTable data={previewHead[previewActiveTab]} /> */}
 
-                {/* <PreviewTable data={previewSummary[previewActiveTab]} /> */}
+                            {previewHead[previewActiveTab] && (
+                                <PreviewTable
+                                    data={previewHead[previewActiveTab]}
+                                    id={"tableSample"}
+                                />
+                            )}
+                        </div>
+                        <div className=" text-left   border-solid bg-fuchsia-900 my-8 ">
+                            <span className="text-sm font-bold  m-2 text-white   ">
+                                Datafile Summary
+                            </span>
 
-                {previewSummary[previewActiveTab] && (
-                    <PreviewTable
-                        data={previewSummary[previewActiveTab]}
-                        id={"tableSummary"}
-                    />
-                )}
-            </div>
+                            {/* <PreviewTable data={previewSummary[previewActiveTab]} /> */}
 
-            {previewType == "GeoJSON" && (
-                <div className="my-8">
-                    <p className="text-sm font-bold mb-4 ml-5">
-                        Datafile geographic bounds
-                    </p>
-                    <MapView
-                        totalBounds={previewTotalBounds}
-                        id={"previewGeographic"}
-                    />
+                            {previewSummary[previewActiveTab] && (
+                                <PreviewTable
+                                    data={previewSummary[previewActiveTab]}
+                                    id={"tableSummary"}
+                                />
+                            )}
+                        </div>
+                    </div>
                 </div>
-            )}
+                {previewType == "GeoJSON" && (
+                    <div className="my-4  ml-14">
+                        <p className="text-sm font-bold mb-4 ml-5">
+                            Datafile geographic bounds
+                        </p>
+                        <MapView
+                            totalBounds={previewTotalBounds}
+                            id={"previewGeographic"}
+                        />
+                    </div>
+                )}
+            </div>
         </div>
     );
 };

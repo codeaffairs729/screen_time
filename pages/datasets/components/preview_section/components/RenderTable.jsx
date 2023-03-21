@@ -2,47 +2,36 @@ import React from "react";
 
 export default function RenderTable({ tableData, id }) {
     return (
-        <table
-            id={id}
-            className="w-full table-auto overflow-x-auto overflow-y-auto overflow-scroll block whitespace-nowrap"
-        >
-            <thead className="text-xs bg-gray-200">
-                <tr>
-                    <th
-                        key={0}
-                        className="font-normal px-2 py-1 border-[1px]"
-                    ></th>
-                    {tableData.columns.map((col, idx) => (
-                        <th
-                            key={idx + 1}
-                            className="font-normal px-2 py-1 border-[1px]"
-                        >
-                            {col}
-                        </th>
-                    ))}
-                </tr>
-            </thead>
-            <tbody className="text-xs text-gray-600">
-                {tableData.rows.map((row, idx) => (
-                    <tr key={idx}>
-                        <td
-                            key={0}
-                            className="text-xs bg-gray-200 px-2 py-1 border-[1px]"
-                        >
-                            {row}
-                        </td>
+        <div>
+            <table id={id} className=" border-solid w-full  ">
+                <thead className="">
+                    <tr className="">
+                        <th key={0} className="w-1/5  bg-fuchsia-800  "></th>
                         {tableData.columns.map((col, idx) => (
                             <td
                                 key={idx + 1}
-                                className="px-2 py-1 border-[1px]"
+                                className=" w-1/5  bg-fuchsia-800 text-white text-center "
                             >
-                                {tableData.data[row][col]}
+                                {col}
                             </td>
                         ))}
                     </tr>
-                ))}
-            </tbody>
-        </table>
-        // <p>He</p>
+                </thead>
+                <tbody className=" w-1/5  bg-slate-300 ">
+                    {tableData.rows.map((row, idx) => (
+                        <tr key={idx} className="border-2 bg-white text-center">
+                            <td key={0} className="">
+                                {row}
+                            </td>
+                            {tableData.columns.map((col, idx) => (
+                                <td key={idx + 1} className="">
+                                    {tableData.data[row][col]}
+                                </td>
+                            ))}
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </div>
     );
 }

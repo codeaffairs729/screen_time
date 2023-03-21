@@ -135,7 +135,7 @@ const DataFileRow = ({
     }
     return (
         <>
-            <tr className="border-b border-gray-200 bg-[#FEFEFE] hover:bg-dtech-main-light">
+            <tr className={`border-b border-gray-200 bg-[#FEFEFE] hover:bg-dtech-main-light ${preview && "bg-dtech-main-light"}`}>
                 <td className="py-3 px-6 text-center whitespace-nowrap">
                     <div className="flex justify-center items-center font-normal text-sm text-center">{`${description}`}</div>
                 </td>
@@ -168,8 +168,8 @@ const DataFileRow = ({
                         />
                     </a>
                 </td>
-                <td className="py-3 px-6 text-center">
-                    <div className="flex item-center justify-center">
+                <td className="py-3 px-6 text-center ">
+                    <div className="flex item-center justify-center ">
                         {!preview ? (
                             <Image
                                 src={previewIcon}
@@ -191,7 +191,7 @@ const DataFileRow = ({
                                 onClick={() => {
                                     setPreview(!preview);
                                 }}
-                                className="mx-auto text-lg cursor-pointer"
+                                className="mx-auto text-lg cursor-pointer "
                             />
                         )}
                     </div>
@@ -199,7 +199,7 @@ const DataFileRow = ({
             </tr>
             {preview && (
                 <tr className="border-b border-gray-200 bg-[#FEFEFE] hover:bg-dtech-main-light">
-                    <td colSpan={5}>
+                    <td colSpan={5} className="bg-dtech-main-light">
                         <PreviewSection />
                     </td>
                 </tr>
