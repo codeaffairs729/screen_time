@@ -4,7 +4,10 @@ import PreviewSelect from "./components/PreviewSelect";
 import DatafilePreview from "./components/DatafilePreview";
 import DatasetPreviewVM from "./dataset_preview.vm";
 import Loader from "components/UI/loader";
-
+import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
+import { Tab } from "@headlessui/react";
+import TabPanel from "components/UI/tabbed/panel";
+import TabHeader from "components/UI/tabbed/header";
 const PreviewSection = () => {
     const vm = useContext(DatasetDetailVMContext);
     const [previewDataList, setPreviewDataList] = useState<any>(null);
@@ -35,15 +38,42 @@ const PreviewSection = () => {
     };
 
     return (
-        <div className="w-[60vw]" >
+        <div className="bg-dtech-main-light">
             {previewData && previewIDList && previewID && previewDataList ? (
                 <div>
-                    <PreviewSelect
+                    {/* <PreviewSelect
                         options={previewIDList}
                         previewID={previewID}
                         handleChangePreviewID={handleChangePreviewID}
-                    />
-                    <DatafilePreview previewData={previewData} />
+                    /> */}
+
+                    <Tab.Group>
+                        <Tab.Panels className="w-full flex bg-dtech-main-light">
+                            {previewDataList?.map((list: any, idx: any) => (
+                                <TabPanel
+                                    key={idx}
+                                    className="bg-dtech-main-light"
+                                >
+                                    <DatafilePreview previewData={list} />
+                                </TabPanel>
+                            ))}
+                        </Tab.Panels>
+                        <div className="">
+                            <Tab.List className="flex min-w-[15rem] items-center px-6 w-[70vw] ">
+                                <div className="cursor-pointer py-1 px-4 ">
+                                    <BsChevronLeft />
+                                </div>
+                                {previewIDList?.map((list: any, idx: any) => (
+                                    <TabHeader key={idx} className="">
+                                        Tab {idx + 1}
+                                    </TabHeader>
+                                ))}
+                                <div className="cursor-pointer py-1 px-4">
+                                    <BsChevronRight />
+                                </div>
+                            </Tab.List>
+                        </div>
+                    </Tab.Group>
                 </div>
             ) : isPageLoading ? (
                 <div className="text-center py-10">
