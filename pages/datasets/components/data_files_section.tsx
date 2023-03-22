@@ -35,7 +35,7 @@ const DataFilesSection = ({ goToPreview }: { goToPreview: () => void }) => {
         });
     };
     return (
-        <div>
+        <div className="max-w-7xl">
             <div className="mx-3 my-4   text-sm text-dtech-dark-grey">
                 All the data files available for this dataset are listed in the
                 table below.
@@ -60,13 +60,13 @@ const DataFilesSection = ({ goToPreview }: { goToPreview: () => void }) => {
                 </div>
             </div>
 
-            <div className=" h-[40rem]  overflow-y-scroll ">
+            <div className=" h-[40rem] overflow-x-hidden ">
                 <table
-                    className="min-w-max w-full table-auto text-sm text-center border"
+                    className="min-w-max w-full table-auto text-sm text-center border "
                     cellPadding={5}
                 >
                     <thead>
-                        <tr className="border border-dtech-middle-grey p-3">
+                        <tr className="border border-dtech-middle-grey p-3 ">
                             {META_FILE_HEADERS.map(
                                 (headName: string, index: number) => (
                                     <th
@@ -80,7 +80,7 @@ const DataFilesSection = ({ goToPreview }: { goToPreview: () => void }) => {
                         </tr>
                     </thead>
                     <tbody
-                        className="text-gray-600 text-sm font-light"
+                        className="text-gray-600 text-sm font-light "
                         data-testid="data-files"
                     >
                         {vm.dataset.urls?.length > 0 ? (
@@ -135,7 +135,7 @@ const DataFileRow = ({
     }
     return (
         <>
-            <tr className={`border-b border-gray-200 bg-[#FEFEFE] hover:bg-dtech-main-light ${preview && "bg-dtech-main-light"}`}>
+            <tr className={`border-b border-gray-200 bg-[#FEFEFE] hover:bg-dtech-main-light  ${preview && "bg-dtech-main-light"}`}>
                 <td className="py-3 px-6 text-center whitespace-nowrap">
                     <div className="flex justify-center items-center font-normal text-sm text-center">{`${description}`}</div>
                 </td>
@@ -184,7 +184,7 @@ const DataFileRow = ({
                             />
                         ) : (
                             <Image
-                                src={doNotPreview}
+                                src={previewIcon}
                                 alt=""
                                 height={24}
                                 width={24}
@@ -198,7 +198,7 @@ const DataFileRow = ({
                 </td>
             </tr>
             {preview && (
-                <tr className="border-b border-gray-200 bg-[#FEFEFE] hover:bg-dtech-main-light">
+                <tr className="border-b border-gray-200 bg-[#FEFEFE] hover:bg-dtech-main-light ">
                     <td colSpan={5} className="bg-dtech-main-light">
                         <PreviewSection />
                     </td>
