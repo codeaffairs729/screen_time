@@ -48,6 +48,28 @@ const PreviewSection = () => {
                     /> */}
 
                     <Tab.Group>
+                        {previewIDList.length > 1 && (
+                            <div className="">
+                                <Tab.List className="flex min-w-[15rem] items-center px-6 w-[70vw] ">
+                                    <div className="cursor-pointer py-1 px-4 text-fuchsia-900 text-xl ">
+                                        <BsChevronLeft />
+                                    </div>
+                                    {previewIDList?.map(
+                                        (list: any, idx: any) => (
+                                            <TabHeader
+                                                key={idx}
+                                                className="underline-offset-4"
+                                            >
+                                                Tab {idx + 1}
+                                            </TabHeader>
+                                        )
+                                    )}
+                                    <div className="cursor-pointer py-1 px-4 text-fuchsia-900 text-xl">
+                                        <BsChevronRight />
+                                    </div>
+                                </Tab.List>
+                            </div>
+                        )}
                         <Tab.Panels className="w-full flex bg-dtech-main-light">
                             {previewDataList?.map((list: any, idx: any) => (
                                 <TabPanel
@@ -58,21 +80,6 @@ const PreviewSection = () => {
                                 </TabPanel>
                             ))}
                         </Tab.Panels>
-                        <div className="">
-                            <Tab.List className="flex min-w-[15rem] items-center px-6 w-[70vw] ">
-                                <div className="cursor-pointer py-1 px-4 ">
-                                    <BsChevronLeft />
-                                </div>
-                                {previewIDList?.map((list: any, idx: any) => (
-                                    <TabHeader key={idx} className="">
-                                        Tab {idx + 1}
-                                    </TabHeader>
-                                ))}
-                                <div className="cursor-pointer py-1 px-4">
-                                    <BsChevronRight />
-                                </div>
-                            </Tab.List>
-                        </div>
                     </Tab.Group>
                 </div>
             ) : isPageLoading ? (

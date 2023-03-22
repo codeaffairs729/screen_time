@@ -18,7 +18,7 @@ const MapView = ({ totalBounds, id }) => {
             <MapContainer
                 center={mapCenter}
                 zoom={2}
-                style={{ height: 300, width: 300 }}
+                style={{ height: 300, width: 820 }}
             >
                 <MapViewControl totalBounds={totalBounds} />
                 <TileLayer

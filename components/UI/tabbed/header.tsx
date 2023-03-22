@@ -2,14 +2,20 @@ import { Tab } from "@headlessui/react";
 import clsx from "clsx";
 import { ReactNode } from "react";
 
-const TabHeader = ({ children, className="" }: { children: ReactNode, className?: string }) => {
+const TabHeader = ({
+    children,
+    className = "",
+}: {
+    children: ReactNode;
+    className?: string;
+}) => {
     return (
         <Tab
             className={({ selected }) =>
                 clsx(
-                    "flex text-sm font-semibold p-3 outline-none w-full",
+                    "flex text-lg  p-3 outline-none w-full text-fuchsia-800 ",
                     selected
-                        ? "text-dtech-primary-dark bg-gray-100 border-l-5 border-dtech-main-dark bg-fuchsia-900 text-white"
+                        ? "font-black text-dtech-primary-dark bg-gray-100 border-l-5 border-dtech-main-dark underline underline-offset-4 bg-dtech-main-light text-fuchsia-900"
                         : "text-gray-500"
                 )
             }
