@@ -53,7 +53,7 @@ const QualityMetricVM = () => {
 export default QualityMetricVM;
 
 interface IQualityMetricVM {
-    error:any;
+    error: any;
     selectedQualityInsights: number;
     qualityMetrics: any;
     fetchQualityMetrics: Function;
@@ -69,23 +69,28 @@ const jsonToQualityMetrics = (json: any): any => ({
     dataFileQuality: {
         overallScore: getQualityScore(
             json["data_file_quality"]["overall"],
-            "overallScore",""
+            "overallScore",
+            "Average of all dimensions listed."
         ),
         accuracy: getQualityScore(
             json["data_file_quality"]["accuracy"],
-            "accuracy", ""
+            "accuracy",
+            "Is the information (headers, acronyms, abbreviations) clear (less ambiguous) and legible?"
         ),
         consistency: getQualityScore(
             json["data_file_quality"]["consistency"],
-            "consistency", ""
+            "consistency",
+            "Do the values and headers have consistent formats (e.g. date formats), granularity (e.g spatiotemporal resolution), ? Does the same information match across multiple instances?"
         ),
         clarity: getQualityScore(
             json["data_file_quality"]["clarity"],
-            "clarity", ""
+            "clarity",
+            "Is the information (e.g. values, content) error-free and correct?"
         ),
         readiness: getQualityScore(
             json["data_file_quality"]["readiness"],
-            "readiness", ""
+            "readiness",
+            "Does the file need minimal preprocessing (e.g. missing value imputation, outlier removal) before any sensible use?"
         ),
     },
     metaFileQuality: {

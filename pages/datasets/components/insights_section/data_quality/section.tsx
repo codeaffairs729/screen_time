@@ -14,7 +14,7 @@ const DatasetQualityInsightsBody = () => {
         isFetchingQualityMetrics,
     } = useContext(QualityMetricsVMContext);
 
-    const { dataset } =useContext(DatasetDetailVMContext)
+    const { dataset } = useContext(DatasetDetailVMContext);
     const { dataFileQuality = {}, metaDataQuality = {} } = qualityMetrics || {};
 
     useEffect(() => {
@@ -59,20 +59,39 @@ const DatasetQualityInsightsBody = () => {
             )}
             <div className="grid lg:grid-cols-2 gap-4 mt-10 sm:grid-cols-1 ">
                 {Object.keys(items)?.map((item: any, index: number) => (
-                    <FileQuality items={items} item={item} key={index} selectedLabel={selectedLabel} quality={dataset?.detail.dataQuality}/>
+                    <FileQuality
+                        items={items}
+                        item={item}
+                        key={index}
+                        selectedLabel={selectedLabel}
+                        quality={dataset?.detail.dataQuality}
+                    />
                 ))}
             </div>
         </div>
     );
 };
-
-const FileQuality = ({ item, items, selectedLabel, quality }: { item: any; items: any; selectedLabel: any, quality:any }) => {
+const FileQuality = ({
+    item,
+    items,
+    selectedLabel,
+    quality,
+}: {
+    item: any;
+    items: any;
+    selectedLabel: any;
+    quality: any;
+}) => {
     return (
         <div className="flex flex-row justify-center items-center mt-10">
             <span>{getLabel(items[item].label)}</span>
             <MetaRating
                 label={""}
-                dataQuality={(selectedLabel == 1 && items[item].label == "overallScore" )? Math.ceil(quality) :Math.ceil(items[item].rating)}
+                dataQuality={
+                    selectedLabel == 1 && items[item].label == "overallScore"
+                        ? Math.ceil(quality)
+                        : Math.ceil(items[item].rating)
+                }
                 className="!flex-row ml-0"
                 labelClass="!text-lg text-dtech-dark-grey"
                 starClassName="!w-6 !h-6 text-[#5F5F63]"
