@@ -57,14 +57,14 @@ const DatasetDetail = ({ dataset }: { dataset: Dataset | undefined }) => {
             <DatasetDetailVMContext.Provider value={vm}>
                 <div className="px-4">
                     <div className="flex flex-col justify-between mb-4 my-2 ml-4">
-                            {/* <BackBtn /> */}
+                        {/* <BackBtn /> */}
                         <p className="text-start text-2xl font-semibold mt-2">
                             DATASET
                         </p>
                         <span></span>
                     </div>
                     <div className="w-full h-fit py-4 bg-white rounded-[20px] shadow-container">
-                        <DatasetHead dataset={dataset}/>
+                        <DatasetHead dataset={dataset} />
                         <div className="lg:flex border-t px-4 shadow-container">
                             {!loading && (
                                 <Tab.Group defaultIndex={selectedIndex}>
@@ -112,9 +112,9 @@ DatasetDetail.getInitialProps = async ({ query, req }: NextPageContext) => {
         }
         const datasetData = await Http.get(`/v4/datasets/${datasetId}`, {
             baseUrl: process.env.NEXT_PUBLIC_PUBLIC_API_ROOT,
-            extraHeaders: authToken
-                ? { Authorization: `Bearer ${authToken}` }
-                : {},
+            extraHeaders: authToken,
+            // ? { Authorization: `Bearer ${authToken}` }
+            // : {},
         });
         const dataset = Dataset.fromJson(
             datasetData[0]["user_search"][0]["results"][0]

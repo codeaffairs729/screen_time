@@ -2,7 +2,7 @@
   "name": "dashboard_webclient",
   "private": true,
   "scripts": {
-    "startproxy": "eval $(grep START_PROXY_CMD .env | cut -d '=' -f2)",
+    "startproxy": "eval $(grep START_PROXY .env | cut -d '=' -f2)",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
