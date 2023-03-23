@@ -20,8 +20,10 @@ const DatasetHead = ({ dataset }: any) => {
 
     useEffect(() => {
         fectchStats([dataset?.id]);
-        setHeadDataset(datasetToResultCardData([dataset], stats)[0]);
     }, []);
+    useEffect(() => {
+        setHeadDataset(datasetToResultCardData([dataset], stats)[0]);
+    }, [stats]);
     if (!dataset) {
         return <div />;
     }
