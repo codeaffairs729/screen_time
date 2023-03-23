@@ -13,14 +13,16 @@ import FooterSocialMediaItem from "./components/footer_social_media_item";
 
 const Footer = ({ className = "" }: { className?: string }) => {
     return (
-        <footer className={clsx("px-8 pt-11 pb-2  ", className)}>
-            <div className="md:flex text-left justify-between items-center max-w-site mx-auto   ">
-                <div className="flex justify-start items-center space-x-12 ">
-                    <div className="flex  justify-center items-center mr-6 text-fuchsia-900 space-x-2">
+        <footer className={clsx("px-8 pt-11 pb-2", className)}>
+            <div className="shadow w-[70%] ml-12 border-2 my-5 bg-dtech-main-dark px-5 md:w-[87%]">
+            </div>
+            <div className="md:ml-5 flex text-left justify-between items-center max-w-site mx-auto  ">
+                <div className="flex flex-wrap justify-start items-center space-x-12 ">
+                    <div className="flex ml-12 justify-center items-center mr-6 text-fuchsia-900 space-x-1">
                         <span className="text-lg  mb-1 text-fuchsia-900  hover:underline text-[17px] ">
                             Follow us on
                         </span>
-                        <div className="space-x-2 ">
+                        <div className="space-x-1 sm:space-x-3 ">
                             <FooterSocialMediaItem
                                 icon={<FaFacebookF size="auto" />}
                                 link="https://www.facebook.com/dtechtive.search"

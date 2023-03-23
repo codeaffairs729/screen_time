@@ -66,7 +66,7 @@ const DefaultLayout = ({
                     />
                     <div className="max-w-site mx-auto w-full">{children}</div>
                     {/* <div className="mt-auto"> */}
-                    <Footer className="mt-8 bg-[#F5F5F5]" />
+                    <Footer className="mt-8 sm:ml-24" />
                     {/* </div> */}
                 </SearchVMContext.Provider>
             </OrganizationSearchVMContext.Provider>
