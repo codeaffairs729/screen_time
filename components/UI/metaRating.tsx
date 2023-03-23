@@ -11,6 +11,7 @@ type MetaRatingProps = {
     title?: string;
     handleFAQClick?: Function;
 };
+
 const MetaRating = ({
     dataQuality,
     displayContext = "",

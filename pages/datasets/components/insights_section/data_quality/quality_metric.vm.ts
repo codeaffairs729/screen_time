@@ -99,7 +99,8 @@ const jsonToQualityMetrics = (json: any): any => ({
             json["datafile_quality"]["overall"],
             "overallScore",
             "votes",
-            json["datafile_quality"]["overall"]["total"]
+            json["datafile_quality"]["overall"]["total"],
+            "Average of all dimension listed"
         ),
         // feedbackSentiment: getdataQualityScore(
         //     json["datafile_quality"]["feedback_sentiment"],
@@ -111,25 +112,29 @@ const jsonToQualityMetrics = (json: any): any => ({
             json["datafile_quality"]["accuracy"],
             "accuracy",
             "votes",
-            json["datafile_quality"]["accuracy"]["total"]
+            json["datafile_quality"]["accuracy"]["total"],
+            "Is the information (headers, acronyms, abbreviations) clear (less ambiguous) and legible?"
         ),
         clarity: getdataQualityScore(
             json["datafile_quality"]["clarity"],
             "clarity",
             "votes",
-            json["datafile_quality"]["clarity"]["total"]
+            json["datafile_quality"]["clarity"]["total"],
+            "Is the information (e.g. values, content) error-free and correct?"
         ),
         consistency: getdataQualityScore(
             json["datafile_quality"]["consistency"],
             "consistency",
             "votes",
-            json["datafile_quality"]["consistency"]["total"]
+            json["datafile_quality"]["consistency"]["total"],
+            "Do the values and headers have consistent formats (e.g. date formats), granularity (e.g spatiotemporal resolution), ? Does the same information match across multiple instances?"
         ),
         readiness: getdataQualityScore(
             json["datafile_quality"]["readiness"],
             "readiness",
             "votes",
-            json["datafile_quality"]["readiness"]["total"]
+            json["datafile_quality"]["readiness"]["total"],
+            "Does the file need minimal preprocessing (e.g. missing value imputation, outlier removal) before any sensible use?"
         ),
     },
 });
@@ -148,10 +153,12 @@ const getdataQualityScore = (
     data: any,
     title: string,
     ratingLabel: string,
-    total: number
+    total: number,
+    tooltipTitle: string
 ) => ({
     label: title,
     rating: data.rating,
     ratingLabel: ratingLabel,
     total: total,
+    tooltipTitle: tooltipTitle,
 });
