@@ -90,14 +90,9 @@ const useFavouriteDataset = (
         datasetStats?.isFavourited ?? false
     );
     useEffect(() => {
-        (async () => {
-            const products = (await datasetStats?.isFavourited) ?? false;
-            setIsFavourited(products);
-        })();
+        setIsFavourited(datasetStats?.isFavourited ?? false);
     }, [datasetStats]);
-    console.log("!isfavourite", !isFavourited);
-    console.log("isfavourite", isFavourited);
-    console.log("dataset", datasetStats);
+
     const { execute: executeHandleFavourite, isLoading: isHandlingFavourite } =
         useHttpCall();
     const handleFavourite = () =>
