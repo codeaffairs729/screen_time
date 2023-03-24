@@ -60,7 +60,7 @@ const CardHead = ({
                     //     <span className="my-auto"></span>
                     // </button>
                     <fieldset
-                        className="px-4 border rounded border-[#5F5F63] text-xs pb-0.5 my-2"
+                        className="px-4 border rounded border-[#5F5F63] text-xs pb-0.5 my-2 mr-4"
                         key={index}
                     >
                         <legend className="text-xs mr-8">Licence</legend>

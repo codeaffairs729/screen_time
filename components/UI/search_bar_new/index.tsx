@@ -92,10 +92,10 @@ const SearchBar = ({
         <div className={clsx("", className)}>
             <Combobox value={selected} onChange={setSelected} nullable>
                 <div className="relative w-full h-full">
-                    <div className="relative flex w-full h-full border border-dtech-main-dark focus-within:border-dtech-secondary-dark focus-within:ring-2 focus-within:ring-dtech-secondary-dark cursor-default rounded-full bg-white text-left focus-within:outline-none sm:text-sm">
+                    <div className="relative flex items-center w-full h-full border border-dtech-main-dark focus-within:border-dtech-secondary-dark focus-within:ring-2 focus-within:ring-dtech-secondary-dark cursor-default rounded-full bg-white text-left focus-within:outline-none sm:text-sm">
                         <SearchIcon isLoading={isLoading} />
                         <Combobox.Input
-                            className="w-full border-none px-2 align-middle text-gray-900 h-full focus:ring-0 text-[19px] leading-[22px]"
+                            className="w-full max-h-[99%] border-none px-2 align-middle text-gray-900 h-full focus:ring-0 text-[19px] leading-[22px]"
                             onFocus={() =>
                                 (openAutoCompleteBtn.current as any)?.click()
                             }
@@ -115,7 +115,7 @@ const SearchBar = ({
                         leaveFrom="opacity-100"
                         leaveTo="opacity-0"
                     >
-                        <Combobox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm z-10">
+                        <Combobox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm z-20">
                             {query.length > 0 && (
                                 <ComboboxOption
                                     item={{
