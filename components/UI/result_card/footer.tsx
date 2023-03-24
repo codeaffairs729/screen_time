@@ -27,7 +27,7 @@ const CardFooter = ({
     return (
         <div
             className={clsx(
-                "flex items-center justify-between w-full my-1.5",
+                "w-full my-1.5",
                 className
             )}
         >
@@ -43,7 +43,7 @@ const CardFooter = ({
                             <a
                                 target="_blank"
                                 rel="noreferrer"
-                                className="text-sm font-medium hover:underline underline-offset-2 text-dtech-main-dark"
+                                className="text-sm font-medium hover:underline underline-offset-2 text-dtech-main-dark mr-10"
                             >
                                 Source
                             </a>
@@ -81,6 +81,8 @@ const CardFooter = ({
                         </LabelledRow>
                     </>
                 )}
+            </div>
+            <div className="flex flex-wrap justify-start items-center">
                 <LabelledRow
                     className="mr-10"
                     label="Domains"

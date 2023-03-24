@@ -16,7 +16,7 @@ const SearchIcon = ({ isLoading }: { isLoading: boolean }) => {
       );
   }
   return (
-      <div className="rotate-90 flex items-center p-2 ml-1">
+      <div className="rotate-90 flex items-center p-2 ml-1 h-full">
           {content}
       </div>
   );
