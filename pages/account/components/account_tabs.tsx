@@ -34,34 +34,33 @@ const HEADERS: Header[] = [
     },
 ];
 
-const AccountTabHeaders = ({ selectedIndex = 0 }: { selectedIndex?: number }) => {
+const AccountTabHeaders = ({
+    selectedIndex = 0,
+}: {
+    selectedIndex?: number;
+}) => {
     const [selected, setSelected] = useState<number>(selectedIndex);
 
     return (
-        <div>
-            <Tab.List className="relative text-dtech-main-dark">
-                {HEADERS.map((header: Header, index: number) => (
-                    <TabIconHeader
-                        key={index}
-                        onClick={() => setSelected(index)}
-                    >
-                        <Image
-                            src={
-                                selected === index
-                                    ? header.filledIcon
-                                    : header.outlineIcon
-                            }
-                            width="36px"
-                            height="36px"
-                            alt={header.name}
-                        />
-                        <span className="text-dtech-main-dark">
-                            {header.name}
-                        </span>
-                    </TabIconHeader>
-                ))}
-            </Tab.List>
-        </div>
+        <Tab.List className="relative text-dtech-main-dark flex flex-row md:flex-col overflow-x-auto">
+            {HEADERS.map((header: Header, index: number) => (
+                <TabIconHeader key={index} onClick={() => setSelected(index)}>
+                    <Image
+                        src={
+                            selected === index
+                                ? header.filledIcon
+                                : header.outlineIcon
+                        }
+                        width="36px"
+                        height="36px"
+                        alt={header.name}
+                    />
+                    <span className="text-dtech-main-dark text-lg font-medium">
+                        {header.name}
+                    </span>
+                </TabIconHeader>
+            ))}
+        </Tab.List>
     );
 };
 
