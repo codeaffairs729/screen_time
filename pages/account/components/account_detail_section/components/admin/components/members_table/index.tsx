@@ -8,7 +8,7 @@ import TextBtn from "components/UI/buttons/text_btn";
 import User, { Role } from "models/user.model";
 import { AdminTabPanelVMContext } from "../../admin_tab_panel.vm";
 
-const MembersTable = () => {
+const MembersTable = ({ className = "" }: { className?: string }) => {
     const { control } = useForm();
     // const vm = MembersTableVM();
     const adminPanelVm = useContext(AdminTabPanelVMContext);
@@ -25,7 +25,7 @@ const MembersTable = () => {
                     <BsSearch />
                 </button>
             </div> */}
-            <div className="shadow-sm mb-8 mt-6">
+            <div className={clsx("shadow-sm mb-8 mt-6", className)}>
                 {!adminPanelVm.isFetchingOrgUsers &&
                     adminPanelVm.orgusers?.length > 0 && (
                         <table

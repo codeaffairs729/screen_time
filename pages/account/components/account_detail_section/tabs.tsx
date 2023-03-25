@@ -22,26 +22,26 @@ const TabHeaders = ({
     };
 
     return (
-        <div className="ml-10 mr-28">
-            <Tab.List className={"flex justify-start items-center "}>
-                <div>
+        <Tab.List
+            className={"md:ml-32 flex space-x-20 justify-start items-center "}
+        >
+            <div>
+                <HeadTag
+                    isSelected={selectedAccountTab == 0}
+                    label={"user"}
+                    setSelected={onTabSelect}
+                ></HeadTag>
+            </div>
+            {User.isOrgAdmin(user) && (
+                <div className="ml-10">
                     <HeadTag
-                        isSelected={selectedAccountTab == 0}
-                        label={"user"}
+                        isSelected={selectedAccountTab == 1}
+                        label={"admin"}
                         setSelected={onTabSelect}
                     ></HeadTag>
                 </div>
-                {User.isOrgAdmin(user) && (
-                    <div className="ml-10">
-                        <HeadTag
-                            isSelected={selectedAccountTab == 1}
-                            label={"admin"}
-                            setSelected={onTabSelect}
-                        ></HeadTag>
-                    </div>
-                )}
-            </Tab.List>
-        </div>
+            )}
+        </Tab.List>
     );
 };
 
@@ -65,7 +65,7 @@ const HeadTag = ({
                 className={`relative inline-block text-left select-none outline-none `}
             >
                 <span
-                    className={`text-dtech-main-dark text-xl hover:underline underline-offset-4 ${
+                    className={`text-dtech-main-dark text-lg hover:underline underline-offset-4 ${
                         isSelected && "underline underline-offset-4"
                     }`}
                 >

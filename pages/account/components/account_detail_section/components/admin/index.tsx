@@ -16,17 +16,25 @@ const AdminSection = () => {
     const { control, handleSubmit } = useForm();
     const admin_user = useSelector((state: RootState) => state.auth.user);
     const vm = AdminTabPanelVM();
+    const user = useSelector((state: RootState) => state.auth.user);
+    const nameInitial = user
+        ? user?.name
+              ?.split(" ")
+              .map((word) => word[0])
+              .join("")
+        : "G";
+    
     return (
-        <div className="mx-24 my-20">
+        <div className="pt-16">
             <AdminTabPanelVMContext.Provider value={vm}>
-                <div className="flex flex-row justify-between items-center">
-                    <div className=" absolute ml-[105px] mt-[-100px] cursor-pointer">
+                <div className="lg:flex flex-row justify-between items-center max-w-3xl mx-auto">
+                    {/* <div className=" absolute ml-[105px] mt-[-100px] cursor-pointer">
                         <Image src={cameraImage} width="50px" height="50px" />
+                    </div> */}
+                    <div className="select-none outline-none text-lg w-36 h-36 flex justify-center items-center bg-[#E2E2E2]  rounded-full text-[#F5F5F5] font-medium text-[96px] mx-auto mb-4">
+                        {nameInitial}
                     </div>
-                    <div className="select-none outline-none text-lg w-36 h-36 flex justify-center items-center bg-[#E2E2E2]  rounded-full text-[#F5F5F5] font-medium text-[96px] mr-[-1rem]">
-                        JK
-                    </div>
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid md:grid-cols-2 gap-4">
                         <FormRow
                             label="Organisation"
                             labelClass="!bg-[#F8F8F8] !w-auto z-10 mx-5 absolute mb-10 text-dtech-main-dark !py-1"
@@ -44,7 +52,7 @@ const AdminSection = () => {
                                     },
                                 }}
                                 placeholder="Organisation"
-                                textfieldClassName="w-[300px] !focus:ring-dtech-main-dark border-2 !border-dtech-main-dark !focus:border-dtech-main-dark"
+                                textfieldClassName="!focus:ring-dtech-main-dark border-2 !border-dtech-main-dark !focus:border-dtech-main-dark"
                             />
                         </FormRow>
                         <FormRow
@@ -94,7 +102,7 @@ const AdminSection = () => {
                                     },
                                 }}
                                 placeholder="Max. members"
-                                textfieldClassName="w-[300px] !focus:ring-dtech-main-dark border-2 !border-dtech-main-dark !focus:border-dtech-main-dark"
+                                textfieldClassName="!focus:ring-dtech-main-dark border-2 !border-dtech-main-dark !focus:border-dtech-main-dark"
                             />
                         </FormRow>
                     </div>
@@ -114,9 +122,7 @@ const AdminSection = () => {
                         isOpen={vm.isAddMemberModalOpen}
                         setIsOpen={vm.setIsAddMemberModalOpen}
                     />
-                    <div>
-                        <MembersTable />
-                    </div>
+                    <MembersTable className="max-w-5xl ml-auto w-full overflow-x-auto" />
                     <div className=" flex justify-end items-end">
                         <PrimaryBtn
                             className="bg-dtech-main-dark w-min whitespace-nowrap  !px-16 !py-2 !rounded-lg !text-lg"
