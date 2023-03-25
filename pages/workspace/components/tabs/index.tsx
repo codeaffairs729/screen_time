@@ -45,7 +45,7 @@ const TabHeaders = ({ selectedIndex = 0 }: { selectedIndex?: number }) => {
 
     return (
         <div>
-            <Tab.List className="relative text-dtech-main-dark">
+            <Tab.List className="relative text-dtech-main-dark flex flex-row md:flex-col overflow-x-auto">
                 {HEADERS.map((header: Header, index: number) => (
                     <TabIconHeader
                         key={index}
