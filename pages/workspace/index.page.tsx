@@ -55,7 +55,7 @@ const WorkspacePage = () => {
                 </span>
                 {/* <Dropdown label={workspace} menuItems={menuItems} /> */}
             </div>
-            <div className="flex mx-4 md:mx-20 border-t bg-white">
+            <div className="md:flex mx-4 md:mx-20 border-t bg-white">
                 {!loading && (
                     <Tab.Group defaultIndex={selectedIndex}>
                         <TabHeaders selectedIndex={selectedIndex} />

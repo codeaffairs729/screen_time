@@ -29,7 +29,7 @@ const ListsSection = () => {
         <div>
             <Tab.Group>
                 <div>
-                    <Tab.List className="flex min-w-[15rem] items-center px-6 w-[70vw]">
+                    <Tab.List className="flex items-center px-6">
                         <div
                             className="cursor-pointer py-1 px-4"
                             onClick={() => scroll(-SCROLLABLE_VALUE)}
@@ -39,7 +39,7 @@ const ListsSection = () => {
                         <div
                             ref={scrollableDiv}
                             id="scrollable-div"
-                            className="scroll-smooth no-scrollbar flex flex-start gap-10 items-center w-2/3 overflow-x-auto overflow-y-hidden whitespace-nowrap"
+                            className="scroll-smooth no-scrollbar flex flex-1 flex-start gap-10 items-center overflow-x-auto overflow-y-hidden whitespace-nowrap"
                         >
                             <TabHeader>Favourites</TabHeader>
 
