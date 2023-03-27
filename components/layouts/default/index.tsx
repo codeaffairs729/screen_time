@@ -41,13 +41,13 @@ const DefaultLayout = ({
                             aria-hidden="true"
                         />
                         This is a{" "}
-                        <span className="font-semibold">Pre-Beta</span> release.
-                        Click to:
+                        <span className="font-semibold">Beta</span> release.
+                        Click to
                         <a
                             href="https://f7xcuekc9xt.typeform.com/to/ff4rGkXc"
                             className="hover:underline text-blue-600 "
                         >
-                            Report a Bug
+                            : Report a Bug
                         </a>{" "}
                         or
                         <a
