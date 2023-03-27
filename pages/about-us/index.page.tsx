@@ -5,6 +5,12 @@ import secondImage from "public/images/about-us/tela.webp";
 import thirdImage from "public/images/about-us/base.webp";
 import fourthImage from "public/images/about-us/ScottishGovernment_Logo.png";
 import fifthImage from "public/images/about-us/NatureScot_Logo.png";
+import sixthImage from "public/images/about-us/image 36.png";
+import seventhImage from "public/images/about-us/image 37.png";
+import eightImage from "public/images/about-us/image 38.png";
+import ninthImage from "public/images/about-us/image 39.png";
+import tenthImage from "public/images/about-us/image 40.png";
+import eleventhImage from "public/images/about-us/Sussex_University_Logo.png";
 import YoutubePlayer from "components/about/youtube";
 import HelpCard from "components/about/helpCard";
 import imageOneOfCard from "public/images/about-us/first_image.png";
@@ -35,7 +41,7 @@ const cardData = [
             ],
         },
         cardUrl: "dtechtive.com",
-        cardUrlLabel:"Try Dtechtive"
+        cardUrlLabel: "Try Dtechtive",
     },
 ];
 const dummyArray = Array(5).fill(dummyData);
@@ -109,7 +115,10 @@ const AboutUsPage = () => {
                         <div className="flex flex-col md:flex-row">
                             {dummyArray.map((item, index) => {
                                 return (
-                                    <div className=" shadow-md w-[280px] h-[420px] mx-1 my-2 text-center bg-[#DBCFE2] border-2 rounded-sm flex flex-col">
+                                    <div
+                                        key={index}
+                                        className=" shadow-md w-[280px] h-[420px] mx-1 my-2 text-center bg-[#DBCFE2] border-2 rounded-sm flex flex-col"
+                                    >
                                         <div className="  my-6">
                                             <Image
                                                 src={item.img}
@@ -125,7 +134,7 @@ const AboutUsPage = () => {
                                             {item.title}
                                         </div>
                                         <div className="text-dtech-main-dark text-1xl mt-20">
-                                            "{item.desc}
+                                            {item.desc}
                                         </div>
                                     </div>
                                 );
@@ -141,6 +150,7 @@ const AboutUsPage = () => {
                     <div className="flex flex-col items-center">
                         {cardData.map((item, index) => (
                             <HelpCard
+                                key={index}
                                 cardNumber={index}
                                 image={image}
                                 setImage={setImage}
@@ -153,6 +163,58 @@ const AboutUsPage = () => {
                                 cardUrlLabel={item.cardUrlLabel}
                             />
                         ))}
+                    </div>
+                </div>
+                <div className=" flex flex-col   ml-44 w-4/5 h-40   border-solid border-2 border-indigo-600 ... box-content  ">
+                    <div>
+                        <div className=" flex flex-row  ml-32 space-x-72 ">
+                            <div className="">
+                                <Image
+                                    src={sixthImage}
+                                    height={50}
+                                    width={90}
+                                />
+                            </div>
+                            <div className="">
+                                <Image
+                                    src={seventhImage}
+                                    height={75}
+                                    width={75}
+                                />
+                            </div>
+                            <div className=" ">
+                                <Image
+                                    src={eightImage}
+                                    height={45}
+                                    width={100}
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div className=" flex flex-row  ml-32  space-x-72 ">
+                            <div className=" ">
+                                <Image
+                                    src={ninthImage}
+                                    height={45}
+                                    width={100}
+                                />
+                            </div>
+                            <div className="">
+                                <Image
+                                    src={tenthImage}
+                                    height={40}
+                                    width={100}
+                                />
+                            </div>
+                            <div className=" ">
+                                <Image
+                                    src={eleventhImage}
+                                    height={70}
+                                    width={70}
+                                />
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
