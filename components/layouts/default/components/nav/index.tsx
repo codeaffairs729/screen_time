@@ -69,6 +69,7 @@ const Nav = ({
                         )}
                     >
                         <NavItem label="Home" link="/" />
+                        <NavItem label="About" link="/about-us" />
                         {user && (
                             <NavMenuDropdown
                                 label="User contributions"
