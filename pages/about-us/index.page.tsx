@@ -1,8 +1,8 @@
 import DefaultLayout from "components/layouts/default";
 import Image from "next/image";
-import firstImage from "public/images/about-us/about_first.webp";
-import secondImage from "public/images/about-us/tela.webp";
-import thirdImage from "public/images/about-us/base.webp";
+import firstImage from "public/images/about-us/about_first.png";
+import secondImage from "public/images/about-us/tela.png";
+import thirdImage from "public/images/about-us/base.png";
 import fourthImage from "public/images/about-us/ScottishGovernment_Logo.png";
 import fifthImage from "public/images/about-us/NatureScot_Logo.png";
 import sixthImage from "public/images/about-us/image 36.png";
