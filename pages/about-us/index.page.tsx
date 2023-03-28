@@ -295,6 +295,7 @@ const AboutUsPage = () => {
                         ].map((value, index) => {
                             return (
                                 <div
+                                    key={index}
                                     className={`flex justify-center items-center p-2 ${
                                         index == 0
                                             ? " text-center h-60 pb-24 border-4 border-grey rounded-lg"
@@ -335,6 +336,7 @@ const AboutUsPage = () => {
                         ].map((value, index) => {
                             return (
                                 <div
+                                    key={index}
                                     className={`flex justify-center items-center p-1 ${
                                         index == 0
                                             ? " text-center h-60 pb-24 "
@@ -361,26 +363,36 @@ const AboutUsPage = () => {
                     <div className="flex bg-[#E3B7FF] text-lg font-bold rounded-lg flex-col m-1 w-[20%]">
                         {[
                             "Essential (Registered free)",
-                            <BsCheck size={40} />,
-                            <BsCheck size={40} />,
+                            <BsCheck key={"bscheck1"} size={40} />,
+                            <BsCheck key={"bscheck2"} size={40} />,
                             "1/6",
                             "4/5",
-                            <BsCheck size={40} />,
+                            <BsCheck key={"bscheck3"} size={40} />,
+                            ,
                             "2/3",
                         ].map((value, index) => {
                             return (
                                 <div
+                                    key={index}
                                     className={`flex justify-center items-center text-center p-2 ${
                                         index == 0
                                             ? " h-60 pb-24 "
                                             : index ==
                                               [
                                                   "Essential (Registered free)",
-                                                  <BsCheck className=" items-center" />,
-                                                  <BsCheck size={40} />,
+                                                  <BsCheck key={"bscheck4"} className=" items-center" />,
+                                                  <BsCheck
+                                                      key={"bscheck5"}
+                                                      size={40}
+                                                  />,
+                                                  ,
                                                   "1/6",
                                                   "4/5",
-                                                  <BsCheck size={40} />,
+                                                  <BsCheck
+                                                      key={"bscheck6"}
+                                                      size={40}
+                                                  />,
+                                                  ,
                                                   "2/3",
                                               ].length -
                                                   1
@@ -396,27 +408,48 @@ const AboutUsPage = () => {
                     <div className="flex  bg-[#D396FA] text-lg font-bold rounded-lg flex-col m-1 w-[20%]">
                         {[
                             "Professional(paid) £15/user/month Discounted bundles available for organisations",
-                            <BsCheck size={40} />,
-                            <BsCheck size={40} />,
+                            <BsCheck key={"bscheck7"} size={40} />,
+                            ,
+                            <BsCheck key={"bscheck8"} size={40} />,
+                            ,
                             "5/6",
                             "4/5",
-                            <BsCheck size={40} />,
-                            <BsCheck size={40} />,
+                            <BsCheck key={"bscheck9"} size={40} />,
+                            ,
+                            <BsCheck key={"bscheck10"} size={40} />,
+                            ,
                         ].map((value, index) => {
                             return (
                                 <div
+                                    key={index}
                                     className={`flex justify-center items-center p-2 ${
                                         index == 0
                                             ? " text-center h-60 pb-24 "
                                             : index ==
                                               [
                                                   "Professional(paid)",
-                                                  <BsCheck size={40} />,
-                                                  <BsCheck size={40} />,
+                                                  <BsCheck
+                                                      key={"bscheck11"}
+                                                      size={40}
+                                                  />,
+                                                  ,
+                                                  <BsCheck
+                                                      key={"bscheck12"}
+                                                      size={40}
+                                                  />,
+                                                  ,
                                                   "5/6",
                                                   "4/5",
-                                                  <BsCheck size={40} />,
-                                                  <BsCheck size={40} />,
+                                                  <BsCheck
+                                                      key={"bscheck13"}
+                                                      size={40}
+                                                  />,
+                                                  ,
+                                                  <BsCheck
+                                                      key={"bscheck14"}
+                                                      size={40}
+                                                  />,
+                                                  ,
                                               ].length -
                                                   1
                                             ? "rounded text-center"
@@ -441,27 +474,58 @@ const AboutUsPage = () => {
                         {[
                             `Premium (paid) £20/user/month
                             Discounted bundles available for organisations`,
-                            <BsCheck size={40} />,
-                            <BsCheck size={40} />,
-                            <BsCheck size={40} />,
-                            <BsCheck size={40} />,
-                            <BsCheck size={40} />,
-                            <BsCheck size={40} />,
+                            <BsCheck key={"bscheck15"} size={40} />,
+                            ,
+                            <BsCheck key={"bscheck16"} size={40} />,
+                            ,
+                            <BsCheck key={"bscheck17"} size={40} />,
+                            ,
+                            <BsCheck key={"bscheck18"} size={40} />,
+                            ,
+                            <BsCheck key={"bscheck19"} size={40} />,
+                            ,
+                            <BsCheck key={"bscheck20"} size={40} />,
+                            ,
                         ].map((value, index) => {
                             return (
                                 <div
+                                    key={index}
                                     className={`flex justify-center items-center p-2 ${
                                         index == 0
                                             ? " text-center h-60 pb-24 "
                                             : index ==
                                               [
                                                   "Premium (paid)",
-                                                  <BsCheck size={40} />,
-                                                  <BsCheck size={40} />,
-                                                  <BsCheck size={40} />,
-                                                  <BsCheck size={40} />,
-                                                  <BsCheck size={40} />,
-                                                  <BsCheck size={40} />,
+                                                  <BsCheck
+                                                      key={"bscheck21"}
+                                                      size={40}
+                                                  />,
+                                                  ,
+                                                  <BsCheck
+                                                      key={"bscheck22"}
+                                                      size={40}
+                                                  />,
+                                                  ,
+                                                  <BsCheck
+                                                      key={"bscheck23"}
+                                                      size={40}
+                                                  />,
+                                                  ,
+                                                  <BsCheck
+                                                      key={"bscheck24"}
+                                                      size={40}
+                                                  />,
+                                                  ,
+                                                  <BsCheck
+                                                      key={"bscheck25"}
+                                                      size={40}
+                                                  />,
+                                                  ,
+                                                  <BsCheck
+                                                      key={"bscheck26"}
+                                                      size={40}
+                                                  />,
+                                                  ,
                                               ].length -
                                                   1
                                             ? "rounded text-center "
@@ -486,18 +550,27 @@ const AboutUsPage = () => {
                 <div className="flex flex-row justify-evenly mx-4 text-lg">
                     <div className=" px-9 py-4 bg-[#EAE3EE] rounded-xl">
                         Add-Ons (paid)
-                        <div><a href="https://dtime.ai/meeting">
-                            <button className="  bg-white rounded-full text-black p-2">
-                                Upgrade
-                            </button>
+                        <div>
+                            <a href="https://dtime.ai/meeting">
+                                <button className="  bg-white rounded-full text-black p-2">
+                                    Upgrade
+                                </button>
                             </a>
                         </div>
                     </div>
-                    <div className="bg-[#EAE3EE] px-9 py-4">Dataset promotion</div>
-                    <div className="bg-[#EAE3EE] px-9 py-4">Data source priority indexing</div>
+                    <div className="bg-[#EAE3EE] px-9 py-4">
+                        Dataset promotion
+                    </div>
+                    <div className="bg-[#EAE3EE] px-9 py-4">
+                        Data source priority indexing
+                    </div>
                     <div className="bg-[#EAE3EE] px-9 py-4">Whitelabelling</div>
-                    <div className="bg-[#EAE3EE] px-9 py-4">Internal search</div>
-                    <div className="bg-[#EAE3EE] px-9 py-4 rounded-xl">3rd party integration</div>
+                    <div className="bg-[#EAE3EE] px-9 py-4">
+                        Internal search
+                    </div>
+                    <div className="bg-[#EAE3EE] px-9 py-4 rounded-xl">
+                        3rd party integration
+                    </div>
                 </div>
             </div>
         </DefaultLayout>
