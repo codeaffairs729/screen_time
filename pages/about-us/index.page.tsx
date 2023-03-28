@@ -1,25 +1,25 @@
 import DefaultLayout from "components/layouts/default";
 import Image from "next/image";
-import firstImage from "public/images/about-us/about_first.png";
-import secondImage from "public/images/about-us/tela.png";
-import thirdImage from "public/images/about-us/base.png";
-import fourthImage from "public/images/about-us/ScottishGovernment_Logo.png";
-import fifthImage from "public/images/about-us/NatureScot_Logo.png";
-import sixthImage from "public/images/about-us/image 36.png";
-import seventhImage from "public/images/about-us/image 37.png";
-import eightImage from "public/images/about-us/image 38.png";
-import ninthImage from "public/images/about-us/image 39.png";
-import tenthImage from "public/images/about-us/image 40.png";
-import userJourneyImage from "public/images/about-us/user_journey.png";
-import eleventhImage from "public/images/about-us/Sussex_University_Logo.png";
+// import firstImage from "public/images/about-us/about_first.png";
+// import secondImage from "public/images/about-us/tela.png";
+// import thirdImage from "public/images/about-us/base.png";
+// import fourthImage from "public/images/about-us/ScottishGovernment_Logo.png";
+// import fifthImage from "public/images/about-us/NatureScot_Logo.png";
+// import sixthImage from "public/images/about-us/image 36.png";
+// import seventhImage from "public/images/about-us/image 37.png";
+// import eightImage from "public/images/about-us/image 38.png";
+// import ninthImage from "public/images/about-us/image 39.png";
+// import tenthImage from "public/images/about-us/image 40.png";
+// import userJourneyImage from "public/images/about-us/user_journey.png";
+// import eleventhImage from "public/images/about-us/Sussex_University_Logo.png";
 import YoutubePlayer from "components/about/youtube";
 import HelpCard from "components/about/helpCard";
-import imageOneOfCard from "public/images/about-us/first_image.png";
-import imageTwoOfCard from "public/images/about-us/second_image.png";
-import imageThreeOfCard from "public/images/about-us/third_image.png";
-import imageFourthOfCard from "public/images/about-us/fourth_image.png";
-import imageFifthOfCard from "public/images/about-us/fifth_image.png";
-import imageSixthOfCard from "public/images/about-us/sixth_image.png";
+// import imageOneOfCard from "public/images/about-us/first_image.png";
+// import imageTwoOfCard from "public/images/about-us/second_image.png";
+// import imageThreeOfCard from "public/images/about-us/third_image.png";
+// import imageFourthOfCard from "public/images/about-us/fourth_image.png";
+// import imageFifthOfCard from "public/images/about-us/fifth_image.png";
+// import imageSixthOfCard from "public/images/about-us/sixth_image.png";
 import { useState } from "react";
 import { BsChevronDown, BsCheck } from "react-icons/bs";
 
@@ -27,12 +27,12 @@ const dummyData = {
     name: "XYZ",
     title: "developer",
     desc: "Amazing",
-    img: fifthImage,
+    img: '/images/about-us/NatureScot_Logo.png',
 };
 const cardData = [
     {
-        imageOne: imageOneOfCard,
-        imageTwo: imageTwoOfCard,
+        imageOne: '/images/about-us/first_image.png',
+        imageTwo: '/images/about-us/second_image.png',
         cardData: {
             title: "Data Users",
             shortDesc:
@@ -52,8 +52,8 @@ const cardData = [
         cardUrlLabel: "Try Dtechtive",
     },
     {
-        imageOne: imageThreeOfCard,
-        imageTwo: imageFourthOfCard,
+        imageOne: '/images/about-us/third_image.png',
+        imageTwo: '/images/about-us/fourth_image.png',
         cardData: {
             title: "Data Providers",
             shortDesc:
@@ -70,8 +70,8 @@ const cardData = [
         cardUrlLabel: "Schedule a meeting for early access",
     },
     {
-        imageOne: imageFifthOfCard,
-        imageTwo: imageSixthOfCard,
+        imageOne: "/images/about-us/fifth_image.png",
+        imageTwo: "/images/about-us/sixth_image.png",
         cardData: {
             title: "Data Enablers",
             shortDesc:
@@ -102,13 +102,13 @@ const AboutUsPage = () => {
                 </div>
                 <div className="flex mt-20 flex-col sm:ml-24  sm:flex-row">
                     <div>
-                        <Image src={firstImage} height={500} width={837} />
+                        <Image src={'/images/about-us/about_first.png'} height={500} width={837} />
                     </div>
                     <div className="flex flex-col items-center sm:-mt-10">
                         <div className=" w-[100%] max-w-[640px] relative">
                             <div className="w-[90%] ml-[4.5%]">
                                 <Image
-                                    src={secondImage}
+                                    src={'/images/about-us/tela.png'}
                                     height={543}
                                     width={756}
                                 />
@@ -123,7 +123,7 @@ const AboutUsPage = () => {
                         </div>
 
                         <div className=" -mt-5">
-                            <Image src={thirdImage} height={17} width={900} />
+                            <Image src={'/images/about-us/base.png'} height={17} width={900} />
                         </div>
                     </div>
                 </div>
@@ -212,7 +212,7 @@ const AboutUsPage = () => {
                 <div className="flex mt-20 flex-col sm:ml-24  sm:flex-row">
                     <div className=" mx-10">
                         <Image
-                            src={userJourneyImage}
+                            src={'/images/about-us/user_journey.png'}
                             height={500}
                             width={437}
                         />
@@ -221,7 +221,7 @@ const AboutUsPage = () => {
                         <div className=" w-[100%] max-w-[640px] relative">
                             <div className="w-[90%] ml-[4.5%]">
                                 <Image
-                                    src={secondImage}
+                                    src={'/images/about-us/tela.png'}
                                     height={493}
                                     width={656}
                                 />
@@ -236,7 +236,7 @@ const AboutUsPage = () => {
                         </div>
 
                         <div className=" -mt-5">
-                            <Image src={thirdImage} height={17} width={750} />
+                            <Image src={'/images/about-us/base.png'} height={17} width={750} />
                         </div>
                     </div>
                 </div>
@@ -247,29 +247,29 @@ const AboutUsPage = () => {
                 <div className=" flex flex-col border-2 shadow-2xl rounded-xl">
                     <div className="flex flex-col md:flex-row">
                         <div className="mx-20 m-10 md:mx-40">
-                            <Image src={sixthImage} height={120} width={250} />
+                            <Image src={'/images/about-us/image 36.png'} height={120} width={250} />
                         </div>
                         <div className="mx-20 m-10 md:mx-40">
-                            <Image src={eightImage} height={70} width={240} />
+                            <Image src={'/images/about-us/image 38.png'} height={70} width={240} />
                         </div>
                         <div className="mx-20 m-10 md:mx-40">
-                            <Image src={tenthImage} height={40} width={200} />
+                            <Image src={'/images/about-us/image 40.png'} height={40} width={200} />
                         </div>
                     </div>
                     <div className="flex flex-col md:flex-row">
                         <div className="mx-20 m-10 md:mx-40">
                             <Image
-                                src={seventhImage}
+                                src={'/images/about-us/image 37.png'}
                                 height={150}
                                 width={200}
                             />
                         </div>
                         <div className="mx-20 m-10 md:mx-40">
-                            <Image src={ninthImage} height={100} width={350} />
+                            <Image src={'/images/about-us/image 39.png'} height={100} width={350} />
                         </div>
                         <div className="mx-20 m-10 md:mx-40">
                             <Image
-                                src={eleventhImage}
+                                src={'/images/about-us/Sussex_University_Logo.png'}
                                 height={90}
                                 width={200}
                             />

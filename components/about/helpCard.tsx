@@ -13,8 +13,8 @@ const HelpCard = ({
     cardUrlLabel,
 }: {
     cardNumber: number;
-    imageOne: StaticImageData;
-    imageTwo: StaticImageData;
+    imageOne: string|StaticImageData;
+    imageTwo: string|StaticImageData;
     title: string;
     shortDesc: string;
     desc: string[];
