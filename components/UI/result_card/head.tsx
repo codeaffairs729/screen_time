@@ -65,9 +65,9 @@ const CardHead = ({
                     >
                         <legend className="text-xs mr-8">Licence</legend>
                         <div>
-                            <label>{`${tag[0].toUpperCase()}${tag.slice(
-                                1
-                            )}`}</label>
+                            <label>{`${tag?.[0].toUpperCase() ?? "-"}${
+                                tag?.slice(1) ?? ""
+                            }`}</label>
                         </div>
                     </fieldset>
                 ))}
