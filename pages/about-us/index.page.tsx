@@ -48,7 +48,7 @@ const cardData = [
                 "Gather data provider, topic and regional level insights",
             ],
         },
-        cardUrl: "dtechtive.com",
+        cardUrl: "https://dtechtive.com/",
         cardUrlLabel: "Try Dtechtive",
     },
     {
@@ -553,7 +553,7 @@ const AboutUsPage = () => {
                         <div>
                             <a href="https://dtime.ai/meeting">
                                 <button className="  bg-white rounded-full text-black p-2">
-                                    Upgrade
+                                    Contact Us
                                 </button>
                             </a>
                         </div>
