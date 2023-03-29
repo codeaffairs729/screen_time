@@ -624,7 +624,7 @@ const AboutUsPage = () => {
                 
                 <div className=" m-1">
                 {accordionData.map((item , index) => (
-                    <Accordion feature={item.feature} guest={item.guest} essential={item.essential} premium={item.premium} professional={item.professional} children={item.children} key={index} index={index}/>
+                    <Accordion feature={item.feature} guest={item.guest} essential={item.essential} premium={item.premium} professional={item.professional} key={index} index={index}>{item.children}</Accordion>
                 ))}
                 <div className="flex flex-col justify-evenly my-2 text-lg md:flex-row">
                     <div className=" px-7 w-[98%] md:w-[20%] mx-1 py-4 bg-[#EAE3EE] rounded-l-xl">
