@@ -30,306 +30,357 @@ const accordionData = [
     {
         feature: "Features",
         guest: "Guest (free)",
-        essential:"Essential (Registered free)",
-        professional:"Professional (paid)",
-        premium:"Premium (paid)",
+        essential: "Essential (Registered free)",
+        professional: "Professional (paid)",
+        premium: "Premium (paid)",
     },
     {
         feature: "Search & navigation features (7)",
         guest: "3/7",
-        essential:"5/6",
-        professional:"5/6",
-        premium:"5/6",
+        essential: "5/6",
+        professional: "5/6",
+        premium: "5/6",
         children: [
             {
                 feature: "Search datasets, data providers, topics & regions",
                 guest: true,
-                essential:true,
-                professional:true,
-                premium:true,
+                essential: true,
+                professional: true,
+                premium: true,
             },
             {
                 feature: "Filter & sort search results",
                 guest: true,
-                essential:true,
-                professional:true,
-                premium:true,
+                essential: true,
+                professional: true,
+                premium: true,
             },
             {
-                feature: "Add datasets, data providers, topics & regions to favourites",
+                feature:
+                    "Add datasets, data providers, topics & regions to favourites",
                 guest: false,
-                essential:true,
-                professional:true,
-                premium:true,
+                essential: true,
+                professional: true,
+                premium: true,
             },
             {
-                feature: "Create dataset, data provider. topics & regions lists",
+                feature:
+                    "Create dataset, data provider. topics & regions lists",
                 guest: false,
-                essential:true,
-                professional:true,
-                premium:true,
+                essential: true,
+                professional: true,
+                premium: true,
             },
             {
-                feature: "Share datasets, data providers, topics & regions on social media",
+                feature:
+                    "Share datasets, data providers, topics & regions on social media",
                 guest: true,
-                essential:true,
-                professional:true,
-                premium:true,
+                essential: true,
+                professional: true,
+                premium: true,
             },
             {
                 feature: "Buy data",
                 guest: false,
-                essential:true,
-                professional:true,
-                premium:true,
+                essential: true,
+                professional: true,
+                premium: true,
             },
             {
                 feature: "Search API access",
                 guest: false,
-                essential:true,
-                professional:true,
-                premium:true,
-            }
-        ].map((item , index) => (
-            <Accordion feature={item.feature} guest={item.guest} essential={item.essential} premium={item.premium} professional={item.professional} key={index} index={index}/>
-        ))
+                essential: true,
+                professional: true,
+                premium: true,
+            },
+        ].map((item, index) => (
+            <Accordion
+                feature={item.feature}
+                guest={item.guest}
+                essential={item.essential}
+                premium={item.premium}
+                professional={item.professional}
+                key={index}
+                index={index}
+            />
+        )),
     },
     {
         feature: "Dataset View Page (10)",
         guest: "2/10",
-        essential:"5/6",
-        professional:"5/6",
-        premium:"5/6",
+        essential: "5/6",
+        professional: "5/6",
+        premium: "5/6",
         children: [
             {
                 feature: "View Data Files",
                 guest: true,
-                essential:true,
-                professional:true,
-                premium:true,
+                essential: true,
+                professional: true,
+                premium: true,
             },
             {
                 feature: "Download individual data files",
                 guest: false,
-                essential:true,
-                professional:true,
-                premium:true,
+                essential: true,
+                professional: true,
+                premium: true,
             },
             {
                 feature: "Download multiple data files",
                 guest: false,
-                essential:false,
-                professional:true,
-                premium:true,
+                essential: false,
+                professional: true,
+                premium: true,
             },
             {
                 feature: "Preview data files",
                 guest: false,
-                essential:true,
-                professional:true,
-                premium:true,
+                essential: true,
+                professional: true,
+                premium: true,
             },
             {
                 feature: "View Metadata Quality scores",
                 guest: false,
-                essential:true,
-                professional:true,
-                premium:true,
+                essential: true,
+                professional: true,
+                premium: true,
             },
             {
                 feature: "View Data Quality scores",
                 guest: false,
-                essential:true,
-                professional:true,
-                premium:true,
+                essential: true,
+                professional: true,
+                premium: true,
             },
             {
                 feature: "View Use Cases summary",
                 guest: false,
-                essential:true,
-                professional:true,
-                premium:true,
+                essential: true,
+                professional: true,
+                premium: true,
             },
             {
                 feature: "View Download metrics",
                 guest: false,
-                essential:true,
-                professional:true,
-                premium:true,
+                essential: true,
+                professional: true,
+                premium: true,
             },
             {
                 feature: "Give User Feedback",
                 guest: false,
-                essential:true,
-                professional:true,
-                premium:true,
+                essential: true,
+                professional: true,
+                premium: true,
             },
             {
                 feature: " See Related Datasets",
                 guest: true,
-                essential:true,
-                professional:true,
-                premium:true,
-            }
-        ].map((item , index) => (
-            <Accordion feature={item.feature} guest={item.guest} essential={item.essential} premium={item.premium} professional={item.professional} key={index} index={index}/>
-        ))
+                essential: true,
+                professional: true,
+                premium: true,
+            },
+        ].map((item, index) => (
+            <Accordion
+                feature={item.feature}
+                guest={item.guest}
+                essential={item.essential}
+                premium={item.premium}
+                professional={item.professional}
+                key={index}
+                index={index}
+            />
+        )),
     },
     {
         feature: "Data provider, topic & region view page (6)",
         guest: "1/6",
-        essential:"5/6",
-        professional:"5/6",
-        premium:"5/6",
+        essential: "5/6",
+        professional: "5/6",
+        premium: "5/6",
         children: [
             {
                 feature: "View Datasets aggregated",
                 guest: true,
-                essential:true,
-                professional:true,
-                premium:true,
+                essential: true,
+                professional: true,
+                premium: true,
             },
             {
                 feature: "View Metadata Quality Scores aggregated",
                 guest: false,
-                essential:false,
-                professional:true,
-                premium:true,
+                essential: false,
+                professional: true,
+                premium: true,
             },
             {
                 feature: "View Data Quality Scores aggregated",
                 guest: false,
-                essential:false,
-                professional:true,
-                premium:true,
+                essential: false,
+                professional: true,
+                premium: true,
             },
             {
                 feature: "View Search Terms aggregated",
                 guest: false,
-                essential:false,
-                professional:true,
-                premium:true,
+                essential: false,
+                professional: true,
+                premium: true,
             },
             {
                 feature: "View Download Metrics aggregated",
                 guest: false,
-                essential:false,
-                professional:true,
-                premium:true,
+                essential: false,
+                professional: true,
+                premium: true,
             },
             {
                 feature: "Generate dataset insights report",
                 guest: false,
-                essential:false,
-                professional:false,
-                premium:true,
+                essential: false,
+                professional: false,
+                premium: true,
             },
-        ].map((item , index) => (
-            <Accordion feature={item.feature} guest={item.guest} essential={item.essential} premium={item.premium} professional={item.professional} key={index} index={index}/>
-        ))
+        ].map((item, index) => (
+            <Accordion
+                feature={item.feature}
+                guest={item.guest}
+                essential={item.essential}
+                premium={item.premium}
+                professional={item.professional}
+                key={index}
+                index={index}
+            />
+        )),
     },
     {
         feature: "My workspace page (5)",
         guest: "_",
-        essential:"5/6",
-        professional:"5/6",
-        premium:"5/6",
+        essential: "5/6",
+        professional: "5/6",
+        premium: "5/6",
         children: [
             {
                 feature: "Upload, manage & publish own datasets",
                 guest: false,
-                essential:true,
-                professional:true,
-                premium:true,
+                essential: true,
+                professional: true,
+                premium: true,
             },
             {
                 feature: "View & manage Lists",
                 guest: false,
-                essential:true,
-                professional:true,
-                premium:true,
+                essential: true,
+                professional: true,
+                premium: true,
             },
             {
                 feature: "View & manage History",
                 guest: false,
-                essential:true,
-                professional:true,
-                premium:true,
+                essential: true,
+                professional: true,
+                premium: true,
             },
             {
                 feature: "View & manage Notifications",
                 guest: false,
-                essential:true,
-                professional:true,
-                premium:true,
+                essential: true,
+                professional: true,
+                premium: true,
             },
             {
                 feature: "View User Feedback & Respond",
                 guest: false,
-                essential:false,
-                professional:false,
-                premium:true,
+                essential: false,
+                professional: false,
+                premium: true,
             },
-        ].map((item , index) => (
-            <Accordion feature={item.feature} guest={item.guest} essential={item.essential} premium={item.premium} professional={item.professional} key={index} index={index}/>
-        ))
+        ].map((item, index) => (
+            <Accordion
+                feature={item.feature}
+                guest={item.guest}
+                essential={item.essential}
+                premium={item.premium}
+                professional={item.professional}
+                key={index}
+                index={index}
+            />
+        )),
     },
     {
         feature: "My accounts page (2)",
         guest: "_",
-        essential:"5/6",
-        professional:"5/6",
-        premium:"5/6",
+        essential: "5/6",
+        professional: "5/6",
+        premium: "5/6",
         children: [
             {
                 feature: "Manage profile",
                 guest: false,
-                essential:true,
-                professional:true,
-                premium:true,
+                essential: true,
+                professional: true,
+                premium: true,
             },
             {
                 feature: "Manage subscriptions & payments",
                 guest: false,
-                essential:true,
-                professional:true,
-                premium:true,
+                essential: true,
+                professional: true,
+                premium: true,
             },
-        ].map((item , index) => (
-            <Accordion feature={item.feature} guest={item.guest} essential={item.essential} premium={item.premium} professional={item.professional} key={index} index={index}/>
-        ))
+        ].map((item, index) => (
+            <Accordion
+                feature={item.feature}
+                guest={item.guest}
+                essential={item.essential}
+                premium={item.premium}
+                professional={item.professional}
+                key={index}
+                index={index}
+            />
+        )),
     },
     {
         feature: "General (3)",
         guest: "_",
-        essential:"5/6",
-        professional:"5/6",
-        premium:"5/6",
+        essential: "5/6",
+        professional: "5/6",
+        premium: "5/6",
         children: [
             {
                 feature: "Data source registration",
                 guest: false,
-                essential:true,
-                professional:true,
-                premium:true,
+                essential: true,
+                professional: true,
+                premium: true,
             },
             {
                 feature: "Sell data",
                 guest: false,
-                essential:true,
-                professional:true,
-                premium:true,
+                essential: true,
+                professional: true,
+                premium: true,
             },
             {
                 feature: "Support",
                 guest: false,
-                essential:false,
-                professional:true,
-                premium:true,
+                essential: false,
+                professional: true,
+                premium: true,
             },
-        ].map((item , index) => (
-            <Accordion feature={item.feature} guest={item.guest} essential={item.essential} premium={item.premium} professional={item.professional} key={index} index={index}/>
-        ))
+        ].map((item, index) => (
+            <Accordion
+                feature={item.feature}
+                guest={item.guest}
+                essential={item.essential}
+                premium={item.premium}
+                professional={item.professional}
+                key={index}
+                index={index}
+            />
+        )),
     },
 ];
 
@@ -337,7 +388,7 @@ const dummyData = {
     name: "XYZ",
     title: "developer",
     desc: "Amazing",
-    img: "/images/about-us/NatureScot_Logo.png",
+    img: "/images/about-us/NatureScot_Logo.webp",
 };
 const cardData = [
     {
@@ -362,8 +413,8 @@ const cardData = [
         cardUrlLabel: "Try Dtechtive",
     },
     {
-        imageOne: "/images/about-us/third_image.png",
-        imageTwo: "/images/about-us/fourth_image.png",
+        imageOne: "/images/about-us/third_image.webp",
+        imageTwo: "/images/about-us/fourth_image.webp",
         cardData: {
             title: "Data Providers",
             shortDesc:
@@ -380,8 +431,8 @@ const cardData = [
         cardUrlLabel: "Schedule a meeting for early access",
     },
     {
-        imageOne: "/images/about-us/fifth_image.png",
-        imageTwo: "/images/about-us/sixth_image.png",
+        imageOne: "/images/about-us/fifth_image.webp",
+        imageTwo: "/images/about-us/sixth_image.webp",
         cardData: {
             title: "Data Enablers",
             shortDesc:
@@ -413,7 +464,8 @@ const AboutUsPage = () => {
                 <div className="flex mt-20 flex-col sm:ml-24  sm:flex-row">
                     <div>
                         <Image
-                            src={"/images/about-us/about_first.png"}
+                            src={"/images/about-us/about_first.webp"}
+                            alt={"loading"}
                             height={500}
                             width={837}
                         />
@@ -422,7 +474,8 @@ const AboutUsPage = () => {
                         <div className=" w-[100%] max-w-[640px] relative">
                             <div className="w-[90%] ml-[4.5%]">
                                 <Image
-                                    src={"/images/about-us/tela.png"}
+                                    src={"/images/about-us/tela.webp"}
+                                    alt={"loading"}
                                     height={543}
                                     width={756}
                                 />
@@ -438,7 +491,8 @@ const AboutUsPage = () => {
 
                         <div className=" -mt-5">
                             <Image
-                                src={"/images/about-us/base.png"}
+                                src={"/images/about-us/base.webp"}
+                                alt={"loading"}
                                 height={17}
                                 width={900}
                             />
@@ -530,7 +584,8 @@ const AboutUsPage = () => {
                 <div className="flex mt-20 flex-col sm:ml-24  sm:flex-row">
                     <div className=" mx-10">
                         <Image
-                            src={"/images/about-us/user_journey.png"}
+                            src={"/images/about-us/user_journey.webp"}
+                            alt={"loading"}
                             height={500}
                             width={437}
                         />
@@ -539,7 +594,8 @@ const AboutUsPage = () => {
                         <div className=" w-[100%] max-w-[640px] relative">
                             <div className="w-[90%] ml-[4.5%]">
                                 <Image
-                                    src={"/images/about-us/tela.png"}
+                                    src={"/images/about-us/tela.webp"}
+                                    alt={"loading"}
                                     height={493}
                                     width={656}
                                 />
@@ -555,7 +611,8 @@ const AboutUsPage = () => {
 
                         <div className=" -mt-5">
                             <Image
-                                src={"/images/about-us/base.png"}
+                                src={"/images/about-us/base.webp"}
+                                alt={"loading"}
                                 height={17}
                                 width={750}
                             />
@@ -570,21 +627,24 @@ const AboutUsPage = () => {
                     <div className="flex flex-col md:flex-row">
                         <div className="mx-20 m-10 md:mx-40">
                             <Image
-                                src={"/images/about-us/image 36.png"}
+                                src={"/images/about-us/image 36.webp"}
+                                alt={"loading"}
                                 height={120}
                                 width={250}
                             />
                         </div>
                         <div className="mx-20 m-10 md:mx-40">
                             <Image
-                                src={"/images/about-us/image 38.png"}
+                                src={"/images/about-us/image 38.webp"}
+                                alt={"loading"}
                                 height={70}
                                 width={240}
                             />
                         </div>
                         <div className="mx-20 m-10 md:mx-40">
                             <Image
-                                src={"/images/about-us/image 40.png"}
+                                src={"/images/about-us/image 40.webp"}
+                                alt={"loading"}
                                 height={40}
                                 width={200}
                             />
@@ -593,14 +653,16 @@ const AboutUsPage = () => {
                     <div className="flex flex-col md:flex-row">
                         <div className="mx-20 m-10 md:mx-40">
                             <Image
-                                src={"/images/about-us/image 37.png"}
+                                src={"/images/about-us/image 37.webp"}
+                                alt={"loading"}
                                 height={150}
                                 width={200}
                             />
                         </div>
                         <div className="mx-20 m-10 md:mx-40">
                             <Image
-                                src={"/images/about-us/image 39.png"}
+                                src={"/images/about-us/image 39.webp"}
+                                alt={"loading"}
                                 height={100}
                                 width={350}
                             />
@@ -608,8 +670,9 @@ const AboutUsPage = () => {
                         <div className="mx-20 m-10 md:mx-40">
                             <Image
                                 src={
-                                    "/images/about-us/Sussex_University_Logo.png"
+                                    "/images/about-us/Sussex_University_Logo.webp"
                                 }
+                                alt={"loading"}
                                 height={90}
                                 width={200}
                             />
