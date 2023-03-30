@@ -392,8 +392,8 @@ const dummyData = {
 };
 const cardData = [
     {
-        imageOne: "/images/about-us/first_image.png",
-        imageTwo: "/images/about-us/second_image.png",
+        imageOne: "/images/about-us/first_image.webp",
+        imageTwo: "/images/about-us/second_image.webp",
         cardData: {
             title: "Data Users",
             shortDesc:
@@ -461,7 +461,7 @@ const AboutUsPage = () => {
                     by connecting Data Users and Data Providers in a unique
                     ecosystem
                 </div>
-                <div className="flex mt-20 flex-col sm:ml-24  sm:flex-row">
+                <div className="flex mt-20 flex-col sm:ml-24 mb-20 sm:flex-row">
                     <div>
                         <Image
                             src={"/images/about-us/about_first.webp"}
@@ -556,12 +556,12 @@ const AboutUsPage = () => {
                         </div>
                     </div>
                 </div> */}
-                <div>
+                <div className="mb-20">
                     <div className="text-dtech-main-dark text-2xl  ml-4 font-sans font-bold">
                         Helping data users, providers and enablers
                     </div>
-                    <div className="shadow !w-[100%] border-2 my-5 px-5"></div>
-                    <div className="flex flex-col">
+                    <div className="shadow !w-[100%] border-2   my-5 px-5"></div>
+                    <div className="flex flex-col mx-4 md:mx-12 w-11/12">
                         {cardData.map((item, index) => (
                             <HelpCard
                                 key={index}
@@ -581,7 +581,7 @@ const AboutUsPage = () => {
                     User Journey Explained
                 </div>
                 <div className="shadow !w-[100%] border-2 my-5 px-5"></div>
-                <div className="flex mt-20 flex-col sm:ml-24  sm:flex-row">
+                <div className="flex mt-20 flex-col sm:ml-24  mb-10 sm:flex-row">
                     <div className=" mx-10">
                         <Image
                             src={"/images/about-us/user_journey.webp"}
@@ -590,7 +590,7 @@ const AboutUsPage = () => {
                             width={437}
                         />
                     </div>
-                    <div className="flex flex-col items-center md:mx-32 sm:-mt-10">
+                    <div className="flex flex-col items-center md:mx-32 sm:-mt-10 ">
                         <div className=" w-[100%] max-w-[640px] relative">
                             <div className="w-[90%] ml-[4.5%]">
                                 <Image
@@ -602,7 +602,7 @@ const AboutUsPage = () => {
                             </div>
                             <div className="h-[100%]  absolute top-0 left-0 w-full  flex justify-left items-center">
                                 <YoutubePlayer
-                                    videoId="UUmzAsOOt2U"
+                                    videoId="L34Lg7bDT1E"
                                     className=" h-[87%] w-[86%] m-[6.5%] max-h-100%"
                                     iframeclassName="h-[100%] w-[100%]"
                                 />
@@ -616,6 +616,55 @@ const AboutUsPage = () => {
                                 height={17}
                                 width={750}
                             />
+                        </div>
+                    </div>
+                </div>
+                <div className="contents  sm:contents ">
+                    <div className="text-dtech-main-dark text-2xl   ml-4  mt-8 font-sans font-bold">
+                        Subscription Plans
+                    </div>
+                    <div className="shadow !w-[100%] border-2 my-5 px-5"></div>
+
+                    <div className=" m-1">
+                        {accordionData.map((item, index) => (
+                            <Accordion
+                                feature={item.feature}
+                                guest={item.guest}
+                                essential={item.essential}
+                                premium={item.premium}
+                                professional={item.professional}
+                                key={index}
+                                index={index}
+                            >
+                                {item.children}
+                            </Accordion>
+                        ))}
+                        <div className="flex flex-col mb-20 justify-evenly my-2 text-lg md:flex-row">
+                            <div className=" px-7 w-[98%] md:w-[20%] mx-1 py-4 bg-[#EAE3EE] rounded-l-xl">
+                                Add-Ons (paid)
+                                <div>
+                                    <a href="https://dtime.ai/meeting">
+                                        <button className="  bg-white rounded-full text-black p-2">
+                                            Contact Us
+                                        </button>
+                                    </a>
+                                </div>
+                            </div>
+                            <div className="bg-[#EAE3EE] mx-1 px-9 py-4">
+                                Dataset promotion
+                            </div>
+                            <div className="bg-[#EAE3EE] mx-1 px-9 py-4">
+                                Data source priority indexing
+                            </div>
+                            <div className="bg-[#EAE3EE] px-9 mx-1 py-4">
+                                Whitelabelling
+                            </div>
+                            <div className="bg-[#EAE3EE] px-9 mx-1 py-4">
+                                Internal search
+                            </div>
+                            <div className="bg-[#EAE3EE] px-9 py-4 mx-1 rounded-r-xl">
+                                3rd party integration
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -678,46 +727,6 @@ const AboutUsPage = () => {
                             />
                         </div>
                     </div>
-                </div>
-            </div>
-            <div className="contents sm:contents">
-                <div className="text-dtech-main-dark text-2xl  ml-4  m-8 font-sans font-bold">
-                    Subscription Plans
-                </div>
-                <div className="shadow !w-[100%] border-2 my-5 px-5"></div>
-               
-                
-                <div className=" md:mx-60">
-                {accordionData.map((item , index) => (
-                    <Accordion feature={item.feature} guest={item.guest} essential={item.essential} premium={item.premium} professional={item.professional} key={index} index={index}>{item.children}</Accordion>
-                ))}
-                <div className="flex flex-col text-[#696969] max-w-fit justify-evenly my-2 text-lg md:flex-row">
-                    <div className=" flex flex-col justify-center items-center px-7 w-[98%] md:w-[30%] mx-1 py-4 bg-[#EAE3EE] rounded-l-xl">
-                        <div className="">
-                        Add-Ons (paid)
-                        </div>
-                        <div>
-                            <a href="https://dtime.ai/meeting">
-                                <button className=" shadow-lg bg-white rounded-full text-black p-2">
-                                    Contact Us
-                                </button>
-                            </a>
-                        </div>
-                    </div>
-                    <div className="bg-[#EAE3EE] mx-1 px-6 py-8 text-sm">
-                        Dataset promotion
-                    </div>
-                    <div className="bg-[#EAE3EE] mx-1 px-6 py-8 text-sm">
-                        Data source priority indexing
-                    </div>
-                    <div className="bg-[#EAE3EE] px-6 mx-1 py-8 text-sm">Whitelabelling</div>
-                    <div className="bg-[#EAE3EE] px-6 mx-1 py-8 text-sm">
-                        Internal search
-                    </div>
-                    <div className="bg-[#EAE3EE] px-6 py-8 mx-1 text-sm rounded-r-xl">
-                        3rd party integration
-                    </div>
-                </div>
                 </div>
             </div>
         </DefaultLayout>
