@@ -463,6 +463,7 @@ const AboutUsPage = () => {
                     <div>
                         <Image
                             src={"/images/about-us/about_first.webp"}
+                            alt={"loading"}
                             height={500}
                             width={837}
                         />
@@ -472,6 +473,7 @@ const AboutUsPage = () => {
                             <div className="w-[90%] ml-[4.5%]">
                                 <Image
                                     src={"/images/about-us/tela.webp"}
+                                    alt={"loading"}
                                     height={543}
                                     width={756}
                                 />
@@ -488,6 +490,7 @@ const AboutUsPage = () => {
                         <div className=" -mt-5">
                             <Image
                                 src={"/images/about-us/base.webp"}
+                                alt={"loading"}
                                 height={17}
                                 width={900}
                             />
@@ -580,6 +583,7 @@ const AboutUsPage = () => {
                     <div className=" mx-10">
                         <Image
                             src={"/images/about-us/user_journey.webp"}
+                            alt={"loading"}
                             height={500}
                             width={437}
                         />
@@ -589,6 +593,7 @@ const AboutUsPage = () => {
                             <div className="w-[90%] ml-[4.5%]">
                                 <Image
                                     src={"/images/about-us/tela.webp"}
+                                    alt={"loading"}
                                     height={493}
                                     width={656}
                                 />
@@ -605,6 +610,7 @@ const AboutUsPage = () => {
                         <div className=" -mt-5">
                             <Image
                                 src={"/images/about-us/base.webp"}
+                                alt={"loading"}
                                 height={17}
                                 width={750}
                             />
@@ -620,6 +626,7 @@ const AboutUsPage = () => {
                         <div className="mx-20 m-10 md:mx-40">
                             <Image
                                 src={"/images/about-us/image 36.webp"}
+                                alt={"loading"}
                                 height={120}
                                 width={250}
                             />
@@ -627,6 +634,7 @@ const AboutUsPage = () => {
                         <div className="mx-20 m-10 md:mx-40">
                             <Image
                                 src={"/images/about-us/image 38.webp"}
+                                alt={"loading"}
                                 height={70}
                                 width={240}
                             />
@@ -634,6 +642,7 @@ const AboutUsPage = () => {
                         <div className="mx-20 m-10 md:mx-40">
                             <Image
                                 src={"/images/about-us/image 40.webp"}
+                                alt={"loading"}
                                 height={40}
                                 width={200}
                             />
@@ -643,6 +652,7 @@ const AboutUsPage = () => {
                         <div className="mx-20 m-10 md:mx-40">
                             <Image
                                 src={"/images/about-us/image 37.webp"}
+                                alt={"loading"}
                                 height={150}
                                 width={200}
                             />
@@ -650,6 +660,7 @@ const AboutUsPage = () => {
                         <div className="mx-20 m-10 md:mx-40">
                             <Image
                                 src={"/images/about-us/image 39.webp"}
+                                alt={"loading"}
                                 height={100}
                                 width={350}
                             />
@@ -659,6 +670,7 @@ const AboutUsPage = () => {
                                 src={
                                     "/images/about-us/Sussex_University_Logo.webp"
                                 }
+                                alt={"loading"}
                                 height={90}
                                 width={200}
                             />
