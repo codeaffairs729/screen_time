@@ -24,7 +24,7 @@ const Accordion = ({
         <div>
             <div className="flex flex-row rounded-xl ">
                 <div
-                    className={`w-[28%] flex-wrap flex justify-between p-8 border-4 border-grey h-  ${
+                    className={`w-[28%] text-[#696969] flex-wrap flex justify-between p-8 border-4 border-grey h-  ${
                         !children &&
                         typeof guest != "boolean" &&
                         " items-center h-64"
@@ -36,9 +36,10 @@ const Accordion = ({
                     ${
                         feature == "Features" &&
                         " !justify-center !items-center pb-52"
-                    }`} style={{height:"inherit"}}
+                    }`}
+                    style={{ height: "inherit" }}
                 >
-                    <div>{feature}</div>
+                    <div>{feature}</div><div>
                     {children && (
                         <div
                             className=" cursor-pointer"
@@ -47,6 +48,8 @@ const Accordion = ({
                             <BsChevronDown size={25} />
                         </div>
                     )}
+
+                    </div>
                 </div>
                 <div className=" w-[18%] bg-[#E4C3F9] flex flex-wrap justify-center text-lg items-center border-4 border-white">
                     {typeof guest == "boolean" ? (
@@ -55,8 +58,16 @@ const Accordion = ({
                         ) : (
                             "_"
                         )
+                    ) : guest == "Guest (free)" ? (
+                        <div
+                            className=" pb-36 font-medium break-words"
+                            style={{ overflowWrap: "anywhere" }}
+                        >
+                            <div>{guest.split(" ")[0]}</div>
+                            <div>{guest.split(" ")[1]}</div>
+                        </div>
                     ) : (
-                        guest=="Guest (free)"?<div className="pb-40" style={{overflowWrap:"anywhere"}}>{guest}</div>:guest
+                        guest
                     )}
                 </div>
                 <div className=" w-[18%] bg-[#E3B7FF] flex flex-wrap break-words justify-center text-lg items-center border-4 border-white">
@@ -67,8 +78,15 @@ const Accordion = ({
                             "_"
                         )
                     ) : index == 0 ? (
-                        <div className="flex flex-col justify-center items-center">
-                            <div className=" mb-28"  style={{overflowWrap:"anywhere"}}>{essential}</div>
+                        <div className="flex flex-col justify-center font-medium items-center">
+                            <div
+                                className=" mb-14   flex flex-col justify-center items-center"
+                                style={{ overflowWrap: "anywhere" }}
+                            >
+                                <div>{essential.split(" ")[0]}</div>
+                                <div>{essential.split(" ")[1]}</div>
+                                <div> {essential.split(" ")[2]}</div>
+                            </div>
                             <div className="">
                                 <button className=" bg-white shadow-xl rounded-full p-1 text-xs md:!px-10 flex md:text-xl md:p-4">
                                     Upgrade
@@ -87,13 +105,16 @@ const Accordion = ({
                             "_"
                         )
                     ) : index == 0 ? (
-                        <div className="flex flex-col justify-center items-center"  style={{overflowWrap:"anywhere"}} >
+                        <div
+                            className="flex flex-col justify-center items-center"
+                            style={{ overflowWrap: "anywhere" }}
+                        >
                             <div className=" font-medium ">{premium}</div>
-                            <div className="text-center my-6">
-                                <div className="">
+                            <div className="text-center my-6 mx-">
+                                <div className=" text-xl font-medium">
                                     <h1>£15/user/month</h1>
                                 </div>
-                                <div className=" text-xs">
+                                <div className=" text-xs font-medium">
                                     <h6>
                                         Discounted bundles available for
                                         organisations
@@ -101,7 +122,7 @@ const Accordion = ({
                                 </div>
                             </div>
                             <div className="">
-                            <button className=" bg-white shadow-xl rounded-full p-1 text-xs !flex md:text-xl md:!px-10 md:p-4">
+                                <button className=" bg-white shadow-xl rounded-full p-1 text-xs !flex md:text-xl md:!px-10 md:p-4">
                                     Upgrade
                                 </button>
                             </div>
@@ -118,13 +139,16 @@ const Accordion = ({
                             "_"
                         )
                     ) : index == 0 ? (
-                        <div className="flex flex-col justify-center items-center" style={{overflowWrap:"anywhere"}}>
+                        <div
+                            className="flex flex-col justify-center items-center"
+                            style={{ overflowWrap: "anywhere" }}
+                        >
                             <div className=" font-medium ">{premium}</div>
                             <div className="text-center my-6">
-                                <div className="">
+                                <div className="text-xl font-medium">
                                     <h1>£20/user/month</h1>
                                 </div>
-                                <div className=" text-xs">
+                                <div className=" text-xs font-medium">
                                     <h6>
                                         Discounted bundles available for
                                         organisations
