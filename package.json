@@ -38,7 +38,7 @@
     "lodash-es": "^4.17.21",
     "loglevel": "^1.8.0",
     "luxon": "^2.3.0",
-    "next": "^12.0.10",
+    "next": "^12.1.0",
     "next-redux-wrapper": "^7.0.5",
     "pg": "^8.7.3",
     "posthog-js": "^1.29.0",
