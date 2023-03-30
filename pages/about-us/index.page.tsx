@@ -1,5 +1,7 @@
 import DefaultLayout from "components/layouts/default";
 import Image from "next/image";
+import dynamic from 'next/dynamic'
+
 // import firstImage from "public/images/about-us/about_first.png";
 // import secondImage from "public/images/about-us/tela.png";
 // import thirdImage from "public/images/about-us/base.png";
@@ -20,9 +22,9 @@ import HelpCard from "components/about/helpCard";
 // import imageFourthOfCard from "public/images/about-us/fourth_image.png";
 // import imageFifthOfCard from "public/images/about-us/fifth_image.png";
 // import imageSixthOfCard from "public/images/about-us/sixth_image.png";
-import { useState } from "react";
-import { BsChevronDown, BsCheck } from "react-icons/bs";
-import Accordion from "components/about/accordion";
+const Accordion = dynamic(()=>import("components/about/accordion"),{
+    ssr:false
+})
 
 const accordionData = [
     {
@@ -400,7 +402,7 @@ const AboutUsPage = () => {
     return (
         <DefaultLayout>
             <div className="flex flex-col">
-                <div className="text-3xl	 ml-4 font-bold mt-6 text-dtech-main-dark w-8/9 sm:text-5xl sm:w-2/3 sm:ml-28">
+                <div className="text-3 ml-4 font-bold mt-6 text-dtech-main-dark w-8/9 sm:text-5xl sm:w-2/3 sm:ml-28">
                     Dtechtive discovers the datasets other search engines cannot
                     reach,
                 </div>
@@ -544,7 +546,7 @@ const AboutUsPage = () => {
                             </div>
                             <div className="h-[100%]  absolute top-0 left-0 w-full  flex justify-left items-center">
                                 <YoutubePlayer
-                                    videoId="aM3-4QvjVBk"
+                                    videoId="UUmzAsOOt2U"
                                     className=" h-[87%] w-[86%] m-[6.5%] max-h-100%"
                                     iframeclassName="h-[100%] w-[100%]"
                                 />
@@ -622,32 +624,34 @@ const AboutUsPage = () => {
                 <div className="shadow !w-[100%] border-2 my-5 px-5"></div>
                
                 
-                <div className=" m-1">
+                <div className=" md:mx-60">
                 {accordionData.map((item , index) => (
                     <Accordion feature={item.feature} guest={item.guest} essential={item.essential} premium={item.premium} professional={item.professional} key={index} index={index}>{item.children}</Accordion>
                 ))}
-                <div className="flex flex-col justify-evenly my-2 text-lg md:flex-row">
-                    <div className=" px-7 w-[98%] md:w-[20%] mx-1 py-4 bg-[#EAE3EE] rounded-l-xl">
+                <div className="flex flex-col text-[#696969] max-w-fit justify-evenly my-2 text-lg md:flex-row">
+                    <div className=" flex flex-col justify-center items-center px-7 w-[98%] md:w-[30%] mx-1 py-4 bg-[#EAE3EE] rounded-l-xl">
+                        <div className="">
                         Add-Ons (paid)
+                        </div>
                         <div>
                             <a href="https://dtime.ai/meeting">
-                                <button className="  bg-white rounded-full text-black p-2">
+                                <button className=" shadow-lg bg-white rounded-full text-black p-2">
                                     Contact Us
                                 </button>
                             </a>
                         </div>
                     </div>
-                    <div className="bg-[#EAE3EE] mx-1 px-9 py-4">
+                    <div className="bg-[#EAE3EE] mx-1 px-6 py-8 text-sm">
                         Dataset promotion
                     </div>
-                    <div className="bg-[#EAE3EE] mx-1 px-9 py-4">
+                    <div className="bg-[#EAE3EE] mx-1 px-6 py-8 text-sm">
                         Data source priority indexing
                     </div>
-                    <div className="bg-[#EAE3EE] px-9 mx-1 py-4">Whitelabelling</div>
-                    <div className="bg-[#EAE3EE] px-9 mx-1 py-4">
+                    <div className="bg-[#EAE3EE] px-6 mx-1 py-8 text-sm">Whitelabelling</div>
+                    <div className="bg-[#EAE3EE] px-6 mx-1 py-8 text-sm">
                         Internal search
                     </div>
-                    <div className="bg-[#EAE3EE] px-9 py-4 mx-1 rounded-r-xl">
+                    <div className="bg-[#EAE3EE] px-6 py-8 mx-1 text-sm rounded-r-xl">
                         3rd party integration
                     </div>
                 </div>
