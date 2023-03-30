@@ -24,7 +24,9 @@ const Accordion = ({
         <div>
             <div className="flex flex-row rounded-xl ">
                 <div
-                    className={`w-[28%] text-[#696969] flex-wrap flex justify-between p-8 border-4 border-grey h-  ${
+                    className={`w-[28%] ${
+                        isActive && " bg-[#D3D3D3]"
+                    } flex-wrap flex justify-between p-8 border-4 border-grey h-  ${
                         !children &&
                         typeof guest != "boolean" &&
                         " items-center h-64"
@@ -169,7 +171,7 @@ const Accordion = ({
 
             {
                 isActive && children
-                //     <div className="flex flex-row rounded-xl ">
+                // <div className="flex flex-row rounded-xl ">
                 //     <div className=" w-[20%] flex justify-between p-4 border-4 border-grey">
                 //     <div>{feature}</div>
                 //         <div>{isActive ? "-" : "+"}</div>

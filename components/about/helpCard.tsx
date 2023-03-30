@@ -13,8 +13,8 @@ const HelpCard = ({
     cardUrlLabel,
 }: {
     cardNumber: number;
-    imageOne: string|StaticImageData;
-    imageTwo: string|StaticImageData;
+    imageOne: string | StaticImageData;
+    imageTwo: string | StaticImageData;
     title: string;
     shortDesc: string;
     desc: string[];
@@ -26,11 +26,11 @@ const HelpCard = ({
 
     return (
         <div
-            className={`shadow-lg w-[100%] border-2 my-2 rounded-lg  flex flex-col ${
-                (cardNumber % 2 ==0) ? "md:flex-row" : "md:flex-row-reverse"
+            className={`shadow-lg w-[100%] border-2 my-2  rounded-lg border-[#9A65C4] flex flex-col ${
+                cardNumber % 2 == 0 ? "md:flex-row" : "md:flex-row-reverse"
             }`}
         >
-            <div className=" my-[1%] flex flex-col items-center w-[100%] md:mx-16">
+            <div className=" my-[1%] flex flex-col items-center w-[100%] md:mx-16 text-left">
                 <div className="">
                     <Image
                         src={image ? imageOne : imageTwo}
@@ -53,20 +53,20 @@ const HelpCard = ({
                     ></div>
                 </div>
             </div>
-            <div className=" my-[4%] flex flex-col md:mx-20 ">
-                <div className=" shadow-md mx-1 my-2 text-center bg-inherit border-2 rounded-xl flex flex-col justify-between">
+            <div className=" my-[4%] flex flex-col   md:mx-20  ">
+                <div className=" shadow-md mx-1  my-2 text-center bg-inherit border-2 rounded-xl flex flex-col justify-between">
                     <div>
-                        <div className="text-dtech-main-dark text-4xl my-6 ml-4 font-sans font-bold break-words">
+                        <div className="text-dtech-main-dark  text-4xl my-6 ml-4 font-sans font-bold break-words">
                             <span className=" text-dtech-main-light bold text-6xl mr-5">
                                 {cardNumber + 1}
                             </span>
                             {title}
                         </div>
-                        <div className="text-dtech-main-dark text-1xl my-6">
+                        <div className="text-dtech-main-dark  text-1xl my-6">
                             {shortDesc}
                         </div>
                         {showDesc && (
-                            <div className="text-dtech-main-dark text-1xl my-10">
+                            <div className="text-dtech-main-dark text-left text-1xl my-10">
                                 {desc.map((item, index) => (
                                     <div
                                         key={index}
