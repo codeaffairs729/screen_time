@@ -1,6 +1,6 @@
 import DefaultLayout from "components/layouts/default";
 import Image from "next/image";
-import dynamic from 'next/dynamic'
+import dynamic from "next/dynamic";
 
 // import firstImage from "public/images/about-us/about_first.png";
 // import secondImage from "public/images/about-us/tela.png";
@@ -22,9 +22,9 @@ import HelpCard from "components/about/helpCard";
 // import imageFourthOfCard from "public/images/about-us/fourth_image.png";
 // import imageFifthOfCard from "public/images/about-us/fifth_image.png";
 // import imageSixthOfCard from "public/images/about-us/sixth_image.png";
-const Accordion = dynamic(()=>import("components/about/accordion"),{
-    ssr:false
-})
+const Accordion = dynamic(() => import("components/about/accordion"), {
+    ssr: false,
+});
 
 const accordionData = [
     {
@@ -672,51 +672,39 @@ const AboutUsPage = () => {
                     Our Partners
                 </div>
                 <div className="shadow !w-[100%] border-2 my-5 px-5"></div>
-                <div className=" flex flex-col border-2 shadow-2xl rounded-xl">
-                    <div className="flex flex-col md:flex-row">
-                        <div className="mx-20 m-10 md:mx-40">
-                            <Image
-                                src={"/images/about-us/image 36.webp"}
-                                alt={"loading"}
-                                height={120}
-                                width={250}
-                            />
-                        </div>
-                        <div className="mx-20 m-10 md:mx-40">
+                <div className=" flex flex-col border-2 shadow-2xl items-center justify-center rounded-xl">
+                    
+                    <div className="flex  flex-col items-center justify-center  md:flex-row">
+
+                        <div className="mx-20 my-10  md:mx-40">
                             <Image
                                 src={"/images/about-us/image 38.webp"}
                                 alt={"loading"}
-                                height={70}
+                                height={50}
                                 width={240}
                             />
                         </div>
-                        <div className="mx-20 m-10 md:mx-40">
+
+                        <div className="mx-20  my-10 md:mx-40">
                             <Image
                                 src={"/images/about-us/image 40.webp"}
                                 alt={"loading"}
                                 height={40}
-                                width={200}
+                                width={250}
                             />
                         </div>
                     </div>
-                    <div className="flex flex-col md:flex-row">
-                        <div className="mx-20 m-10 md:mx-40">
+                    <div className="flex flex-col items-center justify-center md:flex-row">
+                        <div className="mx-20 my-10 md:mx-40">
                             <Image
-                                src={"/images/about-us/image 37.webp"}
-                                alt={"loading"}
-                                height={150}
-                                width={200}
-                            />
-                        </div>
-                        <div className="mx-20 m-10 md:mx-40">
-                            <Image
-                                src={"/images/about-us/image 39.webp"}
+                                src={"/images/about-us/Softcat_Logo.webp"}
                                 alt={"loading"}
                                 height={100}
-                                width={350}
+                                width={250}
                             />
                         </div>
-                        <div className="mx-20 m-10 md:mx-40">
+
+                        <div className="mx-20 my-10 md:mx-40">
                             <Image
                                 src={
                                     "/images/about-us/Sussex_University_Logo.webp"
