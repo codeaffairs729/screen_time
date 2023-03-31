@@ -68,7 +68,7 @@ const OrganisationTabHeaders = ({ selectedIndex = 0, user = "", }: { selectedInd
 };
 
 const getHeader = (user: string) =>{
-    if(user === ORGANIZATION_ADMIN || user === ORGANIZATION_MEMBER){
+    // if(user === ORGANIZATION_ADMIN || user === ORGANIZATION_MEMBER){
         return (
             [
                 {
@@ -88,22 +88,22 @@ const getHeader = (user: string) =>{
                 },
             ]
         )
-    }else{
-        return(
-            [
-                {
-                    name: "Datasets",
-                    outlineIcon: cascadeFolderOutline,
-                    filledIcon: cascadeFolderFilled,
-                },
-                {
-                    name: "Insights",
-                    outlineIcon: barGraphOutline,
-                    filledIcon: barGraphFilled,
-                },
-            ]
-        )
-    }
+    // }else{
+    //     return(
+    //         [
+    //             {
+    //                 name: "Datasets",
+    //                 outlineIcon: cascadeFolderOutline,
+    //                 filledIcon: cascadeFolderFilled,
+    //             },
+    //             {
+    //                 name: "Insights",
+    //                 outlineIcon: barGraphOutline,
+    //                 filledIcon: barGraphFilled,
+    //             },
+    //         ]
+    //     )
+    // }
 }
 
 export default OrganisationTabHeaders;

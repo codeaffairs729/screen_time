@@ -19,9 +19,8 @@ const MetadataLevel = ({ vm }: { vm: any }) => {
                     rules: {
                         required: "Metadata availabilty info is required",
                     },
-                    defaultValue: "nil",
                 }}
-                options={[                    
+                options={[
                     {
                         value: "good",
                         label: "Good",

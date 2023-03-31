@@ -7,16 +7,15 @@ import CommentAnonymous from "./components/comment_anonymous";
 import PrimaryBtn from "components/UI/form/primary_btn";
 import DataUseFeedbackVM from "./data_use_feedback.vm";
 
-
 const DataUseFeedback = () => {
     const vm = useContext(DatasetDetailVMContext);
     const dataset = vm.dataset;
 
     const vmForm = DataUseFeedbackVM();
 
-    useEffect(()=>{
+    useEffect(() => {
         vmForm.fetchUsecaseFeedback();
-    },[])
+    }, []);
 
     if (!dataset) return <div />;
 
@@ -26,15 +25,17 @@ const DataUseFeedback = () => {
                 We are gathering this information from users to help data
                 providers understand what the user needs are.
             </div>
-            {!vmForm.isFetchingUsecaseFeedback && <div className="text-sm text-gray-600 w-full ml-10">
-                You{" "}
-                {vmForm.usecaseFeedback ? (
-                    <p className="inline font-bold"> have</p>
+            {!vmForm.isFetchingUsecaseFeedback && (
+                <div className="text-sm text-gray-600 w-full ml-10">
+                    You{" "}
+                    {vmForm.usecaseFeedback ? (
+                        <p className="inline font-bold"> have</p>
                     ) : (
                         <p className="inline font-bold">have not</p>
-                        )}{" "}
-                submitted a data use case feedback previously.
-            </div>}
+                    )}{" "}
+                    submitted a data use case feedback previously.
+                </div>
+            )}
             <div className="">
                 <div className="my-5 mx-3 px-5 py-3">
                     <DomainsTopics vm={vmForm} />
