@@ -30,7 +30,7 @@ class AuthService {
         // Router.push(redirectUrl);
         // redirectback ? Router.back() : Router.push(redirectUrl);
         // 2. add token and role to cookie
-        saveCookie(AUTH_TOKEN, token);
+        // The token is added as a secure cookie[`auth_token`] by the backend api
         // 3. Fetch user service APIs data after login
         const res_userlistitems = await Http.get(
             `/v1/user-bookmarks/userlistitems`
@@ -51,9 +51,9 @@ class AuthService {
      * redirect user to signin page
      */
     static async logout(redirectUrl = "/login") {
+        await Http.delete('/v1/users/logout'); // Delete `auth_token` secure cookie
         const store = initializeStore();
         store.dispatch(logoutUser());
-        deleteCookie(AUTH_TOKEN);
         UserService.clear();
         Router.push(redirectUrl);
     }
