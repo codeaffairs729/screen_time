@@ -32,15 +32,15 @@ const TabHeader = ({ children }: { children: ReactNode }) => {
 };
 
 const DatasetFeedbackSection = () => {
-    const user = useSelector((state: RootState) => state.auth.user);
+    // const user = useSelector((state: RootState) => state.auth.user);
     const { asPath } = useRouter();
     const [selected, setSelected] = useState<any>(
         tabIndex[asPath.split("#")[1]?.split("/")[1] as any] || 0
     );
-    if (!user) {
-        return <LoginAlert />;
-    }
-
+    // if (!user) {
+    //     return <LoginAlert />;
+    // }
+    console.log("as path", selected);
     return (
         <div className="ml-10">
             <div></div>

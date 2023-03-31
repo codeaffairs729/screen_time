@@ -9,26 +9,28 @@ const formRowToolTipData: ToolTipJson = require("../form_tooltip.json");
 const Domain = ({ vm }: { vm: any }) => {
     const [showOther, setShowOther] = useState(false);
 
-    // // Callback version of watch.  It's your responsibility to unsubscribe when done.
-    // React.useEffect(() => {
-    //     const subscription = vm.form.watch(
-    //         (value: any, { name, type }: { name: string; type: string }) => {
-    //             // const domain_values = [...value.domain];
-    //             const domain_values = JSON.parse(
-    //                 JSON.stringify([...value.domain])
-    //             );
-    //             let other_index = domain_values.indexOf("other");
-    //             if (name === "domain") {
-    //                 if (other_index != -1) {
-    //                     setShowOther(true);
-    //                 } else {
-    //                     setShowOther(false);
-    //                 }
-    //             }
-    //         }
-    //     );
-    //     return () => subscription.unsubscribe();
-    // }, [vm.form, vm.form.watch]);
+    // Callback version of watch.  It's your responsibility to unsubscribe when done.
+    React.useEffect(() => {
+        const subscription = vm.form.watch(
+            (value: any, { name, type }: { name: string; type: string }) => {
+                // const domain_values = [...value.domain];
+                const domain_values = JSON.parse(
+                    JSON.stringify([...value.domain])
+                );
+
+                let other_index = domain_values.indexOf("other");
+                if (name === "domain") {
+                    if (other_index != -1) {
+                        setShowOther(true);
+                    } else {
+                        setShowOther(false);
+                    }
+                }
+            }
+        );
+
+        return () => subscription.unsubscribe();
+    }, [vm.form, vm.form.watch]);
 
     return (
         <>
@@ -45,7 +47,6 @@ const Domain = ({ vm }: { vm: any }) => {
                         rules: {
                             required: "Domain is required.",
                         },
-                        defaultValue: "nil",
                     }}
                     options={[
                         {
@@ -84,7 +85,7 @@ const Domain = ({ vm }: { vm: any }) => {
                     placeholder=""
                 />
             </FormRow>
-            {/* <div className={`${showOther ? "" : "hidden"}`}>
+            <div className={`${showOther ? "" : "hidden"}`}>
                 <FormRow
                     label="Other domain(s)"
                     tooltip={formRowToolTipData.domain_other}
@@ -99,7 +100,7 @@ const Domain = ({ vm }: { vm: any }) => {
                         placeholder="E.g. https://healthdata.gov/sitemap"
                     />
                 </FormRow>
-            </div> */}
+            </div>
         </>
     );
 };

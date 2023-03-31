@@ -25,12 +25,7 @@ const CardFooter = ({
 }) => {
     const { dataProviders, stats, lastUpdate, domains, topics } = data;
     return (
-        <div
-            className={clsx(
-                "w-full my-1.5",
-                className
-            )}
-        >
+        <div className={clsx("w-full my-1.5", className)}>
             {stats && (
                 <div className="flex">
                     <DataStat stats={stats} />
@@ -79,6 +74,23 @@ const CardFooter = ({
                                 </a>
                             </Link>
                         </LabelledRow>
+                        {lastUpdate?.isValid && (
+                            // <div className="flex my-1.5">
+                            //     <span className="text-sm mr-1">Updated</span>
+                            //     <span className="text-sm font-medium">
+                            //         {lastUpdate.toRelative()}
+                            //     </span>
+                            // </div>
+                            <LabelledRow
+                                className="mr-10"
+                                label="Updated"
+                                labelClasses="!text-sm mr-1"
+                            >
+                                <span className="text-sm">
+                                    {lastUpdate.toRelative()}
+                                </span>
+                            </LabelledRow>
+                        )}
                     </>
                 )}
             </div>
@@ -92,9 +104,9 @@ const CardFooter = ({
                         {domains.map((domain: any, index: number) => (
                             <span
                                 key={index}
-                                className="text-sm underline decoration-1 mr-1"
+                                className="text-sm px-2 text-white bg-[#5F5F63] my-0.5 rounded decoration-1 mr-1"
                             >
-                                {createTag(domain)}
+                                {domain}
                             </span>
                         ))}
                     </div>
@@ -104,34 +116,17 @@ const CardFooter = ({
                     label="Topics"
                     labelClasses="!text-sm mr-1"
                 >
-                    <div className="flex flex-wrap">
+                    <div className="flex flex-wrap my-4 ">
                         {topics.map((topic: any, index: number) => (
                             <span
                                 key={index}
-                                className="text-sm underline decoration-1 mr-1 truncate"
+                                className="text-sm px-2 text-white  bg-[#5F5F63] my-0.5 rounded decoration-1 mr-1 truncate"
                             >
-                                {createTag(topic)}
+                                {topic}
                             </span>
                         ))}
                     </div>
                 </LabelledRow>
-                {lastUpdate?.isValid && (
-                    // <div className="flex my-1.5">
-                    //     <span className="text-sm mr-1">Updated</span>
-                    //     <span className="text-sm font-medium">
-                    //         {lastUpdate.toRelative()}
-                    //     </span>
-                    // </div>
-                    <LabelledRow
-                        className="mr-10"
-                        label="Updated"
-                        labelClasses="!text-sm mr-1"
-                    >
-                        <span className="text-sm">
-                            {lastUpdate.toRelative()}
-                        </span>
-                    </LabelledRow>
-                )}
             </div>
         </div>
     );

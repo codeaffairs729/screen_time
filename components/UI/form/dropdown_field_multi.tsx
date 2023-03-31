@@ -34,7 +34,8 @@ const DropdownFieldMulti = ({
                 ? ""
                 : formControl["defaultValue"],
     });
-
+    console.log("formcontroll", formControl);
+    console.log("selected state", selected);
     const filteredOtions =
         query === ""
             ? options
@@ -64,28 +65,31 @@ const DropdownFieldMulti = ({
                 multiple
             >
                 <div className="relative w-full text-left bg-white rounded-lg cursor-default">
-                    <Combobox.Input
-                        className={clsx(
-                            "w-full rounded-lg focus:ring-dtech-secondary-light border-2 border-dtech-secondary-light focus:border-dtech-secondary-light disabled:border-gray-300 disabled:bg-gray-50 py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 placeholder:text-gray-500 placeholder:text-sm placeholder:font-bold",
-                            { "border-red-700": hasError }
-                        )}
-                        displayValue={(selOpts: Option[]) => {
-                            let dispString = "";
-                            selOpts.forEach((option: Option, idx) => {
-                                if (idx === 0) {
-                                    dispString = `${option.label}`;
-                                } else {
-                                    dispString = `${option.label}, ${dispString}`;
-                                }
-                            });
-                            return dispString;
-                        }}
-                        onChange={(event) => setQuery(event.target.value)}
-                        placeholder={placeholder}
-                        name={name}
-                    />
-                    <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2">
-                        <HiOutlineSelector className="w-5 h-5" />
+                    <Combobox.Button className=" w-full ">
+                        <Combobox.Input
+                            className={clsx(
+                                "w-full rounded-lg focus:ring-dtech-secondary-light border-2 border-dtech-secondary-light focus:border-dtech-secondary-light disabled:border-gray-300 disabled:bg-gray-50 py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 placeholder:text-gray-500 placeholder:text-sm placeholder:font-bold",
+                                { "border-red-700": hasError }
+                            )}
+                            displayValue={(selOpts: Option[]) => {
+                                let dispString = "";
+                                selOpts.forEach((option: Option, idx) => {
+                                    if (idx === 0) {
+                                        dispString = `${option.label}`;
+                                    } else {
+                                        dispString = `${option.label}, ${dispString}`;
+                                    }
+                                });
+                                console.log("options", selOpts);
+                                return dispString;
+                            }}
+                            onChange={(event) => setQuery(event.target.value)}
+                            placeholder={placeholder}
+                            name={name}
+                        />
+                        <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2">
+                            <HiOutlineSelector className="w-5 h-5" />
+                        </Combobox.Button>
                     </Combobox.Button>
                 </div>
                 <Transition

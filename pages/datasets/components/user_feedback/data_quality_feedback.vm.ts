@@ -42,16 +42,19 @@ const DataQualityFeedbackVM = () => {
     const fetchQualityFeedback = () =>
         excuteFetchQualityFeedback(
             () => {
-                return Http.get(`/v1/datasets/${dataset?.id}/is_quality_feedback_given`);
+                return Http.get(
+                    `/v1/datasets/${dataset?.id}/is_quality_feedback_given`,
+                    {
+                        redirectToLoginPageIfAuthRequired: false,
+                    }
+                );
             },
             {
                 postProcess: (res) => {
                     return res;
                 },
                 onError: (e) => {
-                    toast.error(
-                        "Something wrong in Quality Feedback."
-                    );
+                    toast.error("Something wrong in Quality Feedback.");
                 },
             }
         );
@@ -63,8 +66,7 @@ const DataQualityFeedbackVM = () => {
         isSubmissionSuccess,
         qualityFeedback,
         isFetchingQualityFeedback,
-        fetchQualityFeedback
-
+        fetchQualityFeedback,
     };
 };
 

@@ -59,16 +59,19 @@ const DataUseFeedbackVM = () => {
     const fetchUsecaseFeedback = () =>
         excuteFetchUsecaseFeedback(
             () => {
-                return Http.get(`/v1/datasets/${dataset?.id}/is_usecase_feedback_given`);
+                return Http.get(
+                    `/v1/datasets/${dataset?.id}/is_usecase_feedback_given`,
+                    {
+                        redirectToLoginPageIfAuthRequired: false,
+                    }
+                );
             },
             {
                 postProcess: (res) => {
                     return res;
                 },
                 onError: (e) => {
-                    toast.error(
-                        "Something wrong in Usecase Feedback."
-                    );
+                    toast.error("Something wrong in Usecase Feedback.");
                 },
             }
         );
@@ -79,7 +82,7 @@ const DataUseFeedbackVM = () => {
         isSubmissionSuccess,
         usecaseFeedback,
         isFetchingUsecaseFeedback,
-        fetchUsecaseFeedback
+        fetchUsecaseFeedback,
     };
 };
 

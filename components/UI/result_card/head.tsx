@@ -23,19 +23,19 @@ const CardHead = ({
     const router = useRouter();
 
     return (
-        <div className="lg:flex items-center justify-between w-full mb-3">
-            {/* <div className="flex items-center"> */}
-            {/* {dataset.featured && (
+        <div className="flex justify-between">
+            <div className="lg:flex items-center  w-full mb-3">
+                {/* <div className="flex items-center"> */}
+                {/* {dataset.featured && (
                     <span className="border border-1 bg-dtech-notification-alert-secondary text-sm px-1 h-6 text-white mr-4 ml-[-12px] rounded-md  ">
                         Featured
                     </span>
                 )} */}
-            <Link href={href}>
-                <a className="font-medium font-roboto text-md my-3 text-dtech-main-dark text-[17px] cursor-pointer hover:underline underline-offset-4">
-                    {title}
-                </a>
-            </Link>
-            <div className="sm:flex items-center">
+                <Link href={href}>
+                    <a className="font-medium font-roboto text-md my-3 text-dtech-main-dark text-[17px] cursor-pointer hover:underline underline-offset-4">
+                        {title}
+                    </a>
+                </Link>
                 <MetaRating
                     dataQuality={Math.ceil(dataQuality)}
                     displayContext={"displayContext"}
@@ -71,6 +71,8 @@ const CardHead = ({
                         </div>
                     </fieldset>
                 ))}
+            </div>
+            <div className="sm:flex items-center">
                 {/* </div> */}
                 <ResultCardAction data={data} setData={setData} href={href} />
             </div>
