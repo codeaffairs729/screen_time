@@ -13,12 +13,38 @@ import FooterSocialMediaItem from "./components/footer_social_media_item";
 
 const Footer = ({ className = "" }: { className?: string }) => {
     return (
-        <footer className={clsx("px-8 pt-11 pb-2", className)}>
-            <div className="shadow w-[70%] ml-12 border-2 my-5 bg-dtech-main-dark px-5 md:w-[87%]">
-            </div>
-            <div className="md:ml-5 flex text-left justify-between items-center max-w-site mx-auto  ">
-                <div className="flex flex-wrap justify-start items-center space-x-12 ">
-                    <div className="flex ml-12 justify-center items-center mr-6 text-fuchsia-900 space-x-1">
+        <footer className={clsx("px-8 pt-11 pb-2")}>
+            <div className="flex flex-nowrap md:flex-wrap shadow w-[90%] mx-[6%] border-2 my-5 bg-dtech-main-dark px-5 md:w-[87%]"></div>
+            <div className="flex flex-col sm:flex-row text-left justify-between items-center w-[88%] mx-auto  ">
+                {/* <div className="justify-center items-center space-x-12  mx-[1%] justify-center items-center  text-fuchsia-900 space-x-1"> */}
+
+                {/* <div className=""> */}
+                <div className="text-center sm:text-left flex flex-col">
+                    <FooterLink
+                        label="Suggest feature"
+                        href="https://f7xcuekc9xt.typeform.com/to/Zpryygkm"
+                    />
+                    <FooterLink
+                        label="Report a bug"
+                        href="https://f7xcuekc9xt.typeform.com/to/ff4rGkXc"
+                    />
+                </div>
+                <div className=" text-center sm:text-left flex flex-col">
+                    <FooterLink label="FAQs" href="/faq" />
+                    <FooterLink
+                        label="Newsletter"
+                        href="https://f7xcuekc9xt.typeform.com/to/BTegGr9w?typeform-source=www.google.com"
+                    />
+                </div>
+                <div className=" text-center sm:text-left flex flex-col">
+                    <FooterLink label="Contact Us" href="/contact-us" />
+                    <FooterLink
+                        label="Privacy Policy"
+                        href="/data-privacy-policy"
+                    />
+                </div>
+                <div>
+                    <div className=" text-center sm:text-left flex flex-col">
                         <span className="text-lg  mb-1 text-fuchsia-900  hover:underline text-[17px] ">
                             Follow us on
                         </span>
@@ -42,38 +68,17 @@ const Footer = ({ className = "" }: { className?: string }) => {
                             />
                         </div>
                     </div>
-                    <div className="flex  justify-center items-center space-x-2  ">
-                        <span className="text-lg  mb-1 text-fuchsia-900 hover:underline text-[17px] ">
-                            Join our community
-                        </span>
+                </div>
+                <div className="text-center sm:text-left flex flex-col">
+                    <span className="text-lg  mb-1 text-fuchsia-900 hover:underline text-[17px] ">
+                        Join our community
+                    </span>
+                    <div className="space-x-2  ">
                         <FooterSocialMediaItem
                             icon={<FaDiscord size="auto" />}
                             link=" https://discord.gg/fg6qPfJhHb"
                         />
                     </div>
-                    <FooterLink
-                        label="Privacy Policy"
-                        href="/data-privacy-policy"
-                    />
-                    <FooterLink label="FAQs" href="/faq" />
-                    <FooterLink
-                        label="Report a bug"
-                        href="https://f7xcuekc9xt.typeform.com/to/ff4rGkXc"
-                    />
-                    <FooterLink
-                        label="Suggest feature"
-                        href="https://f7xcuekc9xt.typeform.com/to/Zpryygkm"
-                    />
-                    <FooterLink
-                        label="Newsletter"
-                        href="https://f7xcuekc9xt.typeform.com/to/BTegGr9w?typeform-source=www.google.com"
-                    />
-                    <FooterLink label="Contact Us" href="/contact-us" />
-                </div>
-                <div className="flex flex-row justify-start md:justify-end items-start space-x-4 my-2 md:my-0 ">
-                    <div className="flex flex-col text-fuchsia-900"></div>
-                    <div className="flex flex-col "></div>
-                    <div className="flex flex-col text-fuchsia-900"></div>
                 </div>
             </div>
             <div className="md:text-center text-[13px] text-fuchsia-900 mb-5 mt-16">
