@@ -108,7 +108,7 @@ const FAQPage = () => {
                             encourage you to create a free account{" "}
                             <a
                                 className="text-blue-600"
-                                href="https://dtechtive.com/signup?signup_type=individual"
+                                href="signup?signup_type=individual"
                             >
                                 using this link.
                             </a>{" "}
@@ -116,7 +116,7 @@ const FAQPage = () => {
                             or more Data Users, you may{" "}
                             <a
                                 className="text-blue-600"
-                                href="https://dtechtive.com/signup?signup_type=org_admin"
+                                href="signup?signup_type=org_admin"
                             >
                                 use this link.
                             </a>{" "}
@@ -125,14 +125,14 @@ const FAQPage = () => {
                             Dtechtive{" "}
                             <a
                                 className="text-blue-600"
-                                href="https://dtechtive.com/signup?signup_type=org_admin"
+                                href="signup?signup_type=org_admin"
                             >
                                 using this link
                             </a>{" "}
                             and submit your data source website details{" "}
                             <a
                                 className="text-blue-600"
-                                href="https://dtechtive.com/login"
+                                href="login"
                             >
                                 using this form
                             </a>{" "}
