@@ -40,7 +40,7 @@ const HelpCard = ({
                 </div>
                 <div className="flex flex-row">
                     <div
-                        className={`w-4 h-4  m-3 rounded-full ${
+                        className={` w-4 h-4  m-3 rounded-full ${
                             image ? `bg-dtech-main-dark` : `bg-[#DBCFE2]`
                         }`}
                         onClick={() => setImage(true)}
@@ -72,7 +72,7 @@ const HelpCard = ({
                                         key={index}
                                         className="flex justify-left  mx-8"
                                     >
-                                        <div className="select-none outline-none  w-2 h-2 bg-black rounded-full mr-2 mt-[7px]"></div>
+                                        <div className="select-none outline-none  w-2 min-w-[8px] h-2 bg-black rounded-full mr-2 mt-[7px]"></div>
                                         {item}
                                     </div>
                                 ))}

@@ -676,14 +676,7 @@ const AboutUsPage = () => {
                     
                     <div className="flex  flex-col items-center justify-center  md:flex-row">
 
-                        <div className="mx-20 my-10  md:mx-40">
-                            <Image
-                                src={"/images/about-us/image 38.webp"}
-                                alt={"loading"}
-                                height={50}
-                                width={240}
-                            />
-                        </div>
+                  
 
                         <div className="mx-20  my-10 md:mx-40">
                             <Image
@@ -693,8 +686,6 @@ const AboutUsPage = () => {
                                 width={250}
                             />
                         </div>
-                    </div>
-                    <div className="flex flex-col items-center justify-center md:flex-row">
                         <div className="mx-20 my-10 md:mx-40">
                             <Image
                                 src={"/images/about-us/Softcat_Logo.webp"}
@@ -703,6 +694,9 @@ const AboutUsPage = () => {
                                 width={250}
                             />
                         </div>
+                    </div>
+                    <div className="flex flex-col items-center justify-center md:flex-row">
+                       
 
                         <div className="mx-20 my-10 md:mx-40">
                             <Image
@@ -712,6 +706,14 @@ const AboutUsPage = () => {
                                 alt={"loading"}
                                 height={90}
                                 width={200}
+                            />
+                        </div>
+                        <div className="mx-20 my-10  md:mx-40">
+                            <Image
+                                src={"/images/about-us/image 38.webp"}
+                                alt={"loading"}
+                                height={50}
+                                width={240}
                             />
                         </div>
                     </div>
