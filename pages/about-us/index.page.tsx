@@ -16,6 +16,7 @@ import dynamic from "next/dynamic";
 // import eleventhImage from "public/images/about-us/Sussex_University_Logo.png";
 import YoutubePlayer from "components/about/youtube";
 import HelpCard from "components/about/helpCard";
+import Link from "next/link";
 // import imageOneOfCard from "public/images/about-us/first_image.png";
 // import imageTwoOfCard from "public/images/about-us/second_image.png";
 // import imageThreeOfCard from "public/images/about-us/third_image.png";
@@ -673,48 +674,66 @@ const AboutUsPage = () => {
                 </div>
                 <div className="shadow !w-[100%] border-2 my-5 px-5"></div>
                 <div className=" flex flex-col border-2 shadow-2xl items-center justify-center rounded-xl">
-                    
                     <div className="flex  flex-col items-center justify-center  md:flex-row">
-
-                  
-
                         <div className="mx-20  my-10 md:mx-40">
-                            <Image
-                                src={"/images/about-us/image 40.webp"}
-                                alt={"loading"}
-                                height={40}
-                                width={250}
-                            />
+                            <a
+                                href="https://dtechtive.com/"
+                                target="_blank"
+                                rel="noreferrer"
+                            >
+                                <Image
+                                    src={"/images/about-us/image 40.webp"}
+                                    alt={"loading"}
+                                    height={40}
+                                    width={250}
+                                />
+                            </a>
                         </div>
                         <div className="mx-20 my-10 md:mx-40">
-                            <Image
-                                src={"/images/about-us/Softcat_Logo.webp"}
-                                alt={"loading"}
-                                height={100}
-                                width={250}
-                            />
+                            <a
+                                href="  https://softcat.com"
+                                target="_blank"
+                                rel="noreferrer"
+                            >
+                                <Image
+                                    src={"/images/about-us/Softcat_Logo.webp"}
+                                    alt={"loading"}
+                                    height={100}
+                                    width={250}
+                                />
+                            </a>
                         </div>
                     </div>
                     <div className="flex flex-col items-center justify-center md:flex-row">
-                       
-
                         <div className="mx-20 my-10 md:mx-40">
-                            <Image
-                                src={
-                                    "/images/about-us/Sussex_University_Logo.webp"
-                                }
-                                alt={"loading"}
-                                height={90}
-                                width={200}
-                            />
+                            <a
+                                href="https://www.sussex.ac.uk/"
+                                target="_blank"
+                                rel="noreferrer"
+                            >
+                                <Image
+                                    src={
+                                        "/images/about-us/Sussex_University_Logo.webp"
+                                    }
+                                    alt={"loading"}
+                                    height={90}
+                                    width={200}
+                                />
+                            </a>
                         </div>
                         <div className="mx-20 my-10  md:mx-40">
-                            <Image
-                                src={"/images/about-us/image 38.webp"}
-                                alt={"loading"}
-                                height={50}
-                                width={240}
-                            />
+                            <a
+                                href="https://www.pyterra.co.uk/"
+                                target="_blank"
+                                rel="noreferrer"
+                            >
+                                <Image
+                                    src={"/images/about-us/image 38.webp"}
+                                    alt={"loading"}
+                                    height={60}
+                                    width={240}
+                                />
+                            </a>
                         </div>
                     </div>
                 </div>

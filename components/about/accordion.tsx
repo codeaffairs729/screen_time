@@ -1,7 +1,9 @@
+import Router from "next/router";
 import { type } from "os";
 import React, { ReactNode, useState } from "react";
 import { BsCheck, BsChevronDown } from "react-icons/bs";
-
+import { useSelector } from "react-redux";
+import { RootState } from "store";
 const Accordion = ({
     feature,
     guest,
@@ -20,6 +22,13 @@ const Accordion = ({
     children?: Array<ReactNode>;
 }) => {
     const [isActive, setIsActive] = useState(false);
+    const user = useSelector((state: RootState) => state.auth.user);
+    const handleClick = () => {
+        if (!user) {
+            Router.push("/signup?signup_type=individual");
+        }
+    };
+
     return (
         <div>
             <div className="flex flex-row rounded-xl ">
@@ -41,16 +50,16 @@ const Accordion = ({
                     }`}
                     style={{ height: "inherit" }}
                 >
-                    <div>{feature}</div><div>
-                    {children && (
-                        <div
-                            className=" cursor-pointer"
-                            onClick={() => setIsActive(!isActive)}
-                        >
-                            <BsChevronDown size={25} />
-                        </div>
-                    )}
-
+                    <div>{feature}</div>
+                    <div>
+                        {children && (
+                            <div
+                                className=" cursor-pointer"
+                                onClick={() => setIsActive(!isActive)}
+                            >
+                                <BsChevronDown size={25} />
+                            </div>
+                        )}
                     </div>
                 </div>
                 <div className=" w-[18%] bg-[#E4C3F9] flex flex-wrap justify-center text-lg items-center border-4 border-white">
@@ -90,8 +99,15 @@ const Accordion = ({
                                 <div> {essential.split(" ")[2]}</div>
                             </div>
                             <div className="">
-                                <button className=" bg-white shadow-xl rounded-full p-1 text-xs md:!px-10 flex md:text-xl md:p-4">
-                                    Upgrade
+                                <button
+                                    className=" bg-white shadow-xl rounded-full p-1 text-xs !flex md:text-xl md:!px-10 md:p-4"
+                                    onClick={handleClick}
+                                >
+                                    {!user ? (
+                                        <div>signin</div>
+                                    ) : (
+                                        <div>upgrade</div>
+                                    )}
                                 </button>
                             </div>
                         </div>
@@ -124,8 +140,15 @@ const Accordion = ({
                                 </div>
                             </div>
                             <div className="">
-                                <button className=" bg-white shadow-xl rounded-full p-1 text-xs !flex md:text-xl md:!px-10 md:p-4">
-                                    Upgrade
+                                <button
+                                    className=" bg-white shadow-xl rounded-full p-1 text-xs !flex md:text-xl md:!px-10 md:p-4"
+                                    onClick={handleClick}
+                                >
+                                    {!user ? (
+                                        <div>signin</div>
+                                    ) : (
+                                        <div>upgrade</div>
+                                    )}
                                 </button>
                             </div>
                         </div>
@@ -158,8 +181,15 @@ const Accordion = ({
                                 </div>
                             </div>
                             <div className="">
-                                <button className=" bg-white !text-black shadow-xl  rounded-full p-1  text-xs flex md:text-xl md:p-4 md:!px-10">
-                                    Upgrade
+                                <button
+                                    className=" bg-white shadow-xl rounded-full p-1 text-xs !flex md:text-xl md:!px-10 md:p-4"
+                                    onClick={handleClick}
+                                >
+                                    {!user ? (
+                                        <div>signin</div>
+                                    ) : (
+                                        <div>upgrade</div>
+                                    )}
                                 </button>
                             </div>
                         </div>
