@@ -1,7 +1,8 @@
 import { type } from "os";
 import React, { ReactNode, useState } from "react";
 import { BsCheck, BsChevronDown } from "react-icons/bs";
-
+import { useSelector } from "react-redux";
+import { RootState } from "store";
 const Accordion = ({
     feature,
     guest,
@@ -20,6 +21,7 @@ const Accordion = ({
     children?: Array<ReactNode>;
 }) => {
     const [isActive, setIsActive] = useState(false);
+    const user = useSelector((state: RootState) => state.auth.user);
     return (
         <div>
             <div className="flex flex-row rounded-xl ">
@@ -41,16 +43,16 @@ const Accordion = ({
                     }`}
                     style={{ height: "inherit" }}
                 >
-                    <div>{feature}</div><div>
-                    {children && (
-                        <div
-                            className=" cursor-pointer"
-                            onClick={() => setIsActive(!isActive)}
-                        >
-                            <BsChevronDown size={25} />
-                        </div>
-                    )}
-
+                    <div>{feature}</div>
+                    <div>
+                        {children && (
+                            <div
+                                className=" cursor-pointer"
+                                onClick={() => setIsActive(!isActive)}
+                            >
+                                <BsChevronDown size={25} />
+                            </div>
+                        )}
                     </div>
                 </div>
                 <div className=" w-[18%] bg-[#E4C3F9] flex flex-wrap justify-center text-lg items-center border-4 border-white">
@@ -90,9 +92,17 @@ const Accordion = ({
                                 <div> {essential.split(" ")[2]}</div>
                             </div>
                             <div className="">
-                                <button className=" bg-white shadow-xl rounded-full p-1 text-xs md:!px-10 flex md:text-xl md:p-4">
-                                    Upgrade
-                                </button>
+                                {!user ? (
+                                    <button className=" bg-white shadow-xl rounded-full p-1 text-xs !flex md:text-xl md:!px-10 md:p-4">
+                                        <a href="https://dtechtive.com/signup?signup_type=individual">
+                                            Upgrade1
+                                        </a>
+                                    </button>
+                                ) : (
+                                    <button className=" bg-white shadow-xl rounded-full p-1 text-xs !flex md:text-xl md:!px-10 md:p-4">
+                                        Upgrade2
+                                    </button>
+                                )}
                             </div>
                         </div>
                     ) : (
@@ -124,9 +134,17 @@ const Accordion = ({
                                 </div>
                             </div>
                             <div className="">
-                                <button className=" bg-white shadow-xl rounded-full p-1 text-xs !flex md:text-xl md:!px-10 md:p-4">
-                                    Upgrade
-                                </button>
+                                {!user ? (
+                                    <button className=" bg-white shadow-xl rounded-full p-1 text-xs !flex md:text-xl md:!px-10 md:p-4">
+                                        <a href="https://dtechtive.com/signup?signup_type=individual">
+                                            Upgrade1
+                                        </a>
+                                    </button>
+                                ) : (
+                                    <button className=" bg-white shadow-xl rounded-full p-1 text-xs !flex md:text-xl md:!px-10 md:p-4">
+                                        Upgrade2
+                                    </button>
+                                )}
                             </div>
                         </div>
                     ) : (
@@ -158,9 +176,17 @@ const Accordion = ({
                                 </div>
                             </div>
                             <div className="">
-                                <button className=" bg-white !text-black shadow-xl  rounded-full p-1  text-xs flex md:text-xl md:p-4 md:!px-10">
-                                    Upgrade
-                                </button>
+                                {!user ? (
+                                    <button className=" bg-white shadow-xl rounded-full p-1 text-xs !flex md:text-xl md:!px-10 md:p-4">
+                                        <a href="https://dtechtive.com/signup?signup_type=individual">
+                                            Upgrade11232
+                                        </a>
+                                    </button>
+                                ) : (
+                                    <button className=" bg-white shadow-xl rounded-full p-1 text-xs !flex md:text-xl md:!px-10 md:p-4">
+                                        Upgrade2
+                                    </button>
+                                )}
                             </div>
                         </div>
                     ) : (
