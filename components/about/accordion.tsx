@@ -1,3 +1,4 @@
+import Router from "next/router";
 import { type } from "os";
 import React, { ReactNode, useState } from "react";
 import { BsCheck, BsChevronDown } from "react-icons/bs";
@@ -22,6 +23,12 @@ const Accordion = ({
 }) => {
     const [isActive, setIsActive] = useState(false);
     const user = useSelector((state: RootState) => state.auth.user);
+    const handleClick = () => {
+        if (!user) {
+            Router.push("/signup?signup_type=individual");
+        }
+    };
+
     return (
         <div>
             <div className="flex flex-row rounded-xl ">
@@ -92,17 +99,16 @@ const Accordion = ({
                                 <div> {essential.split(" ")[2]}</div>
                             </div>
                             <div className="">
-                                {!user ? (
-                                    <button className=" bg-white shadow-xl rounded-full p-1 text-xs !flex md:text-xl md:!px-10 md:p-4">
-                                        <a href="https://dtechtive.com/signup?signup_type=individual">
-                                            Upgrade1
-                                        </a>
-                                    </button>
-                                ) : (
-                                    <button className=" bg-white shadow-xl rounded-full p-1 text-xs !flex md:text-xl md:!px-10 md:p-4">
-                                        Upgrade2
-                                    </button>
-                                )}
+                                <button
+                                    className=" bg-white shadow-xl rounded-full p-1 text-xs !flex md:text-xl md:!px-10 md:p-4"
+                                    onClick={handleClick}
+                                >
+                                    {!user ? (
+                                        <div>signin</div>
+                                    ) : (
+                                        <div>upgrade</div>
+                                    )}
+                                </button>
                             </div>
                         </div>
                     ) : (
@@ -134,17 +140,16 @@ const Accordion = ({
                                 </div>
                             </div>
                             <div className="">
-                                {!user ? (
-                                    <button className=" bg-white shadow-xl rounded-full p-1 text-xs !flex md:text-xl md:!px-10 md:p-4">
-                                        <a href="https://dtechtive.com/signup?signup_type=individual">
-                                            Upgrade1
-                                        </a>
-                                    </button>
-                                ) : (
-                                    <button className=" bg-white shadow-xl rounded-full p-1 text-xs !flex md:text-xl md:!px-10 md:p-4">
-                                        Upgrade2
-                                    </button>
-                                )}
+                                <button
+                                    className=" bg-white shadow-xl rounded-full p-1 text-xs !flex md:text-xl md:!px-10 md:p-4"
+                                    onClick={handleClick}
+                                >
+                                    {!user ? (
+                                        <div>signin</div>
+                                    ) : (
+                                        <div>upgrade</div>
+                                    )}
+                                </button>
                             </div>
                         </div>
                     ) : (
@@ -176,17 +181,16 @@ const Accordion = ({
                                 </div>
                             </div>
                             <div className="">
-                                {!user ? (
-                                    <button className=" bg-white shadow-xl rounded-full p-1 text-xs !flex md:text-xl md:!px-10 md:p-4">
-                                        <a href="https://dtechtive.com/signup?signup_type=individual">
-                                            Upgrade11232
-                                        </a>
-                                    </button>
-                                ) : (
-                                    <button className=" bg-white shadow-xl rounded-full p-1 text-xs !flex md:text-xl md:!px-10 md:p-4">
-                                        Upgrade2
-                                    </button>
-                                )}
+                                <button
+                                    className=" bg-white shadow-xl rounded-full p-1 text-xs !flex md:text-xl md:!px-10 md:p-4"
+                                    onClick={handleClick}
+                                >
+                                    {!user ? (
+                                        <div>signin</div>
+                                    ) : (
+                                        <div>upgrade</div>
+                                    )}
+                                </button>
                             </div>
                         </div>
                     ) : (
