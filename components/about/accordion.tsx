@@ -127,7 +127,7 @@ const Accordion = ({
                             className="flex flex-col justify-center items-center"
                             style={{ overflowWrap: "anywhere" }}
                         >
-                            <div className=" font-medium ">{premium}</div>
+                            <div className=" font-medium ">{professional}</div>
                             <div className="text-center my-6 mx-">
                                 <div className=" text-xl font-medium">
                                     <h1> </h1>
