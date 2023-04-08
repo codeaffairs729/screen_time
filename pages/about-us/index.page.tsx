@@ -429,7 +429,7 @@ const cardData = [
             ],
         },
         cardUrl: "https://dtime.ai/meeting",
-        cardUrlLabel: "Schedule a meeting for early access",
+        cardUrlLabel: "Schedule a meeting",
     },
     {
         imageOne: "/images/about-us/fifth_image.webp",
@@ -446,7 +446,7 @@ const cardData = [
             ],
         },
         cardUrl: "https://dtime.ai/meeting",
-        cardUrlLabel: "Schedule a meeting for early access",
+        cardUrlLabel: "Schedule a meeting",
     },
 ];
 const dummyArray = Array(5).fill(dummyData);
@@ -677,7 +677,7 @@ const AboutUsPage = () => {
                     <div className="flex  flex-col items-center justify-center  md:flex-row">
                         <div className="mx-20  my-10 md:mx-40">
                             <a
-                                href="https://dtechtive.com/"
+                                href="https://www.civtechdemoday.com/challenge-12-dtime"
                                 target="_blank"
                                 rel="noreferrer"
                             >
