@@ -104,9 +104,9 @@ const Accordion = ({
                                     onClick={handleClick}
                                 >
                                     {!user ? (
-                                        <div>signin</div>
+                                        <div>Sign Up</div>
                                     ) : (
-                                        <div>upgrade</div>
+                                        <div>Upgrade</div>
                                     )}
                                 </button>
                             </div>
@@ -130,7 +130,7 @@ const Accordion = ({
                             <div className=" font-medium ">{premium}</div>
                             <div className="text-center my-6 mx-">
                                 <div className=" text-xl font-medium">
-                                    <h1>£15/user/month</h1>
+                                    <h1> </h1>
                                 </div>
                                 <div className=" text-xs font-medium">
                                     <h6>
@@ -145,9 +145,9 @@ const Accordion = ({
                                     onClick={handleClick}
                                 >
                                     {!user ? (
-                                        <div>signin</div>
+                                        <div>Sign Up</div>
                                     ) : (
-                                        <div>upgrade</div>
+                                        <div>Upgrade</div>
                                     )}
                                 </button>
                             </div>
@@ -156,7 +156,7 @@ const Accordion = ({
                         professional
                     )}
                 </div>
-                <div className=" w-[18%] bg-[#B46DE2] flex text-white justify-center text-lg items-center border-4 border-white">
+                <div className=" w-[18%] bg-[#B46DE2] flex flex-wrap break-words justify-center text-lg items-center border-4 border-white">
                     {typeof premium == "boolean" ? (
                         premium ? (
                             <BsCheck size={40} />
@@ -171,7 +171,7 @@ const Accordion = ({
                             <div className=" font-medium ">{premium}</div>
                             <div className="text-center my-6">
                                 <div className="text-xl font-medium">
-                                    <h1>£20/user/month</h1>
+                                    <h1> </h1>
                                 </div>
                                 <div className=" text-xs font-medium">
                                     <h6>
@@ -186,9 +186,9 @@ const Accordion = ({
                                     onClick={handleClick}
                                 >
                                     {!user ? (
-                                        <div>signin</div>
+                                        <div>Sign Up</div>
                                     ) : (
-                                        <div>upgrade</div>
+                                        <div>Upgrade</div>
                                     )}
                                 </button>
                             </div>
