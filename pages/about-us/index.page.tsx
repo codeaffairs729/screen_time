@@ -31,7 +31,7 @@ const accordionData = [
     {
         feature: "Features",
         guest: "Guest (free)",
-        essential: "Essential (Registered free)",
+        essential: "Essential (Free)",
         professional: "Professional (paid)",
         premium: "Premium (paid)",
     },
