@@ -7,7 +7,7 @@ import LabelledRow from "components/dataset/labelled_row";
 import { BsFillEyeFill, BsHeartFill } from "react-icons/bs";
 import { MdFileDownload } from "react-icons/md";
 import Image from "next/image";
-import displaySearch from "public/images/icons/display_search_result.svg";
+import display from "/public/images/icons/display_img.svg";
 import {
     datasetToResultCardData,
     SearchVMContext,
@@ -90,27 +90,29 @@ const DatasetHead = ({ dataset }: any) => {
                 <div className="flex justify-between">
                     <span className="text-sm lg:w-2/3">{description}</span>
                 </div>
-                <div className="flex justify-start items-end my-3">
-                    <MetaInfoEntity entityName="Domains" entities={domain} />
-                    <MetaInfoEntity entityName="Topics" entities={topics} />
-                    <MetaInfoEntity entityName="Keywords" entities={keywords} />
-                </div>
             </div>
             <div className="my-4">
-                <div className="flex flex-wrap justify-between items-center">
-                    <DatasetStat stats={stat} />
+                <div className="flex flex-wrap space-x-8  items-center">
                     <Link href={`${datasetUrl}`}>
                         <a
                             target="_blank"
                             rel="noreferrer"
-                            className="text-xs underline mr-5"
+                            className="text-xs  mr-5 "
                         >
-                            Source
+                            <div className="flex justify-center items-center mr-6">
+                                Go to source
+                                <Image
+                                    src={"/images/icons/arrow.svg"}
+                                    height={30}
+                                    width={30}
+                                />
+                            </div>
                         </a>
                     </Link>
+
                     <LabelledRow
                         displayContext="data-host"
-                        className=" flex-col justify-center items-center"
+                        className=" flex space-x-2  justify-center items-center"
                         label="Host"
                     >
                         <strong>
@@ -118,15 +120,16 @@ const DatasetHead = ({ dataset }: any) => {
                                 <a
                                     target="_blank"
                                     rel="noreferrer"
-                                    className="text-xs underline"
+                                    className=" text-m  text-dtech-main-dark"
                                 >
                                     {dataset.detail.hostName}
                                 </a>
                             </Link>
                         </strong>
                     </LabelledRow>
+
                     <LabelledRow
-                        className=" flex-col justify-center items-center"
+                        className=" flex space-x-2 justify-center items-center"
                         label="Owner"
                     >
                         <strong>
@@ -134,7 +137,7 @@ const DatasetHead = ({ dataset }: any) => {
                                 href={`${dataset.owner.ownerUrl}`}
                                 target="_blank"
                                 rel="noreferrer"
-                                className="text-xs underline"
+                                className="text-m text-dtech-main-dark"
                             >
                                 {dataset.owner.organisation}
                             </a>
@@ -144,13 +147,19 @@ const DatasetHead = ({ dataset }: any) => {
                         <span className="text-sm text-dtech-dark-grey">
                             Updated:{" "}
                         </span>
-                        <span className="text-sm font-medium text-dtech-dark-grey">
+                        <span className="text-m font-medium text-dtech-dark-grey">
                             {DateTime.fromISO(`${lastUpdate}`).toFormat(
                                 "dd MMM yyyy"
                             )}
                         </span>
                     </div>
                 </div>
+                <div className="flex justify-start items-start my-3">
+                    <MetaInfoEntity entityName="Domains" entities={domain} />
+                    <MetaInfoEntity entityName="Topics" entities={topics} />
+                    {/* <MetaInfoEntity entityName="Keywords" entities={keywords} /> */}
+                </div>
+                <DatasetStat stats={stat} />
             </div>
         </div>
     );
@@ -166,18 +175,22 @@ const MetaInfoEntity = ({
     return (
         <div className="flex mr-8">
             {entities && entities.length > 0 && (
-                <div className="flex flex-wrap">
-                    <span className="text-sm font-medium text-dtech-dark-grey mr-4">
-                        {entityName}:{" "}
-                    </span>
-                    {entities.map((entity, index) => (
-                        <span
-                            key={index}
-                            className="text-sm text-dtech-dark-grey p-1.5 !pt-0"
-                        >
-                            #{entity}
+                <div className="flex  flex-row space-x-2 max-w-xs ">
+                    <div className="flex ">
+                        <span className="text-sm font-medium m-1 text-dtech-dark-grey ">
+                            {entityName}
                         </span>
-                    ))}
+                    </div>
+                    <div className="flex flex-wrap flex-row  max-w-xs ">
+                        {entities.map((entity, index) => (
+                            <span
+                                key={index}
+                                className="text-sm text-white m-1 bg-[#5F5F63] mb-2 rounded p-1 px-2 !pt-0"
+                            >
+                                {entity}
+                            </span>
+                        ))}
+                    </div>
                 </div>
             )}
         </div>
@@ -197,39 +210,44 @@ const DatasetStat = ({ stats }: { stats: any }) => {
             <div className="flex justify-between">
                 <div className="flex flex-wrap">
                     <div className="flex justify-center items-center mr-6">
-                        <BsHeartFill className="h-5 w-5 mr-2" />
+                        <BsHeartFill className="h-5 w-5 mr-2 text-dtech-main-dark" />
                         <span className=" max-w-24 text-m font-normal">
                             Added to favourites
                         </span>
-                        <span className="ml-2 font-medium text-sm">
+                        <span className="ml-2 text-dtech-main-dark font-medium text-sm">
                             {favoritesCount}
                         </span>
                     </div>
                     <div className="flex justify-center items-center mr-6">
-                        <BsFillEyeFill className="h-5 w-5 mr-2" />
+                        <BsFillEyeFill className="h-5 w-5 mr-2 text-dtech-main-dark" />
                         <span className="max-w-24 text-m font-normal">
                             Viewed
                         </span>
-                        <span className="ml-2 font-medium text-sm">
+                        <span className="ml-2 text-dtech-main-dark font-medium text-sm">
                             {viewCount}
                         </span>
                     </div>
                     <div className="flex justify-center items-center mr-6">
-                        <MdFileDownload className="h-5 w-5 mr-2" />
+                        <MdFileDownload className="h-5 w-5 mr-2 text-dtech-main-dark" />
                         <span className="max-w-24 text-m font-normal">
                             Downloaded
                         </span>
-                        <span className="ml-2 font-medium text-sm">
+                        <span className="ml-2 text-dtech-main-dark font-medium text-sm">
                             {downloadCount}
                         </span>
                     </div>
-                    <div className="flex justify-center items-center mr-6">
-                        <Image src={displaySearch} height={20} width={20} />
+                    <div className="flex justify-center items-center mr-6 ">
+                        <Image
+                            className="text-dtech-main-dark"
+                            src={display}
+                            height={20}
+                            width={20}
+                        />
                         <span className="max-w-24 text-m font-normal flex flex-col">
                             Displayed in
                             <span>search results</span>
                         </span>
-                        <span className="ml-2 font-medium text-sm">
+                        <span className="ml-2 text-dtech-main-dark font-medium text-sm">
                             {displayCount}
                         </span>
                     </div>
