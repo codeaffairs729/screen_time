@@ -28,7 +28,6 @@ const OrganisationHead = () => {
         url,
     } = organisation || {};
 
-
     const cardActionData = organisationToResultCardData([organisation])[0];
 
     return (
@@ -79,7 +78,7 @@ const OrganisationHead = () => {
                         />
                     </a>
                 </div>
-                <div className="flex justify-start items-end my-3">
+                <div className="flex justify-start items-start my-3">
                     <MetaInfoEntity entityName="Domains" entities={domains} />
                     <MetaInfoEntity entityName="Topics" entities={topics} />
                 </div>
@@ -115,14 +114,14 @@ const MetaInfoEntity = ({
             {entities && entities.length > 0 && (
                 <div className="flex flex-wrap">
                     <span className="text-sm font-medium text-dtech-dark-grey mr-4">
-                        {entityName}:{" "}
+                        {entityName}
                     </span>
                     {entities.map((entity, index) => (
                         <span
                             key={index}
-                            className="text-sm text-dtech-dark-grey p-1.5 !pt-0"
+                            className="text-sm text-white m-1 bg-[#5F5F63] mb-2 rounded p-1 px-2 !pt-0"
                         >
-                            #{entity}
+                            {entity}
                         </span>
                     ))}
                 </div>
