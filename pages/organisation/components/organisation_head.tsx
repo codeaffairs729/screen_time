@@ -110,20 +110,24 @@ const MetaInfoEntity = ({
     entities: string[] | undefined;
 }) => {
     return (
-        <div className="flex mr-10">
+        <div className="flex mr-8">
             {entities && entities.length > 0 && (
-                <div className="flex flex-wrap">
-                    <span className="text-sm font-medium text-dtech-dark-grey mr-4">
-                        {entityName}
-                    </span>
-                    {entities.map((entity, index) => (
-                        <span
-                            key={index}
-                            className="text-sm text-white m-1 bg-[#5F5F63] mb-2 rounded p-1 px-2 !pt-0"
-                        >
-                            {entity}
+                <div className="flex  flex-row space-x-2 max-w-xs">
+                    <div className="flex ">
+                        <span className="text-sm font-medium m-1 text-dtech-dark-grey ">
+                            {entityName}
                         </span>
-                    ))}
+                        <div className="flex flex-wrap flex-row  max-w-xs ">
+                        {entities.map((entity, index) => (
+                            <span
+                                key={index}
+                                className="text-sm text-white m-1 bg-[#5F5F63] mb-2 rounded p-1 px-2 !pt-0"
+                            >
+                                {entity}
+                            </span>
+                        ))}
+                        </div>
+                    </div>
                 </div>
             )}
         </div>
