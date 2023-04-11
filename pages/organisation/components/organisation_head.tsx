@@ -112,7 +112,7 @@ const MetaInfoEntity = ({
     return (
         <div className="flex mr-8">
             {entities && entities.length > 0 && (
-                <div className="flex  flex-row space-x-2 max-w-xs">
+                <div className="flex flex-row space-x-2 max-w-xs">
                     <div className="flex ">
                         <span className="text-sm font-medium m-1 text-dtech-dark-grey ">
                             {entityName}
