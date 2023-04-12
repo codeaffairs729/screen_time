@@ -5,7 +5,7 @@ import { DateTime } from "luxon";
 import { DataStats } from "models/organisation.model";
 import Link from "next/link";
 import { Data } from ".";
-
+import Image from "next/image";
 // export interface DataProviders {
 //     datasetSource: string;
 //     ownerUrl: string;
@@ -40,7 +40,14 @@ const CardFooter = ({
                                 rel="noreferrer"
                                 className="text-sm font-medium hover:underline underline-offset-2 text-dtech-main-dark mr-10"
                             >
-                                Source
+                                <div className="flex justify-center items-center mr-6">
+                                    Go to source
+                                    <Image
+                                        src={"/images/icons/arrow.svg"}
+                                        height={30}
+                                        width={30}
+                                    />
+                                </div>
                             </a>
                         </Link>
                         <LabelledRow
@@ -51,7 +58,7 @@ const CardFooter = ({
                         >
                             <Link href={`${dataProviders.hostUrl}`}>
                                 <a
-                                    className="text-sm text-dtech-main-dark"
+                                    className="text-sm text-dtech-main-dark  drop-shadow-lg "
                                     target="_blank"
                                 >
                                     {dataProviders.hostName}
@@ -66,7 +73,7 @@ const CardFooter = ({
                         >
                             <Link href={`${dataProviders.ownerUrl}`}>
                                 <a
-                                    className="text-sm text-dtech-main-dark"
+                                    className="text-sm text-dtech-main-dark  drop-shadow-lg "
                                     target="_blank"
                                 >
                                     {dataProviders.organisation &&
@@ -116,7 +123,7 @@ const CardFooter = ({
                     label="Topics"
                     labelClasses="!text-sm mr-1"
                 >
-                    <div className="flex flex-wrap my-4 ">
+                    <div className="flex flex-wrap  ">
                         {topics.map((topic: any, index: number) => (
                             <span
                                 key={index}
