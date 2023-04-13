@@ -1,103 +1,159 @@
-import fetch from "isomorphic-unfetch";
-import Router from "next/router";
-
-import { Non200ResponseError } from "common/exceptions";
-import log from "common/logger";
-import { initializeStore } from "store";
 import AuthService from "services/auth.service";
+import { initializeStore } from "store";
+import { Non200ResponseError } from "./exceptions";
 
-/**
- * Parse a fetch response
- */
-async function parseHttpResponse(
-    response: Response,
-    redirectToLoginPageIfAuthRequired: boolean = true
-) {
-    if (!response.ok) {
-        let error;
-        if (response.status === 401) {
-            if (redirectToLoginPageIfAuthRequired) {
-                AuthService.logout();
-            }
-            error = new Non200ResponseError("Please login to continue", {
-                response: response,
-                status: response.status,
-                url: response.url,
-            });
-            // return Promise.reject('Please login to continue')
+export class HttpBuilder {
+    constructor({
+        url,
+        method,
+        params = {},
+        isFormData = false,
+        baseUrl = process.env.NEXT_PUBLIC_WEBPORTAL_API_ROOT as string,
+        redirectToLoginPageIfAuthRequired = false,
+    }: {
+        url: string;
+        method: string;
+        params?: { [key: string]: string };
+        isFormData?: boolean;
+        baseUrl?: string;
+        redirectToLoginPageIfAuthRequired?: boolean;
+    }) {
+        this.method = method;
+        this.isFormData = isFormData;
+        this.redirectToLoginPageIfAuthRequired =
+            redirectToLoginPageIfAuthRequired;
+
+        // Build headers start
+        type HttpHeader = {
+            "Content-Type"?: string;
+            Accept: string;
+            Authorization?: string;
+        };
+        const headers: HttpHeader = {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+        };
+        if (this.isFormData) {
+            delete headers["Content-Type"];
+        }
+        this.headers = headers;
+        // Build headers end
+
+        // Build full URL start
+        let httpParams = Object.keys(params)
+            .map(
+                (k) =>
+                    `${encodeURIComponent(k)}=${encodeURIComponent(params[k])}`
+            )
+            .join("&");
+        // Prepend `?` if parms are non empty
+        if (httpParams) httpParams = `?${httpParams}`;
+        this.fullUrl = `${baseUrl}${url}${httpParams}`;
+        // Build full URL end
+    }
+
+    fullUrl: string;
+    method: string;
+    isFormData: boolean;
+    headers: { [key: string]: string };
+    body: string | FormData | undefined;
+    redirectToLoginPageIfAuthRequired: boolean;
+
+    addHeaders = (extraHeaders = {}) => {
+        this.headers = { ...this.headers, ...extraHeaders };
+        return this;
+    };
+
+    addAuthorizationHeader = () => {
+        const store = initializeStore();
+        const accessToken = store.getState().auth.token;
+        if (accessToken) {
+            this.headers["Authorization"] = `Bearer ${accessToken}`;
+        }
+        return this;
+    };
+
+    addBody = (body: { [key: string]: string } | FormData) => {
+        if (this.isFormData) {
+            this.body = body as FormData; // TODO: handle this better
         } else {
-            error = new Non200ResponseError("Non 2xx response", {
-                response: response,
-                status: response.status,
-                url: response.url,
-            });
+            this.body = JSON.stringify(body);
         }
-        return Promise.reject(error);
-    }
-    if (response.status == 204) {
-        return {};
-    } else {
-        try {
-            const jsonResponse = await response.json();
-            return jsonResponse;
-        } catch (error) {
-            console.error(
-                `Error while while readng response stream from ${response.url}`,
-                error
-            );
+        return this;
+    };
+
+    run = async ({
+        retries = 1,
+        tryRefreshingToken = true,
+    }: {
+        retries?: number;
+        tryRefreshingToken?: boolean;
+    } = {}): Promise<any> => {
+        const response = await fetch(this.fullUrl, {
+            credentials: "include",
+            method: this.method,
+            headers: this.headers,
+            ...(this.body !== undefined && { body: this.body }),
+        });
+        // Response is not ok when status not in the range 200-299
+        if (!response.ok) {
+            // When not authenticated; try refreshing the access token
+            if (tryRefreshingToken && response.status === 401) {
+                const didRefreshToken = await AuthService.refreshAccessToken();
+                if (didRefreshToken) {
+                    this.addAuthorizationHeader();
+                    return await this.run({ retries: retries - 1 });
+                }
+            }
+
+            // Retry when not ok
+            if (retries > 0) {
+                return await this.run({ retries: retries - 1 });
+            }
+
+            let error;
+            if (response.status === 401) {
+                error = new Non200ResponseError("Please login to continue", {
+                    response: response,
+                    status: response.status,
+                    url: response.url,
+                });
+                if (this.redirectToLoginPageIfAuthRequired) {
+                    AuthService.logout();
+                    return Promise.reject(error);
+                }
+                // return Promise.reject('Please login to continue')
+            } else {
+                error = new Non200ResponseError("Non 2xx response", {
+                    response: response,
+                    status: response.status,
+                    url: response.url,
+                });
+            }
+            return Promise.reject(error);
+        } else if (response.status == 204) {
             return {};
+        } else {
+            try {
+                const jsonResponse = await response.json();
+                return jsonResponse;
+            } catch (error) {
+                console.error(
+                    `Error while while readng response stream from ${response.url}`,
+                    error
+                );
+                return Promise.reject(error);
+            }
         }
-    }
+    };
 }
 
-/**
- * Build headers like `Authorization` before making a request
- */
-function buildHeaders(extraHeaders = {}, isPostForm = false) {
-    type HttpHeader = {
-        "Content-Type"?: string;
-        Accept: string;
-        Authorization?: string;
-    };
-    const headers: HttpHeader = {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        ...extraHeaders,
-    };
-    if (isPostForm) {
-        delete headers["Content-Type"];
-    }
-    // Redux store is only available on the browser
-    const store = initializeStore();
-    let authToken = store.getState().auth.token;
-    if (authToken) {
-        headers["Authorization"] = `Bearer ${authToken}`;
-    }
-    return headers;
-}
-
-/**
- * Build a complete url for request from a relative url
- * Prepends base url and apppends query parmas
- */
-function buildUrl(
-    url: string,
-    params: { [key: string]: any } = {},
-    baseUrl?: string
-): string {
-    // Build Query params
-    let httpParams = Object.keys(params)
-        .map((k) => `${encodeURIComponent(k)}=${encodeURIComponent(params[k])}`)
-        .join("&");
-    // Prepend `?` if parms are non empty
-    if (httpParams) httpParams = `?${httpParams}`;
-    // const httpUrl = `${API.baseUrl}${url}${httpParams}`;
-    const httpUrl = `${
-        baseUrl ? baseUrl : process.env.NEXT_PUBLIC_WEBPORTAL_API_ROOT
-    }${url}`;
-    // const httpUrl = `${process.env.NEXT_PUBLIC_PUBLIC_API_ROOT}${url}${httpParams}`;
-    return `${httpUrl}${httpParams}`;
-}
+type OptionsType = {
+    params?: { [key: string]: string };
+    baseUrl?: string;
+    extraHeaders?: { [key: string]: string };
+    redirectToLoginPageIfAuthRequired?: boolean;
+};
 
 class Http {
     /**
@@ -112,34 +168,21 @@ class Http {
         url: string,
         {
             params = {},
-            baseUrl = "",
+            baseUrl,
             extraHeaders = {},
             redirectToLoginPageIfAuthRequired = true,
-        } = {}
+        }: OptionsType = {}
     ): Promise<T> {
-        // Build api end point along with query params
-        const httpUrl = buildUrl(url, params, baseUrl);
-        let result: T;
-        try {
-            // TODO: Handle various fetch fails
-            const response = await fetch(httpUrl, {
-                credentials: "include",
-                method: "GET",
-                headers: buildHeaders(extraHeaders),
-            });
-
-            result = await parseHttpResponse(
-                response,
-                redirectToLoginPageIfAuthRequired
-            );
-        } catch (error) {
-            log.error(
-                `Something went wrong while making the get request to ${httpUrl}`,
-                error
-            );
-            throw error;
-        }
-        return result;
+        return new HttpBuilder({
+            url,
+            method: "GET",
+            params,
+            baseUrl,
+            redirectToLoginPageIfAuthRequired,
+        })
+            .addHeaders(extraHeaders)
+            .addAuthorizationHeader()
+            .run();
     }
 
     /**
@@ -155,34 +198,22 @@ class Http {
         data = {},
         {
             params = {},
-            baseUrl = "",
+            baseUrl,
             extraHeaders = {},
             redirectToLoginPageIfAuthRequired = true,
-        } = {}
+        }: OptionsType = {}
     ): Promise<T> {
-        // // Build Query params
-        const httpUrl = buildUrl(url, params, baseUrl);
-        let result: T;
-        try {
-            // TODO: Handle various fetch fails
-            const response = await fetch(httpUrl, {
-                credentials: "include",
-                method: "POST",
-                headers: buildHeaders(extraHeaders),
-                body: JSON.stringify(data),
-            });
-            result = await parseHttpResponse(
-                response,
-                redirectToLoginPageIfAuthRequired
-            );
-        } catch (error) {
-            log.error(
-                `Something went wrong while making the post request to ${httpUrl}`,
-                error
-            );
-            throw error;
-        }
-        return result;
+        return new HttpBuilder({
+            url,
+            method: "POST",
+            params,
+            baseUrl,
+            redirectToLoginPageIfAuthRequired,
+        })
+            .addHeaders(extraHeaders)
+            .addAuthorizationHeader()
+            .addBody(data)
+            .run();
     }
 
     /**
@@ -198,34 +229,22 @@ class Http {
         data = {},
         {
             params = {},
-            baseUrl = "",
+            baseUrl,
             extraHeaders = {},
             redirectToLoginPageIfAuthRequired = true,
-        } = {}
+        }: OptionsType = {}
     ): Promise<T> {
-        // // Build url and uery params
-        const httpUrl = buildUrl(url, params, baseUrl);
-        let result: T;
-        try {
-            // TODO: Handle various fetch fails
-            const response = await fetch(httpUrl, {
-                credentials: "include",
-                method: "DELETE",
-                headers: buildHeaders(extraHeaders),
-                body: JSON.stringify(data),
-            });
-            result = await parseHttpResponse(
-                response,
-                redirectToLoginPageIfAuthRequired
-            );
-        } catch (error) {
-            log.error(
-                `Something went wrong while making the delete request to ${httpUrl}`,
-                error
-            );
-            throw error;
-        }
-        return result;
+        return new HttpBuilder({
+            url,
+            method: "DELETE",
+            params,
+            baseUrl,
+            redirectToLoginPageIfAuthRequired,
+        })
+            .addHeaders(extraHeaders)
+            .addAuthorizationHeader()
+            .addBody(data)
+            .run();
     }
 
     /**
@@ -240,34 +259,22 @@ class Http {
         data = {},
         {
             params = {},
-            baseUrl = "",
+            baseUrl,
             extraHeaders = {},
             redirectToLoginPageIfAuthRequired = true,
-        } = {}
+        }: OptionsType = {}
     ): Promise<T> {
-        // // Build url and uery params
-        const httpUrl = buildUrl(url, params, baseUrl);
-        let result: T;
-        try {
-            // TODO: Handle various fetch fails
-            const response = await fetch(httpUrl, {
-                credentials: "include",
-                method: "PATCH",
-                headers: buildHeaders(extraHeaders),
-                body: JSON.stringify(data),
-            });
-            result = await parseHttpResponse(
-                response,
-                redirectToLoginPageIfAuthRequired
-            );
-        } catch (error) {
-            log.error(
-                `Something went wrong while making the patch request to ${httpUrl}`,
-                error
-            );
-            throw error;
-        }
-        return result;
+        return new HttpBuilder({
+            url,
+            method: "PATCH",
+            params,
+            baseUrl,
+            redirectToLoginPageIfAuthRequired,
+        })
+            .addHeaders(extraHeaders)
+            .addAuthorizationHeader()
+            .addBody(data)
+            .run();
     }
 
     /**
@@ -283,103 +290,23 @@ class Http {
         data = {},
         {
             params = {},
-            baseUrl = "",
+            baseUrl,
             extraHeaders = {},
             redirectToLoginPageIfAuthRequired = true,
-        } = {}
+        }: OptionsType = {}
     ): Promise<T> {
-        // // Build url and uery params
-        const httpUrl = buildUrl(url, params, baseUrl);
-        let result: T;
-        try {
-            // TODO: Handle various fetch fails
-            const response = await fetch(httpUrl, {
-                credentials: "include",
-                method: "PUT",
-                headers: buildHeaders(extraHeaders),
-                body: JSON.stringify(data),
-            });
-            result = await parseHttpResponse(
-                response,
-                redirectToLoginPageIfAuthRequired
-            );
-        } catch (error) {
-            log.error(
-                `Something went wrong while making the put request to ${httpUrl}`,
-                error
-            );
-            throw error;
-        }
-        return result;
+        return new HttpBuilder({
+            url,
+            method: "PUT",
+            params,
+            baseUrl,
+            redirectToLoginPageIfAuthRequired,
+        })
+            .addHeaders(extraHeaders)
+            .addAuthorizationHeader()
+            .addBody(data)
+            .run();
     }
-
-    /**
-     * Post form data
-     */
-    static async postFormData<T>(
-        url: string,
-        data: FormData,
-        {
-            params = {},
-            baseUrl = "",
-            extraHeaders = {},
-            redirectToLoginPageIfAuthRequired = true,
-        } = {}
-    ): Promise<T> {
-        // const httpUrl = buildUrl(url);
-        const httpUrl = buildUrl(url, params, baseUrl);
-        let result: T;
-        try {
-            const response = await fetch(httpUrl, {
-                credentials: "include",
-                method: "POST",
-                headers: buildHeaders(extraHeaders, true),
-                body: data,
-            });
-            result = await parseHttpResponse(
-                response,
-                redirectToLoginPageIfAuthRequired
-            );
-        } catch (error) {
-            log.error(
-                `Something went wrong while making the form data request to ${httpUrl}`,
-                error
-            );
-            throw error;
-        }
-        return result;
-    }
-
-    /**
-     * Download a file from the server
-     */
-    // static async download(url: string, { params = {} } = {}): Promise<void> {
-    //   const httpUrl = buildUrl(url, params, baseUrl);
-    //   try {
-    //     const response = await fetch(httpUrl, {
-    //       method: 'GET',
-    //       headers: buildHeaders(),
-    //     });
-    //     const blob = await response.blob();
-    //     // console.log('headers', response.headers);
-    //     // response.headers.forEach(console.log);
-    //     // for(let entry of response.headers.entries()) {
-    //     //   console.log(entry);
-    //     // }
-
-    //     saveAs(blob, 'file.xlsx');
-    //     // await response
-    //     //   .then((res) => res.blob())
-    //     //   .then((blob) => {
-    //     //   });
-    //   } catch (error) {
-    //     log.error(
-    //       `Something went wrong while making the form data request to ${httpUrl}`,
-    //       error
-    //     );
-    //     throw error;
-    //   }
-    // }
 }
 
 export default Http;
