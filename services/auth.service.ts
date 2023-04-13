@@ -5,14 +5,14 @@ import Router from "next/router";
 import toast from "react-hot-toast";
 import { initializeStore } from "store";
 import { logoutUser, updateToken, updateUser } from "store/auth/auth.action";
-import Http from "common/http";
+import Http, { HttpBuilder } from "common/http";
 import UserService from "./user.service";
 
 class AuthService {
     static async signin(
         user: User,
         token: string,
-        redirectback:boolean,
+        redirectback: boolean,
         redirectUrl: string,
         fetchNotifications: Function
     ) {
@@ -32,10 +32,14 @@ class AuthService {
         // 2. add token and role to cookie
         // The token is added as a secure cookie[`auth_token`] by the backend api
         // 3. Fetch user service APIs data after login
-        const res_userlistitems = await Http.get(
-            `/v1/user-bookmarks/userlistitems`
-        );
-        UserService.update(res_userlistitems);
+        try {
+            const res_userlistitems = await Http.get(
+                `/v1/user-bookmarks/userlistitems`
+            );
+            UserService.update(res_userlistitems);
+        } catch (error) {
+            console.log(error);
+        }
         // 4. Fetch user notifications
         fetchNotifications(user);
         // 5. redirect
@@ -51,12 +55,52 @@ class AuthService {
      * redirect user to signin page
      */
     static async logout(redirectUrl = "/login") {
-        await Http.delete('/v1/users/logout'); // Delete `auth_token` secure cookie
-        const store = initializeStore();
-        store.dispatch(logoutUser());
-        UserService.clear();
-        Router.push(redirectUrl);
+        try {
+            await new HttpBuilder({
+                url: `${
+                    process.env.NEXT_PUBLIC_WEBPORTAL_API_ROOT as string
+                }/v1/users/logout`,
+                method: "DELETE",
+                params: {},
+                baseUrl: "",
+                redirectToLoginPageIfAuthRequired: false,
+            })
+                .addAuthorizationHeader()
+                .run({ retries: 0, tryRefreshingToken: false });
+            const store = initializeStore();
+            store.dispatch(logoutUser());
+            UserService.clear();
+            Router.push(redirectUrl);
+        } catch (error) {
+            console.log(error);
+            toast.error("Something went wrong while logging out");
+        }
     }
+
+    /**
+     * Return true when we were able to successfully refresh the access token
+     */
+    static refreshAccessToken = async (): Promise<boolean> => {
+        try {
+            const res = await new HttpBuilder({
+                url: `${
+                    process.env.NEXT_PUBLIC_WEBPORTAL_API_ROOT as string
+                }/v1/users/refresh`,
+                method: "POST",
+                redirectToLoginPageIfAuthRequired: true,
+            })
+                .addAuthorizationHeader()
+                .run({ retries: 0, tryRefreshingToken: false });
+
+            const store = initializeStore();
+            store.dispatch(updateUser(User.fromJson(res["user"])));
+            store.dispatch(updateToken(res["token"]));
+            return true;
+        } catch (error) {
+            console.error(error);
+            return false;
+        }
+    };
 }
 
 export default AuthService;
