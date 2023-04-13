@@ -151,7 +151,7 @@ export class HttpBuilder {
 type OptionsType = {
     params?: { [key: string]: string };
     baseUrl?: string;
-    extraHeaders?: { [key: string]: string };
+    extraHeaders?: { [key: string]: string | undefined };
     redirectToLoginPageIfAuthRequired?: boolean;
 };
 
