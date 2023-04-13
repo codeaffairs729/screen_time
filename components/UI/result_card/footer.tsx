@@ -26,11 +26,6 @@ const CardFooter = ({
     const { dataProviders, stats, lastUpdate, domains, topics } = data;
     return (
         <div className={clsx("w-full my-1.5", className)}>
-            {stats && (
-                <div className="flex">
-                    <DataStat stats={stats} />
-                </div>
-            )}
             <div className="flex flex-wrap justify-start items-center">
                 {dataProviders && (
                     <>
@@ -101,13 +96,13 @@ const CardFooter = ({
                     </>
                 )}
             </div>
-            <div className="flex flex-wrap justify-start items-center">
+            <div className="flex flex-row justify-start items-start">
                 <LabelledRow
                     className="mr-10"
                     label="Domains"
                     labelClasses="!text-sm mr-1"
                 >
-                    <div className="flex flex-wrap">
+                    <div className="flex flex-wrap  max-w-xs ">
                         {domains.map((domain: any, index: number) => (
                             <span
                                 key={index}
@@ -123,7 +118,7 @@ const CardFooter = ({
                     label="Topics"
                     labelClasses="!text-sm mr-1"
                 >
-                    <div className="flex flex-wrap  ">
+                    <div className="flex flex-wrap  max-w-xs ">
                         {topics.map((topic: any, index: number) => (
                             <span
                                 key={index}
@@ -135,6 +130,11 @@ const CardFooter = ({
                     </div>
                 </LabelledRow>
             </div>
+            {stats && (
+                <div className="flex">
+                    <DataStat stats={stats} />
+                </div>
+            )}
         </div>
     );
 };
