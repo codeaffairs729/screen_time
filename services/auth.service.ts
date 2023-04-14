@@ -57,12 +57,9 @@ class AuthService {
     static async logout(redirectUrl = "/login") {
         try {
             await new HttpBuilder({
-                url: `${
-                    process.env.NEXT_PUBLIC_WEBPORTAL_API_ROOT as string
-                }/v1/users/logout`,
+                url: `/v1/users/logout`,
                 method: "DELETE",
                 params: {},
-                baseUrl: "",
                 redirectToLoginPageIfAuthRequired: false,
             })
                 .addAuthorizationHeader()
@@ -83,9 +80,7 @@ class AuthService {
     static refreshAccessToken = async (): Promise<boolean> => {
         try {
             const res = await new HttpBuilder({
-                url: `${
-                    process.env.NEXT_PUBLIC_WEBPORTAL_API_ROOT as string
-                }/v1/users/refresh`,
+                url: `/v1/users/refresh`,
                 method: "POST",
                 redirectToLoginPageIfAuthRequired: true,
             })
