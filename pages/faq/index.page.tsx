@@ -130,10 +130,7 @@ const FAQPage = () => {
                                 using this link
                             </a>{" "}
                             and submit your data source website details{" "}
-                            <a
-                                className="text-blue-600"
-                                href="login"
-                            >
+                            <a className="text-blue-600" href="login">
                                 using this form
                             </a>{" "}
                             to help us start the dataset onboarding process.
@@ -183,23 +180,21 @@ const FAQPage = () => {
                         <span className="px-4 py-2 w-full text-sm">
                             Dtechtive assesses metadata quality and data file
                             quality using different approaches. Metadata quality
-                            is assessed algorithmically based on the{" "}
+                            is based on the European Commission&lsquo;s {" "}
                             <a
                                 className="text-blue-600"
                                 href="https://data.europa.eu/mqa/methodology?locale=en"
                             >
                                 Metadata Quality Assessment (MQA) methodology{" "}
                             </a>{" "}
-                            of the European Commission inspired by the FAIR
-                            principles of the GO{" "}
+                            which is itself inspired by the
                             <a
                                 className="text-blue-600"
                                 href="https://www.go-fair.org/fair-principles/"
                             >
                                 FAIR principles{" "}
                             </a>{" "}
-                            Data file quality is assessed based on user feedback
-                            gathered through Dtechtive.
+                            for data management and stewardship.
                         </span>
                     </Accordian>
                     <Accordian
