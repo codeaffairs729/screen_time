@@ -180,21 +180,23 @@ const FAQPage = () => {
                         <span className="px-4 py-2 w-full text-sm">
                             Dtechtive assesses metadata quality and data file
                             quality using different approaches. Metadata quality
-                            is based on the European Commission&lsquo;s {" "}
+                            is based on the European Commission&lsquo;s{" "}
                             <a
                                 className="text-blue-600"
                                 href="https://data.europa.eu/mqa/methodology?locale=en"
                             >
-                                Metadata Quality Assessment (MQA) methodology{" "}
+                                {" "}Metadata Quality Assessment (MQA) methodology{" "}
                             </a>{" "}
                             which is itself inspired by the
                             <a
                                 className="text-blue-600"
                                 href="https://www.go-fair.org/fair-principles/"
                             >
-                                FAIR principles{" "}
+                                {" "}FAIR principles{" "}
                             </a>{" "}
-                            for data management and stewardship.
+                            for data management and stewardship. Data file quality is assessed based on user feedback
+                            gathered through Dtechtive.
+
                         </span>
                     </Accordian>
                     <Accordian
