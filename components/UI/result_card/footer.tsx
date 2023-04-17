@@ -53,7 +53,7 @@ const CardFooter = ({
                         >
                             <Link href={`${dataProviders.hostUrl}`}>
                                 <a
-                                    className="text-sm text-dtech-main-dark  drop-shadow-lg "
+                                    className="text-sm text-dtech-main-dark"
                                     target="_blank"
                                 >
                                     {dataProviders.hostName}
@@ -68,7 +68,7 @@ const CardFooter = ({
                         >
                             <Link href={`${dataProviders.ownerUrl}`}>
                                 <a
-                                    className="text-sm text-dtech-main-dark  drop-shadow-lg "
+                                    className="text-sm text-dtech-main-dark"
                                     target="_blank"
                                 >
                                     {dataProviders.organisation &&
