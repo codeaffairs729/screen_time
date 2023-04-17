@@ -97,7 +97,7 @@ const DatasetHead = ({ dataset }: any) => {
                         <a
                             target="_blank"
                             rel="noreferrer"
-                            className="text-xs  mr-5 "
+                            className="text-sm font-medium hover:underline underline-offset-2 text-dtech-main-dark mr-10"
                         >
                             <div className="flex justify-center items-center mr-6">
                                 Go to source
