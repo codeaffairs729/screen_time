@@ -106,7 +106,7 @@ const CardFooter = ({
                         {domains.map((domain: any, index: number) => (
                             <span
                                 key={index}
-                                className="text-sm px-2 text-white bg-[#5F5F63] my-0.5 rounded decoration-1 mr-1"
+                                className="text-sm px-2 text-black bg-[#F7F0FC] my-0.5 rounded decoration-1 mr-1"
                             >
                                 {domain}
                             </span>
@@ -122,7 +122,7 @@ const CardFooter = ({
                         {topics.map((topic: any, index: number) => (
                             <span
                                 key={index}
-                                className="text-sm px-2 text-white  bg-[#5F5F63] my-0.5 rounded decoration-1 mr-1 truncate"
+                                className="text-sm px-2 text-black bg-[#F7F0FC] my-0.5 rounded decoration-1 mr-1 truncate"
                             >
                                 {topic}
                             </span>
