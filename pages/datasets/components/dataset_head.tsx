@@ -103,8 +103,8 @@ const DatasetHead = ({ dataset }: any) => {
                                 Go to source
                                 <Image
                                     src={"/images/icons/arrow.svg"}
-                                    height={30}
-                                    width={30}
+                                    height={15}
+                                    width={15}
                                 />
                             </div>
                         </a>
@@ -185,7 +185,7 @@ const MetaInfoEntity = ({
                         {entities.map((entity, index) => (
                             <span
                                 key={index}
-                                className="text-sm text-white m-1 bg-[#5F5F63] mb-2 rounded p-1 px-2 !pt-0"
+                                className="text-sm text-black m-1 bg-[#F7F0FC] mb-2 rounded p-1 px-2 !pt-0"
                             >
                                 {entity}
                             </span>
