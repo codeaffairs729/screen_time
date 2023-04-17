@@ -39,8 +39,8 @@ const CardFooter = ({
                                     Go to source
                                     <Image
                                         src={"/images/icons/arrow.svg"}
-                                        height={30}
-                                        width={30}
+                                        height={15}
+                                        width={15}
                                     />
                                 </div>
                             </a>
