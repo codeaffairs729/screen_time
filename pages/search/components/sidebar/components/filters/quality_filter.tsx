@@ -29,20 +29,18 @@ const QualityFilter = () => {
         name: "metadata_quality",
         filterOptionItems: filterOption,
     });
-    console.log("test#################", fields);
-    console.log("test######&&&&&&&&&&&&", filterOption);
     return (
         <FilterSection label="Metadata Quality" disable={vm.isLoading}>
             {fields.map((field, i) => (
-                 <StarRow key={field.id} stars={i + 1}>
-                <FilterCheckboxField
-                    className="mr-1.5 mb-0.5"
-                    key={field.id}
-                    register={register(`metadata_quality.${i}.checkbox`)}
-                    value={field.value}
-                    defaultChecked={!!field.checkbox}
-                />
-                 </StarRow>
+                <StarRow key={field.id} stars={i + 1}>
+                    <FilterCheckboxField
+                        className="mr-1.5 mb-0.5"
+                        key={field.id}
+                        register={register(`metadata_quality.${i}.checkbox`)}
+                        value={field.value}
+                        defaultChecked={!!field.checkbox}
+                    />
+                </StarRow>
             ))}
         </FilterSection>
     );
