@@ -17,7 +17,6 @@ const PrimaryBtn = ({
     className?: string;
     dataSelector?: string;
 }) => {
-    console.log("submit", dataSelector);
     return (
         <button
             data-selector={dataSelector}

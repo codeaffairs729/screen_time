@@ -104,15 +104,12 @@ const DropdownField = ({
                 ? ""
                 : formControl["defaultValue"],
     });
-    console.log("form controll not", formControl);
-    console.log("selected state not", selected);
     useEffect(() => {
         const newValue = value || formControl["defaultValue"];
 
         if (![undefined, null].includes(newValue)) {
             const option = options.find((o) => o.value == newValue);
 
-            console.log("option", option);
             if (option) {
                 setSelected([option]);
                 onChange(option?.value);

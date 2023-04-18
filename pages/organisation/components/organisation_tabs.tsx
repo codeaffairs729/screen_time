@@ -36,7 +36,13 @@ const ORGANIZATION_MEMBER = "Organization Member";
 //     },
 // ];
 
-const OrganisationTabHeaders = ({ selectedIndex = 0, user = "", }: { selectedIndex?: number, user?: string; }) => {
+const OrganisationTabHeaders = ({
+    selectedIndex = 0,
+    user = "",
+}: {
+    selectedIndex?: number;
+    user?: string;
+}) => {
     const [selected, setSelected] = useState<number>(selectedIndex);
 
     return (
@@ -67,43 +73,39 @@ const OrganisationTabHeaders = ({ selectedIndex = 0, user = "", }: { selectedInd
     );
 };
 
-const getHeader = (user: string) =>{
-    // if(user === ORGANIZATION_ADMIN || user === ORGANIZATION_MEMBER){
-        return (
-            [
-                {
-                    name: "Datasets",
-                    outlineIcon: cascadeFolderOutline,
-                    filledIcon: cascadeFolderFilled,
-                },
-                {
-                    name: "Insights",
-                    outlineIcon: barGraphOutline,
-                    filledIcon: barGraphFilled,
-                },
-                {
-                    name: "Report",
-                    outlineIcon: reportOutline,
-                    filledIcon: reportFilled,
-                },
-            ]
-        )
-    // }else{
-    //     return(
-    //         [
-    //             {
-    //                 name: "Datasets",
-    //                 outlineIcon: cascadeFolderOutline,
-    //                 filledIcon: cascadeFolderFilled,
-    //             },
-    //             {
-    //                 name: "Insights",
-    //                 outlineIcon: barGraphOutline,
-    //                 filledIcon: barGraphFilled,
-    //             },
-    //         ]
-    //     )
-    // }
-}
+const getHeader = (user: string) => {
+    if (user === ORGANIZATION_ADMIN || user === ORGANIZATION_MEMBER) {
+        return [
+            {
+                name: "Datasets",
+                outlineIcon: cascadeFolderOutline,
+                filledIcon: cascadeFolderFilled,
+            },
+            {
+                name: "Insights",
+                outlineIcon: barGraphOutline,
+                filledIcon: barGraphFilled,
+            },
+            {
+                name: "Report",
+                outlineIcon: reportOutline,
+                filledIcon: reportFilled,
+            },
+        ];
+    } else {
+        return [
+            {
+                name: "Datasets",
+                outlineIcon: cascadeFolderOutline,
+                filledIcon: cascadeFolderFilled,
+            },
+            {
+                name: "Insights",
+                outlineIcon: barGraphOutline,
+                filledIcon: barGraphFilled,
+            },
+        ];
+    }
+};
 
 export default OrganisationTabHeaders;

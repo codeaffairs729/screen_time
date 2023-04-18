@@ -34,8 +34,6 @@ const DropdownFieldMulti = ({
                 ? ""
                 : formControl["defaultValue"],
     });
-    console.log("formcontroll", formControl);
-    console.log("selected state", selected);
     const filteredOtions =
         query === ""
             ? options
