@@ -96,7 +96,7 @@ const CardFooter = ({
                     </>
                 )}
             </div>
-            <div className="flex flex-row justify-start items-start">
+            <div className="flex flex-row justify-start items-start mt-2.5">
                 <LabelledRow
                     className="mr-10"
                     label="Domains"
