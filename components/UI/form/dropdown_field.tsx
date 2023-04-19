@@ -91,7 +91,7 @@ const DropdownField = ({
     inputClass?: string;
 } & FieldProps) => {
     // const [selected, setSelected] = useState<Option>();
-    const [selected, setSelected] = useState<Option[]>([]);
+    const [selected, setSelected] = useState<Option>();
     const [query, setQuery] = useState("");
 
     const {
@@ -111,11 +111,11 @@ const DropdownField = ({
             const option = options.find((o) => o.value == newValue);
 
             if (option) {
-                setSelected([option]);
+                setSelected(option);
                 onChange(option?.value);
             }
         } else {
-            //setSelected([undefined!]);
+            setSelected(undefined);
             onChange(null);
         }
     }, [value, formControl["defaultValue"]]);
@@ -138,40 +138,25 @@ const DropdownField = ({
         >
             <Combobox
                 value={selected}
-                onChange={(o: any) => {
-                    let values = o.map((option: Option) => {
-                        return option.value;
-                    });
-                    onChange(values);
-                    setSelected(o);
+                onChange={(o) => {
+                    onChange(o?.value);
+                    setSelected(o as any);
                 }}
                 nullable
-                multiple
             >
                 <div className="relative w-full text-left bg-white rounded-lg cursor-default">
-                    <Combobox.Button className="  w-full ">
-                        <Combobox.Input
-                            className={clsx(
-                                "w-full rounded-lg focus:ring-dtech-secondary-light border-2 border-dtech-secondary-light focus:border-dtech-secondary-light disabled:border-gray-300 disabled:bg-gray-50 py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 placeholder:text-gray-500 placeholder:text-sm placeholder:font-bold",
-                                { "border-red-700": hasError }
-                            )}
-                            displayValue={(selOpts: Option[]) => {
-                                let dispString = "";
-                                selOpts.forEach((option: Option, idx) => {
-                                    if (idx === 0) {
-                                        dispString = `${option.label}`;
-                                    } else {
-                                        dispString = `${option.label}, ${dispString}`;
-                                    }
-                                });
-                                console.log("options not", selOpts);
-                                return dispString;
-                            }}
-                            onChange={(event) => setQuery(event.target.value)}
-                            placeholder={placeholder}
-                            name={name}
-                        />
-                    </Combobox.Button>
+                <Combobox.Input
+                        className={clsx(
+                            "w-full rounded-lg focus:ring-dtech-secondary-light border-2 border-dtech-secondary-light focus:border-dtech-secondary-light disabled:border-gray-300 disabled:bg-gray-50 py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 placeholder:text-gray-500 placeholder:text-sm placeholder:font-bold",
+                            { "border-red-700": hasError },
+                            inputClass
+                        )}
+                        displayValue={(option: Option) => option?.label}
+                        onChange={(event) => setQuery(event.target.value)}
+                        placeholder={placeholder}
+                        name={name}
+                    />
+
                     <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2">
                         <HiOutlineSelector className="w-5 h-5" />
                     </Combobox.Button>
