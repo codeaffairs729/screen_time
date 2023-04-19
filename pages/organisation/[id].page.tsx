@@ -85,16 +85,13 @@ const OrganisationDetailPage = ({
                                             <Insights />
                                         </TabPanel>
                                         <TabPanel className="!bg-white">
-                                            <Report />
-                                        </TabPanel>
-                                        {/* <TabPanel className="!bg-white">
                                             {(User.getRole(user)?.name ===
                                                 ORGANIZATION_ADMIN ||
                                                 User.getRole(user)?.name ===
                                                     ORGANIZATION_MEMBER) && (
                                                 <Report />
                                             )}
-                                        </TabPanel> */}
+                                        </TabPanel>
                                     </Tab.Panels>
                                 </Tab.Group>
                             )}
