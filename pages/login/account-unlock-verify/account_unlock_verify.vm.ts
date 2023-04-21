@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 
 const AccountUnlockVerifyVM = () => {
     const router = useRouter();
+    const token = router.query.token;
     const [errorMessage, setErrorMessage] = useState<string>();
 
     const {
@@ -17,7 +18,6 @@ const AccountUnlockVerifyVM = () => {
     const verifyToken = () =>
         executeVerifyToken(
             () => {
-                const token = router.query.token;
                 // return Http.post(
                 //     `/v1/users/unlock/verify`,
                 //     { token },
@@ -38,8 +38,10 @@ const AccountUnlockVerifyVM = () => {
             }
         );
     useEffect(() => {
-        verifyToken();
-    }, []);
+        if (token) {
+            verifyToken();
+        }
+    }, [token]);
 
     return {
         isVerifyingToken,
