@@ -23,12 +23,12 @@ const RequestResetEmail = () => {
         <h1 className="font-semibold text-lg mb-2 mt-8">
           Forgot your password
         </h1>
-        <Link href="#">
+        {/* <Link href="/contact-us">
           <a className="inline-flex space-x-1">
             <i className="mr-1 text-sm underline">Need help? Contact us</i>{" "}
             <InfoIcon title="Contact us" />
           </a>
-        </Link>
+        </Link> */}
       </div>
       <div className="grow flex flex-col items-center justify-center pb-8">
         {vm.signinErrorMsg && (

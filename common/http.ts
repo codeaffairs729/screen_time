@@ -73,7 +73,7 @@ export class HttpBuilder {
         return this;
     };
 
-    addBody = (body: { [key: string]: string } | FormData) => {
+    addBody = (body: { [key: string]: any } | FormData) => {
         if (this.isFormData) {
             this.body = body as FormData; // TODO: handle this better
         } else {
