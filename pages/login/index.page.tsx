@@ -5,12 +5,10 @@ import PrimaryBtn from "components/UI/form/primary_btn";
 import TextField from "components/UI/form/text_field";
 import InfoIcon from "components/UI/icons/info_icon";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import FormRow from "./components/form_row";
 import SigninVM from "./signin.vm";
 
 const SigninPage = () => {
-    const router = useRouter();
     const vm = SigninVM();
 
     return (
@@ -33,7 +31,7 @@ const SigninPage = () => {
                         </a>
                     </Link>
                 </div>
-                <div className="grow flex flex-col items-center justify-center">
+                <div className="grow flex flex-col items-center justify-center max-w-[448px] w-full mx-auto">
                     {vm.signinErrorMsg && (
                         <ErrorAlert
                             message={vm.signinErrorMsg}
@@ -42,7 +40,7 @@ const SigninPage = () => {
                     )}
                     <FormRow label="Email">
                         <TextField
-                            className="w-60"
+                            className="max-w-[250px] ml-auto"
                             formControl={{
                                 control: vm.form.control,
                                 name: "email",
@@ -54,7 +52,7 @@ const SigninPage = () => {
                     </FormRow>
                     <FormRow label="Password">
                         <TextField
-                            className="w-60"
+                            className="max-w-[250px] ml-auto"
                             formControl={{
                                 control: vm.form.control,
                                 name: "password",
@@ -65,11 +63,19 @@ const SigninPage = () => {
                         />
                     </FormRow>
                     <Link href="/forgot-password">
-                        <a className="flex items-center ml-16">
+                        <a className="flex items-center self-end">
                             <i className="mr-1 text-sm underline">
                                 Forgot your password?
                             </i>{" "}
                             <InfoIcon title="Reset your password" />
+                        </a>
+                    </Link>
+                    <Link href="/login/account-unlock">
+                        <a className="flex items-center self-end">
+                            <i className="mr-1 text-sm underline">
+                                Unlock account
+                            </i>{" "}
+                            <InfoIcon title="I know my password but cannot login" />
                         </a>
                     </Link>
                     <div className="flex space-x-4 mt-12">

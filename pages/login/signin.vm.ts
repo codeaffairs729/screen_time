@@ -1,4 +1,4 @@
-import Http from "common/http";
+import Http, { HttpBuilder } from "common/http";
 import { useForm } from "react-hook-form";
 import toast, { Toaster } from "react-hot-toast";
 import { useHttpCall } from "common/hooks";
@@ -11,8 +11,9 @@ import { getHttpErrorMsg } from "common/util";
 import { usereventLogin } from "services/usermetrics.service";
 import { NotificationsVMContext } from "pages/workspace/notification.vm";
 import { useRouter } from "next/router";
+import { Non200ResponseError } from "common/exceptions";
 
-const getPathBool =(previousPath :any) =>{
+const getPathBool = (previousPath: any) => {
     switch (previousPath) {
         case "/search/organisation":
             return true;
@@ -23,7 +24,7 @@ const getPathBool =(previousPath :any) =>{
         default:
             return false;
     }
-}
+};
 const SigninVM = () => {
     const form = useForm();
     const router = useRouter();
@@ -35,7 +36,7 @@ const SigninVM = () => {
         : "";
     const [signinErrorMsg, setSigninErrorMsg] = useState<string | null>();
     const [previousPath, setPreviousPath] = useState<string | null>();
-    
+
     useEffect(() => {
         if (
             localStorage.getItem("previous_path") === null ||
@@ -52,7 +53,13 @@ const SigninVM = () => {
         executePerformLogin(
             () => {
                 setSigninErrorMsg(null);
-                return Http.post(`/v1/users/signin`, data);
+                return new HttpBuilder({
+                    url: `/v1/users/signin`,
+                    method: "POST",
+                })
+                    .addBody(data)
+                    .run({ retries: 0, tryRefreshingToken: false });
+                // return Http.post(`/v1/users/signin`, data);
             },
             {
                 onSuccess: (res) => {
@@ -65,9 +72,10 @@ const SigninVM = () => {
                     );
                     usereventLogin(User.fromJson(res["user"]));
                 },
-                onError: async (error: any) => {
+                onError: async (error: Non200ResponseError) => {
                     const res = error.response.clone();
-                    setSigninErrorMsg(await getHttpErrorMsg(error));
+                    const errorMsg = await getHttpErrorMsg(error);
+                    setSigninErrorMsg(errorMsg);
                     const body = await res.json();
                     if (body["action"] == "redirect_verify_email") {
                         toast.error(
@@ -95,6 +103,5 @@ const SigninVM = () => {
         signinErrorMsg,
     };
 };
-
 
 export default SigninVM;
