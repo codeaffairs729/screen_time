@@ -44,9 +44,10 @@ const WorkspacePage = () => {
                 <div className=" bg-white border-1 ">
                     <div className="md:flex md:px-4">
                         <Tab.Group defaultIndex={selectedIndex}>
-                            <AccountTabHeaders selectedIndex={selectedIndex} />
+                            <AccountTabHeaders selectedIndex={selectedIndex}/>
                             <Tab.Panels className="h-[calc(100%-var(--dataset-detail-tab-header-height))] w-full flex">
-                                <TabPanel className="!bg-white">
+                                <TabPanel className="!bg-gray-50 border-t border-
+                                gray !p-0">
                                     <AccountDetails />
                                 </TabPanel>
                                 <TabPanel className="!bg-white">

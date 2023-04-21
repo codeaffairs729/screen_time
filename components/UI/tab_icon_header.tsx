@@ -12,8 +12,8 @@ const TabIconHeader = ({
         <Tab
             className={({ selected }) =>
                 `${
-                    selected && "border-l-4 border-l-dtech-main-dark"
-                } flex text-sm font-semibold transition-all duration-300 outline-none w-full border-y`
+                    selected && "border-l-8 border-l-dtech-main-dark"
+                } flex text-sm font-semibold transition-all duration-300 outline-none w-full border-y  border-t border-gray`
             }
             onClick={() => onClick()}
         >
