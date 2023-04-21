@@ -49,16 +49,16 @@ const UserSection = () => {
                     ></input>
                     <Image src={cameraImage} width="50px" height="50px" />
                 </div> */}
-                <div className="select-none outline-none text-lg w-36 h-36 flex justify-center items-center bg-[#E2E2E2]  rounded-full text-[#F5F5F5] font-medium text-[96px] mx-auto mb-4">
+                <div className="select-none outline-none text-lg w-28 h-28 flex justify-center items-center bg-[#E2E2E2]  rounded-full text-[#F5F5F5] font-medium text-[96px] mb-4">
                     {nameInitial}
                 </div>
-                <div className="grid md:grid-cols-2 gap-4">
+                <div className="grid md:grid-cols-2 gap-4 mt-2">
                     <FormRow
                         label="Name"
-                        labelClass=" !bg-[#F8F8F8] !w-auto z-10 mx-5 absolute mb-10 text-dtech-main-dark !py-1"
+                        labelClass=" !bg-[#F8F8F8] !w-auto z-10 mx-5 absolute mb-10 text-[#3F0068] !py-1"
                     >
                         <TextField
-                            className="bg-gray-50"
+                            className="bg-gray-50 w-[330px]"
                             formControl={{
                                 control: vm.form.control,
                                 name: "name",
@@ -70,7 +70,7 @@ const UserSection = () => {
                     </FormRow>
                     <FormRow
                         label="Email"
-                        labelClass=" !bg-[#F8F8F8] !w-auto z-10 mx-5 absolute mb-10 text-dtech-main-dark !py-1"
+                        labelClass=" !bg-[#F8F8F8] !w-auto z-10 mx-5 absolute mb-10 text-[#3F0068] !py-1"
                     >
                         <TextField
                             className="bg-gray-50"
@@ -86,7 +86,7 @@ const UserSection = () => {
                     </FormRow>
                     <FormRow
                         label="Organisation"
-                        labelClass=" !bg-[#F8F8F8] !w-auto z-10 mx-5 absolute mb-10 text-dtech-main-dark !py-1"
+                        labelClass=" !bg-[#F8F8F8] !w-auto z-10 mx-5 absolute mb-10 text-[#3F0068] !py-1"
                     >
                         <TextField
                             className="bg-gray-50"
@@ -102,7 +102,7 @@ const UserSection = () => {
                     </FormRow>
                     <FormRow
                         label="Role"
-                        labelClass=" !bg-[#F8F8F8] !w-auto z-10 mx-5 absolute mb-10 text-dtech-main-dark !py-1"
+                        labelClass=" !bg-[#F8F8F8] !w-auto z-10 mx-5 absolute mb-10 text-[#3F0068] !py-1"
                     >
                         <DropdownField
                             inputClass=" !focus:ring-dtech-main-dark border-1 !border-dtech-main-dark !focus:border-dtech-main-dark !bg-transparent"

@@ -48,14 +48,14 @@ const WorkspacePage = () => {
     }
 
     return (
-        <DefaultLayout>
+        <DefaultLayout className="!bg-gray">
             <div className="my-10 mx-4 md:mx-20 flex items-center">
                 <span className="text-left text-[26px] font-semibold">
                     My Workspace
                 </span>
                 {/* <Dropdown label={workspace} menuItems={menuItems} /> */}
             </div>
-            <div className="md:flex mx-4 md:mx-20 border-t bg-white">
+            <div className="md:flex mx-4 md:mx-20 border-t !bg-white">
                 {!loading && (
                     <Tab.Group defaultIndex={selectedIndex}>
                         <TabHeaders selectedIndex={selectedIndex} />
