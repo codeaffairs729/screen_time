@@ -56,7 +56,7 @@ const ListsSection = () => {
                         <CreateList />
                     </Tab.List>
                     <Tab.Panels className="w-full flex">
-                        <TabPanel className="bg-white">
+                        <TabPanel className="!bg-white">
                             <div className="text-sm text-dtech-dark-grey my-4 mx-4">
                                  Your list of favourite datasets and data providers.
                             </div>

@@ -63,13 +63,13 @@ const WorkspacePage = () => {
                             {/* <TabPanel className="bg-white">
                                 <p>Work in progress.</p>
                             </TabPanel> */}
-                            <TabPanel className="bg-white">
+                            <TabPanel className="!bg-white">
                                 <ListsSection />
                             </TabPanel>
                             {/* <TabPanel className="bg-white">
                                 <p>Work in progress.</p>
                             </TabPanel> */}
-                            <TabPanel className="bg-white">
+                            <TabPanel className="!bg-white">
                                 <Notifications />
                             </TabPanel>
                         </Tab.Panels>
