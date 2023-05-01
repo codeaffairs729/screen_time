@@ -42,7 +42,7 @@ const CardHead = ({
                     className="lg:ml-4 w-min"
                     labelClass="font-normal"
                     title={
-                        "Estimated based on the EU Metadata Quality Assessment method https://data.europa.eu/mqa/methodology?locale=en"
+                        "Estimated based on the European Commission's Metadata Quality Assessment method."
                     }
                     handleFAQClick={() => {
                         handleFAQClick
