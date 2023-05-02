@@ -8,7 +8,7 @@ import { updateSearchType } from "store/search/search.action";
 
 export const SearchTypes = {
     DATASET: { label: "Dataset", value: "dataset" },
-    ORGANISATION: { label: "Organisation", value: "organisation" },
+    ORGANISATION: { label: "Data Provider", value: "organisation" },
 };
 
 const SearchTypeSelect = () => {
