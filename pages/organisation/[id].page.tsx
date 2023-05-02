@@ -64,7 +64,7 @@ const OrganisationDetailPage = ({
                 <div className="px-4">
                     <div className="flex flex-row justify-between mb-4 my-2 ml-4">
                         <p className="text-center text-2xl font-semibold">
-                            Organisation
+                            Data Provider
                         </p>
                         <span></span>
                     </div>
