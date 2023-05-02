@@ -17,7 +17,7 @@ const ITEMS: MenuItemType[] = [
     { label: "Dataset" },
     // { label: "Topic" },
     // { label: "Region" },
-    { label: "Data Provider" },
+    { label: "Organisation" },
 ];
 
 const SearchBar = ({
