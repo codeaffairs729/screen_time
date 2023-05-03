@@ -26,7 +26,7 @@ const SearchTypeSelect = () => {
     const dispatch = useDispatch();
     useEffect(() => {
         const filteredSearchTypes = searchTypes.filter(
-            (st) => st.label.toLowerCase() == savedSearchType.toLowerCase()
+            (st) => st.value.toLowerCase() == savedSearchType.toLowerCase()
         );
         if (filteredSearchTypes.length > 0) {
             setSelected(filteredSearchTypes[0]);
