@@ -10,11 +10,12 @@ const TOOLBAR_OPTIONS = {
     },
     link: {
         options: ["link"],
-        showOpenOptionOnHover: false,
-        link:{
-            title:"HyperLink"
-        }
+        showOpenOptionOnHover: true,
+        link: {
+            title: "HyperLink",
+        },
     },
+
     list: {
         options: ["unordered", "ordered"],
     },

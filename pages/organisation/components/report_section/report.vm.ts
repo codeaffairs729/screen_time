@@ -7,13 +7,13 @@ import {
 } from "draft-js";
 import html2canvas from "html2canvas";
 import { format } from "date-fns";
-import { convertToHTML } from "draft-convert";
+
 import jsPDF from "jspdf";
 import { useHttpCall } from "common/hooks";
 import Http from "common/http";
 import toast from "react-hot-toast";
 import { OrganisationDetailVMContext } from "pages/organisation/organisation_detail.vm";
-
+import draftToHtml from "draftjs-to-html";
 type Header = {
     label: string;
     isChecked: boolean;
@@ -200,7 +200,7 @@ const ReportVM = () => {
     };
 
     const formatPreviewData = () => {
-        let html = convertToHTML(editorState.getCurrentContent()).toString();
+        let html = draftToHtml(convertToRaw(editorState.getCurrentContent()));
         const images = convertToRaw(editorState.getCurrentContent()).entityMap;
 
         Object.values(images).forEach((image, index) => {
