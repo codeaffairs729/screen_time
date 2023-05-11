@@ -1,14 +1,15 @@
 import Http from "common/http";
 import Dataset from "models/dataset.model.v4";
-import SearchVM, { datasetToResultCardData } from "pages/search/search.vm";
+// import SearchVM, from "pages/search/search.vm";
 import useSWR from "swr";
 import toast from "react-hot-toast";
 import Organisation from "models/organisation.model";
-import { organisationToResultCardData } from "pages/search/components/organization/organisation.vm";
+import { organisationToResultCardData } from "pages/search/organisation/organisation.vm";
 import { createContext } from "react";
+import { datasetToResultCardData, useFetchStats } from "common/utils/datasets.util";
 
 export const FavouriteVM = () => {
-    const { fectchStats, stats, isFetchingStats } = SearchVM();
+    const { fectchStats, stats, isFetchingStats } = useFetchStats();
     const favDatasetEndpoint = `${process.env.NEXT_PUBLIC_WEBPORTAL_API_ROOT}/v1/users/favourites_datasets`;
     const favProviderEndpoint = `${process.env.NEXT_PUBLIC_WEBPORTAL_API_ROOT}/v1/users/favourites_providers`;
     const { data: favouriteDatasets, error: datasetError } = useSWR(

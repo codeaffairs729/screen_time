@@ -22,7 +22,7 @@ export type Filter = {
     end_date?: string[];
 };
 
-const OrganizationSearchVM = (search = true) => {
+const OrganizationSearchVM = () => {
     const router = useRouter();
     const {
         query: { q },
@@ -74,7 +74,7 @@ const OrganizationSearchVM = (search = true) => {
         setLoading(true);
     }, [activeFilter]);
     const { data, error: organisationError }: any = useSWR(
-        q && search
+        q
             ? `/v1/data_sources/?search_query=${q}&page_size=${pageSize}&page_num=${currentPageNo}${queryParams}`
             : null,
         (url: string) => {
@@ -98,7 +98,7 @@ const OrganizationSearchVM = (search = true) => {
                 { revalidateOnFocus: false };
         }
     );
-    const isFetchingOrganisation = !totalRecords && !organisationError && organisations?.length || loading;
+    const isFetchingOrganisation = !!(!totalRecords && !organisationError && organisations?.length || loading);
     useEffect(() => {
         const len = organisations?.length || 0;
 

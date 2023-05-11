@@ -1,11 +1,12 @@
 import {
-    datasetToResultCardData,
+    // datasetToResultCardData,
     SearchVMContext,
 } from "pages/search/search.vm";
 import { useContext, useLayoutEffect } from "react";
 import SearchHeaders from "../search_headers";
 import ResultLayout from "../result_layout";
 import Sidebar from "../sidebar/sidebar";
+import { datasetToResultCardData } from "common/utils/datasets.util";
 
 const Dataset = () => {
     const {

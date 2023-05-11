@@ -3,7 +3,7 @@ import ResultCardAction from "components/UI/result_card_action";
 import DatasetStat from "components/UI/result_card/data_stat";
 import { useContext } from "react";
 import { OrganisationDetailVMContext } from "../organisation_detail.vm";
-import { organisationToResultCardData } from "pages/search/components/organization/organisation.vm";
+import { organisationToResultCardData } from "pages/search/organisation/organisation.vm";
 import { DateTime } from "luxon";
 
 const OrganisationHead = () => {

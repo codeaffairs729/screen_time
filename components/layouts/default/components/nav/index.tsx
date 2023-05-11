@@ -3,7 +3,6 @@ import SearchBar from "components/UI/search_bar_new";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import SearchVM from "pages/search/search.vm";
 import { ReactNode, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "store";
