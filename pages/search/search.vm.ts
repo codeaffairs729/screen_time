@@ -1,6 +1,5 @@
 import Http from "common/http";
 import { SearchOption } from "components/UI/dataset_search_input";
-import { isEqual } from "lodash-es";
 import { useRouter } from "next/router";
 import { createContext, useContext, useEffect, useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
@@ -13,8 +12,6 @@ import Dataset from "../../models/dataset.model.v4";
 import { usereventSearchQueryResults } from "services/usermetrics.service";
 import { useHttpCall } from "common/hooks";
 import DatasetStats from "models/dataset_stats.model";
-import { RootState } from "store";
-import Datasets from "pages/organisation/components/datasets";
 import { Data } from "components/UI/result_card";
 
 export type Filter = {
@@ -33,27 +30,25 @@ export type Filter = {
     end_date?: string[];
 };
 
-const SearchVM = (search = true) => {
+const SearchVM = () => {
     const router = useRouter();
     const {
         query: { q },
     } = router;
-    // const page = parseInt(router.query.page as string) ? parseInt(router.query.page as string) : 1;
-    console.log(router.query);
     const dispatch = useDispatch();
-
     const [activeFilter, setActiveFilter] = useState<Filter>({
         sort_by: ["relevance"],
     });
     const [filterOptions, setFilterOptions] = useState<Filter>({});
     const [queryParams, setQueryParams] =
         useState<string>("&sort_by=relevance");
-    const [currentPageNo, setCurrentPageNo] = useState<number>(1);
+    const [currentPageNo, setCurrentPageNo] = useState<number>(parseInt(router.query.page as string) || 1);
     const [totalPages, setTotalPages] = useState(1);
     const [pageSize, setPageSize] = useState(20);
     const [totalRecords, setTotalRecords] = useState<number>(0);
     const [isFilterActive, setIsFilterActive] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(false);
+
     /**
      * Update the query params on updating any filter
      */
@@ -90,22 +85,21 @@ const SearchVM = (search = true) => {
         setQueryParams(cQueryParams ? `&${cQueryParams}` : "");
     }, [activeFilter]);
 
-    useEffect(()=>{
-        setCurrentPageNo(parseInt(router.query.page as string) || 1)
-    },[router.query.page])
+    useEffect(() => {
+        setCurrentPageNo(parseInt(router.query.page as string) || 1);
+    }, [router.query.page]);
+
     /**
      * Fired when the term on the search input on the search page is changed
      */
     useEffect(() => {
-        if (router.pathname === "/search") {
-            const url = new URL(window.location.href);
-            const params = new URLSearchParams(url.search);
-
-            params.set("page", `${currentPageNo}`);
-
-            // Replace the current URL with the updated URL
-            window.history.replaceState({}, "", `${url.pathname}?${params}`);
-        }
+        // if (router.pathname === "/search") {
+            if (currentPageNo.toString() != router.query?.page) {
+                router.replace({
+                    query: { ...router.query, page: currentPageNo },
+                });
+            }
+        // }
     }, [currentPageNo]);
 
     const onSearchChange = (
@@ -119,7 +113,7 @@ const SearchVM = (search = true) => {
         setCurrentPageNo(1);
         router.push({
             pathname: `/search/${searchType}`,
-            query: { q: option.value, page: currentPageNo },
+            query: { ...router.query, q: option.value, page: 1 }, // page is 1 because its a new search
         });
     };
 
@@ -174,7 +168,7 @@ const SearchVM = (search = true) => {
      * TODO: uriencode searchquery, pagenum and pagesize
      */
     const { data: datasets, error } = useSWR(
-        q && search
+        q
             ? `/v4/datasets/?search_query=${q}&page_size=${pageSize}&page_num=${currentPageNo}${queryParams}`
             : null,
         (url: string) =>

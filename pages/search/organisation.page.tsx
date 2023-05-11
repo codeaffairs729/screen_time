@@ -3,7 +3,7 @@ import Organisation from "./components/organization";
 
 const OrganisationSearch = () => {
     return (
-        <DefaultLayout page="organisation">
+        <DefaultLayout>
             <div className="flex ml-1">
                 <Organisation />
             </div>

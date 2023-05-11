@@ -1,13 +1,5 @@
 import { useEffect, useState } from "react";
 import log from "loglevel";
-import { Filter } from "pages/search/search.vm";
-import { useFieldArray, useForm, useWatch } from "react-hook-form";
-import Dataset from "models/dataset.model";
-import Http from "./http";
-import toast from "react-hot-toast";
-import { uniq } from "lodash-es";
-import { RootState } from "store";
-import { useSelector } from "react-redux";
 
 export const useScript = (url: string, onSuccess?: () => void) => {
     useEffect(() => {
