@@ -7,8 +7,9 @@ import SearchHeaders from "./components/search_headers";
 import Sidebar from "./components/sidebar/sidebar";
 import SearchVM, {
     SearchVMContext,
-    datasetToResultCardData,
+    // datasetToResultCardData,
 } from "./search.vm";
+import { datasetToResultCardData } from "common/utils/datasets.util";
 
 const SearchPage = () => {
     const vm = SearchVM();

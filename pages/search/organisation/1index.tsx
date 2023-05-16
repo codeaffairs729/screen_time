@@ -1,10 +1,10 @@
 import { useContext } from "react";
-import ResultLayout from "../result_layout";
+import ResultLayout from "../components/result_layout";
 import {
     organisationToResultCardData,
     OrganizationSearchVMContext,
 } from "./organisation.vm";
-import SearchHeaders from "../search_headers";
+import SearchHeaders from "../components/search_headers";
 
 const Organisation = () => {
     const {

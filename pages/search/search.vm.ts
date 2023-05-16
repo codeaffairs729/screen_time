@@ -13,6 +13,7 @@ import { usereventSearchQueryResults } from "services/usermetrics.service";
 import { useHttpCall } from "common/hooks";
 import DatasetStats from "models/dataset_stats.model";
 import { Data } from "components/UI/result_card";
+import { useFetchStats } from "common/utils/datasets.util";
 
 export type Filter = {
     domains?: string[];
@@ -137,31 +138,33 @@ const SearchVM = () => {
     /**
      * Fetch stats for datasets to highlight favourite status
      */
-    const {
-        execute: excuteFectchStats,
-        data: stats,
-        isLoading: isFetchingStats,
-    } = useHttpCall<{ [key: string]: any }>({});
-    const fectchStats = (ids: number[]) =>
-        excuteFectchStats(
-            () =>
-                Http.post("/v1/datasets/stats", {
-                    meta_dataset_ids: ids,
-                }),
-            {
-                postProcess: (res) => {
-                    const o: { [key: string]: DatasetStats } = {};
-                    Object.keys(res).map(
-                        (id) =>
-                            (o[id] = DatasetStats.fromJson({
-                                ...res[id],
-                                dataset_id: id,
-                            }))
-                    );
-                    return o;
-                },
-            }
-        );
+    // const {
+    //     execute: excuteFectchStats,
+    //     data: stats,
+    //     isLoading: isFetchingStats,
+    // } = useHttpCall<{ [key: string]: any }>({});
+    // const fectchStats = (ids: number[]) =>
+    //     excuteFectchStats(
+    //         () =>
+    //             Http.post("/v1/datasets/stats", {
+    //                 meta_dataset_ids: ids,
+    //             }),
+    //         {
+    //             postProcess: (res) => {
+    //                 const o: { [key: string]: DatasetStats } = {};
+    //                 Object.keys(res).map(
+    //                     (id) =>
+    //                         (o[id] = DatasetStats.fromJson({
+    //                             ...res[id],
+    //                             dataset_id: id,
+    //                         }))
+    //                 );
+    //                 return o;
+    //             },
+    //         }
+    //     );
+    const { fectchStats, stats, isFetchingStats } = useFetchStats();
+    
 
     /**
      * Get search results
@@ -343,33 +346,33 @@ export const useSearchFilter = ({
     return { control, register, fields, replace };
 };
 
-export const datasetToResultCardData = (datasets: any, stats: any): Data[] => {
-    if (!datasets?.length) {
-        return [];
-    }
+// export const datasetToResultCardData = (datasets: any, stats: any): Data[] => {
+//     if (!datasets?.length) {
+//         return [];
+//     }
 
-    return datasets?.map((dataset: any) => ({
-        id: dataset.id,
-        title: dataset.detail.name,
-        recordType: "datasets",
-        description: dataset.detail.description,
-        dataQuality: dataset.detail.dataQuality,
-        licenseTypes: [dataset.detail.license.type],
-        topics: dataset.detail.topics,
-        isFavourited: stats[dataset.id]?.isFavourited,
-        lastUpdate: dataset.detail.lastUpdate,
-        domains:
-            typeof dataset.detail.domain === "string"
-                ? [dataset.detail.domain]
-                : dataset.detail.domain, //Some dataset are fetching from older version api need to update it in future
-        dataProviders: {
-            organisation: dataset.owner.organisation,
-            hostName: dataset.detail.hostName,
-            hostUuid: dataset.detail.hostUuid,
-            ownerUuid: dataset.owner.uuid,
-            hostUrl: dataset.detail.hostUrl,
-            ownerUrl: dataset.owner.ownerUrl,
-            datasetSource: dataset.detail.datasetUrl,
-        },
-    }));
-};
+//     return datasets?.map((dataset: any) => ({
+//         id: dataset.id,
+//         title: dataset.detail.name,
+//         recordType: "datasets",
+//         description: dataset.detail.description,
+//         dataQuality: dataset.detail.dataQuality,
+//         licenseTypes: [dataset.detail.license.type],
+//         topics: dataset.detail.topics,
+//         isFavourited: stats[dataset.id]?.isFavourited,
+//         lastUpdate: dataset.detail.lastUpdate,
+//         domains:
+//             typeof dataset.detail.domain === "string"
+//                 ? [dataset.detail.domain]
+//                 : dataset.detail.domain, //Some dataset are fetching from older version api need to update it in future
+//         dataProviders: {
+//             organisation: dataset.owner.organisation,
+//             hostName: dataset.detail.hostName,
+//             hostUuid: dataset.detail.hostUuid,
+//             ownerUuid: dataset.owner.uuid,
+//             hostUrl: dataset.detail.hostUrl,
+//             ownerUrl: dataset.owner.ownerUrl,
+//             datasetSource: dataset.detail.datasetUrl,
+//         },
+//     }));
+// };

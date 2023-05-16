@@ -1,5 +1,6 @@
-import Dataset from "models/dataset.model.v4";
-import { datasetToResultCardData } from "pages/search/search.vm";
+// import Dataset from "models/dataset.model.v4";
+// import { datasetToResultCardData } from "pages/search/search.vm";
+import { datasetToResultCardData } from "common/utils/datasets.util";
 import ResultCard, { Data } from "./result_card";
 
 const DatasetList = ({ stats, datasets }: any) => {
