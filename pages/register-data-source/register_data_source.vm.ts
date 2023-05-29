@@ -13,20 +13,20 @@ const RegisterDataSourceVM = () => {
     } = useHttpCall();
     const registerDataSource = (data: any) => {
         const sanitizedValues = pickBy(data, (value) => value?.length > 0);
-        if (sanitizedValues.metadata_standards == "other") {
-            sanitizedValues.metadata_standards =
-                sanitizedValues.metadata_standards_other;
-            delete sanitizedValues["metadata_standards_other"];
-        }
-        if (sanitizedValues.data_type == "other") {
-            sanitizedValues.data_type = sanitizedValues.data_type_other;
-            delete sanitizedValues["data_type_other"];
-        }
-        if (sanitizedValues.data_management_system == "other") {
-            sanitizedValues.data_management_system =
-                sanitizedValues.data_management_system_other;
-            delete sanitizedValues["data_management_system_other"];
-        }
+        // if (sanitizedValues.metadata_standards == "other") {
+        //     sanitizedValues.metadata_standards =
+        //         sanitizedValues.metadata_standards_other;
+        //     delete sanitizedValues["metadata_standards_other"];
+        // }
+        // if (sanitizedValues.data_type == "other") {
+        //     sanitizedValues.data_type = sanitizedValues.data_type_other;
+        //     delete sanitizedValues["data_type_other"];
+        // }
+        // if (sanitizedValues.data_management_system == "other") {
+        //     sanitizedValues.data_management_system =
+        //         sanitizedValues.data_management_system_other;
+        //     delete sanitizedValues["data_management_system_other"];
+        // }
 
         let host = false;
         let owner = false;
