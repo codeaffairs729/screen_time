@@ -11,16 +11,15 @@ const DataManagementSystem = ({ vm }: { vm: any }) => {
     React.useEffect(() => {
         const subscription = vm.form.watch(
             (value: any, { name, type }: { name: string; type: string }) => {
-                // const domain_values = [...value.domain];
-                const domain_values = JSON.parse(
-                    JSON.stringify([...value.domain])
-                );
-                let other_index = domain_values.indexOf("other");
-                if (name === "data_management_system") {
-                    if (other_index != -1) {
-                        setShowOther(true);
-                    } else {
-                        setShowOther(false);
+                if (value.data_management_system) {
+                    const data_management_system_values: string =
+                        value.data_management_system;
+                    if (name === "data_management_system") {
+                        if (data_management_system_values == "other") {
+                            setShowOther(true);
+                        } else {
+                            setShowOther(false);
+                        }
                     }
                 }
             }
@@ -34,6 +33,7 @@ const DataManagementSystem = ({ vm }: { vm: any }) => {
                 label="Data management system"
                 required={false}
                 tooltip={formRowToolTipData.data_management_system}
+                className="w-screen md:w-auto"
             >
                 <DropdownField
                     className="w-80"
@@ -44,6 +44,10 @@ const DataManagementSystem = ({ vm }: { vm: any }) => {
                     }}
                     options={[
                         {
+                            value: "arcgis",
+                            label: "ArcGIS",
+                        },
+                        {
                             value: "ckan",
                             label: "CKAN",
                         },
@@ -52,8 +56,28 @@ const DataManagementSystem = ({ vm }: { vm: any }) => {
                             label: "DKAN",
                         },
                         {
-                            value: "arcgis",
-                            label: "ArcGIS",
+                            value: "data_mill",
+                            label: "Data Mill",
+                        },
+                        {
+                            value: "edp",
+                            label: "EDP",
+                        },
+                        {
+                            value: "opendatasoft",
+                            label: "OpenDataSoft",
+                        },
+                        {
+                            value: "publishMyData",
+                            label: "PublishMyData",
+                        },
+                        {
+                            value: "socrata",
+                            label: "Socrata",
+                        },
+                        {
+                            value: "usmart",
+                            label: "uSmart",
                         },
                         {
                             value: "other",
@@ -69,14 +93,14 @@ const DataManagementSystem = ({ vm }: { vm: any }) => {
             </FormRow>
             <div className={`${showOther ? "" : "hidden"}`}>
                 <FormRow
-                    label="Other domain(s)"
-                    tooltip={formRowToolTipData.domain_other}
+                    label="Data management system (other)"
+                    tooltip={formRowToolTipData.data_management_system_other}
                 >
                     <TextField
                         className="w-80"
                         formControl={{
                             control: vm.form.control,
-                            name: "domain_other",
+                            name: "data_management_system_other",
                             rules: {},
                         }}
                         placeholder="E.g. https://healthdata.gov/sitemap"

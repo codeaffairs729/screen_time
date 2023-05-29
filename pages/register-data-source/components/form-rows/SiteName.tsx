@@ -10,6 +10,7 @@ const SiteName = ({ vm }: { vm: any }) => {
             label="Organisation name"
             required={true}
             tooltip={formRowToolTipData.site_name}
+            className=" w-screen md:w-auto"
         >
             <TextField
                 className="w-80"

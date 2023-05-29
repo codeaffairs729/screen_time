@@ -13,17 +13,15 @@ const DataType = ({ vm }: { vm: any }) => {
     React.useEffect(() => {
         const subscription = vm.form.watch(
             (value: any, { name, type }: { name: string; type: string }) => {
-                // const domain_values = [...value.domain];
-                const domain_values = JSON.parse(
-                    JSON.stringify([...value.domain])
-                );
-
-                let other_index = domain_values.indexOf("other");
-                if (name === "data_type") {
-                    if (other_index != -1) {
-                        setShowOther(true);
-                    } else {
-                        setShowOther(false);
+                if (value.data_type) {
+                    const data_type: string = value.data_type;
+                    const other_index = data_type.indexOf("other");
+                    if (name === "data_type") {
+                        if (other_index != -1) {
+                            setShowOther(true);
+                        } else {
+                            setShowOther(false);
+                        }
                     }
                 }
             }
@@ -37,6 +35,7 @@ const DataType = ({ vm }: { vm: any }) => {
                 label="Data type"
                 required={false}
                 tooltip={formRowToolTipData.data_type}
+                className="w-screen md:w-auto"
             >
                 <DropdownField
                     className="w-80"
@@ -72,14 +71,14 @@ const DataType = ({ vm }: { vm: any }) => {
             </FormRow>
             <div className={`${showOther ? "" : "hidden"}`}>
                 <FormRow
-                    label="Other domain(s)"
-                    tooltip={formRowToolTipData.domain_other}
+                    label="Data type (other)"
+                    tooltip={formRowToolTipData.data_type_other}
                 >
                     <TextField
                         className="w-80"
                         formControl={{
                             control: vm.form.control,
-                            name: "domain_other",
+                            name: "data_type_other",
                             rules: {},
                         }}
                         placeholder="E.g. https://healthdata.gov/sitemap"

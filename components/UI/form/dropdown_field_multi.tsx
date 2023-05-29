@@ -23,10 +23,11 @@ const DropdownFieldMulti = ({
 } & FieldProps) => {
     const [selected, setSelected] = useState<Option[]>([]);
     const [query, setQuery] = useState("");
+    const [isOpen, setIsOpen] = useState(false);
 
     const {
         fieldState: { error },
-        field: { onChange, name },
+        field: { onChange, name , value},
     } = useController({
         ...formControl,
         defaultValue:
@@ -34,6 +35,7 @@ const DropdownFieldMulti = ({
                 ? ""
                 : formControl["defaultValue"],
     });
+    
     const filteredOtions =
         query === ""
             ? options
@@ -53,6 +55,30 @@ const DropdownFieldMulti = ({
             <Combobox
                 value={selected}
                 onChange={(o: any) => {
+                    const seen:any = {};
+                    const duplicates:any = [];
+
+                    o.forEach((obj:any, index:any) => {
+                        if (seen[obj.value]) {
+                            seen[obj.value].push(index);
+                        } else {
+                            seen[obj.value] = [index];
+                        }
+                    });
+
+                    Object.values(seen).forEach((indices:any) => {
+                        if (indices.length > 1) {
+                            duplicates.push(...indices);
+                        }
+                    });
+
+                    duplicates
+                        .sort()
+                        .reverse()
+                        .forEach((index:any) => {
+                            o.splice(index, 1);
+                        });
+
                     let values = o.map((option: Option) => {
                         return option.value;
                     });
@@ -66,7 +92,7 @@ const DropdownFieldMulti = ({
                     <Combobox.Button className=" w-full ">
                         <Combobox.Input
                             className={clsx(
-                                "w-full rounded-lg focus:ring-dtech-secondary-light border-2 border-dtech-secondary-light focus:border-dtech-secondary-light disabled:border-gray-300 disabled:bg-gray-50 py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 placeholder:text-gray-500 placeholder:text-sm placeholder:font-bold",
+                                "w-full rounded-lg focus:ring-dtech-secondary-light border-2 border-dtech-main-dark focus:border-dtech-main-dark disabled:border-gray-300 disabled:bg-gray-50 py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 placeholder:text-gray-500 placeholder:text-sm placeholder:font-bold",
                                 { "border-red-700": hasError }
                             )}
                             displayValue={(selOpts: Option[]) => {
@@ -78,7 +104,6 @@ const DropdownFieldMulti = ({
                                         dispString = `${option.label}, ${dispString}`;
                                     }
                                 });
-                                console.log("options", selOpts);
                                 return dispString;
                             }}
                             onChange={(event) => setQuery(event.target.value)}
@@ -91,6 +116,8 @@ const DropdownFieldMulti = ({
                     </Combobox.Button>
                 </div>
                 <Transition
+                    // show={isOpen}
+
                     as={Fragment}
                     leave="transition ease-in duration-100"
                     leaveFrom="opacity-100"
@@ -104,7 +131,7 @@ const DropdownFieldMulti = ({
                             </div>
                         ) : (
                             options.map((option, i) => (
-                                <ComboOption key={i} option={option} />
+                                <ComboOption key={i} option={option} selected={selected}/>
                             ))
                         )}
                     </Combobox.Options>
@@ -119,28 +146,28 @@ const DropdownFieldMulti = ({
     );
 };
 
-const ComboOption = ({ option }: { option: Option }) => {
+const ComboOption = ({ option, selected }: { option: Option, selected:any}) => {
     return (
         <Combobox.Option
             className={({ active }) =>
                 `cursor-default select-none relative py-2 pl-10 pr-4 ${
                     active
-                        ? "text-white bg-dtech-secondary-light"
+                        ? "text-white bg-dtech-main-dark"
                         : "text-gray-900"
                 }`
             }
             value={option}
         >
-            {({ selected, active }) => (
+            {({  active }) => (
                 <>
                     <span
                         className={`block truncate ${
-                            selected ? "font-medium" : "font-normal"
+                            selected.includes(option.value) ? "font-medium" : "font-normal"
                         }`}
                     >
                         {option.label}
                     </span>
-                    {selected ? (
+                    {selected.some((obj:any) => JSON.stringify(obj) === JSON.stringify(option)) ? (
                         <span
                             className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
                                 active

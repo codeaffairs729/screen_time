@@ -4,33 +4,32 @@ import DropdownField from "components/UI/form/dropdown_field";
 import { ToolTipJson } from "../form_tooltip_type";
 const formRowToolTipData: ToolTipJson = require("../form_tooltip.json");
 
-const DataDuplication = ({ vm }: { vm: any }) => {
+const DataProviderType = ({ vm }: { vm: any }) => {
     return (
         <FormRow
-            label="Potential data duplication"
-            tooltip={formRowToolTipData.data_duplication}
+            label="Data provider type"
+            tooltip={formRowToolTipData.data_provider_type}
             className="w-screen md:w-auto"
-
         >
             <DropdownField
                 className="w-80"
                 formControl={{
                     control: vm.form.control,
-                    name: "data_duplication",
+                    name: "data_provider_type",
                     rules: {},
                 }}
                 options={[
                     {
-                        value: "yes",
-                        label: "Yes",
+                        value: "host",
+                        label: "Data host",
                     },
                     {
-                        value: "no",
-                        label: "No",
+                        value: "owner",
+                        label: "Data owner",
                     },
                     {
-                        value: "unknown",
-                        label: "Don't know",
+                        value: "host&owner",
+                        label: "Data host & owner",
                     },
                 ]}
                 placeholder=""
@@ -39,4 +38,4 @@ const DataDuplication = ({ vm }: { vm: any }) => {
     );
 };
 
-export default DataDuplication;
+export default DataProviderType;

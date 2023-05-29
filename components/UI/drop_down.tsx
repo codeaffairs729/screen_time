@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { Fragment, ReactNode, useState } from "react";
 import { VscTriangleDown } from "react-icons/vsc";
+import isURL from "validator/lib/isURL";
 
 export type MenuItemType = {
     label: string;
@@ -35,7 +36,6 @@ const Dropdown = ({
     const router = useRouter();
     const [showMenu, setShowMenu] = useState(false);
     const currentRoute = router.pathname;
-
     const onClick = (e: any) => {
         // e.preventDefault();
         e.stopPropagation();
@@ -53,15 +53,23 @@ const Dropdown = ({
                     className
                 )}
             >
-                <span
-                    id="profile-dropdown"
+                {typeof label=="string" ? isURL(label)?<img src={label} height={50} width={50} className="rounded-full"></img>:<span
+                    id="dropdown"
                     className={clsx(
-                        "text-inherit text-sm select-none outline-none",
+                        " ",
                         labelClasses
                     )}
                 >
                     {label}
-                </span>
+                </span>:<span
+                    id="profile-dropdown"
+                    className={clsx(
+                        "select-none outline-none",
+                        labelClasses
+                    )}
+                >
+                    {<label />}
+                </span>}
                 <VscTriangleDown
                     className={`ml-2 text-2xl text-inherit transition-all ${
                         showMenu && "rotate-180"

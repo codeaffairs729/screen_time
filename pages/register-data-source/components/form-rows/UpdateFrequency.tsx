@@ -9,6 +9,8 @@ const UpdateFrequency = ({ vm }: { vm: any }) => {
         <FormRow
             label="Website update frequency"
             tooltip={formRowToolTipData.update_frequency}
+            className="w-screen md:w-auto"
+
         >
             <DropdownField
                 className="w-80"
@@ -54,6 +56,10 @@ const UpdateFrequency = ({ vm }: { vm: any }) => {
                     {
                         value: "annually",
                         label: "Annually",
+                    },
+                    {
+                        value: "unknown",
+                        label: "Don't know",
                     },
                 ]}
                 placeholder=""
