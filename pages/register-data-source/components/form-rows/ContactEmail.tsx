@@ -11,6 +11,7 @@ const ContactEmail = ({ vm }: { vm: any }) => {
             label="Contact email"
             required={true}
             tooltip={formRowToolTipData.contact_email}
+            className=" w-screen md:w-auto"
         >
             <TextField
                 className="w-80"

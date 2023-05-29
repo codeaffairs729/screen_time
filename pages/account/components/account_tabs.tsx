@@ -42,7 +42,7 @@ const AccountTabHeaders = ({
     const [selected, setSelected] = useState<number>(selectedIndex);
 
     return (
-        <Tab.List className="relative text-dtech-main-dark bg-gray-50 flex flex-row md:flex-col overflow-x-auto">
+        <Tab.List className="relative text-dtech-main-dark flex flex-row md:flex-col overflow-x-auto">
             {HEADERS.map((header: Header, index: number) => (
                 <TabIconHeader key={index} onClick={() => setSelected(index)}>
                     <Image

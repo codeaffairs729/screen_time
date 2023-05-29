@@ -10,6 +10,8 @@ const MetadataLevel = ({ vm }: { vm: any }) => {
             label="Metadata availability"
             required={true}
             tooltip={formRowToolTipData.site_url}
+            className=" w-screen md:w-auto"
+
         >
             <DropdownField
                 className="w-80"

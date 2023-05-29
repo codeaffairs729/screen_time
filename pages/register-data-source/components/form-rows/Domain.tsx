@@ -6,6 +6,11 @@ import { useState } from "react";
 import TextField from "components/UI/form/text_field";
 const formRowToolTipData: ToolTipJson = require("../form_tooltip.json");
 
+export type Option = {
+    value: any;
+    label: string;
+};
+
 const Domain = ({ vm }: { vm: any }) => {
     const [showOther, setShowOther] = useState(false);
 
@@ -13,14 +18,14 @@ const Domain = ({ vm }: { vm: any }) => {
     React.useEffect(() => {
         const subscription = vm.form.watch(
             (value: any, { name, type }: { name: string; type: string }) => {
-                // const domain_values = [...value.domain];
-                const domain_values = JSON.parse(
-                    JSON.stringify([...value.domain])
-                );
+                const domain_values: Array<string> = [];
+                if (value.domain) {
+                    domain_values.push(...value.domain);
+                }
 
                 let other_index = domain_values.indexOf("other");
                 if (name === "domain") {
-                    if (other_index != -1) {
+                    if (other_index > -1) {
                         setShowOther(true);
                     } else {
                         setShowOther(false);
@@ -38,6 +43,7 @@ const Domain = ({ vm }: { vm: any }) => {
                 label="Domain"
                 required={true}
                 tooltip={formRowToolTipData.domain}
+                className=" w-screen md:w-auto"
             >
                 <DropdownFieldMulti
                     className="w-80"
@@ -85,22 +91,27 @@ const Domain = ({ vm }: { vm: any }) => {
                     placeholder=""
                 />
             </FormRow>
-            <div className={`${showOther ? "" : "hidden"}`}>
-                <FormRow
-                    label="Other domain(s)"
-                    tooltip={formRowToolTipData.domain_other}
-                >
-                    <TextField
-                        className="w-80"
-                        formControl={{
-                            control: vm.form.control,
-                            name: "domain_other",
-                            rules: {},
-                        }}
-                        placeholder="E.g. https://healthdata.gov/sitemap"
-                    />
-                </FormRow>
-            </div>
+            {showOther && (
+                <div>
+                    <FormRow
+                        label="Domain (other)"
+                        tooltip={formRowToolTipData.domain_other}
+                        required={true}
+                    >
+                        <TextField
+                            className="w-80"
+                            formControl={{
+                                control: vm.form.control,
+                                name: "domain_other",
+                                rules: {
+                                    required: "Domain(other) is required.",
+                                },
+                            }}
+                            placeholder="E.g. https://healthdata.gov/sitemap"
+                        />
+                    </FormRow>
+                </div>
+            )}
         </>
     );
 };

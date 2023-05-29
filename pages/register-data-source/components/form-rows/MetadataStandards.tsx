@@ -13,16 +13,15 @@ const MetadataStandards = ({ vm }: { vm: any }) => {
     React.useEffect(() => {
         const subscription = vm.form.watch(
             (value: any, { name, type }: { name: string; type: string }) => {
-                // const domain_values = [...value.domain];
-                const domain_values = JSON.parse(
-                    JSON.stringify([...value.domain])
-                );
-                let other_index = domain_values.indexOf("other");
-                if (name === "metadata_standards") {
-                    if (other_index != -1) {
-                        setShowOther(true);
-                    } else {
-                        setShowOther(false);
+                if (value.metadata_standards) {
+                    const metadata_standards: string = value.metadata_standards;
+                    let other_index = metadata_standards.indexOf("other");
+                    if (name === "metadata_standards") {
+                        if (other_index != -1) {
+                            setShowOther(true);
+                        } else {
+                            setShowOther(false);
+                        }
                     }
                 }
             }
@@ -36,6 +35,7 @@ const MetadataStandards = ({ vm }: { vm: any }) => {
                 label="Metadata standards"
                 required={false}
                 tooltip={formRowToolTipData.site_url}
+                className="w-screen md:w-auto"
             >
                 <DropdownField
                     className="w-80"
@@ -50,7 +50,7 @@ const MetadataStandards = ({ vm }: { vm: any }) => {
                             label: "Schema.org",
                         },
                         {
-                            value: "scat",
+                            value: "dcat",
                             label: "DCAT",
                         },
                         {
@@ -67,14 +67,14 @@ const MetadataStandards = ({ vm }: { vm: any }) => {
             </FormRow>
             <div className={`${showOther ? "" : "hidden"}`}>
                 <FormRow
-                    label="Other domain(s)"
-                    tooltip={formRowToolTipData.domain_other}
+                    label="Metadata standards (other)"
+                    tooltip={formRowToolTipData.metadata_standards_other}
                 >
                     <TextField
                         className="w-80"
                         formControl={{
                             control: vm.form.control,
-                            name: "domain_other",
+                            name: "metadata_standards_other",
                             rules: {},
                         }}
                         placeholder="E.g. https://healthdata.gov/sitemap"

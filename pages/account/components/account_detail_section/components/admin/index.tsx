@@ -28,13 +28,33 @@ const AdminSection = () => {
         <div className="pt-16">
             <AdminTabPanelVMContext.Provider value={vm}>
                 <div className="lg:flex flex-row justify-between items-center max-w-3xl mx-auto">
-                    {/* <div className=" absolute ml-[105px] mt-[-100px] cursor-pointer">
+                    <div className=" absolute ml-[105px] mt-[-100px] cursor-pointer">
                         <Image src={cameraImage} width="50px" height="50px" />
-                    </div> */}
+                    </div>
                     <div className="select-none outline-none text-lg w-36 h-36 flex justify-center items-center bg-[#E2E2E2]  rounded-full text-[#F5F5F5] font-medium text-[96px] mx-auto mb-4">
                         {nameInitial}
                     </div>
                     <div className="grid md:grid-cols-2 gap-4">
+                    <FormRow
+                            label="name"
+                            labelClass="!bg-[#F8F8F8] !w-auto z-10 mx-5 absolute mb-10 text-dtech-main-dark !py-1"
+                        >
+                            <TextField
+                                className="bg-gray-50"
+                                disabled={false}
+                                formControl={{
+                                    control: control,
+                                    name: "name",
+                                    defaultValue:
+                                        "",
+                                    rules: {
+                                        required: "Organisation is required",
+                                    },
+                                }}
+                                placeholder="Name"
+                                textfieldClassName="!focus:ring-dtech-main-dark border-2 !border-dtech-main-dark !focus:border-dtech-main-dark"
+                            />
+                        </FormRow>
                         <FormRow
                             label="Organisation"
                             labelClass="!bg-[#F8F8F8] !w-auto z-10 mx-5 absolute mb-10 text-dtech-main-dark !py-1"
@@ -44,9 +64,9 @@ const AdminSection = () => {
                                 disabled={true}
                                 formControl={{
                                     control: control,
-                                    name: "name",
+                                    name: "orgnaisation",
                                     defaultValue:
-                                        User.getOrganisation(admin_user)?.name,
+                                        "",
                                     rules: {
                                         required: "Organisation is required",
                                     },
@@ -56,52 +76,41 @@ const AdminSection = () => {
                             />
                         </FormRow>
                         <FormRow
-                            label="Sector"
-                            labelClass=" !bg-[#F8F8F8] !w-auto z-10 mx-5 absolute mb-10 text-dtech-main-dark !py-1"
+                            label="Email"
+                            labelClass="!bg-[#F8F8F8] !w-auto z-10 mx-5 absolute mb-10 text-dtech-main-dark !py-1"
                         >
-                            <DropdownField
-                                inputClass=" !focus:ring-dtech-main-dark border-1 !border-dtech-main-dark !focus:border-dtech-main-dark !bg-transparent"
-                                placeholder="Sector"
-                                options={[
-                                    {
-                                        value: "public_sector",
-                                        label: "Public Sector",
-                                    },
-                                    {
-                                        value: "private_sector",
-                                        label: "Private Sector",
-                                    },
-                                    {
-                                        value: "third_sector",
-                                        label: "Third Sector",
-                                    },
-                                ]}
-                                formControl={{
-                                    control: control,
-                                    defaultValue:
-                                        User.getOrganisation(admin_user)
-                                            ?.sector,
-                                    name: "sector",
-                                    rules: {
-                                        required: "Sector is required",
-                                    },
-                                }}
-                            />
-                        </FormRow>
-                        <FormRow label="Max members"  labelClass=" !bg-[#F8F8F8] !w-auto z-10 mx-5 absolute mb-10 text-dtech-main-dark !py-1">
                             <TextField
                                 className="bg-gray-50"
+                                disabled={true}
                                 formControl={{
                                     control: control,
+                                    name: "email",
                                     defaultValue:
-                                        User.getOrganisation(admin_user)
-                                            ?.maxMembers,
-                                    name: "max_members",
+                                        "",
                                     rules: {
-                                        required: "Max. members is required",
+                                        required: "",
                                     },
                                 }}
-                                placeholder="Max. members"
+                                placeholder="Email"
+                                textfieldClassName="!focus:ring-dtech-main-dark border-2 !border-dtech-main-dark !focus:border-dtech-main-dark"
+                            />
+                        </FormRow>
+                        <FormRow
+                            label="Role"
+                            labelClass="!bg-[#F8F8F8] !w-auto z-10 mx-5 absolute mb-10 text-dtech-main-dark !py-1"
+                        >
+                            <TextField
+                                className="bg-gray-100"
+                                disabled={false}
+                                formControl={{
+                                    control: control,
+                                    name: "role",
+                                    defaultValue:User.getOrganisation(admin_user)?.name,
+                                    rules: {
+                                        required: "",
+                                    },
+                                }}
+                                placeholder="role"
                                 textfieldClassName="!focus:ring-dtech-main-dark border-2 !border-dtech-main-dark !focus:border-dtech-main-dark"
                             />
                         </FormRow>

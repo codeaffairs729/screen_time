@@ -11,6 +11,7 @@ const SiteUrl = ({ vm }: { vm: any }) => {
             label="Data source website URL"
             required={true}
             tooltip={formRowToolTipData.site_url}
+            className=" w-screen md:w-auto bg-white"
         >
             <TextField
                 className="w-80"
@@ -29,6 +30,7 @@ const SiteUrl = ({ vm }: { vm: any }) => {
                 placeholder="E.g. https://healthdata.gov"
             />
         </FormRow>
+        
     );
 };
 
