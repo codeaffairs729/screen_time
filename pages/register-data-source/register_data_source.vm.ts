@@ -58,9 +58,9 @@ const RegisterDataSourceVM = () => {
             () =>
                 Promise.all([
                     Http.post("/v1/data_sources/", newValues),
-                    Http.post("/v1/data_sources/", newValues, {
-                        baseUrl: process.env.NEXT_PUBLIC_PIPELINE_API_ROOT,
-                    }),
+                    // Http.post("/v1/data_sources/", newValues, {
+                    //     baseUrl: process.env.NEXT_PUBLIC_PIPELINE_API_ROOT,
+                    // }),
                 ]),
             {
                 onSuccess: (res) => {
