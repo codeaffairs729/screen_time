@@ -106,14 +106,19 @@ const OrganizationSearchVM = () => {
     }, [pageSize]);
 
     useEffect(() => {
-        if (router.pathname === "/search/organisation") {
-            const url = new URL(window.location.href);
-            const params = new URLSearchParams(url.search);
+        // if (router.pathname === "/search/organisation") {
+        //     const url = new URL(window.location.href);
+        //     const params = new URLSearchParams(url.search);
 
-            params.set("page", `${currentPageNo}`);
+        //     params.set("page", `${currentPageNo}`);
 
-            // Replace the current URL with the updated URL
-            window.history.replaceState({}, "", `${url.pathname}?${params}`);
+        //     // Replace the current URL with the updated URL
+        //     window.history.replaceState({}, "", `${url.pathname}?${params}`);
+        // }
+        if (currentPageNo.toString() != router.query?.page) {
+            router.replace({
+                query: { ...router.query, page: currentPageNo },
+            });
         }
     }, [currentPageNo]);
 
