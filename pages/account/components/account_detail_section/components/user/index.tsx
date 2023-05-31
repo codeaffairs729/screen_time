@@ -5,6 +5,7 @@ import TextField from "components/UI/form/text_field";
 import Image from "next/image";
 import UserTabPanelVM from "./user_tab_panel.vm";
 import cameraImage from "public/images/icons/camera_filled.svg";
+import toast from "react-hot-toast";
 import { useController } from "react-hook-form";
 import { useRef, useState } from "react";
 import { useSelector } from "react-redux";
@@ -167,7 +168,7 @@ const UserSection = () => {
                     label="Update"
                     isLoading={vm.isSavingUserDetails}
                     onClick={() => {
-                        vm.form.handleSubmit(() => {
+                        file!=user?.user_image_url?vm.form.handleSubmit(() => {
                             const formData = new FormData();
                             formData.append("name", vm.form.getValues().name);
                             formData.append("email", vm.form.getValues().email);
@@ -181,7 +182,7 @@ const UserSection = () => {
                                 ...vm.form.getValues(),
                                 image: file,
                             });
-                        })();
+                        })():toast.error("Please change the image")
                     }}
                 />
             </div>
