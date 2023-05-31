@@ -15,6 +15,7 @@ const AdminTabPanelVM = () => {
     const { control, handleSubmit, reset, clearErrors } = useForm();
     const organisationId = adminUser?.organisations?.[0]?.organisation_id;
     let [isAddMemberModalOpen, setIsAddMemberModalOpen] = useState(false);
+    const form=useForm()
 
     // Fetch users belonging to the current organisation
     const {
@@ -172,6 +173,7 @@ const AdminTabPanelVM = () => {
         changingRoleUserId,
         control,
         handleSubmit,
+        form
     };
 };
 

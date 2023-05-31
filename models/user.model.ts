@@ -73,6 +73,7 @@ class User {
         roleOther,
         // isDataOwner,
         user_image_url,
+        logo_url,
         organisation,
         organisations,
         updatedAt,
@@ -85,6 +86,7 @@ class User {
         role: UserRole;
         roles: Role[];
         user_image_url: string;
+        logo_url: string;
         // isDataOwner: Boolean;
         organisation: string;
         organisations: Organisation[];
@@ -98,6 +100,7 @@ class User {
         this.roles = roles;
         this.roleOther = roleOther;
         this.user_image_url = user_image_url;
+        this.logo_url = logo_url;
         // this.isDataOwner = isDataOwner;
         this.organisation = organisation;
         this.organisations = organisations;
@@ -111,6 +114,7 @@ class User {
     role: UserRole;
     roles: Role[];
     user_image_url: string;
+    logo_url: string;
     roleOther: string;
     // isDataOwner: Boolean;
     organisation: string;
@@ -134,6 +138,7 @@ class User {
             roles: roles,
             roleOther: json["role_other"],
             user_image_url: json["user_image_url"],
+            logo_url: json["logo_url"],
             // isDataOwner: json["is_data_owner"],
             organisation: json["organisation"],
             organisations: organisations,
