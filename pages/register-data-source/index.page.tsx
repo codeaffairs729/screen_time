@@ -32,7 +32,7 @@ const RegisterDataSourcePage = () => {
             <div className="grow flex flex-col p-4">
                 <div className="mx-4 md:mx-20 flex">
                     <span className="text-left text-[26px] font-semibold">
-                        REGISTER A DATA SOURCE
+                        Register a Data Source
                     </span>
                 </div>
                 <div className="my-4 mx-4 md:mx-20">
