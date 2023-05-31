@@ -5,7 +5,7 @@ import { HiOutlineChevronUpDown } from "react-icons/hi2";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "store";
 import { updateSearchType } from "store/search/search.action";
-
+import { useRouter } from "next/router";
 export const SearchTypes = {
     DATASET: { label: "Dataset", value: "dataset" },
     ORGANISATION: { label: "Data Provider", value: "organisation" },
@@ -24,13 +24,15 @@ const SearchTypeSelect = () => {
         (state: RootState) => state.search.type
     );
     const dispatch = useDispatch();
+    const router =useRouter()
     useEffect(() => {
+        if(router.route!=='/'){
         const filteredSearchTypes = searchTypes.filter(
             (st) => st.value.toLowerCase() == savedSearchType.toLowerCase()
         );
         if (filteredSearchTypes.length > 0) {
             setSelected(filteredSearchTypes[0]);
-        }
+        }}
     }, []);
 
     return (
