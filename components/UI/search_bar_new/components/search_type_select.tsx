@@ -33,6 +33,9 @@ const SearchTypeSelect = () => {
         if (filteredSearchTypes.length > 0) {
             setSelected(filteredSearchTypes[0]);
         }}
+        else{
+            dispatch(updateSearchType(selected.value))
+        }
     }, []);
 
     return (
