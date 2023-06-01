@@ -14,7 +14,7 @@ const Accordion = ({
     children,
 }: {
     feature: string;
-    guest: string | boolean;
+    guest?: string | boolean;
     essential: string | boolean;
     professional: string | boolean;
     premium: string | boolean;
@@ -30,106 +30,133 @@ const Accordion = ({
     };
 
     return (
-        <div>
-            <div className="flex flex-row rounded-xl ">
+        <div  >
+            <div className="flex  flex-row "  >
                 <div
-                    className={`w-[28%] ${
-                        isActive && " bg-[#D3D3D3]"
-                    } flex-wrap flex justify-between p-8 border-4 border-grey h-  ${
+                    className={` ${index==0 && "rounded-t-3xl "} w-[32%]   ${
+                        isActive && "bg-[#E4C3F9]"
+                    } flex-wrap  flex justify-between p-8 border-t-4 border-r-4 border-l-4 ${index==5 && "border-b-4"} border-grey h-  ${
                         !children &&
                         typeof guest != "boolean" &&
-                        " items-center h-64"
+                        " items-center  h-64  "
                     } ${
                         !children &&
                         feature != "Features" &&
-                        "h-[50px]  text-xs !p-[4px] "
+                        "h-[50px]   text-xs !p-[4px] "
                     }
                     ${
                         feature == "Features" &&
-                        " !justify-center !items-center pb-52"
+                        " !justify-center !items-center pb-52 "
                     }`}
                     style={{ height: "inherit" }}
                 >
-                    <div>{feature}</div>
-                    <div>
+                   <div className="flex items-stretch">
+                    <div className=" mt-11 justify-center text-xl items-center">{feature}</div>
+                    
+                    <div className=" ml-3 mt-11 justify-center text-xl items-center" >
                         {children && (
                             <div
-                                className=" cursor-pointer"
+                                className=" cursor-pointer "
                                 onClick={() => setIsActive(!isActive)}
                             >
-                                <BsChevronDown size={25} />
+                                <BsChevronDown style={{ fontSize: '2.5rem' , color: '#3f0068'}} />
                             </div>
                         )}
                     </div>
+                    </div>
                 </div>
-                <div className=" w-[18%] bg-[#E4C3F9] flex flex-wrap justify-center text-lg items-center border-4 border-white">
-                    {typeof guest == "boolean" ? (
-                        guest ? (
-                            <BsCheck size={40} />
+                {guest !== undefined ? (
+                    <div className={` w-[18%] ${index==0 && "rounded-t-3xl "}  flex flex-wrap justify-center text-lg items-center border-4 border-white`}>
+                        {typeof guest == "boolean" ? (
+                            guest ? (
+                                <BsCheck style={{ fontSize: '5rem' }}/>
+                            ) : (
+                                "_"
+                            )
+                        ) : guest == "Guest (free)" ? (
+                            <div
+                                className=" pb-36 font-medium break-words"
+                                style={{ overflowWrap: "anywhere" }}
+                            >
+                                <div>{guest.split(" ")[0]}</div>
+                                <div>{guest.split(" ")[1]}</div>
+                            </div>
                         ) : (
-                            "_"
-                        )
-                    ) : guest == "Guest (free)" ? (
-                        <div
-                            className=" pb-36 font-medium break-words"
-                            style={{ overflowWrap: "anywhere" }}
-                        >
-                            <div>{guest.split(" ")[0]}</div>
-                            <div>{guest.split(" ")[1]}</div>
-                        </div>
-                    ) : (
-                        guest
-                    )}
-                </div>
-                <div className=" w-[18%] bg-[#E3B7FF] flex flex-wrap break-words justify-center text-lg items-center border-4 border-white">
-                    {typeof essential == "boolean" ? (
+                            guest
+                        )}
+                    </div>
+                ) : (
+                    ""
+                )}
+
+                <div className={` w-[22%]  ${index == 0 && "rounded-t-3xl"} bg-[#E4C3F9] flex flex-wrap break-words justify-center text-lg items-center border-4 border-white`}>
+                
+                    {typeof essential == "boolean" ?  (
                         essential ? (
-                            <BsCheck size={40} />
+                            <BsCheck style={{ fontSize: '2rem' }} />
                         ) : (
                             "_"
                         )
                     ) : index == 0 ? (
-                        <div className="flex flex-col justify-center font-medium items-center">
+                        <div className={`flex flex-col  justify-center font-medium items-center"`}  >
                             <div
-                                className=" mb-14   flex flex-col justify-center items-center"
-                                style={{ overflowWrap: "anywhere" }}
+                               className="flex flex-col justify-center items-center"
+                               style={{ overflowWrap: "anywhere" }}
                             >
                                 <div>{essential.split(" ")[0]}</div>
-                                <div>{essential.split(" ")[1]}</div>
+                                <div >{essential.split(" ")[1]}</div>
                                 <div> {essential.split(" ")[2]}</div>
                             </div>
-                            <div className="">
-                                <button
+                            
+                            <div className="  text-center my-6 mx-">
+                                <div className="  text-xl font-medium">
+                                    <h1> </h1>
+                                </div>
+                                
+                                </div>
+                            <div >
+                            <button
                                     className=" bg-white shadow-xl rounded-full p-1 text-xs !flex md:text-xl md:!px-10 md:p-4"
                                     onClick={handleClick}
                                 >
                                     {!user ? (
                                         <div>Sign Up</div>
                                     ) : (
-                                        <div>Upgrade</div>
+                                        <div>Subscribed</div>
                                     )}
                                 </button>
                             </div>
                         </div>
-                    ) : (
-                        essential
-                    )}
+                    ) : 
+                        <div>
+                            {(children &&
+                                children.filter(
+                                    (item: any) =>
+                                        item.props.essential === false
+                                ).length) == 0 ? (
+                                <BsCheck  style={{ fontSize: '5rem' }} />
+                            ) : (
+                                essential
+                            )}
+                        </div>
+                    } 
+                
                 </div>
-                <div className=" w-[18%] bg-[#D396FA] flex flex-wrap break-words justify-center text-lg items-center border-4 border-white">
+                <div className={` w-[22%] ${index == 0 && "rounded-t-3xl "} bg-[#D396FA] flex flex-wrap break-words justify-center text-lg items-center border-4 border-white`}>
                     {typeof professional == "boolean" ? (
                         professional ? (
-                            <BsCheck size={40} />
+                            <BsCheck style={{ fontSize: '5rem' }} />
                         ) : (
                             "_"
                         )
                     ) : index == 0 ? (
                         <div
-                            className="flex flex-col justify-center items-center"
-                            style={{ overflowWrap: "anywhere" }}
+                        className="flex flex-col justify-center items-center"
+                        style={{ overflowWrap: "anywhere" }}
                         >
-                            <div className=" font-medium ">{professional}</div>
-                            <div className="text-center my-6 mx-">
-                                <div className=" text-xl font-medium">
+                            <div className="">{professional}</div>
+                            <div className="  text-center my-6 mx-">
+                                <div className="  text-xl font-medium">
                                     <h1> </h1>
                                 </div>
                                 <div className=" text-xs font-medium">
@@ -139,7 +166,7 @@ const Accordion = ({
                                     </h6>
                                 </div>
                             </div>
-                            <div className="">
+                            <div >
                                 <button
                                     className=" bg-white shadow-xl rounded-full p-1 text-xs !flex md:text-xl md:!px-10 md:p-4"
                                     onClick={handleClick}
@@ -152,14 +179,19 @@ const Accordion = ({
                                 </button>
                             </div>
                         </div>
+                    ) : (children &&
+                          children.filter(
+                              (item: any) => item.props.professional === false
+                          ).length) == 0 ? (
+                        <BsCheck style={{ fontSize: '5rem' }} />
                     ) : (
                         professional
                     )}
                 </div>
-                <div className=" w-[18%] bg-[#B46DE2] flex flex-wrap break-words justify-center text-lg items-center border-4 border-white">
+                <div className={`w-[22%] ${index == 0 && "rounded-t-2xl"}  bg-[#B46DE2] flex flex-wrap break-words justify-center text-lg items-center border-4 border-white`} >
                     {typeof premium == "boolean" ? (
                         premium ? (
-                            <BsCheck size={40} />
+                            <BsCheck style={{ fontSize: '3rem' }} />
                         ) : (
                             "_"
                         )
@@ -193,14 +225,20 @@ const Accordion = ({
                                 </button>
                             </div>
                         </div>
+                    ) : (children &&
+                          children.filter(
+                              (item: any) => item.props.premium === false
+                          ).length) == 0 ? (
+                        <BsCheck style={{ fontSize: '5rem' }} />
                     ) : (
                         premium
                     )}
                 </div>
             </div>
 
-            {
-                isActive && children
+            
+               { isActive && children
+              
                 // <div className="flex flex-row rounded-xl ">
                 //     <div className=" w-[20%] flex justify-between p-4 border-4 border-grey">
                 //     <div>{feature}</div>
@@ -219,7 +257,7 @@ const Accordion = ({
                 //         {premium}
                 //     </div>
                 // </div>
-            }
+            } 
         </div>
     );
 };
