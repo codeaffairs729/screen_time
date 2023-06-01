@@ -66,7 +66,7 @@ const Accordion = ({
                     </div>
                 </div>
                 {guest !== undefined ? (
-                    <div className={` w-[18%] ${index==0 && "rounded-t-3xl "}  flex flex-wrap justify-center text-lg items-center border-4 border-white`}>
+                    <div className={` w-[22%] ${index==0 && "rounded-t-3xl "} bg-[#E4C3F9]  flex flex-wrap justify-center text-lg items-center border-4 border-white`}>
                         {typeof guest == "boolean" ? (
                             guest ? (
                                 <BsCheck style={{ fontSize: '5rem' }}/>
@@ -89,7 +89,7 @@ const Accordion = ({
                     ""
                 )}
 
-                <div className={` w-[22%]  ${index == 0 && "rounded-t-3xl"} bg-[#E4C3F9] flex flex-wrap break-words justify-center text-lg items-center border-4 border-white`}>
+                <div className={` w-[22%]  ${index == 0 && "rounded-t-3xl"} bg-[#E3B7FF]  flex flex-wrap break-words justify-center text-lg items-center border-4 border-white`}>
                 
                     {typeof essential == "boolean" ?  (
                         essential ? (

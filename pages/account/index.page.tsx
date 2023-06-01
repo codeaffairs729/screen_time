@@ -50,14 +50,14 @@ const WorkspacePage = () => {
                                     className="!bg-white border-t border-
                                 gray !p-0"
                                 >
-                                    <AccountDetails />
-                                </TabPanel>
+                                 <AccountDetails />
+                                 </TabPanel>
                                 <TabPanel className="!bg-white">
-                                    <div className="my-20">
-                                        <SubscriptionSection />
+                                    <div className="my-20 mt-0">
+                                      <SubscriptionSection />
                                     </div>
                                 </TabPanel>
-                                <TabPanel className="!bg-white">
+                                <TabPanel className="!bg-white ">
                                     <div className="my-20">
                                         Work in Progress
                                     </div>
