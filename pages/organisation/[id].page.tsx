@@ -22,8 +22,8 @@ import User from "models/user.model";
 import { useSelector } from "react-redux";
 import { RootState } from "store";
 
-const ORGANIZATION_ADMIN = "Organization Admin";
-const ORGANIZATION_MEMBER = "Organization Member";
+const ORGANIZATION_ADMIN = "Organisation Admin";
+const ORGANIZATION_MEMBER = "Organisation Member";
 
 enum tabIndex {
     datasets,

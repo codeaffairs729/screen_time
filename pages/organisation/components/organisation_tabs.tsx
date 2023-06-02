@@ -15,8 +15,8 @@ type Header = {
     filledIcon: string;
 };
 
-const ORGANIZATION_ADMIN = "Organization Admin";
-const ORGANIZATION_MEMBER = "Organization Member";
+const ORGANIZATION_ADMIN = "Organisation Admin";
+const ORGANIZATION_MEMBER = "Organisation Member";
 
 // const HEADERS: Header[] = [
 //     {

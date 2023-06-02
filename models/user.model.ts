@@ -18,21 +18,25 @@ class Organisation {
         name,
         sector,
         maxMembers,
+        logo_url
     }: {
         organisation_id: number;
         name: string;
         sector: string;
         maxMembers: number;
+        logo_url: string;
     }) {
         this.organisation_id = organisation_id;
         this.name = name;
         this.sector = sector;
         this.maxMembers = maxMembers;
+        this.logo_url = logo_url
     }
     organisation_id: number;
     name: string;
     sector: string;
     maxMembers: number;
+    logo_url: string;
 
     static fromJson(json: { [key: string]: any }) {
         return new Organisation({
@@ -40,13 +44,14 @@ class Organisation {
             name: json["name"],
             sector: json["sector"],
             maxMembers: json["max_members"],
+            logo_url:json["logo_url"]
         });
     }
 }
 export class Role {
     static REGISTERED_USER = "Registered User";
-    static ORGANIZATION_ADMIN = "Organization Admin";
-    static ORGANIZATION_MEMBER = "Organization Member";
+    static ORGANIZATION_ADMIN = "Organisation Admin";
+    static ORGANIZATION_MEMBER = "Organisation Member";
 
     constructor({ role_id, name }: { role_id: number; name: string }) {
         this.role_id = role_id;
