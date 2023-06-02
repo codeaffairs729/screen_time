@@ -7,13 +7,12 @@ import UserTabPanelVM from "./user_tab_panel.vm";
 import cameraImage from "public/images/icons/camera_filled.svg";
 import toast from "react-hot-toast";
 import { useController } from "react-hook-form";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "store";
 
 const UserSection = () => {
     const user = useSelector((state: RootState) => state.auth.user);
-    const [file, setFile] = useState(user?.user_image_url);
     const fileInputRef = useRef<HTMLInputElement>(null);
     const vm = UserTabPanelVM();
     const { field: register } = useController({
@@ -21,14 +20,14 @@ const UserSection = () => {
         name: "image",
     });
     const handleFileChange = (e: any) => {
-        // setFile(e.target.files[0]);
         const file = e.target.files[0];
         const reader = new FileReader();
         reader.onload = () => {
-            setFile(reader?.result as string);
+            vm.setFile(reader?.result as string);
         };
         reader.readAsDataURL(file);
     };
+
     const uploadImage = () => {
         if (fileInputRef.current) {
             fileInputRef.current.click();
@@ -67,8 +66,8 @@ const UserSection = () => {
                                 height="40px"
                             /></div>
                     </div>
-                    <div className={`${!file&&"bg-dtech-middle-grey"} "select-none  outline-none text-lg w-28 h-28 flex justify-center items-center rounded-full text-[#F5F5F5] font-medium text-[96px] mb-4 pb-6"`}>
-                        {file ? <img src={file} className="rounded-full"></img> : `${nameInitial}`}
+                    <div className={`${!vm.file&&"bg-dtech-middle-grey"} "select-none  outline-none text-lg w-28 h-28 flex justify-center items-center rounded-full text-[#F5F5F5] font-medium text-[96px] mb-4 pb-6"`}>
+                        {vm.file ? <img src={vm.file} className="rounded-full"></img> : `${nameInitial}`}
                     </div>
                 </div>
                 <div className="grid md:grid-cols-2 gap-4 mt-2">
@@ -168,7 +167,9 @@ const UserSection = () => {
                     label="Update"
                     isLoading={vm.isSavingUserDetails}
                     onClick={() => {
-                        file!=user?.user_image_url?vm.form.handleSubmit(() => {
+                        if(vm.form.getValues().name!==user?.name||vm.form.getValues().role!==user?.role||vm.file!=user?.user_image_url){
+                        vm.form.handleSubmit(() => {
+
                             const formData = new FormData();
                             formData.append("name", vm.form.getValues().name);
                             formData.append("email", vm.form.getValues().email);
@@ -177,12 +178,15 @@ const UserSection = () => {
                                 "organisation",
                                 vm.form.getValues().organisation
                             );
-                            formData.append("image", file || "");
+                            formData.append("image", vm.file || "");
                             vm.saveUserDetails({
                                 ...vm.form.getValues(),
-                                image: file,
+                                image: vm.file,
                             });
-                        })():toast.error("Please change the image")
+                        })()}
+                        else{
+                            toast.error("There is not any change in the form")
+                    }
                     }}
                 />
             </div>

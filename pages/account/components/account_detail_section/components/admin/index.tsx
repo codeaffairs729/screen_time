@@ -17,7 +17,6 @@ import toast from "react-hot-toast";
 const AdminSection = () => {
     // const { control, handleSubmit } = useForm();
     const user = useSelector((state: RootState) => state.auth.user);
-    const [file, setFile] = useState(user?.logo_url);
     const admin_user = useSelector((state: RootState) => state.auth.user);
     const fileInputRef = useRef<HTMLInputElement>(null);
     const vm = AdminTabPanelVM();
@@ -32,7 +31,7 @@ const AdminSection = () => {
         const file = e.target.files[0];
         const reader = new FileReader();
         reader.onload = () => {
-            setFile(reader?.result as string);
+            vm.setFile(reader?.result as string);
         };
         reader.readAsDataURL(file);
     };
@@ -68,8 +67,8 @@ const AdminSection = () => {
                                 height="40px"
                             /></div>
                     </div>
-                    <div className={`${!file&&"bg-dtech-middle-grey"} "select-none  outline-none text-lg w-28 h-28 flex justify-center items-center rounded-full text-[#F5F5F5] font-medium text-[96px] mb-4 pb-6"`}>
-                        {file ? <img src={file} className="rounded-full"></img> : `${nameInitial}`}
+                    <div className={`${!vm.file&&"bg-dtech-middle-grey"} "select-none  outline-none text-lg w-28 h-28 flex justify-center items-center rounded-full text-[#F5F5F5] font-medium text-[96px] mb-4 pb-6"`}>
+                        {vm.file ? <img src={vm.file} className="rounded-full"></img> : `${nameInitial}`}
                     </div>
                 </div>
                     <div className="grid md:grid-cols-2 gap-4">
@@ -170,17 +169,21 @@ const AdminSection = () => {
                             label="Update"
                             isLoading={vm.isSavingOrgDetails}
                             onClick={() => {
-                                file!=user?.logo_url?
+                                if(vm.form.getValues().name!==User.getOrganisation(admin_user)?.name||vm.form.getValues().sector!==User.getOrganisation(admin_user)?.sector||vm.file!=user?.logo_url){
                                 vm.form.handleSubmit(() => {
                                     const formData = new FormData();
                                     formData.append("name", vm.form.getValues().name);
                                     formData.append("sector", vm.form.getValues().sector);
-                                    formData.append("image", file || "");
+                                    formData.append("image", vm.file || "");
                                     vm.saveOrgDetails({
                                         ...vm.form.getValues(),
-                                        image: file,
+                                        image: vm.file,
                                     });
-                                })():toast.error("Please change the image")
+                                })()
+                            }
+                            else{
+                                toast.error("There is not any change in the form")
+                            }
                             }}
                         />
                     </div>

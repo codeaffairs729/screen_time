@@ -11,8 +11,9 @@ import { updateUser } from "store/auth/auth.action";
 
 const AdminTabPanelVM = () => {
     const adminUser = useSelector((state: RootState) => state.auth.user);
+    const [file, setFile] = useState(adminUser?.logo_url)
     const dispatch = useDispatch();
-    const { control, handleSubmit, reset, clearErrors } = useForm();
+    const { control, handleSubmit, reset, clearErrors, getValues, formState } = useForm();
     const organisationId = adminUser?.organisations?.[0]?.organisation_id;
     let [isAddMemberModalOpen, setIsAddMemberModalOpen] = useState(false);
     const form=useForm()
@@ -103,6 +104,7 @@ const AdminTabPanelVM = () => {
                         throw new Error("Updated user is not valid");
                     }
                     dispatch(updateUser(newAdminUser));
+                    setFile(newAdminUser.logo_url)
                     toast.success("Details were updated successfully");
                 },
                 onError: async (error) => {
@@ -173,7 +175,11 @@ const AdminTabPanelVM = () => {
         changingRoleUserId,
         control,
         handleSubmit,
-        form
+        getValues,
+        form, 
+        formState,
+        file,
+        setFile
     };
 };
 
