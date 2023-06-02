@@ -130,7 +130,7 @@ const AdminSection = () => {
                         >
                             <TextField
                                 className="bg-gray-100"
-                                // disabled={false}
+                                disabled={false}
                                 formControl={{
                                     control: vm.form.control,
                                     defaultValue:
