@@ -25,7 +25,6 @@ export const usereventSearchQueryResults = (
     query: string | string[] | undefined,
     results: number[]
 ) => {
-    console.log(query, results);
     posthog.capture("search query results", {
         search_term: query,
         search_term_results: results,
@@ -43,10 +42,16 @@ export const usereventDatasetView = (
 };
 
 export const usereventDatasetDownload = (dataset: Dataset, url: string) => {
-    console.log(dataset.owner.uuid,'dataset.owner.uuid')
     posthog.capture("datafile download", {
         dataset_id: dataset.id,
         datafile_id: url,
         provider_uuid: dataset.owner.uuid
+    });
+};
+
+export const usereventDatasetDownloadSearchTerms = (dataset: Dataset, query:string) => {
+    posthog.capture("datafile download search term", {
+        dataset_id: dataset.id,
+        search_term: query
     });
 };
