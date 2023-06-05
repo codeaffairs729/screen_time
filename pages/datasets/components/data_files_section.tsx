@@ -9,7 +9,10 @@ import previewIcon from "public/images/icons/preview.svg";
 import doNotPreview from "public/images/icons/do_not_preview.svg";
 import Image from "next/image";
 import PreviewSection from "./preview_section";
-import { usereventDatasetDownload } from "services/usermetrics.service";
+import {
+    usereventDatasetDownload,
+    usereventDatasetDownloadSearchTerms,
+} from "services/usermetrics.service";
 
 const META_FILE_HEADERS = ["Name", "Format", "Size", "Download", "Preview"];
 
@@ -24,6 +27,22 @@ const DataFilesSection = ({ goToPreview }: { goToPreview: () => void }) => {
 
     const onDowloadAll = () => {
         createFeedbackNotification(vm.dataset, user);
+        if (typeof window !== "undefined") {
+            const previousPath = localStorage.getItem("previous_path");
+            if (previousPath?.includes("/search?q=") && vm.dataset) {
+                const startIndex =
+                    previousPath.indexOf("/search?q=") + "/search?q=".length;
+                const endIndex = previousPath.indexOf("&", startIndex);
+                const extractedString = previousPath.substring(
+                    startIndex,
+                    endIndex
+                );
+                usereventDatasetDownloadSearchTerms(
+                    vm.dataset,
+                    extractedString
+                );
+            }
+        }
         document.querySelectorAll("#downloadAll").forEach((element, index) => {
             setTimeout(() => {
                 element.dispatchEvent(
@@ -91,7 +110,42 @@ const DataFilesSection = ({ goToPreview }: { goToPreview: () => void }) => {
                                         key={i}
                                         goToPreview={goToPreview}
                                         onDownload={() => {
-                                            vm.dataset !== undefined && usereventDatasetDownload(vm.dataset,url.url)
+                                            vm.dataset !== undefined &&
+                                                usereventDatasetDownload(
+                                                    vm.dataset,
+                                                    url.url
+                                                );
+                                            if (typeof window !== "undefined") {
+                                                const previousPath =
+                                                    localStorage.getItem(
+                                                        "previous_path"
+                                                    );
+                                                if (
+                                                    previousPath?.includes(
+                                                        "/search?q="
+                                                    ) &&
+                                                    vm.dataset
+                                                ) {
+                                                    const startIndex =
+                                                        previousPath.indexOf(
+                                                            "/search?q="
+                                                        ) + "/search?q=".length;
+                                                    const endIndex =
+                                                        previousPath.indexOf(
+                                                            "&",
+                                                            startIndex
+                                                        );
+                                                    const extractedString =
+                                                        previousPath.substring(
+                                                            startIndex,
+                                                            endIndex
+                                                        );
+                                                    usereventDatasetDownloadSearchTerms(
+                                                        vm.dataset,
+                                                        extractedString
+                                                    );
+                                                }
+                                            }
                                             createFeedbackNotification(
                                                 vm.dataset,
                                                 user
@@ -135,7 +189,11 @@ const DataFileRow = ({
     }
     return (
         <>
-            <tr className={`border-b border-gray-200 bg-[#FEFEFE] hover:bg-dtech-main-light  ${preview && "bg-dtech-main-light"}`}>
+            <tr
+                className={`border-b border-gray-200 bg-[#FEFEFE] hover:bg-dtech-main-light  ${
+                    preview && "bg-dtech-main-light"
+                }`}
+            >
                 <td className="py-3 px-6 text-center whitespace-nowrap">
                     <div className="flex justify-center items-center font-normal text-sm text-center">{`${description}`}</div>
                 </td>

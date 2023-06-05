@@ -7,7 +7,7 @@ import { AppProps } from "next/app";
 import { Toaster } from "react-hot-toast";
 import Loader from "components/UI/loader";
 import { useScript } from "common/hooks";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import posthog from "posthog-js";
 import { AUTH_TOKEN } from "common/constants/cookie.key";
@@ -22,6 +22,8 @@ function DtechtiveApp({ Component, pageProps }: AppProps) {
     const router = useRouter();
     const vm: any = NotificationsVM();
     // const context = NotificationsVMContext;
+    const [previousPath, setPreviousPath] = useState("");
+
     const store = useStore(pageProps.initialReduxState);
 
     const persistor = persistStore(store, {}, function () {
@@ -39,9 +41,19 @@ function DtechtiveApp({ Component, pageProps }: AppProps) {
             window.location.reload();
         }
     }
+
     useEffect(() => {
-        localStorage.setItem("previous_path", router.route);
-    }, [router.asPath]);
+        const handleRouteChange = () => {
+            localStorage.setItem("previous_path", previousPath);
+            setPreviousPath(router.asPath);
+        };
+    
+        router.events.on("routeChangeComplete", handleRouteChange);
+    
+        return () => {
+          router.events.off("routeChangeComplete", handleRouteChange);
+        };
+      }, [router.asPath]);
 
     useScript("/js/acctoolbar.min.js");
 
@@ -61,6 +73,7 @@ function DtechtiveApp({ Component, pageProps }: AppProps) {
 
         const handleRouteChange = () => {
             posthog.capture("$pageview");
+            setPreviousPath(router.asPath);
         };
         //When the component is mounted, subscribe to router changes
         //and log those page views
