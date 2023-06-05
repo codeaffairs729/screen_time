@@ -40,20 +40,23 @@ const DatasetDetail = ({ dataset }: { dataset: Dataset | undefined }) => {
     useEffect(() => {
         const hashParam: string = asPath.split("#")[1]?.split("/")[0];
         setSelectedIndex(tabIndex[hashParam as any]);
-        setLoading(false);        
+        setLoading(false);
     }, []);
-    if(typeof window!=="undefined"){
-       const previousPath=localStorage.getItem("previous_path")
-       if (previousPath?.includes('/search?q=')&&dataset){
-           const startIndex = previousPath.indexOf("/search?q=") + "/search?q=".length;
-           console.log(startIndex,'startIndex')
-           const endIndex = previousPath.indexOf("&", startIndex);
-           console.log(endIndex,'endIndex',previousPath)
-           const extractedString = previousPath.substring(startIndex, endIndex);
-           console.log(extractedString,'extractedString')
-           usereventDatasetView(dataset,extractedString)
-       }
-       }
+    if (typeof window !== "undefined") {
+        const previousPath = localStorage.getItem("previous_path");
+        if (previousPath?.includes("/search?q=") && dataset) {
+            const startIndex =
+                previousPath.indexOf("/search?q=") + "/search?q=".length;
+            const endIndex = previousPath.indexOf("&", startIndex);
+            let extractedString;
+            if (endIndex === -1) {
+                extractedString = previousPath.replace("/search?q=", "");
+            } else {
+                extractedString = previousPath.substring(startIndex, endIndex);
+            }
+            usereventDatasetView(dataset, extractedString);
+        }
+    }
     if (!dataset) {
         return (
             <DefaultLayout>
