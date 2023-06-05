@@ -46,8 +46,11 @@ const DatasetDetail = ({ dataset }: { dataset: Dataset | undefined }) => {
        const previousPath=localStorage.getItem("previous_path")
        if (previousPath?.includes('/search?q=')&&dataset){
            const startIndex = previousPath.indexOf("/search?q=") + "/search?q=".length;
+           console.log(startIndex,'startIndex')
            const endIndex = previousPath.indexOf("&", startIndex);
+           console.log(endIndex,'endIndex',previousPath)
            const extractedString = previousPath.substring(startIndex, endIndex);
+           console.log(extractedString,'extractedString')
            usereventDatasetView(dataset,extractedString)
        }
        }
