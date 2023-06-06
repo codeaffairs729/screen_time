@@ -39,7 +39,6 @@ const AdminTabPanelVM = () => {
     useEffect(() => {
         fetchOrgUsers();
     }, []);
-
     const { execute: executeInviteMember, isLoading: isInvitingMember } =
         useHttpCall();
     const inviteMember = ({
@@ -98,13 +97,14 @@ const AdminTabPanelVM = () => {
                         name: res["data"]["name"],
                         maxMembers: res["data"]["max_members"],
                         sector: res["data"]["sector"],
+                        logo_url: res["data"]["logo_url"]
                     });
                     if (!newAdminUser) {
                         console.log("newAdminUser", newAdminUser);
                         throw new Error("Updated user is not valid");
                     }
                     dispatch(updateUser(newAdminUser));
-                    setFile(newAdminUser.logo_url)
+                    setFile(newAdminUser.organisations[0]?.logo_url)
                     toast.success("Details were updated successfully");
                 },
                 onError: async (error) => {
