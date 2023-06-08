@@ -54,21 +54,21 @@ const Dropdown = ({
                 )}
             >
                 {typeof label=="string" ? isURL(label)?<img src={label} height={50} width={50} className="rounded-full"></img>:<span
-                    id="dropdown"
+                    id="profile-dropdown"
                     className={clsx(
                         " ",
                         labelClasses
-                    )}
-                >
+                        )}
+                        >
                     {label}
                 </span>:<span
-                    id="profile-dropdown"
                     className={clsx(
-                        "select-none outline-none",
+                        "text-inherit text-sm select-none outline-nones",
                         labelClasses
-                    )}
+                        )}
+                        id="dropdown"
                 >
-                    {<label />}
+                    {label}
                 </span>}
                 <VscTriangleDown
                     className={`ml-2 text-2xl text-inherit transition-all ${
