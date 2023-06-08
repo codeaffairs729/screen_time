@@ -38,6 +38,7 @@ export const usereventDatasetView = (
     posthog.capture("dataset view", {
         dataset_id: dataset.id,
         search_term: query,
+        provider_uuid: dataset.owner.uuid
     });
 };
 
