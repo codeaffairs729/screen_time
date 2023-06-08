@@ -52,6 +52,7 @@ export const usereventDatasetDownload = (dataset: Dataset, url: string) => {
 export const usereventDatasetDownloadSearchTerms = (dataset: Dataset, query:string) => {
     posthog.capture("datafile download search term", {
         dataset_id: dataset.id,
-        search_term: query
+        search_term: query,
+        provider_uuid: dataset.owner.uuid
     });
 };
