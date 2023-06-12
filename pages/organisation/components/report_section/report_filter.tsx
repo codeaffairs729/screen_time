@@ -3,7 +3,7 @@ import { OrganisationDetailVMContext } from "pages/organisation/organisation_det
 import { useContext, useEffect, useState } from "react";
 import { VscTriangleDown } from "react-icons/vsc";
 import { ReportVMContext } from "./report.vm";
-
+import { QualityMetricVMContext } from "../insights_section/quality_insights/quality_metric.vm"; 
 const ReportFilter = () => {
     const [showFilter, setShowFilter] = useState<boolean>(true);
     const {
@@ -16,6 +16,13 @@ const ReportFilter = () => {
         setFromDate,
         setToDate,
     } = useContext(ReportVMContext);
+    const {
+        qualityMetrics,
+        fetchQualityMetrics,
+        isFetchingQualityMetrics,
+        error,
+        selectedQualityInsights: selectedLabel,
+    } = useContext(QualityMetricVMContext);
 
     const handleGenerateReport = () => {
         const alert = "This will remove your previous Data";
@@ -23,7 +30,8 @@ const ReportFilter = () => {
             !editorState.getCurrentContent().hasText() ||
             confirm(alert) == true
         ) {
-            fetchData();
+        fetchQualityMetrics && fetchQualityMetrics();
+            fetchData(qualityMetrics);
         }
     };
 

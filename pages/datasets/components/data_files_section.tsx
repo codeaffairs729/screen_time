@@ -13,6 +13,7 @@ import {
     usereventDatasetDownload,
     usereventDatasetDownloadSearchTerms,
 } from "services/usermetrics.service";
+import InfoAlert from "components/UI/alerts/info_alert";
 
 const META_FILE_HEADERS = ["Name", "Format", "Size", "Download", "Preview"];
 
@@ -53,115 +54,123 @@ const DataFilesSection = ({ goToPreview }: { goToPreview: () => void }) => {
             }, 1000 * (index + 1));
         });
     };
+    const urls = vm.dataset.urls?.filter(obj => obj.format !== null);
+    if (!urls.length) {
+        return (
+            <InfoAlert
+                message="There is no data to show"
+                className="mt-5 ml-20 mr-32"
+                messageClassName="ml-56 font-semibold !text-lg !text-blue-800"
+                divClassName="flex flex-row"
+            />
+        );
+    }
     return (
         <div className="max-w-7xl">
             <div className="mx-3 my-4   text-sm text-dtech-dark-grey">
                 All the data files available for this dataset are listed in the
                 table below.
             </div>
-            <div className="flex flex-row justify-between items-center mx-3 my-4 ">
-                <span>Total files : {vm.dataset.urls?.length}</span>
+                <div className="flex flex-row justify-between items-center mx-3 my-4 ">
+                    <span>Total files : {urls?.length}</span>
 
-                <div className="flex flex-row">
-                    <a
-                        onClick={() => onDowloadAll()}
-                        className="mx-auto text-lg cursor-pointer flex"
-                        download
-                    >
-                        <span className="mr-2">Download all</span>
-                        <Image
-                            src={downloadIcon}
-                            alt=""
-                            height={24}
-                            width={24}
-                        />
-                    </a>
+                    <div className="flex flex-row">
+                        <a
+                            onClick={() => onDowloadAll()}
+                            className="mx-auto text-lg cursor-pointer flex"
+                            download
+                        >
+                            <span className="mr-2">Download all</span>
+                            <Image
+                                src={downloadIcon}
+                                alt=""
+                                height={24}
+                                width={24}
+                            />
+                        </a>
+                    </div>
                 </div>
-            </div>
 
-            <div className=" h-[40rem] overflow-x-hidden ">
-                <table
-                    className="min-w-max w-full table-auto text-sm text-center border "
-                    cellPadding={5}
-                >
-                    <thead>
-                        <tr className="border border-dtech-middle-grey p-3 ">
-                            {META_FILE_HEADERS.map(
-                                (headName: string, index: number) => (
-                                    <th
-                                        key={index}
-                                        className="py-3 px-6 text-center text-[17px] font-medium bg-[#F5F5F5] "
-                                    >
-                                        {headName}
-                                    </th>
-                                )
-                            )}
-                        </tr>
-                    </thead>
-                    <tbody
-                        className="text-gray-600 text-sm font-light "
-                        data-testid="data-files"
+                <div className=" h-[40rem] overflow-x-hidden ">
+                    <table
+                        className="min-w-max w-full table-auto text-sm text-center border "
+                        cellPadding={5}
                     >
-                        {vm.dataset.urls?.length > 0 ? (
-                            vm.dataset.urls?.map((url, i) => {
-                                return (
-                                    <DataFileRow
-                                        url={url}
-                                        key={i}
-                                        goToPreview={goToPreview}
-                                        onDownload={() => {
-                                            vm.dataset !== undefined &&
-                                                usereventDatasetDownload(
-                                                    vm.dataset,
-                                                    url.url
-                                                );
-                                            if (typeof window !== "undefined") {
-                                                const previousPath =
-                                                    localStorage.getItem(
-                                                        "previous_path"
-                                                    );
-                                                if (
-                                                    previousPath?.includes(
-                                                        "/search?q="
-                                                    ) &&
-                                                    vm.dataset
-                                                ) {
-                                                    const startIndex =
-                                                        previousPath.indexOf(
-                                                            "/search?q="
-                                                        ) + "/search?q=".length;
-                                                    const endIndex =
-                                                        previousPath.indexOf(
-                                                            "&",
-                                                            startIndex
-                                                        );
-                                                    const extractedString =
-                                                        previousPath.substring(
-                                                            startIndex,
-                                                            endIndex
-                                                        );
-                                                    usereventDatasetDownloadSearchTerms(
+                        <thead>
+                            <tr className="border border-dtech-middle-grey p-3 ">
+                                {META_FILE_HEADERS.map(
+                                    (headName: string, index: number) => (
+                                        <th
+                                            key={index}
+                                            className="py-3 px-6 text-center text-[17px] font-medium bg-[#F5F5F5] "
+                                        >
+                                            {headName}
+                                        </th>
+                                    )
+                                )}
+                            </tr>
+                        </thead>
+                        <tbody
+                            className="text-gray-600 text-sm font-light "
+                            data-testid="data-files"
+                        >
+                            {
+                                urls?.map((url, i) => {
+                                    return (
+                                        <DataFileRow
+                                            url={url}
+                                            key={i}
+                                            goToPreview={goToPreview}
+                                            onDownload={() => {
+                                                vm.dataset !== undefined &&
+                                                    usereventDatasetDownload(
                                                         vm.dataset,
-                                                        extractedString
+                                                        url.url
                                                     );
+                                                if (typeof window !== "undefined") {
+                                                    const previousPath =
+                                                        localStorage.getItem(
+                                                            "previous_path"
+                                                        );
+                                                    if (
+                                                        previousPath?.includes(
+                                                            "/search?q="
+                                                        ) &&
+                                                        vm.dataset
+                                                    ) {
+                                                        const startIndex =
+                                                            previousPath.indexOf(
+                                                                "/search?q="
+                                                            ) + "/search?q=".length;
+                                                        const endIndex =
+                                                            previousPath.indexOf(
+                                                                "&",
+                                                                startIndex
+                                                            );
+                                                        const extractedString =
+                                                            previousPath.substring(
+                                                                startIndex,
+                                                                endIndex
+                                                            );
+                                                        usereventDatasetDownloadSearchTerms(
+                                                            vm.dataset,
+                                                            extractedString
+                                                        );
+                                                    }
                                                 }
-                                            }
-                                            createFeedbackNotification(
-                                                vm.dataset,
-                                                user
-                                            );
-                                        }}
-                                    />
-                                );
-                            })
-                        ) : (
-                            <div className="my-2 mx-2">
-                                No data files available for this dataset.
-                            </div>
-                        )}
-                    </tbody>
-                </table>
-            </div>
+                                                createFeedbackNotification(
+                                                    vm.dataset,
+                                                    user
+                                                );
+                                            }}
+                                        />
+                                    );
+                                })
+}
+                        </tbody>
+                    </table>
+                </div>
+     
         </div>
     );
 };
