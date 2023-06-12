@@ -1,7 +1,10 @@
 import { Tab } from "@headlessui/react";
 import { useState } from "react";
-import DownloadReport from "./downloadReport";
-
+// import DownloadReport from "./downloadReport";
+import dynamic from "next/dynamic";
+const DownloadReport = dynamic(() => import("./downloadReport"), {
+    ssr: false,
+});
 const Head = () => {
     const [edit, setEdit] = useState(false);
     return (
