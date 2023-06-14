@@ -34,6 +34,10 @@ const Preview = () => {
                             .replaceAll(
                                 "<h3>",
                                 '<h3 style="text-align: center;font-style: italic;">'
+                            )
+                            .replaceAll(
+                                "<a",
+                                '<a style="color: blue;text-decoration: underline;"'
                             ),
                     }}
                 ></div>
