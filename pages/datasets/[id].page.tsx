@@ -20,6 +20,7 @@ import RelatedDatasetsVM, {
     RelatedDatasetsVMContext,
 } from "./components/related_datasets/related_datasets.vm";
 import BackBtn from "components/UI/buttons/back_btn";
+import { usereventDatasetView } from "services/usermetrics.service";
 
 enum tabIndex {
     data_files,
@@ -41,6 +42,21 @@ const DatasetDetail = ({ dataset }: { dataset: Dataset | undefined }) => {
         setSelectedIndex(tabIndex[hashParam as any]);
         setLoading(false);
     }, []);
+    if (typeof window !== "undefined") {
+        const previousPath = localStorage.getItem("previous_path");
+        if (previousPath?.includes("/search?q=") && dataset) {
+            const startIndex =
+                previousPath.indexOf("/search?q=") + "/search?q=".length;
+            const endIndex = previousPath.indexOf("&", startIndex);
+            let extractedString;
+            if (endIndex === -1) {
+                extractedString = previousPath.replace("/search?q=", "");
+            } else {
+                extractedString = previousPath.substring(startIndex, endIndex);
+            }
+            usereventDatasetView(dataset, extractedString);
+        }
+    }
     if (!dataset) {
         return (
             <DefaultLayout>

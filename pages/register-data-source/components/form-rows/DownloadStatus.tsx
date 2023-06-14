@@ -10,6 +10,7 @@ const DownloadStatus = ({ vm }: { vm: any }) => {
             label="Readily downloadable"
             required={true}
             tooltip={formRowToolTipData.downloadable_status}
+            className=" w-screen md:w-auto"
         >
             <DropdownField
                 className="w-80"

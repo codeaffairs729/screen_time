@@ -34,28 +34,30 @@ const WorkspacePage = () => {
 
     return (
         <DefaultLayout>
-            <div className="px-4">
-                <div className="flex flex-row justify-center mb-4 my-2 ml-4">
-                    <p className="text-center text-2xl font-normal">
+                <div className="my-10 mx-4 md:mx-20 flex items-center">
+                    <span className="text-left text-[26px] font-semibold">
                         My Account
-                    </p>
-                    <span></span>
+                    </span>
+                    {/* <Dropdown label={workspace} menuItems={menuItems} /> */}
                 </div>
+            <div className=" px-16">
                 <div className=" bg-white border-1 ">
                     <div className="md:flex md:px-4">
                         <Tab.Group defaultIndex={selectedIndex}>
-                            <AccountTabHeaders selectedIndex={selectedIndex}/>
+                            <AccountTabHeaders selectedIndex={selectedIndex} />
                             <Tab.Panels className="h-[calc(100%-var(--dataset-detail-tab-header-height))] w-full flex">
-                                <TabPanel className="!bg-gray-50 border-t border-
-                                gray !p-0">
-                                    <AccountDetails />
-                                </TabPanel>
+                                <TabPanel
+                                    className="!bg-white border-t border-
+                                gray !p-0"
+                                >
+                                 <AccountDetails />
+                                 </TabPanel>
                                 <TabPanel className="!bg-white">
-                                    <div className="my-20">
-                                        <SubscriptionSection />
+                                    <div className="my-20 mt-0">
+                                      <SubscriptionSection />
                                     </div>
                                 </TabPanel>
-                                <TabPanel className="!bg-white">
+                                <TabPanel className="!bg-white ">
                                     <div className="my-20">
                                         Work in Progress
                                     </div>

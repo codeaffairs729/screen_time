@@ -8,14 +8,16 @@ import { BsFillEyeFill, BsHeartFill } from "react-icons/bs";
 import { MdFileDownload } from "react-icons/md";
 import Image from "next/image";
 import display from "/public/images/icons/display_img.svg";
-import {
-    datasetToResultCardData,
-    SearchVMContext,
-} from "pages/search/search.vm";
+// import {
+//     datasetToResultCardData,
+//     SearchVMContext,
+// } from "pages/search/search.vm";
 import Link from "next/link";
+import { useFetchStats } from "common/utils/datasets.util";
+import { Data } from "components/UI/result_card";
 const DatasetHead = ({ dataset }: any) => {
     // const vm = useContext(DatasetDetailVMContext);
-    const { stats, fectchStats, isFetchingStats } = useContext(SearchVMContext);
+    const { stats, fectchStats, isFetchingStats } = useFetchStats();
     const { headDataset, setHeadDataset } = useContext(DatasetDetailVMContext);
 
     useEffect(() => {
@@ -258,3 +260,34 @@ const DatasetStat = ({ stats }: { stats: any }) => {
 };
 
 export default DatasetHead;
+
+const datasetToResultCardData = (datasets: any, stats: any): Data[] => {
+    if (!datasets?.length) {
+        return [];
+    }
+
+    return datasets?.map((dataset: any) => ({
+        id: dataset.id,
+        title: dataset.detail.name,
+        recordType: "datasets",
+        description: dataset.detail.description,
+        dataQuality: dataset.detail.dataQuality,
+        licenseTypes: [dataset.detail.license.type],
+        topics: dataset.detail.topics,
+        isFavourited: stats[dataset.id]?.isFavourited,
+        lastUpdate: dataset.detail.lastUpdate,
+        domains:
+            typeof dataset.detail.domain === "string"
+                ? [dataset.detail.domain]
+                : dataset.detail.domain, //Some dataset are fetching from older version api need to update it in future
+        dataProviders: {
+            organisation: dataset.owner.organisation,
+            hostName: dataset.detail.hostName,
+            hostUuid: dataset.detail.hostUuid,
+            ownerUuid: dataset.owner.uuid,
+            hostUrl: dataset.detail.hostUrl,
+            ownerUrl: dataset.owner.ownerUrl,
+            datasetSource: dataset.detail.datasetUrl,
+        },
+    }));
+};

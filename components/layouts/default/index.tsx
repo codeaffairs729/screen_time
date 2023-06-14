@@ -4,28 +4,48 @@ import Nav from "./components/nav";
 import Footer from "./components/footer";
 
 import { BsMegaphone } from "react-icons/bs";
-import SearchVM, { SearchVMContext } from "pages/search/search.vm";
-import OrganizationSearchVM, {
-    OrganizationSearchVMContext,
-} from "pages/search/components/organization/organisation.vm";
+// import SearchVM, { SearchVMContext } from "pages/search/search.vm";
+// import OrganizationSearchVM, {
+//     OrganizationSearchVMContext,
+// } from "pages/search/components/organization/organisation.vm";
+import { SearchOption } from "components/UI/dataset_search_input";
+import router from "next/router";
+import { SingleValue } from "react-select";
+import { updateCache } from "store/cache/cache.action";
+import { useDispatch } from "react-redux";
+
 
 const DefaultLayout = ({
     children,
     className = "",
     showLogo = true,
     showSearchBar = true,
-    page = "dataset",
     navContent,
 }: {
     children: ReactNode;
     className?: string;
     showLogo?: boolean;
-    page?: string;
     showSearchBar?: boolean;
     navContent?: ReactNode;
 }) => {
-    const vm = SearchVM(page == "dataset");
-    const ovm: any = OrganizationSearchVM(page == "organisation");
+    // const vm = SearchVM(page == "dataset");
+    // const ovm: any = OrganizationSearchVM(page == "organisation");
+    const dispatch = useDispatch();
+    const onSearchChange = (
+        type: string,
+        option: SingleValue<SearchOption>
+    ) => {
+        if (!option) return;
+        const searchType = type === "dataset" ? "" : type;
+
+        dispatch(updateCache("last-search-query", option.value));
+        // setCurrentPageNo(1);
+        router.push({
+            pathname: `/search/${searchType}`,
+            query: { ...router.query, q: option.value, page: 1 }, // page is 1 because its a new search
+        });
+    };
+    
     return (
         <div
             className={clsx(
@@ -33,8 +53,8 @@ const DefaultLayout = ({
                 className
             )}
         >
-            <OrganizationSearchVMContext.Provider value={ovm}>
-                <SearchVMContext.Provider value={vm}>
+            {/* <OrganizationSearchVMContext.Provider value={ovm}> */}
+                {/* <SearchVMContext.Provider value={vm}> */}
                     <div className="mx-auto my-2 px-10 py-1 text-gray-800 bg-gray-100 text-sm">
                         <BsMegaphone
                             className="h-4 w-4 text-gray-700 inline mr-2 mb-1"
@@ -62,14 +82,14 @@ const DefaultLayout = ({
                         showSearchBar={showSearchBar}
                         showLogo={showLogo}
                         content={navContent}
-                        onSearchChange={vm.onSearchChange}
+                        onSearchChange={onSearchChange}
                     />
                     <div className="max-w-site mx-auto w-full">{children}</div>
                     {/* <div className="mt-auto"> */}
                     <Footer className="mt-8 sm:ml-24" />
                     {/* </div> */}
-                </SearchVMContext.Provider>
-            </OrganizationSearchVMContext.Provider>
+                {/* </SearchVMContext.Provider> */}
+            {/* </OrganizationSearchVMContext.Provider> */}
         </div>
     );
 };

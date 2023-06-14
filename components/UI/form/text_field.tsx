@@ -36,23 +36,25 @@ const TextField = ({
                 <textarea
                     placeholder={placeholder}
                     className={clsx(
-                        "block px-3 py-2 w-full text-sm appearance-none bg-transparent rounded-lg focus:ring-dtech-secondary-light border-2 border-dtech-secondary-light focus:border-dtech-secondary-light placeholder:text-gray-400 placeholder:text-sm disabled:border-gray-300 disabled:bg-gray-50",
-                        { "border-red-700": hasError },
+                        "block px-3 py-2 w-full text-sm appearance-none bg-transparent rounded-lg focus:ring-dtech-secondary-light border-2 border-dtech-main-dark focus:border-dtech-secondary-light placeholder:text-gray-400 placeholder:text-sm disabled:border-gray-300 disabled:bg-gray-50",
+                         {"border-red-700": hasError },
                         textfieldClassName
                     )}
                     rows={rows}
                     {...register}
                     disabled={disabled}
+                    required={true}
                 />
             ) : (
                 <input
                     type={type}
                     placeholder={placeholder}
                     className={clsx(
-                        "block px-3 py-2 w-full text-sm appearance-none bg-transparent rounded-lg focus:ring-dtech-secondary-light border-2 border-dtech-secondary-light focus:border-dtech-secondary-light placeholder:text-gray-400 placeholder:text-sm disabled:border-gray-300 disabled:bg-gray-50",
+                        "block px-3 py-2 w-full text-sm appearance-none bg-transparent rounded-lg focus:ring-dtech-secondary-light border-2 border-dtech-main-dark focus:border-dtech-secondary-light placeholder:text-gray-400 placeholder:text-sm disabled:border-gray-300 disabled:bg-gray-50",
                         { "border-red-700": hasError },
                         textfieldClassName
                     )}
+                    required={true}
                     {...register}
                     disabled={disabled}
                 />

@@ -15,4 +15,8 @@ export interface ToolTipJson {
     comment: string;
     usage_rights: string;
     update_frequency: string;
+    metadata_standards_other:string;
+    data_type_other:string;
+    data_management_system_other:string;
+    data_provider_type:string;
 }

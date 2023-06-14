@@ -10,6 +10,7 @@ const UsageRights = ({ vm }: { vm: any }) => {
             label="Usage rights"
             required={true}
             tooltip={formRowToolTipData.usage_rights}
+            className=" w-screen md:w-auto"
         >
             <DropdownField
                 className="w-80"

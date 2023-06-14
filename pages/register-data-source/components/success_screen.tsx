@@ -6,7 +6,7 @@ const SuccessScreen = () => {
 
     return (
         <div className="max-w-site text-center m-auto">
-            <p className="w-[350px] text-gray-700 font-semibold">
+            <p className="w-[350px] text-gray-700 font-semibold contents">
                 Thank you for registering a new data source website and
                 contributing to data discovery.
             </p>

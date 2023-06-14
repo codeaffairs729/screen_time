@@ -1,6 +1,5 @@
 import Dropdown from "components/UI/drop_down";
 import { useContext } from "react";
-import Organisation from "..";
 import { OrganizationSearchVMContext } from "../organisation.vm";
 
 const OPTIONS = [

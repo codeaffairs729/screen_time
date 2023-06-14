@@ -10,11 +10,13 @@ const Comment = ({ vm }: { vm: any }) => {
         <FormRow
             label="Comments"
             isTwoRow={true}
-            className="flex-col"
+            // className="flex-col"
             tooltip={formRowToolTipData.comment}
+            className="w-screen md:w-auto"
         >
             <TextField
                 type="textarea"
+                className="w-80"
                 formControl={{
                     control: vm.form.control,
                     name: "comment",

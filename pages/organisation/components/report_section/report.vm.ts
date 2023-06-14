@@ -90,14 +90,22 @@ const formatSubHeading = (text: string) => `<h4> ${text}</h4><br/><br/>`;
 const headerSelected = (
     selected: Array<Object>,
     byTimeImageData: any,
-    imagePie: any
-) =>
-    selected
+    imagePie: any,
+    mapRegion: any,
+    qualityMetric: any,
+    bySearchTermsCanvas: any
+) => {
+    return selected
         .map((object: any, index: any) =>
             object === "Download metrics"
                 ? `
                 <br/><h5><strong id=label_${index}>&#09${object}</strong></h5><br/></br>
                 ${formatSubHeading("Downloads by region")}
+                ${
+                    mapRegion
+                        ? getImageCanvas(mapRegion)
+                        : "<h3>No Data Presents for Location.</h3><br/><br/>"
+                }
                 ${formatSubHeading("Downloads by time")}
                 ${
                     byTimeImageData
@@ -111,9 +119,24 @@ const headerSelected = (
                         : "<h3>No Data Presents for Role.</h3> <br/>"
                 }
                 <p>...</p>`
-                : `<br/><h5><strong id=label_${index}>${object}</strong></h5><br/>`
+                : object === "Dataset quality"
+                ? `<br/><h5><strong id=label_${index}>${object}</strong></h5><br/>
+                ${
+                    qualityMetric
+                        ? getImageCanvas(qualityMetric)
+                        : `<h3>No Data Presents for ${object}.</h3> <br/>`
+                }
+                `
+                : `<br/><h5><strong id=label_${index}>${object}</strong></h5><br/>
+                ${
+                    bySearchTermsCanvas
+                        ? getImageCanvas(bySearchTermsCanvas)
+                        : `<h3>No Data Presents for ${object}.</h3> <br/>`
+                }
+                `
         )
         .join("");
+};
 
 const checkIfDateExists = (downloadDate: any, currDate: any) => {
     const downloadDateString = new Date(downloadDate.date).toDateString();
@@ -137,7 +160,6 @@ const ReportVM = () => {
     );
     const [previewContent, setPreviewContent] = useState("");
     const [isGeneratingReport, setIsGeneratingReport] = useState(false);
-
     useEffect(() => {
         setPreviewContent(formatPreviewData());
     }, [editorState]);
@@ -164,28 +186,67 @@ const ReportVM = () => {
         setSelectedHeaders(selectedHeaderLabels);
         setActiveHeaders(updatedActiveHeaders);
     };
+    const {
+        execute: executeFetchImage,
+        data: image,
+        isLoading: isFetchingImage,
+    } = useHttpCall<{ [key: string]: any }>([]);
 
-    const generateReportContent = async () => {
+    const fetchImage = (url: any) =>
+        executeFetchImage(
+            () => {
+                return Http.get(
+                    `/v1/data_sources/provider/image/?image_url=${url}`
+                );
+            },
+            {
+                postProcess: (res: any) => {
+                    return res;
+                },
+                onError: (e) => {
+                    toast.error(
+                        "Something went wrong while fetching organisation logo."
+                    );
+                },
+            }
+        );
+
+    const generateReportContent = async (qualityMetrics: any) => {
         setIsGeneratingReport(true);
+        const metricByLocation: any = document.getElementById("map");
         const metricByTime: any = document.getElementById("screenshot");
         const metricByUseCase: any = document.getElementById("pie");
+        const searchTerms: any = document.getElementById("searchTerms");
+        const qualityMetric: any = document.getElementById("qualityMetrics");
 
+        const byQualityMetricCanvas =
+            qualityMetric &&
+            (await html2canvas(qualityMetric)).toDataURL("image/png");
+        const bySearchTermsCanvas =
+            metricByLocation &&
+            (await html2canvas(searchTerms)).toDataURL("image/png");
+        const byLocationCanvas =
+            metricByLocation &&
+            (await html2canvas(metricByLocation)).toDataURL("image/png");
         const byTimeCanvas =
             metricByTime &&
             (await html2canvas(metricByTime)).toDataURL("image/png");
         const byUseCaseCanvas =
             metricByUseCase &&
             (await html2canvas(metricByUseCase)).toDataURL("image/png");
-
+        const base64 = await fetchImage(imgUrl);
         const data = `
-                <figure style='width:200px;margin-left:auto;margin-right:auto;'><img src='${imgUrl}' /></figure>
+                <figure style='width:200px;margin-left:auto;margin-right:auto;'><img src='data:image/jpeg;base64,${base64}' /></figure>
                 <br/>
                 ${getReportTitle(organisation?.title)}
                 ${getReportDate(fromDate, toDate)}
                 ${headerSelected(
                     selectedHeaders,
                     byTimeCanvas,
-                    byUseCaseCanvas
+                    byUseCaseCanvas,
+                    byLocationCanvas,
+                    byQualityMetricCanvas,
+                    bySearchTermsCanvas
                 )}
             `;
 
@@ -212,6 +273,56 @@ const ReportVM = () => {
 
         return html;
     };
+
+    const {
+        execute: executeFetchQualityMetrics,
+        data: qualityMetrics,
+        isLoading: isFetchingQualityMetrics,
+    } = useHttpCall<{ [key: string]: any }>([]);
+
+    const fetchQualityMetrics = () =>
+        executeFetchQualityMetrics(
+            () => {
+                return Http.get(
+                    `/v1/data_sources/${organisation?.uuid}/quality_metrics`
+                );
+            },
+            {
+                postProcess: (res: any) => {
+                    return jsonToQualityMetrics(res);
+                },
+                onError: (e) => {
+                    toast.error(
+                        "Something went wrong while fetching organisation metrics by roles."
+                    );
+                },
+            }
+        );
+
+    const {
+        execute: executeFetchSearchTerms,
+        data: searchTerms,
+        isLoading: isFetchingSearchTerms,
+    } = useHttpCall<{ [key: string]: any }>([]);
+
+    const fetchSearchTerms = () =>
+        executeFetchSearchTerms(
+            () => {
+                return Http.get(
+                    `/v1/metrics/provider/${organisation?.uuid}/10`
+                );
+            },
+            {
+                postProcess: (res: any) => {
+                    return res;
+                },
+                onError: (e) => {
+                    toast.error(
+                        "Something went wrong while fetching organisation metrics by roles."
+                    );
+                },
+            }
+        );
 
     const {
         execute: executeFetchByRoles,
@@ -263,7 +374,112 @@ const ReportVM = () => {
             }
         );
 
-    const fetchData = () => {
+    const {
+        execute: executeFetchByLocation,
+        data: downloadByLocation,
+        isLoading: isFetchingByLocation,
+    } = useHttpCall<{ [key: string]: any }>([]);
+
+    const fetchMetricDataByLocation = (from: string, to: string) =>
+        executeFetchByLocation(
+            () => {
+                return Http.get(
+                    `/v1/metrics/provider/${organisation?.uuid}/by_location?from_date=${from}&to_date=${to}`
+                );
+            },
+            {
+                postProcess: (res: any) => {
+                    return res;
+                },
+                onError: (e) => {
+                    toast.error(
+                        "Something went wrong while fetching organisation metrics by location."
+                    );
+                },
+            }
+        );
+    const jsonToQualityMetrics = (json: any): any => {
+        return {
+            dataFileQuality: {
+                overallScore: getQualityScore(
+                    json["data_file_quality"]["overall"],
+                    "overallScore",
+                    "Average of all dimensions listed."
+                ),
+                accuracy: getQualityScore(
+                    json["data_file_quality"]["accuracy"],
+                    "accuracy",
+                    "Is the information (headers, acronyms, abbreviations) clear (less ambiguous) and legible?"
+                ),
+                consistency: getQualityScore(
+                    json["data_file_quality"]["consistency"],
+                    "consistency",
+                    "Do the values and headers have consistent formats (e.g. date formats), granularity (e.g spatiotemporal resolution), ? Does the same information match across multiple instances?"
+                ),
+                clarity: getQualityScore(
+                    json["data_file_quality"]["clarity"],
+                    "clarity",
+                    "Is the information (e.g. values, content) error-free and correct?"
+                ),
+                readiness: getQualityScore(
+                    json["data_file_quality"]["readiness"],
+                    "readiness",
+                    "Does the file need minimal preprocessing (e.g. missing value imputation, outlier removal) before any sensible use?"
+                ),
+            },
+            metaFileQuality: {
+                overallScore: getQualityScore(
+                    json["meta_file_quality"]["overall"],
+                    "overallScore",
+                    "Average of all dimensions listed."
+                ),
+                findability: getQualityScore(
+                    json["meta_file_quality"]["findability"],
+                    "findability",
+                    "Does this dataset contain metadata that enables its findability for humans and computers?"
+                ),
+                accessibility: getQualityScore(
+                    json["meta_file_quality"]["accessibility"],
+                    "accessibility",
+                    "Are the dataset and data file download URLs available and working?"
+                ),
+                reusability: getQualityScore(
+                    json["meta_file_quality"]["reusability"],
+                    "reusability",
+                    "How well-described is this dataset so it can be replicated and/or combined in different settings, to help optimise its reuse?"
+                ),
+                contextuality: getQualityScore(
+                    json["meta_file_quality"]["contextuality"],
+                    "contextuality",
+                    "Does this dataset have contextual information to aid in deciding if a dataset is fit-for-purpose or not?"
+                ),
+                interoperability: getQualityScore(
+                    json["meta_file_quality"]["interoperability"],
+                    "interoperability",
+                    "How well can this dataset work in conjunction with applications or workflows for analysis, storage, and processing?"
+                ),
+            },
+        };
+    };
+    const getQualityScore = (
+        data: any,
+        title: string,
+        tooltipTitle: string
+    ) => ({
+        title: title,
+        rating: data?.rating,
+        tooltipTitle: tooltipTitle,
+        datasets: data?.datasets.map((data: any) => getQualityDatasets(data)),
+    });
+
+    const getQualityDatasets = (dataset: any) => ({
+        id: dataset["id"],
+        title: dataset["title"],
+        description: dataset["description"],
+        rating: dataset["ratings"],
+    });
+
+    const fetchData = (qualityMetrics: any) => {
         let from: string = format(new Date(), "yyyy-MM-dd");
         let to: string = format(new Date(), "yyyy-MM-dd");
 
@@ -282,17 +498,30 @@ const ReportVM = () => {
         //Check if option selected
         const promise1 = fetchMetricDataByTime(from, to);
         const promise2 = fetchMetricDataByRoles(from, to);
+        const promise3 = fetchMetricDataByLocation(from, to);
+        const promise4 = fetchSearchTerms();
+        const promise5 = fetchQualityMetrics();
 
-        Promise.all([promise1, promise2]).then(() => {
-            generateReportContent();
-        });
+        Promise.all([promise1, promise2, promise3, promise4, promise5]).then(
+            () => {
+                generateReportContent(qualityMetrics);
+            }
+        );
     };
-    const isFetching = isFetchingByTime || isFetchingByRoles;
+    const isFetching =
+        isFetchingByTime ||
+        isFetchingByRoles ||
+        isFetchingByLocation ||
+        isFetchingQualityMetrics ||
+        isFetchingSearchTerms;
     const loading =
         isGeneratingReport ||
         isFetching ||
+        isFetchingQualityMetrics ||
+        isFetchingSearchTerms ||
         isFetchingByTime ||
-        isFetchingByRoles;
+        isFetchingByRoles ||
+        isFetchingByLocation;
 
     return {
         generateReportContent,
@@ -314,6 +543,9 @@ const ReportVM = () => {
         setToDate,
         downloadByTime,
         downloadByRole,
+        downloadByLocation,
+        searchTerms,
+        qualityMetrics,
     };
 };
 
@@ -365,6 +597,9 @@ interface IReportVMContext {
     setToDate: Function;
     downloadByTime: any;
     downloadByRole: any;
+    downloadByLocation: any;
+    searchTerms: any;
+    qualityMetrics: any;
 }
 
 export const ReportVMContext = createContext<IReportVMContext>(

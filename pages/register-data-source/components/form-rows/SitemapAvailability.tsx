@@ -11,6 +11,7 @@ const SitemapAvailability = ({ vm }: { vm: any }) => {
             <FormRow
                 label="Sitemap availability"
                 tooltip={formRowToolTipData.sitemap_exists}
+                className="w-screen md:w-auto"
             >
                 <DropdownField
                     className="w-80"
@@ -47,7 +48,7 @@ const SitemapAvailability = ({ vm }: { vm: any }) => {
                 >
                     <TextField
                         disabled={vm.form.watch("sitemap_exists") != "yes"}
-                        className="w-80"
+                        
                         formControl={{
                             control: vm.form.control,
                             name: "sitemap_url",

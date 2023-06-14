@@ -2,7 +2,7 @@ import ResultCard from "components/UI/result_card";
 import { useSelector } from "react-redux";
 import { RootState } from "store";
 import { DateTime } from "luxon";
-import { organisationToResultCardData } from "pages/search/components/organization/organisation.vm";
+import { organisationToResultCardData } from "pages/search/organisation/organisation.vm";
 
 const OrganisationBookmarksSection = ({ orgIDS }: { orgIDS: any }) => {
     const bookmarkItemsData = useSelector(

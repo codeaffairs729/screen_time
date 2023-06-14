@@ -18,21 +18,25 @@ class Organisation {
         name,
         sector,
         maxMembers,
+        logo_url
     }: {
         organisation_id: number;
         name: string;
         sector: string;
         maxMembers: number;
+        logo_url: string;
     }) {
         this.organisation_id = organisation_id;
         this.name = name;
         this.sector = sector;
         this.maxMembers = maxMembers;
+        this.logo_url = logo_url
     }
     organisation_id: number;
     name: string;
     sector: string;
     maxMembers: number;
+    logo_url: string;
 
     static fromJson(json: { [key: string]: any }) {
         return new Organisation({
@@ -40,13 +44,14 @@ class Organisation {
             name: json["name"],
             sector: json["sector"],
             maxMembers: json["max_members"],
+            logo_url:json["logo_url"]
         });
     }
 }
 export class Role {
     static REGISTERED_USER = "Registered User";
-    static ORGANIZATION_ADMIN = "Organization Admin";
-    static ORGANIZATION_MEMBER = "Organization Member";
+    static ORGANIZATION_ADMIN = "Organisation Admin";
+    static ORGANIZATION_MEMBER = "Organisation Member";
 
     constructor({ role_id, name }: { role_id: number; name: string }) {
         this.role_id = role_id;
@@ -72,6 +77,8 @@ class User {
         roles,
         roleOther,
         // isDataOwner,
+        user_image_url,
+        logo_url,
         organisation,
         organisations,
         updatedAt,
@@ -83,6 +90,8 @@ class User {
         roleOther: UserRole;
         role: UserRole;
         roles: Role[];
+        user_image_url: string;
+        logo_url: string;
         // isDataOwner: Boolean;
         organisation: string;
         organisations: Organisation[];
@@ -95,6 +104,8 @@ class User {
         this.role = role;
         this.roles = roles;
         this.roleOther = roleOther;
+        this.user_image_url = user_image_url;
+        this.logo_url = logo_url;
         // this.isDataOwner = isDataOwner;
         this.organisation = organisation;
         this.organisations = organisations;
@@ -107,6 +118,8 @@ class User {
     email: string;
     role: UserRole;
     roles: Role[];
+    user_image_url: string;
+    logo_url: string;
     roleOther: string;
     // isDataOwner: Boolean;
     organisation: string;
@@ -129,6 +142,8 @@ class User {
             role: json["role"],
             roles: roles,
             roleOther: json["role_other"],
+            user_image_url: json["user_image_url"],
+            logo_url: json["logo_url"],
             // isDataOwner: json["is_data_owner"],
             organisation: json["organisation"],
             organisations: organisations,

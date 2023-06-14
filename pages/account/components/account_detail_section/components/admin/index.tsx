@@ -12,28 +12,65 @@ import cameraImage from "public/images/icons/camera_filled.svg";
 import plusWhite from "public/images/icons/plus_white.svg";
 import AddMemberModal from "./components/add_member_modal";
 import MembersTable from "./components/members_table";
+import { useRef, useState } from "react";
+import toast from "react-hot-toast";
 const AdminSection = () => {
-    const { control, handleSubmit } = useForm();
-    const admin_user = useSelector((state: RootState) => state.auth.user);
-    const vm = AdminTabPanelVM();
+    // const { control, handleSubmit } = useForm();
     const user = useSelector((state: RootState) => state.auth.user);
+    const admin_user = useSelector((state: RootState) => state.auth.user);
+    const fileInputRef = useRef<HTMLInputElement>(null);
+    const vm = AdminTabPanelVM();
     const nameInitial = user
         ? user?.name
               ?.split(" ")
               .map((word) => word[0])
               .join("")
         : "G";
+    const handleFileChange = (e: any) => {
+        // setFile(e.target.files[0]);
+        const file = e.target.files[0];
+        const reader = new FileReader();
+        reader.onload = () => {
+            vm.setFile(reader?.result as string);
+        };
+        reader.readAsDataURL(file);
+    };
+    const uploadImage = () => {
+        if (fileInputRef.current) {
+            fileInputRef.current.click();
+        }
+    };
     
     return (
         <div className="pt-16">
             <AdminTabPanelVMContext.Provider value={vm}>
                 <div className="lg:flex flex-row justify-between items-center max-w-3xl mx-auto">
-                    {/* <div className=" absolute ml-[105px] mt-[-100px] cursor-pointer">
-                        <Image src={cameraImage} width="50px" height="50px" />
-                    </div> */}
-                    <div className="select-none outline-none text-lg w-36 h-36 flex justify-center items-center bg-[#E2E2E2]  rounded-full text-[#F5F5F5] font-medium text-[96px] mx-auto mb-4">
-                        {nameInitial}
+                <div>
+                    <div
+                        className=" absolute ml-[80px] mt-[-15px] cursor-pointer"
+                        onClick={() => {
+                            uploadImage();
+                        }}
+                    ><div>
+                        <input
+                            id="image-upload"
+                            ref={fileInputRef}
+                            // {...register}
+                            type="file"
+                            accept="image/*"
+                            onChange={handleFileChange}
+                            className="hidden"
+                        ></input>
+                            <Image
+                                src={cameraImage}
+                                width="40px"
+                                height="40px"
+                            /></div>
                     </div>
+                    <div className={`${!vm.file&&"bg-dtech-middle-grey"} "select-none  outline-none text-lg w-28 h-28 flex justify-center items-center rounded-full text-[#F5F5F5] font-medium text-[96px] mb-4 pb-6"`}>
+                        {vm.file ? <img src={vm.file} className="rounded-full"></img> : `${nameInitial}`}
+                    </div>
+                </div>
                     <div className="grid md:grid-cols-2 gap-4">
                         <FormRow
                             label="Organisation"
@@ -41,12 +78,12 @@ const AdminSection = () => {
                         >
                             <TextField
                                 className="bg-gray-50"
-                                disabled={true}
+                                disabled={false}
                                 formControl={{
-                                    control: control,
+                                    control: vm.form.control,
                                     name: "name",
-                                    defaultValue:
-                                        User.getOrganisation(admin_user)?.name,
+                                    defaultValue:User.getOrganisation(admin_user)?.name,
+                                        // "",
                                     rules: {
                                         required: "Organisation is required",
                                     },
@@ -57,7 +94,7 @@ const AdminSection = () => {
                         </FormRow>
                         <FormRow
                             label="Sector"
-                            labelClass=" !bg-[#F8F8F8] !w-auto z-10 mx-5 absolute mb-10 text-dtech-main-dark !py-1"
+                            labelClass="!bg-[#F8F8F8] !w-auto z-10 mx-5 absolute mb-10 text-dtech-main-dark !py-1"
                         >
                             <DropdownField
                                 inputClass=" !focus:ring-dtech-main-dark border-1 !border-dtech-main-dark !focus:border-dtech-main-dark !bg-transparent"
@@ -77,31 +114,34 @@ const AdminSection = () => {
                                     },
                                 ]}
                                 formControl={{
-                                    control: control,
-                                    defaultValue:
-                                        User.getOrganisation(admin_user)
-                                            ?.sector,
+                                    control: vm.form.control,
+                                    defaultValue:User.getOrganisation(admin_user)?.sector,
                                     name: "sector",
                                     rules: {
                                         required: "Sector is required",
+
                                     },
                                 }}
                             />
                         </FormRow>
-                        <FormRow label="Max members"  labelClass=" !bg-[#F8F8F8] !w-auto z-10 mx-5 absolute mb-10 text-dtech-main-dark !py-1">
+                        <FormRow
+                            label="Max Members"
+                            labelClass="!bg-[#F8F8F8] !w-auto z-10 mx-5 absolute mb-10 text-dtech-main-dark !py-1"
+                        >
                             <TextField
-                                className="bg-gray-50"
+                                className="bg-gray-100"
+                                disabled={false}
                                 formControl={{
-                                    control: control,
+                                    control: vm.form.control,
                                     defaultValue:
-                                        User.getOrganisation(admin_user)
+                                   User.getOrganisation(admin_user)
                                             ?.maxMembers,
                                     name: "max_members",
                                     rules: {
                                         required: "Max. members is required",
                                     },
                                 }}
-                                placeholder="Max. members"
+                                placeholder="role"
                                 textfieldClassName="!focus:ring-dtech-main-dark border-2 !border-dtech-main-dark !focus:border-dtech-main-dark"
                             />
                         </FormRow>
@@ -128,7 +168,23 @@ const AdminSection = () => {
                             className="bg-dtech-main-dark w-min whitespace-nowrap  !px-16 !py-2 !rounded-lg !text-lg"
                             label="Update"
                             isLoading={vm.isSavingOrgDetails}
-                            onClick={handleSubmit(vm.saveOrgDetails)}
+                            onClick={() => {
+                                if(vm.form.getValues().name!==User.getOrganisation(admin_user)?.name||vm.form.getValues().sector!==User.getOrganisation(admin_user)?.sector||vm.file!=user?.logo_url){
+                                vm.form.handleSubmit(() => {
+                                    const formData = new FormData();
+                                    formData.append("name", vm.form.getValues().name);
+                                    formData.append("sector", vm.form.getValues().sector);
+                                    formData.append("image", vm.file || "");
+                                    vm.saveOrgDetails({
+                                        ...vm.form.getValues(),
+                                        image: vm.file,
+                                    });
+                                })()
+                            }
+                            else{
+                                toast.error("There is not any change in the form")
+                            }
+                            }}
                         />
                     </div>
                 </div>

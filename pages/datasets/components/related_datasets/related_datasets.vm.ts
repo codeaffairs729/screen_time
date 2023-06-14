@@ -1,7 +1,8 @@
 import { useHttpCall } from "common/hooks";
 import Http from "common/http";
+import { useFetchStats } from "common/utils/datasets.util";
 import Dataset from "models/dataset.model.v4";
-import SearchVM, { SearchVMContext } from "pages/search/search.vm";
+// import SearchVM, { SearchVMContext } from "pages/search/search.vm";
 import { createContext } from "react";
 import toast from "react-hot-toast";
 import useSWR from "swr";
@@ -11,7 +12,7 @@ const RelatedDatasetsVM = (dataset: any) => {
      * Fetch stats for datasets to highlight favourite status
      */
 
-    const { fectchStats, stats, isFetchingStats } = SearchVM();
+    const { fectchStats, stats, isFetchingStats } = useFetchStats();
 
     const {
         execute: excuteFetchDatasetsByCategory,

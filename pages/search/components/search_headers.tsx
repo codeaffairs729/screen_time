@@ -1,5 +1,5 @@
-import RecordsSortBy from "./organization/components/organization_sortby_field";
-import TotalRecords from "./organization/components/total_records";
+import RecordsSortBy from "../organisation/components/organization_sortby_field";
+import TotalRecords from "../organisation/components/total_records";
 import Pagination from "components/UI/pagination";
 import SortbyField from "./sortby_field";
 

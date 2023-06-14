@@ -11,10 +11,12 @@ import { updateUser } from "store/auth/auth.action";
 
 const AdminTabPanelVM = () => {
     const adminUser = useSelector((state: RootState) => state.auth.user);
+    const [file, setFile] = useState(adminUser?.logo_url)
     const dispatch = useDispatch();
-    const { control, handleSubmit, reset, clearErrors } = useForm();
+    const { control, handleSubmit, reset, clearErrors, getValues, formState } = useForm();
     const organisationId = adminUser?.organisations?.[0]?.organisation_id;
     let [isAddMemberModalOpen, setIsAddMemberModalOpen] = useState(false);
+    const form=useForm()
 
     // Fetch users belonging to the current organisation
     const {
@@ -37,7 +39,6 @@ const AdminTabPanelVM = () => {
     useEffect(() => {
         fetchOrgUsers();
     }, []);
-
     const { execute: executeInviteMember, isLoading: isInvitingMember } =
         useHttpCall();
     const inviteMember = ({
@@ -96,12 +97,14 @@ const AdminTabPanelVM = () => {
                         name: res["data"]["name"],
                         maxMembers: res["data"]["max_members"],
                         sector: res["data"]["sector"],
+                        logo_url: res["data"]["logo_url"]
                     });
                     if (!newAdminUser) {
                         console.log("newAdminUser", newAdminUser);
                         throw new Error("Updated user is not valid");
                     }
                     dispatch(updateUser(newAdminUser));
+                    setFile(newAdminUser.organisations[0]?.logo_url)
                     toast.success("Details were updated successfully");
                 },
                 onError: async (error) => {
@@ -172,6 +175,11 @@ const AdminTabPanelVM = () => {
         changingRoleUserId,
         control,
         handleSubmit,
+        getValues,
+        form, 
+        formState,
+        file,
+        setFile
     };
 };
 
