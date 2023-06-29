@@ -35,18 +35,8 @@ const SigninVM = () => {
         ? `?q=${encodeURI(lastSearchQuery)}`
         : "";
     const [signinErrorMsg, setSigninErrorMsg] = useState<string | null>();
-    const [previousPath, setPreviousPath] = useState<string | null>();
 
-    useEffect(() => {
-        if (
-            localStorage.getItem("previous_path") === null ||
-            localStorage.getItem("previous_path") === ""
-        ) {
-            setPreviousPath("/");
-        } else {
-            setPreviousPath(localStorage.getItem("previous_path"));
-        }
-    }, []);
+
     const { isLoading: isSigningIn, execute: executePerformLogin } =
         useHttpCall();
     const performLogin = (data: any) =>
@@ -61,14 +51,14 @@ const SigninVM = () => {
                     .run({ retries: 0, tryRefreshingToken: false });
                 // return Http.post(`/v1/users/signin`, data);
             },
-            {
+            {                  
                 onSuccess: (res) => {
                     AuthService.signin(
                         User.fromJson(res["user"]),
                         res["token"],
-                        getPathBool(previousPath),
-                        "/",
-                        fetchNotifications
+                        getPathBool(localStorage.getItem("previous_path")),
+                        localStorage.getItem("previous_path")??"/",
+                        fetchNotifications,
                     );
                     usereventLogin(User.fromJson(res["user"]));
                 },

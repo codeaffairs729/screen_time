@@ -10,21 +10,14 @@ const ForgotPasswordPage = () => {
   const vm = ForgotPasswordVM();
 
   return (
-    <DefaultLayout>
+    // <DefaultLayout>
       <ForgotPasswordVMContext.Provider value={vm}>
         <div className="h-[calc(100vh-var(--nav-height))] flex flex-col justify-between">
           <RequestResetEmail />
           <EmailSent />
-          <div className="text-center pb-4">
-            <Link href="/data-privacy-policy">
-              <a className="text-sm underline text-gray-600">
-                Data privacy policy
-              </a>
-            </Link>
-          </div>
         </div>
       </ForgotPasswordVMContext.Provider>
-    </DefaultLayout>
+    // </DefaultLayout>
   );
 };
 

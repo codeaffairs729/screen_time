@@ -29,7 +29,7 @@ const SignupVM = () => {
                 setSignupErrorMsg(null);
                 return Http.post("/v1/users/signup", {
                     ...data,
-                    signup_type: signupType,
+                    // signup_type: signupType,
                 });
             },
             {
@@ -53,6 +53,11 @@ const SignupVM = () => {
         label: k,
     }));
 
+    const accountTypeOptions: Option[]= [
+        { value: 'individual', label: "Individual" },
+        { value: 'org_admin', label: "Organisation" },
+    ]
+
     const dataOwnerOptions: Option[] = [
         { value: true, label: "Yes" },
         { value: false, label: "No" },
@@ -63,6 +68,7 @@ const SignupVM = () => {
         handleSignup,
         isSigningUp,
         roleOptions,
+        accountTypeOptions,
         dataOwnerOptions,
         signupErrorMsg,
         signupType,

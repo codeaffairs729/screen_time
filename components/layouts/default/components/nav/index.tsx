@@ -97,7 +97,8 @@ const Nav = ({
                             openInNewTab={true}
                         />
                         {user && <Notification />}
-                        {!user && <SignupDropdown />}
+                        {/* {!user && <SignupDropdown />} */}
+                        {!user && <NavItem label="Sign Up" link="/signup" />}
                         {!user && <NavItem label="Log In" link="/login" />}
                     </div>
                     <ProfileDropdown className="mx-4 md:mx-0" />

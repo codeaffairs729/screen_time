@@ -6,19 +6,31 @@ import LoginUnlockVM from "./login_unlock.vm";
 import PrimaryBtn from "components/UI/form/primary_btn";
 import { getHttpErrorMsg, getMessageFromResponse } from "common/util";
 import SuccessAlert from "components/UI/alerts/success_alert";
+import { useEffect, useState } from "react";
+import InfoIcon from "components/UI/icons/info_icon";
+import isEmail from "validator/lib/isEmail";
+import { useRouter } from "next/router";
+import NewGradientUI from "components/layouts/gradientLayout";
+
 
 const LoginUnlockPage = () => {
     const vm = LoginUnlockVM();
-
+    const router = useRouter();
+   
     return (
-        <DefaultLayout showSearchBar={false}>
-            <div className="min-h-[calc(100vh-var(--nav-height))] flex flex-col justify-between">
-                <div className="text-center">
-                    <h1 className="font-semibold text-lg mb-2 mt-8">
-                        Unlock account
-                    </h1>
-                </div>
-                <div className="grow flex flex-col items-center justify-center pb-8 max-w-[448px] w-full mx-auto">
+        <NewGradientUI>
+                <div className="grow flex flex-col items-left max-w-[30%px] justify-center sm:justify-center  sm:mx-[20%] sm:my-0 mx-[5%] my-[5%] ">
+                    <div
+                        className="  -mt-[740px] sm:mt-0 mb-8 w-fit absolute sm:relative cursor-pointer"
+                        onClick={() => router.push("/login")}
+                    >
+                        <img src="/images/icons/arrows/arrow_back.svg" />
+                    </div>
+                    <div className="text-center">
+                        <h1 className="font-semibold text-[#333333] text-2xl  mb-2 sm:text-xl ">
+                            Unlock account
+                        </h1>
+                    </div>
                     {vm.requestUnlockData && (
                         <SuccessAlert
                             message={getMessageFromResponse(
@@ -37,31 +49,55 @@ const LoginUnlockPage = () => {
                             className="max-w-[450px] w-full mb-4"
                         />
                     )}
-                    <FormRow label="Email">
+
+                    <div className=" sm:-mt-10">
+                        <div className="mt-0 sm:mt-8 flex flex-col">
+                            <div className="flex flex-row justify-items-start my-8">
+                                <FormRow
+                                    label="Email"
+                                    className=" !bg-transparent text-[#333333] !text-xl sm:mt-0 sm:!text-base"
+                                >
+                                    {" "}
+                                    <InfoIcon
+                                        tooltipBackground="#28A197"
+                                        iconClasses="text-[#333333]  -ml-24 sm:-ml-28"
+                                        title="Enter regular text in email id "
+                                    />
+                                </FormRow>
+                            </div>
+                        </div>
                         <TextField
-                            className="w-60"
+                            className=" -mt-6 sm:-mt-8 rounded-xl  "
+                            textfieldClassName="!bg-white"
                             formControl={{
                                 control: vm.form.control,
                                 name: "email",
-                                rules: { required: "Email is required" },
+                                rules: {
+                                    required: "Required field",
+                                    validate: (val: string) => {
+                                        if (!isEmail(val)) {
+                                            return "Please enter a valid e-mail address";
+                                        }
+                                    },
+                                },
                             }}
-                            placeholder="Email"
+                            placeholder="Enter Email"
                             type="email"
+                            errorPosition={true}
                         />
-                    </FormRow>
-                    <div className="flex space-x-4 mt-12">
+                    </div>
+
+                    <div className="flex space-x-4 sm:mt-8 mt-12 justify-center">
                         <PrimaryBtn
-                            className="bg-dtech-primary-dark min-w-[150px]"
-                            label="Send Email"
+                            className=" bg-dtech-main-dark min-w-[150px] !justify-center !items-center !py-3 w-8 sm:w-full !rounded-lg"
+                            label="Send Link"
                             isLoading={vm.isRequestUnlockLoading}
                             isDisabled={vm.isRequestUnlockLoading}
                             onClick={vm.form.handleSubmit(vm.requestUnlock)}
                         />
                     </div>
                 </div>
-            </div>
-        </DefaultLayout>
+        </NewGradientUI>
     );
 };
-
 export default LoginUnlockPage;
