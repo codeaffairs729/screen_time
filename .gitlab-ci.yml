@@ -1,25 +1,91 @@
 workflow:
   rules:
+    - if: $CI_COMMIT_MESSAGE =~ /#nocicd/
+      when: never
     - if: $CI_COMMIT_BRANCH == 'main'
+      when: always
 
 default:
   image: google/cloud-sdk:alpine
   before_script:
-    - gcloud config set project epsilon1-dev
+    - gcloud config set project $GCP_PROJECT_ID
     - gcloud auth activate-service-account --key-file $GCP_SERVICE_CREDS
-    - chmod +x ./gitlab_setup_env.sh
 
-build:
+stages:
+  - build
+  - deploy
+
+# BUILD start
+.build:
   stage: build
   script:
+    - chmod +x ./gitlab_setup_env.sh
     - ./gitlab_setup_env.sh
-    - ls -lah
-    - cat .env
     - >
-      gcloud builds submit . --tag gcr.io/epsilon1-dev/portal-webclient
+      gcloud builds submit . --tag gcr.io/$GCP_PROJECT_ID/portal-webclient
 
-deploy:
+build_staging:
+  environment: staging
+  extends: .build
+  rules:
+    - if: '$TRIGGER_JOB == "build"' # dont run job triggered without `TRIGGER_JOB == "deploy"`
+      when: always
+    - if: '$CI_PIPELINE_SOURCE == "trigger"'
+      when: never
+    - when: on_success
+
+build_production:
+  environment: production
+  extends: .build
+  rules:
+    - if: '$TRIGGER_JOB == "build"' # dont run job triggered without `TRIGGER_JOB == "build"`
+      when: always
+    - if: '$CI_PIPELINE_SOURCE == "trigger"'
+      when: never
+    - when: manual
+# build:
+  # stage: build
+  # script:
+  #   - ./gitlab_setup_env.sh
+  #   - ls -lah
+  #   - cat .env
+  #   - >
+  #     gcloud builds submit . --tag gcr.io/$GCP_PROJECT_ID/portal-webclient
+# BUILD end
+
+# deploy:
+#   stage: deploy
+#   script:
+#     - >
+#       gcloud run deploy portal-webclient --image gcr.io/$GCP_PROJECT_ID/portal-webclient --platform managed --region us-central1 --allow-unauthenticated
+# DEPLOY start
+.deploy:
   stage: deploy
   script:
     - >
-      gcloud run deploy portal-webclient --image gcr.io/epsilon1-dev/portal-webclient --platform managed --region us-central1 --allow-unauthenticated
+      gcloud run deploy portal-webclient --image gcr.io/$GCP_PROJECT_ID/portal-webclient --platform managed --region $GCP_REGION --allow-unauthenticated
+
+deploy_staging:
+  extends: .deploy
+  environment: staging
+  needs:
+    - build_staging
+  rules:
+    - if: '$TRIGGER_JOB == "deploy"' # dont run job triggered without `TRIGGER_JOB == "deploy"`
+      when: always
+    - if: '$CI_PIPELINE_SOURCE == "trigger"'
+      when: never
+    - when: on_success
+
+deploy_production:
+  extends: .deploy
+  environment: production
+  needs:
+    - build_production
+  rules:
+    - if: '$TRIGGER_JOB == "deploy"' # dont run job triggered without `TRIGGER_JOB == "deploy"`
+      when: always
+    - if: '$CI_PIPELINE_SOURCE == "trigger"'
+      when: never
+    - when: manual
+# DEPLOY end
