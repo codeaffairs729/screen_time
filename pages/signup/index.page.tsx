@@ -7,208 +7,410 @@ import SignupVM from "./signup.vm";
 import isEmail from "validator/lib/isEmail";
 import ErrorAlert from "components/UI/alerts/error_alert";
 import SuccessAlert from "components/UI/alerts/success_alert";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { RootState } from "store";
+import { useSelector } from "react-redux";
+import InfoIcon from "components/UI/icons/info_icon";
+import NewGradientUI from "components/layouts/gradientLayout";
 
 const SignupPage = () => {
     const vm = SignupVM();
+    const user = useSelector((state: RootState) => state.auth.user);
+    const router = useRouter();
+    const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+    const [step, setStep] = useState(false);
+    const [isChecked, setIsChecked] = useState(false);
+    const [showError, setShowError] = useState(false);
 
+    useEffect(() => {
+        if (user) {
+            router.push("/");
+        }
+    }, []);
+
+    if (user || vm.signupErrorMsg || vm.signupSuccessMsg) {
+        return (
+            <div
+                className="max-h-screen h-screen flex flex-col items-center justify-center "
+                style={{
+                    background:
+                        "linear-gradient(to bottom right, #3F0068, #FFFFFF)",
+                }}
+            >
+                <img
+                    className="-mt-8 hidden sm:block"
+                    src="/images/icons/mail-sent.svg"
+                ></img>
+                <span className=" text-xl sm:text-4xl text-dtech-main-dark font-bold my-8">
+                    {" "}
+                    A verification email has been sent.
+                </span>
+                <span className=" text-sm sm:text-2xl text-dtech-main-dark font-bold w-[32%] text-center">
+                    Please use the link in the email to verify your account.
+                    After this, you can login into your account.
+                </span>
+            </div>
+        );
+    }
     return (
-        <DefaultLayout showSearchBar={false}>
-            <div className="min-h-[calc(100vh-var(--nav-height))] flex flex-col justify-between">
-                <div className="text-center mt-8 mb-4">
-                    <h1 className="font-semibold text-lg">
-                        {vm.signupType == "org_admin"
-                            ? "Organisation Admin Sign Up"
-                            : "Individual Sign Up"}
-                    </h1>
-                    <p className="text-sm text-gray-600 max-w-[480px] mx-auto">
-                        {vm.signupType == "org_admin"
-                            ? "As an organisation admin, you can manage the members and resources of your organisation. Please use a work email address to sign up."
-                            : "As a registered user, you can gain access to features such as data downloads, data previews, providing feedback to data providers, among others."}
-                    </p>
-                </div>
-                <div className="grow flex flex-col items-center justify-center">
-                    {vm.signupErrorMsg && (
-                        <ErrorAlert
-                            message={vm.signupErrorMsg}
-                            className="max-w-[450px] w-full mb-4"
-                        />
-                    )}
-                    {vm.signupSuccessMsg && (
-                        <SuccessAlert
-                            message={vm.signupSuccessMsg}
-                            className="max-w-[450px] w-full mb-4"
-                        />
-                    )}
-                    <FormRow label="Name">
+        <NewGradientUI>
+            {!step ? (
+                <div className="grow flex flex-col items-left max-w-[30%px] justify-evenly sm:justify-center  sm:mx-[20%] sm:my-0 mx-[5%] my-[5%] ">
+                    <div className="text-center">
+                        <h1 className="font-semibold text-[#333333] text-2xl mt-8 mb-2 sm:text-xl ">
+                            Create an Account
+                        </h1>
+                    </div>
+
+                    <div>
+                        <div className="mt-4">
+                            <FormRow
+                                label="Name"
+                                className=" !bg-transparent text-[#333333] !text-xl sm:mt-0 sm:!text-base"
+                            >
+                                {" "}
+                            </FormRow>
+                            <InfoIcon
+                                tooltipBackground="#28A197"
+                                iconClasses="text-[#333333] -mt-[54px] ml-20 sm:ml-16"
+                                title="Enter your name"
+                            />
+                        </div>
                         <TextField
-                            className="w-60"
+                            className=" -mt-6 sm:-mt-8 rounded-xl !bg-transparent "
+                            textfieldClassName="!bg-white"
                             formControl={{
                                 control: vm.form.control,
                                 name: "name",
-                                rules: { required: "Name is required" },
+                                rules: {
+                                    required: "Name is required",
+                                    pattern: {
+                                        value: /^[A-Za-z\s]+$/,
+                                        message: "Use only letters",
+                                    },
+                                },
                             }}
                             placeholder="Name"
+                            errorPosition={true}
                         />
-                    </FormRow>
-                    <FormRow label="Email">
+                        <div className="mt-4">
+                            <FormRow
+                                label="Email"
+                                className=" !bg-transparent text-[#333333] !text-xl sm:mt-0 sm:!text-base"
+                            ></FormRow>
+                            <InfoIcon
+                                tooltipBackground="#28A197"
+                                iconClasses="text-[#333333] -mt-[54px] ml-[72px] sm:ml-16"
+                                title="Enter regular text in email id "
+                            />
+                        </div>
                         <TextField
-                            className="w-60"
+                            className=" -mt-6 sm:-mt-8 rounded-xl !bg-transparent "
+                            textfieldClassName="!bg-white"
                             formControl={{
                                 control: vm.form.control,
                                 name: "email",
                                 rules: {
-                                    required: "Email is required",
+                                    required: "Required field",
                                     validate: (val: string) => {
                                         if (!isEmail(val)) {
-                                            return "Please enter a valid email";
+                                            return "Please enter a valid e-mail address";
                                         }
                                     },
                                 },
                             }}
-                            placeholder="Email"
+                            placeholder="Enter Email"
                             type="email"
+                            errorPosition={true}
                         />
-                    </FormRow>
-                    <FormRow label="Password">
-                        <TextField
-                            className="w-60"
-                            formControl={{
-                                control: vm.form.control,
-                                name: "password",
-                                rules: {
-                                    validate: (val: string) => {
-                                        const prefix = "Password should contain atleast";
-                                        const specialChars = /[ !@#$%^&*]/;
-                                        const err_msgs = [];
-                                        if (val.length < 8) {
-                                            err_msgs.push(
-                                                "8 charachters"
-                                            );
-                                        }
-                                        if (val.search(/[A-Z]/) < 0) {
-                                            err_msgs.push(
-                                                "1 uppercase character"
-                                            );
-                                        }
-                                        if (val.search(/[0-9]/) < 0) {
-                                            err_msgs.push(
-                                                "1 number"
-                                            );
-                                        }
-                                        if (
-                                            !specialChars.test(val)
-                                        ) {
-                                            err_msgs.push(
-                                                "1 special character[!@#$%^&*]"
-                                            );
-                                        }
-                                        if (err_msgs.length) {
-                                            let suffix =
-                                                err_msgs[err_msgs.length - 1];
-                                            if (err_msgs.length > 1) {
-                                                suffix = `${err_msgs
-                                                    .slice(0, err_msgs.length-1)
-                                                    .join(", ")} and ${suffix}`;
+                        <div className="mt-4">
+                            <FormRow
+                                label="Password"
+                                className=" !bg-transparent text-[#333333] !text-xl sm:!text-base"
+                            >
+                                {" "}
+                            </FormRow>
+                            <InfoIcon
+                                tooltipBackground="#28A197"
+                                iconClasses="text-[#333333] -mt-[54px] ml-28 sm:ml-24"
+                                title="Enter password "
+                            />
+                        </div>
+                        <div className="relative">
+                            <TextField
+                                className=" -mt-6 sm:-mt-8 rounded-xl !bg-transparent "
+                                textfieldClassName="!bg-white"
+                                formControl={{
+                                    control: vm.form.control,
+                                    name: "password",
+                                    rules: {
+                                        validate: (val: string) => {
+                                            const prefix =
+                                                "Password should contain atleast,";
+                                            const specialChars = /[ !@#$%^&*]/;
+                                            const err_msgs = [];
+                                            if (val.length < 8) {
+                                                err_msgs.push("8 charachters");
                                             }
-                                            return `${prefix} ${suffix}`;
-                                        }
+                                            if (val.search(/[A-Z]/) < 0) {
+                                                err_msgs.push(
+                                                    "1 uppercase character"
+                                                );
+                                            }
+                                            if (val.search(/[0-9]/) < 0) {
+                                                err_msgs.push("1 number");
+                                            }
+                                            if (!specialChars.test(val)) {
+                                                err_msgs.push(
+                                                    "1 special character[!@#$%^&*]"
+                                                );
+                                            }
+                                            if (err_msgs.length) {
+                                                let suffix =
+                                                    err_msgs[
+                                                        err_msgs.length - 1
+                                                    ];
+                                                if (err_msgs.length > 1) {
+                                                    suffix = `${err_msgs
+                                                        .slice(
+                                                            0,
+                                                            err_msgs.length - 1
+                                                        )
+                                                        .join(
+                                                            ", "
+                                                        )} , ${suffix}`;
+                                                }
+                                                return `${prefix} ${suffix}`;
+                                            }
+                                        },
                                     },
-                                },
-                            }}
-                            placeholder="Password"
-                            type="password"
-                        />
-                    </FormRow>
-                    <FormRow label="Confirm Password">
+                                }}
+                                placeholder="Enter password"
+                                type={isPasswordVisible ? "text" : "password"}
+                                errorPosition={false}
+                            />
+                            <img
+                                className="  ml-[92%] absolute top-3"
+                                onClick={() =>
+                                    setIsPasswordVisible(!isPasswordVisible)
+                                }
+                                src={
+                                    isPasswordVisible
+                                        ? "/images/icons/closed_eye.svg"
+                                        : "images/icons/open_eye.svg"
+                                }
+                            />
+                        </div>
+
+                        <div className="flex justify-center !items-center space-x-4 my-10 sm:my-10">
+                            <PrimaryBtn
+                                dataSelector="next-button"
+                                className=" bg-dtech-main-dark min-w-[150px] !justify-center !items-center !py-3 w-8 sm:w-full !rounded-lg"
+                                label="Next"
+                                onClick={vm.form.handleSubmit(() =>
+                                    setStep(!step)
+                                )}
+                            />
+                        </div>
+                        <div className="flex flex-row my-10 sm:my-8 mt- justify-center">
+                            <div className=" bg-[#727272] h-[1px] w-[25%] sm:w-[35%]"></div>
+                            <div className=" text-[#727272] -mt-3 mx-6">or</div>
+                            <div className=" bg-[#727272] h-[1px] w-[25%] sm:w-[35%]"></div>
+                        </div>
+                        <div className="my-8">
+                            <div className="flex flex-row justify-center text-[#333333]">
+                                Sign Up with
+                            </div>
+                            <div className="flex flex-row mt-4 justify-center">
+                                <div className=" mx-4 ">
+                                    <img
+                                        src="/images/icons/Google.svg"
+                                        width={35}
+                                    ></img>
+                                </div>
+                                <div className=" mx-4 ">
+                                    <img
+                                        src="/images/icons/Microsoft.svg"
+                                        width={35}
+                                    ></img>
+                                </div>
+                                <div className=" mx-4 ">
+                                    <img
+                                        src="/images/icons/LinkedIn.svg"
+                                        width={35}
+                                    ></img>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="flex flex-row my-10 sm:my-8 justify-center">
+                            <div className=" bg-[#727272] h-[1px] w-[25%] sm:w-[35%]"></div>
+                            <div className=" text-[#727272] -mt-3 mx-4">
+                                Step 1/2
+                            </div>
+                            <div className=" bg-[#727272] h-[1px] w-[25%] sm:w-[35%]"></div>
+                        </div>
+                    </div>
+                </div>
+            ) : (
+                <div className="grow flex flex-col items-left max-w-[30%px] justify-evenly sm:justify-center -mt-10  sm:mx-[20%] sm:my-0 mx-[5%] my-[5%] ">
+                    <div
+                        className=" mb-10 mt-4 w-fit cursor-pointer"
+                        onClick={() => setStep(!step)}
+                    >
+                        <img src="/images/icons/arrows/arrow_back.svg" />
+                    </div>
+                    <div className=" -mt-12 sm:mt-0">
+                        <div className="mt-4">
+                            <FormRow
+                                label="Organisation"
+                                className=" !bg-transparent text-[#333333] !text-xl sm:!text-base"
+                            >
+                                {" "}
+                            </FormRow>
+                            <InfoIcon
+                                tooltipBackground="#28A197"
+                                iconClasses="text-[#333333] -mt-[54px] ml-36 sm:ml-[118px]"
+                                title="Enter organisation name "
+                            />
+                        </div>
+
                         <TextField
-                            className="w-60"
-                            formControl={{
-                                control: vm.form.control,
-                                name: "confirm_password",
-                                rules: {
-                                    required: "Confirm password is required",
-                                    validate: (val: string) => {
-                                        if (vm.form.watch("password") != val) {
-                                            return "Your passwords do no match";
-                                        }
-                                    },
-                                },
-                            }}
-                            placeholder="Confirm Password"
-                            type="password"
-                        />
-                    </FormRow>
-                    <FormRow label="Organisation">
-                        <TextField
-                            className="w-60"
+                            errorPosition={true}
+                            className=" -mt-6 sm:-mt-8 rounded-xl !bg-transparent "
+                            textfieldClassName="!bg-white"
                             formControl={{
                                 control: vm.form.control,
                                 name: "organisation",
-                                rules: { required: "Organisation is required" },
+                                rules: {
+                                    required: "Required field",
+                                },
                             }}
                             placeholder="Organisation"
                         />
-                    </FormRow>
-                    {/* <FormRow label="Data Owner">
+                        <div className="mt-4">
+                            <FormRow
+                                label="Account type"
+                                className=" !bg-transparent text-[#333333] !text-xl sm:!text-base"
+                            >
+                                {" "}
+                            </FormRow>
+                            <InfoIcon
+                                tooltipBackground="#28A197"
+                                iconClasses="text-[#333333] ml-36 -mt-[54px] sm:!ml-[118px]"
+                                title="Select one account type "
+                            />
+                        </div>
+
                         <DropdownField
-                            className="w-60"
-                            placeholder="Choose whether data owner"
-                            options={vm.dataOwnerOptions}
-                            dataSelector="data-owner-dropdown"
+                            newDropdown={true}
+                            errorPosition={true}
+                            className=" w-full -mt-6 sm:-mt-8 "
+                            placeholder="Select from the drop-down"
+                            options={vm.accountTypeOptions}
+                            dataSelector="account-dropdown"
                             formControl={{
                                 control: vm.form.control,
-                                name: "is_data_owner",
+                                name: "signup_type",
                                 rules: {
-                                    validate: (val: boolean) => {
-                                        if (![true, false].includes(val)) {
-                                            return "Data owner is required";
-                                        }
-                                    },
+                                    required: "Required field",
                                 },
                             }}
                         />
-                    </FormRow> */}
-                    <FormRow label="Role">
+                        <div className="mt-4">
+                            <FormRow
+                                label="Role"
+                                className=" !bg-transparent text-[#333333] !text-xl sm:!text-base"
+                            ></FormRow>
+                            <InfoIcon
+                                tooltipBackground="#28A197"
+                                iconClasses="text-[#333333] -mt-[56px] ml-14 sm:ml-12"
+                                title="Select role "
+                            />
+                        </div>
+
                         <DropdownField
-                            className="w-60"
-                            placeholder="Please select your role"
+                            newDropdown={true}
+                            errorPosition={true}
+                            className=" w-full -mt-6 sm:-mt-8 "
+                            placeholder="Select your role"
                             options={vm.roleOptions}
                             dataSelector="role-dropdown"
                             formControl={{
                                 control: vm.form.control,
                                 name: "role",
-                                rules: { required: "Role is required" },
+                                rules: { required: "Required field" },
                             }}
                         />
-                    </FormRow>
-                    {vm.form.watch("role") == "other" && (
-                        <FormRow label="Role Other">
+
+                        {vm.form.watch("role") == "other" && (
                             <TextField
-                                className="w-60"
+                                className=" -mt-6 sm:mt-4 rounded-xl !bg-white "
                                 formControl={{
                                     control: vm.form.control,
                                     name: "role_other",
                                     rules: {
-                                        required: "Role Other is required",
+                                        required: "Required field",
                                     },
                                 }}
-                                placeholder="Role Other"
+                                placeholder="Enter other role"
                             />
-                        </FormRow>
+                        )}
+                    </div>
+                    <div className="flex -mt-8 sm:mt-8">
+                        <input
+                            className=" border-[2px] p-2 cursor-pointer  hover:border-4  hover:ring-4 hover:ring-[#C3C3C3] hover:bg-white focus:ring-[#FDD522] focus:border-2 active:bg-[#FDD522] checked:bg-dtech-main-dark"
+                            type="checkbox"
+                            onChange={() => setIsChecked(!isChecked)}
+                        />
+                        <div className=" -mt-1 ml-8 font-[Roboto] text-l">
+                            I Accept Dtechtive’s{" "}
+                            <a
+                                className=" text-dtech-main-dark underline"
+                                href="https://dtechtive.com/data-privacy-policy"
+                            >
+                                Data Privacy Policy
+                            </a>
+                        </div>
+                    </div>
+                    {!isChecked && showError && (
+                        <ErrorAlert
+                            message={
+                                "Please agree to the terms and policies to proceed."
+                            }
+                            className="max-w-[450px] w-full mb-4"
+                        />
                     )}
-                    <div className="flex space-x-4 mt-2">
+                    <div className="flex flex-row -my-10  sm:my-10 justify-center">
+                        <div className=" bg-[#727272] h-[1px] w-[25%] sm:w-[35%]"></div>
+                        <div className=" text-[#727272] -mt-3 mx-4">
+                            Step 2/2
+                        </div>
+                        <div className=" bg-[#727272] h-[1px] w-[25%] sm:w-[35%]"></div>
+                    </div>
+                    <div className="flex justify-center !items-center space-x-4">
                         <PrimaryBtn
                             dataSelector="signup-button"
-                            className="bg-dtech-primary-dark min-w-[150px]"
-                            label="Get started now"
+                            className=" bg-dtech-main-dark min-w-[150px] my-2 !justify-center !items-center !py-3 w-8 sm:w-full !rounded-lg"
+                            label="Create my account"
                             isLoading={vm.isSigningUp}
                             isDisabled={vm.isSigningUp}
-                            onClick={vm.form.handleSubmit(vm.handleSignup)}
+                            onClick={() => {
+                                isChecked
+                                    ? vm.form.handleSubmit(() =>
+                                          vm.handleSignup({
+                                              ...vm.form.getValues(),
+                                              confirm_password:
+                                                  vm.form.getValues().password,
+                                          })
+                                      )()
+                                    : setShowError(true);
+                            }}
                         />
                     </div>
                 </div>
-            </div>
-        </DefaultLayout>
+            )}
+        </NewGradientUI>
     );
 };
 

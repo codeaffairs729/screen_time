@@ -7,95 +7,260 @@ import InfoIcon from "components/UI/icons/info_icon";
 import Link from "next/link";
 import FormRow from "./components/form_row";
 import SigninVM from "./signin.vm";
+import { useEffect, useState } from "react";
+import { RootState } from "store";
+import { useSelector } from "react-redux";
+import { useRouter } from "next/router";
+import NewGradientUI from "components/layouts/gradientLayout";
+import isEmail from "validator/lib/isEmail";
 
 const SigninPage = () => {
     const vm = SigninVM();
+    const user = useSelector((state: RootState) => state.auth.user);
+    const router = useRouter();
+    const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+    const [rememberMe, setRememberMe] = useState(false);
 
+    useEffect(() => {
+        if (user) {
+            router.push("/");
+        }
+    }, []);
+    if (user) {
+        return (
+            <div
+                className="max-h-screen h-screen flex flex-col items-center justify-center"
+                style={{
+                    background:
+                        "linear-gradient(146.51deg, rgba(0, 101, 189, 0.55) -7.18%, rgba(40, 161, 151, 0.19) 98.96%)",
+                }}
+            >
+                <img
+                    className="-mt-8 hidden sm:block"
+                    src="/images/icons/login_successful.svg"
+                ></img>
+                <span className=" text-sm sm:text-2xl text-dtech-main-dark font-bold">
+                    {" "}
+                    LOG IN{" "}
+                </span>
+                <span className=" text-sm sm:text-2xl text-dtech-main-dark font-bold">
+                    SUCCESSFULL !
+                </span>
+            </div>
+        );
+    }
     return (
-        <DefaultLayout showSearchBar={false}>
-            <div className="min-h-[calc(100vh-var(--nav-height))] flex flex-col justify-between">
+        <NewGradientUI>
+            <div className="grow flex flex-col items-left max-w-[30%px] justify-evenly sm:justify-center  sm:mx-[20%] sm:my-0 mx-[5%] my-[5%] ">
                 <div className="text-center">
-                    <h1 className="font-semibold text-lg mb-2 mt-8">Log In</h1>
-                    <Link
-                        href={
-                            vm.lastSearchQueryUrl
-                                ? `/search${vm.lastSearchQueryUrl}`
-                                : "/"
-                        }
+                    <h1 className="font-semibold text-[#333333] text-2xl mt-8 mb-2 sm:mt-16 sm:text-xl ">
+                        Log In
+                    </h1>
+                </div>
+
+                <div className=" -mt-20 sm:-mt-10">
+                    <div className="mt-4 flex flex-col">
+                        <div className="flex flex-row justify-items-start my-8">
+                            <FormRow
+                                label="Email"
+                                className=" !bg-transparent text-[#333333] !text-xl sm:mt-0 sm:!text-base"
+                            >
+                                {" "}
+                                <InfoIcon
+                                    tooltipBackground="#28A197"
+                                    iconClasses="text-[#333333]  -ml-24 sm:-ml-28"
+                                    title="Enter regular text in email id "
+                                />
+                            </FormRow>
+                        </div>
+
+                        {vm.signinErrorMsg?.includes(
+                            "password you entered is wrong"
+                        ) && (
+                            <div className="text-xs mb-7 sm:mb-10 -mt-10 text-red-800">
+                                {vm.signinErrorMsg}
+                            </div>
+                        )}
+                    </div>
+                    <TextField
+                        className=" -mt-6 sm:-mt-8 rounded-xl !bg-transparent "
+                        textfieldClassName="!bg-white "
+                        formControl={{
+                            control: vm.form.control,
+                            name: "email",
+                            rules: {
+                                required: "Required field",
+                                validate: (val: string) => {
+                                    if (!isEmail(val)) {
+                                        return "Please enter a valid e-mail address";
+                                    }
+                                },
+                            },
+                        }}
+                        placeholder="Enter Email"
+                        type="email"
+                        errorPosition={true}
+                    />
+                </div>
+                <div className=" -mt-20 sm:-mt-10">
+                    <div className="mt-4 flex flex-col">
+                        <div className="flex flex-row justify-items-start my-8">
+                            <FormRow
+                                label="Password"
+                                className=" !bg-transparent text-[#333333] !text-xl sm:!text-base"
+                            >
+                                {" "}
+                                <InfoIcon
+                                    tooltipBackground="#28A197"
+                                    iconClasses="text-[#333333] -ml-16 sm:-ml-20"
+                                    title="Enter password "
+                                />
+                            </FormRow>
+                        </div>
+                        {vm.signinErrorMsg?.includes("You have made") && (
+                            <div className="text-xs mb-7 sm:mb-10 -mt-10 text-red-800">
+                                {vm.signinErrorMsg}
+                            </div>
+                        )}
+                    </div>
+                    <TextField
+                        className=" -mt-6 sm:-mt-8 rounded-xl !bg-transparent "
+                        textfieldClassName="!bg-white "
+                        formControl={{
+                            control: vm.form.control,
+                            name: "password",
+                            rules: { required: "Required field" },
+                        }}
+                        placeholder="Enter password"
+                        type={isPasswordVisible ? "text" : "password"}
+                        errorPosition={true}
+                    />
+                    <button
+                        onClick={() => setIsPasswordVisible(!isPasswordVisible)}
+                        className=" ml-[92%] -mt-16"
                     >
-                        <a className="inline-flex space-x-1">
-                            <i className="mr-1 text-sm underline">
-                                Continue as a guest?
-                            </i>{" "}
-                            <InfoIcon title="Continue using the website without logging in" />
+                        <img
+                            className=" absolute -mt-[44px]"
+                            src={
+                                isPasswordVisible
+                                    ? "/images/icons/closed_eye.svg"
+                                    : "images/icons/open_eye.svg"
+                            }
+                        />
+                    </button>
+                </div>
+                <div className="flex flex-row justify-between mb-4 -mt-12 sm:mt-0 ">
+                    <Link href="/login/account-unlock">
+                        <a className=" items-center self-end underline text-[#3F0068] text-sm">
+                            Unlock account
+                            <InfoIcon
+                                tooltipBackground="#28A197"
+                                iconClasses="text-[#3F0068] mx-2"
+                                title="Enter email id to unlock account"
+                            />
+                        </a>
+                    </Link>
+                    <Link href="/forgot-password">
+                        <a className=" items-center self-end underline text-[#3F0068]  text-sm">
+                            Forgot your password?
+                            <InfoIcon
+                                tooltipBackground="#28A197"
+                                iconClasses="text-[#3F0068] ml-2"
+                                title="Reset your password"
+                            />
                         </a>
                     </Link>
                 </div>
-                <div className="grow flex flex-col items-center justify-center max-w-[448px] w-full mx-auto">
-                    {vm.signinErrorMsg && (
-                        <ErrorAlert
-                            message={vm.signinErrorMsg}
-                            className="max-w-[450px] w-full mb-4"
-                        />
-                    )}
-                    <FormRow label="Email">
-                        <TextField
-                            className="max-w-[250px] ml-auto"
-                            formControl={{
-                                control: vm.form.control,
-                                name: "email",
-                                rules: { required: "Email is required" },
-                            }}
-                            placeholder="Email"
-                            type="email"
-                        />
-                    </FormRow>
-                    <FormRow label="Password">
-                        <TextField
-                            className="max-w-[250px] ml-auto"
-                            formControl={{
-                                control: vm.form.control,
-                                name: "password",
-                                rules: { required: "Password is required" },
-                            }}
-                            placeholder="Password"
-                            type="password"
-                        />
-                    </FormRow>
-                    <Link href="/forgot-password">
-                        <a className="flex items-center self-end">
-                            <i className="mr-1 text-sm underline">
-                                Forgot your password?
-                            </i>{" "}
-                            <InfoIcon title="Reset your password" />
-                        </a>
-                    </Link>
-                    <Link href="/login/account-unlock">
-                        <a className="flex items-center self-end">
-                            <i className="mr-1 text-sm underline">
-                                Unlock account
-                            </i>{" "}
-                            <InfoIcon title="I know my password but cannot login" />
-                        </a>
-                    </Link>
-                    <div className="flex space-x-4 mt-12">
-                        {/* <PrimaryBtn
-                            className="bg-dtech-primary-dark min-w-[150px]"
-                            label="Sign Up"
-                            onClick={() => router.push("/signup")}
-                        /> */}
-                        <PrimaryBtn
-                            className="bg-dtech-primary-dark min-w-[150px]"
-                            dataSelector="signin-button"
-                            label="Log In"
-                            isDisabled={vm.isSigningIn}
-                            isLoading={vm.isSigningIn}
-                            onClick={vm.form.handleSubmit(vm.performLogin)}
-                        />
+                <div className=" -mt-8 sm:mt-0">
+                    <input
+                        className=" border-[2px] p-2 cursor-pointer  hover:border-4  hover:ring-4 hover:ring-[#C3C3C3] hover:bg-white focus:ring-[#FDD522] focus:border-2 active:bg-[#FDD522] checked:bg-dtech-main-dark"
+                        type="checkbox"
+                        onChange={() => setRememberMe(!rememberMe)}
+                    />{" "}
+                    Remember Me
+                </div>
+                <div className="flex space-x-4 sm:mt-8 justify-center">
+                    <PrimaryBtn
+                        className=" bg-dtech-main-dark min-w-[150px] !justify-center !items-center !py-3 w-8 sm:w-full !rounded-lg"
+                        dataSelector="signin-button"
+                        label="Log In"
+                        isDisabled={vm.isSigningIn}
+                        isLoading={vm.isSigningIn}
+                        onClick={() => {
+                            vm.form.handleSubmit(() =>
+                                vm.performLogin({
+                                    ...vm.form.getValues(),
+                                    rememberMe,
+                                })
+                            )();
+                        }}
+                    />
+                </div>
+
+                <div className=" -mt-12 sm:mt-0">
+                    <div className="flex flex-row mt-10 justify-center">
+                        <div className=" bg-[#727272] h-[1px] w-[25%] sm:w-[35%]"></div>
+                        <div className=" text-[#727272] -mt-3 mx-6">or</div>
+                        <div className=" bg-[#727272] h-[1px] w-[25%] sm:w-[35%]"></div>
+                    </div>
+                    <div className="flex flex-row mt-6 justify-center text-[#333333]">
+                        Log In with
+                    </div>
+                    <div className="flex flex-row mt-4 justify-center">
+                        <div className=" mx-4 ">
+                            <img
+                                src="/images/icons/Google.svg"
+                                width={35}
+                            ></img>
+                        </div>
+                        <div className=" mx-4 ">
+                            <img
+                                src="/images/icons/Microsoft.svg"
+                                width={35}
+                            ></img>
+                        </div>
+                        <div className=" mx-4 ">
+                            <img
+                                src="/images/icons/LinkedIn.svg"
+                                width={35}
+                            ></img>
+                        </div>
+                    </div>
+                    <div className="flex flex-col">
+                        <div className="flex flex-row mt-4 justify-center">
+                            <div className="text-sm mx-2 text-[#333333]">
+                                Do not have an account ?
+                            </div>
+                            <Link href={"/signup"}>
+                                <a className="inline-flex space-x-1 mx-2">
+                                    <i className="mr-1 text-sm underline text-[#3F0068]">
+                                        Sign up for free
+                                    </i>{" "}
+                                </a>
+                            </Link>
+                        </div>
+                        <div className="flex flex-row mt-4 justify-center">
+                            <div className="text-sm mx-2 text-[#333333]">
+                                Do not want an account ?
+                            </div>
+                            <Link
+                                href={
+                                    vm.lastSearchQueryUrl
+                                        ? `/search${vm.lastSearchQueryUrl}`
+                                        : "/"
+                                }
+                            >
+                                <a className="inline-flex space-x-1 mx-2">
+                                    <i className="mr-1 text-sm underline text-[#3F0068]">
+                                        Continue as a guest?
+                                    </i>{" "}
+                                </a>
+                            </Link>
+                        </div>
                     </div>
                 </div>
             </div>
-        </DefaultLayout>
+        </NewGradientUI>
     );
 };
 

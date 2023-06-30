@@ -77,16 +77,21 @@ const TOOLTIP_VALUE = [
     },
 ];
 const DropdownField = ({
+    newDropdown,
     options,
     className = "",
     placeholder,
     formControl,
     dataSelector,
     inputClass = "",
+    errorPosition = false,
+
 }: {
+    newDropdown?: boolean,
     className?: string;
     options: Option[];
     inputClass?: string;
+    errorPosition?: boolean;
 } & FieldProps) => {
     // const [selected, setSelected] = useState<Option>();
     const [selected, setSelected] = useState<Option>();
@@ -148,6 +153,11 @@ const DropdownField = ({
             className={clsx("w-full relative", className)}
             ref={myRef}
         >
+            {errorPosition && hasError && (
+                <div className="text-xs text-red-800 ml-1 mt-1 mb-2">
+                    {error["message"]}
+                </div>
+            )}
             <Combobox
                 value={selected}
                 onChange={(o) => {
@@ -165,7 +175,7 @@ const DropdownField = ({
                             className={clsx(
                                 "w-full rounded-lg focus:ring-dtech-secondary-light border-2 border-dtech-main-dark focus:border-dtech-main-dark disabled:border-gray-300 disabled:bg-gray-50 py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 placeholder:text-gray-500 placeholder:text-sm placeholder:font-bold",
                                 { "border-red-700": hasError },
-                                inputClass
+                                inputClass, newDropdown&&isOpen&&"focus:ring-yellow-400  !border-black !border-[2px]"
                             )}
                             displayValue={(option: Option) => option?.label}
                             onChange={(event) => setQuery(event.target.value)}
@@ -175,9 +185,9 @@ const DropdownField = ({
                     </Combobox.Button>
                     <Combobox.Button
                         onClick={() => setIsOpen(!isOpen)}
-                        className="absolute inset-y-0 right-0 flex items-center pr-2"
+                        className="absolute inset-y-0 right-0 flex items-center pr-2 mt-[1x]"
                     >
-                        <HiOutlineSelector className="w-5 h-5" />
+                        {newDropdown?<img className={isOpen?" rounded-md bg-[#FDD522] relative left-2 p-[14px]":"rounded-md bg-dtech-main-dark relative left-2 p-[13px]"}  src={isOpen?"images/icons/arrows/black_down_arrow.svg":"images/icons/arrows/feArrowUp2.svg"}/>:<HiOutlineSelector className="w-5 h-5" />}
                     </Combobox.Button>
                 </div>
                 <Transition
@@ -204,7 +214,7 @@ const DropdownField = ({
                     </Combobox.Options>
                 </Transition>
             </Combobox>
-            {hasError && (
+            {!errorPosition&& hasError && (
                 <div className="text-xs text-red-800 ml-1 mt-1">
                     {error["message"]}
                 </div>
