@@ -22,7 +22,7 @@ stages:
     - chmod +x ./gitlab_setup_env.sh
     - ./gitlab_setup_env.sh
     - >
-      gcloud builds submit . --tag gcr.io/$GCP_PROJECT_ID/portal-webclient
+      gcloud builds submit . --tag gcr.io/$GCP_PROJECT_ID/$GCP_CLOUD_RUN_ID
 
 build_staging:
   environment: staging
@@ -42,28 +42,14 @@ build_production:
       when: always
     - if: '$CI_PIPELINE_SOURCE == "trigger"'
       when: never
-    - when: manual
-# build:
-  # stage: build
-  # script:
-  #   - ./gitlab_setup_env.sh
-  #   - ls -lah
-  #   - cat .env
-  #   - >
-  #     gcloud builds submit . --tag gcr.io/$GCP_PROJECT_ID/portal-webclient
-# BUILD end
-
-# deploy:
-#   stage: deploy
-#   script:
-#     - >
-#       gcloud run deploy portal-webclient --image gcr.io/$GCP_PROJECT_ID/portal-webclient --platform managed --region us-central1 --allow-unauthenticated
+    - when: on_success
+    
 # DEPLOY start
 .deploy:
   stage: deploy
   script:
     - >
-      gcloud run deploy portal-webclient --image gcr.io/$GCP_PROJECT_ID/portal-webclient --platform managed --region $GCP_REGION --allow-unauthenticated
+      gcloud run deploy $GCP_CLOUD_RUN_ID --image gcr.io/$GCP_PROJECT_ID/$GCP_CLOUD_RUN_ID --platform managed --region $GCP_REGION --allow-unauthenticated
 
 deploy_staging:
   extends: .deploy
