@@ -435,7 +435,7 @@ const SignupPage = () => {
                             <div className="text-sm mx-2 text-[#333333]">
                                 Already have an account ?
                             </div>
-                            <Link href={"/signup"}>
+                            <Link href={"/login"}>
                                 <a className="inline-flex space-x-1 mx-2">
                                     <i className="mr-1 text-sm underline text-[#3F0068]">
                                         Log in
