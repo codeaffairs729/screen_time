@@ -77,7 +77,7 @@ const NewGradientUI = ({
         };
     }, []);
     return (
-        <div className="flex flex-row justify-between h-screen ">
+        <div className="flex flex-row justify-between h-screen z-0">
             <div
                 className=" hidden md:w-2/3 max-h-screen bg-black text-center md:flex flex-col items-center justify-center p-8"
                 // style={{
@@ -103,7 +103,7 @@ const NewGradientUI = ({
                     //     transition: "opacity  ease-in-out",
                     //   }}
                     src={imageSrc[imageIndex].src}
-                    width={500}
+                    width={350}
                 ></img>
             </div>
             <div className=" bg-[#28A197] h-screen  w-2 ml-5 sm:ml-0 fixed md:relative md:w-8"></div>
