@@ -13,12 +13,194 @@ import { RootState } from "store";
 import { useSelector } from "react-redux";
 import InfoIcon from "components/UI/icons/info_icon";
 import NewGradientUI from "components/layouts/gradientLayout";
+import Link from "next/link";
+
+
+const SecondStep = ({
+    vm,
+    step,
+    setStep,
+    organisationRequired,
+    isChecked,
+    setIsChecked,
+    showError,
+    setOrganisationRequired,
+    setShowError
+}: { vm: any, step: boolean, setStep: any, organisationRequired: boolean, isChecked: boolean, setIsChecked: any, showError: boolean, setOrganisationRequired: any, setShowError: any }) => {
+    return (
+        <div className="grow flex flex-col items-left max-w-[30%px] justify-evenly sm:justify-center mt-10  sm:mx-[20%] sm:my-0 mx-[5%] my-[5%] ">
+            <div
+                className=" mb-10 mt-4 w-fit cursor-pointer"
+                onClick={() => setStep(!step)}
+            >
+                <img src="/images/icons/arrows/arrow_back.svg" />
+            </div>
+            <div className=" -mt-12 sm:mt-0">
+                <div className="mt-4">
+                    <FormRow
+                        label="Account type"
+                        className=" !bg-transparent text-[#333333] !text-xl sm:!text-base"
+                    >
+                        {" "}
+                    </FormRow>
+                    <InfoIcon
+                        tooltipBackground="#28A197"
+                        iconClasses="text-[#333333] ml-36 -mt-[54px] sm:!ml-[118px]"
+                        title="Select one account type "
+                    />
+                </div>
+
+                <DropdownField
+                    newDropdown={true}
+                    errorPosition={true}
+                    className=" w-full -mt-6 sm:-mt-8 "
+                    placeholder="Select from the drop-down"
+                    options={vm.accountTypeOptions}
+                    dataSelector="account-dropdown"
+                    formControl={{
+                        control: vm.form.control,
+                        name: "signup_type",
+                        rules: {
+                            required: "Required field",
+                        },
+                    }}
+                />
+                <div className="mt-4">
+                    <FormRow
+                        label="Organisation"
+                        className=" !bg-transparent text-[#333333] !text-xl sm:!text-base"
+                    >
+                        {" "}
+                    </FormRow>
+                    <InfoIcon
+                        tooltipBackground="#28A197"
+                        iconClasses="text-[#333333] -mt-[54px] ml-36 sm:ml-[118px]"
+                        title="Enter the name of the organisation that you are affiliated to"
+                    />
+                </div>
+
+                <TextField
+                    type="text"
+                    errorPosition={true}
+                    className=" -mt-6 sm:-mt-8 rounded-xl !bg-transparent "
+                    textfieldClassName="!bg-white"
+                    formControl={{
+                        control: vm.form.control,
+                        name: "organisation",
+                        rules: {
+                            ...(organisationRequired
+                                ? { required: "Required field" }
+                                : { required: false }),
+                        },
+                    }}
+                    placeholder="E.g. ABC Corp"
+                />
+                
+                <div className="mt-4">
+                    <FormRow
+                        label="Role"
+                        className=" !bg-transparent text-[#333333] !text-xl sm:!text-base"
+                    ></FormRow>
+                    <InfoIcon
+                        tooltipBackground="#28A197"
+                        iconClasses="text-[#333333] -mt-[56px] ml-14 sm:ml-12"
+                        title="Select role "
+                    />
+                </div>
+
+                <DropdownField
+                    newDropdown={true}
+                    errorPosition={true}
+                    className=" w-full -mt-6 sm:-mt-8 "
+                    placeholder="Select your role"
+                    options={vm.roleOptions}
+                    dataSelector="role-dropdown"
+                    formControl={{
+                        control: vm.form.control,
+                        name: "role",
+                        rules: { required: "Required field" },
+                    }}
+                />
+
+                {vm.form.watch("role") == "other" && (
+                    <TextField
+                        className=" mt-4     rounded-xl !bg-white "
+                        formControl={{
+                            control: vm.form.control,
+                            name: "role_other",
+                            rules: {
+                                required: "Required field",
+                            },
+                        }}
+                        placeholder="Enter other role"
+                    />
+                )}
+            </div>
+            <div className="flex mt-2  sm:mt-8">
+                <input
+                    className=" border-[2px] p-2 cursor-pointer  hover:border-4  hover:ring-4 hover:ring-[#C3C3C3] hover:bg-white focus:ring-[#FDD522] focus:border-2 active:bg-[#FDD522] checked:bg-dtech-main-dark"
+                    type="checkbox"
+                    onChange={() => setIsChecked(!isChecked)}
+                />
+                <div className=" -mt-1 ml-8 font-[Roboto] text-l">
+                    I Accept Dtechtive’s{" "}
+                    <a
+                        className=" text-dtech-main-dark underline"
+                        href="https://dtechtive.com/data-privacy-policy"
+                    >
+                        Data Privacy Policy
+                    </a>
+                </div>
+            </div>
+            {!isChecked && showError && (
+                <ErrorAlert
+                    message={
+                        "Please agree to the terms and policies to proceed."
+                    }
+                    className="max-w-[450px] w-full my-4"
+                />
+            )}
+            <div className="flex flex-row my-10  sm:my-10 justify-center">
+                <div className=" bg-[#727272] h-[1px] w-[25%] sm:w-[35%]"></div>
+                <div className=" text-[#727272] -mt-3 mx-4">
+                    Step 2/2
+                </div>
+                <div className=" bg-[#727272] h-[1px] w-[25%] sm:w-[35%]"></div>
+            </div>
+            <div className="flex justify-center !items-center space-x-4">
+                <PrimaryBtn
+                    dataSelector="signup-button"
+                    className=" bg-dtech-main-dark min-w-[150px] my-2 !justify-center !items-center !py-3 w-8 sm:w-full !rounded-lg"
+                    label="Create my account"
+                    isLoading={vm.isSigningUp}
+                    isDisabled={vm.isSigningUp}
+                    onClick={() => {
+                        vm.form.getValues().signup_type == "org_admin"
+                            ? setOrganisationRequired(true)
+                            : setOrganisationRequired(false);
+                        isChecked
+                            ? vm.form.handleSubmit(() =>
+                                vm.handleSignup({
+                                    ...vm.form.getValues(),
+                                    confirm_password:
+                                        vm.form.getValues().password,
+                                })
+                            )()
+                            : setShowError(true);
+                    }}
+                />
+            </div>
+        </div>
+    )
+}
 
 const SignupPage = () => {
+
     const vm = SignupVM();
     const user = useSelector((state: RootState) => state.auth.user);
     const router = useRouter();
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+    const [organisationRequired, setOrganisationRequired] = useState(false);
     const [step, setStep] = useState(false);
     const [isChecked, setIsChecked] = useState(false);
     const [showError, setShowError] = useState(false);
@@ -32,18 +214,17 @@ const SignupPage = () => {
     if (user || vm.signupErrorMsg || vm.signupSuccessMsg) {
         return (
             <div
-                className="max-h-screen h-screen flex flex-col items-center justify-center "
+                className=" h-screen flex flex-col items-center justify-center "
                 style={{
                     background:
                         "linear-gradient(to bottom right, #3F0068, #FFFFFF)",
                 }}
             >
-                <img
+                <img width={200}
                     className="-mt-8 hidden sm:block"
-                    src="/images/icons/mail-sent.svg"
+                    src="/gif/mail_sent.gif"
                 ></img>
                 <span className=" text-xl sm:text-4xl text-dtech-main-dark font-bold my-8">
-                    {" "}
                     A verification email has been sent.
                 </span>
                 <span className=" text-sm sm:text-2xl text-dtech-main-dark font-bold w-[32%] text-center">
@@ -74,7 +255,7 @@ const SignupPage = () => {
                             <InfoIcon
                                 tooltipBackground="#28A197"
                                 iconClasses="text-[#333333] -mt-[54px] ml-20 sm:ml-16"
-                                title="Enter your name"
+                                title="Enter your full name"
                             />
                         </div>
                         <TextField
@@ -91,7 +272,7 @@ const SignupPage = () => {
                                     },
                                 },
                             }}
-                            placeholder="Name"
+                            placeholder="E.g. Jane Doe"
                             errorPosition={true}
                         />
                         <div className="mt-4">
@@ -102,7 +283,7 @@ const SignupPage = () => {
                             <InfoIcon
                                 tooltipBackground="#28A197"
                                 iconClasses="text-[#333333] -mt-[54px] ml-[72px] sm:ml-16"
-                                title="Enter regular text in email id "
+                                title="Enter your email ID. If signing up as an organisation admin, enter your organisation email ID."
                             />
                         </div>
                         <TextField
@@ -120,7 +301,7 @@ const SignupPage = () => {
                                     },
                                 },
                             }}
-                            placeholder="Enter Email"
+                            placeholder="E.g. jane.doe@abc.org"
                             type="email"
                             errorPosition={true}
                         />
@@ -134,7 +315,7 @@ const SignupPage = () => {
                             <InfoIcon
                                 tooltipBackground="#28A197"
                                 iconClasses="text-[#333333] -mt-[54px] ml-28 sm:ml-24"
-                                title="Enter password "
+                                title="Create a secure password using 8 characters with at least 1 uppercase character, 1 number and 1 special character[!@#$%^&*]"
                             />
                         </div>
                         <div className="relative">
@@ -169,7 +350,7 @@ const SignupPage = () => {
                                             if (err_msgs.length) {
                                                 let suffix =
                                                     err_msgs[
-                                                        err_msgs.length - 1
+                                                    err_msgs.length - 1
                                                     ];
                                                 if (err_msgs.length > 1) {
                                                     suffix = `${err_msgs
@@ -250,165 +431,22 @@ const SignupPage = () => {
                             </div>
                             <div className=" bg-[#727272] h-[1px] w-[25%] sm:w-[35%]"></div>
                         </div>
+                        <div className="flex flex-row mt-4 mb-8 justify-center">
+                            <div className="text-sm mx-2 text-[#333333]">
+                                Already have an account ?
+                            </div>
+                            <Link href={"/signup"}>
+                                <a className="inline-flex space-x-1 mx-2">
+                                    <i className="mr-1 text-sm underline text-[#3F0068]">
+                                        Log in
+                                    </i>{" "}
+                                </a>
+                            </Link>
+                        </div>
                     </div>
                 </div>
             ) : (
-                <div className="grow flex flex-col items-left max-w-[30%px] justify-evenly sm:justify-center -mt-10  sm:mx-[20%] sm:my-0 mx-[5%] my-[5%] ">
-                    <div
-                        className=" mb-10 mt-4 w-fit cursor-pointer"
-                        onClick={() => setStep(!step)}
-                    >
-                        <img src="/images/icons/arrows/arrow_back.svg" />
-                    </div>
-                    <div className=" -mt-12 sm:mt-0">
-                        <div className="mt-4">
-                            <FormRow
-                                label="Organisation"
-                                className=" !bg-transparent text-[#333333] !text-xl sm:!text-base"
-                            >
-                                {" "}
-                            </FormRow>
-                            <InfoIcon
-                                tooltipBackground="#28A197"
-                                iconClasses="text-[#333333] -mt-[54px] ml-36 sm:ml-[118px]"
-                                title="Enter organisation name "
-                            />
-                        </div>
-
-                        <TextField
-                            errorPosition={true}
-                            className=" -mt-6 sm:-mt-8 rounded-xl !bg-transparent "
-                            textfieldClassName="!bg-white"
-                            formControl={{
-                                control: vm.form.control,
-                                name: "organisation",
-                                rules: {
-                                    required: "Required field",
-                                },
-                            }}
-                            placeholder="Organisation"
-                        />
-                        <div className="mt-4">
-                            <FormRow
-                                label="Account type"
-                                className=" !bg-transparent text-[#333333] !text-xl sm:!text-base"
-                            >
-                                {" "}
-                            </FormRow>
-                            <InfoIcon
-                                tooltipBackground="#28A197"
-                                iconClasses="text-[#333333] ml-36 -mt-[54px] sm:!ml-[118px]"
-                                title="Select one account type "
-                            />
-                        </div>
-
-                        <DropdownField
-                            newDropdown={true}
-                            errorPosition={true}
-                            className=" w-full -mt-6 sm:-mt-8 "
-                            placeholder="Select from the drop-down"
-                            options={vm.accountTypeOptions}
-                            dataSelector="account-dropdown"
-                            formControl={{
-                                control: vm.form.control,
-                                name: "signup_type",
-                                rules: {
-                                    required: "Required field",
-                                },
-                            }}
-                        />
-                        <div className="mt-4">
-                            <FormRow
-                                label="Role"
-                                className=" !bg-transparent text-[#333333] !text-xl sm:!text-base"
-                            ></FormRow>
-                            <InfoIcon
-                                tooltipBackground="#28A197"
-                                iconClasses="text-[#333333] -mt-[56px] ml-14 sm:ml-12"
-                                title="Select role "
-                            />
-                        </div>
-
-                        <DropdownField
-                            newDropdown={true}
-                            errorPosition={true}
-                            className=" w-full -mt-6 sm:-mt-8 "
-                            placeholder="Select your role"
-                            options={vm.roleOptions}
-                            dataSelector="role-dropdown"
-                            formControl={{
-                                control: vm.form.control,
-                                name: "role",
-                                rules: { required: "Required field" },
-                            }}
-                        />
-
-                        {vm.form.watch("role") == "other" && (
-                            <TextField
-                                className=" -mt-6 sm:mt-4 rounded-xl !bg-white "
-                                formControl={{
-                                    control: vm.form.control,
-                                    name: "role_other",
-                                    rules: {
-                                        required: "Required field",
-                                    },
-                                }}
-                                placeholder="Enter other role"
-                            />
-                        )}
-                    </div>
-                    <div className="flex -mt-8 sm:mt-8">
-                        <input
-                            className=" border-[2px] p-2 cursor-pointer  hover:border-4  hover:ring-4 hover:ring-[#C3C3C3] hover:bg-white focus:ring-[#FDD522] focus:border-2 active:bg-[#FDD522] checked:bg-dtech-main-dark"
-                            type="checkbox"
-                            onChange={() => setIsChecked(!isChecked)}
-                        />
-                        <div className=" -mt-1 ml-8 font-[Roboto] text-l">
-                            I Accept Dtechtive’s{" "}
-                            <a
-                                className=" text-dtech-main-dark underline"
-                                href="https://dtechtive.com/data-privacy-policy"
-                            >
-                                Data Privacy Policy
-                            </a>
-                        </div>
-                    </div>
-                    {!isChecked && showError && (
-                        <ErrorAlert
-                            message={
-                                "Please agree to the terms and policies to proceed."
-                            }
-                            className="max-w-[450px] w-full mb-4"
-                        />
-                    )}
-                    <div className="flex flex-row -my-10  sm:my-10 justify-center">
-                        <div className=" bg-[#727272] h-[1px] w-[25%] sm:w-[35%]"></div>
-                        <div className=" text-[#727272] -mt-3 mx-4">
-                            Step 2/2
-                        </div>
-                        <div className=" bg-[#727272] h-[1px] w-[25%] sm:w-[35%]"></div>
-                    </div>
-                    <div className="flex justify-center !items-center space-x-4">
-                        <PrimaryBtn
-                            dataSelector="signup-button"
-                            className=" bg-dtech-main-dark min-w-[150px] my-2 !justify-center !items-center !py-3 w-8 sm:w-full !rounded-lg"
-                            label="Create my account"
-                            isLoading={vm.isSigningUp}
-                            isDisabled={vm.isSigningUp}
-                            onClick={() => {
-                                isChecked
-                                    ? vm.form.handleSubmit(() =>
-                                          vm.handleSignup({
-                                              ...vm.form.getValues(),
-                                              confirm_password:
-                                                  vm.form.getValues().password,
-                                          })
-                                      )()
-                                    : setShowError(true);
-                            }}
-                        />
-                    </div>
-                </div>
+                <SecondStep showError={showError} setShowError={setShowError} isChecked={isChecked} setIsChecked={setIsChecked} vm={vm} step={step} setStep={setStep} organisationRequired={organisationRequired} setOrganisationRequired={setOrganisationRequired} />
             )}
         </NewGradientUI>
     );
