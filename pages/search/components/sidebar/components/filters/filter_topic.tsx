@@ -28,10 +28,10 @@ const FilterTopic = () => {
         //       }))
         //     : undefined
         // );
-        const topics = vm.filterOptions?.topics?.map((t) => ({
+        const topics = vm.filterOptions?.topics?.map((t:any) => ({
             checkbox: false,
-            value: t,
-            label: t,
+            value: t.value,
+            label: t.value,
         }));
         setFilterOptionItems(topics);
     }, [vm.filterOptions]);

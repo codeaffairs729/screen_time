@@ -20,9 +20,9 @@ const FilterDomain = () => {
         //   .filter((domain, i, a) => a.indexOf(domain) == i)
         //   .map((domain) => ({ value: domain, label: domain, checkbox: false }));
         // setFilterOptionItems(domains);
-        const domains = vm.filterOptions?.domains?.map((domain) => ({
-            value: domain,
-            label: domain,
+        const domains = vm.filterOptions?.domains?.map((domain:any) => ({
+            value: domain.value,
+            label: domain.value,
             checkbox: false,
         }));
         setFilterOptionItems(domains);
