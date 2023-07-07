@@ -20,9 +20,9 @@ const FilterOwner = () => {
     //   .filter((owner, i, a) => a.indexOf(owner) == i)
     //   .map((owner) => ({ value: owner, label: owner, checkbox: false }));
     // setFilterOptionItems(owners);
-    const owners = vm.filterOptions?.data_owners?.map((owner) => ({
-      value: owner,
-      label: owner,
+    const owners = vm.filterOptions?.data_owners?.map((owner:any) => ({
+      value: owner.value,
+      label: owner.value,
       checkbox: false,
     }));
     setFilterOptionItems(owners);

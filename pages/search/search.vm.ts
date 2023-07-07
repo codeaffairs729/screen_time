@@ -172,7 +172,7 @@ const SearchVM = () => {
      */
     const { data: datasets, error } = useSWR(
         q
-            ? `/v4/datasets/?search_query=${q}&page_size=${pageSize}&page_num=${currentPageNo}${queryParams}`
+            ? `/v5/datasets/?query=${q}&page_size=${pageSize}&page_number=${currentPageNo}${queryParams}`
             : null,
         (url: string) =>
             Http.get(url, {
@@ -188,33 +188,34 @@ const SearchVM = () => {
                 })
                 .then((res) => {
                     setLoading(false);
-                    // setCurrentPageNo(res[0]["user_search"][0]["pagenum"]);
-                    const totalRecords = res[0]["user_search"][0]["total"];
+                    setCurrentPageNo(res["page_number"]);
+                    const totalRecords = res["total_matches"];
                     setTotalPages(
                         totalRecords
-                            ? Math.ceil(totalRecords / pageSize)
-                            : totalRecords
-                    );
-                    setTotalRecords(totalRecords);
-                    const resFitlerOptions =
-                        res[0]["user_search"][0]["filter_options"];
-                    Object.keys(resFitlerOptions).map((filterOption: any) => {
-                        resFitlerOptions[filterOption].sort();
+                        ? Math.ceil(totalRecords / pageSize)
+                        : totalRecords
+                        );
+                        setTotalRecords(totalRecords);
+                        const resFilterOptions =
+                        res["filter_options"];
+                    Object.keys(resFilterOptions).map((filterOption) => {
+                        resFilterOptions[filterOption].sort((a:any, b:any) =>
+                            {if (typeof a.value=="string") return a.value.localeCompare(b.value)}
+                        );
                     });
 
                     setFilterOptions({
-                        domains: resFitlerOptions["domains"],
-                        file_formats: resFitlerOptions["file_formats"],
-                        data_owners: resFitlerOptions["data_owners"],
-                        topics: resFitlerOptions["topics"],
-                        usage_rights: resFitlerOptions["usage_rights"],
-                        keywords: resFitlerOptions["keywords"],
-                        data_hosts: resFitlerOptions["data_hosts"],
-                        update_frequency: resFitlerOptions["update_frequency"],
+                        domains: resFilterOptions["domains"],
+                        file_formats: resFilterOptions["file_formats"],
+                        data_owners: resFilterOptions["data_owners"],
+                        topics: resFilterOptions["topics"],
+                        usage_rights: resFilterOptions["usage_rights"],
+                        keywords: resFilterOptions["keywords"],
+                        data_hosts: resFilterOptions["data_hosts"],
+                        update_frequency: resFilterOptions["update_frequency"],
                     });
-
                     const datasets = Dataset.fromJsonList(
-                        res[0]["user_search"][0]["results"]
+                        res["results"]
                     );
                     const datasetIds = datasets.map((dataset) => dataset.id);
                     if (datasetIds.length) {

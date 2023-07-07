@@ -126,14 +126,14 @@ DatasetDetail.getInitialProps = async ({ query, req }: NextPageContext) => {
         if (req?.headers.cookie) {
             authToken = getCookieFromServer(AUTH_TOKEN, req);
         }
-        const datasetData = await Http.get(`/v4/datasets/${datasetId}`, {
-            baseUrl: process.env.NEXT_PUBLIC_PUBLIC_API_ROOT,
+        const datasetData = await Http.get(`/v5/datasets/by-dataset-ids?dataset_ids=${datasetId}`, {
+            baseUrl: process.env.NEXT_PUBLIC_PUBLIC_API_V5_ROOT,
             extraHeaders: authToken
                 ? { Authorization: `Bearer ${authToken}` }
                 : {},
         });
         const dataset = Dataset.fromJson(
-            datasetData[0]["user_search"][0]["results"][0]
+            datasetData["results"][0]
         );
         return { dataset };
     } catch (error) {

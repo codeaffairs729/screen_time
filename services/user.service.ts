@@ -79,20 +79,20 @@ class UserService {
         if (dataset_ids.length > 0) {
             let item_req_param = "";
             dataset_ids.forEach((id: any) => {
-                item_req_param = `${item_req_param}li=${id}&`;
+                item_req_param = `${item_req_param}dataset_ids=${id}&`;
             });
 
             try {
                 const res_itemsdata = await Http.get(
-                    `/v4/data_view/{ids}?${item_req_param}`,
+                    `/v5/datasets/by-dataset-ids?${item_req_param}`,
                     {
-                        baseUrl: process.env.NEXT_PUBLIC_PUBLIC_API_ROOT,
+                        baseUrl: process.env.NEXT_PUBLIC_PUBLIC_API_V5_ROOT,
                         redirectToLoginPageIfAuthRequired: false,
                     }
                 );
 
                 datasets = Dataset.fromJsonList(
-                    res_itemsdata[0].user_search[0].results
+                    res_itemsdata.results
                 );
             } catch (error) {
                 console.log(error);
