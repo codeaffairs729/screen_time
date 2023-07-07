@@ -176,7 +176,7 @@ const SearchVM = () => {
             : null,
         (url: string) =>
             Http.get(url, {
-                baseUrl: `${process.env.NEXT_PUBLIC_PUBLIC_API_ROOT}`,
+                baseUrl: `${process.env.NEXT_PUBLIC_PUBLIC_API_V5_ROOT}`,
                 redirectToLoginPageIfAuthRequired: false,
             })
                 .catch((e) => {
