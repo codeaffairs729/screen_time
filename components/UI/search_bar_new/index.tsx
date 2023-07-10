@@ -42,7 +42,7 @@ const SearchBar = ({
                 (inputVal: string) =>
                     executeLodAutocomplete(
                         () =>
-                            Http.get(`/completion/${inputVal}`, {
+                            Http.get(`/v5/autocomplete/suggestions/${inputVal}`, {
                                 baseUrl:
                                     process.env.NEXT_PUBLIC_PUBLIC_API_ROOT,
                                 extraHeaders: {
@@ -55,7 +55,7 @@ const SearchBar = ({
                             postProcess: (res) =>
                                 res.map((t: string[], i: number) => ({
                                     id: i + 1,
-                                    name: t[0],
+                                    name: t,
                                 })),
                         }
                     ),
