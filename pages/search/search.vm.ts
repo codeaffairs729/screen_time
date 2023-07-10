@@ -172,11 +172,11 @@ const SearchVM = () => {
      */
     const { data: datasets, error } = useSWR(
         q
-            ? `/v5/datasets/?query=${q}&page_size=${pageSize}&page_number=${currentPageNo}${queryParams}`
+            ? `/v4/datasets/?search_query=${q}&page_size=${pageSize}&page_num=1${queryParams}`
             : null,
         (url: string) =>
             Http.get(url, {
-                baseUrl: `${process.env.NEXT_PUBLIC_PUBLIC_API_V5_ROOT}`,
+                baseUrl: `${process.env.NEXT_PUBLIC_PUBLIC_API_ROOT}`,
                 redirectToLoginPageIfAuthRequired: false,
             })
                 .catch((e) => {
@@ -188,35 +188,32 @@ const SearchVM = () => {
                 })
                 .then((res) => {
                     setLoading(false);
-                    setCurrentPageNo(res["page_number"]);
-                    const totalRecords = res["total_matches"];
+                    // setCurrentPageNo(res[0]["user_search"][0]["pagenum"]);
+                    const totalRecords = res[0]["user_search"][0]["total"];
+
                     setTotalPages(
                         totalRecords
-                        ? Math.ceil(totalRecords / pageSize)
-                        : totalRecords
-                        );
-                        setTotalRecords(totalRecords);
-                        const resFilterOptions =
-                        res["filter_options"];
-                    Object.keys(resFilterOptions).map((filterOption) => {
-                        resFilterOptions[filterOption].sort((a:any, b:any) =>
-                            {if (typeof a.value=="string") return a.value.localeCompare(b.value)}
-                        );
+                            ? Math.ceil(totalRecords / pageSize)
+                            : totalRecords
+                    );
+                    setTotalRecords(totalRecords);
+                    const resFitlerOptions =
+                        res[0]["user_search"][0]["filter_options"];
+                    Object.keys(resFitlerOptions).map((filterOption: any) => {
+                        resFitlerOptions[filterOption].sort();
                     });
 
                     setFilterOptions({
-                        domains: resFilterOptions["domains"],
-                        file_formats: resFilterOptions["file_formats"],
-                        data_owners: resFilterOptions["data_owners"],
-                        topics: resFilterOptions["topics"],
-                        usage_rights: resFilterOptions["usage_rights"],
-                        keywords: resFilterOptions["keywords"],
-                        data_hosts: resFilterOptions["data_hosts"],
-                        update_frequency: resFilterOptions["update_frequency"],
+                        domains: resFitlerOptions["domains"],
+                        file_formats: resFitlerOptions["file_formats"],
+                        data_owners: resFitlerOptions["data_owners"],
+                        topics: resFitlerOptions["topics"],
+                        usage_rights: resFitlerOptions["usage_rights"],
+                        keywords: resFitlerOptions["keywords"],
+                        data_hosts: resFitlerOptions["data_hosts"],
+                        update_frequency: resFitlerOptions["update_frequency"],
                     });
-                    const datasets = Dataset.fromJsonList(
-                        res["results"]
-                    );
+                    const datasets = Dataset.fromJsonList(res[0]["user_search"][0]["results"]);
                     const datasetIds = datasets.map((dataset) => dataset.id);
                     if (datasetIds.length) {
                         fectchStats(datasetIds);
