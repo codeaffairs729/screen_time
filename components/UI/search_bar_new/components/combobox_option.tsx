@@ -7,9 +7,10 @@ export interface Option {
   name: string;
 }
 
-const ComboboxOption = ({ item }: { item: Option }) => {
+const ComboboxOption = ({ item, setOpen }: { item: Option, setOpen:any }) => {
   return (
       <Combobox.Option
+          onClick={()=>setOpen(false)}
           className={({ active }) =>
               `relative cursor-default select-none py-2 pl-10 pr-4 ${
                   active ? "bg-dtech-main-light text-dtech-dark-grey" : "text-gray-900"
