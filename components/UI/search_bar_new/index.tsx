@@ -26,6 +26,7 @@ const SearchBar = ({
     const [selected, setSelected] = useState<Option>();
     const [query, setQuery] = useState("");
     const openAutoCompleteBtn = useRef(null);
+    const [open, setOpen] = useState<boolean>(false)
 
     const searchType = useSelector((state: RootState) => state.search.type);
     const {
@@ -91,6 +92,7 @@ const SearchBar = ({
     return (
         <div className={clsx("", className)}>
             <Combobox value={selected} onChange={setSelected} nullable>
+             
                 <div className="relative w-full h-full">
                     <div className="relative flex items-center w-full h-full border border-dtech-main-dark focus-within:border-dtech-secondary-dark focus-within:ring-2 focus-within:ring-dtech-secondary-dark cursor-default rounded-full bg-white text-left focus-within:outline-none sm:text-sm">
                         <SearchIcon isLoading={isLoading} />
@@ -102,6 +104,8 @@ const SearchBar = ({
                             displayValue={(option: Option) => query}
                             value={query}
                             onChange={(event) => setQuery(event.target.value)}
+                            onClick={() => setOpen(true)}
+                            
                         />
                         <Combobox.Button
                             ref={openAutoCompleteBtn}
@@ -109,8 +113,9 @@ const SearchBar = ({
                         ></Combobox.Button>
                         <SearchTypeSelect />
                     </div>
-                    <Transition
+                    {<Transition
                         as={Fragment}
+                        show={open}
                         leave="transition ease-in duration-100"
                         leaveFrom="opacity-100"
                         leaveTo="opacity-0"
@@ -118,6 +123,7 @@ const SearchBar = ({
                         <Combobox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm z-20">
                             {query.length > 0 && (
                                 <ComboboxOption
+                                    setOpen={setOpen}
                                     item={{
                                         id: 0,
                                         name: query,
@@ -129,14 +135,16 @@ const SearchBar = ({
                             ) : (
                                 options.map((option) => (
                                     <ComboboxOption
+                                        setOpen={setOpen}
                                         key={option.id}
                                         item={option}
                                     />
                                 ))
                             )}
                         </Combobox.Options>
-                    </Transition>
-                </div>
+                    </Transition>}
+                        </div>
+                    
             </Combobox>
         </div>
     );
