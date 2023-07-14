@@ -79,7 +79,23 @@ const SearchBar = ({
         }
         lodAutocomplete(query);
     }, [query]);
-
+    const myRef = useRef(null);
+    useOutsideAlerter(myRef);
+    function useOutsideAlerter(ref: any) {
+        useEffect(() => {
+            // Function for click event
+            function handleOutsideClick(event: any) {
+                if (ref.current && !ref.current.contains(event.target)) {
+                    // setSelected(selected);
+                    setOpen(false)
+                }
+            }
+            // Adding click event listener
+            document.addEventListener("click", handleOutsideClick);
+            return () =>
+                document.removeEventListener("click", handleOutsideClick);
+        }, [ref]);
+    }
     const {
         query: { q },
     } = useRouter();
@@ -120,7 +136,7 @@ const SearchBar = ({
                         leaveFrom="opacity-100"
                         leaveTo="opacity-0"
                     >
-                        <Combobox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm z-20">
+                        <Combobox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm z-20" ref={myRef} >
                             {query.length > 0 && (
                                 <ComboboxOption
                                     setOpen={setOpen}
