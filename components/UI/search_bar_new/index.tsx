@@ -131,7 +131,7 @@ const SearchBar = ({
                     </div>
                     {<Transition
                         as={Fragment}
-                        show={open}
+                        // show={open}
                         leave="transition ease-in duration-100"
                         leaveFrom="opacity-100"
                         leaveTo="opacity-0"
