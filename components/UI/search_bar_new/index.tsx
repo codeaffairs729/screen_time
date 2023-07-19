@@ -111,7 +111,7 @@ const SearchBar = ({
              
                 <div className="relative w-full h-full">
                     <div className="relative flex items-center w-full h-full border border-dtech-main-dark focus-within:border-dtech-secondary-dark focus-within:ring-2 focus-within:ring-dtech-secondary-dark cursor-default rounded-full bg-white text-left focus-within:outline-none sm:text-sm">
-                        <SearchIcon isLoading={isLoading} />
+                        <SearchIcon isLoading={false} />
                         <Combobox.Input
                             className="w-full max-h-[99%] border-none px-2 align-middle text-gray-900 h-full focus:ring-0 text-[19px] leading-[22px]"
                             onFocus={() =>
@@ -146,9 +146,7 @@ const SearchBar = ({
                                     }}
                                 />
                             )}
-                            {options.length === 0 && query !== "" ? 
-                                <EmptyResults isLoading={isLoading} />
-                             : (
+                            {!((options.length === 0) && (query !== "")) && (
                                 options.map((option) => (
                                     <ComboboxOption
                                         setOpen={setOpen}
