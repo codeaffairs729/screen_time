@@ -60,7 +60,7 @@ const SearchBar = ({
                                 })),
                         }
                     ),
-                1000
+                1
             ),
         []
     );
@@ -146,9 +146,9 @@ const SearchBar = ({
                                     }}
                                 />
                             )}
-                            {options.length === 0 && query !== "" ? (
+                            {options.length === 0 && query !== "" ? 
                                 <EmptyResults isLoading={isLoading} />
-                            ) : (
+                             : (
                                 options.map((option) => (
                                     <ComboboxOption
                                         setOpen={setOpen}
