@@ -44,7 +44,7 @@ const SecondStep = ({
                         {" "}
                     </FormRow>
                     <InfoIcon
-                        tooltipBackground="#28A197"
+                        tooltipClassName="dtech-dark-teal"
                         iconClasses="text-[#333333] ml-36 -mt-[54px] sm:!ml-[118px]"
                         title="Select one account type "
                     />
@@ -73,7 +73,7 @@ const SecondStep = ({
                         {" "}
                     </FormRow>
                     <InfoIcon
-                        tooltipBackground="#28A197"
+                        tooltipClassName="dtech-dark-teal"
                         iconClasses="text-[#333333] -mt-[54px] ml-36 sm:ml-[118px]"
                         title="Enter the name of the organisation that you are affiliated to"
                     />
@@ -102,7 +102,7 @@ const SecondStep = ({
                         className=" !bg-transparent text-[#333333] !text-xl sm:!text-base"
                     ></FormRow>
                     <InfoIcon
-                        tooltipBackground="#28A197"
+                        tooltipClassName="dtech-dark-teal"
                         iconClasses="text-[#333333] -mt-[56px] ml-14 sm:ml-12"
                         title="Select role "
                     />
@@ -253,7 +253,7 @@ const SignupPage = () => {
                                 {" "}
                             </FormRow>
                             <InfoIcon
-                                tooltipBackground="#28A197"
+                                tooltipClassName="dtech-dark-teal"
                                 iconClasses="text-[#333333] -mt-[54px] ml-20 sm:ml-16"
                                 title="Enter your full name"
                             />
@@ -281,7 +281,7 @@ const SignupPage = () => {
                                 className=" !bg-transparent text-[#333333] !text-xl sm:mt-0 sm:!text-base"
                             ></FormRow>
                             <InfoIcon
-                                tooltipBackground="#28A197"
+                                tooltipClassName="dtech-dark-teal"
                                 iconClasses="text-[#333333] -mt-[54px] ml-[72px] sm:ml-16"
                                 title="Enter your email ID. If signing up as an organisation admin, enter your organisation email ID."
                             />
@@ -313,7 +313,7 @@ const SignupPage = () => {
                                 {" "}
                             </FormRow>
                             <InfoIcon
-                                tooltipBackground="#28A197"
+                                tooltipClassName="dtech-dark-teal"
                                 iconClasses="text-[#333333] -mt-[54px] ml-28 sm:ml-24"
                                 title="Create a secure password using 8 characters with at least 1 uppercase character, 1 number and 1 special character[!@#$%^&*]"
                             />

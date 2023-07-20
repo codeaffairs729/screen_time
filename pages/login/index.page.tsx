@@ -52,7 +52,7 @@ const SigninPage = () => {
                                 >
                                     {" "}
                                     <InfoIcon
-                                        tooltipBackground="#28A197"
+                                        tooltipClassName="!bg-dtech-dark-teal"
                                         iconClasses="text-[#333333]  -ml-24 sm:-ml-28"
                                         title="Enter your email ID. If logging in as an organisation admin, enter your organisation email ID."
                                     />
@@ -96,7 +96,7 @@ const SigninPage = () => {
                                 >
                                     {" "}
                                     <InfoIcon
-                                        tooltipBackground="#28A197"
+                                        tooltipClassName="!bg-dtech-dark-teal"
                                         iconClasses="text-[#333333] -ml-16 sm:-ml-20"
                                         title="Enter password "
                                     />
@@ -141,7 +141,7 @@ const SigninPage = () => {
                             <a className=" items-center self-end underline text-[#3F0068] text-sm">
                                 Unlock account
                                 <InfoIcon
-                                    tooltipBackground="#28A197"
+                                    tooltipClassName="!bg-dtech-dark-teal"
                                     iconClasses="text-[#3F0068] mx-2"
                                     title="Enter email id to unlock account"
                                 />
@@ -151,7 +151,7 @@ const SigninPage = () => {
                             <a className=" items-center self-end underline text-[#3F0068]  text-sm">
                                 Forgot your password?
                                 <InfoIcon
-                                    tooltipBackground="#28A197"
+                                    tooltipClassName="!bg-dtech-dark-teal"
                                     iconClasses="text-[#3F0068] ml-2"
                                     title="Reset your password"
                                 />

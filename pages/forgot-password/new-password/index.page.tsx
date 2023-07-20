@@ -44,7 +44,7 @@ const ForgotPasswordPage = () => {
                             {" "}
                         </FormRow>
                         <InfoIcon
-                            tooltipBackground="#28A197"
+                            tooltipClassName="!bg-dtech-dark-teal"
                             iconClasses="text-[#333333] -mt-[54px] ml-40 sm:ml-32"
                             title="Enter password "
                         />
@@ -120,7 +120,7 @@ const ForgotPasswordPage = () => {
                             {" "}
                         </FormRow>
                         <InfoIcon
-                            tooltipBackground="#28A197"
+                            tooltipClassName="!bg-dtech-dark-teal"
                             iconClasses="text-[#333333] -mt-[54px] ml-[240px] sm:ml-[200px]"
                             title="Enter password "
                         />

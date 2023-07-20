@@ -96,7 +96,7 @@ const TextField = ({
                         else {
                             {
                                 return (
-                                    <div className=" m-1 text-[#28A197]">
+                                    <div className=" m-1 text-dtech-dark-teal">
                                         {item}
                                     </div>
                                 );

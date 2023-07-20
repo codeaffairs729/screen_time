@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 import clsx from "clsx";
 import Nav from "./components/nav";
 import Footer from "./components/footer";
+import { useEffect, useState } from "react";
 
 import { BsMegaphone } from "react-icons/bs";
 // import SearchVM, { SearchVMContext } from "pages/search/search.vm";
