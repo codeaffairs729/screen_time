@@ -19,7 +19,10 @@ enum tabIndex {
 
 const WorkspacePage = () => {
     const user = useSelector((state: RootState) => state.auth.user);
-    const [selectedIndex, setSelectedIndex] = useState<any>(0);
+    const router =useRouter()
+    const [selectedIndex, setSelectedIndex] = useState<any>(
+        tabIndex[router.asPath.split("#")[1]?.split("/")[0] as any] || 0
+    );
     const { asPath } = useRouter();
     useEffect(() => {
         const hashParam: string = asPath.split("#")[1];

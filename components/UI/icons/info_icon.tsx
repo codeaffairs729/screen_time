@@ -11,14 +11,14 @@ const InfoIcon = ({
     oldIcon = true,
     iconClasses = "",
     onClick,
-    tooltipBackground,
+    tooltipClassName
 }: {
     title: string;
     className?: string;
     oldIcon?: boolean;
     onClick?: Function;
     iconClasses?: string;
-    tooltipBackground?: string;
+    tooltipClassName?: string
 }) => {
     const tooltipId = `dtechtive-info-tooltip-${uuidv4()}`;
     return (
@@ -55,7 +55,7 @@ const InfoIcon = ({
                 )}
             </span>
             <ReactTooltip
-                backgroundColor={tooltipBackground}
+                className={tooltipClassName}
                 id={tooltipId}
                 overridePosition={({ left, top }, _e, _t, node) => {
                     return {

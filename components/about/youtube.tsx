@@ -9,7 +9,7 @@ const YoutubePlayer = ({
 }: {
     videoId: string;
     width?: string;
-    height?: string;
+    height?: string|number;
     className?: string;
     iframeclassName?: string;
 }) => {

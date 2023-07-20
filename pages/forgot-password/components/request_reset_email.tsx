@@ -49,7 +49,7 @@ const RequestResetEmail = () => {
                             >
                                 {" "}
                                 <InfoIcon
-                                    tooltipBackground="#28A197"
+                                    tooltipClassName="!bg-dtech-dark-teal"
                                     iconClasses="text-[#333333]  -ml-32 sm:-ml-36"
                                     title="Enter regular text in email id "
                                 />

@@ -106,7 +106,7 @@ const NewGradientUI = ({
                     width={350}
                 ></img>
             </div>
-            <div className=" bg-[#28A197] h-screen  w-2 ml-5 sm:ml-0 fixed md:relative md:w-8"></div>
+            <div className=" bg-dtech-dark-teal h-screen  w-2 ml-5 sm:ml-0 fixed md:relative md:w-8"></div>
             <div className=" bg-[#0065BD] h-screen  w-6 sm:hidden md:relative md:w-8"></div>
             <div
                 className="flex flex-col w-fixed md:w-1/2 w-screen md:bg-white overflow-scroll"

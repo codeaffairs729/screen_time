@@ -16,7 +16,7 @@
     "incremental": true,
     "baseUrl": "."
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "pages/api/verify.page.ts"],
   "exclude": ["node_modules"],
   "files": [
     "./node_modules/redux-persist/types/integration/react.d.ts",
