@@ -59,7 +59,7 @@ const NewSearchBar = ({
                                 })),
                         }
                     ),
-                1000
+                1
             ),
         []
     );
