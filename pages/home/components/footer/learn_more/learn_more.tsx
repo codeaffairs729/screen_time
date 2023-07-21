@@ -2,26 +2,6 @@ import Link from "next/link";
 import CustomLink from "../custom_link";
 const LearnMoreObjects = [
     {
-        label: "Data Provider",
-        link: "/",
-        target: false
-    },
-    {
-        label: "Data User",
-        link: "/",
-        target: false
-    },
-    {
-        label: "Data Enablers",
-        link: "/",
-        target: false
-    },
-    {
-        label: "Subscription Plan",
-        link: "/account#subscription",
-        target: false
-    },
-    {
         label: "API",
         link: "https://api.dtechtive.com/docs",
         target: false
@@ -31,11 +11,31 @@ const LearnMoreObjects = [
         link: "/register-data-source",
         target: false
     },
-    {
-        label: "Data Catalogue",
-        link: "/",
-        target: false
-    }
+    // {
+    //     label: "Data Provider",
+    //     link: "/",
+    //     target: false
+    // },
+    // {
+    //     label: "Data User",
+    //     link: "/",
+    //     target: false
+    // },
+    // {
+    //     label: "Data Enablers",
+    //     link: "/",
+    //     target: false
+    // },
+    // {
+    //     label: "Subscription Plan",
+    //     link: "/account#subscription",
+    //     target: false
+    // },
+    // {
+    //     label: "Data Catalogue",
+    //     link: "/",
+    //     target: false
+    // }
 ]
 const LearnMore = () => {
     return (
@@ -49,25 +49,6 @@ const LearnMore = () => {
                             <CustomLink item={item} />
                         </div>
                     ))}
-
-                    {/* <div className=" sm:mb-3 mb-1">
-                        <Link href={""}>Data User</Link>
-                    </div>
-                    <div className=" sm:mb-3 mb-1">
-                        <Link href={""}>Data Enablers</Link>
-                    </div>
-                    <div className=" sm:mb-3 mb-1">
-                        <Link href={"/account#subscription"}>Subscription Plan</Link>
-                    </div>
-                    <div className=" sm:mb-3 mb-1">
-                        <a target="_blank"><Link href={"https://api.dtechtive.com/docs"}>API</Link></a>
-                    </div>
-                    <div className=" sm:mb-3 mb-1">
-                        <Link href={"/register-data-source"}>Register a Data Source</Link>
-                    </div>
-                    <div className=" sm:mb-3 mb-1">
-                        <Link href={""}>Data Catalogue</Link>
-                    </div> */}
                 </div>
             </div>
         </div>
