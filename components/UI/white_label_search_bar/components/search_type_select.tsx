@@ -19,8 +19,8 @@ const SearchTypeSelect = () => {
     const searchTypes = [
         { label: SearchTypes.DATASET.label, value: SearchTypes.DATASET.value, path: SearchTypes.DATASET.imgPath, imagePathOnHover: SearchTypes.DATASET.imagePathOnHover },
         { label: SearchTypes.ORGANISATION.label, value: SearchTypes.ORGANISATION.value, path: SearchTypes.ORGANISATION.imgPath, imagePathOnHover: SearchTypes.ORGANISATION.imagePathOnHover},
-        { label: SearchTypes.TOPICS.label, value: SearchTypes.TOPICS.value, path: SearchTypes.TOPICS.imgPath, imagePathOnHover: SearchTypes.TOPICS.imagePathOnHover},
-        { label: SearchTypes.REGIONS.label, value: SearchTypes.REGIONS.value, path: SearchTypes.REGIONS.imgPath, imagePathOnHover: SearchTypes.REGIONS.imagePathOnHover},
+        // { label: SearchTypes.TOPICS.label, value: SearchTypes.TOPICS.value, path: SearchTypes.TOPICS.imgPath, imagePathOnHover: SearchTypes.TOPICS.imagePathOnHover},
+        // { label: SearchTypes.REGIONS.label, value: SearchTypes.REGIONS.value, path: SearchTypes.REGIONS.imgPath, imagePathOnHover: SearchTypes.REGIONS.imagePathOnHover},
     ];
     const [isHovered, setIsHovered] = useState(false);
     const [selected, setSelected] = useState(searchTypes[0]);

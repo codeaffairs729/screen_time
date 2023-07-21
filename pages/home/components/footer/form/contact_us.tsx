@@ -6,6 +6,7 @@ import FormRow from "pages/login/components/form_row";
 import PrimaryBtn from "components/UI/form/primary_btn";
 import ReCAPTCHA from "react-google-recaptcha"
 import InfoIcon from "components/UI/icons/info_icon";
+import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 const ContactUs = () => {
     const [recaptchaToken, setRecaptchaToken] = useState<string>("");
     const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ""
@@ -76,14 +77,14 @@ const ContactUs = () => {
                         >
 
                         </FormRow>
-                        <InfoIcon
+                        {/* <InfoIcon
                             tooltipClassName="w-60 !bg-dtech-dark-teal"
                             iconClasses="text-[#333333] -mt-[46px] !ml-[52px] sm:ml-16"
                             title="Enter your email ID. If signing up as an organisation admin, enter your organisation email ID."
-                        />
+                        /> */}
                     </div>
                     <TextField
-                        className=" -mt-6 sm:-mt-8 rounded-xl !bg-transparent "
+                        className=" sm:-mt-2 rounded-xl !bg-transparent "
                         textfieldClassName="!bg-white"
                         formControl={{
                             control: vm.form.control,
@@ -143,6 +144,7 @@ const ContactUs = () => {
                             }
                         }}
                     />
+                    {vm.isSubmissionSuccess && <div className="  bg-green-700 my-2 flex items-center text-white w-fit px-4 py-2"><IoMdCheckmarkCircleOutline size={32} color="white" /><div className="mx-2">Thanks for your message.</div></div>}
                 </div>
 
             </div>

@@ -118,7 +118,7 @@ const HomePage = () => {
                     {/* <div className=" text-xs sm:text-sm">Your <a className=" text-dtech-main-dark">feedback</a> will help us to improve it.</div> */}
                 </div>
             </div>
-            <CookieConsentForm />
+            {/* <CookieConsentForm /> */}
             <NewNavbar />
             <div className="flex flex-col z-0 px-6 sm:px-[10%] py-12 sm:bg-transparent sm:bg-white">
                 <div className="flex flex-row">
