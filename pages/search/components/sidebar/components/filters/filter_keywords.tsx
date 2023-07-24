@@ -16,8 +16,8 @@ const FilterKeywords = () => {
 
     useEffect(() => {
         const keywords = vm.filterOptions?.keywords?.map((format:any) => ({
-            value: format.value,
-            label: format.value,
+            value: format,
+            label: format,
             checkbox: false,
         }));
         setFilterOptionItems(keywords);

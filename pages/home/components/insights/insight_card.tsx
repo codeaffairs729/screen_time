@@ -17,7 +17,7 @@ const InsightCard = ({ label, metrics, isMobile, insightIcon }: { label: string,
                 <div className="flex flex-col justify-center items-center sm:p-16 space-y-2 ">
                     <StarRating
                         starClassName={"text-dtech-new-main-light sm:h-6 sm:w-6"}
-                        rating={metrics}
+                        rating={Math.floor(Math.ceil((metrics || 0) * 2) / 2)}
                     />
                     <div>{Math.floor(Math.ceil((metrics || 0) * 2) / 2)}</div>
                 </div>

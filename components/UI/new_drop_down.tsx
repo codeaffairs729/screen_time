@@ -5,9 +5,10 @@ import { useRouter } from "next/router";
 import React, { Fragment, ReactNode, useState } from "react";
 import { VscTriangleDown } from "react-icons/vsc";
 import isURL from "validator/lib/isURL";
+import InfoIcon from "./icons/info_icon";
 
 function isImageString(image: string) {
-    const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.svg', '.webp']; 
+    const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.svg', '.webp'];
     const lowerCaseStr = image.toLowerCase();
 
     return imageExtensions.some(extension => lowerCaseStr.endsWith(extension));
@@ -22,6 +23,7 @@ export type MenuItemType = {
     isLast?: boolean;
     isBlank?: boolean
     imagePathOnHover?: string;
+    isAuthRequired?: boolean;
 };
 
 const NewDropdown = ({
@@ -35,7 +37,8 @@ const NewDropdown = ({
     dropDownImage,
     imageWidth = 10,
     isMobile = false,
-    imageClasses =""
+    imageClasses = "",
+    isLoggedIn = false
 }: {
     label?: string | ReactNode;
     menuItems: MenuItemType[];
@@ -45,9 +48,10 @@ const NewDropdown = ({
     menuItemsClasses?: string;
     itemsClasses?: string;
     dropDownImage?: string;
-        imageWidth?: number;
-        isMobile?: boolean;
-        imageClasses?: string
+    imageWidth?: number;
+    isMobile?: boolean;
+    imageClasses?: string
+    isLoggedIn?: boolean
 }) => {
     const router = useRouter();
     const [showMenu, setShowMenu] = useState(false);
@@ -75,7 +79,7 @@ const NewDropdown = ({
                 >
                     {dropDownImage}
                 </span>}
-                {label&&typeof label == "string" ? isURL(label) ? <img src={label} height={50} width={50} className="rounded-full"></img> : <span
+                {label && typeof label == "string" ? isURL(label) ? <img src={label} height={50} width={50} className="rounded-full"></img> : <span
                     id="profile-dropdown"
                     className={clsx(
                         " ",
@@ -131,7 +135,8 @@ const MenuItem = ({
     isLast,
     className,
     isBlank,
-    imagePathOnHover
+    imagePathOnHover,
+    isAuthRequired = false
 }: MenuItemType) => {
     const router = useRouter();
     const currentRoute = router.pathname;
@@ -168,13 +173,13 @@ const MenuItem = ({
                     </button>
                 ) : isBlank ? (
                     <a target="_blank">
-                        <LinkTag label={label} className={className} link={link} >
-                                <img src={isHovered ? imagePathOnHover : imagePath} className=" mx-2"></img>
+                        <LinkTag label={label} className={className} link={link} isAuthRequired={isAuthRequired} isHovered={isHovered}>
+                            <img src={isHovered ? imagePathOnHover : imagePath} className={`mx-2`}></img>
                         </LinkTag>
                     </a>
                 ) : (
-                    <LinkTag label={label} className={className} link={link} >
-                                <img src={isHovered ? imagePathOnHover : imagePath} className=" mx-2"></img>
+                    <LinkTag label={label} className={className} link={link} isAuthRequired={isAuthRequired} isHovered={isHovered}>
+                        <img src={isHovered ? imagePathOnHover : imagePath} className=" mx-2"></img>
                     </LinkTag>
                 )}
             </div>
@@ -188,22 +193,42 @@ const LinkTag = React.forwardRef(
             link,
             className,
             children,
+            isAuthRequired,
             label,
-        }: { link?: string; className?: string; label: string, children: ReactNode },
+            isHovered
+        }: { link?: string; className?: string; label: string, isAuthRequired: boolean, children: ReactNode, isHovered: boolean },
         ref: any
     ) => (
-        <Link href={link || "#"}>
-            <span
-                ref={ref}
-                className={clsx(
-                    " px-2.5 py-2 text-sm w-full text-left boder-b-1 shadow-dtech-dark-grey text-dtech-dark-grey cursor-pointer flex flex-row items-center",
-                    className
-                )}
-            >
-                <div>{children}</div>
-                <div>{label}</div>
-            </span>
-        </Link>
+        !isAuthRequired ?
+            <Link href={link || "#"} >
+                <span
+                    ref={ref}
+                    className={clsx(
+                        " px-2.5 py-2 text-sm w-full text-left boder-b-1 shadow-dtech-dark-grey text-dtech-dark-grey cursor-pointer flex flex-row items-center",
+                        className
+                    )}
+                >
+                    <div>{children}</div>
+                    <div>{label}</div>
+                </span>
+            </Link> :
+            <button disabled={true} className="">
+                <span
+                    ref={ref}
+                    className={clsx(
+                        " px-2.5 py-2 text-sm w-full text-left boder-b-1 shadow-dtech-dark-grey text-dtech-dark-grey cursor-pointer flex flex-row items-center",
+                        className
+                    )}
+                >
+                    <InfoIcon
+                        tooltipClassName={" !bg-dtech-dark-teal"}
+                        iconClasses={!isHovered ? " text-[#333333] " : " text-white"}
+                        title="Please login to access this "
+                    />
+                    <div>{children}</div>
+                    <div className=" ">{label}</div>
+                </span>
+            </button>
     )
 );
 LinkTag.displayName = "LinkTag";

@@ -21,8 +21,8 @@ const FilterOwner = () => {
     //   .map((owner) => ({ value: owner, label: owner, checkbox: false }));
     // setFilterOptionItems(owners);
     const owners = vm.filterOptions?.data_owners?.map((owner:any) => ({
-      value: owner.value,
-      label: owner.value,
+      value: owner,
+      label: owner,
       checkbox: false,
     }));
     setFilterOptionItems(owners);

@@ -41,15 +41,15 @@ const NewNavbar = () => {
                             Hi there!
                         </div>
                         <div className="flex sm:flex-row flex-col mt-[1px]">
-                            <Link href="/login"><div className="underline font-semibold cursor-pointer">Login</div></Link>
+                            <Link href="/login"><div className=" font-semibold cursor-pointer">Login</div></Link>
                             <div>&nbsp; or &nbsp;</div>
-                            <Link href="/signup"><div className="underline font-semibold cursor-pointer">Signup</div></Link>
+                            <Link href="/signup"><div className=" font-semibold cursor-pointer">Signup</div></Link>
                         </div>
 
                     </div>
             }
             <div className=" float-left p-2 sm:float-right flex flex-col items-center hover:bg-opacity-60 hover:bg-white">
-                <NewNavMenuDropdown />
+                <NewNavMenuDropdown isLoggedIn={user?true:false} />
             </div>
             <div className=" hover:cursor-pointer p-2 float-right items-center flex flex-col hover:bg-opacity-60 hover:bg-white">
                 <Link href="/">

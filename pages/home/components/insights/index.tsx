@@ -7,19 +7,27 @@ import InsightCard from "./insight_card";
 const Insights = ({ isMobile }: { isMobile: boolean }) => {
     const [metrics, setMetrics] = useState<any>()
     const [isVisible, setIsVisible] = useState(false);
+    const [showScroll, setShowScroll] = useState(false);
 
     const homeVM = HomeVM()
 
+    const handleScroll = () => {
+        if (window.scrollY > 100) {
+            setShowScroll(true);
+        } else {
+            setShowScroll(false);
+        }
+    };
     const scrollToTop = () => {
         window.scrollTo({
             top: 0,
             behavior: 'smooth',
         });
     };
-    const handleScroll = () => {
-        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        setIsVisible(scrollTop > 0);
-    };
+    // const handleScroll = () => {
+    //     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    //     setIsVisible(scrollTop > 0);
+    // };
 
     useEffect(() => {
         setMetrics(homeVM.fetchedMetrics)
@@ -40,20 +48,19 @@ const Insights = ({ isMobile }: { isMobile: boolean }) => {
             </div>
             <div className=" flex flex-row p-4 text-dtech-new-main-light text-md sm:text-xl font-bold">
                 <InsightCard label="Datasets" isMobile={isMobile} metrics={metrics?.datasets} insightIcon="/images/insight_dataset.svg" />
-                <InsightCard label="Data Providers" isMobile={isMobile} metrics={metrics?.providers} insightIcon="/images/insight_provider.svg" />
+                <InsightCard label="Data Providers" isMobile={isMobile} metrics={metrics?.providers} insightIcon="/images/insight_provider.png" />
                 <InsightCard label="Dataset quality" isMobile={isMobile} metrics={metrics?.quality} insightIcon="/images/insight_provider.svg" />
-                <div className=" sm:flex flex-col-reverse hidden ">
-                    <button
-                        className={`flex text-dtech-main-dark flex-row items-center text-sm whitespace-nowrap px-8 underline back-to-top-button  ${isVisible ? 'visible' : ''}`}
-                        onClick={scrollToTop}
-                    >
-                        <div className="hover:bg-[#D9EFFC]">Back to Top</div>
-                        <div>
-                            <AiOutlineArrowUp />
-                        </div>
-                    </button>
-                </div>
-
+            </div>
+            <div className="">
+                {showScroll&&<button
+                    className={` fixed bottom-12 right-4 cursor-pointer p-2  transition-opacity  flex text-dtech-main-dark flex-row items-center text-sm whitespace-nowrap px-8 underline back-to-top-button  ${isVisible ? 'visible' : ''}`}
+                    onClick={scrollToTop}
+                >
+                    <div className="">Back to Top</div>
+                    <div>
+                        <AiOutlineArrowUp />
+                    </div>
+                </button>}
             </div>
         </div>
     )

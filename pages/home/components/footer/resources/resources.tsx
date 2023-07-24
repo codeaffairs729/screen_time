@@ -25,10 +25,10 @@ const Resource = [
 
 const Resources = () => {
     return (
-        <div className="flex flex-col w-1/2">
+        <div className="flex flex-col w-1/2 ">
             <div className=" my-4 font-bold sm:text-lg">Resources</div>
-            <div className=" flex flex-row">
-                <div className=" bg-dtech-light-teal w-[2px] mr-4 sm:h-[510px] h-[220px] "></div>
+            <div className=" flex flex-row h-[100%]">
+                <div className=" bg-dtech-light-teal w-[2px] mr-4"></div>
                 <div className=" text-dtech-main-grey">
                     {
                         Resource.map((item: any, index: any) => (
