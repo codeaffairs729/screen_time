@@ -168,7 +168,7 @@ const HomePage = () => {
                     />
                 </div>
             </div>
-            {/* <Insights isMobile={isMobile} /> */}
+            <Insights isMobile={isMobile} />
             {/* <DiscoverByComponent isMobile={isMobile} /> */}
             <div className=" w-full py-3 sm:py-4 sm:text-3xl cursor-pointer flex flex-col items-center justify-center text-dtech-new-main-light font-bold  mt-14 "
                 style={{
