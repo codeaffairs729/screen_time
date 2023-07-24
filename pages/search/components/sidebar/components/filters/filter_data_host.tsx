@@ -16,8 +16,8 @@ const FilterDataHost = () => {
 
     useEffect(() => {
         const dataHost = vm.filterOptions?.data_hosts?.map((format:any) => ({
-            value: format.value,
-            label: format.value,
+            value: format,
+            label: format,
             checkbox: false,
         }));
         setFilterOptionItems(dataHost);

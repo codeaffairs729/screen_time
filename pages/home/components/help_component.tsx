@@ -38,18 +38,18 @@ const HelpComponent = ({ item, index }: { item: any, index: any }) => {
                     </ul>
                 </Transition>
                 <div
-                    className="hover:bg-[#D9EFFC] focus-within:bg-[#FDD522] active:bg-[#FDD522] focus:bg-[#FDD522] focus-within:border-b-2 focus-within:border-black bg-dtech-new-main-light animate-pulse active:animate-ping text-dtech-main-light w-fit border-dtech-main-dark border-2 text-sm sm:text-lg font-sans sm:mt-8 sm:p-3 p-1 mt-4 cursor-pointer"
+                    className="font-bold hover:bg-[#6DCDCB] hover:text-black  active:bg-dtech-main-dark active:text-white focus:bg-dtech-main-dark focus:text-white   bg-dtech-new-main-light  text-dtech-main-light w-fit  text-sm sm:text-lg font-sans sm:mt-8 sm:p-3 p-1 mt-4 cursor-pointer"
                     onClick={() => setShowDesc(!showDesc)}
                 >
                     {
                         showDesc
                             ?
-                            <div className="flex flex-row">
-                                Read Less<HiOutlineChevronUp className="my-2 animate-bounce ml-2" />
+                            <div className="flex flex-row items-center justify-center ">
+                                <div>Read Less</div><HiOutlineChevronUp size={30} className="my-2 ml-2" />
                             </div>
                             :
-                            <div className="flex flex-row">
-                                Read More<HiOutlineChevronDown className="my-2 animate-bounce ml-2" />
+                            <div className="flex flex-row items-center justify-center ">
+                                <div>Read More</div><HiOutlineChevronDown size={30} className="my-2 ml-2" />
                             </div>
                     }
                 </div>

@@ -21,8 +21,8 @@ const FilterDomain = () => {
         //   .map((domain) => ({ value: domain, label: domain, checkbox: false }));
         // setFilterOptionItems(domains);
         const domains = vm.filterOptions?.domains?.map((domain:any) => ({
-            value: domain.value,
-            label: domain.value,
+            value: domain,
+            label: domain,
             checkbox: false,
         }));
         setFilterOptionItems(domains);

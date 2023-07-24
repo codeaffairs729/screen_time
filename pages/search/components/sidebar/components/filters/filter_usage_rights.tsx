@@ -16,8 +16,8 @@ const FilterUsageRights = () => {
 
     useEffect(() => {
         const usageRights = vm.filterOptions?.usage_rights?.map((format: any) => ({
-            value: format.value,
-            label: format.value,
+            value: format,
+            label: format,
             checkbox: false,
         }));
         setFilterOptionItems(usageRights);

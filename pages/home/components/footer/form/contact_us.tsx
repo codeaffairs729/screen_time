@@ -121,6 +121,7 @@ const ContactUs = () => {
                                 required: "Message is required",
                             },
                         }}
+                        errorPosition={true}
                     />
                     <div className="my-4 text-dtech-main-grey">You can enter up to 100 characters</div>
                     <ReCAPTCHA
@@ -131,7 +132,7 @@ const ContactUs = () => {
                     <div className=" text-red-600">{formError}</div>
                     <PrimaryBtn
                         label="Send"
-                        className="bg-dtech-new-main-light hover:animate-pulse active:animate-ping max-w-[120px] my-4 !p-5 "
+                        className="bg-dtech-new-main-light hover:bg-[#6DCDCB] hover:text-black active:bg-dtech-main-dark active:text-white active:animate-ping max-w-[120px] my-4 !p-5 "
                         isLoading={vm.isSendingMail}
                         onClick={async () => {
                             const validated = await vm.form.trigger()

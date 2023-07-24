@@ -46,9 +46,9 @@ const HomePage = () => {
 
 
     const helpData = [{
-        img: "/images/helping_data_users.png",
+        img: "/images/helping_data_users.svg",
         label: "DATA USERS",
-        title: "Spend less time searching for datasets and more time deriving value from them.",
+        title: "Spend less of your time searching for datasets and more time using them.",
         summary: [
             "Discover datasets hidden deep in the web",
             "Search using simple terms and find relevant datasets",
@@ -62,9 +62,9 @@ const HomePage = () => {
         ]
     },
     {
-        img: "/images/helping_data_provider.png",
+        img: "/images/helping_data_providers.svg",
         label: "DATA PROVIDER",
-        title: "Generate interest in datasets, improve dataset quality, understand user needs better and gain competitive advantage.",
+        title: "Promote your datasets, get guidance on enhancing dataset quality, learn how users use your datasets, and improve your understanding of user needs.",
         summary: [
             "Make datasets more discoverable",
             "Promote datasets and increase userbase",
@@ -74,7 +74,7 @@ const HomePage = () => {
         ]
     },
     {
-        img: "/images/helping_data_enablers.png",
+        img: "/images/helping_data_enablers.svg",
         label: "DATA ENABLERS",
         title: "Improve your organisation’s data discovery capability, foster data-informed decision making, enhance data-driven strategy and drive growth.",
         summary: [
@@ -88,13 +88,13 @@ const HomePage = () => {
     return (
         <div className="flex flex-col">
             <img src="/images/home.png" className=" -z-100 absolute hidden sm:block" />
-            <img src="/images/home_for_mobile.png" width={window.innerWidth} className=" -z-100 absolute sm:hidden block" style={{height:"570px"}}/>
+            <img src="/images/home_for_mobile.png" width={window.innerWidth} className=" -z-100 absolute sm:hidden block" style={{ height: "570px" }} />
 
             <div className="sm:mt-4  flex flex-row px-6 sm:px-[10%] py-3 bg-dtech-middle-grey sm:bg-white z-10">
                 <div>
-                    <button className=" bg-[#0065BD] text-white font-semibold sm:mt-0 sm:px-4 px-6 py-1 sm:py-0 rounded-md">
+                    <div className=" bg-dtech-new-main-light text-white font-semibold sm:mt-0 sm:px-4 px-6 py-1 sm:py-0 rounded-md">
                         BETA
-                    </button>
+                    </div>
                 </div>
                 <div className="text-xs sm:text-sm flex flex-col sm:flex-row ml-6 sm:mt-0 ">
                     <div className=" ">This is a new service.&nbsp;</div>
@@ -135,11 +135,11 @@ const HomePage = () => {
                         </div>
                     </div>
                     <div className=" hidden lg:block">
-                        <img src="/images/icons/txt.svg" className="mt-[48px] ml-[11.5%] z-10 absolute" />
+                        {/* <img src="/images/icons/txt.svg" className="mt-[48px] ml-[11.5%] z-10 absolute" /> */}
                         <div className=" bg-white w-[58px] mt-[136px] flex items-center justify-center ml-[19%] z-10 absolute">
-                            <img src="/images/icons/xls.svg" width={36} className=" " />
+                            {/* <img src="/images/icons/xls.svg" width={36} className=" " /> */}
                         </div>
-                        <img src="/images/working_girl.png" width={800}></img>
+                        <img src="/images/working_girl.svg" width={800}></img>
                     </div>
                     <div className="mt-32 sm:hidden block max-w-[8%] mr-8">
                         <img src="/images/1.svg" className=" ml-6" width={25}></img>
@@ -164,15 +164,15 @@ const HomePage = () => {
                                 query: { q: option.value },
                             });
                         }}
-                        className="  focus-within:ring-2 focus-within:ring-[#FDD522] border-2  focus-within:border-black focus-within:border-2 !bg-white h-10 sm:w-[70%]"
+                        className="  focus-within:ring-2 focus-within:ring-[#FDD522] border-2  focus-within:border-black focus-within:border-2 !bg-white sm:h-10 h-8 sm:w-[70%]"
                     />
                 </div>
             </div>
             {/* <Insights isMobile={isMobile} /> */}
             {/* <DiscoverByComponent isMobile={isMobile} /> */}
-            <div className=" w-full py-3 sm:py-4  sm:text-xl cursor-pointer flex flex-col items-center justify-center text-dtech-new-main-light font-bold  mt-14 "
+            <div className=" w-full py-3 sm:py-4 sm:text-3xl cursor-pointer flex flex-col items-center justify-center text-dtech-new-main-light font-bold  mt-14 "
                 style={{
-                    background: "linear-gradient(to right, #CEFFFE, #CEB0D000)"
+                    background: "linear-gradient(to right, #CEFFFE, #CEB0D0)"
                 }}>
                 <div className=" flex flex-col items-center"
                     onClick={() => {
@@ -184,10 +184,10 @@ const HomePage = () => {
                 >
 
                     <div>{!learnMore ? "Learn more" : "See less"}</div>
-                    <div className=" w-fit shadow-custom-1 bg-dtech-new-main-light rounded-full p-2 mt-2 hover:bg-[#D9EFFC] hover:rounded-full focus-within:rounded-full focus:rounded-full focus-visible:rounded-full active:rounded-full focus-within:bg-[#FDD522] focus-within:border-b-2 focus-within:border-black active:bg-[#FDD522] focus:bg-[#FDD522] animate-bounce">{!learnMore ? <HiOutlineChevronDown className=" !text-white hover:!text-[#00437E] " /> : <HiOutlineChevronUp className="!text-white hover:!text-[#00437E] " />}</div>
+                    <div className=" w-fit shadow-custom-1 bg-dtech-new-main-light rounded-full p-2 mt-2 hover:bg-[#D9EFFC] hover:rounded-full focus-within:rounded-full focus:rounded-full focus-visible:rounded-full active:rounded-full focus-within:bg-[#FDD522] focus-within:border-b-2 focus-within:border-black active:bg-[#FDD522] focus:bg-[#FDD522] animate-bounce">{!learnMore ? <HiOutlineChevronDown size={40} className=" !text-white hover:!text-[#00437E] " /> : <HiOutlineChevronUp size={40} className="!text-white hover:!text-[#00437E] " />}</div>
                 </div>
             </div>
-            <Transition
+            {/* <Transition
                 show={learnMore}
                 enter="transition-all duration-500"
                 enterFrom="opacity-0 max-h-0"
@@ -195,26 +195,29 @@ const HomePage = () => {
                 leave="transition-all duration-500"
                 leaveFrom="opacity-100 max-h-full"
                 leaveTo="opacity-0 max-h-0"
-            >
-                <div className={""}>
-                    <div className="flex flex-row px-6 sm:px-[10%] sm:items-center justify-between sm:justify-start">
-                        <div className=" flex flex-row py-3">
-                            <div className="font-bold sm:text-xl text-md text-dtech-main-dark">Helping Data Users, Providers & Enablers</div>
+            > */}
+                <div className={!learnMore?"h-72":"h-full"}>
+                <div className={!learnMore?" hidden":"block"}>
+
+                        <div className="flex flex-row px-6 sm:px-[10%] sm:items-center justify-between sm:justify-start">
+                            <div className=" flex flex-row py-10">
+                                <div className="font-bold sm:text-xl text-md text-dtech-main-dark">Helping Data Users, Providers & Enablers</div>
+                            </div>
                         </div>
+                        {helpData.map((item, index) => {
+                            return (
+                                <HelpComponent key={index} item={item} index={index} />
+                            )
+                        })}
                     </div>
-                    {helpData.map((item, index) => {
-                        return (
-                            <HelpComponent key={index} item={item} index={index} />
-                        )
-                    })}
+                <HowItWorks isMobile={isMobile} learnMore={learnMore} />
                 </div>
-            </Transition>
-            <HowItWorks isMobile={isMobile} />
+            {/* </Transition> */}
             <Footer />
         </div>
     )
 
-   };
+};
 export default HomePage;
 export interface RecommendationItem {
     title: string;
