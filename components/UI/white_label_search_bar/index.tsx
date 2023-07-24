@@ -147,7 +147,7 @@ const NewSearchBar = ({
                                 />
                             )}
                             {options.length === 0 && query !== "" ? (
-                                <EmptyResults isLoading={isLoading} />
+                                <EmptyResults isLoading={false} />
                             ) : (
                                 options.map((option) => (
                                     <ComboboxOption
@@ -164,7 +164,7 @@ const NewSearchBar = ({
             <SearchTypeSelect />
             </Combobox>
             <div className="w-14 bg-dtech-new-main-light px-1">
-            <SearchIcon isLoading={isLoading} />
+            <SearchIcon isLoading={false} />
             </div>
 
         </div>

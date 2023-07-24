@@ -47,13 +47,13 @@ const Insights = ({ isMobile }: { isMobile: boolean }) => {
                 </div>
             </div>
             <div className=" flex flex-row p-4 text-dtech-new-main-light text-md sm:text-xl font-bold">
-                <InsightCard label="Datasets" isMobile={isMobile} metrics={metrics?.datasets} insightIcon="/images/insight_dataset.svg" />
-                <InsightCard label="Data Providers" isMobile={isMobile} metrics={metrics?.providers} insightIcon="/images/insight_provider.png" />
-                <InsightCard label="Dataset quality" isMobile={isMobile} metrics={metrics?.quality} insightIcon="/images/insight_provider.svg" />
+                <InsightCard label="Datasets" tooltip="Total number of datasets discoverable through Dtechtive" isMobile={isMobile} metrics={metrics?.datasets} insightIcon="/images/insight_dataset.svg" />
+                <InsightCard label="Data Providers" tooltip="Total number of data hosts and owners whose datasets are discoverable through Dtechtive" isMobile={isMobile} metrics={metrics?.providers} insightIcon="/images/insight_provider.png" />
+                <InsightCard label="Metadata quality" tooltip="Average quality of dataset metadata based on the EU Metadata Quality Assessment method" isMobile={isMobile} metrics={metrics?.quality} insightIcon="/images/insight_provider.svg" />
             </div>
             <div className="">
                 {showScroll&&<button
-                    className={` fixed bottom-12 right-4 cursor-pointer p-2  transition-opacity  flex text-dtech-main-dark flex-row items-center text-sm whitespace-nowrap px-8 underline back-to-top-button  ${isVisible ? 'visible' : ''}`}
+                    className={` fixed z-30 bottom-12 right-4 cursor-pointer p-2  transition-opacity  flex text-dtech-main-dark flex-row items-center text-sm whitespace-nowrap px-8 underline back-to-top-button  ${isVisible ? 'visible' : ''}`}
                     onClick={scrollToTop}
                 >
                     <div className="">Back to Top</div>
