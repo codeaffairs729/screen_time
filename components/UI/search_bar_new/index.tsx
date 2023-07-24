@@ -104,7 +104,10 @@ const SearchBar = ({
             setQuery(q as string);
         }
     }, [q]);
-
+    const handleInputClick = (event:any) => {
+        event.stopPropagation();
+        setOpen(!open);
+    };
     return (
         <div className={clsx("", className)}>
             <Combobox value={selected} onChange={setSelected} nullable>
@@ -120,7 +123,7 @@ const SearchBar = ({
                             displayValue={(option: Option) => query}
                             value={query}
                             onChange={(event) => setQuery(event.target.value)}
-                            onClick={() => setOpen(true)}
+                            onClick={(e) => handleInputClick(e)}
                             
                         />
                         <Combobox.Button
@@ -131,7 +134,7 @@ const SearchBar = ({
                     </div>
                     {<Transition
                         as={Fragment}
-                        // show={open}
+                        show={open}
                         leave="transition ease-in duration-100"
                         leaveFrom="opacity-100"
                         leaveTo="opacity-0"

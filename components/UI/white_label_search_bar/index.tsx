@@ -25,6 +25,7 @@ const NewSearchBar = ({
 }) => {
     const [selected, setSelected] = useState<Option>();
     const [query, setQuery] = useState("");
+    const [open, setOpen] = useState(false)
     const openAutoCompleteBtn = useRef(null);
 
     const searchType = useSelector((state: RootState) => state.search.type);
@@ -63,6 +64,23 @@ const NewSearchBar = ({
             ),
         []
     );
+    const myRef = useRef(null);
+    useOutsideAlerter(myRef);
+    function useOutsideAlerter(ref: any) {
+        useEffect(() => {
+            // Function for click event
+            function handleOutsideClick(event: any) {
+                if (ref.current && !ref.current.contains(event.target)) {
+                    // setSelected(selected);
+                    setOpen(false)
+                }
+            }
+            // Adding click event listener
+            document.addEventListener("click", handleOutsideClick);
+            return () =>
+                document.removeEventListener("click", handleOutsideClick);
+        }, [ref]);
+    }
 
     useEffect(() => {
         if (!selected) return;
@@ -87,12 +105,11 @@ const NewSearchBar = ({
             setQuery(q as string);
         }
     }, [q]);
-
     return (
         <div className={clsx("flex flex-row", className)}>
             <Combobox value={selected} onChange={setSelected} nullable>
                 <div className="relative w-full h-full">
-                    <div className="relative flex items-center w-full h-full border cursor-default  bg-white text-left focus-within:outline-none sm:text-sm">
+                    <div className="relative flex items-center w-full h-full  cursor-default  bg-white text-left focus-within:outline-none sm:text-sm">
                         <Combobox.Input
                             placeholder="Search"
                             className="w-full max-h-[99%] border-none px-2 align-middle text-gray-900 h-full focus:ring-0 text-[19px] leading-[22px]"
@@ -102,6 +119,10 @@ const NewSearchBar = ({
                             displayValue={(option: Option) => query}
                             value={query}
                             onChange={(event) => setQuery(event.target.value)}
+                            onClick={(e) => {
+                                e.stopPropagation()
+                                setOpen(!open)
+                            }}
                         />
                         <Combobox.Button
                             ref={openAutoCompleteBtn}
@@ -109,14 +130,16 @@ const NewSearchBar = ({
                         ></Combobox.Button>
                     </div>
                     <Transition
+                        show={open}
                         as={Fragment}
                         leave="transition ease-in duration-100"
                         leaveFrom="opacity-100"
                         leaveTo="opacity-0"
                     >
-                        <Combobox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm z-20">
+                        <Combobox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm z-20" ref={myRef}>
                             {query.length > 0 && (
                                 <ComboboxOption
+                                    setOpen={setOpen}
                                     item={{
                                         id: 0,
                                         name: query,
@@ -128,6 +151,7 @@ const NewSearchBar = ({
                             ) : (
                                 options.map((option) => (
                                     <ComboboxOption
+                                        setOpen={setOpen}
                                         key={option.id}
                                         item={option}
                                     />
@@ -139,7 +163,7 @@ const NewSearchBar = ({
                 <div className="h-3/4 w-[1px] mx-3 my-[4px] bg-[#333333]"></div>
             <SearchTypeSelect />
             </Combobox>
-            <div className="w-14 bg-dtech-new-main-light">
+            <div className="w-14 bg-dtech-new-main-light px-1">
             <SearchIcon isLoading={isLoading} />
             </div>
 
