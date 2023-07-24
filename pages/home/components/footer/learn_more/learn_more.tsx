@@ -7,7 +7,7 @@ const LearnMoreObjects = [
         target: false
     },
     {
-        label: "Register a Data Source",
+        label: "Data source registeration",
         link: "/register-data-source",
         target: false
     },

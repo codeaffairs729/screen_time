@@ -18,6 +18,7 @@ import HowItWorks from "./components/how_it_works";
 import DiscoverByComponent from "./components/discover_by_components";
 import Insights from "pages/home/components/insights";
 import { Transition } from '@headlessui/react';
+import clsx from "clsx";
 
 const HomePage = () => {
     const router = useRouter()
@@ -131,15 +132,14 @@ const HomePage = () => {
                             Discover the datasets other search engines cannot reach
                         </div>
                         <div className=" sm:font-bold sm:text-lg text-dtech-new-main-light font-semibold text-sm sm:text-[#333333] mb-7 sm:w-3/4">
-                            We employ intelligent techniques to help you discover diverse open and commercial datasets, while providing you unparalleled insights about them.
-                        </div>
+                            We help you discover and obtain insights on open and commercial datasets using the power of AI.                        </div>
                     </div>
                     <div className=" hidden lg:block">
                         {/* <img src="/images/icons/txt.svg" className="mt-[48px] ml-[11.5%] z-10 absolute" /> */}
                         <div className=" bg-white w-[58px] mt-[136px] flex items-center justify-center ml-[19%] z-10 absolute">
                             {/* <img src="/images/icons/xls.svg" width={36} className=" " /> */}
                         </div>
-                        <img src="/images/working_girl.svg" width={800}></img>
+                        <img src="/images/working_girl.svg" width={600}></img>
                     </div>
                     <div className="mt-32 sm:hidden block max-w-[8%] mr-8">
                         <img src="/images/1.svg" className=" ml-6" width={25}></img>
@@ -170,7 +170,7 @@ const HomePage = () => {
             </div>
             <Insights isMobile={isMobile} />
             {/* <DiscoverByComponent isMobile={isMobile} /> */}
-            <div className=" w-full py-3 sm:py-4 sm:text-3xl cursor-pointer flex flex-col items-center justify-center text-dtech-new-main-light font-bold  mt-14 "
+            <div className={clsx(`w-full py-3 sm:py-4 sm:text-3xl overflow-hidden cursor-pointer text-dtech-new-main-light font-bold  mt-14 ${learnMore && "!h-full"} ${!isMobile && "h-[360px]"}`)}
                 style={{
                     background: "linear-gradient(to right, #CEFFFE, #CEB0D0)"
                 }}>
@@ -186,6 +186,7 @@ const HomePage = () => {
                     <div>{!learnMore ? "Learn more" : "See less"}</div>
                     <div className=" w-fit shadow-custom-1 bg-dtech-new-main-light rounded-full p-2 mt-2 hover:bg-[#D9EFFC] hover:rounded-full focus-within:rounded-full focus:rounded-full focus-visible:rounded-full active:rounded-full focus-within:bg-[#FDD522] focus-within:border-b-2 focus-within:border-black active:bg-[#FDD522] focus:bg-[#FDD522] animate-bounce">{!learnMore ? <HiOutlineChevronDown size={40} className=" !text-white hover:!text-[#00437E] " /> : <HiOutlineChevronUp size={40} className="!text-white hover:!text-[#00437E] " />}</div>
                 </div>
+                {!learnMore && !isMobile && <HowItWorks isMobile={isMobile} learnMore={learnMore} />}
             </div>
             {/* <Transition
                 show={learnMore}
@@ -196,22 +197,22 @@ const HomePage = () => {
                 leaveFrom="opacity-100 max-h-full"
                 leaveTo="opacity-0 max-h-0"
             > */}
-                <div className={!learnMore?"h-72":"h-full"}>
-                <div className={!learnMore?" hidden":"block"}>
+            <div className={!learnMore ? "" : "h-full"}>
+                <div className={!learnMore ? " hidden" : "block"}>
 
-                        <div className="flex flex-row px-6 sm:px-[10%] sm:items-center justify-between sm:justify-start">
-                            <div className=" flex flex-row py-10">
-                                <div className="font-bold sm:text-xl text-md text-dtech-main-dark">Helping Data Users, Providers & Enablers</div>
-                            </div>
+                    <div className="flex flex-row px-6 sm:px-[10%] sm:items-center justify-between sm:justify-start">
+                        <div className=" flex flex-row py-10">
+                            <div className="font-bold sm:text-xl text-md text-dtech-main-dark">Helping Data Users, Providers & Enablers</div>
                         </div>
-                        {helpData.map((item, index) => {
-                            return (
-                                <HelpComponent key={index} item={item} index={index} />
-                            )
-                        })}
                     </div>
-                <HowItWorks isMobile={isMobile} learnMore={learnMore} />
+                    {helpData.map((item, index) => {
+                        return (
+                            <HelpComponent key={index} item={item} index={index} />
+                        )
+                    })}
                 </div>
+                {learnMore && <HowItWorks isMobile={isMobile} learnMore={learnMore} />}
+            </div>
             {/* </Transition> */}
             <Footer />
         </div>

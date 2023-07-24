@@ -1,7 +1,7 @@
 import InfoIcon from "components/UI/icons/info_icon";
 import StarRating from "components/UI/star_rating";
 
-const InsightCard = ({ label, metrics, isMobile, insightIcon }: { label: string, metrics: number, isMobile: boolean, insightIcon: string }) => {
+const InsightCard = ({ label, tooltip, metrics, isMobile, insightIcon }: { label: string, tooltip:string, metrics: number, isMobile: boolean, insightIcon: string }) => {
     return (
         <div className=" flex flex-col w-1/3 shadow-custom-1 m-[2px]">
             <div className=" flex flex-row px-4 justify-center items-center p-2">
@@ -10,7 +10,7 @@ const InsightCard = ({ label, metrics, isMobile, insightIcon }: { label: string,
                     tooltipClassName="w-60 !bg-[#C5E8E7] !text-black"
                     iconClasses="!text-dtech-new-main-light"
                     className=" w-10 "
-                    title="Total number of data hosts whose datasets are discoverable through Dtechtive"
+                    title={tooltip}
                 />
             </div>
             {label === "Dataset quality" ?
