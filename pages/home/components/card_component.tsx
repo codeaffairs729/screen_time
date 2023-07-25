@@ -65,7 +65,7 @@ const CardComponent = ({ dataObjects, isMobile }: { dataObjects: RecommendationI
 
                     <div className=" hover:bg-[#D9EFFC] max-h-28 break-word overflow-hidden     focus-within:bg-[#FDD522] focus-within:border-b-2 focus-within:border-black active:bg-[#FDD522] focus:bg-[#FDD522] flex flex-col p-1 sm:p-2 shadow-lg">
                         <div className=" flex flex-row items-center justify-between max-h-fit flex-wrap ">
-                            <div className="flex flex-row items-center ">
+                            <div className="flex flex-row items-center h-10 max-h-10 ">
                                 <div className="font-bold text-sm sm:text-sm text-dtech-new-main-light">{item.title}</div>
                                 <div className=" mx-1 hidden sm:block min-w-max"><img src="images/icons/curved_arrow.svg" /></div>
                             </div>
