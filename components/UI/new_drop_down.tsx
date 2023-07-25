@@ -6,7 +6,7 @@ import React, { Fragment, ReactNode, useState } from "react";
 import { VscTriangleDown } from "react-icons/vsc";
 import isURL from "validator/lib/isURL";
 import InfoIcon from "./icons/info_icon";
-
+import ReactTooltip from 'react-tooltip';
 function isImageString(image: string) {
     const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.svg', '.webp'];
     const lowerCaseStr = image.toLowerCase();
@@ -24,6 +24,7 @@ export type MenuItemType = {
     isBlank?: boolean
     imagePathOnHover?: string;
     isAuthRequired?: boolean;
+    isLoggedIn?: boolean
 };
 
 const NewDropdown = ({
@@ -119,7 +120,7 @@ const NewDropdown = ({
                     )}
                 >
                     {menuItems.map((m, i) => (
-                        <MenuItem key={i} {...m} className={itemsClasses} />
+                        <MenuItem key={i} {...m} isLoggedIn={isLoggedIn} className={itemsClasses} />
                     ))}
                 </Menu.Items>
             </Transition>
@@ -136,7 +137,8 @@ const MenuItem = ({
     className,
     isBlank,
     imagePathOnHover,
-    isAuthRequired = false
+    isAuthRequired = false,
+    isLoggedIn = false
 }: MenuItemType) => {
     const router = useRouter();
     const currentRoute = router.pathname;
@@ -156,7 +158,7 @@ const MenuItem = ({
 
     return (
         <Menu.Item>
-            <div className=" flex flex-row"
+            <div className=" flex flex-row w-full"
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
             >
@@ -173,12 +175,12 @@ const MenuItem = ({
                     </button>
                 ) : isBlank ? (
                     <a target="_blank">
-                        <LinkTag label={label} className={className} link={link} isAuthRequired={isAuthRequired} isHovered={isHovered}>
+                        <LinkTag label={label} className={className} link={link} isAuthRequired={isAuthRequired} isLoggedIn={isLoggedIn} isHovered={isHovered}>
                             <img src={isHovered ? imagePathOnHover : imagePath} className={`mx-2`}></img>
                         </LinkTag>
                     </a>
                 ) : (
-                    <LinkTag label={label} className={className} link={link} isAuthRequired={isAuthRequired} isHovered={isHovered}>
+                    <LinkTag label={label} className={className} link={link} isAuthRequired={isAuthRequired} isLoggedIn={isLoggedIn} isHovered={isHovered}>
                         <img src={isHovered ? imagePathOnHover : imagePath} className=" mx-2"></img>
                     </LinkTag>
                 )}
@@ -194,12 +196,27 @@ const LinkTag = React.forwardRef(
             className,
             children,
             isAuthRequired,
+            isLoggedIn,
             label,
             isHovered
-        }: { link?: string; className?: string; label: string, isAuthRequired: boolean, children: ReactNode, isHovered: boolean },
+        }: { link?: string; className?: string; label: string, isAuthRequired: boolean, isLoggedIn: boolean, children: ReactNode, isHovered: boolean },
         ref: any
-    ) => (
-        !isAuthRequired ?
+    ) => (<div className=" w-full">
+        {isAuthRequired && !isLoggedIn
+            ?
+            <div data-tip="Please login to access this"
+                ref={ref}
+                className={clsx(
+                    " px-2.5 py-2 text-sm w-full text-left boder-b-1 shadow-dtech-dark-grey text-dtech-dark-grey cursor-pointer flex flex-row items-center",
+                    className
+                )}
+            >
+
+
+                <div>{children}</div>
+                <div>{label}</div>
+                <ReactTooltip effect="solid" className=" font-bold !bg-dtech-dark-teal" />
+            </div> :
             <Link href={link || "#"} >
                 <span
                     ref={ref}
@@ -211,24 +228,10 @@ const LinkTag = React.forwardRef(
                     <div>{children}</div>
                     <div>{label}</div>
                 </span>
-            </Link> :
-            <button disabled={true} className="">
-                <span
-                    ref={ref}
-                    className={clsx(
-                        " px-2.5 py-2 text-sm w-full text-left boder-b-1 shadow-dtech-dark-grey text-dtech-dark-grey cursor-pointer flex flex-row items-center",
-                        className
-                    )}
-                >
-                    <InfoIcon
-                        tooltipClassName={" !bg-dtech-dark-teal"}
-                        iconClasses={!isHovered ? " text-[#333333] " : " text-white"}
-                        title="Please login to access this "
-                    />
-                    <div>{children}</div>
-                    <div className=" ">{label}</div>
-                </span>
-            </button>
+            </Link>
+        }
+        <ReactTooltip effect="solid" />
+    </div>
     )
 );
 LinkTag.displayName = "LinkTag";
