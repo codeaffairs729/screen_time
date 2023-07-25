@@ -48,7 +48,7 @@ const Insights = ({ isMobile }: { isMobile: boolean }) => {
             </div>
             <div className=" flex flex-row p-4 text-dtech-new-main-light text-md sm:text-xl font-bold">
                 <InsightCard label="Datasets" tooltip="Total number of datasets discoverable through Dtechtive" isMobile={isMobile} metrics={metrics?.datasets} insightIcon="/images/insight_dataset.svg" />
-                <InsightCard label="Data Providers" tooltip="Total number of data hosts and owners whose datasets are discoverable through Dtechtive" isMobile={isMobile} metrics={metrics?.providers} insightIcon="/images/insight_provider.png" />
+                <InsightCard label="Data Providers" tooltip="Total number of data hosts and owners whose datasets are discoverable through Dtechtive" isMobile={isMobile} metrics={{ host: metrics?.host, owner: metrics?.owner }} insightIcon="/images/insight_provider.png" />
                 <InsightCard label="Metadata quality" tooltip="Average quality of dataset metadata based on the EU Metadata Quality Assessment method" isMobile={isMobile} metrics={metrics?.quality} insightIcon="/images/insight_provider.svg" />
             </div>
             <div className="">

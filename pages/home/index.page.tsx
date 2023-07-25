@@ -169,7 +169,7 @@ const HomePage = () => {
                 </div>
             </div>
             <Insights isMobile={isMobile} />
-            {/* <DiscoverByComponent isMobile={isMobile} /> */}
+            <DiscoverByComponent isMobile={isMobile} />
             <div className={clsx(`w-full py-3 sm:py-4 sm:text-3xl overflow-hidden cursor-pointer text-dtech-new-main-light font-bold  mt-14 ${learnMore && "!h-full"} ${!isMobile && "h-[360px]"}`)}
                 style={{
                     background: "linear-gradient(to right, #CEFFFE, #CEB0D0)"
@@ -225,4 +225,5 @@ export interface RecommendationItem {
     subTitle: string;
     imageUrl: string;
     recommended: boolean;
+    id:string
 }
