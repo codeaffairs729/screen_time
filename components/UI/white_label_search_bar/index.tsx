@@ -26,6 +26,7 @@ const NewSearchBar = ({
     const [selected, setSelected] = useState<Option>();
     const [query, setQuery] = useState("");
     const [open, setOpen] = useState(false)
+    const [oldOptions, setOldOptions] = useState<Option[]>([]);
     const openAutoCompleteBtn = useRef(null);
 
     const searchType = useSelector((state: RootState) => state.search.type);
@@ -118,7 +119,10 @@ const NewSearchBar = ({
                             }
                             displayValue={(option: Option) => query}
                             value={query}
-                            onChange={(event) => setQuery(event.target.value)}
+                            onChange={(event) => {
+                                setOldOptions(options);
+                                setQuery(event.target.value)
+                            }}
                             onClick={(e) => {
                                 e.stopPropagation()
                                 setOpen(!open)
@@ -139,6 +143,7 @@ const NewSearchBar = ({
                         <Combobox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm z-20" ref={myRef}>
                             {query.length > 0 && (
                                 <ComboboxOption
+                                    key={query.length}
                                     setOpen={setOpen}
                                     item={{
                                         id: 0,
@@ -147,7 +152,13 @@ const NewSearchBar = ({
                                 />
                             )}
                             {options.length === 0 && query !== "" ? (
-                                <EmptyResults isLoading={false} />
+                                oldOptions?.map((option) => (
+                                    <ComboboxOption
+                                        setOpen={setOpen}
+                                        key={option.id}
+                                        item={option}
+                                    />
+                                ))
                             ) : (
                                 options.map((option) => (
                                     <ComboboxOption

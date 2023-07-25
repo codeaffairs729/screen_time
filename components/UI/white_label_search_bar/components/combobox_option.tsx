@@ -7,7 +7,7 @@ export interface Option {
     name: string;
 }
 
-const ComboboxOption = ({ item, setOpen }: { item: Option, setOpen: any }) => {
+const ComboboxOption = ({ item, setOpen, key }: { item: Option, setOpen: any, key:any }) => {
     return (
         <Combobox.Option
             onClick={() => setOpen(false)}
@@ -16,6 +16,7 @@ const ComboboxOption = ({ item, setOpen }: { item: Option, setOpen: any }) => {
                 }`
             }
             value={item}
+            key={key}
         >
             {({ selected, active }) => (
                 <>
