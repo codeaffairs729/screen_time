@@ -55,7 +55,7 @@ const ContactUs = () => {
                     </div>
                     <TextField
                         className=" -mt-6 sm:-mt-8 rounded-xl !bg-transparent"
-                        textfieldClassName="!bg-white "
+                        textfieldClassName="!bg-white !rounded-full "
                         formControl={{
                             control: vm.form.control,
                             name: "name",
@@ -85,7 +85,7 @@ const ContactUs = () => {
                     </div>
                     <TextField
                         className=" sm:-mt-2 rounded-xl !bg-transparent "
-                        textfieldClassName="!bg-white"
+                        textfieldClassName="!bg-white !rounded-full"
                         formControl={{
                             control: vm.form.control,
                             name: "email",
@@ -112,7 +112,7 @@ const ContactUs = () => {
                     </div>
                     <TextField
                         className=" !-mt-2 sm:-mt-8 rounded-xl !bg-transparent "
-                        textfieldClassName="!bg-white"
+                        textfieldClassName="!bg-white !rounded-full"
                         placeholder="Enter Message"
                         formControl={{
                             control: vm.form.control,
@@ -132,7 +132,7 @@ const ContactUs = () => {
                     <div className=" text-red-600">{formError}</div>
                     <PrimaryBtn
                         label="Send"
-                        className="bg-dtech-new-main-light hover:bg-[#6DCDCB] hover:text-black active:bg-dtech-main-dark active:text-white active:animate-ping max-w-[120px] my-4 !p-5 "
+                        className="bg-dtech-new-main-light  !rounded-full hover:bg-[#6DCDCB] hover:text-black active:bg-dtech-main-dark active:text-white active:animate-ping max-w-[120px] my-4 !p-5 "
                         isLoading={vm.isSendingMail}
                         onClick={async () => {
                             const validated = await vm.form.trigger()

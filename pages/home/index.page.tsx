@@ -164,7 +164,7 @@ const HomePage = () => {
                                 query: { q: option.value },
                             });
                         }}
-                        className="  focus-within:ring-2 focus-within:ring-[#FDD522] border-2  focus-within:border-black focus-within:border-2 !bg-white sm:h-10 h-8 sm:w-[70%]"
+                        className=" rounded-full  focus-within:ring-2 focus-within:ring-[#FDD522] border-2  focus-within:border-black focus-within:border-2 !bg-white sm:h-10 h-8 sm:w-[70%]"
                     />
                 </div>
             </div>

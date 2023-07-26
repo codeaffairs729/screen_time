@@ -4,8 +4,8 @@ import Resources from "./resources/resources";
 import Link from "next/link"
 const Footer = () => {
     return (
-        <div className=" z-20" style={{
-            background: "linear-gradient(to bottom, #B585B770, #6DCDCB59)"
+        <div className=" z-20 bg-[#A6A6A6]" style={{
+            // background: "linear-gradient(to bottom, #B585B770, #6DCDCB59)"
         }}>
             <div className=" sm:py-6 sm:px-[10%]">
                 <div className="flex flex-col sm:flex-row sm:px-[10%] px-6 bg-white ">
