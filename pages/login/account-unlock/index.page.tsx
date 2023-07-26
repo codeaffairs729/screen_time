@@ -59,7 +59,7 @@ const LoginUnlockPage = () => {
                             >
                                 {" "}
                                 <InfoIcon
-                                    tooltipClassName="dtech-dark-teal"
+                                    tooltipClassName="bg-dtech-dark-teal"
                                     iconClasses="text-[#333333]  -ml-24 sm:-ml-28"
                                     title="Enter your email ID. If logging in as an organisation admin, enter your organisation email ID."
                                 />

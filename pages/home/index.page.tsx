@@ -93,13 +93,13 @@ const HomePage = () => {
 
             <div className="sm:mt-4  flex flex-row px-6 sm:px-[10%] py-3 bg-dtech-middle-grey sm:bg-white z-10">
                 <div>
-                    <div className=" bg-dtech-new-main-light text-white font-semibold sm:mt-0 sm:px-4 px-6 py-1 sm:py-0 rounded-md">
+                    <div className=" bg-dtech-new-main-light text-white font-semibold sm:mt-0 px-4 py-1 sm:py-0 rounded-md">
                         BETA
                     </div>
                 </div>
                 <div className="text-xs sm:text-sm flex flex-col sm:flex-row ml-6 sm:mt-0 ">
                     <div className=" ">This is a new service.&nbsp;</div>
-                    <div className=" flex flex-row">
+                    <div className="">
                         Click to&nbsp;
                         <a
                             target="_blank"
