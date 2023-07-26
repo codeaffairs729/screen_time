@@ -43,7 +43,7 @@ const Insights = ({ isMobile }: { isMobile: boolean }) => {
         <div className="flex flex-col px-6 sm:pl-[10%] mt-6 sm:mt-16">
             <div className="flex flex-row sm:items-center justify-between sm:justify-start">
                 <div className=" flex flex-row">
-                    <div className="font-bold sm:text-xl text-md">Insights</div>
+                    <div className="font-bold sm:text-xl text-md text-dtech-main-dark">Insights</div>
                 </div>
             </div>
             <div className=" flex flex-row p-4 text-dtech-new-main-light text-md sm:text-xl font-bold">
@@ -52,7 +52,7 @@ const Insights = ({ isMobile }: { isMobile: boolean }) => {
                 <InsightCard label="Metadata quality" tooltip="Average quality of dataset metadata based on the EU Metadata Quality Assessment method" isMobile={isMobile} metrics={metrics?.quality} insightIcon="/images/insight_provider.svg" />
             </div>
             <div className="">
-                {showScroll&&<button
+                {showScroll && <button
                     className={` fixed z-30 bottom-12 right-4 cursor-pointer p-2  transition-opacity  flex text-dtech-main-dark flex-row items-center text-sm whitespace-nowrap px-8 underline back-to-top-button  ${isVisible ? 'visible' : ''}`}
                     onClick={scrollToTop}
                 >
