@@ -7,6 +7,8 @@ import { VscTriangleDown } from "react-icons/vsc";
 import isURL from "validator/lib/isURL";
 import InfoIcon from "./icons/info_icon";
 import ReactTooltip from 'react-tooltip';
+import { v4 as uuidv4 } from "uuid";
+
 function isImageString(image: string) {
     const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.svg', '.webp'];
     const lowerCaseStr = image.toLowerCase();
@@ -201,38 +203,55 @@ const LinkTag = React.forwardRef(
             isHovered
         }: { link?: string; className?: string; label: string, isAuthRequired: boolean, isLoggedIn: boolean, children: ReactNode, isHovered: boolean },
         ref: any
-    ) => (<div className=" w-full">
-        {isAuthRequired && !isLoggedIn
-            ?
-            <div data-tip="Please login to access this"
-                ref={ref}
-                className={clsx(
-                    " px-2.5 py-2 text-sm w-full text-left boder-b-1 shadow-dtech-dark-grey text-dtech-dark-grey cursor-pointer flex flex-row items-center",
-                    className
-                )}
-            >
-
-
-                <div>{children}</div>
-                <div>{label}</div>
-                <ReactTooltip effect="solid" className=" font-bold !bg-dtech-dark-teal" />
-            </div> :
-            <Link href={link || "#"} >
-                <span
+    ) => {
+        const tooltipId = `dtechtive-info-tooltip-${uuidv4()}`;
+        return <div className=" w-full">
+            {isAuthRequired && !isLoggedIn
+                ?
+                <div data-tip="Please login to access this" data-for={tooltipId}
                     ref={ref}
                     className={clsx(
                         " px-2.5 py-2 text-sm w-full text-left boder-b-1 shadow-dtech-dark-grey text-dtech-dark-grey cursor-pointer flex flex-row items-center",
                         className
                     )}
                 >
+
+
                     <div>{children}</div>
                     <div>{label}</div>
-                </span>
-            </Link>
-        }
-        <ReactTooltip effect="solid" />
-    </div>
-    )
+                    <ReactTooltip overridePosition={({ left, top }, _e, _t, node) => {
+                        return {
+                            top,
+                            left:
+                                typeof node === "string" ? left : Math.max(left, 0),
+                        };
+                    }} className=" font-bold !bg-dtech-dark-teal" />
+                </div> :
+                <Link href={link || "#"} >
+                    <span
+                        ref={ref}
+                        className={clsx(
+                            " px-2.5 py-2 text-sm w-full text-left boder-b-1 shadow-dtech-dark-grey text-dtech-dark-grey cursor-pointer flex flex-row items-center",
+                            className
+                        )}
+                    >
+                        <div>{children}</div>
+                        <div>{label}</div>
+                    </span>
+                </Link>
+            }
+            <ReactTooltip  id={tooltipId}
+                className="!bg-dtech-dark-teal"
+                overridePosition={({ left, top }, _e, _t, node) => {
+                    return {
+                        top,
+                        left:
+                            typeof node === "string" ? left : Math.max(left, 0),
+                    };
+                }}
+            />
+        </div>
+    }
 );
 LinkTag.displayName = "LinkTag";
 
