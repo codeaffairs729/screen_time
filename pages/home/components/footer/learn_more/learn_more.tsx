@@ -9,7 +9,8 @@ const LearnMoreObjects = [
     {
         label: "Data Source Registration",
         link: "/register-data-source",
-        target: false
+        target: false,
+        isAuthRequired:true
     },
     // {
     //     label: "Data Provider",

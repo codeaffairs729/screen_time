@@ -51,13 +51,14 @@ const CardComponent = ({ dataObjects, isMobile }: { dataObjects: RecommendationI
             infinite={false}
             responsive={true}
         >{dataObjects.map((item: RecommendationItem, index: any) => {
-            const imageText=item?.title
+
+            const imageText = item?.title
                 ?.split(" ")
                 .map((word) => word[0])
                 .join("")
             return <Link href={`/organisation/${item.id}`} key={index}>
                 <div className="flex flex-col relative max-w-[290px] p-2 sm:p-4" key={index}>
-                    <div className=' border-b-2 max-h-28 overflow-hidden  h-28 flex items-center justify-center'>
+                    <div className=' border-b-2 max-h-28 overflow-hidden  h-28 flex items-center justify-center bg-gray-100'>
                         {item.recommended && isMobile && <div className=" absolute ml-2 sm:hidden p-2 bg-white z-50"><img src="/images/icons/recommended.svg" /></div>}
                         {isMobile && <div className="absolute top-2 ml-2 p-2 !bg-white z-50 left-28"><img src="images/icons/curved_arrow.svg" /></div>}
                         {item.imageUrl ? <div className=''> <img src={item?.imageUrl} className=' max-w-[100%] max-h-[100%] block' /></div> : <div className='flex items-center justify-center bg-inherit  min-h-[100%] text-[#EBEBEB] text-5xl font-bold'> {imageText}</div>}
