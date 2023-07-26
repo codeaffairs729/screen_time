@@ -38,7 +38,7 @@ const HelpComponent = ({ item, index }: { item: any, index: any }) => {
                     </ul>
                 </Transition>
                 <div
-                    className="font-bold hover:bg-[#6DCDCB] hover:text-black  active:bg-dtech-main-dark active:text-white focus:bg-dtech-main-dark focus:text-white   bg-dtech-new-main-light  text-dtech-main-light w-fit  text-sm sm:text-lg font-sans sm:mt-8 sm:p-3 p-1 mt-4 cursor-pointer"
+                    className="font-semibold text-dtech-new-main-light hover:bg-[#6DCDCB] hover:text-black  active:bg-dtech-main-dark active:text-white focus:bg-dtech-main-dark focus:text-white border-dtech-new-main-light border-2  w-fit  text-sm sm:text-lg sm:mt-8 sm:p-3 p-1 mt-4 cursor-pointer rounded-full"
                     onClick={() => setShowDesc(!showDesc)}
                 >
                     {
