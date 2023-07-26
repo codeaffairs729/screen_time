@@ -27,7 +27,6 @@ const OrganizationSearchVM = () => {
     const {
         query: { q },
     } = router;
-
     const [pageSize, setPageSize] = useState(20); // number of table in page
     const [currentPageNo, setCurrentPageNo] = useState<number>(
         router.query.page ? parseInt(router.query.page as string) : 1
@@ -76,7 +75,7 @@ const OrganizationSearchVM = () => {
     const { data, error: organisationError }: any = useSWR(
         q
             ? `/v1/data_sources/?search_query=${q}&page_size=${pageSize}&page_num=${currentPageNo}${queryParams}`
-            : null,
+            : `/v1/data_sources/?search_query=&page_size=${pageSize}&page_num=${currentPageNo}${queryParams}`,
         (url: string) => {
             Http.get(url)
                 .then((res: any) => {

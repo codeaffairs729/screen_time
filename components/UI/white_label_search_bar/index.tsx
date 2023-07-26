@@ -109,11 +109,11 @@ const NewSearchBar = ({
     return (
         <div className={clsx("flex flex-row", className)}>
             <Combobox value={selected} onChange={setSelected} nullable>
-                <div className="relative w-full h-full">
-                    <div className="relative flex items-center w-full h-full  cursor-default  bg-white text-left focus-within:outline-none sm:text-sm">
+                <div className="relative w-full h-full ">
+                    <div className="relative flex items-center w-full h-full  cursor-default  text-left focus-within:outline-none sm:text-sm">
                         <Combobox.Input
                             placeholder="Search"
-                            className="w-full max-h-[99%] border-none px-2 align-middle text-gray-900 h-full focus:ring-0 text-[19px] leading-[22px]"
+                            className="w-full  !rounded-l-full max-h-[99%] border-none px-2 align-middle text-gray-900 h-full focus:ring-0 text-[19px] leading-[22px]"
                             onFocus={() =>
                                 (openAutoCompleteBtn.current as any)?.click()
                             }
@@ -172,10 +172,10 @@ const NewSearchBar = ({
                     </Transition>
                 </div>
                 <div className="h-3/4 w-[1px] mx-3 my-[4px] bg-[#333333]"></div>
-            <SearchTypeSelect />
+                <SearchTypeSelect />
             </Combobox>
-            <div className="w-14 bg-dtech-new-main-light px-1">
-            <SearchIcon isLoading={false} />
+            <div className="w-14 text-dtech-main-dark px-1">
+                <SearchIcon isLoading={false} />
             </div>
 
         </div>

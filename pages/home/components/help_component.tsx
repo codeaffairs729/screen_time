@@ -6,7 +6,7 @@ import { Transition } from '@headlessui/react';
 const HelpComponent = ({ item, index }: { item: any, index: any }) => {
     const [showDesc, setShowDesc] = useState(false);
     return (<div className=" sm:px-[10%]">
-        <div key={item.label + index} className={clsx("flex flex-row justify-center px-6 py-4 sm:px-0 ", index % 2 != 0 ? "flex-row-reverse" : " bg-dtech-light-grey")}>
+        <div key={item.label + index} className={clsx("flex flex-row justify-center px-6 py-4 sm:px-0 ", index % 2 != 0 ? "flex-row-reverse" : " bg-[#A6A6A6]")}>
             <div className={clsx("w-1/2 sm:w-[50%] flex max-h-[108px] sm:max-h-full", showDesc && " items-start sm:items-center")}>
                 <img src={item.img} />
             </div>

@@ -17,7 +17,7 @@ const DiscoverByDataProviders = ({ isMobile, recommendations }: { isMobile: bool
                         />
                     </div>
                 </div>
-                <div className="text-sm text-dtech-new-main-light hover:bg-[#D9EFFC] focus-within:bg-[#FDD522] focus-within:border-b-2 focus-within:border-black active:bg-[#FDD522] focus:bg-[#FDD522]"><Link href={"/"}>(View All)</Link></div>
+                <div className="text-sm text-dtech-new-main-light hover:bg-[#D9EFFC] focus-within:bg-[#FDD522] focus-within:border-b-2 focus-within:border-black active:bg-[#FDD522] focus:bg-[#FDD522]"><Link href={"/search/organisation?page=1"}>(View All)</Link></div>
             </div>
             <CardComponent dataObjects={recommendations} isMobile={isMobile} />
         </div>
