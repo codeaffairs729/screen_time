@@ -102,6 +102,8 @@ const HomePage = () => {
                     <div className=" flex flex-row">
                         Click to&nbsp;
                         <a
+                            target="_blank"
+                            rel="noopener noreferrer"
                             href="https://f7xcuekc9xt.typeform.com/to/ff4rGkXc"
                             className="underline text-dtech-main-dark "
                         >
@@ -109,6 +111,8 @@ const HomePage = () => {
                         </a>
                         &nbsp;or
                         <a
+                            target="_blank"
+                            rel="noopener noreferrer"
                             href="https://f7xcuekc9xt.typeform.com/to/Zpryygkm"
                             className="underline text-dtech-main-dark ml-1"
                         >
