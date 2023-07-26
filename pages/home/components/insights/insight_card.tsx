@@ -9,14 +9,13 @@ const InsightCard = ({ label, tooltip, metrics, isMobile, insightIcon }: { label
                 <div className=" sm:text-2xl text-lg"> {label} </div>
                 <InfoIcon
                     tooltipClassName="w-60 !bg-[#C5E8E7] !text-black"
-                    iconClasses="!text-dtech-new-main-light"
-                    className=" w-10 "
+                    iconClasses=" text-dtech-new-main-light ml-1  mr-5"
                     title={tooltip}
                 />
             </div>
             {label === "Metadata quality" ?
                 <div className="flex flex-col justify-center items-center sm:px-16 sm:py-8 space-y-2 ">
-                    <div><NumberAnimation targetNumber={Math.floor(Math.ceil((metrics || 0) * 2) / 2)} duration={2000}/></div>
+                    <div><NumberAnimation targetNumber={Math.floor(Math.ceil((metrics || 0) * 2) / 2)} duration={2000} /></div>
                     <StarRating
                         starClassName={"text-dtech-new-main-light sm:h-6 sm:w-6"}
                         rating={Math.floor(Math.ceil((metrics || 0) * 2) / 2)}
