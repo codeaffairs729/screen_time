@@ -13,7 +13,7 @@ const DiscoverByDataProviders = ({ isMobile, recommendations }: { isMobile: bool
                         <InfoIcon
                             tooltipClassName="w-60 !bg-[#C5E8E7] !text-black"
                             iconClasses=" text-dtech-new-main-light ml-1  mr-5"
-                            title="Datasets aggregated by data providers"
+                            title="Datasets aggregated by Data Hosts"
                         />
                     </div>
                 </div>

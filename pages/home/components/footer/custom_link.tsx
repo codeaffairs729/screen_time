@@ -6,7 +6,7 @@ const CustomLink = ({ item }: any) => {
             {
                 item.target
                     ?
-                    <a target="_blank" rel="noreferrer" href={item.link}> {item.label}</a>
+                    <a target="_blank" rel="noopener noreferrer" href={item.link}> {item.label}</a>
                     :
                     <Link href={item.link}>{item.label}</Link>
             }
