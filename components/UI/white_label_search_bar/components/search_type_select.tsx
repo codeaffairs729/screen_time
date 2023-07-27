@@ -66,7 +66,7 @@ const SearchTypeSelect = () => {
                     <Listbox.Button
                         onMouseEnter={handleMouseEnter}
                         onMouseLeave={handleMouseLeave} className="relative cursor-default pl-0 pr-10 text-right focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
-                        <span className="block truncate text-dtech-new-main-light font-bold sm:text-lg text-sm">{selected.label}</span>
+                        <span className="block truncate text-black font-bold sm:text-lg text-sm">{selected.label}</span>
                         <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                             <img className=" h-3" src="/images/icons/arrows/arrow_down.svg"/>
                         </span>
