@@ -30,10 +30,12 @@ const ComboboxOption = ({ item, setOpen, key, onDelete }: {
                     <span
                         className={` flex flex-row space-x-2 truncate  ${selected ? "font-medium" : "font-normal"
                             }`}
-                    ><img src='/images/icons/history.svg'></img>
+                    >
+                        {/* uncomment line to show history icon
+                        <img src='/images/icons/history.svg'></img> */}
                         <div className=" flex items-end w-full">
                             {item.name}
-                            {active && <button
+                            {/* {active && <button
                                 className="w-full flex justify-end"
                             >
                                 <RxCross1
@@ -42,7 +44,7 @@ const ComboboxOption = ({ item, setOpen, key, onDelete }: {
                                     onClick={handleDeleteClick}
                                     size={20}
                                 />
-                            </button>}
+                            </button>} */}
                         </div>
                     </span>
                     {selected ? (
