@@ -1,5 +1,6 @@
 import { Combobox } from "@headlessui/react";
 import { BsCheck } from "react-icons/bs";
+import { RxCross1 } from "react-icons/rx";
 
 
 export interface Option {
@@ -7,12 +8,18 @@ export interface Option {
     name: string;
 }
 
-const ComboboxOption = ({ item, setOpen, key }: { item: Option, setOpen: any, key:any }) => {
+const ComboboxOption = ({ item, setOpen, key, onDelete }: {
+    item: Option, setOpen: any, key: any, onDelete: (id: number) => void;
+}) => {
+    const handleDeleteClick = (event: any) => {
+        event.stopPropagation();
+        onDelete(item.id);
+    };
     return (
         <Combobox.Option
             onClick={() => setOpen(false)}
             className={({ active }) =>
-                `relative cursor-default select-none py-2 pl-10 pr-4 ${active ? "bg-dtech-main-light text-dtech-dark-grey" : "text-gray-900"
+                `relative cursor-default select-none py-2 px-4 ${active ? " bg-[#D9EFFC] text-dtech-dark-grey" : "text-gray-900"
                 }`
             }
             value={item}
@@ -21,10 +28,22 @@ const ComboboxOption = ({ item, setOpen, key }: { item: Option, setOpen: any, ke
             {({ selected, active }) => (
                 <>
                     <span
-                        className={`block truncate ${selected ? "font-medium" : "font-normal"
+                        className={` flex flex-row space-x-2 truncate  ${selected ? "font-medium" : "font-normal"
                             }`}
-                    >
-                        {item.name}
+                    ><img src='/images/icons/history.svg'></img>
+                        <div className=" flex items-end w-full">
+                            {item.name}
+                            {active && <button
+                                className="w-full flex justify-end"
+                            >
+                                <RxCross1
+                                    title="Delete"
+                                    className=" cursor-pointer"
+                                    onClick={handleDeleteClick}
+                                    size={20}
+                                />
+                            </button>}
+                        </div>
                     </span>
                     {selected ? (
                         <span

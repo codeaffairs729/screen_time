@@ -28,7 +28,7 @@ const NewSearchBar = ({
     const [open, setOpen] = useState(false)
     const [oldOptions, setOldOptions] = useState<Option[]>([]);
     const openAutoCompleteBtn = useRef(null);
-
+    
     const searchType = useSelector((state: RootState) => state.search.type);
     const {
         data: options,
@@ -36,6 +36,7 @@ const NewSearchBar = ({
         isLoading,
         execute: executeLodAutocomplete,
     } = useHttpCall<Option[]>([]);
+    const [newOptions, setNewOptions] = useState<Option[]>(options);
 
     // Debounced call to api to fetch autocomplete results
     const lodAutocomplete = useMemo(
@@ -106,21 +107,33 @@ const NewSearchBar = ({
             setQuery(q as string);
         }
     }, [q]);
+    const handleDeleteOption = (id:number) => {
+        // Remove the selected option from the search history
+        if (id === 0) {
+            setQuery("")
+        }
+        setNewOptions((prevOptions) =>prevOptions.filter((option) => option.id !== id));
+    };
+    useEffect(() => {
+        setNewOptions(options)
+    },[options])
+    
     return (
-        <div className={clsx("flex flex-row", className)}>
+        <div className={clsx("flex ", className,`${((open&&newOptions.length>0)||isLoading)&&" !rounded-b-none rounded-t-3xl"}`)}>
             <Combobox value={selected} onChange={setSelected} nullable>
-                <div className="relative w-full h-full ">
+                <div className="flex flex-row w-full h-full relative">
                     <div className="relative flex items-center w-full h-full  cursor-default  text-left focus-within:outline-none sm:text-sm">
                         <Combobox.Input
                             placeholder="Search"
-                            className="w-full  !rounded-l-full max-h-[99%] border-none px-2 align-middle text-gray-900 h-full focus:ring-0 text-[19px] leading-[22px]"
+                            className="w-full !rounded-l-full max-h-[99%] border-none px-4 align-middle text-gray-900 h-full focus:ring-0 text-[19px] leading-[22px]"
                             onFocus={() =>
                                 (openAutoCompleteBtn.current as any)?.click()
                             }
                             displayValue={(option: Option) => query}
                             value={query}
                             onChange={(event) => {
-                                setOldOptions(options);
+                                setOpen(true)
+                                setOldOptions(newOptions);
                                 setQuery(event.target.value)
                             }}
                             onClick={(e) => {
@@ -140,7 +153,7 @@ const NewSearchBar = ({
                         leaveFrom="opacity-100"
                         leaveTo="opacity-0"
                     >
-                        <Combobox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm z-20" ref={myRef}>
+                        <Combobox.Options className="absolute mt-8 sm:mt-10 max-h-60 w-full rounded-b-3xl scrollable-container overflow-auto bg-white  text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm z-20" ref={myRef}>
                             {query.length > 0 && (
                                 <ComboboxOption
                                     key={query.length}
@@ -149,6 +162,7 @@ const NewSearchBar = ({
                                         id: 0,
                                         name: query,
                                     }}
+                                    onDelete={handleDeleteOption}
                                 />
                             )}
                             {options.length === 0 && query !== "" ? (
@@ -157,26 +171,30 @@ const NewSearchBar = ({
                                         setOpen={setOpen}
                                         key={option.id}
                                         item={option}
+                                        onDelete={handleDeleteOption}
+
                                     />
                                 ))
                             ) : (
-                                options.map((option) => (
+                                    newOptions.map((option) => (
                                     <ComboboxOption
                                         setOpen={setOpen}
                                         key={option.id}
                                         item={option}
+                                        onDelete={handleDeleteOption}
+
                                     />
                                 ))
                             )}
                         </Combobox.Options>
                     </Transition>
-                </div>
-                <div className="h-3/4 w-[1px] mx-3 my-[4px] bg-[#333333]"></div>
+            <div className="  text-dtech-main-dark flex flex-row px-1">
+                <div className="h-3/4 w-[1px] mx-3 my-[4px] bg-[#333333]">&nbsp;</div>
                 <SearchTypeSelect />
-            </Combobox>
-            <div className="w-14 text-dtech-main-dark px-1">
                 <SearchIcon isLoading={false} />
             </div>
+                </div>
+            </Combobox>
 
         </div>
     );

@@ -8,7 +8,7 @@ const InsightCard = ({ label, tooltip, metrics, isMobile, insightIcon }: { label
             <div className=" flex flex-row  sm:px-4 justify-center items-center p-2">
                 <div className=" sm:text-2xl text-md "> {label} </div>
                 <InfoIcon
-                    tooltipClassName="w-60 !bg-[#C5E8E7] !text-black"
+                    tooltipClassName="max-w-sm  !bg-dtech-dark-teal "
                     iconClasses=" text-dtech-new-main-light ml-1"
                     title={tooltip}
                 />
