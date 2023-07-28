@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import clsx from "clsx";
 import Nav from "./components/nav";
-import Footer from "./components/footer";
+// import Footer from "./components/footer";
 import { useEffect, useState } from "react";
 
 import { BsMegaphone } from "react-icons/bs";
@@ -14,6 +14,7 @@ import router from "next/router";
 import { SingleValue } from "react-select";
 import { updateCache } from "store/cache/cache.action";
 import { useDispatch } from "react-redux";
+import Footer from "pages/home/components/footer";
 
 
 const DefaultLayout = ({
@@ -87,7 +88,7 @@ const DefaultLayout = ({
                     />
                     <div className="max-w-site mx-auto w-full">{children}</div>
                     {/* <div className="mt-auto"> */}
-                    <Footer className="mt-8 sm:ml-24" />
+                    <Footer/>
                     {/* </div> */}
                 {/* </SearchVMContext.Provider> */}
             {/* </OrganizationSearchVMContext.Provider> */}

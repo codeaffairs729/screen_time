@@ -40,16 +40,16 @@ const Insights = ({ isMobile }: { isMobile: boolean }) => {
         };
     }, []);
     return (
-        <div className="flex flex-col px-6 sm:pl-[10%] mt-6 sm:mt-16">
+        <div className="flex flex-col px-4 sm:px-[10%] mt-6 sm:mt-16 ">
             <div className="flex flex-row sm:items-center justify-between sm:justify-start">
                 <div className=" flex flex-row">
                     <div className="font-bold sm:text-xl text-md text-dtech-main-dark">Insights</div>
                 </div>
             </div>
-            <div className=" flex flex-row sm:p-4 py-2 text-dtech-new-main-light text-md sm:text-xl font-bold">
-                <InsightCard label="Datasets" tooltip="Total number of datasets discoverable through Dtechtive" isMobile={isMobile} metrics={metrics?.datasets} insightIcon="/images/insight_dataset.svg" />
-                <InsightCard label="Data Providers" tooltip="Total number of data hosts and owners whose datasets are discoverable through Dtechtive" isMobile={isMobile} metrics={{ host: metrics?.host, owner: metrics?.owner }} insightIcon="/images/insight_provider.png" />
-                <InsightCard label="Metadata quality" tooltip="Average quality of dataset metadata based on the EU Metadata Quality Assessment method" isMobile={isMobile} metrics={metrics?.quality} insightIcon="/images/insight_provider.svg" />
+            <div className=" flex flex-row sm:p-4 py-2  text-dtech-new-main-light text-md sm:text-xl space-x-[18px] sm:space-x-1 font-bold">
+                <InsightCard className="sm:py-2 " label="Datasets" tooltip="Total number of datasets discoverable through Dtechtive" isMobile={isMobile} metrics={metrics?.datasets} insightIcon="/images/insight_dataset.svg" />
+                <InsightCard className="sm:py-2" label="Data Providers" tooltip="Total number of data hosts and owners whose datasets are discoverable through Dtechtive" isMobile={isMobile} metrics={{ host: metrics?.host, owner: metrics?.owner }} insightIcon="/images/insight_provider.png" />
+                <InsightCard className="sm:py-2" label="Metadata quality" tooltip="Average quality of dataset metadata based on the EU Metadata Quality Assessment method" isMobile={isMobile} metrics={metrics?.quality} insightIcon="/images/insight_provider.svg" />
             </div>
             <div className="">
                 {showScroll && <button
