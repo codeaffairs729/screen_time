@@ -68,7 +68,7 @@ const Nav = ({
                         )}
                     >
                         <NavItem label="Home" link="/" />
-                        <NavItem label="About" link="/about-us" />
+                        {/* <NavItem label="About" link="/about-us" /> */}
                         {user && (
                             <NavItem
                                 label="Register a data source"
