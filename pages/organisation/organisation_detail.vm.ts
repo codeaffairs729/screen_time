@@ -56,7 +56,7 @@ const OrganisationDetailVM = (
                 return Http.get(
                     `/v5/datasets/by-data-host/${orgUUID}?page_number=1&page_size=${orgDatasetsCount}`,
                     {
-                        baseUrl: process.env.NEXT_PUBLIC_PUBLIC_API_V5_ROOT,
+                        baseUrl: process.env.NEXT_PUBLIC_PUBLIC_API_ROOT,
                         extraHeaders: {
                             "Content-type": "application/json",
                             "x-api-key": process.env.NEXT_PUBLIC_MARK_KEY,
@@ -67,7 +67,7 @@ const OrganisationDetailVM = (
             {
                 postProcess: (res) => {
                     return jsonToOrgDatasets(
-                        res[0]["user_search"][0]["results"]
+                        res["results"]
                     );
                 },
                 onError: (e) => {
@@ -154,7 +154,7 @@ const GetRankedData = ({
             () => {
                 //TODO replace TempUUID with orgUUID when working with orginal providers related data instead of dummy data
                 return Http.get(`/v5/datasets/${orgUUID}/ranked-by/${key}`, {
-                    baseUrl: process.env.NEXT_PUBLIC_PUBLIC_API_V5_ROOT,
+                    baseUrl: process.env.NEXT_PUBLIC_PUBLIC_API_ROOT,
                     extraHeaders: {
                         "Content-type": "application/json",
                         "x-api-key": process.env.NEXT_PUBLIC_MARK_KEY
@@ -164,7 +164,7 @@ const GetRankedData = ({
             {
                 postProcess: (res) => {
                     return jsonToOrgDatasets(
-                        res[0]["user_search"][0]["results"],
+                        res["results"],
                         true,
                         getCountKey()
                     );

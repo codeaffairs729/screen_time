@@ -23,8 +23,8 @@ const FilterFileType = () => {
         //     .map((format) => ({ value: format, label: format, checkbox: false }));
         //   setFilterOptionItems(fileFormats);
         const fileFormats = vm.filterOptions?.file_formats?.map((format:any) => ({
-            value: format,
-            label: format,
+            value: format.value,
+            label: format.count,
             checkbox: false,
         }));
         setFilterOptionItems(fileFormats);

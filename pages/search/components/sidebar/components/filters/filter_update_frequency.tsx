@@ -17,8 +17,8 @@ const FilterUpdateFrequency = () => {
     useEffect(() => {
         console.log(vm.filterOptions)
         const updateFrequency = vm.filterOptions?.update_frequency?.map((format:any) => ({
-            value: format,
-            label: format,
+            value: format.value,
+            label: format.count,
             checkbox: false,
         }));
         setFilterOptionItems(updateFrequency);
