@@ -172,7 +172,7 @@ const SearchVM = () => {
      */
     const { data: datasets, error } = useSWR(
         q
-            ? `/v4/datasets/?search_query=${q}&page_size=${pageSize}&page_num=${currentPageNo}${queryParams}`
+            ? `/v5/datasets/?query=${q}&page_size=${pageSize}&page_num=${currentPageNo}${queryParams}`
             : null,
         (url: string) =>
             Http.get(url, {
@@ -189,7 +189,7 @@ const SearchVM = () => {
                 .then((res) => {
                     setLoading(false);
                     // setCurrentPageNo(res[0]["user_search"][0]["pagenum"]);
-                    const totalRecords = res[0]["user_search"][0]["total"];
+                    const totalRecords = res["total_matches"];
 
                     setTotalPages(
                         totalRecords
@@ -198,7 +198,7 @@ const SearchVM = () => {
                     );
                     setTotalRecords(totalRecords);
                     const resFitlerOptions =
-                        res[0]["user_search"][0]["filter_options"];
+                        res["filter_options"];
                     Object.keys(resFitlerOptions).map((filterOption: any) => {
                         resFitlerOptions[filterOption].sort();
                     });
@@ -213,7 +213,7 @@ const SearchVM = () => {
                         data_hosts: resFitlerOptions["data_hosts"],
                         update_frequency: resFitlerOptions["update_frequency"],
                     });
-                    const datasets = Dataset.fromJsonList(res[0]["user_search"][0]["results"]);
+                    const datasets = Dataset.fromJsonList(res["results"]);
                     const datasetIds = datasets.map((dataset) => dataset.id);
                     if (datasetIds.length) {
                         fectchStats(datasetIds);

@@ -127,7 +127,7 @@ DatasetDetail.getInitialProps = async ({ query, req }: NextPageContext) => {
             authToken = getCookieFromServer(AUTH_TOKEN, req);
         }
         const datasetData = await Http.get(`/v5/datasets/by-dataset-ids?dataset_ids=${datasetId}`, {
-            baseUrl: process.env.NEXT_PUBLIC_PUBLIC_API_V5_ROOT,
+            baseUrl: process.env.NEXT_PUBLIC_PUBLIC_API_ROOT,
             extraHeaders: authToken
                 ? { Authorization: `Bearer ${authToken}` }
                 : {},

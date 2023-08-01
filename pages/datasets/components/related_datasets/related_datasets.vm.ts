@@ -27,7 +27,7 @@ const RelatedDatasetsVM = (dataset: any) => {
                 return Http.get(
                     `/v5/datasets/related-by-domains-and-topics/${dataset?.id}`,
                     {
-                        baseUrl: process.env.NEXT_PUBLIC_PUBLIC_API_V5_ROOT,
+                        baseUrl: process.env.NEXT_PUBLIC_PUBLIC_API_ROOT,
                         extraHeaders: {
                             "Content-type": "application/json",
                             "x-api-key": process.env.NEXT_PUBLIC_MARK_KEY,
@@ -38,7 +38,7 @@ const RelatedDatasetsVM = (dataset: any) => {
             {
                 postProcess: (res) => {
                     const datasets = Dataset.fromJsonList(
-                        res[0]["user_search"][0]["results"]
+                        res["results"]
                             .slice(0, 10)
                             .filter((ds: any) => ds["id"] != dataset?.["id"])
                     );
@@ -71,7 +71,7 @@ const RelatedDatasetsVM = (dataset: any) => {
                 return Http.get(
                     `/v5/datasets/related-by-description/${dataset?.id}`,
                     {
-                        baseUrl: process.env.NEXT_PUBLIC_PUBLIC_API_V5_ROOT,
+                        baseUrl: process.env.NEXT_PUBLIC_PUBLIC_API_ROOT,
                         extraHeaders: {
                             "Content-type": "application/json",
                             "x-api-key": process.env.NEXT_PUBLIC_MARK_KEY,
@@ -82,7 +82,7 @@ const RelatedDatasetsVM = (dataset: any) => {
             {
                 postProcess: (res) => {
                     const datasets = Dataset.fromJsonList(
-                        res[0]["user_search"][0]["results"]
+                        res["results"]
                             .slice(0, 10)
                             .filter((ds: any) => ds["id"] != dataset?.["id"])
                     );
