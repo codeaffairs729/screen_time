@@ -19,7 +19,7 @@ const InsightCard = ({ className, label, tooltip, metrics, isMobile, insightIcon
                     <div><NumberAnimation targetNumber={Math.floor(Math.ceil((metrics || 0) * 2) / 2)} duration={2000} /></div>
                     <StarRating
                         starClassName={"text-dtech-new-main-light sm:h-6 sm:w-6"}
-                        rating={Math.floor(Math.ceil((metrics || 0) * 2) / 2)}
+                        rating={metrics}
                     />
                 </div>
                 :

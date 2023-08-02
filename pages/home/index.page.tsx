@@ -124,7 +124,7 @@ const HomePage = () => {
                 </div>
             </div>
             {/* <CookieConsentForm /> */}
-            <NewNavbar />
+            <NewNavbar showSearchBar={false} showLogo={false}/>
             <div className="flex flex-col z-0 px-6 sm:px-[10%] py-12 sm:bg-transparent sm:bg-white">
                 <div className="flex flex-row">
                     <div>

@@ -15,6 +15,8 @@ import { SingleValue } from "react-select";
 import { updateCache } from "store/cache/cache.action";
 import { useDispatch } from "react-redux";
 import Footer from "pages/home/components/footer";
+import NewNavbar from "./components/newNavbar";
+import NewSearchBar from "components/UI/white_label_search_bar";
 
 
 const DefaultLayout = ({
@@ -33,6 +35,23 @@ const DefaultLayout = ({
     // const vm = SearchVM(page == "dataset");
     // const ovm: any = OrganizationSearchVM(page == "organisation");
     const dispatch = useDispatch();
+    const [isMobile, setIsMobile] = useState(false)
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth < 640); // Adjust the breakpoint as needed
+        };
+
+        // Call handleResize on initial component render
+        handleResize();
+
+        // Add event listener to window resize
+        window.addEventListener("resize", handleResize);
+
+        // Clean up event listener on component unmount
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        };
+    }, []);
     const onSearchChange = (
         type: string,
         option: SingleValue<SearchOption>
@@ -80,12 +99,28 @@ const DefaultLayout = ({
                         </a>
                         .
                     </div>
-                    <Nav
+                    {/* <Nav
                         showSearchBar={showSearchBar}
                         showLogo={showLogo}
                         content={navContent}
                         onSearchChange={onSearchChange}
-                    />
+            /> */}
+            <NewNavbar showSearchBar={true} showLogo={true} />
+            {isMobile &&<div className="flex items-center py-4 mb-4 justify-center">
+            <NewSearchBar
+                onChange={(type: string, option: any) => {
+                    if (!option) return;
+                    const searchType =
+                    type === "dataset" ? "" : type;
+
+                    router.push({
+                        pathname: `/search/${searchType}`,
+                        query: { q: option.value },
+                    });
+                }}
+                className=" rounded-full !bg-white sm:h-10 h-8 w-[90%] border-2 border-black"
+                />
+                </div>}
                     <div className="max-w-site mx-auto w-full">{children}</div>
                     {/* <div className="mt-auto"> */}
                     <Footer/>

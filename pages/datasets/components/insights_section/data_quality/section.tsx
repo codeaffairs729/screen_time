@@ -89,8 +89,8 @@ const FileQuality = ({
                 label={""}
                 dataQuality={
                     selectedLabel == 1 && items[item].label == "overallScore"
-                        ? Math.ceil(quality)
-                        : Math.ceil(items[item].rating)
+                        ? quality
+                        : items[item].rating
                 }
                 className="!flex-row ml-0"
                 labelClass="!text-lg text-dtech-dark-grey"

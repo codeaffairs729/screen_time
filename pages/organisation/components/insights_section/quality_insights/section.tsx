@@ -87,7 +87,7 @@ const QualityInsightsBody = () => {
                             ratings={items[key].rating}
                             tooltipTitle={items[key].tooltipTitle}
                             selectedLabel = {selectedLabel}
-                            orgQuality={(!organisation)? 0:Math.ceil(organisation.dataQuality)}
+                            orgQuality={(!organisation)? 0:organisation.dataQuality}
                         />
                     }
                     key={selectedLabel + key}
@@ -143,7 +143,7 @@ const AccordianLabel = ({
     tooltipTitle: string;
     selectedLabel: number;
     orgQuality: number;
-}) => {
+    }) => {
     return (
         <MetaRating
             label={label}
@@ -197,7 +197,8 @@ const getLabel = (title: string) => {
 };
 
 const getTableData = (key: string, datasets: any) =>
-    datasets?.map((dataset: any, index: number) => {
+{
+    if (key === "overallScore") return datasets?.map((dataset: any, index: number) => {
         const datasetCell = (
             <DisplayDataset
                 id={dataset?.id}
@@ -209,6 +210,29 @@ const getTableData = (key: string, datasets: any) =>
 
         return [dataset?.rating, datasetCell];
     });
+    else {
+        return datasets?.map((dataset: any, index: number) => {
+            let rating;
+            if (dataset.factorWiseRating == 0) {
+                rating=0
+            }
+            else {
+                rating=dataset.factorWiseRating[key]
+            }
+
+            const datasetCell = (
+                <DisplayDataset
+                    id={dataset?.id}
+                    key={dataset?.id}
+                    title={dataset?.title ? dataset?.title : "NA"}
+                    description={dataset?.description ? dataset?.description : "NA"}
+                />
+            );
+
+            return [rating, datasetCell];
+        });
+    }
+}
 
 const getRating = (ratings: any, index: any) => {
     let rating;

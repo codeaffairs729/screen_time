@@ -4,9 +4,10 @@ import { useSelector } from "react-redux";
 import AuthService from "services/auth.service";
 import { usereventLogout } from "services/usermetrics.service";
 import { RootState } from "store";
-
+import {useRouter} from "next/router"
 const NewNavMenuDropdown = ({isLoggedIn=false}:{isLoggedIn:boolean}) => {
     const [isMobile, setIsMobile] = useState(false)
+    const router =useRouter()
     const menuItems =
         [
             { label: "Data Source Registration", link: "/register-data-source", imagePath: "/images/icons/data_source.svg", imagePathOnHover: "/images/icons/transparent_data_source.svg", isAuthRequired:true },
@@ -36,7 +37,7 @@ const NewNavMenuDropdown = ({isLoggedIn=false}:{isLoggedIn:boolean}) => {
             label="Menu"
             labelClasses=" hidden sm:block mt-[1px]"
             itemsClasses=" hover:bg-dtech-main-dark hover:text-white "
-            dropDownImage={isMobile ? "/images/icons/profile/menu_mobile.svg" :"/images/icons/profile/menu.svg"}
+            dropDownImage={(isMobile && (router.route == "/")) ? "/images/icons/profile/menu_mobile.svg" :"/images/icons/profile/menu.svg"}
             imageWidth={22}
             isMobile={isMobile}
             isLoggedIn={isLoggedIn}

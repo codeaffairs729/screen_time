@@ -128,7 +128,7 @@ const Report = () => {
                         ratings={items[key].rating}
                         tooltipTitle={items[key].tooltipTitle}
                         selectedLabel = {selectedLabel}
-                        orgQuality={(!organisation)? 0:Math.ceil(organisation.dataQuality)}
+                        orgQuality={(!organisation)? 0:organisation.dataQuality}
                         />
                     }
                     key={selectedLabel + key}
