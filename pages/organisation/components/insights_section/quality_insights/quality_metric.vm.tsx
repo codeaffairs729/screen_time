@@ -139,4 +139,5 @@ const getQualityDatasets = (dataset: any) => ({
     title: dataset["title"],
     description: dataset["description"],
     rating: dataset["ratings"],
+    factorWiseRating: dataset["factor_wise_rating"]
 });

@@ -39,7 +39,7 @@ const OrganisationHead = () => {
                     </div>
                     <div className="flex justify-between items-center">
                         <MetaRating
-                            dataQuality={Math.ceil(dataQuality) ?? 0}
+                            dataQuality={dataQuality}
                             title="Estimated based on the European Commission's Metadata Quality Assessment method."
                         />
                         {buttonTags?.map((tag: string, index: number) => (

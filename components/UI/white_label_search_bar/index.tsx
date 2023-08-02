@@ -28,7 +28,7 @@ const NewSearchBar = ({
     const [open, setOpen] = useState(false)
     const [oldOptions, setOldOptions] = useState<Option[]>([]);
     const openAutoCompleteBtn = useRef(null);
-    
+
     const searchType = useSelector((state: RootState) => state.search.type);
     const {
         data: options,
@@ -107,25 +107,25 @@ const NewSearchBar = ({
             setQuery(q as string);
         }
     }, [q]);
-    const handleDeleteOption = (id:number) => {
+    const handleDeleteOption = (id: number) => {
         // Remove the selected option from the search history
         if (id === 0) {
             setQuery("")
         }
-        setNewOptions((prevOptions) =>prevOptions.filter((option) => option.id !== id));
+        setNewOptions((prevOptions) => prevOptions.filter((option) => option.id !== id));
     };
     useEffect(() => {
         setNewOptions(options)
-    },[options])
-    
+    }, [options])
+
     return (
-        <div className={clsx("flex ", className,`${((open&&newOptions.length>0)||isLoading)&&" !rounded-b-none rounded-t-3xl"}`)}>
+        <div className={clsx("flex ", className, `${((open && newOptions.length > 0) || isLoading) && " !rounded-b-none rounded-t-3xl"}`)}>
             <Combobox value={selected} onChange={setSelected} nullable>
                 <div className="flex flex-row w-full h-full relative">
-                    <div className="relative flex items-center w-full h-full  cursor-default  text-left focus-within:outline-none sm:text-sm">
+                    <div className="relative rounded-full flex items-center w-full h-full  cursor-default  text-left focus-within:outline-none sm:text-sm">
                         <Combobox.Input
                             placeholder="Search"
-                            className="w-full !rounded-l-full max-h-[99%] border-none px-4 align-middle text-gray-900 h-full focus:ring-0 text-[19px] leading-[22px]"
+                            className="w-full ml-2 sm:ml-0 !rounded-l-full max-h-[99%] border-none px-4 align-middle text-gray-900 h-full focus:ring-0 text-[19px] leading-[22px]"
                             onFocus={() =>
                                 (openAutoCompleteBtn.current as any)?.click()
                             }
@@ -176,7 +176,7 @@ const NewSearchBar = ({
                                     />
                                 ))
                             ) : (
-                                    newOptions.map((option) => (
+                                newOptions.map((option) => (
                                     <ComboboxOption
                                         setOpen={setOpen}
                                         key={option.id}
@@ -188,11 +188,11 @@ const NewSearchBar = ({
                             )}
                         </Combobox.Options>
                     </Transition>
-            <div className="  text-dtech-main-dark flex flex-row px-1">
-                <div className="h-3/4 w-[1px] mx-3 my-[4px] bg-[#333333]">&nbsp;</div>
-                <SearchTypeSelect />
-                <SearchIcon isLoading={false} />
-            </div>
+                    <div className="  text-dtech-main-dark flex flex-row px-1">
+                        <div className="h-3/4 w-[1px] mx-3 my-[4px] bg-[#333333]">&nbsp;</div>
+                        <SearchTypeSelect />
+                        {/* <SearchIcon isLoading={false} /> */}
+                    </div>
                 </div>
             </Combobox>
 
