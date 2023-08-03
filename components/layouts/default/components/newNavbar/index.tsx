@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import NewSearchBar from "components/UI/white_label_search_bar";
 import clsx from "clsx";
 
-const NewNavbar = ({ showSearchBar, showLogo }: { showSearchBar: boolean, showLogo: boolean }) => {
+const NewNavbar = ({ showSearchBar, showLogo, handleSearchFocus, handleSearchBlur }: { showSearchBar: boolean, showLogo: boolean, handleSearchFocus:()=>void, handleSearchBlur :()=>void}) => {
     const router = useRouter();
     const [isMobile, setIsMobile] = useState(false)
     const user = useSelector((state: RootState) => state.auth.user);
@@ -30,8 +30,8 @@ const NewNavbar = ({ showSearchBar, showLogo }: { showSearchBar: boolean, showLo
     }, []);
 
     return (
-        <div className={clsx("sm:bg-[#512C71] text-white sm:pr-[10%] px-[5%] py-1 z-10 ", !isMobile && showLogo ? "flex justify-between items-center" : " bg-dtech-main-dark", (router.route === "/" && isMobile) && " bg-transparent", showLogo && !isMobile && "!p-5 !px-8")}>
-            {showLogo && !isMobile && <Link href="/"><img className=" cursor-pointer" src="/images/Dtechtive_Logo_Header.png" /></Link>}
+        <div className={clsx("sm:bg-[#512C71] text-white sm:pr-[10%] h-10 sm:h-full px-[5%] py-1 z-10 ", !isMobile && showLogo ? "flex justify-between items-center" : " bg-dtech-main-dark", (router.route === "/" && isMobile) && " bg-transparent", showLogo && !isMobile && "!p-5 !px-8")}>
+            {showLogo && !isMobile && <Link href="/"><img className=" cursor-pointer" src="/images/Dtechtive_Logo_Header.svg" /></Link>}
             {showSearchBar && !isMobile && <NewSearchBar
                 onChange={(type: string, option: any) => {
                     if (!option) return;
@@ -43,12 +43,15 @@ const NewNavbar = ({ showSearchBar, showLogo }: { showSearchBar: boolean, showLo
                         query: { q: option.value },
                     });
                 }}
-                className=" rounded-full !bg-white sm:h-10 h-8 sm:w-[40%]"
+                
+                className="!border-dtech-light-teal border-[3px] rounded-full !bg-white sm:h-10 h-8 sm:w-[40%]"
+                onFocusSearchBar={handleSearchFocus}
+                onBlurSearchBar={handleSearchBlur}
             />}
             <div>
 
                 {
-                    user || isMobile
+                    user || isMobile || router.asPath!="/"
                         ?
                         <div className="flex flex-col p-2 float-right items-center hover:bg-opacity-60 hover:bg-white">
                             <NewProfileDropdown />
