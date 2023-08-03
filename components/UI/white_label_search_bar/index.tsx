@@ -16,12 +16,17 @@ import ComboboxOption, { Option } from "./components/combobox_option";
 const NewSearchBar = ({
     className = "",
     onChange,
+    onFocusSearchBar,
+    onBlurSearchBar,
+
 }: {
     className?: string;
     onChange: (
         searchType: string,
         searchOption: { label: string; value: string }
     ) => void;
+    onFocusSearchBar?: any;
+    onBlurSearchBar?: any;
 }) => {
     const [selected, setSelected] = useState<Option>();
     const [query, setQuery] = useState("");
@@ -37,7 +42,6 @@ const NewSearchBar = ({
         execute: executeLodAutocomplete,
     } = useHttpCall<Option[]>([]);
     const [newOptions, setNewOptions] = useState<Option[]>(options);
-
     // Debounced call to api to fetch autocomplete results
     const lodAutocomplete = useMemo(
         () =>
@@ -107,6 +111,13 @@ const NewSearchBar = ({
             setQuery(q as string);
         }
     }, [q]);
+    const handleKeyDown = (event:any) => {
+        if (event.key === 'Enter' && query.trim() === '') {
+            // User pressed Enter on an empty input field
+            // Do something here, for example, show an alert or perform any action
+            onChange(searchType, { label: "User input", value: query });
+        }
+    };
     const handleDeleteOption = (id: number) => {
         // Remove the selected option from the search history
         if (id === 0) {
@@ -117,18 +128,23 @@ const NewSearchBar = ({
     useEffect(() => {
         setNewOptions(options)
     }, [options])
-
     return (
-        <div className={clsx("flex ", className, `${((open && newOptions.length > 0) || isLoading) && " !rounded-b-none rounded-t-3xl"}`)}>
+        < div
+            onFocus={()=>onFocusSearchBar()}
+            onBlur={()=>onBlurSearchBar()}
+            className={clsx("flex z-20", className, `${(((query.length > 0 && open) || (newOptions.length > 0 && open)) || isLoading) && " !rounded-b-none border-b-0 rounded-t-3xl"
+                }`)}>
             <Combobox value={selected} onChange={setSelected} nullable>
                 <div className="flex flex-row w-full h-full relative">
-                    <div className="relative rounded-full flex items-center w-full h-full  cursor-default  text-left focus-within:outline-none sm:text-sm">
+                    <div className="relative rounded-full ml-4 flex items-center w-full h-full  cursor-default  text-left focus-within:outline-none sm:text-sm">
                         <Combobox.Input
                             placeholder="Search"
-                            className="w-full ml-2 sm:ml-0 !rounded-l-full max-h-[99%] border-none px-4 align-middle text-gray-900 h-full focus:ring-0 text-[19px] leading-[22px]"
-                            onFocus={() =>
+                            className="w-full shadow-[0, 0, 0, 350px, #212121]  sm:ml-0 !rounded-l-full max-h-[99%] border-none px-1 align-middle text-gray-900 h-full focus:ring-0 text-[19px] leading-[22px]"
+                            onFocus={() => {
                                 (openAutoCompleteBtn.current as any)?.click()
                             }
+                            }
+                            onKeyDown={handleKeyDown}
                             displayValue={(option: Option) => query}
                             value={query}
                             onChange={(event) => {
@@ -153,7 +169,7 @@ const NewSearchBar = ({
                         leaveFrom="opacity-100"
                         leaveTo="opacity-0"
                     >
-                        <Combobox.Options className="absolute mt-8 sm:mt-10 max-h-60 w-full rounded-b-3xl scrollable-container overflow-auto bg-white  text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm z-20" ref={myRef}>
+                        <Combobox.Options className={`absolute mt-8 -ml-[0.4%] border-[3px] border-dtech-light-teal border-t-0 sm:mt-9 max-h-60 w-[100.7%] rounded-b-3xl scrollable-container overflow-auto bg-white  text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm z-20 ${oldOptions.length==0&&newOptions.length==0&&"hidden"}`} ref={myRef}>
                             {query.length > 0 && (
                                 <ComboboxOption
                                     key={query.length}

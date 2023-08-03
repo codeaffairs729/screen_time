@@ -24,7 +24,17 @@ const HomePage = () => {
     const router = useRouter()
     const [isMobile, setIsMobile] = useState<boolean>(false)
     const [learnMore, setLearnMore] = useState<boolean>(false)
+    const [searching, setSearching] = useState(false);
 
+    const handleSearchFocus = () => {
+        console.log('hi')
+        setSearching(true);
+    };
+
+    const handleSearchBlur = () => {
+        console.log('bye')
+        setSearching(false);
+    };
 
 
 
@@ -87,8 +97,9 @@ const HomePage = () => {
     }]
 
     return (
-        <div className="flex flex-col">
-            <img src="/images/home.png" className=" -z-100 absolute hidden sm:block" />
+        <div className={`flex flex-col relative`}>
+            {<div className={searching ? " bg-black absolute opacity-50 h-full w-full z-40" : "hidden"}></div>}
+            <img src="/images/home.png" className=" -z-10 absolute hidden sm:block" />
             <img src="/images/home_for_mobile.png" width={window.innerWidth} className=" -z-100 absolute sm:hidden block" style={{ height: "570px" }} />
 
             <div className="sm:mt-4  flex flex-row px-6 sm:px-[10%] py-3 bg-dtech-middle-grey sm:bg-white z-10">
@@ -124,8 +135,9 @@ const HomePage = () => {
                 </div>
             </div>
             {/* <CookieConsentForm /> */}
-            <NewNavbar showSearchBar={false} showLogo={false}/>
-            <div className="flex flex-col z-0 px-6 sm:px-[10%] py-12 sm:bg-transparent sm:bg-white">
+            
+            <NewNavbar showSearchBar={false} showLogo={false} handleSearchBlur={handleSearchBlur} handleSearchFocus={handleSearchFocus}  />
+            <div className="flex flex-col  px-6 sm:px-[10%] py-12 sm:bg-transparent sm:bg-white">
                 <div className="flex flex-row">
                     <div>
 
@@ -156,7 +168,7 @@ const HomePage = () => {
 
                     </div>
                 </div>
-                <div>
+                <div className={searching?"z-50":"z-30"}>
                     <NewSearchBar
                         onChange={(type: string, option: any) => {
                             if (!option) return;
@@ -168,11 +180,14 @@ const HomePage = () => {
                                 query: { q: option.value },
                             });
                         }}
-                        className=" rounded-full !bg-white sm:h-10 h-8 sm:w-[70%]"
+                        className={` rounded-full !border-[#727272] border-[3px] !bg-white sm:h-10 h-8 sm:w-[70%] ${searching&&"!border-dtech-light-teal"}`}
+                        onFocusSearchBar={handleSearchFocus}
+                        onBlurSearchBar={handleSearchBlur}
                     />
                 </div>
             </div>
             <Insights isMobile={isMobile} />
+            
             <DiscoverByComponent isMobile={isMobile} />
             <div className={clsx(`w-full py-3 sm:py-4 sm:text-3xl overflow-hidden cursor-pointer text-dtech-new-main-light font-bold  mt-14 ${learnMore && "!h-full"} ${!isMobile && "h-[360px]"}`)}
                 style={{

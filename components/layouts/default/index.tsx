@@ -17,6 +17,7 @@ import { useDispatch } from "react-redux";
 import Footer from "pages/home/components/footer";
 import NewNavbar from "./components/newNavbar";
 import NewSearchBar from "components/UI/white_label_search_bar";
+import { opacity } from "html2canvas/dist/types/css/property-descriptors/opacity";
 
 
 const DefaultLayout = ({
@@ -36,6 +37,15 @@ const DefaultLayout = ({
     // const ovm: any = OrganizationSearchVM(page == "organisation");
     const dispatch = useDispatch();
     const [isMobile, setIsMobile] = useState(false)
+    const [searching, setSearching] = useState(false);
+
+    const handleSearchFocus = () => {
+        setSearching(true);
+    };
+
+    const handleSearchBlur = () => {
+        setSearching(false);
+    };
     useEffect(() => {
         const handleResize = () => {
             setIsMobile(window.innerWidth < 640); // Adjust the breakpoint as needed
@@ -66,17 +76,17 @@ const DefaultLayout = ({
             query: { ...router.query, q: option.value, page: 1 }, // page is 1 because its a new search
         });
     };
-    
     return (
         <div
             className={clsx(
-                "w-full min-h-screen mx-auto flex flex-col",
+                "w-full min-h-screen mx-auto flex flex-col relative",
                 className
             )}
         >
+            {<div className={searching?" bg-black absolute opacity-50 h-full w-full  z-20":"hidden"}></div>}
             {/* <OrganizationSearchVMContext.Provider value={ovm}> */}
-                {/* <SearchVMContext.Provider value={vm}> */}
-                    <div className="mx-auto my-2 px-10 py-1 text-gray-800 bg-gray-100 text-sm">
+            {/* <SearchVMContext.Provider value={vm}> */}
+            {/* <div className="mx-auto my-2 px-10 py-1 text-gray-800 bg-gray-100 text-sm">
                         <BsMegaphone
                             className="h-4 w-4 text-gray-700 inline mr-2 mb-1"
                             aria-hidden="true"
@@ -98,34 +108,40 @@ const DefaultLayout = ({
                             Suggest a Feature
                         </a>
                         .
-                    </div>
-                    {/* <Nav
+                    </div> */}
+            {/* <Nav
                         showSearchBar={showSearchBar}
                         showLogo={showLogo}
                         content={navContent}
                         onSearchChange={onSearchChange}
             /> */}
-            <NewNavbar showSearchBar={true} showLogo={true} />
-            {isMobile &&<div className="flex items-center py-4 mb-4 justify-center">
-            <NewSearchBar
-                onChange={(type: string, option: any) => {
-                    if (!option) return;
-                    const searchType =
-                    type === "dataset" ? "" : type;
+            <div className="">
 
-                    router.push({
-                        pathname: `/search/${searchType}`,
-                        query: { q: option.value },
-                    });
-                }}
-                className=" rounded-full !bg-white sm:h-10 h-8 w-[90%] border-2 border-black"
+            <NewNavbar showSearchBar={true} showLogo={true} handleSearchFocus={handleSearchFocus} handleSearchBlur={handleSearchBlur} />
+            </div>
+            {isMobile && <div className="flex items-center py-4 mb-4 justify-center">
+                <NewSearchBar
+                    onChange={(type: string, option: any) => {
+                        if (!option) return;
+                        const searchType =
+                            type === "dataset" ? "" : type;
+
+                        router.push({
+                            pathname: `/search/${searchType}`,
+                            query: { q: option.value },
+                        });
+                    }}
+                    onFocusSearchBar={handleSearchFocus}
+                    onBlurSearchBar={handleSearchBlur}
+
+                    className={`rounded-full !bg-white sm:h-10 h-8 w-[90%] border-2 border-black ${searching && "!border-dtech-light-teal"}`}
                 />
-                </div>}
-                    <div className="max-w-site mx-auto w-full">{children}</div>
-                    {/* <div className="mt-auto"> */}
-                    <Footer/>
-                    {/* </div> */}
-                {/* </SearchVMContext.Provider> */}
+            </div>}
+            <div className="max-w-site mx-auto w-full">{children}</div>
+            {/* <div className="mt-auto"> */}
+            <Footer />
+            {/* </div> */}
+            {/* </SearchVMContext.Provider> */}
             {/* </OrganizationSearchVMContext.Provider> */}
         </div>
     );
