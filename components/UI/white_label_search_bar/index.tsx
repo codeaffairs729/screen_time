@@ -112,10 +112,10 @@ const NewSearchBar = ({
         }
     }, [q]);
     const handleKeyDown = (event:any) => {
-        if (event.key === 'Enter' && query.trim() === '') {
-            // User pressed Enter on an empty input field
-            // Do something here, for example, show an alert or perform any action
-            onChange(searchType, { label: "User input", value: query });
+        if (event.key === 'Enter') {
+             onChange(searchType, { label: "User input", value: query });
+            handleOnBlur()
+            setOpen(false)
         }
     };
     const handleDeleteOption = (id: number) => {
