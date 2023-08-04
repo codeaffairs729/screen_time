@@ -40,6 +40,12 @@ const CardComponent = ({ dataObjects, isMobile }: { dataObjects: RecommendationI
         }
         return str;
     }
+    if (!dataObjects) {
+        return <div className=' flex items-center justify-center'>
+            No Data To Show
+        </div>
+            
+    }
     return (
         <Carousel
             dynamic={true}
