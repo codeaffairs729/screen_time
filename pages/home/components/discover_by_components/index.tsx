@@ -70,19 +70,19 @@ import DiscoverVM from "./discover.vm";
 
 // }
 // ]
-const DiscoverByComponent = ({ isMobile }: { isMobile: boolean }) => {
-    const [providers, setProviders] = useState<any[]>()
-    const discoverVM = DiscoverVM()
-    useEffect(() => {
-        setProviders(discoverVM.fetchedProviders)
-    }, [discoverVM.fetchedProviders])
-    useEffect(() => {
-        discoverVM.fetchProviders()
-    }, []);
+const DiscoverByComponent = ({ isMobile, discoveryData }: { isMobile: boolean, discoveryData:any }) => {
+    // const [providers, setProviders] = useState<any[]>()
+    // const discoverVM = DiscoverVM()
+    // useEffect(() => {
+    //     setProviders(discoverVM.fetchedProviders)
+    // }, [discoverVM.fetchedProviders])
+    // useEffect(() => {
+    //     discoverVM.fetchProviders()
+    // }, []);
     return (
         <div>
             {/* <RecommendedDatasets  isMobile={isMobile} recommendations={recommendations}/> */}
-            {providers&&<DiscoverByDataProviders isMobile={isMobile} recommendations={providers} />}
+            <DiscoverByDataProviders isMobile={isMobile} recommendations={discoveryData.providers} />
             {/* <DiscoverByRegions isMobile={isMobile} recommendations={recommendations} />
             <DiscoverByTopics isMobile={isMobile} recommendations={recommendations} /> */}
         </div>

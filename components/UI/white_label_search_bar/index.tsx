@@ -125,13 +125,24 @@ const NewSearchBar = ({
         }
         setNewOptions((prevOptions) => prevOptions.filter((option) => option.id !== id));
     };
+    const handleOnBlur = () => {
+        onBlurSearchBar()
+    }
     useEffect(() => {
         setNewOptions(options)
     }, [options])
     return (
         < div
-            onFocus={()=>onFocusSearchBar()}
-            onBlur={()=>onBlurSearchBar()}
+            onFocus={(e) => {
+                if (!e.currentTarget.contains(e.relatedTarget)) {
+                    onFocusSearchBar()
+                }
+            }}
+            onBlur={(e) => {
+                if (!e.currentTarget.contains(e.relatedTarget)) {
+                    handleOnBlur()
+                }
+            }}
             className={clsx("flex z-20", className, `${(((query.length > 0 && open) || (newOptions.length > 0 && open)) || isLoading) && " !rounded-b-none border-b-0 rounded-t-3xl"
                 }`)}>
             <Combobox value={selected} onChange={setSelected} nullable>
@@ -163,7 +174,7 @@ const NewSearchBar = ({
                         ></Combobox.Button>
                     </div>
                     <Transition
-                        show={open}
+                        show={open&&(oldOptions.length>0||newOptions.length>0)}
                         as={Fragment}
                         leave="transition ease-in duration-100"
                         leaveFrom="opacity-100"
@@ -179,6 +190,7 @@ const NewSearchBar = ({
                                         name: query,
                                     }}
                                     onDelete={handleDeleteOption}
+                                    handleOnBlur={handleOnBlur}
                                 />
                             )}
                             {options.length === 0 && query !== "" ? (
@@ -188,7 +200,7 @@ const NewSearchBar = ({
                                         key={option.id}
                                         item={option}
                                         onDelete={handleDeleteOption}
-
+                                        handleOnBlur={handleOnBlur}
                                     />
                                 ))
                             ) : (
@@ -198,7 +210,7 @@ const NewSearchBar = ({
                                         key={option.id}
                                         item={option}
                                         onDelete={handleDeleteOption}
-
+                                        handleOnBlur={handleOnBlur}
                                     />
                                 ))
                             )}

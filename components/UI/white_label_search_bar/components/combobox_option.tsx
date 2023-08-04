@@ -8,8 +8,8 @@ export interface Option {
     name: string;
 }
 
-const ComboboxOption = ({ item, setOpen, key, onDelete }: {
-    item: Option, setOpen: any, key: any, onDelete: (id: number) => void;
+const ComboboxOption = ({ item, setOpen, key, onDelete, handleOnBlur }: {
+    item: Option, setOpen: any, key: any, onDelete: (id: number) => void, handleOnBlur:any
 }) => {
     const handleDeleteClick = (event: any) => {
         event.stopPropagation();
@@ -17,7 +17,10 @@ const ComboboxOption = ({ item, setOpen, key, onDelete }: {
     };
     return (
         <Combobox.Option
-            onClick={() => setOpen(false)}
+            onClick={() => {
+                setOpen(false)
+                handleOnBlur(); // Trigger onBlur of the parent div using the ref
+            }}
             className={({ active }) =>
                 `relative cursor-default select-none py-2 px-4 ${active ? " bg-[#D9EFFC] text-dtech-dark-grey" : "text-gray-900"
                 }`
@@ -47,14 +50,14 @@ const ComboboxOption = ({ item, setOpen, key, onDelete }: {
                             </button>} */}
                         </div>
                     </span>
-                    {selected ? (
+                    {/* {selected ? (
                         <span
                             className={`absolute inset-y-0 left-0 flex items-center pl-3 ${active ? "text-white" : "text-teal-600"
                                 }`}
                         >
                             <BsCheck aria-hidden="true" />
                         </span>
-                    ) : null}
+                    ) : null} */}
                 </>
             )}
         </Combobox.Option>

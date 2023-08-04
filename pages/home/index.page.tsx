@@ -19,24 +19,24 @@ import DiscoverByComponent from "./components/discover_by_components";
 import Insights from "pages/home/components/insights";
 import { Transition } from '@headlessui/react';
 import clsx from "clsx";
+import { NextPageContext } from "next";
+import { getCookieFromServer } from "common/utils/cookie.util";
+import Http from "common/http";
+import { AUTH_TOKEN } from "common/constants/cookie.key";
 
-const HomePage = () => {
+const HomePage = ({ home }: { home: any }) => {
     const router = useRouter()
     const [isMobile, setIsMobile] = useState<boolean>(false)
     const [learnMore, setLearnMore] = useState<boolean>(false)
     const [searching, setSearching] = useState(false);
 
     const handleSearchFocus = () => {
-        console.log('hi')
         setSearching(true);
     };
 
     const handleSearchBlur = () => {
-        console.log('bye')
         setSearching(false);
     };
-
-
 
     useEffect(() => {
         const handleResize = () => {
@@ -186,9 +186,9 @@ const HomePage = () => {
                     />
                 </div>
             </div>
-            <Insights isMobile={isMobile} />
+            <Insights isMobile={isMobile} insightMetrics={home.metrics} />
             
-            <DiscoverByComponent isMobile={isMobile} />
+            <DiscoverByComponent isMobile={isMobile} discoveryData={home.discoveryData } />
             <div className={clsx(`w-full py-3 sm:py-4 sm:text-3xl overflow-hidden cursor-pointer text-dtech-new-main-light font-bold  mt-14 ${learnMore && "!h-full"} ${!isMobile && "h-[360px]"}`)}
                 style={{
                     background: "linear-gradient(to right, #CEFFFE, #CEB0D0)"
@@ -238,6 +238,41 @@ const HomePage = () => {
     )
 
 };
+
+HomePage.getInitialProps = async ({
+    query,
+    req,
+}: NextPageContext) => {
+    try {
+        let authToken;
+        if (req?.headers.cookie) {
+            authToken = getCookieFromServer(AUTH_TOKEN, req);
+        }
+        const requestMetrics = Http.get(`/v1/metrics/get_metrics_for_home`, {
+            extraHeaders: authToken
+                ? { Authorization: `Bearer ${authToken}` }
+                : {},
+        });
+
+        const requestProviders = Http.get(`/v1/data_sources/providers_for_homepage?offset=0&count=20`, {
+            extraHeaders: authToken
+                ? { Authorization: `Bearer ${authToken}` }
+                : {},
+        });
+
+        const [metrics, providers] = await Promise.all([requestMetrics, requestProviders]);
+        const home = {
+            metrics: metrics,
+            discoveryData:{byDataProviders:providers}
+        }
+        // const home = HomePage.fromJson(res[0]);
+
+        return { home };
+    } catch (error) {
+        return { home: undefined };
+    }
+};
+
 export default HomePage;
 export interface RecommendationItem {
     title: string;
