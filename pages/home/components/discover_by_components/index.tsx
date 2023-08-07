@@ -70,6 +70,16 @@ import DiscoverVM from "./discover.vm";
 
 // }
 // ]
+const convertToJson = (input_data: any) => {
+    const output_data = input_data.map((item: any) => ({
+        title: item.name,
+        subTitle: null,
+        imageUrl: item.logo_url || null,
+        recommended: false,
+        id: item.uuid
+    }));
+    return output_data
+}
 const DiscoverByComponent = ({ isMobile, discoveryData }: { isMobile: boolean, discoveryData:any }) => {
     // const [providers, setProviders] = useState<any[]>()
     // const discoverVM = DiscoverVM()
@@ -82,7 +92,7 @@ const DiscoverByComponent = ({ isMobile, discoveryData }: { isMobile: boolean, d
     return (
         <div>
             {/* <RecommendedDatasets  isMobile={isMobile} recommendations={recommendations}/> */}
-            <DiscoverByDataProviders isMobile={isMobile} recommendations={discoveryData.providers} />
+            <DiscoverByDataProviders isMobile={isMobile} recommendations={convertToJson(discoveryData.byDataProviders)} />
             {/* <DiscoverByRegions isMobile={isMobile} recommendations={recommendations} />
             <DiscoverByTopics isMobile={isMobile} recommendations={recommendations} /> */}
         </div>
