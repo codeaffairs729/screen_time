@@ -7,26 +7,8 @@ import { QualityMetricVMContext } from "./quality_metric.vm";
 import ErrorAlert from "components/UI/alerts/error_alert";
 import { OrganisationDetailVMContext } from "pages/organisation/organisation_detail.vm";
 // import { Bar } from "react-chartjs-2";
-import {
-    Chart as ChartJS,
-    CategoryScale,
-    LinearScale,
-    BarElement,
-    Title,
-    Tooltip,
-    Legend,
-} from "chart.js";
+
 import { AgChartsReact } from "ag-charts-react";
-
-ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    BarElement,
-    Title,
-    Tooltip,
-    Legend
-);
-
 
 const TABLE_HEADERS = ["Score", "Dataset"];
 
