@@ -126,19 +126,19 @@ const QualityInsightsBody = () => {
                                                 fill:'#3F0068'
 
                                             },
-                                            {
-                                                xKey: 'star',
-                                                yKey: 'starRating',
-                                                // type: 'column', // Bar series
+                                            // {
+                                            //     xKey: 'star',
+                                            //     yKey: 'starRating',
+                                            //     // type: 'column', // Bar series
 
-                                                strokeWidth: 1,
-                                                tooltip: {
-                                                    enabled: true
-                                                },
-                                                stroke: '#3F0068',
-                                                fill: '#3F0068'
+                                            //     strokeWidth: 1,
+                                            //     tooltip: {
+                                            //         enabled: true
+                                            //     },
+                                            //     stroke: '#3F0068',
+                                            //     fill: '#3F0068'
 
-                                            }
+                                            // }
                                             ],
                                             axes: [
                                                 {
