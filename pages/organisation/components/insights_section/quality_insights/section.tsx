@@ -9,6 +9,7 @@ import { OrganisationDetailVMContext } from "pages/organisation/organisation_det
 // import { Bar } from "react-chartjs-2";
 
 import { AgChartsReact } from "ag-charts-react";
+import { roundRatings } from "components/UI/star_rating";
 
 const TABLE_HEADERS = ["Score", "Dataset"];
 
@@ -270,7 +271,7 @@ const getTableData = (key: string, datasets: any) => {
             />
         );
 
-        return [dataset?.rating, datasetCell];
+        return [roundRatings(dataset?.rating), datasetCell];
     });
     else {
         return datasets?.map((dataset: any, index: number) => {
@@ -291,7 +292,7 @@ const getTableData = (key: string, datasets: any) => {
                 />
             );
 
-            return [rating, datasetCell];
+            return [roundRatings(rating), datasetCell];
         });
     }
 }
