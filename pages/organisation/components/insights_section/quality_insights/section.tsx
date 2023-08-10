@@ -144,7 +144,7 @@ const QualityInsightsBody = () => {
                                                     type: 'category',
                                                     position: 'bottom',
                                                     title: {
-                                                        text: 'Star',
+                                                        text: 'Score',
                                                     },
                                                     label: {
                                                         formatter: (params) => {
@@ -157,7 +157,7 @@ const QualityInsightsBody = () => {
                                                     type: 'number',
                                                     position: 'left',
                                                     title: {
-                                                        text: 'Ratings',
+                                                        text: 'Dataset count',
                                                     },
                                                     tick: {
                                                         interval:5
