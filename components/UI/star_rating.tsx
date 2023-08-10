@@ -2,22 +2,6 @@ import Image from "next/image";
 import { BsStar, BsStarHalf, BsStarFill } from "react-icons/bs";
 
 const StarRating = ({ rating, starClassName = "" }: { rating: number, starClassName?: string }) => {
-    function roundRatings(number:number) {
-        const thresholds = [1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5];
-
-        // Find the closest threshold below the number
-        let lowerThreshold = thresholds.reduce((prev, curr) => {
-            return curr <= number ? curr : prev;
-        }, 0);
-
-        // Find the closest threshold above the number
-        let upperThreshold = thresholds.find((threshold) => threshold >= number)||0;
-
-        // Choose the threshold that is closer to the number
-        let closestThreshold = Math.abs(number - lowerThreshold) < Math.abs(number - upperThreshold) ? lowerThreshold : upperThreshold;
-
-        return closestThreshold;
-    }
     let roundedStars=roundRatings(rating)
     const fullStarsNo = Math.floor(roundedStars);
     const fullStars = [...Array(fullStarsNo)].map((_, i) => (
@@ -66,3 +50,20 @@ const Star = ({ type }: { type: string }) => {
 };
 
 export default StarRating;
+
+export function roundRatings(number:number) {
+    const thresholds = [1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5];
+
+    // Find the closest threshold below the number
+    let lowerThreshold = thresholds.reduce((prev, curr) => {
+        return curr <= number ? curr : prev;
+    }, 0);
+
+    // Find the closest threshold above the number
+    let upperThreshold = thresholds.find((threshold) => threshold >= number)||0;
+
+    // Choose the threshold that is closer to the number
+    let closestThreshold = Math.abs(number - lowerThreshold) < Math.abs(number - upperThreshold) ? lowerThreshold : upperThreshold;
+
+    return closestThreshold;
+}
