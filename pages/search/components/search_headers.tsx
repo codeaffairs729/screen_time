@@ -1,6 +1,6 @@
 import RecordsSortBy from "../organisation/components/organization_sortby_field";
 import TotalRecords from "../organisation/components/total_records";
-import Pagination from "components/UI/pagination";
+import Pagination from "components/UI/pagination_for_datasets";
 import SortbyField from "./sortby_field";
 
 type SearchHeadersProps = {
@@ -28,10 +28,11 @@ const SearchHeaders = ({
                 totalRecords={totalRecords}
                 setPageSize={setPageSize}
                 pageSize={pageSize}
+                setPageNumber={setCurrentPageNo}
             />
             <Pagination
-                currentPageNo={currentPageNo}
-                setCurrentPageNo={setCurrentPageNo}
+                currentPage={currentPageNo}
+                setPageNumber={setCurrentPageNo}
                 totalPages={totalPages}
             />
             {recordType == "datasets" ? <SortbyField /> : <RecordsSortBy />}
