@@ -20,12 +20,12 @@ export type Filter = {
     topics?: string[];
     last_updated?: string[];
     file_formats?: string[];
-    data_owners?: string[];
+    data_owner?: string[];
     metadata_quality?: string[];
     sort_by?: string[];
     usage_rights?: string[];
     keywords?: string[];
-    data_hosts?: string[];
+    data_host?: string[];
     update_frequency?: string[];
     start_date?: string[];
     end_date?: string[];
@@ -94,6 +94,9 @@ const SearchVM = () => {
      * Fired when the term on the search input on the search page is changed
      */
     useEffect(() => {
+        resetAllFilters(); 
+    },[router.query.q])
+    useEffect(() => {
         // if (router.pathname === "/search") {
             if (currentPageNo.toString() != router.query?.page) {
                 router.replace({
@@ -112,6 +115,7 @@ const SearchVM = () => {
 
         dispatch(updateCache("last-search-query", option.value));
         setCurrentPageNo(1);
+        resetAllFilters();
         router.push({
             pathname: `/search/${searchType}`,
             query: { ...router.query, q: option.value, page: 1 }, // page is 1 because its a new search
@@ -203,11 +207,11 @@ const SearchVM = () => {
                     setFilterOptions({
                         domains: resFitlerOptions["domains"],
                         file_formats: resFitlerOptions["file_formats"],
-                        data_owners: resFitlerOptions["data_owners"],
+                        data_owner: resFitlerOptions["data_owners"],
                         topics: resFitlerOptions["topics"],
                         usage_rights: resFitlerOptions["usage_rights"],
                         keywords: resFitlerOptions["keywords"],
-                        data_hosts: resFitlerOptions["data_hosts"],
+                        data_host: resFitlerOptions["data_hosts"],
                         update_frequency: resFitlerOptions["update_frequency"],
                     });
                     const datasets = Dataset.fromJsonList(res["results"]);

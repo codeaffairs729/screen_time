@@ -20,7 +20,7 @@ const FilterOwner = () => {
     //   .filter((owner, i, a) => a.indexOf(owner) == i)
     //   .map((owner) => ({ value: owner, label: owner, checkbox: false }));
     // setFilterOptionItems(owners);
-    const owners = vm.filterOptions?.data_owners?.map((owner:any) => ({
+    const owners = vm.filterOptions?.data_owner?.map((owner:any) => ({
       value: owner.value,
       label: owner.count,
       checkbox: false,
@@ -29,7 +29,7 @@ const FilterOwner = () => {
   }, [vm.datasets]);
 
   const { register, fields } = useSearchFilter({
-    name: "data_owners",
+    name: "data_owner",
     filterOptionItems,
   });
 
@@ -47,9 +47,9 @@ const FilterOwner = () => {
       {!vm.isLoading &&
         fields.map((field, i) => (
           <FilterCheckboxField
-            dataSelector="data-owners"
+            dataSelector="data-owner"
             key={field.id}
-            register={register(`data_owners.${i}.checkbox`)}
+            register={register(`data_owner.${i}.checkbox`)}
             label={field.value}
             value={field.value}
             defaultChecked={!!field.checkbox}
