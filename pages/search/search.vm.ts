@@ -87,6 +87,13 @@ const SearchVM = () => {
     }, [activeFilter]);
 
     useEffect(() => {
+        if (parseInt(router.query.page as string)>50) {
+            const updatedPath = router?.asPath.replace(
+                `page=${router.query.page}`,
+                "page=50"
+            );
+            router.push(updatedPath);
+        }
         setCurrentPageNo(parseInt(router.query.page as string) || 1);
     }, [router.query.page]);
 
@@ -191,11 +198,13 @@ const SearchVM = () => {
                     setLoading(false);
                     // setCurrentPageNo(res[0]["user_search"][0]["pagenum"]);
                     const totalRecords = res["total_matches"];
+                    const limit = res["max_hits_limit"];
+                    
 
                     setTotalPages(
-                        totalRecords
+                        totalRecords <= limit
                             ? Math.ceil(totalRecords / pageSize)
-                            : totalRecords
+                            : Math.ceil(limit / pageSize)
                     );
                     setTotalRecords(totalRecords);
                     const resFitlerOptions =

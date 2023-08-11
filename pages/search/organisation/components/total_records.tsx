@@ -17,18 +17,21 @@ const OPTIONS = [
 const TotalRecords = ({
     setPageSize,
     totalRecords,
+    setPageNumber,
     pageSize,
 }: {
     setPageSize: Function;
     totalRecords: number;
+    setPageNumber: Function;
     pageSize: number;
 }) => {
-    const {setLoading } = useContext(OrganizationSearchVMContext)
+    const { setLoading } = useContext(OrganizationSearchVMContext)
     const options = OPTIONS.map((option) => ({
         label: `${option.label}`,
         onClick: () => {
             setPageSize(option.label);
             setLoading(true);
+            setPageNumber(1)
         },
     }));
 
