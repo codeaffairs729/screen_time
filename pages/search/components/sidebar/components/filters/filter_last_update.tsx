@@ -11,9 +11,10 @@ const FilterLastUpdate = () => {
 
   useEffect(() => {
     const filterValues = [
-      { checkbox: false, label: "Past Week", value: "past_week" },
-      { checkbox: false, label: "Past Month", value: "past_month" },
-      { checkbox: false, label: "Past Year", value: "past_year" },
+      { checkbox: false, label: "Past Day", value: "Past day" },
+      { checkbox: false, label: "Past Week", value: "Past 7 days" },
+      { checkbox: false, label: "Past Month", value: "Past 30 days" },
+      { checkbox: false, label: "Past 3 Months", value: "Past 90 days" },
     ]
 
     setFilterOptions(filterValues);

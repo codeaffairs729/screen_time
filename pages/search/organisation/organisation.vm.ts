@@ -11,12 +11,12 @@ export type Filter = {
     topics?: string[];
     last_updated?: string[];
     file_formats?: string[];
-    data_owners?: string[];
+    data_owner?: string[];
     metadata_quality?: string[];
     sort_by?: string[];
     usage_rights?: string[];
     keywords?: string[];
-    data_hosts?: string[];
+    data_host?: string[];
     update_frequency?: string[];
     start_date?: string[];
     end_date?: string[];

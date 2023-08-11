@@ -15,19 +15,18 @@ const FilterDataHost = () => {
     >([]);
 
     useEffect(() => {
-        const dataHost = vm.filterOptions?.data_hosts?.map((format:any) => ({
+        const dataHost = vm.filterOptions?.data_host?.map((format:any) => ({
             value: format.value,
             label: format.count,
             checkbox: false,
         }));
         setFilterOptionItems(dataHost);
     }, [vm.filterOptions]);
-
+    
     const { register, fields } = useSearchFilter({
-        name: "data_hosts",
+        name: "data_host",
         filterOptionItems,
     });
-
     return (
         <FilterSection
             dataSelector="data-hosts-filter-section"
@@ -42,9 +41,9 @@ const FilterDataHost = () => {
             {!vm.isLoading &&
                 fields.map((field, i) => (
                     <FilterCheckboxField
-                        dataSelector="data_hosts"
+                        dataSelector="data_host"
                         key={field.id}
-                        register={register(`data_hosts.${i}.checkbox`)}
+                        register={register(`data_host.${i}.checkbox`)}
                         label={field.value}
                         value={field.value}
                         defaultChecked={!!field.checkbox}
