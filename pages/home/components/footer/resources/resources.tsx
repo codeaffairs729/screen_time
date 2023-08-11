@@ -2,6 +2,11 @@ import Link from "next/link";
 import CustomLink from "../custom_link";
 const Resource = [
     {
+        label: "Newsletter",
+        link: "https://f7xcuekc9xt.typeform.com/to/BTegGr9w",
+        target: true
+    },
+    {
         label: "FAQ's",
         link: "/faq",
         target: false
