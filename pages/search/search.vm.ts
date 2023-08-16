@@ -223,6 +223,7 @@ const SearchVM = () => {
                         data_host: resFitlerOptions["data_hosts"],
                         update_frequency: resFitlerOptions["update_frequency"],
                         last_updated: resFitlerOptions["last_updated"],
+                        metadata_quality:resFitlerOptions["metadata_quality"],
                     });
                     const datasets = Dataset.fromJsonList(res["results"]);
                     const datasetIds = datasets.map((dataset) => dataset.id);

@@ -12,17 +12,22 @@ const QualityFilter = () => {
     const vm = useContext(SearchVMContext);
     const [filterOption, setFilterOptions] = useState<
         FilterOptionItem[] | undefined
-    >([]);
+        >([]);
     useEffect(() => {
-        const filterValues = [
-            { checkbox: false, value: "1", label: "1" },
-            { checkbox: false, value: "2", label: "2" },
-            { checkbox: false, value: "3", label: "3" },
-            { checkbox: false, value: "4", label: "4" },
-            { checkbox: false, value: "5", label: "5" },
-        ];
+        const filterValues = vm.filterOptions?.metadata_quality?.map((format: any) => ({
+            value: format.value,
+            label: format.value,
+            checkbox: false,
+        }));
+        // const filterValues = [
+        //     { checkbox: false, value: "1", label: "1" },
+        //     { checkbox: false, value: "2", label: "2" },
+        //     { checkbox: false, value: "3", label: "3" },
+        //     { checkbox: false, value: "4", label: "4" },
+        //     { checkbox: false, value: "5", label: "5" },
+        // ];
 
-        setFilterOptions(filterValues);
+        setFilterOptions(filterValues?.slice().reverse());
     }, [vm.datasets]);
 
     const { register, fields } = useSearchFilter({
@@ -32,7 +37,7 @@ const QualityFilter = () => {
     return (
         <FilterSection label="Metadata Quality" disable={vm.isLoading}>
             {fields.map((field, i) => (
-                <StarRow key={field.id} stars={i + 1}>
+                <StarRow key={field.id} stars={parseInt(field.value)}>
                     <FilterCheckboxField
                         className="mr-1.5 mb-0.5"
                         key={field.id}
