@@ -222,6 +222,7 @@ const SearchVM = () => {
                         keywords: resFitlerOptions["keywords"],
                         data_host: resFitlerOptions["data_hosts"],
                         update_frequency: resFitlerOptions["update_frequency"],
+                        last_updated: resFitlerOptions["last_updated"],
                     });
                     const datasets = Dataset.fromJsonList(res["results"]);
                     const datasetIds = datasets.map((dataset) => dataset.id);
