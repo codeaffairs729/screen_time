@@ -181,7 +181,10 @@ const SearchVM = () => {
      * Get search results
      * TODO: uriencode searchquery, pagenum and pagesize
      */
-    const { data: datasets, error } = useSWR(`/v5/datasets?query=${q??""}&page_size=${pageSize}&page_number=${currentPageNo}${queryParams}`,
+    const { data: datasets, error } = useSWR(
+        `/v5/datasets?query=${
+            q ?? ""
+        }&page_size=${pageSize}&page_number=${currentPageNo}${queryParams}&dataset_metrics=false`,
         (url: string) =>
             Http.get(url, {
                 baseUrl: `${process.env.NEXT_PUBLIC_PUBLIC_API_ROOT}`,
@@ -199,7 +202,6 @@ const SearchVM = () => {
                     // setCurrentPageNo(res[0]["user_search"][0]["pagenum"]);
                     const totalRecords = res["total_matches"];
                     const limit = res["max_hits_limit"];
-                    
 
                     setTotalPages(
                         totalRecords <= limit
@@ -207,8 +209,7 @@ const SearchVM = () => {
                             : Math.ceil(limit / pageSize)
                     );
                     setTotalRecords(totalRecords);
-                    const resFitlerOptions =
-                        res["filter_options"];
+                    const resFitlerOptions = res["filter_options"];
                     Object.keys(resFitlerOptions).map((filterOption: any) => {
                         resFitlerOptions[filterOption].sort();
                     });
@@ -223,7 +224,7 @@ const SearchVM = () => {
                         data_host: resFitlerOptions["data_hosts"],
                         update_frequency: resFitlerOptions["update_frequency"],
                         last_updated: resFitlerOptions["last_updated"],
-                        metadata_quality:resFitlerOptions["metadata_quality"],
+                        metadata_quality: resFitlerOptions["metadata_quality"],
                     });
                     const datasets = Dataset.fromJsonList(res["results"]);
                     const datasetIds = datasets.map((dataset) => dataset.id);
