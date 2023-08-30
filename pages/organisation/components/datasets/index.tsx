@@ -1,5 +1,5 @@
 import Accordian from "components/UI/accordian";
-import { BsHeartFill, BsFillEyeFill } from "react-icons/bs";
+import { BsHeartFill, BsFillEyeFill, BsChevronRight } from "react-icons/bs";
 import { MdFileDownload } from "react-icons/md";
 import dataset from "public/images/icons/dataset.svg";
 import Table from "../table";
@@ -10,6 +10,7 @@ import Link from "next/link";
 import AllDatasets from "./all_datasets";
 import { OrganisationDetailVMContext } from "pages/organisation/organisation_detail.vm";
 import ErrorAlert from "components/UI/alerts/error_alert";
+import Pagination from "components/UI/pagination_for_datasets";
 
 const DisplayDataset = ({
     id,
@@ -33,16 +34,40 @@ const DisplayDataset = ({
 );
 
 const Datasets = () => {
+    const [currentSlide, setCurrentSlide] = useState(0);
     const {
         organisationRankedDatasets,
         fetchOrganisationRankedDatasets,
         isFetchingOrganisationRankedDatasets,
         error,
     } = useContext(OrganisationDetailVMContext);
+    const {
+        organisationDatasets,
+        incrementOrgDatasetsCount,
+        fetchOrganisationDatasets,
+        isFetchingOrganisationDatasets,
+        orgDatasetsCount,
+        errorOrganisationDatasets,
+        pageNumber,
+        setPageNumber
+    } = useContext(OrganisationDetailVMContext);
 
     useEffect(() => {
+        fetchOrganisationDatasets();
         fetchOrganisationRankedDatasets();
     }, []);
+    const handleDotClick = (index:any) => {
+        setCurrentSlide(index);
+    };
+
+    if (errorOrganisationDatasets || error) {
+        return (
+            <ErrorAlert
+                className="m-12"
+                message="Something went wrong while fetching Organisation Datasets data. Please try again later"
+            />
+        );
+    }
 
     if (error) {
         return (
@@ -51,95 +76,79 @@ const Datasets = () => {
             </div>
         );
     }
-
-    return (
-        <div className="ml-16">
-            <div className="text-sm text-dtech-dark-grey">
-                All the datasets of this organisation are listed here.
+    if (isFetchingOrganisationDatasets) {
+        return (
+            <div className="h-full w-full flex items-center justify-center mt-24">
+                <Loader />
             </div>
-            <div>
-                <AllDatasets />
-                {Object.keys(organisationRankedDatasets).map(
-                    (key: string, index: number) => {
-                        return (
-                            <Accordian
-                                key={index}
-                                label={<ItemCard item={getItem(key)} />}
-                            >
-                                <div className="px-8 pb-4">
-                                    {!isFetchingOrganisationRankedDatasets ? (
-                                        <Table
-                                            tableClass="w-[43rem]"
-                                            // onScrollEnd={importOrgDatasets}
-                                            tableHeaders={["Count", "Dataset"]}
-                                            tableData={getTableData(
-                                                key,
-                                                organisationRankedDatasets[key]
-                                            )}
-                                            tableBodyClasses={""}
-                                            cellPadding={3}
-                                        />
-                                    ) : (
-                                        <div className=" mx-80 my-36">
-                                            <Loader />
-                                        </div>
-                                    )}
-                                </div>
-                            </Accordian>
-                        );
-                    }
-                )}
-            </div>
-        </div>
-    );
-};
-
-const ItemCard = ({ item }: { item: { name: string; icon: ReactNode } }) => {
-    return (
-        <div className="flex items-center jutify-between">
-            {item.icon}
-            <span className="ml-3">{item.name}</span>
-        </div>
-    );
-};
-
-const getTableData = (key: string, datasets: any) =>
-    datasets?.map((dataset: any, index: number) => {
-        const datasetCell = (
-            <DisplayDataset
-                id={dataset?.id}
-                key={dataset?.id}
-                title={dataset?.title}
-                description={dataset?.description}
-            />
-        );
-
-        return [dataset?.count, datasetCell];
-    });
-
-const getItem = (key: string) => {
-    switch (key) {
-        case "downloaded":
-            return {
-                name: "Downloaded",
-                icon: <MdFileDownload className="w-[20px] h-[20px]" />,
-            };
-        case "viewed":
-            return {
-                name: "Viewed",
-                icon: <BsFillEyeFill className="w-[20px] h-[20px]" />,
-            };
-        case "added_to_favourite":
-            return {
-                name: "Added to favourites",
-                icon: <BsHeartFill className="w-[20px] h-[20px]" />,
-            };
-        default:
-            return {
-                name: "All datasets",
-                icon: <Image src={dataset} alt="" height={20} width={20} />,
-            };
+        )
     }
-};
+    const totalPages = Math.ceil(organisationDatasets?.total_matches / orgDatasetsCount)
+    // return <AllDatasets />
+    return (
+        <div className="" key={currentSlide}>
+            <div
+                className="sm:overflow-auto overflow-x-hidden"
+            >
+                <table className=" w-full h-full "
+                    style={{ transform: `translateX(-${currentSlide * 16}%)` }}
+                >
+                    <thead className="">
+                        <tr className="">
+                            <th className="sm:w-[32%] p-2 text-xs border-r-[1px] sm:border-r-0 sm:text-sm w-1/2 text-left  pb-4 min-w-[130px]">All Datasets ({organisationDatasets?.total_matches})</th>
+                            <th className="sm:w-[17%] p-2 text-xs sm:text-sm min-w-[130px] text-center pb-4">Last Updated</th>
+                            <th className="sm:w-[17%] p-2 text-xs sm:text-sm text-center pb-4">Views</th>
+                            <th className="sm:w-[17%] p-2 text-xs sm:text-sm text-center pb-4">Downloads</th>
+                            <th className="sm:w-[17%] p-2 text-xs sm:text-sm text-center pb-4">Likes</th>
+                        </tr>
+                    </thead>
+                    <tbody className=" sm:border-t-[1px] border-black">
+                        {organisationDatasets?.datasets?.map((item: any, index: any) => (
+                            <tr className=" border-b-[1px] h-14" key={index}>
+                                <td className="underline  p-2 text-xs border-r-[1px] sm:border-r-0 sm:text-sm text-dtech-main-dark w-1/2 min-w-[120px] sm:w-[32%]">{item.title}</td>
+                                <td className="sm:w-[17%] p-2 text-xs sm:text-sm min-w-[100px] text-center">{new Date(item.last_updated).toLocaleDateString('en-GB')}</td>
+                                <td className="sm:w-[17%] p-2 text-xs sm:text-sm text-center">{item.views}</td>
+                                <td className="sm:w-[17%] p-2 text-xs sm:text-sm text-center">{item.downloads}</td>
+                                <td className="sm:w-[17%] p-2 text-xs sm:text-sm text-center">{item.likes}</td>
+                            </tr>
+                        ))}
+                        {/* Add more rows as needed */}
+                        {/* <button onClick={()=>setPageNumber(2)}>2</button> */}
 
+                        {/* <tr className="">
+                            <td colSpan={5} className="pt-4">
+
+                            </td>
+                        </tr> */}
+                    </tbody>
+                </table>
+            </div>
+            <div className=" flex flex-col pt-4">
+                <div className=" sm:hidden flex flex-row w-full items-center justify-center">
+                    {[1, 2, 3].map((item, index) => (
+                        <div
+                            key={index}
+                            className={` rounded-full w-3 h-3 m-1 ${index === currentSlide ? 'bg-dtech-dark-teal' : 'bg-[#D9D9D9]'}`}
+                            onClick={() => handleDotClick(index)}
+                        ></div>
+                    ))}
+                </div>
+
+
+                <div className=" flex flex-row items-center justify-center">
+
+                    <Pagination
+                        currentPage={pageNumber}
+                        setPageNumber={setPageNumber}
+                        totalPages={totalPages}
+                    />
+                    <button className=" flex flex-row items-center justify-center text-dtech-main-dark" onClick={() => setPageNumber(pageNumber + 1)}>
+                        <div>Next</div> <BsChevronRight className="text-dtech-main-dark" />
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    );
+}
 export default Datasets;

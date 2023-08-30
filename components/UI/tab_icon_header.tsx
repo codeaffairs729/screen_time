@@ -12,14 +12,12 @@ const TabIconHeader = ({
         <Tab
             className={({ selected }) =>
                 `${
-                    selected && "border-l-8 border-l-dtech-main-dark"
-                } flex text-sm font-semibold transition-all duration-300 outline-none w-full border-y  border-t border-gray`
+                selected && " !border-t-dtech-new-main-light bg-white"
+                } flex items-center hover:bg-dtech-light-teal justify-center border-t-4 sm:h-20 h-10 border-t-[#ACACAC] text-sm font-bold transition-all duration-300 outline-none w-full border-y border-gray`
             }
             onClick={() => onClick()}
         >
-            <div className="w-50 h-26 flex flex-col items-center justify-center">
                 {children}
-            </div>
         </Tab>
     );
 };

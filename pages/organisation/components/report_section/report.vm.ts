@@ -14,15 +14,17 @@ import Http from "common/http";
 import toast from "react-hot-toast";
 import { OrganisationDetailVMContext } from "pages/organisation/organisation_detail.vm";
 import draftToHtml from "draftjs-to-html";
+import { jsonToUseCaseMetrics } from "../insights_section/use_case_section/usecase.vm";
 type Header = {
     label: string;
     isChecked: boolean;
 };
 
 const HEADER: Header[] = [
-    { label: "Dataset quality", isChecked: false },
+    { label: "Dataset Quality", isChecked: false },
     { label: "Search terms used", isChecked: false },
     { label: "Download metrics", isChecked: false },
+    { label: "Use Cases", isChecked: false },
 ];
 
 const A4_WIDTH_MM = 210;
@@ -93,7 +95,8 @@ const headerSelected = (
     imagePie: any,
     mapRegion: any,
     qualityMetric: any,
-    bySearchTermsCanvas: any
+    bySearchTermsCanvas: any,
+    byUseCasesCanvas:any
 ) => {
     return selected
         .map((object: any, index: any) =>
@@ -119,11 +122,19 @@ const headerSelected = (
                         : "<h3>No Data Presents for Role.</h3> <br/>"
                 }
                 <p>...</p>`
-                : object === "Dataset quality"
+                : object === "Dataset Quality"
                 ? `<br/><h5><strong id=label_${index}>${object}</strong></h5><br/>
                 ${
                     qualityMetric
                         ? getImageCanvas(qualityMetric)
+                        : `<h3>No Data Presents for ${object}.</h3> <br/>`
+                }
+                `
+                : object == "Use Cases"
+                ? `<br/><h5><strong id=label_${index}>${object}</strong></h5><br/>
+                ${
+                    bySearchTermsCanvas
+                        ? getImageCanvas(byUseCasesCanvas)
                         : `<h3>No Data Presents for ${object}.</h3> <br/>`
                 }
                 `
@@ -216,6 +227,7 @@ const ReportVM = () => {
         const metricByLocation: any = document.getElementById("map");
         const metricByTime: any = document.getElementById("screenshot");
         const metricByUseCase: any = document.getElementById("pie");
+        const useCases: any = document.getElementById("useCases");
         const searchTerms: any = document.getElementById("searchTerms");
         const qualityMetric: any = document.getElementById("qualityMetrics");
 
@@ -223,7 +235,7 @@ const ReportVM = () => {
             qualityMetric &&
             (await html2canvas(qualityMetric)).toDataURL("image/png");
         const bySearchTermsCanvas =
-            metricByLocation &&
+            searchTerms &&
             (await html2canvas(searchTerms)).toDataURL("image/png");
         const byLocationCanvas =
             metricByLocation &&
@@ -234,6 +246,9 @@ const ReportVM = () => {
         const byUseCaseCanvas =
             metricByUseCase &&
             (await html2canvas(metricByUseCase)).toDataURL("image/png");
+        const byUseCasesCanvas =
+            useCases &&
+            (await html2canvas(useCases)).toDataURL("image/png");
         const base64 = await fetchImage(imgUrl);
         const data = `
                 <figure style='width:200px;margin-left:auto;margin-right:auto;'><img src='data:image/jpeg;base64,${base64}' /></figure>
@@ -246,7 +261,8 @@ const ReportVM = () => {
                     byUseCaseCanvas,
                     byLocationCanvas,
                     byQualityMetricCanvas,
-                    bySearchTermsCanvas
+                    bySearchTermsCanvas,
+                    byUseCasesCanvas
                 )}
             `;
 
@@ -398,6 +414,33 @@ const ReportVM = () => {
                 },
             }
         );
+    const {
+        execute: excuteFetchUseCases,
+        data: useCases,
+        isLoading: isFetchingUseCases,
+        error,
+    } = useHttpCall<{ [key: string]: any }>([]);
+    const fetchUseCases = () =>
+        excuteFetchUseCases(
+            () => {
+                return Http.get(
+                    `/v1/data_sources/provider/use_cases/${organisation?.uuid}`
+                );
+            },
+            {
+                postProcess: (res) => {
+                    const useCase = jsonToUseCaseMetrics(res);
+                    return useCase;
+                },
+                onError: (e) => {
+                    toast.error(
+                        "Something went wrong while fetching organisation search terms insights."
+                    );
+                },
+            }
+        );
+
+   
     const jsonToQualityMetrics = (json: any): any => {
         return {
             dataFileQuality: {
@@ -501,8 +544,9 @@ const ReportVM = () => {
         const promise3 = fetchMetricDataByLocation(from, to);
         const promise4 = fetchSearchTerms();
         const promise5 = fetchQualityMetrics();
+        const promise6 = fetchUseCases();
 
-        Promise.all([promise1, promise2, promise3, promise4, promise5]).then(
+        Promise.all([promise1, promise2, promise3, promise4, promise5, promise6]).then(
             () => {
                 generateReportContent(qualityMetrics);
             }
@@ -521,7 +565,8 @@ const ReportVM = () => {
         isFetchingSearchTerms ||
         isFetchingByTime ||
         isFetchingByRoles ||
-        isFetchingByLocation;
+        isFetchingByLocation ||
+        isFetchingUseCases;
 
     return {
         generateReportContent,
@@ -546,6 +591,7 @@ const ReportVM = () => {
         downloadByLocation,
         searchTerms,
         qualityMetrics,
+        useCases
     };
 };
 
@@ -600,6 +646,7 @@ interface IReportVMContext {
     downloadByLocation: any;
     searchTerms: any;
     qualityMetrics: any;
+    useCases:any;
 }
 
 export const ReportVMContext = createContext<IReportVMContext>(

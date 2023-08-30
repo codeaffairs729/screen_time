@@ -46,14 +46,13 @@ const OrganisationTabHeaders = ({
     const [selected, setSelected] = useState<number>(selectedIndex);
 
     return (
-        <div>
-            <Tab.List className="relative text-dtech-main-dark">
+            <Tab.List className=" flex text-dtech-new-main-light w-full space-x-2">
                 {getHeader(user).map((header: Header, index: number) => (
                     <TabIconHeader
                         key={index}
                         onClick={() => setSelected(index)}
                     >
-                        <Image
+                        {/* <Image
                             src={
                                 selected === index
                                     ? header.filledIcon
@@ -62,14 +61,13 @@ const OrganisationTabHeaders = ({
                             width="36px"
                             height="36px"
                             alt={header.name}
-                        />
-                        <span className="text-dtech-main-dark">
+                        /> */}
+                        <span className="text-dtech-new-main-light text-xs sm:text-lg">
                             {header.name}
                         </span>
                     </TabIconHeader>
                 ))}
             </Tab.List>
-        </div>
     );
 };
 
@@ -87,7 +85,7 @@ const getHeader = (user: string) => {
                 filledIcon: barGraphFilled,
             },
             {
-                name: "Report",
+                name: "Generate Report",
                 outlineIcon: reportOutline,
                 filledIcon: reportFilled,
             },

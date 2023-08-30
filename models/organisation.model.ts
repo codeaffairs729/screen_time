@@ -15,6 +15,7 @@ class Organisation {
         isFavourited,
         lastUpdate,
         url,
+        topic_image,
     }: OrganisationDetail) {
         this.id = id;
         this.uuid = uuid;
@@ -29,6 +30,7 @@ class Organisation {
         this.isFavourited = isFavourited;
         this.lastUpdate = lastUpdate;
         this.url = url;
+        this.topic_image = topic_image;
     }
     id: number;
     uuid: string;
@@ -43,6 +45,7 @@ class Organisation {
     isFavourited: boolean;
     lastUpdate: DateTime;
     url: string;
+    topic_image: string;
 
     static fromJson(json: { [key: string]: any }) {
         const domains =
@@ -74,6 +77,7 @@ class Organisation {
             },
             lastUpdate: json["last_updated"],
             url: json["url"],
+            topic_image: json["topic_image"],
         });
     }
 
@@ -97,6 +101,7 @@ export type OrganisationDetail = {
     stats: DataStats;
     isFavourited: boolean;
     url: string;
+    topic_image: string;
 };
 
 export type DataStats = {

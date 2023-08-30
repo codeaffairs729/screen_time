@@ -54,19 +54,19 @@ const FavouriteBtn = ({
                 )}
             >
                 {!user ? (
-                    <BsHeart className="h-6 w-6 ml-4 text-dtech-main-dark cursor-pointer" />
+                    <BsHeart className="sm:h-6 sm:w-6 h-4 w-4 text-dtech-new-main-light cursor-pointer" />
                 ) : (
                     <>
                         {!isHandlingFavourite ? (
                             <>
                                 {isFavourited ? (
-                                    <BsHeartFill className="h-6 w-6 ml-4 text-dtech-main-dark cursor-pointer" />
+                                    <BsHeartFill className="sm:h-6 sm:w-6 h-4 w-4  text-dtech-new-main-light cursor-pointer" />
                                 ) : (
-                                    <BsHeart className="h-6 w-6 ml-4 text-dtech-main-dark cursor-pointer" />
+                                    <BsHeart className="sm:h-6 sm:w-6 h-4 w-4  text-dtech-new-main-light cursor-pointer" />
                                 )}
                             </>
                         ) : (
-                            <Loader className="ml-4" />
+                            <Loader className="" />
                         )}
                     </>
                 )}

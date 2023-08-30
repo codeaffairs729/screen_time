@@ -10,6 +10,8 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@amcharts/amcharts4": "^4.10.37",
+    "@amcharts/amcharts4-geodata": "^4.1.27",
     "@headlessui/react": "^1.7.13",
     "@heroicons/react": "^1.0.6",
     "@tailwindcss/forms": "^0.4.0",
@@ -28,7 +30,7 @@
     "@types/react-youtube": "^7.10.0",
     "@types/uuid": "^8.3.4",
     "@types/validator": "^13.7.1",
-    "ag-charts-react": "^8.0.6",
+    "ag-charts-react": "^8.1.0",
     "chart.js": "^4.3.3",
     "clsx": "^1.1.1",
     "debounce-promise": "^3.1.2",

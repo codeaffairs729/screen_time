@@ -11,7 +11,7 @@ const Popup = ({ href, dataset }: PopupProps) => {
     return (
         <div
             id="popup"
-            className="z-10 absolute w-32 flex border border-1 border-dtech-light-grey bg-[#FCDCFB] text-sm px-1 h-14 p-2 my-2 ml-[-75px] mr-4 rounded-md"
+            className="z-10 absolute w-32 flex border border-1 border-dtech-light-grey bg-dtech-new-main-light text-sm px-1 h-14 p-2 my-2 ml-[-75px] mr-4 rounded-md"
         >
             <a
                 href={`${LinkedinURL}${process.env.NEXT_PUBLIC_WEBCLIENT_ROOT}${href}`}

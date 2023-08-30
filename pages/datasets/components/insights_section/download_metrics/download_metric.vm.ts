@@ -178,7 +178,7 @@ const jsonToOrgDownloadMetricByRole = (json: any): any =>
 const jsonToOrgDownloadMetrics = (json: any): any => ({
     regions: jsonToOrgDownloadMetricByLocation(json["downloads_by_location"]),
     downloadByTime: jsonToOrgDownloadMetricByTime(json["downloads_by_time"]),
-    downloadByUseCase: jsonToOrgDownloadMetricByRole(json["downloads_by_role"]),
+    downloadByRole: jsonToOrgDownloadMetricByRole(json["downloads_by_role"]),
 });
 
 const getDifferenceInDays = (fromDate: any, toDate: any) =>

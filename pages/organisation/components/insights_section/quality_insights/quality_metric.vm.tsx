@@ -1,7 +1,7 @@
 import { useHttpCall } from "common/hooks";
 import Http from "common/http";
 import { OrganisationDetailVMContext } from "pages/organisation/organisation_detail.vm";
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 export enum qualityInsights {
@@ -11,20 +11,24 @@ export enum qualityInsights {
 
 const QualityMetricVM = () => {
     const { organisation } = useContext(OrganisationDetailVMContext);
+    const [pageNumber, setPageNumber] = useState(1);
+    const [datasetsCount, setDatasetsCount] = useState(7);
     const [selectedQualityInsights, setSelectedQualityInsights] =
-        useState<number>(0);
+        useState<number>(1);
     const {
         execute: excuteFetchQualityMetrics,
         data: qualityMetrics,
         isLoading: isFetchingQualityMetrics,
         error,
     } = useHttpCall<{ [key: string]: any }>({});
-
+    useEffect(() => {
+   fetchQualityMetrics() 
+},[pageNumber])
     const fetchQualityMetrics = () =>
         excuteFetchQualityMetrics(
             () => {
                 return Http.get(
-                    `/v1/data_sources/${organisation?.uuid}/quality_metrics`
+                    `/v1/data_sources/${organisation?.uuid}/quality_metrics?page_num=${pageNumber}&page_size=${datasetsCount}`
                 );
             },
             {
@@ -47,6 +51,9 @@ const QualityMetricVM = () => {
         isFetchingQualityMetrics,
         fetchQualityMetrics,
         setSelectedQualityInsights,
+        datasetsCount,
+        pageNumber,
+        setPageNumber,
     };
 };
 
@@ -59,6 +66,9 @@ interface IQualityMetricVM {
     fetchQualityMetrics: Function;
     setSelectedQualityInsights: Function;
     isFetchingQualityMetrics: boolean;
+    datasetsCount: number;
+    pageNumber: number;
+    setPageNumber: Function
 }
 
 export const QualityMetricVMContext = createContext<IQualityMetricVM>(
@@ -125,6 +135,7 @@ const jsonToQualityMetrics = (json: any): any => ({
             "How well can this dataset work in conjunction with applications or workflows for analysis, storage, and processing?"
         ),
     },
+    totalMatches:json["total_matches"]
 });
 
 const getQualityScore = (data: any, title: string, tooltipTitle: string) => ({
