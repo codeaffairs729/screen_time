@@ -91,14 +91,14 @@ const OrganisationDetailPage = ({
     return (
         <DefaultLayout>
             <OrganisationDetailVMContext.Provider value={vm}>
-                <div className=" bg-[#EBEBEB]  ">
+                <div className=" bg-[#EBEBEB] ">
                     <div
                         className="bg-black  h-[414px] absolute right-0 z-0 w-full">
                         {/* <img src={organisation.topic_image} className=" w-full" /> */}
                     </div>
                     <div className="px-4 relative">
                         <div
-                            className="hidden sm:flex flex-row justify-between mb-4 my-10 ml-4 items-center">
+                            className="hidden sm:flex flex-row justify-between mb-4  ml-4 items-center">
                             <p className="text-center text-2xl font-bold  px-[37px] py-[18px] bg-[#0E9A8E] bg-opacity-60 text-white">
                                 Data Provider
                             </p>

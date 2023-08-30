@@ -79,7 +79,7 @@ const DefaultLayout = ({
     return (
         <div
             className={clsx(
-                "w-full min-h-screen mx-auto flex flex-col relative",
+                "w-full min-h-screen mx-auto flex flex-col relative bg-[#EBEBEB]",
                 className
             )}
         >
