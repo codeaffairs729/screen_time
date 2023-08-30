@@ -30,12 +30,13 @@ const DownloadHeader = () => {
     }));
     return (
         <Dropdown
-            className="border-b-[3px] border-dtech-main-dark"
+            className="border-b-[4px] font-semibold border-b-dtech-dark-teal text-dtech-dark-teal hover:!text-dtech-dark-teal"
             labelClasses="!text-lg"
             menuItems={menuItems}
             label={
                 <Label labelPrefix="Download metrics:" label={selectedLabel} />
             }
+            iconClass="hover:text-dtech-dark-teal text-dtech-dark-teal"
             itemsClasses="rounded-[10px] shadow-none "
             menuItemsClasses="rounded-[10px]"
         />
