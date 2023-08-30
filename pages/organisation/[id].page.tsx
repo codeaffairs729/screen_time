@@ -93,7 +93,7 @@ const OrganisationDetailPage = ({
             <OrganisationDetailVMContext.Provider value={vm}>
                 <div className=" bg-[#EBEBEB]  ">
                     <div
-                        className="bg-black  h-[414px] absolute z-0 w-full">
+                        className="bg-black  h-[414px] absolute right-0 z-0 w-full">
                         {/* <img src={organisation.topic_image} className=" w-full" /> */}
                     </div>
                     <div className="px-4 relative">
