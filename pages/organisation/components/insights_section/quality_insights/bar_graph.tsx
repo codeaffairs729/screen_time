@@ -5,7 +5,7 @@ import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 
 am4core.useTheme(am4themes_animated);
 
-function BarChart({ data,titles, isMobile }: { data: any, titles:any, isMobile: boolean }) {
+function BarChart({ data, titles, isMobile }: { data: any, titles: any, isMobile: boolean }) {
     useEffect(() => {
         // Create chart instance
         const chart = am4core.create("chartDiv", am4charts.XYChart);
@@ -39,7 +39,7 @@ function BarChart({ data,titles, isMobile }: { data: any, titles:any, isMobile: 
         return () => {
             chart.dispose();
         };
-    }, [data]);
+    }, []);
 
     return <div id="chartDiv" style={{ width: "100%", height: (isMobile?"200px":"400px") }}></div>;
 }
