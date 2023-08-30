@@ -12,6 +12,7 @@ import toast from "react-hot-toast";
 
 export enum insightTabIndex {
     dataset_quality,
+    use_cases,
     search_term,
     download_metrics,
 }
@@ -32,7 +33,8 @@ const OrganisationDetailVM = (
     orgUUID: String | undefined
 ) => {
     const [organisation, setOrganisation] = useState(initialOrganisationData);
-    const [orgDatasetsCount, setOrgDatasetsCount] = useState(10);
+    const [orgDatasetsCount, setOrgDatasetsCount] = useState(7);
+    const [pageNumber, setPageNumber] = useState(1);
 
     useEffect(() => {
         if (orgDatasetsCount > 10) {
@@ -42,7 +44,9 @@ const OrganisationDetailVM = (
 
     const incrementOrgDatasetsCount = () =>
         setOrgDatasetsCount(orgDatasetsCount + 10);
-
+    useEffect(() => {
+        fetchOrganisationDatasets();
+    }, [pageNumber]);
     const {
         execute: excuteFetchOrganisationDatasets,
         data: organisationDatasets,
@@ -54,7 +58,7 @@ const OrganisationDetailVM = (
         excuteFetchOrganisationDatasets(
             () => {
                 return Http.get(
-                    `/v5/datasets/by-data-host/${orgUUID}?page_number=1&page_size=${orgDatasetsCount}`,
+                    `/v5/datasets/by-data-host/${orgUUID}?page_number=${pageNumber}&page_size=${orgDatasetsCount}`,
                     {
                         baseUrl: process.env.NEXT_PUBLIC_PUBLIC_API_ROOT,
                         extraHeaders: {
@@ -66,9 +70,10 @@ const OrganisationDetailVM = (
             },
             {
                 postProcess: (res) => {
-                    return jsonToOrgDatasets(
-                        res["results"]
-                    );
+                    return {
+                        datasets: jsonToOrgDatasets(res["results"]),
+                        total_matches: res["total_matches"],
+                    };
                 },
                 onError: (e) => {
                     toast.error(
@@ -131,6 +136,9 @@ const OrganisationDetailVM = (
         organisationDatasets,
         isFetchingOrganisationDatasets,
         isFetchingOrganisationRankedDatasets,
+        orgDatasetsCount,
+        pageNumber,
+        setPageNumber,
         setOrganisation,
         fetchOrganisationDatasets,
         incrementOrgDatasetsCount,
@@ -157,7 +165,7 @@ const GetRankedData = ({
                     baseUrl: process.env.NEXT_PUBLIC_PUBLIC_API_ROOT,
                     extraHeaders: {
                         "Content-type": "application/json",
-                        "x-api-key": process.env.NEXT_PUBLIC_MARK_KEY
+                        "x-api-key": process.env.NEXT_PUBLIC_MARK_KEY,
                     },
                 });
             },
@@ -206,9 +214,12 @@ export interface IOrganisationDetailVMContext {
     organisation: Organisation | undefined;
     organisationDatasets: any;
     organisationRankedDatasets: any;
+    orgDatasetsCount: any;
     incrementOrgDatasetsCount: Function;
     fetchOrganisationRankedDatasets: Function;
     fetchOrganisationDatasets: Function;
+    pageNumber: number;
+    setPageNumber: Function;
     setOrganisation: Dispatch<SetStateAction<Organisation | undefined>>;
     isFetchingOrganisationDatasets: boolean;
     isFetchingOrganisationRankedDatasets: boolean;
@@ -222,15 +233,19 @@ export const OrganisationDetailVMContext =
 const jsonToOrgDatasets = (jsons: any, isRanked = false, countKey = "views") =>
     jsons.map((json: any) => {
         const { dataset } = json || {};
+        const { metrics } = dataset || {};
+        const { global } = metrics || {};
         const data: any = {
             id: json?.id,
             uuid: dataset?.uuid,
             title: dataset?.title,
             description: dataset?.description,
+            last_updated: dataset?.last_updated,
+            total_matches: dataset?.total_matches,
+            views: global?.views,
+            downloads: global?.downloads,
+            likes: global?.favourite_count,
         };
-
-        const { metrics } = dataset || {};
-        const { global } = metrics || {};
 
         if (isRanked) {
             data["count"] = global[countKey];

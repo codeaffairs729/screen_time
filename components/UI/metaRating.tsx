@@ -10,6 +10,7 @@ type MetaRatingProps = {
     starClassName?: String;
     title?: string;
     handleFAQClick?: Function;
+    infoClassName?: string;
 };
 
 const MetaRating = ({
@@ -19,6 +20,7 @@ const MetaRating = ({
     className = "",
     labelClass = "",
     starClassName = "",
+    infoClassName="",
     title = "",
     handleFAQClick,
 }: MetaRatingProps) => {
@@ -32,7 +34,7 @@ const MetaRating = ({
                 <InfoIcon
                     onClick={handleFAQClick}
                     oldIcon={false}
-                    iconClasses="absolute left-[100%] top-[-25%] ml-[1px] h-3.5 w-3.5 text-black outline-none cursor-pointer"
+                    iconClasses={clsx(infoClassName,"absolute left-[100%]  ml-[1px] h-3.5 w-3.5 text-black outline-none cursor-pointer")}
                     title={title}
                 />
             </span>

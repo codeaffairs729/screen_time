@@ -6,7 +6,7 @@ import ReactTooltip from "react-tooltip";
 import { RootState } from "store";
 import Loader from "../loader";
 import BookmarkModal from "./bookmark_modal";
-import { BsBookmarkPlus, BsFillBookmarkPlusFill } from "react-icons/bs";
+import { BsBookmark, BsBookmarkFill, BsBookmarkPlus, BsFillBookmarkPlusFill } from "react-icons/bs";
 
 const BookmarkBtn = ({
     className = "",
@@ -52,15 +52,15 @@ const BookmarkBtn = ({
                     )}
                 >
                     {!user ? (
-                        <BsBookmarkPlus className="h-6 w-6 ml-4 text-dtech-main-dark cursor-pointer" />
+                        <BsBookmark className="sm:h-6 sm:w-6 h-4 w-4 text-dtech-new-main-light cursor-pointer" />
                     ) : (
                         <>
                             {!isHandlingBookmark ? (
                                 <>
                                     {isBookmarked ? (
-                                        <BsFillBookmarkPlusFill className="h-6 w-6 ml-4 text-dtech-main-dark cursor-pointer" />
+                                        <BsBookmarkFill className="sm:h-6 sm:w-6 h-4 w-4  text-dtech-new-main-light cursor-pointer" />
                                     ) : (
-                                        <BsBookmarkPlus className="h-6 w-6 ml-4 text-dtech-main-dark cursor-pointer" />
+                                        <BsBookmark className="sm:h-6 sm:w-6 h-4 w-4  text-dtech-new-main-light cursor-pointer" />
                                     )}
                                 </>
                             ) : (

@@ -34,9 +34,9 @@ const DownloadReport = () => {
                 // }}
                 onClick={generatePDF}
             >
-                <div className="flex flex-row mr-6">
-                    <Image src={downloadIcon} alt="" height={24} width={24} />
-                    <span className="ml-2">Download report</span>
+                <div className="flex flex-row mr-6 bg-dtech-new-main-light sm:p-4 sm:px-10 p-2 px-3 text-xs text-white font-semibold rounded-full">
+                    {/* <Image src={downloadIcon} alt="" height={24} width={24} /> */}
+                    <span className="">Download</span>
                 </div>
             </div>
         </div>

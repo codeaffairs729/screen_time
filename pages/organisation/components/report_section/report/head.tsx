@@ -5,8 +5,7 @@ import dynamic from "next/dynamic";
 const DownloadReport = dynamic(() => import("./downloadReport"), {
     ssr: false,
 });
-const Head = () => {
-    const [edit, setEdit] = useState(false);
+const Head = ({edit, setEdit}:{edit:boolean, setEdit:Function}) => {
     return (
         <div className="flex justify-between items-center">
             <div className="relative flex text-center w-32 justify-between">
@@ -14,9 +13,9 @@ const Head = () => {
                     onClick={() => setEdit(false)}
                     className={`${
                         edit
-                            ? "text-dtech-dark-grey"
-                            : "border-b-2 border-b-dtech-main-dark text-dtech-main-dark"
-                    } pb-2 w-12 cursor-pointer outline-none`}
+                        ? "text-dtech-dark-grey text-lg font-semibold"
+                        : "border-b-4 border-b-dtech-dark-teal text-lg font-semibold text-dtech-dark-teal"
+                    } pb-2  cursor-pointer outline-none`}
                 >
                     Preview
                 </Tab>
@@ -24,14 +23,14 @@ const Head = () => {
                     onClick={() => setEdit(true)}
                     className={`${
                         edit
-                            ? "text-dtech-main-dark border-b-2 border-b-dtech-main-dark"
-                            : "text-dtech-dark-grey"
-                    } pb-2 w-12 ml-3 cursor-pointer outline-none`}
+                        ? "text-dtech-dark-teal text-lg font-semibold border-b-4 border-b-dtech-dark-teal"
+                        : "text-dtech-dark-grey text-lg font-semibold"
+                    } pb-2 w-12 ml-64 cursor-pointer outline-none`}
                 >
                     Edit
                 </Tab>
             </div>
-            {!edit && <DownloadReport />}
+            {/* {!edit && <DownloadReport />} */}
         </div>
     );
 };

@@ -4,6 +4,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { format } from "date-fns";
 import Calander from "./calander";
 import toast from "react-hot-toast";
+import { BsChevronDown } from "react-icons/bs";
 const CalendarSelect = ({
     label = "Select",
     fromDate,
@@ -39,14 +40,14 @@ const CalendarSelect = ({
     const handleChange = (e: any) => {
         setSelected(false);
         if (label == "From") {
-            if ((toDate.getTime() - e.getTime()) / (1000 * 3600 * 24) >=0) {
+            if ((toDate.getTime() - e.getTime()) / (1000 * 3600 * 24) >= 0) {
                 setFromDate(e);
             } else {
                 setFromDate(toDate);
                 toast.error("Please select correct From Date");
             }
         } else {
-            if ((e.getTime() - fromDate.getTime()) / (1000 * 3600 * 24) >=0) {
+            if ((e.getTime() - fromDate.getTime()) / (1000 * 3600 * 24) >= 0) {
                 setToDate(e);
             } else {
                 setToDate(fromDate);
@@ -56,27 +57,41 @@ const CalendarSelect = ({
     };
 
     return (
-        <div className="flex  pl-5" ref={myRef}>
-            <div
-                className="flex items-center border border-dtech-main-dark w-fit px-2 py-1 rounded-md cursor-pointer"
+        <div className="flex  " ref={myRef}>
+            <div className="flex flex-row w-full "
                 onClick={() => {
                     setSelected(!select);
                 }}
             >
-                {dateSelect ? (
-                    <span className="text-sm">
-                        {label == "From"
-                            ? format(fromDate, "dd-MM-yyyy")
-                            : format(toDate, "dd-MM-yyyy")}
-                    </span>
-                ) : (
-                    <span className="text-sm">{label}</span>
-                )}
-                <VscTriangleDown
-                    className={`${
-                        select && "rotate-180"
-                    } ml-2 text-xl text-inherit transition-all `}
-                />
+
+                <div
+                    className="flex items-center border-[2px] border-[#333333] w-full p-2 cursor-pointer rounded-full"
+
+                >
+                    {dateSelect ? (
+                        <div className=" flex w-full justify-between">
+                            <span className="text-sm">
+                                {label == "From"
+                                    ? format(fromDate, "dd-MM-yyyy")
+                                    : format(toDate, "dd-MM-yyyy")}
+                            </span>
+                            <BsChevronDown
+                                className={`${select && "rotate-180"
+                                    } text-xl   transition-all `}
+                            />
+                        </div>
+                    ) : (
+                        <div className=" flex w-full justify-between">
+                            <span className="text-sm">dd/mm/yyyy
+                            </span>
+                            <BsChevronDown
+                                className={`${select && "rotate-180"
+                                    } text-xl    transition-all `}
+                            />
+                        </div>
+                    )}
+
+                </div>
             </div>
             {select && (
                 <div>

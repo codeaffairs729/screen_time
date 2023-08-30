@@ -25,12 +25,12 @@ const SearchTermHeader = () => {
 
     return (
         <Dropdown
-            className="border-b-[3px] border-dtech-main-dark"
+            className="border-b-[4px] font-semibold text-dtech-dark-teal hover:!text-dtech-dark-teal border-dtech-dark-teal"
             labelClasses="!text-lg"
             // className="!m-0"
             menuItems={menuItems}
             label={
-                <Label labelPrefix="Search terms used:" label={selectedLabel} />
+                <Label labelPrefix="Search Term" label={selectedLabel} />
             }
             itemsClasses="rounded-[10px] shadow-none "
             menuItemsClasses="rounded-[10px]"

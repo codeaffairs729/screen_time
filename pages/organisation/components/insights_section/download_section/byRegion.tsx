@@ -5,11 +5,12 @@ import { getAge } from "pages/workspace/notification.vm";
 import { useContext } from "react";
 import Table from "../../table";
 import { DownloadMetricVMContext } from "./download_metric.vm";
+import MapChartComponent from "./map_component";
 const WorldMap = dynamic(() => import("components/UI/world_map"), {
     ssr: false,
 });
 const TABLE_HEADERS = ["Region", "Count", "Last used"];
-const ByRegion = () => {
+const ByRegion = ({ isMobile }: { isMobile: boolean }) => {
     const { downloadMetrics, error, isFetchingDownloadMetrics } = useContext(
         DownloadMetricVMContext
     );
@@ -45,25 +46,27 @@ const ByRegion = () => {
         region?.count,
         getAge(region.date),
     ]);
-
     return (
-        <div>
-            <div className="my-4 ml-16 text-base text-dtech-dark-grey">
-                Dataset downloads aggregated on the basis of locations for the
-                whole organisation.
-            </div>
-            <div className="mt-12 ml-8 mr-24 block h-[44rem] overflow-y-scroll no-scrollbar whitespace-nowrap">
-                <WorldMap locations={loc} counts={downloadCounts} />
-                <div className="mt-8">
-                    <Table
-                        tableHeaders={TABLE_HEADERS}
-                        tableData={tableData}
-                        headerClass="text-[17px] font-medium bg-[#F5F5F5] "
-                        tableClass="w-full text-sm text-left border table-fixed"
-                        cellPadding={20}
-                        tableRow="text-[17px] font-normal "
-                    />
+        <div className=" sm:px-20">
+            <div className="text-sm sm:block text-[#727272] my-4">
+                <div className="sm:my-8 text-sm text-[#727272] text-center ">
+                    Dataset downloads aggregated on the basis of locations for the
+                    whole organisation.
                 </div>
+            </div>
+            <div className="sm:px-32">
+                <MapChartComponent regions={regions} isMobile={isMobile} />
+                {/* <WorldMap locations={loc} counts={downloadCounts} /> */}
+            </div>
+            <div className="mt-8 flex sm:mx-20 ">
+                <Table
+                    tableHeaders={TABLE_HEADERS}
+                    tableData={tableData}
+                    headerClass="sm:text-[17px] !py-2 sm:!py-4 !text-xs border-2 border-white sm:!w-auto sm:!px-10 !px-4  text-white text-center sm:font-medium sm:bg-dtech-new-main-light bg-dtech-dark-teal "
+                    tableClass=" text-sm border-white sm:w-[180%] !px-10 text-white text-center sm:font-medium bg-[#EBEBEB]"
+                    cellPadding={20}
+                    tableRow="sm:text-[17px] text-black font-normal py-2 sm:!py-4  sm:!px-10 !px-4  border-2 border-white"
+                />
             </div>
         </div>
     );

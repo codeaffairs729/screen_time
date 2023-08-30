@@ -49,7 +49,7 @@ export const UseCaseMetricsVMContext = createContext<IUseCaseMetricsVMContext>(
     {} as IUseCaseMetricsVMContext
 );
 
-const jsonToUseCaseMetrics = (json: any = {}) => {
+export const jsonToUseCaseMetrics = (json: any = {}) => {
     return Object.keys(json).map((key) => ({
         name: key,
         value: json[key]["count"],

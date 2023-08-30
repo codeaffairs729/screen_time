@@ -28,6 +28,7 @@ export interface Data {
     recordType: string;
     lastUpdate: DateTime;
     isFavourited: boolean;
+    url?: string;
 }
 
 interface ResultCardProps {

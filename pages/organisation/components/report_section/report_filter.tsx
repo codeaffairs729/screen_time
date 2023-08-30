@@ -4,7 +4,7 @@ import { useContext, useEffect, useState } from "react";
 import { VscTriangleDown } from "react-icons/vsc";
 import { ReportVMContext } from "./report.vm";
 import { QualityMetricVMContext } from "../insights_section/quality_insights/quality_metric.vm"; 
-const ReportFilter = () => {
+const ReportFilter = ({setIsReportGenerated}: {setIsReportGenerated:Function}) => {
     const [showFilter, setShowFilter] = useState<boolean>(true);
     const {
         fetchData,
@@ -32,27 +32,40 @@ const ReportFilter = () => {
         ) {
         fetchQualityMetrics && fetchQualityMetrics();
             fetchData(qualityMetrics);
+            setIsReportGenerated(true);
         }
     };
 
     return (
-        <div className="w-1/3 py-4 px-6 flex flex-col items-center mt-12 ml-6 mb-96 border-2 drop-shadow-lg rounded-[24px]">
-            <div className="px-2">
-                <div
+        <div className="sm:w-1/3 w-full py-4 sm:m-12 flex flex-col items-center justify-center sm:items-start  sm:mt-12  sm:mb-96  ">
+            
+            {/* <div className="px-4"> */}
+                {/* <div className="px-3 w-[244px] py-1 mb-4 flex justify-between bg-dtech-main-light cursor-pointer"> */}
+                    <span className=" w-full sm:text-left text-center font-semibold">Select period</span>
+                {/* </div> */}
+            {/* </div> */}
+            <div className=" sm:w-full w-3/4">
+                <RangeSelector
+                    fromDate={fromDate}
+                    setFromDate={setFromDate}
+                    toDate={toDate}
+                    setToDate={setToDate}
+                />
+            </div>
+            <div className="sm:mt-16 mt-4">
+                {/* <div
                     className="px-3 w-[244px] py-1 flex justify-between bg-dtech-main-light cursor-pointer"
                     onClick={() => setShowFilter(!showFilter)}
                 >
                     <span>Select header</span>
                     <VscTriangleDown
-                        className={`ml-2 text-2xl text-inherit transition-all ${
-                            showFilter && "rotate-180"
-                        }`}
+                        className={`ml-2 text-2xl text-inherit transition-all ${showFilter && "rotate-180"
+                            }`}
                     />
-                </div>
+                </div> */}
+                <span className=" w-full text-center flex sm:justify-start justify-center font-semibold sm:mb-8">Select header</span>
                 <div
-                    className={`${
-                        showFilter ? "max-h-[100vh]" : "max-h-0"
-                    } overflow-hidden transition-all duration-300 m-3`}
+                    className={` w-fit max-h-[100vh] overflow-hidden transition-all duration-300 my-4`}
                 >
                     {activeHeaders.map((header: any, index: number) => (
                         <Input
@@ -63,30 +76,16 @@ const ReportFilter = () => {
                             value={header.label}
                         />
                     ))}
+                    <button
+                        onClick={handleGenerateReport}
+                        data-selector="back-btn"
+                        className="text-sm mt-8 p-2 py-3 whitespace-nowrap w-full bg-dtech-new-main-light text-white  flex items-center justify-center rounded-full px-6"
+                    >
+                            Autogenerate report
+                    </button>
                 </div>
             </div>
-            <div className="px-4">
-                <div className="px-3 w-[244px] py-1 mb-4 flex justify-between bg-dtech-main-light cursor-pointer">
-                    <span>Select period</span>
-                </div>
-            </div>
-            <div className="flex justify-around items-center mb-6 ">
-                <RangeSelector
-                    fromDate={fromDate}
-                    setFromDate={setFromDate}
-                    toDate={toDate}
-                    setToDate={setToDate}
-                />
-            </div>
-            <button
-                onClick={handleGenerateReport}
-                data-selector="back-btn"
-                className="m-1 whitespace-nowrap bg-dtech-main-dark h-8 flex items-center justify-center rounded"
-            >
-                <span className="ml-1 mr-2 font-medium text-white px-12">
-                    Autogenerate report
-                </span>
-            </button>
+            
         </div>
     );
 };
@@ -106,12 +105,12 @@ const Input = ({
         <div className="flex items-center mb-1.5">
             <input
                 type="checkbox"
-                className="focus:ring-0 filter-checkbox rounded-sm border-dtech-main-dark"
+                className="focus:ring-0 filter-checkbox  border-2"
                 value={value}
                 checked={isChecked}
                 onChange={handleCheck}
             />
-            <span className="ml-2 text-sm text-gray-700">{label}</span>
+            <span className="ml-2 text-sm font-semibold">{label}</span>
         </div>
     );
 };

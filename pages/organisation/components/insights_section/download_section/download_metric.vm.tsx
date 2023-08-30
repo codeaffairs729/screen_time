@@ -26,7 +26,7 @@ export type DownloadByTime = {
     count: number;
 };
 
-export type DownloadByUseCase = {
+export type DownloadByRole = {
     name: string;
     value: number;
 };
@@ -34,7 +34,7 @@ export type DownloadByUseCase = {
 export interface DownloadMetrics {
     regions: DownloadByRegion[];
     downloadByTime: DownloadByTime[];
-    downloadByUseCase: DownloadByUseCase[];
+    downloadByRole: DownloadByRole[];
 }
 
 const checkIfDateExists = (downloadDate: any, currDate: any) => {
@@ -173,10 +173,10 @@ const jsonToOrgDownloadMetrics = (json: any): any => ({
         date: data["date"],
         count: data["count"],
     })),
-    downloadByUseCase: json["provider_downloads_by_role"]?.map(
-        (useCase: any) => ({
-            name: useCase["name"],
-            value: useCase["count"],
+    downloadByRole: json["provider_downloads_by_role"]?.map(
+        (role: any) => ({
+            name: role["name"],
+            value: role["count"],
         })
     ),
 });
@@ -245,8 +245,8 @@ export const getTableData = (fromDate: any, toDate: any, dates: any) => {
     const differenceInDays: number = getDifferenceInDays(fromDate, toDate);
     if (differenceInDays >= 90) {
         const tableDataByMonth = getDataByMonth(dates).map((data: any) => [
-            [data.count],
             [data.month],
+            [data.count],
         ]);
         return tableDataByMonth;
     } else {
@@ -254,7 +254,7 @@ export const getTableData = (fromDate: any, toDate: any, dates: any) => {
             const date = new Date(data?.date);
             const month = date.toLocaleString("en", { month: "short" });
             const year = new Date(data?.date).getFullYear();
-            return [[data.count], [`${month} ${year}`]];
+            return [[`${month} ${year}`], [data.count] ];
         });
 
         return tableDataByTime;
