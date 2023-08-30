@@ -37,7 +37,7 @@ const OrganisationDetailPage = ({
     organisation, requestProviders
 }: {
     organisation: Organisation | undefined, requestProviders: any
-}) => {
+    }) => {
     const [loading, setLoading] = useState<boolean>(false);
     const [isMobile, setIsMobile] = useState<boolean>(false);
     const [selectedIndex, setSelectedIndex] = useState<any>(0);
@@ -91,10 +91,10 @@ const OrganisationDetailPage = ({
     return (
         <DefaultLayout>
             <OrganisationDetailVMContext.Provider value={vm}>
-                <div className=" ">
+                <div className=" bg-[#EBEBEB]  ">
                     <div
-                        className="bg-black  h-[414px] absolute -z-10 w-full">
-                        <img src={organisation.topic_image} className=" w-full" />
+                        className="bg-black  h-[414px] absolute z-0 w-full">
+                        {/* <img src={organisation.topic_image} className=" w-full" /> */}
                     </div>
                     <div className="px-4 relative">
                         <div
@@ -131,7 +131,7 @@ const OrganisationDetailPage = ({
                             <OrganisationHead />
                         </div>
 
-                        <div className="flex border-t px-4 sm:-mt-28 -mt-28 shadow-container flex-col bg-[#EBEBEB]">
+                        <div className="flex border-t  sm:-mt-28 -mt-28  flex-col bg-[#EBEBEB]">
                             {!loading && (
                                 <Tab.Group defaultIndex={selectedIndex}>
                                     <OrganisationTabHeaders
@@ -157,8 +157,8 @@ const OrganisationDetailPage = ({
                                 </Tab.Group>
                             )}
                         </div>
-                        <div className=" hidden">
-                            <RelatedProviders isMobile={isMobile} recommendations={convertToJson(requestProviders)} />
+                        <div className=" sm:h-8">
+                            {/* <RelatedProviders isMobile={isMobile} recommendations={convertToJson(requestProviders)} /> */}
                         </div>
                     </div>
                 </div>

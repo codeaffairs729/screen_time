@@ -29,7 +29,6 @@ const ByTime = ({ isMobile }: { isMobile:any }) => {
         isFetchingDownloadMetrics,
     } = useContext(DownloadMetricVMContext);
     const { downloadByTime = [] } = downloadMetrics || {};
-
     if (error) {
         return (
             <ErrorAlert
