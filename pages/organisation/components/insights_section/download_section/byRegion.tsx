@@ -47,27 +47,27 @@ const ByRegion = ({ isMobile }: { isMobile: boolean }) => {
         getAge(region.date),
     ]);
     return (
-        <div className=" sm:px-20">
+        <div className=" sm:px-20 flex items-center justify-center flex-col">
             <div className="text-sm sm:block text-[#727272] my-4">
                 <div className="sm:my-8 text-sm text-[#727272] text-center ">
                     Dataset downloads aggregated on the basis of locations for the
                     whole organisation.
                 </div>
             </div>
-            <div className="sm:px-32">
+            <div className=" w-full">
                 <MapChartComponent regions={regions} isMobile={isMobile} />
                 {/* <WorldMap locations={loc} counts={downloadCounts} /> */}
             </div>
-            <div className="mt-8 flex sm:mx-20 ">
+            {/* <div className="mt-8 w-full "> */}
                 <Table
                     tableHeaders={TABLE_HEADERS}
                     tableData={tableData}
-                    headerClass="sm:text-[17px] !py-2 sm:!py-4 !text-xs border-2 border-white sm:!w-auto sm:!px-10 !px-4  text-white text-center sm:font-medium sm:bg-dtech-new-main-light bg-dtech-dark-teal "
-                    tableClass=" text-sm border-white sm:w-[180%] !px-10 text-white text-center sm:font-medium bg-[#EBEBEB]"
+                    headerClass="sm:text-[17px] !py-2 sm:!py-4 !text-xs border-2 border-white sm:!px-10 !px-4  text-white text-center sm:font-medium sm:bg-dtech-new-main-light bg-dtech-dark-teal "
+                    tableClass=" text-sm border-white  !px-10 text-white text-center sm:font-medium bg-[#EBEBEB]"
                     cellPadding={20}
                     tableRow="sm:text-[17px] text-black font-normal py-2 sm:!py-4  sm:!px-10 !px-4  border-2 border-white"
                 />
-            </div>
+            {/* </div> */}
         </div>
     );
 };

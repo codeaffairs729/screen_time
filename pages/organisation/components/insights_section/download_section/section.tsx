@@ -80,8 +80,7 @@ const DownloadSection = () => {
                 </Tab.Group>
             </div>
             <div className="sm:flex flex-row hidden my-6 relative">
-                <div className=" w-[350px] text-dtech-main-dark absolute z-20">Insights &gt; Dataset Quality &gt; {selectedLabel == 0 ? "By Region" : selectedLabel==1?"By Time": "By Role"}</div>
-                <div className=" flex justify-center items-center w-full text-[#727272] ">Rating out of 5 <BsFillStarFill className=" ml-3" /><BsFillStarFill /><BsFillStarFill /><BsFillStarFill /><BsFillStarFill /></div>
+                <div className=" w-[350px] text-dtech-main-dark absolute z-20">Insights &gt; Download Metrics &gt; {selectedLabel == 0 ? "By Region" : selectedLabel==1?"By Time": "By Role"}</div>
             </div>
             {selectedLabel == 0 && <ByRegion isMobile={isMobile} />}
             {selectedLabel == 1 && <ByTime isMobile={isMobile} />}
