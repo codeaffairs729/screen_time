@@ -35,11 +35,11 @@ const ContactUs = () => {
         }
     };
     return (
-        <div className="flex flex-col">
+        <div className="flex flex-col w-full ">
             <div className=" my-4 font-bold sm:text-lg">Say Hello 👋</div>
-            <div className=" flex flex-row ">
-                <div className=" bg-dtech-light-teal w-[2px] mr-4 "></div>
-                <div className="flex flex-col">
+            <div className=" flex flex-row w-full ">
+                <div className=" bg-dtech-light-teal min-w-[2px] mr-4 "></div>
+                <div className="flex flex-col w-full">
                     <div className="mb-2">
                         <FormRow
                             label="Name"
@@ -54,7 +54,7 @@ const ContactUs = () => {
                         />
                     </div>
                     <TextField
-                        className=" -mt-6 sm:-mt-8 rounded-xl !bg-transparent"
+                        className=" -mt-6 !static w-[100%]  sm:-mt-8 rounded-xl !bg-transparent"
                         textfieldClassName="!bg-white !rounded-full "
                         formControl={{
                             control: vm.form.control,
@@ -84,7 +84,7 @@ const ContactUs = () => {
                         /> */}
                     </div>
                     <TextField
-                        className=" sm:-mt-2 rounded-xl !bg-transparent "
+                        className=" sm:-mt-2 !static w-[100%] rounded-xl !bg-transparent "
                         textfieldClassName="!bg-white !rounded-full"
                         formControl={{
                             control: vm.form.control,
@@ -111,7 +111,7 @@ const ContactUs = () => {
                         </FormRow>
                     </div>
                     <TextField
-                        className=" !-mt-2 sm:-mt-8 rounded-xl !bg-transparent "
+                        className=" !-mt-2 sm:-mt-8 !static w-[100%] rounded-xl !bg-transparent "
                         textfieldClassName="!bg-white !rounded-full"
                         placeholder="Enter Message"
                         formControl={{

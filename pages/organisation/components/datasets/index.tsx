@@ -105,7 +105,7 @@ const Datasets = () => {
                     <tbody className=" sm:border-t-[1px] border-black">
                         {organisationDatasets?.datasets?.map((item: any, index: any) => (
                             <tr className=" border-b-[1px] h-14" key={index}>
-                                <td className="underline  p-2 text-xs border-r-[1px] sm:border-r-0 sm:text-sm text-dtech-main-dark w-1/2 min-w-[120px] sm:w-[32%]">{item.title}</td>
+                                <td className="underline  p-2 text-xs border-r-[1px] sm:border-r-0 sm:text-sm text-dtech-main-dark w-1/2 min-w-[120px] sm:w-[32%]"><a href={`${process.env.NEXT_PUBLIC_WEBCLIENT_ROOT}/datasets/${item.id}`}>{item.title}</a></td>
                                 <td className="sm:w-[17%] p-2 text-xs sm:text-sm min-w-[100px] text-center">{new Date(item.last_updated).toLocaleDateString('en-GB')}</td>
                                 <td className="sm:w-[17%] p-2 text-xs sm:text-sm text-center">{item.views}</td>
                                 <td className="sm:w-[17%] p-2 text-xs sm:text-sm text-center">{item.downloads}</td>

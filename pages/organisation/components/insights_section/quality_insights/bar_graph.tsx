@@ -15,7 +15,7 @@ function BarChart({ data, titles, isMobile }: { data: any, titles: any, isMobile
             const star = Object.keys(item)[0];
             return { category: star, value: item[star] };
         });
-
+        
         // Add data
         chart.data = chartData;
 
@@ -39,7 +39,7 @@ function BarChart({ data, titles, isMobile }: { data: any, titles: any, isMobile
         return () => {
             chart.dispose();
         };
-    }, []);
+    }, [data]);
 
     return <div id="chartDiv" style={{ width: "100%", height: (isMobile?"200px":"400px") }}></div>;
 }

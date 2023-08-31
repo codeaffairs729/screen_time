@@ -19,7 +19,7 @@ const MapChartComponent = ({ regions, isMobile }: { regions: any, isMobile :bool
     let polygonSeries = new am4maps.MapPolygonSeries();
     chart.zoomControl = new am4maps.ZoomControl();
     chart.height = isMobile?328:656;
-    chart.width = isMobile?280:760;
+    chart.width = isMobile?280:window.innerWidth;
     chart.zoomControl.align = isMobile?"right":"left"; // Set alignment (right side)
     chart.zoomControl.valign = "top"; // Set vertical alignment (bottom)
     // chart.zoomControl.slider.height = 100; // Set the height of the zoom slider
@@ -66,20 +66,6 @@ const MapChartComponent = ({ regions, isMobile }: { regions: any, isMobile :bool
       }
     })
     imageSeries.data = data
-    // Add data for the three cities
-    // imageSeries.data = [{
-    //   "latitude": 48.856614,
-    //   "longitude": 2.352222,
-    //   "title": "Paris"
-    // }, {
-    //   "latitude": 40.712775,
-    //   "longitude": -74.005973,
-    //   "title": "New York"
-    // }, {
-    //   "latitude": 49.282729,
-    //   "longitude": -123.120738,
-    //   "title": "Vancouver"
-    // }];
     polygonSeries.exclude = ["AQ"];
 
     // Make map load polygon data (country shapes and names) from GeoJSON

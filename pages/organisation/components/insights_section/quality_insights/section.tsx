@@ -20,6 +20,7 @@ import Label from "../label";
 import { qualityInsights, QualityMetricVMContext } from "./quality_metric.vm";
 import Dropdown, { MenuItemType } from "components/UI/drop_down";
 import clsx from "clsx";
+import InfoIcon from "components/UI/icons/info_icon";
 
 const ITEMS: MenuItemType[] = [{ label: "metadata" }, { label: "data_file" }];
 
@@ -149,12 +150,12 @@ const QualityInsightsBody = () => {
             </div>
             <div>
                 <div
-                    className="sm:overflow-auto  overflow-x-hidden"
+                    className="sm:overflow-none  overflow-x-hidden sm:py-10 sm:-mt-10"
                 >
                     <table className=" w-full h-full "
                         style={{ transform: `translateX(-${currentSlide * percentToSlide}%)` }}
                     >
-                        <thead className="">
+                        <thead className=" ">
                             <tr className="">
                                 <th className="sm:w-[25%] p-2 text-xs border-r-[1px] sm:border-r-0 sm:text-sm w-1/2 text-left  pb-4 min-w-[130px]">All Datasets ({totalMatches})</th>
                                 {/* {Object.keys(items)?.map((key, index) => {
@@ -164,18 +165,74 @@ const QualityInsightsBody = () => {
                                 {
                                     Object.keys(items).length == 5
                                         ?
-                                        <><th className="sm:w-[15%] p-2 text-xs sm:text-sm text-center pb-4">Overall</th>
-                                            <th className="sm:w-[15%] p-2 text-xs sm:text-sm text-center pb-4">Accuracy</th>
-                                            <th className="sm:w-[15%] p-2 text-xs sm:text-sm text-center pb-4">Clarity</th>
-                                            <th className="sm:w-[15%] p-2 text-xs sm:text-sm text-center pb-4">Consistency</th>
-                                            <th className="sm:w-[15%] p-2 text-xs sm:text-sm text-center pb-4">Readiness</th></>
+                                        <><th className="sm:w-[15%] p-2 text-xs sm:text-sm text-center pb-4">Overall
+                                            <InfoIcon
+                                            tooltipClassName=" max- max-w-sm  !bg-dtech-dark-teal"
+                                                iconClasses="text-dtech-dark-teal ml-1"
+                                                title={`${items['overallScore'].tooltipTitle}`}
+                                        /></th>
+                                            <th className="sm:w-[15%] p-2 text-xs sm:text-sm text-center pb-4">Accuracy
+                                                <InfoIcon
+                                                    tooltipClassName=" max- max-w-sm  !bg-dtech-dark-teal"
+                                                iconClasses="text-dtech-dark-teal ml-1"
+                                                    title={`${items['accuracy'].tooltipTitle}`}
+                                                /></th>
+                                            <th className="sm:w-[15%] p-2 text-xs sm:text-sm text-center pb-4">Clarity
+                                                <InfoIcon
+                                                    tooltipClassName=" max- max-w-sm  !bg-dtech-dark-teal"
+                                                iconClasses="text-dtech-dark-teal ml-1"
+                                                    title={`${items['clarity'].tooltipTitle}`}
+                                                /></th>
+                                            <th className="sm:w-[15%] p-2 text-xs sm:text-sm text-center pb-4">Consistency
+                                                <InfoIcon
+                                                    tooltipClassName=" max-w-2xl !bg-dtech-dark-teal"
+                                                iconClasses="text-dtech-dark-teal ml-1"
+                                                    title={`${items['consistency'].tooltipTitle}`}
+                                                /></th>
+                                            <th className="sm:w-[15%] p-2 text-xs sm:text-sm text-center pb-4">Readiness
+                                                <InfoIcon
+                                                    tooltipClassName=" max- max-w-sm  !bg-dtech-dark-teal"
+                                                iconClasses="text-dtech-dark-teal ml-1"
+                                                    title={`${items['readiness'].tooltipTitle}`}
+                                                /></th></>
                                         :
-                                        <><th className="sm:w-[15%] p-2 text-xs sm:text-sm text-center pb-4">Overall</th>
-                                            <th className="sm:w-[15%] p-2 text-xs sm:text-sm text-center pb-4">Accessibility</th>
-                                            <th className="sm:w-[15%] p-2 text-xs sm:text-sm text-center pb-4">Contextuality</th>
-                                            <th className="sm:w-[15%] p-2 text-xs sm:text-sm text-center pb-4">Findability</th>
-                                            <th className="sm:w-[15%] p-2 text-xs sm:text-sm text-center pb-4">Interoperability</th>
-                                            <th className="sm:w-[15%] p-2 text-xs sm:text-sm text-center pb-4">Reusability</th></>
+                                        <><th className="sm:w-[15%] p-2 text-xs sm:text-sm text-center pb-4">Overall
+                                            <InfoIcon
+                                                tooltipClassName=" max-w-2xl !bg-dtech-dark-teal"
+                                                iconClasses="text-dtech-dark-teal ml-1"
+                                                title={`${items['overallScore'].tooltipTitle}`}
+                                            /></th>
+                                            <th className="sm:w-[15%] p-2 text-xs sm:text-sm text-center pb-4">Accessibility
+                                                <InfoIcon
+                                                    tooltipClassName=" max-w-2xl !bg-dtech-dark-teal"
+                                                    iconClasses="text-dtech-dark-teal ml-1"
+                                                    title={`${items['accessibility'].tooltipTitle}`}
+                                                /></th>
+                                            <th className="sm:w-[15%] p-2 text-xs sm:text-sm text-center pb-4">Contextuality
+                                                <InfoIcon
+                                                    tooltipClassName=" max-w-2xl !bg-dtech-dark-teal"
+                                                    iconClasses="text-dtech-dark-teal ml-1"
+                                                    title={`${items['contextuality'].tooltipTitle}`}
+                                                />
+                                            </th>
+                                            <th className="sm:w-[15%] p-2 text-xs sm:text-sm text-center pb-4">Findability
+                                                <InfoIcon
+                                                    tooltipClassName=" max-w-2xl !bg-dtech-dark-teal"
+                                                iconClasses="text-dtech-dark-teal ml-1"
+                                                    title={`${items['findability'].tooltipTitle}`}
+                                                /></th>
+                                            <th className="sm:w-[15%] p-2 text-xs sm:text-sm text-center pb-4">Interoperability
+                                                <InfoIcon
+                                                    tooltipClassName=" max-w-2xl !bg-dtech-dark-teal"
+                                                iconClasses="text-dtech-dark-teal ml-1"
+                                                    title={`${items['interoperability'].tooltipTitle}`}
+                                                /></th>
+                                            <th className="sm:w-[15%] p-2 text-xs sm:text-sm text-center pb-4">Reusability
+                                                <InfoIcon
+                                                    tooltipClassName=" max-w-2xl !bg-dtech-dark-teal"
+                                                iconClasses="text-dtech-dark-teal ml-1"
+                                                    title={`${items['reusability'].tooltipTitle}`}
+                                                /></th></>
                                 }
                             </tr>
                         </thead>
@@ -183,7 +240,7 @@ const QualityInsightsBody = () => {
                             ? <tbody className=" sm:border-t-[1px] border-black">
                                 {items["overallScore"]?.datasets?.map((item: any, index: any) => (
                                     <tr className=" border-b-[1px] h-14" key={index}>
-                                        <td className="underline  p-2 text-xs border-r-[1px] sm:border-r-0 sm:text-sm text-dtech-main-dark w-1/2 min-w-[120px] sm:w-[25%]">{item.title}</td>
+                                        <td className="underline  p-2 text-xs border-r-[1px] sm:border-r-0 sm:text-sm text-dtech-main-dark w-1/2 min-w-[120px] sm:w-[25%]"><a href={`${process.env.NEXT_PUBLIC_WEBCLIENT_ROOT}/datasets/${item.id}`}>{item.title}</a></td>
                                         <td className="sm:w-[15%] p-2 text-xs sm:text-sm text-center">{item.rating.replace("N/A","-")}</td>
                                         <td className="sm:w-[15%] p-2 text-xs sm:text-sm text-center">{item.factorWiseRating.accuracy ?? "-"}</td>
                                         <td className="sm:w-[15%] p-2 text-xs sm:text-sm text-center">{item.factorWiseRating.clarity ?? "-"}</td>
@@ -195,7 +252,7 @@ const QualityInsightsBody = () => {
                             : <tbody className=" sm:border-t-[1px] border-black">
                                 {items["overallScore"]?.datasets?.map((item: any, index: any) => (
                                     <tr className=" border-b-[1px] h-14" key={index}>
-                                        <td className="underline  p-2 text-xs border-r-[1px] sm:border-r-0 sm:text-sm text-dtech-main-dark w-1/2 min-w-[120px] sm:w-[25%]">{item.title}</td>
+                                        <td className="underline  p-2 text-xs border-r-[1px] sm:border-r-0 sm:text-sm text-dtech-main-dark w-1/2 min-w-[120px] sm:w-[25%]"><a href={`${process.env.NEXT_PUBLIC_WEBCLIENT_ROOT}/datasets/${item.id}`}>{item.title}</a></td>
                                         <td className="sm:w-[15%] p-2 text-xs sm:text-sm text-center">{item.factorWiseRating.overall ?? "-"}</td>
                                         <td className="sm:w-[15%] p-2 text-xs sm:text-sm text-center">{item.factorWiseRating.accessibility ?? "-"}</td>
                                         <td className="sm:w-[15%] p-2 text-xs sm:text-sm text-center">{item.factorWiseRating.contextuality ?? "-"}</td>

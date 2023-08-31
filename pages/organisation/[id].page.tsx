@@ -1,6 +1,6 @@
 import DefaultLayout from "components/layouts/default";
 import BackBtn from "components/UI/buttons/back_btn";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import OrganisationHead from "./components/organisation_head";
 import { Tab } from "@headlessui/react";
 import TabPanel from "components/UI/tabbed/panel";
@@ -37,7 +37,7 @@ const OrganisationDetailPage = ({
     organisation, requestProviders
 }: {
     organisation: Organisation | undefined, requestProviders: any
-    }) => {
+}) => {
     const [loading, setLoading] = useState<boolean>(false);
     const [isMobile, setIsMobile] = useState<boolean>(false);
     const [selectedIndex, setSelectedIndex] = useState<any>(0);
@@ -47,6 +47,7 @@ const OrganisationDetailPage = ({
     const { asPath } = useRouter();
     const vm: any = OrganisationDetailVM(organisation, asPath.split("/")[2]);
     const user = useSelector((state: RootState) => state.auth.user);
+    const imageRef = useRef<HTMLDivElement>(null)
     useEffect(() => {
         const hashParam: string = asPath.split("#")[1];
         setSelectedIndex(tabIndex[hashParam as any]);
@@ -74,10 +75,27 @@ const OrganisationDetailPage = ({
         };
     }, []);
     const handleScroll = () => {
-        setScrollPosition(window.scrollY);
+        setScrollPosition(-window.scrollY);
+        setHeight(window.scrollY)
     };
-    const upperLimit = 128;
-    const translationValue = Math.min(scrollPosition * 0.5, upperLimit);
+    const upperLimit1 = -60;
+    const upperLimit2 = -270;
+    const translationValue1 = Math.max(scrollPosition * 0.5, upperLimit1);
+    const translationValue2 = Math.max(scrollPosition * 0.3, upperLimit2*1.2 );
+    useEffect(() => {
+        if (imageRef.current) {
+            const desiredHeight = `${250}px`;
+            imageRef.current.style.height = desiredHeight;
+            imageRef.current.style.width = desiredHeight;
+        }
+    }, [])
+    const setHeight = (size: any) => {
+        if (imageRef.current) {
+            const desiredHeight = `${250 - size}px`; 
+            imageRef.current.style.height = desiredHeight;
+            imageRef.current.style.width = desiredHeight;
+        }
+    };
     if (!organisation) {
         return (
             <DefaultLayout>
@@ -92,33 +110,38 @@ const OrganisationDetailPage = ({
         <DefaultLayout>
             <OrganisationDetailVMContext.Provider value={vm}>
                 <div className=" bg-[#EBEBEB] ">
+                    <div className=" bg-white h-16 sm:h-10 -mt-20 sm:mt-0">
+
+                    </div>
                     <div
                         className="bg-black  h-[414px] absolute right-0 z-0 w-full">
                         {/* <img src={organisation.topic_image} className=" w-full" /> */}
                     </div>
                     <div className="px-4 relative">
                         <div
-                            className="hidden sm:flex flex-row justify-between mb-4 my-10 ml-4 items-center">
+                            className="hidden sm:flex flex-row justify-between mb-4 my-10 ml-4 items-center ">
                             <p className="text-center text-2xl font-bold  px-[37px] py-[18px] bg-[#0E9A8E] bg-opacity-60 text-white">
                                 Data Provider
                             </p>
                             <span></span>
-                            <a href={`${organisation.url}`} target="_blank" rel="noreferrer" className=" h-[100px] w-[100px] mt-4 bg-[#0E9A8E] bg-opacity-60 rounded-full relative flex items-center justify-center">
-                                <img
-                                    // data-tip={"Click to open website"}
-                                    src={organisation.imgUrl}
-                                    alt=""
-                                    className="h-[70px] w-[70px] absolute z-20 rounded-full"
-                                />
-                            </a>
+                            <div ref={imageRef} className=" rounded-full min-h-[100px] min-w-[100px]">
+                                <a href={`${organisation.url}`} target="_blank" rel="noreferrer" className="h-full w-full overflow-hidden bg-[#0E9A8E] bg-opacity-60 rounded-full relative flex items-center justify-center">
+                                    <img
+                                        // data-tip={"Click to open website"}
+                                        src={organisation.imgUrl}
+                                        alt=""
+                                        className={clsx(`h-[70%] w-[70%] absolute z-10 `)}
+                                    />
+                                </a>
+                            </div>
                         </div>
                         <div className="flex sm:hidden flex-row px-4 py-2 my-2  items-center bg-[#0E9A8E] bg-opacity-60">
-                            <a href={`${organisation.url}`} target="_blank" rel="noreferrer">
+                            <a href={`${organisation.url}`} target="_blank" rel="noreferrer" className=" rounded-full overflow-hidden">
                                 <img
                                     // data-tip={"Click to open website"}
                                     src={organisation.imgUrl}
                                     alt=""
-                                    className="h-[70px] w-[70px]  rounded-full"
+                                    className="h-[80px] w-[80px] p-2 "
                                 />
                             </a>
                             <p className="text-center text-lg font-bold mx-4 text-white">
@@ -126,39 +149,44 @@ const OrganisationDetailPage = ({
                             </p>
                         </div>
                         <div
-                            style={{ transform: `translateY(-${translationValue}px)` }}
-                            className="w-full h-fit py-4 sm:mt-24 mt-32 bg-white rounded-lg">
-                            <OrganisationHead />
-                        </div>
+                            style={{ marginTop: `${translationValue1}px` }}
+                        >
+                            <div
+                                className="w-full h-fit py-4 sm:mt-24 mt-32 bg-white rounded-lg">
+                                <OrganisationHead />
+                            </div>
 
-                        <div className="flex border-t  sm:-mt-28 -mt-28  flex-col bg-[#EBEBEB]">
-                            {!loading && (
-                                <Tab.Group defaultIndex={selectedIndex}>
-                                    <OrganisationTabHeaders
-                                        selectedIndex={selectedIndex}
-                                        user={User.getRole(user)?.name}
-                                    />
-                                    <Tab.Panels className="h-[calc(100%-var(--dataset-detail-tab-header-height))] w-full flex">
-                                        <TabPanel className="!bg-white">
-                                            <Datasets />
-                                        </TabPanel>
-                                        <TabPanel className="!bg-white">
-                                            <Insights />
-                                        </TabPanel>
-                                        <TabPanel className={clsx("!bg-white  ", isReportGenerated && "!bg-transparent sm:!bg-white")}>
-                                            {(User.getRole(user)?.name ===
-                                            ORGANIZATION_ADMIN ||
-                                            User.getRole(user)?.name ===
-                                            ORGANIZATION_MEMBER) && (
-                                            <Report setIsReportGenerated={setIsReportGenerated} isReportGenerated={isReportGenerated} />
-                                            )} 
-                                        </TabPanel>
-                                    </Tab.Panels>
-                                </Tab.Group>
-                            )}
-                        </div>
-                        <div className=" sm:h-8">
-                            {/* <RelatedProviders isMobile={isMobile} recommendations={convertToJson(requestProviders)} /> */}
+                            <div className="flex border-t sm:mt-[600px]  flex-col bg-[#EBEBEB]"
+                                style={{ marginTop: `${translationValue2 + (isMobile?320:200)}px` }}
+                            >
+                                {!loading && (
+                                    <Tab.Group defaultIndex={selectedIndex}>
+                                        <OrganisationTabHeaders
+                                            selectedIndex={selectedIndex}
+                                            user={User.getRole(user)?.name}
+                                        />
+                                        <Tab.Panels className="h-[calc(100%-var(--dataset-detail-tab-header-height))] w-full flex">
+                                            <TabPanel className="!bg-white">
+                                                <Datasets />
+                                            </TabPanel>
+                                            <TabPanel className="!bg-white">
+                                                <Insights />
+                                            </TabPanel>
+                                            <TabPanel className={clsx("!bg-white  ", isReportGenerated && "!bg-transparent sm:!bg-white")}>
+                                                {(User.getRole(user)?.name ===
+                                                    ORGANIZATION_ADMIN ||
+                                                    User.getRole(user)?.name ===
+                                                    ORGANIZATION_MEMBER) && (
+                                                        <Report setIsReportGenerated={setIsReportGenerated} isReportGenerated={isReportGenerated} />
+                                                    )}
+                                            </TabPanel>
+                                        </Tab.Panels>
+                                    </Tab.Group>
+                                )}
+                            </div>
+                            <div className=" sm:h-8">
+                                {/* <RelatedProviders isMobile={isMobile} recommendations={convertToJson(requestProviders)} /> */}
+                            </div>
                         </div>
                     </div>
                 </div>

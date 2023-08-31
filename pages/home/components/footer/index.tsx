@@ -7,13 +7,13 @@ const Footer = () => {
         <div className="  bg-[#EBEBEB]" style={{
             // background: "linear-gradient(to bottom, #B585B770, #6DCDCB59)"
         }}>
-            <div className=" sm:py-6 sm:px-[10%]">
-                <div className="flex flex-col sm:flex-row sm:px-[10%] px-6 bg-white ">
+            <div className=" sm:py-6 sm:px-[10%] ">
+                <div className="flex flex-col sm:flex-row sm:px-[10%] px-6 max-w-full bg-white ">
                     <div className="flex flex-row sm:w-2/3 sm:px-2 sm:py-4 ">
                         <Resources />
                         <LearnMore />
                     </div>
-                    <div className=" sm:px-2 sm:py-4">
+                    <div className=" sm:px-2 sm:py-4 sm:w-1/3 ">
                         <ContactUs />
                     </div>
                 </div>

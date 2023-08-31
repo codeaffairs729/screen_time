@@ -35,45 +35,31 @@ const UseCaseSection = () => {
             <Loader />
         </div>
     }
-
-    const pieData = useCaseMetricVM.useCases.map((data: any) => [
+    const pieData = sortAndAggregate(useCaseMetricVM.useCases).map((data: any) => [
         data.category.charAt(0).toUpperCase() + data.category.slice(1),
         data.value
 
     ]);
-    interface RatingCategory {
-        category: string;
-        value: number;
-    }
+    
 
-    function sortAndAggregate(categories: RatingCategory[]): RatingCategory[] {
-        const sortedCategories = categories.slice().sort((a, b) => b.value - a.value);
+    function sortAndAggregate(categories: any) {
+        const sortedCategories = categories.slice().sort((a:any, b:any) => b.value - a.value);
 
         if (sortedCategories.length > 10) {
             const otherCategories = sortedCategories.slice(9);
-            const aggregatedValue = otherCategories.reduce((sum, category) => sum + category.value, 0);
+            const aggregatedValue = otherCategories.reduce((sum:any, category:any) => sum + category.value, 0);
             sortedCategories[9] = { category: 'others', value: aggregatedValue };
             return sortedCategories.slice(0, 10);
         }
 
         return sortedCategories;
     }
-
-    const ratings: RatingCategory[] = [
-        { category: 'publications', value: 3 },
-        { category: 'software', value: 1 },
-        { category: 'data-modelling', value: 2 },
-        { category: 'planning', value: 1 },
-        { category: 'policy', value: 1 },
-        // Add more items as needed
-    ];
-
-    const sortedAndAggregated: RatingCategory[] = sortAndAggregate(ratings);
+    
     return (
         <div className="flex flex-col items-center justify-center">
             <div className=" text- text-[#727272] sm:text-sm text-xs my-6 sm:my-10">{isMobile ? "Dataset downloads aggregated on the basis of user role for the whole organisation" : "Use cases of datasets gathered from user feedback aggregated on the data provider level."}.</div>
             <div className=" sm:ml-[50%] w-full">
-                <PieChartComponent isMobile={isMobile} chartData={sortedAndAggregated} />
+                <PieChartComponent isMobile={isMobile} chartData={sortAndAggregate(useCaseMetricVM.useCases)} />
             </div>
             <div className=" items-center flex justify-center">
                 <Table
