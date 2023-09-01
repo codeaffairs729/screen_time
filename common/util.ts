@@ -1,4 +1,5 @@
 import log from "common/logger";
+import AuthService from "services/auth.service";
 
 export const isBrowser = () => {
     return !(typeof window === "undefined");
