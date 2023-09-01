@@ -17,6 +17,7 @@ import {
     // NotificationsVMContext,
 } from "./workspace/notification.vm";
 import Head from "next/head";
+import IdleTimeoutModal from "./components/idle_timeout";
 
 function DtechtiveApp({ Component, pageProps }: AppProps) {
     const router = useRouter();
@@ -47,13 +48,13 @@ function DtechtiveApp({ Component, pageProps }: AppProps) {
             localStorage.setItem("previous_path", previousPath);
             setPreviousPath(router.asPath);
         };
-    
+
         router.events.on("routeChangeComplete", handleRouteChange);
-    
+
         return () => {
-          router.events.off("routeChangeComplete", handleRouteChange);
+            router.events.off("routeChangeComplete", handleRouteChange);
         };
-      }, [router.asPath]);
+    }, [router.asPath]);
 
     useScript("/js/acctoolbar.min.js");
 
@@ -87,7 +88,8 @@ function DtechtiveApp({ Component, pageProps }: AppProps) {
     }, [router.events]);
     useEffect(() => {
         const user = store.getState().auth.user;
-        if (document.cookie.includes(AUTH_TOKEN) && user) vm.fetchNotifications(user);
+        if (document.cookie.includes(AUTH_TOKEN) && user)
+            vm.fetchNotifications(user);
     }, []);
     return (
         <>
@@ -118,6 +120,7 @@ function DtechtiveApp({ Component, pageProps }: AppProps) {
                             className: "dtechtive-toast-container",
                         }}
                     />
+                    <IdleTimeoutModal />
                 </PersistGate>
             </Provider>
         </>
