@@ -1,37 +1,75 @@
 import { Dialog, Transition } from "@headlessui/react";
 import PrimaryBtn from "components/UI/form/primary_btn";
-import { useRouter } from "next/router";
+import User from "models/user.model";
 import { Fragment, useCallback, useEffect, useRef } from "react";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import AuthService from "services/auth.service";
 import { RootState } from "store";
 
+/**
+ * Make sure the new session is valid
+ * 
+ * Session can become invalid if the user has closed his browser tab without 
+ * logging out and `sessionTimeoutTime` time has passed.
+ * In such a case this function is called on mount to check whether the 
+ * new session[the newly loaded page] is valid
+ */
+const isSessionValid = (user: User | null) => {
+    if (!user) {
+        return true;
+    }
+    const sessionTimeoutTime =
+        Number(process.env.NEXT_PUBLIC_SESSION_TIMEOUT_TIME) * 1000;
+    const currentTimeStamp = Date.now();
+    const lastActivityTimeStamp = Number(
+        localStorage.getItem("lastActivityTimeStamp")
+    );
+    return !lastActivityTimeStamp || (currentTimeStamp - lastActivityTimeStamp < sessionTimeoutTime);
+};
+
 const IdleTimeoutModal = () => {
     const user = useSelector((state: RootState) => state.auth.user);
     const sessionTimeoutTime =
         Number(process.env.NEXT_PUBLIC_SESSION_TIMEOUT_TIME) * 1000; // Seconds after which the modal will be displayed
-    const modalTimeoutTime = 300 * 1000; // [300|5mins]Seconds after modal is opened after which user will be redirected to login page, unless user chooses to stay logged in
+    const modalTimeoutTime = 300 * 1000; // [300|5mins]Seconds after modal is opened, user will be redirected to login page, unless user chooses to stay logged in
     const [isOpen, setIsOpen] = useState(false);
     const [timer, setTimer] = useState("00");
     const sessionTimeOut: any = useRef(null);
     const modalTimeOut: any = useRef(null);
     const modalTimer: any = useRef(null);
+
     // User click on "Stay Logged in"
     const stayLoggedIn = () => {
         setIsOpen(false);
+        clearTimeout(sessionTimeOut.current);
+        clearTimeout(modalTimeOut.current);
+        clearInterval(modalTimer.current);
+        sessionTimeOut.current = setTimeout(() => {
+            setIsOpen(true);
+        }, sessionTimeoutTime);
     };
     // User click on "Log out"
     const logOff = () => {
-        AuthService.logout();
+        clearTimeout(sessionTimeOut.current);
+        clearTimeout(modalTimeOut.current);
+        clearInterval(modalTimer.current);
         setIsOpen(false);
+        AuthService.logout();
     };
     // Call back fired user presses a key or moves the pointer
     const userEventsListener = useCallback(() => {
         clearTimeout(sessionTimeOut.current);
+        localStorage.setItem("lastActivityTimeStamp", JSON.stringify(Date.now()));
         sessionTimeOut.current = setTimeout(() => {
             setIsOpen(true);
         }, sessionTimeoutTime);
+    }, []);
+
+    useEffect(() => {
+        if (!isSessionValid(user)) {
+            logOff();
+        }
     }, []);
 
     useEffect(() => {
@@ -42,9 +80,7 @@ const IdleTimeoutModal = () => {
             clearInterval(modalTimer.current);
             return;
         }
-        sessionTimeOut.current = setTimeout(() => {
-            setIsOpen(true);
-        }, sessionTimeoutTime);
+        stayLoggedIn();
         const userEvents = ["keydown", "mousemove"];
         userEvents.forEach((event) => {
             window.addEventListener(event, userEventsListener);
@@ -90,9 +126,9 @@ const IdleTimeoutModal = () => {
         <Transition appear show={isOpen} as={Fragment}>
             <Dialog
                 as="div"
-                className="relative z-10"
+                className="relative z-40"
                 open={isOpen}
-                onClose={() => setIsOpen(false)}
+                onClose={stayLoggedIn}
             >
                 <Transition.Child
                     as={Fragment}
