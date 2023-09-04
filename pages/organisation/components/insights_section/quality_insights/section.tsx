@@ -241,7 +241,7 @@ const QualityInsightsBody = () => {
                                 {items["overallScore"]?.datasets?.map((item: any, index: any) => (
                                     <tr className=" border-b-[1px] h-14" key={index}>
                                         <td className="underline  p-2 text-xs border-r-[1px] sm:border-r-0 sm:text-sm text-dtech-main-dark w-1/2 min-w-[120px] sm:w-[25%]"><a href={`${process.env.NEXT_PUBLIC_WEBCLIENT_ROOT}/datasets/${item.id}`}>{item.title}</a></td>
-                                        <td className="sm:w-[15%] p-2 text-xs sm:text-sm text-center">{item.rating.replace("N/A","-")}</td>
+                                        <td className="sm:w-[15%] p-2 text-xs sm:text-sm text-center">{typeof item.rating == "string" ? item.rating.replace("N/A", "-") : item.rating}</td>
                                         <td className="sm:w-[15%] p-2 text-xs sm:text-sm text-center">{item.factorWiseRating.accuracy ?? "-"}</td>
                                         <td className="sm:w-[15%] p-2 text-xs sm:text-sm text-center">{item.factorWiseRating.clarity ?? "-"}</td>
                                         <td className="sm:w-[15%] p-2 text-xs sm:text-sm text-center">{item.factorWiseRating.consistency ?? "-"}</td>
