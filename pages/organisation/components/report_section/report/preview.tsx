@@ -20,7 +20,7 @@ const Preview = () => {
                         )
                             .replaceAll(
                                 "<h6>",
-                                '<h6 style="text-align: center; margin-bottom: 500px"><br />'
+                                '<h6 style="text-align: center; margin-bottom: 600px"><br />'
                             )
                             .replace(
                                 "<h2>",
