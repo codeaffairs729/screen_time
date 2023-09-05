@@ -8,16 +8,19 @@ const Preview = () => {
             {
                 <div
                     ref={(ref) => setDownloadRef(ref)}
-                    className="editor_preview"
+                    className="editor_preview px-20"
                     dangerouslySetInnerHTML={{
                         __html: previewContent
                             .replace(
                                 "<h1>",
-                                '<h1 style="text-align: center;font-size: 30px; margin-top:10px;">'
-                            )
+                                '<h1 style="text-align: center;font-size: 30px; margin-top:400px;">'
+                        ).replace(
+                            "<img",
+                            '<img style="margin:auto"'
+                        )
                             .replaceAll(
                                 "<h6>",
-                                '<h6 style="text-align: center;"><br />'
+                                '<h6 style="text-align: center; margin-bottom: 500px"><br />'
                             )
                             .replace(
                                 "<h2>",
@@ -25,7 +28,7 @@ const Preview = () => {
                             )
                             .replaceAll(
                                 "<h5>",
-                                '<h5 style="padding-bottom:4px;padding-top:4px;">'
+                                '<h5 style="padding-bottom:4px;padding-top:4px; font-size:x-large">'
                             )
                             .replaceAll(
                                 "<h4>",
