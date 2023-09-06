@@ -36,7 +36,6 @@ const SigninVM = () => {
         : "";
     const [signinErrorMsg, setSigninErrorMsg] = useState<string | null>();
 
-
     const { isLoading: isSigningIn, execute: executePerformLogin } =
         useHttpCall();
     const performLogin = (data: any) =>
@@ -51,14 +50,15 @@ const SigninVM = () => {
                     .run({ retries: 0, tryRefreshingToken: false });
                 // return Http.post(`/v1/users/signin`, data);
             },
-            {                  
+            {
                 onSuccess: (res) => {
                     AuthService.signin(
                         User.fromJson(res["user"]),
                         res["token"],
+                        { rememberMe: res?.remember_me },
                         getPathBool(localStorage.getItem("previous_path")),
-                        localStorage.getItem("previous_path")??"/",
-                        fetchNotifications,
+                        localStorage.getItem("previous_path") ?? "/",
+                        fetchNotifications
                     );
                     usereventLogin(User.fromJson(res["user"]));
                 },

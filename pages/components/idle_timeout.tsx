@@ -9,14 +9,14 @@ import { RootState } from "store";
 
 /**
  * Make sure the new session is valid
- * 
- * Session can become invalid if the user has closed his browser tab without 
+ *
+ * Session can become invalid if the user has closed his browser tab without
  * logging out and `sessionTimeoutTime` time has passed.
- * In such a case this function is called on mount to check whether the 
+ * In such a case this function is called on mount to check whether the
  * new session[the newly loaded page] is valid
  */
-const isSessionValid = (user: User | null) => {
-    if (!user) {
+const isSessionValid = (enableIdleTimeout: boolean) => {
+    if (!enableIdleTimeout) {
         return true;
     }
     const sessionTimeoutTime =
@@ -25,11 +25,18 @@ const isSessionValid = (user: User | null) => {
     const lastActivityTimeStamp = Number(
         localStorage.getItem("lastActivityTimeStamp")
     );
-    return !lastActivityTimeStamp || (currentTimeStamp - lastActivityTimeStamp < sessionTimeoutTime);
+    return (
+        !lastActivityTimeStamp ||
+        currentTimeStamp - lastActivityTimeStamp < sessionTimeoutTime
+    );
 };
 
 const IdleTimeoutModal = () => {
     const user = useSelector((state: RootState) => state.auth.user);
+    const rememberMe = useSelector(
+        (state: RootState) => state.auth.extraDetails?.rememberMe
+    );
+    const enableIdleTimeout = !!(user && !rememberMe); // done enable idle timeout if user not logged in or has enabled remember me when signing in
     const sessionTimeoutTime =
         Number(process.env.NEXT_PUBLIC_SESSION_TIMEOUT_TIME) * 1000; // Seconds after which the modal will be displayed
     const modalTimeoutTime = 300 * 1000; // [300|5mins]Seconds after modal is opened, user will be redirected to login page, unless user chooses to stay logged in
@@ -60,21 +67,24 @@ const IdleTimeoutModal = () => {
     // Call back fired user presses a key or moves the pointer
     const userEventsListener = useCallback(() => {
         clearTimeout(sessionTimeOut.current);
-        localStorage.setItem("lastActivityTimeStamp", JSON.stringify(Date.now()));
+        localStorage.setItem(
+            "lastActivityTimeStamp",
+            JSON.stringify(Date.now())
+        );
         sessionTimeOut.current = setTimeout(() => {
             setIsOpen(true);
         }, sessionTimeoutTime);
     }, []);
 
     useEffect(() => {
-        if (!isSessionValid(user)) {
+        if (!isSessionValid(enableIdleTimeout)) {
             logOff();
         }
     }, []);
 
     useEffect(() => {
         // if user not logged in clear all timers
-        if (!user) {
+        if (!enableIdleTimeout) {
             clearTimeout(sessionTimeOut.current);
             clearTimeout(modalTimeOut.current);
             clearInterval(modalTimer.current);
@@ -91,10 +101,10 @@ const IdleTimeoutModal = () => {
                 window.removeEventListener(event, userEventsListener);
             });
         };
-    }, [user]);
+    }, [enableIdleTimeout]);
 
     useEffect(() => {
-        if (!user) return;
+        if (!enableIdleTimeout) return;
         if (isOpen) {
             // Setup timer to be shown on the modal
             const currDt = new Date();
@@ -120,7 +130,7 @@ const IdleTimeoutModal = () => {
             clearInterval(modalTimer.current);
             clearTimeout(modalTimeOut.current);
         };
-    }, [isOpen, user]);
+    }, [isOpen, enableIdleTimeout]);
 
     return (
         <Transition appear show={isOpen} as={Fragment}>

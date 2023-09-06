@@ -4,7 +4,12 @@ import User from "models/user.model";
 import Router from "next/router";
 import toast from "react-hot-toast";
 import { initializeStore } from "store";
-import { logoutUser, updateToken, updateUser } from "store/auth/auth.action";
+import {
+    logoutUser,
+    updateDetails,
+    updateToken,
+    updateUser,
+} from "store/auth/auth.action";
 import Http, { HttpBuilder } from "common/http";
 import UserService from "./user.service";
 
@@ -12,6 +17,7 @@ class AuthService {
     static async signin(
         user: User,
         token: string,
+        extraDetails: { [key: string]: any },
         redirectback: boolean,
         redirectUrl: string,
         fetchNotifications: Function
@@ -27,6 +33,7 @@ class AuthService {
         const store = initializeStore();
         store.dispatch(updateUser(user));
         store.dispatch(updateToken(token));
+        store.dispatch(updateDetails(extraDetails));
         // Router.push(redirectUrl);
         // redirectback ? Router.back() : Router.push(redirectUrl);
         // 2. add token and role to cookie
