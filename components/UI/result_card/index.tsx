@@ -41,7 +41,6 @@ interface ResultCardProps {
 const ResultCard = ({ data, handleFAQClick }: ResultCardProps) => {
     const [resultRecord, setResultRecord] = useState(data);
     const { dataProviders, stats, lastUpdate } = data || {};
-
     return (
         <div className="rounded-lg px-5 py-1.5 flex flex-row justify-between bg-dtech-light-grey hover:bg-dtech-main-light w-full my-2">
             <div className="flex flex-col flex-1 w-full">
@@ -49,6 +48,7 @@ const ResultCard = ({ data, handleFAQClick }: ResultCardProps) => {
                     handleFAQClick={handleFAQClick}
                     data={resultRecord}
                     setData={setResultRecord}
+                    datasetSource={dataProviders?.datasetSource}
                 />
                 <CardBody data={resultRecord} />
                 <CardFooter

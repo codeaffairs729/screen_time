@@ -35,7 +35,7 @@ const Sidebar = ({ className = "" }: { className?: string }) => {
             </button>
             <div
                 className={clsx(
-                    "border-0 rounded overflow-hidden mx-3 mt-[6.50px] absolute md:relative bg-white z-10 md:left-0 shadow-lg md:shadow-none",
+                    "border-0 rounded overflow-hidden mx-3 mt-[6.50px] absolute md:relative bg-transparent z-10 md:left-0 shadow-lg md:shadow-none",
                     { "-left-full": !showMobileSidebar },
                     // { "block": !showMobileSidebar },
                     className
