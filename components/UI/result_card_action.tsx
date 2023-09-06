@@ -37,7 +37,7 @@ const ResultCardAction = ({
                             className="sm:h-6 sm:w-6 h-4 w-4 text-dtech-new-main-light cursor-pointer "
                         />
                     </a>
-                    <div className="text-dtech-new-main-light">Website</div>
+                    <div className="text-dtech-new-main-light w-max">{!data?.url?.includes("dataset")?"Website":"Source"}</div>
                 </div>
                 <div className=" flex justify-center items-center flex-col sm:ml-0 ml-4">
 
