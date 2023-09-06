@@ -8,10 +8,12 @@ const CardHead = ({
     data,
     setData,
     handleFAQClick,
+    datasetSource
 }: {
     data: Data;
     setData: Function;
     handleFAQClick?: Function;
+    datasetSource: string|undefined
 }) => {
     const {
         title,
@@ -48,8 +50,8 @@ const CardHead = ({
                         handleFAQClick
                             ? handleFAQClick()
                             : router.push({
-                                  pathname: `/faq`,
-                              });
+                                pathname: `/faq`,
+                            });
                     }}
                 />
                 {licenseTypes?.map((tag: string, index: number) => (
@@ -65,16 +67,15 @@ const CardHead = ({
                     >
                         <legend className="text-xs mr-8">Licence</legend>
                         <div>
-                            <label>{`${tag?.[0].toUpperCase() ?? "-"}${
-                                tag?.slice(1) ?? ""
-                            }`}</label>
+                            <label>{`${tag?.[0].toUpperCase() ?? "-"}${tag?.slice(1) ?? ""
+                                }`}</label>
                         </div>
                     </fieldset>
                 ))}
             </div>
             <div className="sm:flex items-center">
                 {/* </div> */}
-                <ResultCardAction data={data} setData={setData} href={href} />
+                <ResultCardAction data={{ ...data, url: datasetSource }} setData={setData} href={href} />
             </div>
         </div>
     );

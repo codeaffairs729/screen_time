@@ -29,22 +29,6 @@ const CardFooter = ({
             <div className="flex flex-wrap justify-start items-center">
                 {dataProviders && (
                     <>
-                        <Link href={`${dataProviders?.datasetSource}`}>
-                            <a
-                                target="_blank"
-                                rel="noreferrer"
-                                className="text-sm font-medium hover:underline underline-offset-2 text-dtech-main-dark mr-10"
-                            >
-                                <div className="flex justify-center items-center mr-6">
-                                    Go to source
-                                    <Image
-                                        src={"/images/icons/arrow.svg"}
-                                        height={15}
-                                        width={15}
-                                    />
-                                </div>
-                            </a>
-                        </Link>
                         <LabelledRow
                             className="mr-10"
                             label="Host"
