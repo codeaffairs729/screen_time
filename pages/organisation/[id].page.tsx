@@ -43,7 +43,6 @@ const OrganisationDetailPage = ({
     const [selectedIndex, setSelectedIndex] = useState<any>(0);
     const [isReportGenerated, setIsReportGenerated] = useState<boolean>(false)
     const [scrollPosition, setScrollPosition] = useState(0);
-
     const { asPath } = useRouter();
     const vm: any = OrganisationDetailVM(organisation, asPath.split("/")[2]);
     const user = useSelector((state: RootState) => state.auth.user);
@@ -81,7 +80,7 @@ const OrganisationDetailPage = ({
     const upperLimit1 = -60;
     const upperLimit2 = -270;
     const translationValue1 = Math.max(scrollPosition * 0.5, upperLimit1);
-    const translationValue2 = Math.max(scrollPosition * 0.3, upperLimit2*1.2 );
+    const translationValue2 = Math.max(scrollPosition * 0.3, upperLimit2 * 1.2);
     useEffect(() => {
         if (imageRef.current) {
             const desiredHeight = `${250}px`;
@@ -91,11 +90,12 @@ const OrganisationDetailPage = ({
     }, [])
     const setHeight = (size: any) => {
         if (imageRef.current) {
-            const desiredHeight = `${250 - size}px`; 
+            const desiredHeight = `${250 - size}px`;
             imageRef.current.style.height = desiredHeight;
             imageRef.current.style.width = desiredHeight;
         }
     };
+
     if (!organisation) {
         return (
             <DefaultLayout>
@@ -115,7 +115,7 @@ const OrganisationDetailPage = ({
                     </div>
                     <div
                         className="bg-black  h-[414px] absolute right-0 z-0 w-full">
-                        {/* <img src={organisation.topic_image} className=" w-full" /> */}
+                        <img src={`data:image/jpeg;base64,${organisation.topic_image}`} className=" w-full h-full" />
                     </div>
                     <div className="px-4 relative">
                         <div
@@ -157,7 +157,7 @@ const OrganisationDetailPage = ({
                             </div>
 
                             <div className="flex border-t sm:mt-[600px]  flex-col bg-[#EBEBEB]"
-                                style={{ marginTop: `${translationValue2 + (isMobile?320:200)}px` }}
+                                style={{ marginTop: `${translationValue2 + (isMobile ? 320 : 200)}px` }}
                             >
                                 {!loading && (
                                     <Tab.Group defaultIndex={selectedIndex}>
