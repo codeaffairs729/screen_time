@@ -1,6 +1,6 @@
 import MetaRating from "components/UI/metaRating";
 import ResultCardAction from "components/UI/result_card_action";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { DateTime } from "luxon";
 import { DatasetDetailVMContext } from "../dataset_detail.vm";
 import LabelledRow from "components/dataset/labelled_row";
@@ -15,6 +15,9 @@ import display from "/public/images/icons/display_img.svg";
 import Link from "next/link";
 import { useFetchStats } from "common/utils/datasets.util";
 import { Data } from "components/UI/result_card";
+import DatasetStat from "pages/search/organisation/components/dataset_stat";
+import { BiDownload } from "react-icons/bi";
+import { AiFillEye, AiFillHeart } from "react-icons/ai";
 const DatasetHead = ({ dataset }: any) => {
     // const vm = useContext(DatasetDetailVMContext);
     const { stats, fectchStats, isFetchingStats } = useFetchStats();
@@ -34,7 +37,6 @@ const DatasetHead = ({ dataset }: any) => {
     if ((contactOwnerEmail?.search(/^mailto:/) ?? -1) > -1) {
         contactOwnerEmail = contactOwnerEmail?.slice(7);
     }
-
     const {
         name,
         description,
@@ -50,6 +52,7 @@ const DatasetHead = ({ dataset }: any) => {
         dataQuality,
         datasetUrl,
         hostUrl,
+        hostName
     } = dataset.detail || {};
 
     const stat = {
@@ -58,111 +61,218 @@ const DatasetHead = ({ dataset }: any) => {
         viewCount: views,
         downloadCount: downloads,
     };
+    function getFileFormatCounts(fileArray: Array<{ format: string }>) {
+        // Define the type of formatCounts object
+        const formatCounts: Record<string, number> = {};
 
+        // Iterate through the array of objects and count the formats
+        fileArray.forEach((file: any) => {
+            const format = file.format;
+
+            // If the format exists in the counts object, increment the count; otherwise, set it to 1
+            if ((formatCounts[format])) {
+                formatCounts[format]++;
+            } else {
+                formatCounts[format] = 1;
+            }
+        });
+
+        // Create an array of strings with string interpolation
+        const result = Object.entries(formatCounts).map(([format, count]) => {
+            return `${format.toUpperCase()} (${count})`;
+        });
+
+        return result;
+    }
     return (
-        <div className="px-4">
-            {/* <div className="flex justify-between items-center"> */}
-            <div className="lg:flex justify-between items-center">
-                <div className="text-dtech-dark-grey text-lg font-semibold">
-                    {name}
-                </div>
-                <div className="md:flex justify-between items-center">
-                    <MetaRating
-                        className="w-min mb-2"
-                        dataQuality={dataQuality}
-                        title="Estimated based on the EU Metadata Quality Assessment method."
-                    />
-                    <fieldset className=" min-h-full px-4 border rounded border-[#5F5F63] w-min text-xs pb-0.5 mb-2">
-                        <legend className="text-xs mr-8">Licence</legend>
-                        <div>
-                            <label>{license?.type}</label>
-                        </div>
-                    </fieldset>
-                    {!isFetchingStats && (
-                        <ResultCardAction
-                            data={headDataset}
-                            setData={setHeadDataset}
-                            href={`/datasets/${dataset?.id}`}
+        <div className="flex flex-col sm:flex-row">
+            <div className="sm:px-10 sm:py-4 px-4  sm:w-3/4 sm:min-w-[75%]">
+
+                {/* <div className="flex }items-center"> */}
+                <div className="flex justify-between items-center">
+                    <div className=" text-dtech-new-main-light text-xl pb-4 font-bold">
+                        {name}
+                    </div>
+                    <div className="sm:flex hidden justify-between items-center ">
+                        <MetaRating
+                            className="text-dtech-new-main-light !flex-row items-center"
+                            infoClassName="!text-dtech-new-main-light top-0 m-[1px] ml-[5px]"
+                            starClassName="!text-dtech-new-main-light"
+                            dataQuality={dataQuality}
+                            title="Estimated based on the European Commission's Metadata Quality Assessment method."
                         />
-                    )}
-                </div>
-            </div>
-            {/* </div> */}
-            <div className="my-4">
-                <div className="flex justify-between">
-                    <span className="text-sm lg:w-2/3">{description}</span>
-                </div>
-            </div>
-            <div className="my-4">
-                <div className="flex flex-wrap space-x-8  items-center">
-                    <Link href={`${datasetUrl}`}>
-                        <a
-                            target="_blank"
-                            rel="noreferrer"
-                            className="text-sm font-medium hover:underline underline-offset-2 text-dtech-main-dark mr-10"
-                        >
-                            <div className="flex justify-center items-center mr-6">
-                                Go to source
-                                <Image
-                                    src={"/images/icons/arrow.svg"}
-                                    height={15}
-                                    width={15}
-                                />
-                            </div>
-                        </a>
-                    </Link>
-
-                    <LabelledRow
-                        displayContext="data-host"
-                        className=" flex space-x-2  justify-center items-center"
-                        label="Host"
-                    >
-                        <strong>
-                            <Link href={`${hostUrl}`}>
-                                <a
-                                    target="_blank"
-                                    rel="noreferrer"
-                                    className=" text-m  text-dtech-main-dark"
-                                >
-                                    {dataset.detail.hostName}
-                                </a>
-                            </Link>
-                        </strong>
-                    </LabelledRow>
-
-                    <LabelledRow
-                        className=" flex space-x-2 justify-center items-center"
-                        label="Owner"
-                    >
-                        <strong>
-                            <a
-                                href={`${dataset.owner.ownerUrl}`}
-                                target="_blank"
-                                rel="noreferrer"
-                                className="text-m text-dtech-main-dark"
+                        {/* {buttonTags?.map((tag: string, index: number) => (
+                            <fieldset
+                                className=" min-h-full px-4 border rounded border-[#5F5F63]  text-xs pb-0.5"
+                                key={index}
                             >
-                                {dataset.owner.organisation}
-                            </a>
-                        </strong>
-                    </LabelledRow>
+                                <legend className="text-xs mr-8">
+                                    Licence
+                                </legend>
+                                <div>
+                                    <label>{`${tag[0].toUpperCase()}${tag.slice(
+                                        1
+                                    )}`}</label>
+                                </div>
+                            </fieldset>
+                        ))} */}
+                    </div>
+                </div>
+
+                {/* </div> */}
+                <div className="sm:hidden flex flex-col bg-[#EBEBEB] p-2">
+                    <MetaRating
+                        labelClass=" !text-base font-semibold"
+                        className=" !flex-row justify-between"
+                        infoClassName="!text-dtech-new-main-light top-0 m-[1px] ml-[10px] !h-6 !w-5"
+                        starClassName="!text-dtech-new-main-light mx-0.5 "
+                        dataQuality={dataQuality}
+                        title="Estimated based on the European Commission's Metadata Quality Assessment method."
+                    />
                     <div>
-                        <span className="text-sm text-dtech-dark-grey">
-                            Updated:{" "}
+                        <span className="text-base font-semibold text-[#333333] ">
+                            Last Updated:{" "}
                         </span>
-                        <span className="text-m font-medium text-dtech-dark-grey">
+                        <span className="text-base font-normal  text-[#727272]">
                             {DateTime.fromISO(`${lastUpdate}`).toFormat(
                                 "dd MMM yyyy"
                             )}
                         </span>
                     </div>
+
                 </div>
-                <div className="flex justify-start items-start my-3">
-                    <MetaInfoEntity entityName="Domains" entities={domain} />
-                    <MetaInfoEntity entityName="Topics" entities={topics} />
-                    {/* <MetaInfoEntity entityName="Keywords" entities={keywords} /> */}
+                <div className="">
+                    <div className="flex justify-between py-2">
+                        <span className="sm:text-lg text-base text-[#727272]">{description}</span>
+                        {/* Add Website Url */}
+
+                    </div>
+                    <div className="my-4 p-2 bg-[#EBEBEB]">
+                        <div className="flex sm:flex-row flex-col py-1 w-full">
+                            {/* <DatasetStat stats={stats} /> */}
+                            <div className="sm:w-1/3 sm:pl-10 flex flex-row items-center">
+                                <span className="text-md font-semibold text-[#2D2D32] ">
+                                    Host{" "}
+                                </span>
+                                <span className="text-md text-[#727272] w-full font-normal ml-2">
+                                    {hostName}
+                                </span>
+                            </div>
+                            <div className="sm:w-1/3 sm:pl-10 flex flex-row items-center">
+                                <span className="text-md font-semibold text-[#2D2D32] ">
+                                    Owner{""}
+                                </span>
+                                <span className="text-md text-[#727272] font-normal ml-2">
+                                    {dataset.owner.organisation}
+                                </span>
+                            </div>
+                            <div className="sm:w-1/3 sm:pl-10 flex flex-row items-center">
+
+                                <span className="text-md font-semibold text-[#2D2D32] ">
+                                    Last Updated{" "}
+                                </span>
+                                <span className="text-md text-[#727272] font-normal ml-2">
+                                    {DateTime.fromISO(`${lastUpdate}`).toFormat(
+                                        "dd MMM yyyy"
+                                    )}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="my-4 hidden sm:block bg-[#EBEBEB]">
+                        <div className="flex flex-col sm:flex-row py-1 w-full">
+                            {/* <DatasetStat stats={stats} /> */}
+                            <div className="w-1/3 pl-10 flex flex-row items-center">
+                                <span className="text-md flex items-center font-semibold text-[#2D2D32] ">
+                                    <BiDownload size={20} className=" text-[#727272] mx-1" /> Downloads{" "}
+                                </span>
+                                <span className="text-md text-[#727272] font-normal ml-2">
+                                    {downloads}
+                                </span>
+                            </div>
+                            <div className="w-1/3 pl-10 flex flex-row items-center">
+                                <span className="text-md text-[#2D2D32] flex font-semibold items-center ">
+                                    <AiFillEye size={20} className=" text-[#727272] mx-1" /> Views{""}
+                                </span>
+                                <span className="text-md text-[#727272] font-normal ml-2">
+
+                                    {views}
+                                </span>
+                            </div>
+                            <div className="w-1/3 pl-10 flex flex-row items-center">
+                                <span className="text-md text-[#2D2D32] font-semibold flex items-center">
+                                    <AiFillHeart size={20} className=" text-[#727272] mx-1" /> Likes{" "}
+                                </span>
+                                <span className="text-md text-[#727272] font-normal ml-2">
+                                    {favourites}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="flex flex-col sm:flex-row justify-start items-start my-3">
+                        <div className="flex flex-col sm:w-1/2">
+                            <MetaInfoEntity entityName="Domains" entities={domain} />
+                            <MetaInfoEntity entityName="Topics" entities={topics} />
+                        </div>
+                        <div className="flex flex-col sm:w-1/2 w-full">
+                            <MetaInfoEntity entityName="File Type" entities={getFileFormatCounts(dataset.urls)} />
+                            <div className="my-4 sm:hidden bg-[#EBEBEB]">
+                                <div className="flex flex-col p-2 w-full">
+                                    <div className=" flex flex-row">
+                                        <div className="flex flex-row items-center w-1/2">
+                                            <span className="text-md flex items-center font-semibold text-[#2D2D32] ">
+                                                <BiDownload size={20} className=" text-[#727272] mx-1" /> Downloads{" "}
+                                            </span>
+                                            <span className="text-md text-[#727272] font-normal ml-2">
+                                                {downloads}
+                                            </span>
+                                        </div>
+                                        <div className=" flex flex-row items-center">
+                                            <span className="text-md text-[#2D2D32] flex font-semibold items-center ">
+                                                <AiFillEye size={20} className=" text-[#727272] mx-1" /> Views{""}
+                                            </span>
+                                            <span className="text-md text-[#727272] font-normal ml-2">
+
+                                                {views}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div className=" flex flex-row">
+
+                                        <div className=" flex flex-row items-center">
+                                            <span className="text-md text-[#2D2D32] font-semibold flex items-center">
+                                                <AiFillHeart size={20} className=" text-[#727272] mx-1" /> Likes{" "}
+                                            </span>
+                                            <span className="text-md text-[#727272] font-normal ml-2">
+                                                {favourites}
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div className=" flex justify-between w-full sm:justify-start ">
+                                <span className="sm:text-sm text-base font-normal m-1 text-[#333333] ">
+                                    Licence
+                                </span>
+                                <span
+                                    className=" border-2 border-dtech-new-main-light px-2 sm:ml-2 sm:text-sm text-sm cursor-pointer text-dtech-new-main-light">
+                                    {license.type}
+                                </span>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
-                <DatasetStat stats={stat} />
+
             </div>
+            <div className=" bg-[#2D2D32] bg-opacity-10 sm:w-1 h-[1px] sm:h-auto sm:my-4 mx-4 mb-4 sm:mx-0 sm:mb-0"> </div>
+            <ResultCardAction
+                className="flex-row sm:flex-col items-center justify-center sm:py-8 w-full"
+                data={{ ...headDataset, url: dataset?.owner?.ownerUrl}}
+                setData={setHeadDataset}
+                href={`/dataset/${dataset?.id}`}
+            />
         </div>
     );
 };
@@ -174,91 +284,81 @@ const MetaInfoEntity = ({
     entityName: string;
     entities: string[] | undefined;
 }) => {
+    const [viewAll, setViewAll] = useState<boolean>(false)
+    const handleSearchFocus = () => {
+        setViewAll(true);
+    };
+
+    const handleSearchBlur = () => {
+        setViewAll(false);
+    };
+    const myRef = useRef(null);
+    useOutsideAlerter(myRef);
+    function useOutsideAlerter(ref: any) {
+        useEffect(() => {
+            // Function for click event
+            function handleOutsideClick(event: any) {
+                if (ref.current && !ref.current.contains(event.target)) {
+                    setViewAll(viewAll);
+                }
+            }
+            // Adding click event listener
+            document.addEventListener("click", handleOutsideClick);
+            return () =>
+                document.removeEventListener("click", handleOutsideClick);
+        }, [ref]);
+    }
+
     return (
-        <div className="flex mr-8">
+        <div className="flex sm:mr-8 w-full "
+            ref={myRef}
+        >
             {entities && entities.length > 0 && (
-                <div className="flex  flex-row space-x-2 max-w-xs ">
-                    <div className="flex ">
-                        <span className="text-sm font-medium m-1 text-dtech-dark-grey ">
+                // <div className="flex flex-row space-x-2  w-full ">
+                <div className="flex w-full items-center sm:justify-start justify-between">
+                    <div className=" min-w-max">
+                        <span className="sm:text-sm text-md font-normal m-1 text-[#333333] ">
                             {entityName}
                         </span>
+                        <span
+                            onClick={() => setViewAll(!viewAll)}
+                            className=" underline sm:text-sm text-md cursor-pointer text-dtech-main-dark">
+                            View all
+                        </span>
                     </div>
-                    <div className="flex flex-wrap flex-row  max-w-xs ">
-                        {entities.map((entity, index) => (
-                            <span
-                                key={index}
-                                className="text-sm text-black m-1 bg-[#F7F0FC] mb-2 rounded p-1 px-2 !pt-0"
-                            >
-                                {entity}
-                            </span>
-                        ))}
+                    <div className="flex flex-wrap flex-row  sm:max-w-xs  ml-2 ">
+                        {entities.map((entity, index) => {
+                            if (index < 2) return (
+                                <span
+                                    key={index}
+                                    className="sm:text-sm text-md text-white m-1 bg-dtech-new-main-light rounded p-1 px-2 !pt-0"
+                                >
+                                    {entity}
+                                </span>
+                            )
+                        })}
                     </div>
+                    {<div onClick={handleSearchBlur}
+                        className={viewAll ? ` bg-black absolute opacity-50 h-[3000px] -right-4 sm:h-[3000px]  w-screen flex items-center  z-20` : "hidden"}></div>}
+                    {viewAll && <div className="flex flex-wrap flex-row px-6 py-4 sm:w-[616px] w-xs bg-white absolute z-20 rounded-xl">
+                        <div className="flex justify-between w-full pb-4"><div>{entityName}</div><div className=" cursor-pointer" onClick={() => setViewAll(!viewAll)}><img src="/images/provider-detail-page/close.svg" /></div></div>
+                        {entities.map((entity, index) => {
+                            return (
+                                <span
+                                    key={index}
+                                    className="text-sm text-white m-1 bg-dtech-new-main-light rounded p-1 px-2 !pt-0"
+                                >
+                                    {entity}
+                                </span>
+                            )
+                        })}
+                    </div>}
                 </div>
+                // </div>
             )}
         </div>
     );
 };
-
-const DatasetStat = ({ stats }: { stats: any }) => {
-    const {
-        displayCount = 0,
-        favoritesCount = 0,
-        viewCount = 0,
-        downloadCount = 0,
-    } = stats || {};
-
-    return (
-        <div className="my-4">
-            <div className="flex justify-between">
-                <div className="flex flex-wrap">
-                    <div className="flex justify-center items-center mr-6">
-                        <BsHeartFill className="h-5 w-5 mr-2 text-dtech-main-dark" />
-                        <span className=" max-w-24 text-m font-normal">
-                            Added to favourites
-                        </span>
-                        <span className="ml-2 text-dtech-main-dark font-medium text-sm">
-                            {favoritesCount}
-                        </span>
-                    </div>
-                    <div className="flex justify-center items-center mr-6">
-                        <BsFillEyeFill className="h-5 w-5 mr-2 text-dtech-main-dark" />
-                        <span className="max-w-24 text-m font-normal">
-                            Viewed
-                        </span>
-                        <span className="ml-2 text-dtech-main-dark font-medium text-sm">
-                            {viewCount}
-                        </span>
-                    </div>
-                    <div className="flex justify-center items-center mr-6">
-                        <MdFileDownload className="h-5 w-5 mr-2 text-dtech-main-dark" />
-                        <span className="max-w-24 text-m font-normal">
-                            Downloaded
-                        </span>
-                        <span className="ml-2 text-dtech-main-dark font-medium text-sm">
-                            {downloadCount}
-                        </span>
-                    </div>
-                    <div className="flex justify-center items-center mr-6 ">
-                        <Image
-                            className="text-dtech-main-dark"
-                            src={display}
-                            height={20}
-                            width={20}
-                        />
-                        <span className="max-w-24 text-m font-normal flex flex-col">
-                            Displayed in
-                            <span>search results</span>
-                        </span>
-                        <span className="ml-2 text-dtech-main-dark font-medium text-sm">
-                            {displayCount}
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    );
-};
-
 export default DatasetHead;
 
 const datasetToResultCardData = (datasets: any, stats: any): Data[] => {
