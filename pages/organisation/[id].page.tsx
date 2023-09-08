@@ -114,8 +114,8 @@ const OrganisationDetailPage = ({
 
                     </div>
                     <div
-                        className="bg-black  h-[414px] absolute right-0 z-0 w-full">
-                        <img src={`data:image/jpeg;base64,${organisation.topic_image}`} className=" w-full h-full" />
+                        className="bg-black  h-[414px] overflow-hidden absolute right-0 z-0 w-full">
+                        <img src={`data:image/jpeg;base64,${organisation.topic_image}`} className=" " />
                     </div>
                     <div className="px-4 relative">
                         <div
@@ -125,7 +125,7 @@ const OrganisationDetailPage = ({
                             </p>
                             <span></span>
                             <div ref={imageRef} className=" rounded-full min-h-[100px] min-w-[100px]">
-                                <a href={`${organisation.url}`} target="_blank" rel="noreferrer" className="h-full w-full overflow-hidden bg-[#0E9A8E] bg-opacity-60 rounded-full relative flex items-center justify-center">
+                                <a href={`${organisation.url}`} target="_blank" rel="noreferrer" className="h-full w-full overflow-hidden bg-white bg-opacity-80 rounded-full relative flex items-center justify-center">
                                     <img
                                         // data-tip={"Click to open website"}
                                         src={organisation.imgUrl}
@@ -135,7 +135,7 @@ const OrganisationDetailPage = ({
                                 </a>
                             </div>
                         </div>
-                        <div className="flex sm:hidden flex-row px-4 py-2 my-2  items-center bg-[#0E9A8E] bg-opacity-60">
+                        <div className="flex sm:hidden flex-row px-4 py-2 my-2  items-center bg-white bg-opacity-80">
                             <a href={`${organisation.url}`} target="_blank" rel="noreferrer" className=" rounded-full overflow-hidden">
                                 <img
                                     // data-tip={"Click to open website"}
