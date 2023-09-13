@@ -139,7 +139,7 @@ const DatasetDetail = ({ dataset }: { dataset: Dataset | undefined }) => {
                                 Dataset
                             </p>
                             <span></span>
-                            <div ref={imageRef} className=" rounded-full min-h-[100px] min-w-[100px]">
+                            {/* <div ref={imageRef} className=" rounded-full min-h-[100px] min-w-[100px]">
                                 <a href={``} target="_blank" rel="noreferrer" className="h-full w-full overflow-hidden bg-[#0E9A8E] bg-opacity-60 rounded-full relative flex items-center justify-center">
                                     <img
                                         // data-tip={"Click to open website"}
@@ -148,17 +148,17 @@ const DatasetDetail = ({ dataset }: { dataset: Dataset | undefined }) => {
                                         className={clsx(`h-[70%] w-[70%] absolute z-10 `)}
                                     />
                                 </a>
-                            </div>
+                            </div> */}
                         </div>
                         <div className="flex sm:hidden flex-row px-4 py-2 my-2  items-center bg-[#0E9A8E] bg-opacity-60">
-                            <a href={``} target="_blank" rel="noreferrer" className=" rounded-full overflow-hidden">
+                            {/* <a href={``} target="_blank" rel="noreferrer" className=" rounded-full overflow-hidden">
                                 <img
                                     // data-tip={"Click to open website"}
                                     src={"organisation.imgUrl"}
                                     alt=""
                                     className="h-[80px] w-[80px] p-2 "
                                 />
-                            </a>
+                            </a> */}
                             <p className="text-center text-lg font-bold mx-4 text-white">
                                 Dataset
                             </p>
