@@ -14,6 +14,8 @@ const FilterUsageRights = () => {
     const [filterOptionItems, setFilterOptionItems] = useState<
         FilterOptionItem[] | undefined
     >([]);
+    const [itemShow, setItemShow] = useState(6);
+    const [seeMore, setSeeMore] = useState(true);
 
     useEffect(() => {
         const usageRights = vm.filterOptions?.usage_rights?.map((format: any) => ({
@@ -43,17 +45,29 @@ const FilterUsageRights = () => {
                 </div>
             )}
             {!vm.isLoading &&
-                fields.map((field, i) => (
-                    <FilterCheckboxField
-                        dataSelector="usage_rights"
-                        key={field.id}
-                        register={register(`usage_rights.${i}.checkbox`)}
-                        label={field.value}
-                        value={field.value}
-                        count={field.label}
-                        defaultChecked={!!field.checkbox}
-                    />
-                ))}
+                fields
+                    .slice(0, itemShow)
+                    .map((field, i) => (
+                        <FilterCheckboxField
+                            dataSelector="domains-filter"
+                            key={field.id}
+                            register={register(`domains.${i}.checkbox`)}
+                            label={field.value}
+                            value={field.value}
+                            count={field.label}
+                            defaultChecked={!!field.checkbox}
+                        />
+                    ))}
+            {fields.length > 6 && seeMore && (
+                <button
+                className="text-xs text-dtech-main-dark mx-2"
+                    onClick={() => {
+                        setItemShow(fields.length), setSeeMore(!seeMore);
+                    }}
+                >
+                    see more...
+                </button>
+            )}
         </FilterSection>
     );
 };

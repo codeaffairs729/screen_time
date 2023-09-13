@@ -45,11 +45,10 @@ const CardFooter = ({
                 formatCounts[format] = 1;
             }
         });
-
         // Create an array of strings with string interpolation
         const result = Object.entries(formatCounts).map(([format, count]) => {
             return `${format.toUpperCase()} (${count})`;
-        });
+        }).filter((data)=> !data.includes("NULL"));
 
         return result;
     }

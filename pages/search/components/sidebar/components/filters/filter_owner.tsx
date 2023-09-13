@@ -14,6 +14,8 @@ const FilterOwner = () => {
   const [filterOptionItems, setFilterOptionItems] = useState<
     FilterOptionItem[] | undefined
   >([]);
+  const [itemShow, setItemShow] = useState(6);
+  const [seeMore, setSeeMore] = useState(true);
 
   useEffect(() => {
     // const owners = vm.datasets
@@ -48,18 +50,30 @@ const FilterOwner = () => {
           <Loader />
         </div>
       )}
-      {!vm.isLoading &&
-        fields.map((field, i) => (
-          <FilterCheckboxField
-            dataSelector="data-owner"
-            key={field.id}
-            register={register(`data_owner.${i}.checkbox`)}
-            label={field.value}
-            value={field.value}
-            count={field.label}
-            defaultChecked={!!field.checkbox}
-          />
-        ))}
+            {!vm.isLoading &&
+                fields
+                    .slice(0, itemShow)
+                    .map((field, i) => (
+                        <FilterCheckboxField
+                            dataSelector="domains-filter"
+                            key={field.id}
+                            register={register(`domains.${i}.checkbox`)}
+                            label={field.value}
+                            value={field.value}
+                            count={field.label}
+                            defaultChecked={!!field.checkbox}
+                        />
+                    ))}
+            {fields.length > 6 && seeMore && (
+                <button
+                className="text-xs text-dtech-main-dark mx-2"
+                    onClick={() => {
+                        setItemShow(fields.length), setSeeMore(!seeMore);
+                    }}
+                >
+                    see more...
+                </button>
+            )}
     </FilterSection>
   );
 };
