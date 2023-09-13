@@ -49,7 +49,7 @@ const ResultCard = ({ data, handleFAQClick }: ResultCardProps) => {
     }/${resultRecord.id}`;
 
     return (
-        <div className="rounded-lg px-5 py-1.5 flex flex-row justify-between border-gray-100  w-full min-w my-2 shadow-custom-2 hover:border-r-8 hover:border-dtech-main-dark">
+        <div className="rounded-lg px-5 py-1.5 flex flex-row justify-between border-gray-100  w-full min-w my-2 shadow-custom-2 hover:border-r-8 hover:border-[#6DCDCB] active:border-dtech-main-dark">
             <div className="flex flex-col md:flex-row justify-between w-full">
                 <div className="flex flex-col flex-1 w-full">
                     <CardHead

@@ -48,8 +48,8 @@ const Pagination = ({
 
 
         return <div
-            className="flex items-center lg:justify-center text-xs text-gray-700 font-light">
-            <span className="font-medium text-sm mr-4">Page</span>
+            className="flex items-center lg:justify-center text-xs text-[#0065BD] font-light">
+            {/* <span className="font-medium text-sm mr-4">Page</span> */}
             {
                 filteredPageNumbers.map((pageNumber, index) => (
                     typeof pageNumber === 'number'?
@@ -58,7 +58,7 @@ const Pagination = ({
                         onClick={() => setPageNumber(pageNumber)}
                         className={`${
                             currentPage == pageNumber && "bg-dtech-main-light"
-                        } px-2 leading-tight font-medium hover:bg-dtech-main-light hover:text-dtech-dark-grey cursor-pointer rounded-sm`}
+                        } px-2 leading-tight font-normal hover:bg-dtech-main-light hover:text-dtech-dark-grey cursor-pointer rounded-sm mx-2`}
                     >
                         <span className="text-[17px]">{pageNumber}</span>
                         </a>
@@ -85,11 +85,11 @@ const Pagination = ({
             (
             <div>
                 <button
-                    className=" flex flex-row items-center justify-center text-dtech-main-dark"
+                    className=" flex flex-row items-center justify-center font-normal text-[#0065BD] text-lg"
                     onClick={() => setPageNumber(currentPage + 1)}
                 >
                     <div>Next</div>
-                    <BsChevronRight className="text-dtech-main-dark" />
+                    <BsChevronRight className="text-[#0065BD] mx-3 font-[100px] text-[20px]"  />
                 </button>
             </div>
             )}
