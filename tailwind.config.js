@@ -48,6 +48,7 @@ module.exports = {
                 container:
                     "inset 0px 1px 0px #B5B6BC, inset -1px 0px 0px #CACACB, inset 1px 0px 0px #CACACB;",
                 "paper-shadow": "0px 0px 15px rgba(95, 95, 99, 0.3)",
+                "custom-2": "0 0 5px rgb(160, 174, 192)",
             },
         },
     },
