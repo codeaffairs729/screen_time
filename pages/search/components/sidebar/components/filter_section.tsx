@@ -19,8 +19,8 @@ const FilterSection = ({
         <div data-selector={dataSelector}>
             <div
                 className={`${
-                    disable ? "cursor-not-allowed  bg-dtech-light-grey" : hideFilters ?"  cursor-pointer " : " text-white bg-dtech-new-main-light cursor-pointer "
-                } `}
+                    disable ? "cursor-not-allowed  bg-dtech-light-grey" : hideFilters ?"  cursor-pointer " : " text-white bg-dtech-new-main-light cursor-pointer"
+                }   hover:bg-[#6DCDCB] text-gray-500 hover:text-dtech-main-dark hover:border-l-2 hover:border-dtech-new-main-light`}
                 onClick={() => setHideFilters(!hideFilters)}
             >
                 <div className=" flex justify-between items-center mx-3">
@@ -29,7 +29,7 @@ const FilterSection = ({
                             disable
                                 ? "text-gray-300"
                                 : hideFilters
-                                ? "text-gray-500"
+                                ? " "
                                 : "text-white"
                         } text-sm pr-2 py-1.5`}
                     >
@@ -39,13 +39,13 @@ const FilterSection = ({
                         className={`
                         ${
                             disable
-                                ? "text-gray-800"
+                                ? "text-gray-300"
                                 : hideFilters
-                                ? " text-gray-500"
+                                ? ""
                                 : "text-white  rotate-180"
                         }
-                        transition-all h-4 w-4`}
-                    size={1}
+                        transition-all h-4 w-6`}
+                        strokeWidth="2"
                     />
                     {/* <VscTriangleDown
                         className={`

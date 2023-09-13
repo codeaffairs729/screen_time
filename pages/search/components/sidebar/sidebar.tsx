@@ -61,7 +61,7 @@ const Sidebar = ({ className = "" }: { className?: string }) => {
                     className
                 )}
             >
-                <div className="flex justify-between text-black text-lg font-normal pr-2 py-0.5 rounded overflow-hidden my-2 mt-4 z-10">
+                <div className="flex justify-between  text-sm font-normal pr-2 py-1.5 overflow-hidden my-2 mt-4 z-10 bg-[#6DCDCB]">
                     <span className=" mx-3 md:mx-3 ">Filters</span>
                     <div className=" hidden md:block">
                         <div

@@ -10,10 +10,12 @@ import FilterSection from "../filter_section";
 
 const FilterFileType = () => {
     const vm = useContext(SearchVMContext);
-    const {isMobile, mobileFilter,setMobileFilter  } = vm;
+    const { isMobile, mobileFilter, setMobileFilter } = vm;
     const [filterOptionItems, setFilterOptionItems] = useState<
         FilterOptionItem[] | undefined
     >([]);
+    const [itemShow, setItemShow] = useState(6);
+    const [seeMore, setSeeMore] = useState(true);
 
     useEffect(() => {
         //   const fileFormats = vm.datasets
@@ -23,11 +25,13 @@ const FilterFileType = () => {
         //     .filter((format, i, a) => a.indexOf(format) == i)
         //     .map((format) => ({ value: format, label: format, checkbox: false }));
         //   setFilterOptionItems(fileFormats);
-        const fileFormats = vm.filterOptions?.file_formats?.map((format:any) => ({
-            value: format.value,
-            label: format.count,
-            checkbox: false,
-        }));
+        const fileFormats = vm.filterOptions?.file_formats?.map(
+            (format: any) => ({
+                value: format.value,
+                label: format.count,
+                checkbox: false,
+            })
+        );
         setFilterOptionItems(fileFormats);
     }, [vm.filterOptions]);
 
@@ -36,7 +40,7 @@ const FilterFileType = () => {
         filterOptionItems,
         ismobile: isMobile,
         mobileFilter: mobileFilter,
-        setMobileFilter:setMobileFilter
+        setMobileFilter: setMobileFilter,
     });
 
     return (
@@ -51,17 +55,29 @@ const FilterFileType = () => {
                 </div>
             )}
             {!vm.isLoading &&
-                fields.map((field, i) => (
-                    <FilterCheckboxField
-                        dataSelector="file-formats"
-                        key={field.id}
-                        register={register(`file_formats.${i}.checkbox`)}
-                        label={field.value}
-                        value={field.value}
-                        count={field.label}
-                        defaultChecked={!!field.checkbox}
-                    />
-                ))}
+                fields
+                    .slice(0, itemShow)
+                    .map((field, i) => (
+                        <FilterCheckboxField
+                            dataSelector="domains-filter"
+                            key={field.id}
+                            register={register(`domains.${i}.checkbox`)}
+                            label={field.value}
+                            value={field.value}
+                            count={field.label}
+                            defaultChecked={!!field.checkbox}
+                        />
+                    ))}
+            {fields.length > 6 && seeMore && (
+                <button
+                className="text-xs text-dtech-main-dark mx-2"
+                    onClick={() => {
+                        setItemShow(fields.length), setSeeMore(!seeMore);
+                    }}
+                >
+                    see more...
+                </button>
+            )}
         </FilterSection>
     );
 };
