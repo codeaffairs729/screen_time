@@ -10,6 +10,7 @@ import FilterSection from "../filter_section";
 
 const QualityFilter = () => {
     const vm = useContext(SearchVMContext);
+    const { isMobile,mobileFilter,setMobileFilter } = vm;
     const [filterOption, setFilterOptions] = useState<
         FilterOptionItem[] | undefined
         >([]);
@@ -33,6 +34,9 @@ const QualityFilter = () => {
     const { register, fields } = useSearchFilter({
         name: "metadata_quality",
         filterOptionItems: filterOption,
+        ismobile: isMobile,
+        mobileFilter: mobileFilter,
+        setMobileFilter:setMobileFilter
     });
     return (
         <FilterSection label="Metadata Quality" disable={vm.isLoading}>
@@ -43,6 +47,7 @@ const QualityFilter = () => {
                         key={field.id}
                         register={register(`metadata_quality.${i}.checkbox`)}
                         value={field.value}
+                        count={field.label}
                         defaultChecked={!!field.checkbox}
                     />
                 </StarRow>

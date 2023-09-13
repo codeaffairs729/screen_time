@@ -10,6 +10,7 @@ import Loader from "components/UI/loader";
 
 const FilterDomain = () => {
     const vm = useContext(SearchVMContext);
+    const {isMobile, mobileFilter,setMobileFilter } = vm;
     const [filterOptionItems, setFilterOptionItems] = useState<
         FilterOptionItem[] | undefined
     >([]);
@@ -31,6 +32,9 @@ const FilterDomain = () => {
     const { register, fields } = useSearchFilter({
         name: "domains",
         filterOptionItems,
+        ismobile: isMobile,
+        mobileFilter: mobileFilter,
+        setMobileFilter:setMobileFilter
     });
 
     return (
@@ -52,6 +56,7 @@ const FilterDomain = () => {
                         register={register(`domains.${i}.checkbox`)}
                         label={field.value}
                         value={field.value}
+                        count={field.label}
                         defaultChecked={!!field.checkbox}
                     />
                 ))}

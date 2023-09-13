@@ -49,6 +49,34 @@ const SearchVM = () => {
     const [totalRecords, setTotalRecords] = useState<number>(0);
     const [isFilterActive, setIsFilterActive] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(false);
+    const [showMobileSidebar, setShowMobileSidebar] = useState<boolean>(false);
+
+    const [isMobile, setIsMobile] = useState(false);
+    const [mobileFilter, setMobileFilter] = useState({
+        sort_by: ["relevance"],
+    });
+
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth < 640); // Adjust the breakpoint as needed
+            if(window.innerWidth > 640){
+                setMobileFilter({sort_by: ["relevance"]})
+            }
+        };
+
+        // Call handleResize on initial component render
+        handleResize();
+
+        // Add event listener to window resize
+        window.addEventListener("resize", handleResize);
+
+        // Clean up event listener on component unmount
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        };
+    }, []);
+
 
     /**
      * Update the query params on updating any filter
@@ -278,6 +306,11 @@ const SearchVM = () => {
         pageSize,
         totalRecords,
         setPageSize,
+        showMobileSidebar,
+        setShowMobileSidebar,
+        isMobile,
+        mobileFilter,
+        setMobileFilter
     };
 };
 
@@ -301,6 +334,11 @@ interface ISearchVMContext {
     stats: { [key: string]: DatasetStats };
     pageSize: number;
     setPageSize: Function;
+    showMobileSidebar: boolean;
+    setShowMobileSidebar: Function;
+    isMobile: boolean;
+    mobileFilter: any ;
+    setMobileFilter: any;
 }
 
 export default SearchVM;
@@ -319,9 +357,15 @@ export interface FilterOptions {
 export const useSearchFilter = ({
     name,
     filterOptionItems,
+    ismobile,
+    mobileFilter,
+    setMobileFilter
 }: {
     name: keyof Filter;
     filterOptionItems: FilterOptionItem[] | undefined;
+    ismobile: boolean;
+    mobileFilter :any
+    setMobileFilter: any;
 }) => {
     const { activeFilter, setActiveFilter } = useContext(SearchVMContext);
     const { control, register, watch, reset } = useForm<FilterOptions>();
@@ -339,6 +383,15 @@ export const useSearchFilter = ({
         );
     }, [filterOptionItems]);
 
+    // ismobile && watch((formState) => {
+    //     const currentFilterState = formState[name];
+    //     const newFilterState = currentFilterState
+    //         ?.filter((f) => f)
+    //         .filter((f) => f?.checkbox)
+    //         .map((f) => f?.value);
+    //         setMobileFilter({...mobileFilter, [name]: newFilterState })
+    // });
+
     useEffect(() => {
         const subscription = watch((formState) => {
             const currentFilterState = formState[name];
@@ -346,10 +399,15 @@ export const useSearchFilter = ({
                 ?.filter((f) => f)
                 .filter((f) => f?.checkbox)
                 .map((f) => f?.value);
-            setActiveFilter((state: Filter) => ({
-                ...state,
-                [name]: newFilterState,
-            }));
+
+            // if (!ismobile){
+                setActiveFilter((state: Filter) => ({
+                    ...state,
+                    [name]: newFilterState,
+                }));
+            // }else{
+            //     // setMobileFilter({...mobileFilter, [name]: newFilterState })
+            // }
         });
         return () => subscription.unsubscribe();
     }, [watch]);

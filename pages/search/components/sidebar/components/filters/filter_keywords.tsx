@@ -10,6 +10,7 @@ import FilterSection from "../filter_section";
 
 const FilterKeywords = () => {
     const vm = useContext(SearchVMContext);
+    const {isMobile, mobileFilter,setMobileFilter  } = vm;
     const [filterOptionItems, setFilterOptionItems] = useState<
         FilterOptionItem[] | undefined
     >([]);
@@ -26,6 +27,9 @@ const FilterKeywords = () => {
     const { register, fields } = useSearchFilter({
         name: "keywords",
         filterOptionItems,
+        ismobile: isMobile,
+        mobileFilter: mobileFilter,
+        setMobileFilter:setMobileFilter
     });
 
     return (
@@ -47,6 +51,7 @@ const FilterKeywords = () => {
                         register={register(`keywords.${i}.checkbox`)}
                         label={field.value}
                         value={field.value}
+                        count={field.label}
                         defaultChecked={!!field.checkbox}
                     />
                 ))}

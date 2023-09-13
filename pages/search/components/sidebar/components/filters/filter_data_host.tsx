@@ -10,6 +10,7 @@ import FilterSection from "../filter_section";
 
 const FilterDataHost = () => {
     const vm = useContext(SearchVMContext);
+    const {isMobile,mobileFilter,setMobileFilter } = vm;
     const [filterOptionItems, setFilterOptionItems] = useState<
         FilterOptionItem[] | undefined
     >([]);
@@ -26,7 +27,11 @@ const FilterDataHost = () => {
     const { register, fields } = useSearchFilter({
         name: "data_host",
         filterOptionItems,
+        ismobile: isMobile,
+        mobileFilter: mobileFilter,
+        setMobileFilter:setMobileFilter
     });
+
     return (
         <FilterSection
             dataSelector="data-hosts-filter-section"
@@ -46,6 +51,7 @@ const FilterDataHost = () => {
                         register={register(`data_host.${i}.checkbox`)}
                         label={field.value}
                         value={field.value}
+                        count={field.label}
                         defaultChecked={!!field.checkbox}
                     />
                 ))}

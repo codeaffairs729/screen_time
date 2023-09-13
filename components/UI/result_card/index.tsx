@@ -4,6 +4,8 @@ import CardHead from "./head";
 import { DateTime } from "luxon";
 import { useState } from "react";
 import { DataStats } from "models/organisation.model";
+import ResultCardAction from "../result_card_action";
+import NewResultCardAction from "../new_result_card_action";
 
 export interface DataProviders {
     datasetSource: string;
@@ -29,6 +31,7 @@ export interface Data {
     lastUpdate: DateTime;
     isFavourited: boolean;
     url?: string;
+    urls?: any;
 }
 
 interface ResultCardProps {
@@ -41,21 +44,44 @@ interface ResultCardProps {
 const ResultCard = ({ data, handleFAQClick }: ResultCardProps) => {
     const [resultRecord, setResultRecord] = useState(data);
     const { dataProviders, stats, lastUpdate } = data || {};
+    const href = `/${
+        resultRecord.recordType ? resultRecord.recordType : "datasets"
+    }/${resultRecord.id}`;
+
     return (
-        <div className="rounded-lg px-5 py-1.5 flex flex-row justify-between bg-dtech-light-grey hover:bg-dtech-main-light w-full my-2">
-            <div className="flex flex-col flex-1 w-full">
-                <CardHead
-                    handleFAQClick={handleFAQClick}
-                    data={resultRecord}
-                    setData={setResultRecord}
-                    datasetSource={dataProviders?.datasetSource}
-                />
-                <CardBody data={resultRecord} />
-                <CardFooter
-                    data={data}
-                    // stats={stats}
-                    // lastUpdate={lastUpdate}
-                />
+        <div className="rounded-lg px-5 py-1.5 flex flex-row justify-between border-gray-100  w-full min-w my-2 shadow-custom-2 hover:border-r-8 hover:border-dtech-main-dark">
+            <div className="flex flex-col md:flex-row justify-between w-full">
+                <div className="flex flex-col flex-1 w-full">
+                    <CardHead
+                        handleFAQClick={handleFAQClick}
+                        data={resultRecord}
+                        setData={setResultRecord}
+                        datasetSource={dataProviders?.datasetSource}
+                    />
+                    <CardBody
+                        data={resultRecord}
+                        handleFAQClick={handleFAQClick}
+                    />
+                    <CardFooter
+                        data={data}
+                        // stats={stats}
+                        // lastUpdate={lastUpdate}
+                    />
+                </div>
+                <div className=" md:flex md:flex-row">
+                    <div className="mx-1 my-3 md:mx-3 md:my-2 border border-1 "></div>
+                    <div className="flex sm:flex-col md:flex-row">
+                        <NewResultCardAction
+                            data={{
+                                ...data,
+                                url: dataProviders?.datasetSource,
+                            }}
+                            setData={setResultRecord}
+                            href={href}
+                            className="flex-row md:flex-col items-center justify-center sm:py-8 w-full mx-5 max-h-min"
+                        />
+                    </div>
+                </div>
             </div>
         </div>
     );

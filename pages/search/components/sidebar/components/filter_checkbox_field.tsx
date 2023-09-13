@@ -1,38 +1,78 @@
 import clsx from "clsx";
+import { useRef, useState, forwardRef, RefObject } from "react";
 import { UseFormRegisterReturn } from "react-hook-form";
 
 const FilterCheckboxField = ({
-  label,
-  register,
-  value,
-  className = "",
-  defaultChecked,
-  dataSelector,
+    label,
+    register,
+    value,
+    className = "",
+    defaultChecked,
+    count,
+    dataSelector,
 }: {
-  label?: string;
-  value?: any;
-  register?: UseFormRegisterReturn;
-  className?: string;
-  defaultChecked: boolean;
-  dataSelector?: string;
+    label?: string;
+    value?: any;
+    register?: UseFormRegisterReturn;
+    className?: string;
+    defaultChecked: boolean;
+    count: string;
+    dataSelector?: string;
 }) => {
-	return (
-		<div
-			data-selector={dataSelector}
-			className={clsx("flex items-start mb-1.5", className)}
-		>
-			<input
-				type="checkbox"
-				{...register}
-				className="focus:ring-0 rounded-sm border-dtech-main-dark text-dtech-main-dark"
-				value={value}
-				defaultChecked={defaultChecked}
-			/>
-			{label && (
-				<span className="ml-2 text-sm">{label}</span>
-			)}
-		</div>
-	);
+    const ref = useRef<any>(null);
+
+    // const handleClick = () =>{
+    //     if(ref.current){
+    //         (ref.current as HTMLButtonElement).click()
+    //     }
+    // }
+    return (
+        <div
+            data-selector={dataSelector}
+            className={clsx(
+                "flex items-start mb-1.5 cursor-pointer ",
+                className,
+                {
+                    "hover:bg-[#EBEBEB]": !defaultChecked,
+                    "bg-[#EBEBEB]": defaultChecked,
+                }
+            )}
+        >
+            <input
+                type="checkbox"
+                {...register}
+                id={register?.name}
+                className="sr-only"
+                value={value}
+                defaultChecked={defaultChecked}
+            />
+            <div className="flex justify-evenly items-center w-full mr-3">
+                <div
+                    className={clsx("cursor-pointer", {
+                        "border-2 border-dtech-main-dark h-5 m-1 ":
+                            defaultChecked,
+                    })}
+                ></div>
+                <div className="flex flex-row justify-between items-center w-full text-gray-500 hover:text-black" onClick={() =>  ref.current != null && ref.current.click()}>
+                    <div>
+                        <label
+                            className="cursor-pointer"
+                            htmlFor={register?.name}
+                            onClick={() => {}}
+                            ref={ref}
+                        >
+                            {label && (
+                                <span className="ml-2 text-sm ">{label}</span>
+                            )}
+                        </label>
+                    </div>
+					<div className="ml-2 text-xs">
+					    {count}
+					</div>
+                </div>
+            </div>
+        </div>
+    );
 };
 
 export default FilterCheckboxField;

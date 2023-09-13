@@ -6,6 +6,8 @@ import { DataStats } from "models/organisation.model";
 import Link from "next/link";
 import { Data } from ".";
 import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/router";
 // export interface DataProviders {
 //     datasetSource: string;
 //     ownerUrl: string;
@@ -16,6 +18,8 @@ import Image from "next/image";
 //     hostUrl?: string;
 // }
 
+const entity = ["JSON", "CSV"];
+
 const CardFooter = ({
     data,
     className = "",
@@ -24,95 +28,41 @@ const CardFooter = ({
     className?: string;
 }) => {
     const { dataProviders, stats, lastUpdate, domains, topics } = data;
+    const router = useRouter();
+
+    function getFileFormatCounts(fileArray: Array<{ format: string }>) {
+        // Define the type of formatCounts object
+        const formatCounts: Record<string, number> = {};
+
+        // Iterate through the array of objects and count the formats
+        fileArray?.forEach((file: any) => {
+            const format = file.format;
+
+            // If the format exists in the counts object, increment the count; otherwise, set it to 1
+            if (formatCounts[format]) {
+                formatCounts[format]++;
+            } else {
+                formatCounts[format] = 1;
+            }
+        });
+
+        // Create an array of strings with string interpolation
+        const result = Object.entries(formatCounts).map(([format, count]) => {
+            return `${format.toUpperCase()} (${count})`;
+        });
+
+        return result;
+    }
+
     return (
         <div className={clsx("w-full my-1.5", className)}>
-            <div className="flex flex-wrap justify-start items-center">
-                {dataProviders && (
-                    <>
-                        <LabelledRow
-                            className="mr-10"
-                            label="Host"
-                            labelClasses="!text-sm font-medium mr-1"
-                            childClasses="hover:underline underline-offset-2"
-                        >
-                            <Link href={`${dataProviders.hostUrl}`}>
-                                <a
-                                    className="text-sm text-dtech-main-dark"
-                                    target="_blank"
-                                >
-                                    {dataProviders.hostName}
-                                </a>
-                            </Link>
-                        </LabelledRow>
-                        <LabelledRow
-                            className="mr-10"
-                            label="Owner"
-                            labelClasses="!text-sm font-medium mr-1"
-                            childClasses="hover:underline underline-offset-2"
-                        >
-                            <Link href={`${dataProviders.ownerUrl}`}>
-                                <a
-                                    className="text-sm text-dtech-main-dark"
-                                    target="_blank"
-                                >
-                                    {dataProviders.organisation &&
-                                        dataProviders.organisation}
-                                </a>
-                            </Link>
-                        </LabelledRow>
-                        {lastUpdate?.isValid && (
-                            // <div className="flex my-1.5">
-                            //     <span className="text-sm mr-1">Updated</span>
-                            //     <span className="text-sm font-medium">
-                            //         {lastUpdate.toRelative()}
-                            //     </span>
-                            // </div>
-                            <LabelledRow
-                                className="mr-10"
-                                label="Updated"
-                                labelClasses="!text-sm mr-1"
-                            >
-                                <span className="text-sm">
-                                    {lastUpdate.toRelative()}
-                                </span>
-                            </LabelledRow>
-                        )}
-                    </>
+            <div>
+                {router.pathname == "/search" && (
+                    <MetaInfoEntity
+                        entityName="File Type"
+                        entities={getFileFormatCounts(data.urls)}
+                    />
                 )}
-            </div>
-            <div className="flex flex-row justify-start items-start mt-2.5">
-                <LabelledRow
-                    className="mr-10"
-                    label="Domains"
-                    labelClasses="!text-sm mr-1"
-                >
-                    <div className="flex flex-wrap  max-w-xs ">
-                        {domains.map((domain: any, index: number) => (
-                            <span
-                                key={index}
-                                className="text-sm px-2 text-black bg-[#F7F0FC] my-0.5 rounded decoration-1 mr-1"
-                            >
-                                {domain}
-                            </span>
-                        ))}
-                    </div>
-                </LabelledRow>
-                <LabelledRow
-                    className="mr-10"
-                    label="Topics"
-                    labelClasses="!text-sm mr-1"
-                >
-                    <div className="flex flex-wrap  max-w-xs ">
-                        {topics.map((topic: any, index: number) => (
-                            <span
-                                key={index}
-                                className="text-sm px-2 text-black bg-[#F7F0FC] my-0.5 rounded decoration-1 mr-1 truncate"
-                            >
-                                {topic}
-                            </span>
-                        ))}
-                    </div>
-                </LabelledRow>
             </div>
             {stats && (
                 <div className="flex">
@@ -123,13 +73,103 @@ const CardFooter = ({
     );
 };
 
-const createTag = (topic: string) => {
-    const tag = topic
-        .split(/[_\s]/g)
-        .map((tag: string) => `${tag[0].toUpperCase()}${tag.slice(1)}`)
-        .join("");
+// const createTag = (topic: string) => {
+//     const tag = topic
+//         .split(/[_\s]/g)
+//         .map((tag: string) => `${tag[0].toUpperCase()}${tag.slice(1)}`)
+//         .join("");
 
-    return `#${tag}`;
+//     return `#${tag}`;
+// };
+
+const MetaInfoEntity = ({
+    entityName,
+    entities,
+}: {
+    entityName: string;
+    entities: string[] | undefined;
+}) => {
+    const [viewAll, setViewAll] = useState<boolean>(false);
+    const handleSearchFocus = () => {
+        setViewAll(true);
+    };
+
+    const handleSearchBlur = () => {
+        setViewAll(false);
+    };
+    const myRef = useRef(null);
+    useOutsideAlerter(myRef);
+    function useOutsideAlerter(ref: any) {
+        useEffect(() => {
+            // Function for click event
+            function handleOutsideClick(event: any) {
+                if (ref.current && !ref.current.contains(event.target)) {
+                    setViewAll(viewAll);
+                }
+            }
+            // Adding click event listener
+            document.addEventListener("click", handleOutsideClick);
+            return () =>
+                document.removeEventListener("click", handleOutsideClick);
+        }, [ref]);
+    }
+
+    return (
+        <div className="flex sm:mr-8 w-full " ref={myRef}>
+            {entities && entities.length > 0 && (
+                // <div className="flex flex-row space-x-2  w-full ">
+                <div className="flex w-full items-center sm:justify-start justify-between">
+                    <div className="flex flex-wrap flex-row  sm:max-w-xs  ml-2 ">
+                        {entities.map((entity, index) => {
+                            if (index < 2)
+                                return (
+                                    <span
+                                        key={index}
+                                        className="sm:text-sm text-md text-white m-1 bg-dtech-new-main-light rounded p-1 px-2 !pt-0"
+                                    >
+                                        {entity}
+                                    </span>
+                                );
+                        })}
+                    </div>
+                    {
+                        <div
+                            onClick={handleSearchBlur}
+                            className={
+                                viewAll
+                                    ? ` bg-black absolute opacity-50 h-[3000px] -right-4 sm:h-[3000px]  w-screen flex items-center  z-20`
+                                    : "hidden"
+                            }
+                        ></div>
+                    }
+                    {viewAll && (
+                        <div className="flex flex-wrap flex-row px-6 py-4 sm:w-[616px] w-xs bg-white absolute z-20 rounded-xl">
+                            <div className="flex justify-between w-full pb-4">
+                                <div>{entityName}</div>
+                                <div
+                                    className=" cursor-pointer"
+                                    onClick={() => setViewAll(!viewAll)}
+                                >
+                                    <img src="/images/provider-detail-page/close.svg" />
+                                </div>
+                            </div>
+                            {entities.map((entity, index) => {
+                                return (
+                                    <span
+                                        key={index}
+                                        className="text-sm text-white m-1 bg-dtech-new-main-light rounded p-1 px-2 !pt-0"
+                                    >
+                                        {entity}
+                                    </span>
+                                );
+                            })}
+                        </div>
+                    )}
+                </div>
+                // </div>
+            )}
+        </div>
+    );
 };
 
 export default CardFooter;

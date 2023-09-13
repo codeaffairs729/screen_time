@@ -51,18 +51,23 @@ const RecordsSortBy = () => {
     }, [activeFilter]);
 
     return (
-        <div className="flex mr-2 ">
-            <span className="text-sm font-medium mr-2 mt-2">Sort By: </span>
+        <div className="flex flex-row items-center mr-2">
+            <div>
+                <span className="text-base font-medium mx-3 mt-2">
+                    Sort&nbsp;By
+                </span>
+            </div>
 
-            <div className="flex justify-center items-center  space-x-1 h-7 border border-dtech-main-dark rounded px-3 pr-1.5 mt-1">
+            <div className="flex justify-center items-center space-x-1 h-7 border-2 border-gray-500 rounded-full px-5 py-5  pr-1.5 mt-1">
                 <Dropdown
                     label={`${activeOption ? activeOption.label : "Sort by"}`}
                     menuItems={options}
                     menuItemsClasses="!w-60 rounded-[10px]"
-                    labelClasses=" text-m pr-3.5"
+                    labelClasses="text-lg  text-gray-500 font-normal pr-2.5 whitespace-nowrap pr-3.5"
                     className="!ml-0 "
-                    iconClass="text-dtech-main-dark !ml-2.5"
+                    iconClass=" !font-medium text-xl !mx-5"
                     itemsClasses="rounded-[10px] shadow-none "
+                    dropdownIcon= "arrow"
                 />
             </div>
         </div>

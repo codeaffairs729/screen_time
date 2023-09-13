@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import React, { Fragment, ReactNode, useState } from "react";
 import { VscTriangleDown } from "react-icons/vsc";
 import isURL from "validator/lib/isURL";
+import { BsChevronDown } from "react-icons/bs";
 
 export type MenuItemType = {
     label: string;
@@ -23,6 +24,7 @@ const Dropdown = ({
     labelClasses = "",
     menuItemsClasses = "",
     itemsClasses = "",
+    dropdownIcon = "",
 }: {
     menuTitle?: string;
     label: string | ReactNode;
@@ -32,6 +34,7 @@ const Dropdown = ({
     labelClasses?: string;
     menuItemsClasses?: string;
     itemsClasses?: string;
+    dropdownIcon?: string;
 }) => {
     const router = useRouter();
     const [showMenu, setShowMenu] = useState(false);
@@ -70,11 +73,19 @@ const Dropdown = ({
                 >
                     {label}
                 </span>}
-                <VscTriangleDown
-                    className={`ml-2 text-2xl text-inherit transition-all ${
-                        showMenu && "rotate-180"
-                    } ${iconClass}`}
-                />
+                {dropdownIcon == "arrow" ? (
+                    <BsChevronDown
+                        className={`font-medium text-gray-500 transition-all ${
+                            showMenu && "rotate-180"
+                        } ${iconClass}`}
+                    />
+                ) : (
+                    <VscTriangleDown
+                        className={`ml-2 text-2xl text-inherit transition-all ${
+                            showMenu && "rotate-180"
+                        } ${iconClass}`}
+                    />
+                )}
             </Menu.Button>
             <Transition
                 as={Fragment}
