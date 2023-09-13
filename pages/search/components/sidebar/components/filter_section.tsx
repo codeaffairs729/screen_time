@@ -61,8 +61,8 @@ const FilterSection = ({
                 </div>
             </div>
             <div
-                className={`overflow-auto transition-all duration-300	${
-                    disable || hideFilters ? "max-h-0" : "max-h-80 my-2 ml-3"
+                className={`overflow-auto transition-all duration-300 	${
+                    disable || hideFilters ? "max-h-0" : "max-h-80 my-2"
                 }`}
             >
                 {children}
