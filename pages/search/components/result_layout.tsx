@@ -20,7 +20,7 @@ const ResultLayout = ({ error, isLoading, recordsData, className="" }: ResultLay
 
     if (error) {
         return (
-            <div className="w-full flex items-start justify-center">
+            <div className="w-full flex items-start justify-center mt-20 md:mt-0">
                 <ErrorAlert
                     className="max-w-xl mx-auto"
                     message="Something went wrong while fetching data. Please try again later."
@@ -31,7 +31,7 @@ const ResultLayout = ({ error, isLoading, recordsData, className="" }: ResultLay
 
     if (isLoading) {
         return (
-            <div className="h-[calc(100vh-var(--nav-height))]  w-full flex items-center justify-center">
+            <div className="h-[calc(100vh-var(--nav-height))]  w-full flex items-center justify-center ">
                 <Loader />
             </div>
         );
@@ -39,7 +39,7 @@ const ResultLayout = ({ error, isLoading, recordsData, className="" }: ResultLay
 
     if (!recordsData?.length) {
         return (
-            <div className="h-[calc(100vh-var(--nav-height))] w-full flex items-start justify-center ">
+            <div className="h-[calc(100vh-var(--nav-height))] w-full flex items-start justify-center mt-20 md:mt-0">
                 <NoResults
                     message={`No results found for ${q}.`}
                     subMessages={[
@@ -52,7 +52,7 @@ const ResultLayout = ({ error, isLoading, recordsData, className="" }: ResultLay
     }
 
     return (
-        <div className={clsx("flex flex-col", className)} data-test-id="results table">
+        <div className={clsx("flex flex-col mt-20 md:mt-0", className)} data-test-id="results table">
             {recordsData.map((data: Data) => (
                 <ResultCard key={data.id} data={data} />
             ))}

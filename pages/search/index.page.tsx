@@ -10,6 +10,7 @@ import SearchVM, {
     // datasetToResultCardData,
 } from "./search.vm";
 import { datasetToResultCardData } from "common/utils/datasets.util";
+import Pagination from "components/UI/pagination_for_datasets";
 
 const SearchPage = () => {
     const vm = SearchVM();
@@ -30,8 +31,8 @@ const SearchPage = () => {
         <DefaultLayout>
             <SearchVMContext.Provider value={vm}>
                 {/* <Dataset /> */}
-                <div className="flex relative">
-                    <Sidebar className="w-48 shrink-0" />
+                <div className="flex relative bg-white">
+                    <Sidebar className="md:w-48 shrink-0" />
                     <div className="overflow-x-auto w-full">
                         <SearchHeaders
                             setCurrentPageNo={setCurrentPageNo}
@@ -51,6 +52,13 @@ const SearchPage = () => {
                                     stats
                                 )}
                                 className="-mt-[18px] mx-4"
+                            />
+                        )}
+                        {!isLoading && (
+                            <Pagination
+                                currentPage={currentPageNo}
+                                setPageNumber={setCurrentPageNo}
+                                totalPages={totalPages}
                             />
                         )}
                     </div>

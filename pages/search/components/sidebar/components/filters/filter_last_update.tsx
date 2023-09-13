@@ -5,6 +5,7 @@ import FilterSection from "../filter_section";
 
 const FilterLastUpdate = () => {
   const vm = useContext(SearchVMContext);
+  const {isMobile, mobileFilter,setMobileFilter } = vm;
   const [filterOptions, setFilterOptions] = useState<
         FilterOptionItem[] | undefined
     >([]);
@@ -27,6 +28,9 @@ const FilterLastUpdate = () => {
   const { register, fields } = useSearchFilter({
     name: "last_updated",
     filterOptionItems: filterOptions,
+    ismobile: isMobile,
+    mobileFilter: mobileFilter,
+    setMobileFilter:setMobileFilter
   });
 
   return (
@@ -37,6 +41,7 @@ const FilterLastUpdate = () => {
           register={register(`last_updated.${i}.checkbox`)}
           label={field.value}
           value={field.label}
+          count={field.label}
           defaultChecked={!!field.checkbox}
         />
       ))}

@@ -18,6 +18,7 @@ import { Data } from "components/UI/result_card";
 import DatasetStat from "pages/search/organisation/components/dataset_stat";
 import { BiDownload } from "react-icons/bi";
 import { AiFillEye, AiFillHeart } from "react-icons/ai";
+import NewResultCardAction from "components/UI/new_result_card_action";
 const DatasetHead = ({ dataset }: any) => {
     // const vm = useContext(DatasetDetailVMContext);
     const { stats, fectchStats, isFetchingStats } = useFetchStats();
@@ -267,8 +268,9 @@ const DatasetHead = ({ dataset }: any) => {
 
             </div>
             <div className=" bg-[#2D2D32] bg-opacity-10 sm:w-1 h-[1px] sm:h-auto sm:my-4 mx-4 mb-4 sm:mx-0 sm:mb-0"> </div>
-            <ResultCardAction
+            <NewResultCardAction
                 className="flex-row sm:flex-col items-center justify-center sm:py-8 w-full"
+                gridClass = "md:!gap-16"
                 data={{ ...headDataset, url: dataset?.owner?.ownerUrl}}
                 setData={setHeadDataset}
                 href={`/dataset/${dataset?.id}`}

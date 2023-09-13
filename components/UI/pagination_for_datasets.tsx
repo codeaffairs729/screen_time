@@ -1,8 +1,17 @@
-import React from 'react';
+import React from "react";
+import { BsChevronRight } from "react-icons/bs";
 
-const Pagination = ({ currentPage, totalPages, setPageNumber }
-    : { currentPage: number, totalPages: number, setPageNumber: Function }) => {
-    const range = (start: number, end: number) => Array.from({ length: end - start + 1 }, (_, i) => start + i);
+const Pagination = ({
+    currentPage,
+    totalPages,
+    setPageNumber,
+}: {
+    currentPage: number;
+    totalPages: number;
+    setPageNumber: Function;
+}) => {
+    const range = (start: number, end: number) =>
+        Array.from({ length: end - start + 1 }, (_, i) => start + i);
 
     const renderPageNumbers = () => {
         const pageCount = 5; // Total page numbers to display (2 on left, current, 2 on right)
@@ -69,7 +78,23 @@ const Pagination = ({ currentPage, totalPages, setPageNumber }
         </div>
     };
 
-    return <div className="pagination">{renderPageNumbers()}</div>;
+    return (
+        <div className="pagination flex flex-row justify-center items-center my-4">
+            <div>{renderPageNumbers()}</div>
+            {(totalPages > 1) &&
+            (
+            <div>
+                <button
+                    className=" flex flex-row items-center justify-center text-dtech-main-dark"
+                    onClick={() => setPageNumber(currentPage + 1)}
+                >
+                    <div>Next</div>
+                    <BsChevronRight className="text-dtech-main-dark" />
+                </button>
+            </div>
+            )}
+        </div>
+    );
 };
 
 export default Pagination;

@@ -10,6 +10,7 @@ import FilterSection from "../filter_section";
 
 const FilterUpdateFrequency = () => {
     const vm = useContext(SearchVMContext);
+    const {isMobile, mobileFilter,setMobileFilter  } = vm;
     const [filterOptionItems, setFilterOptionItems] = useState<
         FilterOptionItem[] | undefined
     >([]);
@@ -26,6 +27,9 @@ const FilterUpdateFrequency = () => {
     const { register, fields } = useSearchFilter({
         name: "update_frequency",
         filterOptionItems,
+        ismobile: isMobile,
+        mobileFilter: mobileFilter,
+        setMobileFilter:setMobileFilter
     });
 
     return (
@@ -47,6 +51,7 @@ const FilterUpdateFrequency = () => {
                         register={register(`update_frequency.${i}.checkbox`)}
                         label={field.value}
                         value={field.value}
+                        count={field.label}
                         defaultChecked={!!field.checkbox}
                     />
                 ))}

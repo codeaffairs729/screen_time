@@ -14,45 +14,69 @@ import { SearchVMContext } from "pages/search/search.vm";
 import { useContext, useLayoutEffect, useState } from "react";
 import { FaFilter } from "react-icons/fa";
 import { MdMenu, MdMenuOpen } from "react-icons/md";
+import { IoFilterSharp } from "react-icons/io5";
+import { AiOutlineClose } from "react-icons/ai";
 
 const Sidebar = ({ className = "" }: { className?: string }) => {
     const vm = useContext(SearchVMContext);
 
-    const [showMobileSidebar, setShowMobileSidebar] = useState(false);
+    const { showMobileSidebar, setShowMobileSidebar, setActiveFilter } = vm;
+
     useLayoutEffect(() => {
         window.addEventListener("resize", () => {});
     }, []);
 
     return (
         <>
-            <button
+            <div
                 className={clsx(
-                    "text-sm font-semibold text-gray-700 w-20 text-left flex item-center space-x-2 justify-center absolute -top-4 left-0 md:hidden border-2 border-l-0 border-dtech-secondary-dark shadow bg-white"
+                    "absolute top-[1.25rem] flex justify-center item-center text-lg font-semibold text-dtech-new-main-light text-left  space-x-2  md:hidden border-2 border-dtech-new-main-light rounded-full shadow bg-white mx-4 px-4 py-2 z-10"
                 )}
                 onClick={() => setShowMobileSidebar(!showMobileSidebar)}
             >
-                Filters {showMobileSidebar?<MdMenuOpen className="w-5 h-5 ml-1" />:<MdMenu className="w-5 h-5 ml-1" />}
-            </button>
+                Filters
+                {/* {showMobileSidebar ? (
+                    <MdMenuOpen className="w-5 h-5 ml-1" />
+                ) : (
+                    <MdMenu className="w-5 h-5 ml-1 " />
+                )} */}
+                <IoFilterSharp className="mt-1 ml-2" />
+            </div>
+
             <div
                 className={clsx(
-                    "border-0 rounded overflow-hidden mx-3 mt-[6.50px] absolute md:relative bg-transparent z-10 md:left-0 shadow-lg md:shadow-none",
+                    "z-10 absolute top-[1.25rem] right-2 flex justify-center item-center text-lg font-semibold text-dtech-new-main-light  text-left  space-x-2  md:hidden border-2 border-dtech-new-main-light rounded-full shadow bg-white mx-4 px-4 py-2 ",
+                    { hidden: !showMobileSidebar }
+                )}
+                onClick={() => vm.resetAllFilters()}
+            >
+                Clear all
+                <AiOutlineClose className="mt-1 ml-2" />
+            </div>
+            <div
+                className={clsx(
+                    "border-0 rounded overflow-hidden md:mx-3 w-full top-16 absolute md:relative md:bg-transparent bg-white  z-10 md:left-0 shadow-lg md:shadow-none mt-1",
                     { "-left-full": !showMobileSidebar },
                     // { "block": !showMobileSidebar },
                     className
                 )}
             >
-                <div className="flex justify-between text-black text-lg font-medium pr-2 py-0.5 rounded overflow-hidden my-2 mt-4">
-                    <span>Filters</span>
-                    <div
-                        onClick={() => vm.resetAllFilters()}
-                        className={`${
-                            vm.isFilterActive && !vm.isLoading
-                                ? "text-grey-700 hover:text-dtech-secondary-dark cursor-pointer"
-                                : "text-gray-300 cursor-not-allowed"
-                        } flex justify-center items-center`}
-                    >
-                        <span className="text-[10px] text-inherit">Clear</span>
-                        <FaFilter className="w-2 h-2 ml-1 text-inherit" />
+                <div className="flex justify-between text-black text-lg font-normal pr-2 py-0.5 rounded overflow-hidden my-2 mt-4 z-10">
+                    <span className=" mx-3 md:mx-3 ">Filters</span>
+                    <div className=" hidden md:block">
+                        <div
+                            onClick={() => vm.resetAllFilters()}
+                            className={`${
+                                vm.isFilterActive && !vm.isLoading
+                                    ? "text-grey-700 hover:text-dtech-secondary-dark cursor-pointer"
+                                    : "text-gray-300 cursor-not-allowed"
+                            } flex justify-center items-center`}
+                        >
+                            <span className="text-[10px] text-inherit">
+                                Clear
+                            </span>
+                            <FaFilter className="w-2 h-2 ml-1 text-inherit" />
+                        </div>
                     </div>
                 </div>
                 <FilterUsageRights />
@@ -66,6 +90,24 @@ const Sidebar = ({ className = "" }: { className?: string }) => {
                 <FilterLastUpdate />
                 <FilterUpdateFrequency />
                 <QualityFilter />
+                <div className="md:hidden">
+                    {/* <div className="flex flex-row justify-between items-center mx-3 my-4">
+                        <div
+                            className="text-lg font-normal text-dtech-new-main-light  text-left border-2 border-dtech-new-main-light rounded-full shadow px-4 py-1.5 "
+                            onClick={() =>
+                                setActiveFilter({ ...vm.mobileFilter })
+                            }
+                        >
+                            Apply
+                        </div>
+                        <div
+                            className="text-lg font-normal text-dtech-new-main-light  text-left border-2 border-dtech-new-main-light rounded-full shadow px-4 py-1.5 "
+                            onClick={() => setShowMobileSidebar(false)}
+                        >
+                            Close
+                        </div>
+                    </div> */}
+                </div>
             </div>
         </>
     );

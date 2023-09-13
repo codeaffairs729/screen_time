@@ -10,6 +10,7 @@ import FilterSection from "../filter_section";
 
 const FilterOwner = () => {
   const vm = useContext(SearchVMContext);
+  const {isMobile, mobileFilter,setMobileFilter  } = vm;
   const [filterOptionItems, setFilterOptionItems] = useState<
     FilterOptionItem[] | undefined
   >([]);
@@ -31,6 +32,9 @@ const FilterOwner = () => {
   const { register, fields } = useSearchFilter({
     name: "data_owner",
     filterOptionItems,
+    ismobile: isMobile,
+    mobileFilter: mobileFilter,
+    setMobileFilter:setMobileFilter
   });
 
   return (
@@ -52,6 +56,7 @@ const FilterOwner = () => {
             register={register(`data_owner.${i}.checkbox`)}
             label={field.value}
             value={field.value}
+            count={field.label}
             defaultChecked={!!field.checkbox}
           />
         ))}

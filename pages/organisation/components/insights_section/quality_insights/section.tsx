@@ -289,9 +289,9 @@ const QualityInsightsBody = () => {
                         totalPages={totalPages}
                         key={selectedLabel}
                     />
-                    <button className=" flex flex-row items-center justify-center text-dtech-main-dark" onClick={() => setPageNumber(pageNumber + 1)}>
+                    {/* <button className=" flex flex-row items-center justify-center text-dtech-main-dark" onClick={() => setPageNumber(pageNumber + 1)}>
                         <div>Next</div> <BsChevronRight className="text-dtech-main-dark" />
-                    </button>
+                    </button> */}
                 </div>
             </div>
             <div className="hidden sm:flex justify-center mt-20">

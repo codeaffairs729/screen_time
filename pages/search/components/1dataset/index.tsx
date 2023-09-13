@@ -26,7 +26,7 @@ const Dataset = () => {
     
     return (
         <div className="flex relative">
-            <Sidebar className="w-48 shrink-0" />
+            <Sidebar className="md:w-48 shrink-0" />
             <div className="overflow-x-auto w-full">
                 <SearchHeaders
                     setCurrentPageNo={setCurrentPageNo}

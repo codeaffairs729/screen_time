@@ -38,7 +38,6 @@ export const datasetToResultCardData = (datasets: any, stats: any): Data[] => {
     if (!datasets?.length) {
         return [];
     }
-
     return datasets?.map((dataset: any) => ({
         id: dataset.id,
         title: dataset.detail.name,
@@ -62,5 +61,6 @@ export const datasetToResultCardData = (datasets: any, stats: any): Data[] => {
             ownerUrl: dataset.owner.ownerUrl,
             datasetSource: dataset.detail.datasetUrl,
         },
+        urls: dataset.urls,
     }));
 };

@@ -25,35 +25,44 @@ const TotalRecords = ({
     setPageNumber: Function;
     pageSize: number;
 }) => {
-    const { setLoading } = useContext(OrganizationSearchVMContext)
+    // const { setLoading } = useContext(OrganizationSearchVMContext)
+
+    // console.log("><><><><", setLoading)
     const options = OPTIONS.map((option) => ({
         label: `${option.label}`,
         onClick: () => {
             setPageSize(option.label);
-            setLoading(true);
+            // setLoading(true);
             setPageNumber(1)
         },
     }));
 
     return (
-        <div className="sm:flex items-center">
-            <div className="flex">
-                <span className="mt-1 pr-2 font-medium text-sm">Display</span>
-                <div className="flex justify-center items-center space-x-1 border border-dtech-main-dark rounded  h-7 px-7 pr-1.5">
-                    <Dropdown
-                        label={`${pageSize} results`}
-                        menuItems={options}
-                        menuItemsClasses="!w-32  rounded-[10px]"
-                        labelClasses=" text-m font-normal pr-2.5 whitespace-nowrap"
-                        className="!ml-0 "
-                        iconClass="text-dtech-main-dark !ml-2.5"
-                        itemsClasses="rounded-[10px] shadow-none "
-                    />
+        <div className="sm:flex justify-between items-center w-full">
+            <div className="flex flex-row justify-between items-center">
+                <div className=" text-base">
+                    <span className="font-medium text-lg">Total</span>
+                    <span className="font-medium text-lg">{` ${totalRecords} results`}</span>
                 </div>
             </div>
-            <div className="text-sm mt-2 sm:mt-0 sm:ml-2">
-                <span className="font-medium ">Total:</span>
-                <span className="font-normal text-sm ">{` ${totalRecords} results`}</span>
+            <div className="flex flex-row items-center mx-2">
+                <div>
+                    <span className=" text-base font-medium mx-3">
+                        Display
+                    </span>
+                </div>
+                <div className="flex justify-center items-center space-x-1 h-7 border-2 border-gray-500 rounded-full px-5 py-5 pr-1.5 mt-1">
+                    <Dropdown
+                        label={`${pageSize} Results`}
+                        menuItems={options}
+                        menuItemsClasses="!w-32  rounded-[10px]"
+                        labelClasses=" text-lg  text-gray-500 font-normal pr-2.5 whitespace-nowrap"
+                        className="!ml-0 "
+                        iconClass=" !font-medium text-xl !mx-5"
+                        itemsClasses="rounded-[10px] shadow-none"
+                        dropdownIcon = "arrow"
+                    />
+                </div>
             </div>
         </div>
     );

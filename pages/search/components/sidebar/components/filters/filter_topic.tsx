@@ -10,6 +10,7 @@ import Loader from "components/UI/loader";
 
 const FilterTopic = () => {
     const vm = useContext(SearchVMContext);
+    const {isMobile , mobileFilter,setMobileFilter } = vm;
     const [filterOptionItems, setFilterOptionItems] = useState<
         FilterOptionItem[] | undefined
     >([]);
@@ -39,6 +40,9 @@ const FilterTopic = () => {
     const { register, fields } = useSearchFilter({
         name: "topics",
         filterOptionItems,
+        ismobile:isMobile,
+        mobileFilter: mobileFilter,
+        setMobileFilter:setMobileFilter
     });
 
     return (
@@ -60,6 +64,7 @@ const FilterTopic = () => {
                         register={register(`topics.${i}.checkbox`)}
                         label={field.value}
                         value={field.value}
+                        count={field.label}
                         defaultChecked={!!field.checkbox}
                     />
                 ))}

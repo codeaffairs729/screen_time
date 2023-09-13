@@ -61,7 +61,7 @@ const DatasetDetail = ({ dataset }: { dataset: Dataset | undefined }) => {
             usereventDatasetView(dataset, extractedString);
         }
     }
-    console.log({dataset})
+
     useEffect(() => {
         const hashParam: string = asPath.split("#")[1];
         setSelectedIndex(tabIndex[hashParam as any]);
