@@ -29,12 +29,9 @@ const FilterUsageRights = () => {
         setFilterOptionItems(usageRights);
     }, [vm.filterOptions]);
 
-    const { register, fields } = useSearchFilter({
+    const { register, fields, control, setValue   } = useSearchFilter({
         name: "usage_rights",
         filterOptionItems,
-        ismobile: isMobile,
-        mobileFilter: mobileFilter,
-        setMobileFilter: setMobileFilter,
     });
     return (
         <FilterSection
@@ -52,13 +49,16 @@ const FilterUsageRights = () => {
                     .slice(0, itemShow)
                     .map((field, i) => (
                         <FilterCheckboxField
-                            dataSelector="domains-filter"
+                            dataSelector="usage_rights"
                             key={field.id}
-                            register={register(`domains.${i}.checkbox`)}
+                            register={register(`usage_rights.${i}.checkbox`)}
                             label={field.value}
                             value={field.value}
                             count={field.label}
                             defaultChecked={!!field.checkbox}
+                            name={`usage_rights.${i}.checkbox`}
+                            control={control}
+                            setValue={setValue}
                         />
                     ))}
             {fields.length > 6 && seeMore && (

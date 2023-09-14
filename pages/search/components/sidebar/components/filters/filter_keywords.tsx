@@ -27,12 +27,9 @@ const FilterKeywords = () => {
         setFilterOptionItems(keywords);
     }, [vm.filterOptions]);
 
-    const { register, fields } = useSearchFilter({
+    const { register, fields, control, setValue   } = useSearchFilter({
         name: "keywords",
         filterOptionItems,
-        ismobile: isMobile,
-        mobileFilter: mobileFilter,
-        setMobileFilter:setMobileFilter
     });
 
     return (
@@ -51,13 +48,16 @@ const FilterKeywords = () => {
                     .slice(0, itemShow)
                     .map((field, i) => (
                         <FilterCheckboxField
-                            dataSelector="domains-filter"
+                            dataSelector="keywords"
                             key={field.id}
-                            register={register(`domains.${i}.checkbox`)}
+                            register={register(`keywords.${i}.checkbox`)}
                             label={field.value}
                             value={field.value}
                             count={field.label}
                             defaultChecked={!!field.checkbox}
+                            name={`keywords.${i}.checkbox`}
+                            control={control}
+                            setValue={setValue}
                         />
                     ))}
             {fields.length > 6 && seeMore && (

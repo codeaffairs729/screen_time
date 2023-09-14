@@ -73,7 +73,7 @@ const ResultCard = ({ data, handleFAQClick }: ResultCardProps) => {
                     <div className="flex sm:flex-col md:flex-row">
                         <NewResultCardAction
                             data={{
-                                ...data,
+                                ...resultRecord,
                                 url: dataProviders?.datasetSource,
                             }}
                             setData={setResultRecord}

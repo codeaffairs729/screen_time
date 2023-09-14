@@ -7,6 +7,7 @@ import {
     BsBookmark,
     BsPencil,
     BsCheck,
+    BsBookmarkFill,
 } from "react-icons/bs";
 import DeleteListVM from "./delete_list.vm";
 import Loader from "../loader";
@@ -15,6 +16,7 @@ import DelListItemVM from "./del_list_item.vm";
 import EditListNameVM from "./edit_list_name.vm";
 import { useState } from "react";
 import ReactTooltip from "react-tooltip";
+import { AiOutlineClose } from "react-icons/ai";
 
 export default function BookmarkModal({
     showModal,
@@ -41,15 +43,25 @@ export default function BookmarkModal({
                     <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
                         <div className="relative w-[26rem] my-6 mx-auto px-5">
                             {/*content*/}
-                            <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+                            <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none pt-3">
                                 {/*header*/}
-                                <div className="flex items-start justify-between px-5 py-3 border-b border-solid border-slate-200 rounded-t">
-                                    <p className="text-lg font-semibold">
-                                        Lists
+                                <div>
+                                    <AiOutlineClose
+                                        className="absolute cursor-pointer right-7 top-4"
+                                        
+                                        onClick={() => setShowModal(false)}
+                                    />
+                                </div>
+                                <div className="flex items-center justify-between px-4 pt-5 pb-1 rounded-t">
+                                    <p className="text-lg font-normal">
+                                        {bookmark_lists?.length == 0
+                                            ? "Lists"
+                                            : "Save to:"}
                                     </p>
                                 </div>
+                                <div className="border-b border-solid border-slate-400 mx-4"></div>
                                 {/*body*/}
-                                <div className="flex flex-col h-36 m-3 px-5 justify-start text-left overflow-y-auto">
+                                <div className="flex flex-col h-36 justify-start text-left overflow-y-auto mx-4">
                                     <ul>
                                         {bookmark_lists?.length == 0 ? (
                                             <>
@@ -76,15 +88,11 @@ export default function BookmarkModal({
                                 </div>
 
                                 {/*footer*/}
-                                <div className="flex items-center justify-between px-5 py-3 border-t border-solid border-slate-200 rounded-b">
-                                    <CreateNewList inLists={false} />
-                                    <button
-                                        className="text-red-500 background-transparent font-bold uppercase text-xs mx-2 mb-1 px-3 py-1.5 outline-none focus:outline-none ease-linear transition-all duration-150"
-                                        type="button"
-                                        onClick={() => setShowModal(false)}
-                                    >
-                                        CLOSE
-                                    </button>
+                                <div className="flex items-center justify-between px-5 py-3 rounded-b ">
+                                    <CreateNewList
+                                        inLists={false}
+                                        labelClass={" rounded-full !py-3 !my-3 !px-4 !bg-dtech-new-main-light"}
+                                    />
                                 </div>
                             </div>
                         </div>
@@ -142,7 +150,7 @@ const ModelList = ({
     };
 
     return (
-        <li className="items-center my-1 py-0.5 w-full bg-gray-100 hover:bg-gray-200 border-radius-md flex justify-between">
+        <li className="items-center my-3 py-1.5 w-full bg-gray-100 hover:bg-gray-200 border-radius-md flex justify-between">
             <div className="flex items-center">
                 {thisList ? (
                     isAddingListItem ? (
@@ -160,23 +168,24 @@ const ModelList = ({
                                 );
                             }}
                         >
-                            <BsBookmarkCheckFill className="text-dtech-secondary-dark hover:text-dtech-secondary-light" />
+                            <BsBookmarkFill className=" text-dtech-light-teal" size={20} />
                         </button>
                     )
                 ) : isDeletingListItem ? (
                     <button className="px-2">
                         <Loader />
                     </button>
-                ) : (<div data-tip ="Select list">
-                    <button
-                        className="px-2 py-0.5"
-                        onClick={() => {
-                            addNewListItem(list.listID, getItemPayload());
-                        }}
-                    >
-                        <BsBookmark className="text-dtech-secondary-dark hover:text-dtech-secondary-light" />
-                    </button>
-                    <ReactTooltip uuid="dtechtive-list-selected-btn-tooltip" />
+                ) : (
+                    <div data-tip="Select list">
+                        <button
+                            className="px-2 py-0.5"
+                            onClick={() => {
+                                addNewListItem(list.listID, getItemPayload());
+                            }}
+                        >
+                            <BsBookmark className="text-dtech-light-teal" size={20} />
+                        </button>
+                        <ReactTooltip uuid="dtechtive-list-selected-btn-tooltip" />
                     </div>
                 )}
 
@@ -214,16 +223,17 @@ const ModelList = ({
                                 >
                                     <BsCheck className="text-gray-600 hover:text-red-600" />
                                 </button>
-                            ) : (<div data-tip="Edit">
-                                <button
-                                    className="px-2 py-0.5"
-                                    onClick={() => {
-                                        setEditActive(true);
-                                    }}
-                                >
-                                    <BsPencil className="text-gray-600 hover:text-red-600" />
-                                </button>
-                                <ReactTooltip uuid="dtechtive-edit-btn-tooltip" />
+                            ) : (
+                                <div data-tip="Edit">
+                                    <button
+                                        className="px-2 py-0.5"
+                                        onClick={() => {
+                                            setEditActive(true);
+                                        }}
+                                    >
+                                        <BsPencil className="text-gray-600 hover:text-red-600" />
+                                    </button>
+                                    <ReactTooltip uuid="dtechtive-edit-btn-tooltip" />
                                 </div>
                             )}
                         </>
@@ -236,19 +246,20 @@ const ModelList = ({
                                 <button className="px-2">
                                     <Loader />
                                 </button>
-                            ) : (<div data-tip="Delete">
-                                <button
-                                    className="px-2 py-0.5"
-                                    onClick={() => {
-                                        deleteUserList(
-                                            list.listName,
-                                            list.listID
-                                        );
-                                    }}
-                                >
-                                    <BsTrash className="text-gray-600 hover:text-red-600" />
-                                </button>
-                                <ReactTooltip uuid="dtechtive-delete-btn-tooltip" />
+                            ) : (
+                                <div data-tip="Delete">
+                                    <button
+                                        className="px-2 py-0.5"
+                                        onClick={() => {
+                                            deleteUserList(
+                                                list.listName,
+                                                list.listID
+                                            );
+                                        }}
+                                    >
+                                        <BsTrash className="text-gray-600 hover:text-red-600" />
+                                    </button>
+                                    <ReactTooltip uuid="dtechtive-delete-btn-tooltip" />
                                 </div>
                             )}
                         </>

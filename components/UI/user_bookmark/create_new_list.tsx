@@ -4,7 +4,7 @@ import { RootState } from "store";
 import CreateListVM from "./create_list.vm";
 import Loader from "../loader";
 
-const CreateNewList = ({ inLists = false }: { inLists: boolean }) => {
+const CreateNewList = ({ inLists = false, labelClass }: { inLists: boolean, labelClass?: string }) => {
     const user = useSelector((state: RootState) => state.auth.user);
     const bookmark_lists = useSelector(
         (state: RootState) => state.user.bookmarkLists
@@ -33,7 +33,7 @@ const CreateNewList = ({ inLists = false }: { inLists: boolean }) => {
                 ) : (
                     <button
                         // className="bg-dtech-secondary-light rounded text-white font-semibold text-sm mr-2 mb-1 px-3 py-1.5 outline-none focus:outline-none ease-linear transition-all duration-150"
-                        className={`bg-dtech-secondary-light text-white text-sm mr-2 mb-1 px-3 py-1.5 outline-none focus:outline-none ease-linear transition-all duration-150 ${
+                        className={`bg-dtech-secondary-light text-white text-sm mr-2 mb-1 px-3 py-1.5 outline-none focus:outline-none ease-linear transition-all duration-150 ${labelClass} ${
                             inLists ? "rounded-full w-full" : "rounded"
                         }`}
                         type="button"

@@ -27,12 +27,9 @@ const FilterUpdateFrequency = () => {
         setFilterOptionItems(updateFrequency);
     }, [vm.filterOptions]);
 
-    const { register, fields } = useSearchFilter({
+    const { register, fields, control, setValue   } = useSearchFilter({
         name: "update_frequency",
         filterOptionItems,
-        ismobile: isMobile,
-        mobileFilter: mobileFilter,
-        setMobileFilter:setMobileFilter
     });
 
     return (
@@ -51,13 +48,16 @@ const FilterUpdateFrequency = () => {
                     .slice(0, itemShow)
                     .map((field, i) => (
                         <FilterCheckboxField
-                            dataSelector="domains-filter"
+                            dataSelector="update_frequency"
                             key={field.id}
-                            register={register(`domains.${i}.checkbox`)}
+                            register={register(`update_frequency.${i}.checkbox`)}
                             label={field.value}
                             value={field.value}
                             count={field.label}
                             defaultChecked={!!field.checkbox}
+                            name={`update_frequency.${i}.checkbox`}
+                            control={control}
+                            setValue={setValue}
                         />
                     ))}
             {fields.length > 6 && seeMore && (

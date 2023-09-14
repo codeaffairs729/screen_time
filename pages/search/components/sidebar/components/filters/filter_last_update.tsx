@@ -25,12 +25,9 @@ const FilterLastUpdate = () => {
     setFilterOptions(filterValues);
   }, [vm.filterOptions]);
 
-  const { register, fields } = useSearchFilter({
+  const { register, fields,control, setValue } = useSearchFilter({
     name: "last_updated",
     filterOptionItems: filterOptions,
-    ismobile: isMobile,
-    mobileFilter: mobileFilter,
-    setMobileFilter:setMobileFilter
   });
 
   return (
@@ -43,6 +40,9 @@ const FilterLastUpdate = () => {
           value={field.label}
           count={field.label}
           defaultChecked={!!field.checkbox}
+          name={`last_updated.${i}.checkbox`}
+          control={control}
+          setValue={setValue}
         />
       ))}
     </FilterSection>

@@ -27,12 +27,9 @@ const FilterDataHost = () => {
         setFilterOptionItems(dataHost);
     }, [vm.filterOptions]);
     
-    const { register, fields } = useSearchFilter({
+    const { register, fields,control, setValue } = useSearchFilter({
         name: "data_host",
         filterOptionItems,
-        ismobile: isMobile,
-        mobileFilter: mobileFilter,
-        setMobileFilter:setMobileFilter
     });
 
     return (
@@ -51,13 +48,16 @@ const FilterDataHost = () => {
                     .slice(0, itemShow)
                     .map((field, i) => (
                         <FilterCheckboxField
-                            dataSelector="domains-filter"
+                            dataSelector="data_host"
                             key={field.id}
-                            register={register(`domains.${i}.checkbox`)}
+                            register={register(`data_host.${i}.checkbox`)}
                             label={field.value}
                             value={field.value}
                             count={field.label}
                             defaultChecked={!!field.checkbox}
+                            name={`data_host.${i}.checkbox`}
+                            control={control}
+                            setValue={setValue}
                         />
                     ))}
             {fields.length > 6 && seeMore && (

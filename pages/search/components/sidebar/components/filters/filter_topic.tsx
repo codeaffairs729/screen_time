@@ -40,12 +40,9 @@ const FilterTopic = () => {
         setFilterOptionItems(topics);
     }, [vm.filterOptions]);
 
-    const { register, fields } = useSearchFilter({
+    const { register, fields, control, setValue   } = useSearchFilter({
         name: "topics",
         filterOptionItems,
-        ismobile:isMobile,
-        mobileFilter: mobileFilter,
-        setMobileFilter:setMobileFilter
     });
 
     return (
@@ -64,13 +61,16 @@ const FilterTopic = () => {
                     .slice(0, itemShow)
                     .map((field, i) => (
                         <FilterCheckboxField
-                            dataSelector="domains-filter"
+                            dataSelector="topics-filter"
                             key={field.id}
-                            register={register(`domains.${i}.checkbox`)}
+                            register={register(`topics.${i}.checkbox`)}
                             label={field.value}
                             value={field.value}
                             count={field.label}
                             defaultChecked={!!field.checkbox}
+                            name={`topics.${i}.checkbox`}
+                            control={control}
+                            setValue={setValue}
                         />
                     ))}
             {fields.length > 6 && seeMore && (

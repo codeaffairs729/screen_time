@@ -49,9 +49,13 @@ const NewResultCardAction = ({
                 <div className=" flex flex-col justify-center items-center">
                     <a href={data?.url} target="_blank" rel="noreferrer">
                         {!href?.includes("dataset") ? (
-                            <BsGlobe className="sm:h-6 sm:w-6 h-4 w-4 text-dtech-new-main-light cursor-pointer " />
+                            <div className="hover:bg-[#6DCDCB] px-2 pt-2">
+                                <BsGlobe className="sm:h-6 sm:w-6 h-4 w-4 text-dtech-new-main-light cursor-pointer" />
+                            </div>
                         ) : (
-                            <Image src={SourceArrow} />
+                            <div className="hover:bg-[#6DCDCB] px-2 pt-2">
+                                <Image src={SourceArrow} className=" " />
+                            </div>
                         )}
                     </a>
                     <div className="text-dtech-new-main-light w-max">
@@ -59,20 +63,24 @@ const NewResultCardAction = ({
                     </div>
                 </div>
                 <div className=" flex flex-col justify-center items-center">
-                    <FavouriteBtn
-                        className="mx-auto "
-                        datasetStats={data}
-                        recordType={data.recordType}
-                        onFavouriteChange={onFav}
-                    />
+                    <div className="hover:bg-[#6DCDCB] active:bg-white px-2 pt-2 mb-[-10px]">
+                        <FavouriteBtn
+                            className="mx-auto"
+                            datasetStats={data}
+                            recordType={data.recordType}
+                            onFavouriteChange={onFav}
+                        />
+                    </div>
                     <div className="text-dtech-new-main-light mt-2">Like</div>
                 </div>
                 <div className=" flex flex-col justify-center items-center">
-                    <BookmarkBtn
-                        className="mx-auto "
-                        data={data}
-                        recordType={data.recordType}
-                    />
+                    <div className="hover:bg-[#6DCDCB] px-2 pt-2 mb-[-10px]">
+                        <BookmarkBtn
+                            className="mx-auto"
+                            data={data}
+                            recordType={data.recordType}
+                        />
+                    </div>
                     <div className="text-dtech-new-main-light mt-2">Save</div>
                 </div>
                 <div className=" flex flex-col justify-center items-center">
@@ -82,10 +90,10 @@ const NewResultCardAction = ({
                                 <Menu.Button>
                                     <div data-tip="Share on social media">
                                         <BsShareFill
-                                                className="sm:h-6 sm:w-6 h-4 w-4 text-dtech-new-main-light cursor-pointer"
-                                                data-modal-toggle="popup"
-                                                onClick={() => setShare(true)}
-                                            />
+                                            className="sm:h-6 sm:w-6 h-4 w-4 text-dtech-new-main-light cursor-pointer"
+                                            data-modal-toggle="popup"
+                                            onClick={() => setShare(true)}
+                                        />
                                     </div>
                                     <ReactTooltip uuid="dtechtive-share-btn-tooltip" />
                                 </Menu.Button>
