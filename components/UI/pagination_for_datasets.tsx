@@ -57,8 +57,8 @@ const Pagination = ({
                         key={index}
                         onClick={() => setPageNumber(pageNumber)}
                         className={`${
-                            currentPage == pageNumber && "bg-dtech-main-light"
-                        } px-2 leading-tight font-normal hover:bg-dtech-main-light hover:text-dtech-dark-grey cursor-pointer rounded-sm mx-2`}
+                            currentPage == pageNumber && "bg-[#0065BD] bg-opacity-20"
+                        } px-2 leading-tight font-normal hover:bg-[#0065BD] hover:bg-opacity-20 hover:text-[#0065BD] cursor-pointer rounded-sm mx-2`}
                     >
                         <span className="text-[17px]">{pageNumber}</span>
                         </a>
@@ -81,7 +81,7 @@ const Pagination = ({
     return (
         <div className="pagination flex flex-row justify-center items-center my-4">
             <div>{renderPageNumbers()}</div>
-            {(totalPages > 1) &&
+            {/* {(totalPages > 1) || (totalPages > currentPage) &&
             (
             <div>
                 <button
@@ -92,7 +92,7 @@ const Pagination = ({
                     <BsChevronRight className="text-[#0065BD] mx-3 font-[100px] text-[20px]"  />
                 </button>
             </div>
-            )}
+            )} */}
         </div>
     );
 };

@@ -30,7 +30,7 @@ const FilterCheckboxField = ({
         <div
             data-selector={dataSelector}
             className={clsx(
-                "flex items-start py-1.5 cursor-pointer ",
+                "flex items-start py-2 cursor-pointer ",
                 className,
                 {
                     "hover:bg-[#EBEBEB]": !defaultChecked,
@@ -46,10 +46,10 @@ const FilterCheckboxField = ({
                 value={value}
                 defaultChecked={defaultChecked}
             />
-            <div className="flex justify-evenly items-center w-full mr-3">
+            <div className="flex justify-evenly items-center w-full mr-3 ml-5">
                 <div
                     className={clsx("cursor-pointer", {
-                        "border-2 border-dtech-main-dark h-6 m-1 ":
+                        "border-[1.4px] border-dtech-new-main-light h-5 ml-0":
                             defaultChecked,
                     })}
                 ></div>
