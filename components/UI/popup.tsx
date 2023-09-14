@@ -3,7 +3,7 @@ import { BsFacebook, BsLinkedin, BsTwitter } from "react-icons/bs";
 type PopupProps = {
     href: String;
     dataset: String;
-    onClose: () => void;
+    onClose?: () => void;
 };
 const Popup = ({ href, dataset, onClose }: PopupProps) => {
     const Message = `Checkout the datasets from ${dataset} listed on Dtechtive`;
