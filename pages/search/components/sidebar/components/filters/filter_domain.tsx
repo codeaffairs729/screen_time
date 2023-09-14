@@ -32,12 +32,9 @@ const FilterDomain = () => {
         setFilterOptionItems(domains);
     }, [vm.filterOptions]);
 
-    const { register, fields } = useSearchFilter({
+    const { register, fields, control, setValue } = useSearchFilter({
         name: "domains",
         filterOptionItems,
-        ismobile: isMobile,
-        mobileFilter: mobileFilter,
-        setMobileFilter: setMobileFilter,
     });
 
     return (
@@ -63,6 +60,9 @@ const FilterDomain = () => {
                             value={field.value}
                             count={field.label}
                             defaultChecked={!!field.checkbox}
+                            name={`domains.${i}.checkbox`}
+                            control={control}
+                            setValue={setValue}
                         />
                     ))}
             {fields.length > 6 && seeMore && (

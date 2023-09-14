@@ -363,12 +363,12 @@ export const useSearchFilter = ({
 }: {
     name: keyof Filter;
     filterOptionItems: FilterOptionItem[] | undefined;
-    ismobile: boolean;
-    mobileFilter :any
-    setMobileFilter: any;
+    ismobile?: boolean;
+    mobileFilter?:any
+    setMobileFilter?: any;
 }) => {
     const { activeFilter, setActiveFilter } = useContext(SearchVMContext);
-    const { control, register, watch, reset } = useForm<FilterOptions>();
+    const { control, register, watch, reset, setValue } = useForm<FilterOptions>();
     const { fields, replace, update } = useFieldArray({ control, name });
 
     useEffect(() => {
@@ -382,16 +382,7 @@ export const useSearchFilter = ({
             }))
         );
     }, [filterOptionItems]);
-
-    // ismobile && watch((formState) => {
-    //     const currentFilterState = formState[name];
-    //     const newFilterState = currentFilterState
-    //         ?.filter((f) => f)
-    //         .filter((f) => f?.checkbox)
-    //         .map((f) => f?.value);
-    //         setMobileFilter({...mobileFilter, [name]: newFilterState })
-    // });
-
+    
     useEffect(() => {
         const subscription = watch((formState) => {
             const currentFilterState = formState[name];
@@ -399,20 +390,15 @@ export const useSearchFilter = ({
                 ?.filter((f) => f)
                 .filter((f) => f?.checkbox)
                 .map((f) => f?.value);
-
-            // if (!ismobile){
-                setActiveFilter((state: Filter) => ({
-                    ...state,
-                    [name]: newFilterState,
-                }));
-            // }else{
-            //     // setMobileFilter({...mobileFilter, [name]: newFilterState })
-            // }
+            setActiveFilter((state: Filter) => ({
+                ...state,
+                [name]: newFilterState,
+            }));
         });
         return () => subscription.unsubscribe();
     }, [watch]);
 
-    return { control, register, fields, replace };
+    return { control, register, fields, replace,setValue };
 };
 
 // export const datasetToResultCardData = (datasets: any, stats: any): Data[] => {

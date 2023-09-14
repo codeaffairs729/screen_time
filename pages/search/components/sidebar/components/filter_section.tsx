@@ -15,6 +15,7 @@ const FilterSection = ({
     dataSelector?: string;
 }) => {
     const [hideFilters, setHideFilters] = useState<boolean>(true);
+    const [isHovered, setIsHovered] = useState<boolean>(false);
     return (
         <div data-selector={dataSelector} className={`${disable? "hidden": ""}`}>
             <div
@@ -22,6 +23,8 @@ const FilterSection = ({
                     disable ? "cursor-not-allowed bg-dtech-light-grey" : hideFilters ?"  cursor-pointer " : " text-white bg-dtech-new-main-light cursor-pointer"
                 }   hover:bg-[#6DCDCB] hover:bg-opacity-50 text-gray-500 hover:text-black `}
                 onClick={() => setHideFilters(!hideFilters)}
+                onMouseEnter={()=>setIsHovered(true)}
+                onMouseLeave={()=>setIsHovered(false)}
             >
                 <div className=" flex justify-between items-center mx-3 hover:text-black">
                     <h4
@@ -31,7 +34,7 @@ const FilterSection = ({
                                 : hideFilters
                                 ? " "
                                 : "text-white"
-                        } text-sm pr-2 py-1.5 hover:text-black `}
+                        } text-sm pr-2 py-1.5 ${isHovered&&"text-black"}  `}
                     >
                         {label}
                     </h4>
@@ -42,9 +45,9 @@ const FilterSection = ({
                                 ? "text-gray-300"
                                 : hideFilters
                                 ? ""
-                                : "text-white hover:text-black  rotate-180"
+                                : "text-white  rotate-180"
                         }
-                        transition-all h-4 w-6 `}
+                        transition-all h-4 w-6 ${isHovered&&"text-black"} `}
                         strokeWidth="2"
                     />
                     {/* <VscTriangleDown

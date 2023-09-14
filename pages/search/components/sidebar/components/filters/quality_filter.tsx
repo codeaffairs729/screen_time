@@ -31,17 +31,13 @@ const QualityFilter = () => {
         setFilterOptions(filterValues?.slice().reverse());
     }, [vm.datasets]);
 
-    const { register, fields } = useSearchFilter({
+    const { register, fields, control, setValue   } = useSearchFilter({
         name: "metadata_quality",
         filterOptionItems: filterOption,
-        ismobile: isMobile,
-        mobileFilter: mobileFilter,
-        setMobileFilter:setMobileFilter
     });
     return (
         <FilterSection label="Metadata Quality" disable={vm.isLoading}>
             {fields.map((field, i) => (
-                <StarRow key={field.id} stars={parseInt(field.value)}>
                     <FilterCheckboxField
                         className="mr-1.5 mb-0.5"
                         key={field.id}
@@ -49,8 +45,13 @@ const QualityFilter = () => {
                         value={field.value}
                         count={field.label}
                         defaultChecked={!!field.checkbox}
+                        name={`metadata_quality.${i}.checkbox`}
+                        control={control}
+                        setValue={setValue}
+                        stars={parseInt(field.value)}
                     />
-                </StarRow>
+                // <StarRow key={field.id} stars={parseInt(field.value)}>
+                // </StarRow>
             ))}
         </FilterSection>
     );

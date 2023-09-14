@@ -36,12 +36,9 @@ const FilterFileType = () => {
         setFilterOptionItems(fileFormats);
     }, [vm.filterOptions]);
 
-    const { register, fields } = useSearchFilter({
+    const { register, fields, control, setValue  } = useSearchFilter({
         name: "file_formats",
         filterOptionItems,
-        ismobile: isMobile,
-        mobileFilter: mobileFilter,
-        setMobileFilter: setMobileFilter,
     });
 
     return (
@@ -60,13 +57,16 @@ const FilterFileType = () => {
                     .slice(0, itemShow)
                     .map((field, i) => (
                         <FilterCheckboxField
-                            dataSelector="domains-filter"
+                            dataSelector="file-formats"
                             key={field.id}
-                            register={register(`domains.${i}.checkbox`)}
+                            register={register(`file_formats.${i}.checkbox`)}
                             label={field.value}
                             value={field.value}
                             count={field.label}
                             defaultChecked={!!field.checkbox}
+                            name={`file_formats.${i}.checkbox`}
+                            control={control}
+                            setValue={setValue}
                         />
                     ))}
             {fields.length > 6 && seeMore && (

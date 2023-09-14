@@ -60,9 +60,9 @@ const FavouriteBtn = ({
                         {!isHandlingFavourite ? (
                             <>
                                 {isFavourited ? (
-                                    <BsHeartFill className="sm:h-6 sm:w-6 h-4 w-4  text-dtech-new-main-light cursor-pointer" />
+                                    <BsHeartFill className="sm:h-6 sm:w-6 h-4 w-4  text-dtech-new-main-light cursor-pointer active:bg-[#6DCDCB]" />
                                 ) : (
-                                    <BsHeart className="sm:h-6 sm:w-6 h-4 w-4  text-dtech-new-main-light cursor-pointer" />
+                                    <BsHeart className="sm:h-6 sm:w-6 h-4 w-4  text-dtech-new-main-light cursor-pointer active:bg-[#6DCDCB]" />
                                 )}
                             </>
                         ) : (

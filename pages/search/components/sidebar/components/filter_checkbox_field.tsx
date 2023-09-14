@@ -1,6 +1,11 @@
 import clsx from "clsx";
-import { useRef, useState, forwardRef, RefObject } from "react";
-import { UseFormRegisterReturn } from "react-hook-form";
+import StarRating from "components/UI/star_rating";
+import { useRef, useState, forwardRef, RefObject, ReactNode } from "react";
+import {
+    Controller,
+    UseFormRegisterReturn,
+    useFormContext,
+} from "react-hook-form";
 
 const FilterCheckboxField = ({
     label,
@@ -10,6 +15,10 @@ const FilterCheckboxField = ({
     defaultChecked,
     count,
     dataSelector,
+    control,
+    name,
+    setValue,
+    stars,
 }: {
     label?: string;
     value?: any;
@@ -18,14 +27,15 @@ const FilterCheckboxField = ({
     defaultChecked: boolean;
     count: string;
     dataSelector?: string;
+    name?: any;
+    control?: any;
+    setValue?: any;
+    stars?: any;
 }) => {
-    const ref = useRef<any>(null);
+    const handleOuterDivClick = () => {
+        setValue(name, !defaultChecked);
+    };
 
-    // const handleClick = () =>{
-    //     if(ref.current){
-    //         (ref.current as HTMLButtonElement).click()
-    //     }
-    // }
     return (
         <div
             data-selector={dataSelector}
@@ -37,14 +47,17 @@ const FilterCheckboxField = ({
                     "bg-[#EBEBEB]": defaultChecked,
                 }
             )}
+            onClick={handleOuterDivClick}
         >
             <input
                 type="checkbox"
-                {...register}
-                id={register?.name}
+                name={name}
+                {...register} // Assuming you are using register
+                checked={defaultChecked}
+                onChange={(e) => {
+                    setValue(name, e.target.checked);
+                }}
                 className="sr-only"
-                value={value}
-                defaultChecked={defaultChecked}
             />
             <div className="flex justify-evenly items-center w-full mr-3 ml-5">
                 <div
@@ -53,22 +66,26 @@ const FilterCheckboxField = ({
                             defaultChecked,
                     })}
                 ></div>
-                <div className="flex flex-row justify-between items-center w-full text-gray-500 hover:text-black" onClick={() =>  ref.current != null && ref.current.click()}>
-                    <div>
-                        <label
-                            className="cursor-pointer"
-                            htmlFor={register?.name}
-                            onClick={() => {}}
-                            ref={ref}
-                        >
-                            {label && (
-                                <span className="ml-2 text-sm flex">{label}</span>
-                            )}
-                        </label>
+                <div className="flex flex-row justify-between items-center w-full text-gray-500 hover:text-black">
+                    {!stars && (
+                        <div>
+                            <label className="cursor-pointer">
+                                {label && (
+                                    <span className="ml-2 text-sm flex">
+                                        {label}{" "}
+                                    </span>
+                                )}
+                            </label>
+                        </div>
+                    )}
+                    <div className="ml-2 text-xs flex flex-row">
+                        {count}
+                        {stars && (
+                            <div className=" ml-4">
+                                <StarRating rating={stars} />
+                            </div>
+                        )}
                     </div>
-					<div className="ml-2 text-xs">
-					    {count}
-					</div>
                 </div>
             </div>
         </div>
@@ -76,3 +93,38 @@ const FilterCheckboxField = ({
 };
 
 export default FilterCheckboxField;
+
+/**
+ * 
+ * 
+	<div
+			data-selector={dataSelector}
+			className={clsx("flex items-start mb-1.5", className)}
+		>
+			<input
+				type="checkbox"
+				{...register}
+				className="focus:ring-0 rounded-sm border-dtech-main-dark text-dtech-main-dark"
+				value={value}
+				defaultChecked={defaultChecked}
+			/>
+			{label && (
+				<span className="ml-2 text-sm">{label}</span>
+			)}
+		</div>
+ */
+
+const StarRow = ({
+    stars,
+    children,
+}: {
+    stars: number;
+    children: ReactNode;
+}) => {
+    return (
+        <div className="flex items-center justify-start">
+            {children}
+            <StarRating rating={stars} />
+        </div>
+    );
+};

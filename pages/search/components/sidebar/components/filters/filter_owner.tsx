@@ -32,12 +32,9 @@ const FilterOwner = () => {
     setFilterOptionItems(owners);
   }, [vm.datasets]);
 
-  const { register, fields } = useSearchFilter({
+  const { register, fields, control, setValue   } = useSearchFilter({
     name: "data_owner",
     filterOptionItems,
-    ismobile: isMobile,
-    mobileFilter: mobileFilter,
-    setMobileFilter:setMobileFilter
   });
 
   return (
@@ -56,13 +53,16 @@ const FilterOwner = () => {
                     .slice(0, itemShow)
                     .map((field, i) => (
                         <FilterCheckboxField
-                            dataSelector="domains-filter"
+                            dataSelector="data-owner"
                             key={field.id}
-                            register={register(`domains.${i}.checkbox`)}
+                            register={register(`data_owner.${i}.checkbox`)}
                             label={field.value}
                             value={field.value}
                             count={field.label}
                             defaultChecked={!!field.checkbox}
+                            name={`data_owner.${i}.checkbox`}
+                            control={control}
+                            setValue={setValue}
                         />
                     ))}
             {fields.length > 6 && seeMore && (
