@@ -7,6 +7,7 @@ import { useContext, useEffect, useState } from "react";
 import FilterCheckboxField from "../filter_checkbox_field";
 import FilterSection from "../filter_section";
 import Loader from "components/UI/loader";
+import { BsChevronDown } from "react-icons/bs";
 
 const FilterTopic = () => {
     const vm = useContext(SearchVMContext);
@@ -73,14 +74,19 @@ const FilterTopic = () => {
                         />
                     ))}
             {fields.length > 6 && seeMore && (
-                <button
-                className="text-xs text-dtech-main-dark mx-2"
-                    onClick={() => {
-                        setItemShow(fields.length), setSeeMore(!seeMore);
-                    }}
-                >
-                    see more...
-                </button>
+                <div
+                className="flex items-center font-normal text-sm text-[#0065BD] mx-7 cursor-pointer"
+                onClick={() => {
+                    setItemShow(fields.length), setSeeMore(!seeMore);
+                }}
+            >
+                <div>See more</div>
+                <BsChevronDown
+                    className={`
+                font-normal h-4 w-6 `}
+                    strokeWidth="1.5"
+                />
+            </div>
             )}
         </FilterSection>
     );

@@ -16,14 +16,14 @@ const FilterSection = ({
 }) => {
     const [hideFilters, setHideFilters] = useState<boolean>(true);
     return (
-        <div data-selector={dataSelector}>
+        <div data-selector={dataSelector} className={`${disable? "hidden": ""}`}>
             <div
                 className={`${
-                    disable ? "cursor-not-allowed  bg-dtech-light-grey" : hideFilters ?"  cursor-pointer " : " text-white bg-dtech-new-main-light cursor-pointer"
-                }   hover:bg-[#6DCDCB] text-gray-500 hover:text-dtech-main-dark hover:border-l-2 hover:border-dtech-new-main-light`}
+                    disable ? "cursor-not-allowed bg-dtech-light-grey" : hideFilters ?"  cursor-pointer " : " text-white bg-dtech-new-main-light cursor-pointer"
+                }   hover:bg-[#6DCDCB] hover:bg-opacity-50 text-gray-500 hover:text-black `}
                 onClick={() => setHideFilters(!hideFilters)}
             >
-                <div className=" flex justify-between items-center mx-3">
+                <div className=" flex justify-between items-center mx-3 hover:text-black">
                     <h4
                         className={`${
                             disable
@@ -31,7 +31,7 @@ const FilterSection = ({
                                 : hideFilters
                                 ? " "
                                 : "text-white"
-                        } text-sm pr-2 py-1.5`}
+                        } text-sm pr-2 py-1.5 hover:text-black `}
                     >
                         {label}
                     </h4>
@@ -42,9 +42,9 @@ const FilterSection = ({
                                 ? "text-gray-300"
                                 : hideFilters
                                 ? ""
-                                : "text-white  rotate-180"
+                                : "text-white hover:text-black  rotate-180"
                         }
-                        transition-all h-4 w-6`}
+                        transition-all h-4 w-6 `}
                         strokeWidth="2"
                     />
                     {/* <VscTriangleDown

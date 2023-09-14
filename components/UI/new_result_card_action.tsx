@@ -34,6 +34,10 @@ const NewResultCardAction = ({
     }
     const onFav = () => setData({ ...data, isFavourited: !data.isFavourited });
 
+    const handleClosePopup = () => {
+        setShare(false);
+    };
+
     return (
         <div className={clsx("flex", className)}>
             <div
@@ -78,18 +82,19 @@ const NewResultCardAction = ({
                                 <Menu.Button>
                                     <div data-tip="Share on social media">
                                         <BsShareFill
-                                            className="sm:h-6 sm:w-6 h-4 w-4 text-dtech-new-main-light cursor-pointer "
-                                            data-modal-toggle="popup"
-                                            onClick={() => setShare(!share)}
-                                        />
+                                                className="sm:h-6 sm:w-6 h-4 w-4 text-dtech-new-main-light cursor-pointer"
+                                                data-modal-toggle="popup"
+                                                onClick={() => setShare(true)}
+                                            />
                                     </div>
                                     <ReactTooltip uuid="dtechtive-share-btn-tooltip" />
                                 </Menu.Button>
-                                <Transition show={open}>
+                                <Transition show={open && share}>
                                     <Menu.Items static className="">
                                         <Popup
                                             href={href}
                                             dataset={data.title}
+                                            onClose={handleClosePopup}
                                         />
                                     </Menu.Items>
                                 </Transition>
