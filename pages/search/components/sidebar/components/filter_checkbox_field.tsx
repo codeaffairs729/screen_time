@@ -66,7 +66,7 @@ const FilterCheckboxField = ({
                             defaultChecked,
                     })}
                 ></div>
-                <div className="flex flex-row justify-between items-center w-full text-gray-500 hover:text-black">
+                <div className="flex flex-row justify-between items-center w-full text-gray-500 hover:text-black mr-5">
                     {!stars && (
                         <div>
                             <label className="cursor-pointer">

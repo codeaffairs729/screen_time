@@ -13,11 +13,13 @@ const BookmarkBtn = ({
     data,
     recordType = "dataset",
     onBookmarkChange,
+    bookmarkColor="",
 }: {
     className?: string;
     data: any;
     recordType?: string;
     onBookmarkChange?: () => void;
+    bookmarkColor?: string;
 }) => {
     // const { handleBookmark, isBookmarked, isHandlingBookmark, user } =
     //     useBookmarkDataset(dataset, onBookmarkChange);
@@ -35,7 +37,7 @@ const BookmarkBtn = ({
                 recordType={recordType}
             />
             <div
-                className="inline-block"
+                className="inline-block active:bg-dtech-main-dark active:!text-white"
                 data-tip={
                     !user ? "Please login to bookmark this dataset." : "Add to lists"
                 }
@@ -52,15 +54,15 @@ const BookmarkBtn = ({
                     )}
                 >
                     {!user ? (
-                        <BsBookmark className="sm:h-6 sm:w-6 h-4 w-4 text-dtech-new-main-light cursor-pointer" />
+                        <BsBookmark className={`sm:h-6 sm:w-6 h-4 w-4  cursor-pointer text-dtech-new-main-light  active:bg-dtech-main-dark active:!text-white ${ bookmarkColor}`} />
                     ) : (
                         <>
                             {!isHandlingBookmark ? (
                                 <>
                                     {isBookmarked ? (
-                                        <BsBookmarkFill className="sm:h-6 sm:w-6 h-4 w-4  text-dtech-new-main-light cursor-pointer" />
+                                        <BsBookmarkFill className={`sm:h-6 sm:w-6 h-4 w-4 text-dtech-new-main-light cursor-pointer  active:bg-dtech-main-dark active:!text-white ${bookmarkColor}`} />
                                     ) : (
-                                        <BsBookmark className="sm:h-6 sm:w-6 h-4 w-4  text-dtech-new-main-light cursor-pointer" />
+                                        <BsBookmark className={`sm:h-6 sm:w-6 h-4 w-4 text-dtech-new-main-light  cursor-pointer  active:bg-dtech-main-dark active:!text-white ${bookmarkColor}`} />
                                     )}
                                 </>
                             ) : (

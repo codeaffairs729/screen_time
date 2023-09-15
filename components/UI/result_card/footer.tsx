@@ -46,9 +46,11 @@ const CardFooter = ({
             }
         });
         // Create an array of strings with string interpolation
-        const result = Object.entries(formatCounts).map(([format, count]) => {
-            return `${format.toUpperCase()} (${count})`;
-        }).filter((data)=> !data.includes("NULL"));
+        const result = Object.entries(formatCounts)
+            .map(([format, count]) => {
+                return `${format.toUpperCase()} (${count})`;
+            })
+            .filter((data) => !data.includes("NULL"));
 
         return result;
     }
@@ -116,56 +118,20 @@ const MetaInfoEntity = ({
     return (
         <div className="flex sm:mr-8 w-full " ref={myRef}>
             {entities && entities.length > 0 && (
-                // <div className="flex flex-row space-x-2  w-full ">
                 <div className="flex w-full items-center sm:justify-start justify-between">
                     <div className="flex flex-wrap flex-row  sm:max-w-xs  ml-2 ">
                         {entities.map((entity, index) => {
-                            if (index < 2)
-                                return (
-                                    <span
-                                        key={index}
-                                        className="sm:text-sm text-md text-white m-1 bg-dtech-new-main-light rounded p-1 px-2 !pt-0"
-                                    >
-                                        {entity}
-                                    </span>
-                                );
+                            return (
+                                <span
+                                    key={index}
+                                    className="sm:text-sm text-md text-white m-1 bg-dtech-new-main-light p-1 px-2 !pt-0"
+                                >
+                                    {entity}
+                                </span>
+                            );
                         })}
                     </div>
-                    {
-                        <div
-                            onClick={handleSearchBlur}
-                            className={
-                                viewAll
-                                    ? ` bg-black absolute opacity-50 h-[3000px] -right-4 sm:h-[3000px]  w-screen flex items-center  z-20`
-                                    : "hidden"
-                            }
-                        ></div>
-                    }
-                    {viewAll && (
-                        <div className="flex flex-wrap flex-row px-6 py-4 sm:w-[616px] w-xs bg-white absolute z-20 rounded-xl">
-                            <div className="flex justify-between w-full pb-4">
-                                <div>{entityName}</div>
-                                <div
-                                    className=" cursor-pointer"
-                                    onClick={() => setViewAll(!viewAll)}
-                                >
-                                    <img src="/images/provider-detail-page/close.svg" />
-                                </div>
-                            </div>
-                            {entities.map((entity, index) => {
-                                return (
-                                    <span
-                                        key={index}
-                                        className="text-sm text-white m-1 bg-dtech-new-main-light rounded p-1 px-2 !pt-0"
-                                    >
-                                        {entity}
-                                    </span>
-                                );
-                            })}
-                        </div>
-                    )}
                 </div>
-                // </div>
             )}
         </div>
     );

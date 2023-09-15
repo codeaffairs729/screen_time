@@ -17,12 +17,14 @@ const FavouriteBtn = ({
     recordType = "datasets",
     isLoading = false,
     onFavouriteChange,
+    favouriteColor=""
 }: {
     className?: string;
     datasetStats: any;
     isLoading?: Boolean;
     recordType?: string;
     onFavouriteChange?: () => void;
+    favouriteColor?: any;
 }) => {
     const { handleFavourite, isFavourited, isHandlingFavourite, user } =
         useFavouriteDataset(
@@ -54,15 +56,15 @@ const FavouriteBtn = ({
                 )}
             >
                 {!user ? (
-                    <BsHeart className="sm:h-6 sm:w-6 h-4 w-4 text-dtech-new-main-light cursor-pointer" />
+                    <BsHeart className={`sm:h-6 sm:w-6 h-4 w-4 text-dtech-new-main-light cursor-pointer active:bg-dtech-main-dark active:!text-white ${favouriteColor}`} />
                 ) : (
                     <>
                         {!isHandlingFavourite ? (
                             <>
                                 {isFavourited ? (
-                                    <BsHeartFill className="sm:h-6 sm:w-6 h-4 w-4  text-dtech-new-main-light cursor-pointer active:bg-[#6DCDCB]" />
+                                    <BsHeartFill className={`sm:h-6 sm:w-6 h-4 w-4  text-dtech-new-main-light cursor-pointer  active:bg-dtech-main-dark active:text-white ${favouriteColor}`} />
                                 ) : (
-                                    <BsHeart className="sm:h-6 sm:w-6 h-4 w-4  text-dtech-new-main-light cursor-pointer active:bg-[#6DCDCB]" />
+                                    <BsHeart className={`sm:h-6 sm:w-6 h-4 w-4  text-dtech-new-main-light cursor-pointer  active:bg-dtech-main-dark active:text-white ${favouriteColor}`} />
                                 )}
                             </>
                         ) : (
