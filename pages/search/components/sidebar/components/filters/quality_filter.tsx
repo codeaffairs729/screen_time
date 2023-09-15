@@ -37,7 +37,7 @@ const QualityFilter = () => {
     });
     return (
         <FilterSection label="Metadata Quality" disable={vm.isLoading}>
-            {fields.map((field, i) => (
+            {fields.reverse().map((field, i) => (
                     <FilterCheckboxField
                         className="mr-1.5 mb-0.5"
                         key={field.id}

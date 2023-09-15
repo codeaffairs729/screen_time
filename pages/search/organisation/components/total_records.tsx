@@ -40,7 +40,7 @@ const TotalRecords = ({
     return (
         <div className="sm:flex justify-between items-center w-full">
             <div className="flex flex-row justify-between items-center">
-                <div className=" text-base">
+                <div className=" text-base mt-0.1">
                     <span className="font-medium text-lg">Total</span>
                     <span className="font-medium text-lg">{` ${totalRecords} results`}</span>
                 </div>
@@ -56,7 +56,7 @@ const TotalRecords = ({
                         label={`${pageSize} Results`}
                         menuItems={options}
                         menuItemsClasses="!w-32  rounded-[10px]"
-                        labelClasses=" text-lg  text-gray-500 font-normal pr-2.5 whitespace-nowrap"
+                        labelClasses=" !text-base text-gray-500 font-normal pr-2.5 whitespace-nowrap"
                         className="!ml-0 "
                         iconClass=" !font-medium text-xl !mx-5"
                         itemsClasses="rounded-[10px] shadow-none"

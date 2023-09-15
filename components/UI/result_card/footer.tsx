@@ -56,7 +56,7 @@ const CardFooter = ({
     }
 
     return (
-        <div className={clsx("w-full my-1.5", className)}>
+        <div className={clsx("w-full ", className)}>
             <div>
                 {router.pathname == "/search" && (
                     <MetaInfoEntity
@@ -124,7 +124,7 @@ const MetaInfoEntity = ({
                             return (
                                 <span
                                     key={index}
-                                    className="sm:text-sm text-md text-white m-1 bg-dtech-new-main-light p-1 px-2 !pt-0"
+                                    className="sm:text-xs text-xs text-white m-1 bg-dtech-new-main-light py-0.5 px-2 pt-1"
                                 >
                                     {entity}
                                 </span>
