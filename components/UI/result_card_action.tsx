@@ -74,7 +74,7 @@ const ResultCardAction = ({
                                             onClick={() => setShare(!share)}
                                         />
                                     </div>
-                                    <ReactTooltip uuid="dtechtive-share-btn-tooltip" />
+                                    <ReactTooltip uuid="dtechtive-share-btn-tooltip" textColor={'white'}  backgroundColor="#4CA7A5" className="w-60 !bg-dtech-dark-teal"/>
                                 </Menu.Button>
                                 <Transition show={open}>
                                     <Menu.Items static className="">

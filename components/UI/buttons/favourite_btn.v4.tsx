@@ -17,7 +17,7 @@ const FavouriteBtn = ({
     recordType = "datasets",
     isLoading = false,
     onFavouriteChange,
-    favouriteColor=""
+    favouriteColor = "",
 }: {
     className?: string;
     datasetStats: any;
@@ -56,15 +56,21 @@ const FavouriteBtn = ({
                 )}
             >
                 {!user ? (
-                    <BsHeart className={`sm:h-6 sm:w-6 h-4 w-4 text-dtech-new-main-light cursor-pointer active:bg-dtech-main-dark active:!text-white ${favouriteColor}`} />
+                    <BsHeart
+                        className={`sm:h-6 sm:w-6 h-4 w-4 text-dtech-new-main-light cursor-pointer active:bg-dtech-main-dark active:!text-white ${favouriteColor}`}
+                    />
                 ) : (
                     <>
                         {!isHandlingFavourite ? (
                             <>
                                 {isFavourited ? (
-                                    <BsHeartFill className={`sm:h-6 sm:w-6 h-4 w-4  text-dtech-new-main-light cursor-pointer  active:bg-dtech-main-dark active:text-white ${favouriteColor}`} />
+                                    <BsHeartFill
+                                        className={`sm:h-6 sm:w-6 h-4 w-4  text-dtech-new-main-light cursor-pointer  active:bg-dtech-main-dark active:text-white ${favouriteColor}`}
+                                    />
                                 ) : (
-                                    <BsHeart className={`sm:h-6 sm:w-6 h-4 w-4  text-dtech-new-main-light cursor-pointer  active:bg-dtech-main-dark active:text-white ${favouriteColor}`} />
+                                    <BsHeart
+                                        className={`sm:h-6 sm:w-6 h-4 w-4  text-dtech-new-main-light cursor-pointer  active:bg-dtech-main-dark active:text-white ${favouriteColor}`}
+                                    />
                                 )}
                             </>
                         ) : (
@@ -73,7 +79,18 @@ const FavouriteBtn = ({
                     </>
                 )}
             </button>
-            <ReactTooltip uuid="dtechtive-favourite-btn-tooltip" />
+            <ReactTooltip
+                uuid="dtechtive-favourite-btn-tooltip"
+                textColor={"white"}
+                backgroundColor="#4CA7A5"
+                overridePosition={({ left, top }, _e, _t, node) => {
+                    return {
+                        top,
+                        left:
+                            typeof node === "string" ? left : Math.max(left, 0),
+                    };
+                }}
+            />
         </div>
     );
 };

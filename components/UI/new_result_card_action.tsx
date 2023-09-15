@@ -68,11 +68,11 @@ const NewResultCardAction = ({
                 <div className=" flex flex-col justify-center items-center">
                     <a href={data?.url} target="_blank" rel="noreferrer">
                         {!href?.includes("dataset") ? (
-                            <div className="hover:bg-[#6DCDCB] px-2 pt-2">
+                            <div className="hover:bg-[#6DCDCB] hover:bg-opacity-50  px-2 pt-2">
                                 <BsGlobe className="sm:h-6 sm:w-6 h-4 w-4 text-dtech-new-main-light cursor-pointer" />
                             </div>
                         ) : (
-                            <div className="hover:bg-[#6DCDCB] active:bg-dtech-main-dark !hover:text-white px-2 pt-2 ml-1"
+                            <div className="hover:bg-[#6DCDCB] hover:bg-opacity-50  active:bg-dtech-main-dark !hover:text-white px-2 pt-2 ml-1"
                             onMouseDown={() => setArrowActive(true)}
                             onMouseUp={() => setArrowActive(false)}
                             onMouseLeave={() => setArrowActive(false)}
@@ -80,14 +80,14 @@ const NewResultCardAction = ({
                                 <Image src={arrowActive ? SourceArrowWhite :SourceArrow} className=" " />
                             </div>
                         )}
-                    <div className="text-dtech-main-dark underline underline-offset-2 cursor-pointer w-max">
+                    <div className="text-dtech-main-dark underline underline-offset-2 cursor-pointer w-max text-base font-roboto">
                         {!href?.includes("dataset") ? "Website" : "Source"}
                     </div>
                     </a>
                 </div>
                 <div className=" flex flex-col justify-center items-center">
                     <div
-                        className={` hover:bg-[#6DCDCB] px-2 pt-2 mb-[-10px] active:bg-dtech-main-dark !hover:text-white ${favouriteColor}`}
+                        className={` hover:bg-[#6DCDCB] hover:bg-opacity-50  px-2 pt-2 mb-[-10px] active:bg-dtech-main-dark !hover:text-white ${favouriteColor}`}
                         onMouseDown={() => setFavouriteClicked(true)}
                         onMouseUp={() => setFavouriteClicked(false)}
                         onMouseLeave={() => setFavouriteClicked(false)}
@@ -99,11 +99,11 @@ const NewResultCardAction = ({
                             onFavouriteChange={onFav}
                         />
                     </div>
-                    <div className="text-dtech-new-main-light mt-2">Like</div>
+                    <div className="text-dtech-new-main-light mt-2 text-base font-roboto">Like</div>
                 </div>
                 <div className=" flex flex-col justify-center items-center">
                     <div
-                        className={`hover:bg-[#6DCDCB] px-2 pt-2 mb-[-10px]  active:bg-dtech-main-dark !hover:text-white ${bookmarkColor}`}
+                        className={`hover:bg-[#6DCDCB] hover:bg-opacity-50  px-2 pt-2 mb-[-10px]  active:bg-dtech-main-dark !hover:text-white ${bookmarkColor}`}
                         onMouseDown={() => setBookmarkClicked(true)}
                         onMouseUp={() => setBookmarkClicked(false)}
                         onMouseLeave={() => setBookmarkClicked(false)}
@@ -115,7 +115,7 @@ const NewResultCardAction = ({
                             bookmarkColor={bookmarkColor}
                         />
                     </div>
-                    <div className="text-dtech-new-main-light mt-2">Save</div>
+                    <div className="text-dtech-new-main-light mt-2 text-base font-roboto">Save</div>
                 </div>
                 <div className=" flex flex-col justify-center items-center">
                     <Menu>
@@ -124,7 +124,7 @@ const NewResultCardAction = ({
                                 <Menu.Button>
                                     <div
                                         data-tip="Share on social media"
-                                        className={`hover:bg-[#6DCDCB] text-dtech-main-light px-2 pt-2 pb-2 mb-[-10px]  ${shareColor}`}
+                                        className={`hover:bg-[#6DCDCB] hover:bg-opacity-50 text-dtech-main-light px-2 pt-2 pb-2 mb-[-10px]  ${shareColor}`}
                                         onMouseDown={() =>
                                             setShareClicked(true)
                                         }
@@ -139,7 +139,7 @@ const NewResultCardAction = ({
                                             onClick={() => setShare(true)}
                                         />
                                     </div>
-                                    <ReactTooltip uuid="dtechtive-share-btn-tooltip" />
+                                    <ReactTooltip uuid="dtechtive-share-btn-tooltip" textColor={'white'}  backgroundColor="#4CA7A5" />
                                 </Menu.Button>
                                 <Transition show={open && share}>
                                     <Menu.Items static className="">
@@ -153,12 +153,12 @@ const NewResultCardAction = ({
                             </>
                         )}
                     </Menu>
-                    <div className="text-dtech-new-main-light mt-2">Share</div>
+                    <div className="text-dtech-new-main-light mt-2 text-base font-roboto">Share</div>
                 </div>
                 {router.pathname == "/datasets/[id]" && (
                     <div className=" flex flex-col justify-center items-center">
                         <Image src={CiteQuotes} />
-                        <div className="text-dtech-new-main-light mt-2">
+                        <div className="text-dtech-new-main-light mt-2 text-base font-roboto">
                             Cite
                         </div>
                     </div>

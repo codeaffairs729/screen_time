@@ -6,14 +6,19 @@ import ReactTooltip from "react-tooltip";
 import { RootState } from "store";
 import Loader from "../loader";
 import BookmarkModal from "./bookmark_modal";
-import { BsBookmark, BsBookmarkFill, BsBookmarkPlus, BsFillBookmarkPlusFill } from "react-icons/bs";
+import {
+    BsBookmark,
+    BsBookmarkFill,
+    BsBookmarkPlus,
+    BsFillBookmarkPlusFill,
+} from "react-icons/bs";
 
 const BookmarkBtn = ({
     className = "",
     data,
     recordType = "dataset",
     onBookmarkChange,
-    bookmarkColor="",
+    bookmarkColor = "",
 }: {
     className?: string;
     data: any;
@@ -39,7 +44,9 @@ const BookmarkBtn = ({
             <div
                 className="inline-block active:bg-dtech-main-dark active:!text-white"
                 data-tip={
-                    !user ? "Please login to bookmark this dataset." : "Add to lists"
+                    !user
+                        ? "Please login to bookmark this dataset."
+                        : "Add to lists"
                 }
             >
                 <button
@@ -54,15 +61,21 @@ const BookmarkBtn = ({
                     )}
                 >
                     {!user ? (
-                        <BsBookmark className={`sm:h-6 sm:w-6 h-4 w-4  cursor-pointer text-dtech-new-main-light  active:bg-dtech-main-dark active:!text-white ${ bookmarkColor}`} />
+                        <BsBookmark
+                            className={`sm:h-6 sm:w-6 h-4 w-4  cursor-pointer text-dtech-new-main-light  active:bg-dtech-main-dark active:!text-white ${bookmarkColor}`}
+                        />
                     ) : (
                         <>
                             {!isHandlingBookmark ? (
                                 <>
                                     {isBookmarked ? (
-                                        <BsBookmarkFill className={`sm:h-6 sm:w-6 h-4 w-4 text-dtech-new-main-light cursor-pointer  active:bg-dtech-main-dark active:!text-white ${bookmarkColor}`} />
+                                        <BsBookmarkFill
+                                            className={`sm:h-6 sm:w-6 h-4 w-4 text-dtech-new-main-light cursor-pointer  active:bg-dtech-main-dark active:!text-white ${bookmarkColor}`}
+                                        />
                                     ) : (
-                                        <BsBookmark className={`sm:h-6 sm:w-6 h-4 w-4 text-dtech-new-main-light  cursor-pointer  active:bg-dtech-main-dark active:!text-white ${bookmarkColor}`} />
+                                        <BsBookmark
+                                            className={`sm:h-6 sm:w-6 h-4 w-4 text-dtech-new-main-light  cursor-pointer  active:bg-dtech-main-dark active:!text-white ${bookmarkColor}`}
+                                        />
                                     )}
                                 </>
                             ) : (
@@ -71,7 +84,19 @@ const BookmarkBtn = ({
                         </>
                     )}
                 </button>
-                <ReactTooltip uuid="dtechtive-favourite-btn-tooltip" />
+                <ReactTooltip
+                    uuid="dtechtive-bookmark-btn-tooltip"
+                    textColor={"white"}
+                    backgroundColor="#4CA7A5"
+
+                    overridePosition={({ left, top }, _e, _t, node) => {
+                        return {
+                            top,
+                            left:
+                                typeof node === "string" ? left : Math.max(left, 0),
+                        };
+                    }}
+                />
             </div>
         </>
     );

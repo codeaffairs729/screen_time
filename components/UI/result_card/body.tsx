@@ -11,35 +11,23 @@ const CardBody = ({ data, handleFAQClick }: { data: Data; handleFAQClick?: Funct
         dataQuality
     } = data;
     const router = useRouter();
+
+    // console.log("description :", description)
+    const words = description.split(/\s+/);
+    const first30Words = words.slice(0, 30);
+    const wordCount = words.length;
+
     return (
         <>
-            {/* <MetaRating
-                dataQuality={dataQuality}
-                displayContext={"displayContext"}
-                labelClass="font-normal"
-                className="!flex-row items-center !font-medium !text-lg"
-                infoClassName="!text-dtech-new-main-light top-0 m-[1px] !ml-[5px]"
-                starClassName="!text-dtech-new-main-light"
-                title={
-                    "Estimated based on the European Commission's Metadata Quality Assessment method."
-                }
-                handleFAQClick={() => {
-                    handleFAQClick
-                        ? handleFAQClick()
-                        : router.push({
-                            pathname: `/faq`,
-                        });
-                }}
-            /> */}
             <div
                 className={`${more ? "max-h-16" : "max-h-[100vh] "
                     } overflow-hidden transition-all duration-1000 ease-in-out w-full`}
             >
                 <p className="text-sm  text-gray-800 my-1.5">
-                    {description?.length > 300 ? (
+                    {wordCount > 30 ? (
                         <span>
                             {more
-                                ? description.replace(/^(.{200}[^\s]*).*/, "$1")
+                                ? first30Words.join(' ')
                                 : description}
                             <span
                                 onClick={() => setMore(!more)}

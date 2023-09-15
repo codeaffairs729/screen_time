@@ -16,7 +16,7 @@ const CustomLink = ({ item }: any) => {
                         ?
                         <div data-tip="Please login to access this">
                             {item.label}
-                            <ReactTooltip effect="solid" className=" font-bold !bg-dtech-dark-teal" />
+                            <ReactTooltip effect="solid" className=" font-bold !bg-dtech-dark-teal" textColor={'white'}  backgroundColor="#4CA7A5"/>
                         </div>
                         :
                         <Link href={item.link}>{item.label}</Link>

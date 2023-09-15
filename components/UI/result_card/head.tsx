@@ -31,7 +31,7 @@ const CardHead = ({
             <div className="lg:flex flex-col w-full mb-3">
                 <div>
                     <Link href={href}>
-                        <a className="font-medium font-roboto text-md my-3 text-dtech-main-dark text-[17px] cursor-pointer hover:underline underline-offset-4">
+                        <a className="font-medium font-roboto text-md my-3 text-dtech-new-main-light text-[17px] cursor-pointer hover:underline underline-offset-4">
                             {title}
                         </a>
                     </Link>

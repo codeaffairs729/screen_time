@@ -48,7 +48,6 @@ export default function BookmarkModal({
                                 <div>
                                     <AiOutlineClose
                                         className="absolute cursor-pointer right-7 top-4"
-                                        
                                         onClick={() => setShowModal(false)}
                                     />
                                 </div>
@@ -91,7 +90,9 @@ export default function BookmarkModal({
                                 <div className="flex items-center justify-between px-5 py-3 rounded-b ">
                                     <CreateNewList
                                         inLists={false}
-                                        labelClass={" rounded-full !py-3 !my-3 !px-4 !bg-dtech-new-main-light"}
+                                        labelClass={
+                                            " rounded-full !py-3 !my-3 !px-4 !bg-dtech-new-main-light"
+                                        }
                                     />
                                 </div>
                             </div>
@@ -168,7 +169,10 @@ const ModelList = ({
                                 );
                             }}
                         >
-                            <BsBookmarkFill className=" text-dtech-light-teal" size={20} />
+                            <BsBookmarkFill
+                                className=" text-dtech-light-teal"
+                                size={20}
+                            />
                         </button>
                     )
                 ) : isDeletingListItem ? (
@@ -183,9 +187,23 @@ const ModelList = ({
                                 addNewListItem(list.listID, getItemPayload());
                             }}
                         >
-                            <BsBookmark className="text-dtech-light-teal" size={20} />
+                            <BsBookmark
+                                className="text-dtech-light-teal"
+                                size={20}
+                            />
                         </button>
-                        <ReactTooltip uuid="dtechtive-list-selected-btn-tooltip" />
+                        <ReactTooltip
+                            uuid="dtechtive-list-selected-btn-tooltip"
+                            textColor={"white"}
+                            backgroundColor="#4CA7A5"
+                            overridePosition={({ left, top }, _e, _t, node) => {
+                                return {
+                                    top,
+                                    left:
+                                        typeof node === "string" ? left : Math.max(left, 0),
+                                };
+                            }}
+                        />
                     </div>
                 )}
 
@@ -233,7 +251,19 @@ const ModelList = ({
                                     >
                                         <BsPencil className="text-gray-600 hover:text-red-600" />
                                     </button>
-                                    <ReactTooltip uuid="dtechtive-edit-btn-tooltip" />
+                                    <ReactTooltip
+                                        uuid="dtechtive-edit-btn-tooltip"
+                                        textColor={"white"}
+                                        backgroundColor="#4CA7A5"
+
+                                        overridePosition={({ left, top }, _e, _t, node) => {
+                                            return {
+                                                top,
+                                                left:
+                                                    typeof node === "string" ? left : Math.max(left, 0),
+                                            };
+                                        }}
+                                    />
                                 </div>
                             )}
                         </>
@@ -259,7 +289,18 @@ const ModelList = ({
                                     >
                                         <BsTrash className="text-gray-600 hover:text-red-600" />
                                     </button>
-                                    <ReactTooltip uuid="dtechtive-delete-btn-tooltip" />
+                                    <ReactTooltip
+                                        uuid="dtechtive-delete-btn-tooltip"
+                                        textColor={"white"}
+                                        backgroundColor="#4CA7A5"
+                                        overridePosition={({ left, top }, _e, _t, node) => {
+                                            return {
+                                                top,
+                                                left:
+                                                    typeof node === "string" ? left : Math.max(left, 0),
+                                            };
+                                        }}
+                                    />
                                 </div>
                             )}
                         </>
