@@ -1,12 +1,14 @@
+import { Tab } from "@headlessui/react";
+
 const DatasetUseCasesHead = () => {
     return (
-        <div
-            className={`relative inline-block text-left select-none outline-none border-b-[3px] border-dtech-main-dark `}
+        <Tab
+            className={
+                `!border-b-dtech-dark-teal text-xl text-dtech-dark-teal bg-white  border-b-4 w-full font-semibold transition-all duration-300 `
+            }
         >
-            <span className="text-dtech-main-dark text-xl hover:underline underline-offset-4">
-                {'Use cases'}
-            </span>
-        </div>
+            Use Cases
+        </Tab>
     );
 };
 export default DatasetUseCasesHead;

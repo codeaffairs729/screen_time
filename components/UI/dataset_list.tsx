@@ -3,13 +3,15 @@
 import { datasetToResultCardData } from "common/utils/datasets.util";
 import ResultCard, { Data } from "./result_card";
 
-const DatasetList = ({ stats, datasets }: any) => {
+const   DatasetList = ({ stats, datasets }: any) => {
     const recordsData = datasetToResultCardData(datasets, stats);
 
     return (
-        <div className="flex flex-col" data-test-id="results table">
-            {recordsData?.map((data) => (
-                <ResultCard key={data.id} data={data} />
+        <div className="grid grid-cols-1 lg:grid-cols-2 bg-white" data-test-id="results table">
+            {recordsData?.map((data,index) => (
+                <div className=" lg:ml-8" key={index}>
+                    <ResultCard key={data.id} data={data} hideResultCard={true} showToolTip={false} />
+                </div>
             ))}
         </div>
     );

@@ -19,11 +19,11 @@ const CommentAnonymous = ({ vm }: { vm: any }) => {
     return (
         <div className="flex items-center ml-2">
             <input
-                className="w-4 h-4 border-0 mr-2 bg-gray-300 text-dtech-main-dark"
+                className="w-6 h-6 border-2 border-[#333333] mr-2  text-dtech-main-dark"
                 type="checkbox"
                 onChange={(e) => onChange(e.target.checked)}
             />
-            <span className="text-sm text-gray-600">Comment anonymously </span>
+            <span className="text-sm text-[#333333]">Comment anonymously </span>
         </div>
     );
 };

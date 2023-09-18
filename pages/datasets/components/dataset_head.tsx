@@ -33,7 +33,6 @@ const DatasetHead = ({ dataset }: any) => {
     if (!dataset) {
         return <div />;
     }
-
     let contactOwnerEmail = dataset?.owner?.contact?.email;
     if ((contactOwnerEmail?.search(/^mailto:/) ?? -1) > -1) {
         contactOwnerEmail = contactOwnerEmail?.slice(7);
@@ -144,7 +143,7 @@ const DatasetHead = ({ dataset }: any) => {
                 </div>
                 <div className="">
                     <div className="flex justify-between py-2">
-                        <span className="sm:text-lg text-base text-[#727272]">{description}</span>
+                        <span className="sm:text-md text-base text-[#727272]">{description}</span>
                         {/* Add Website Url */}
 
                     </div>
@@ -271,9 +270,10 @@ const DatasetHead = ({ dataset }: any) => {
             <NewResultCardAction
                 className="flex-row sm:flex-col items-center justify-center sm:py-8 w-full"
                 gridClass = "md:!gap-16"
-                data={{ ...headDataset, url: dataset?.owner?.ownerUrl}}
+                data={{ ...headDataset, url: headDataset?.dataProviders?.datasetSource}}
                 setData={setHeadDataset}
                 href={`/dataset/${dataset?.id}`}
+                owner={dataset.owner.organisation}
             />
         </div>
     );
@@ -341,7 +341,7 @@ const MetaInfoEntity = ({
                         })}
                     </div>
                     {<div onClick={handleSearchBlur}
-                        className={viewAll ? ` bg-black absolute opacity-50 h-[3000px] -right-4 sm:h-[3000px]  w-screen flex items-center  z-20` : "hidden"}></div>}
+                        className={viewAll ? ` bg-black absolute opacity-50 h-[3000px] right-0 sm:h-[3000px]  w-screen flex items-center  z-20` : "hidden"}></div>}
                     {viewAll && <div className="flex flex-wrap flex-row px-6 py-4 sm:w-[616px] w-xs bg-white absolute z-20 rounded-xl">
                         <div className="flex justify-between w-full pb-4"><div>{entityName}</div><div className=" cursor-pointer" onClick={() => setViewAll(!viewAll)}><img src="/images/provider-detail-page/close.svg" /></div></div>
                         {entities.map((entity, index) => {

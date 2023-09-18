@@ -1,4 +1,4 @@
-import { useContext, useState, useRef } from "react";
+import { useContext, useState, useRef, useEffect } from "react";
 import { DatasetDetailVMContext } from "../dataset_detail.vm";
 import { DatasetUrl } from "models/dataset.model.v4";
 import { useSelector } from "react-redux";
@@ -14,18 +14,57 @@ import {
     usereventDatasetDownloadSearchTerms,
 } from "services/usermetrics.service";
 import InfoAlert from "components/UI/alerts/info_alert";
+import { BiDownload } from "react-icons/bi";
+import { AiFillEye } from "react-icons/ai";
 
 const META_FILE_HEADERS = ["Name", "Format", "Size", "Download", "Preview"];
 
-const DataFilesSection = ({ goToPreview }: { goToPreview: () => void }) => {
+const DataFilesSection = ({ goToPreview, scrollLeft, setScrollLeft, setHighlightedDot }: { goToPreview: () => void, scrollLeft:any, setScrollLeft: any, setHighlightedDot:any }) => {
     const vm = useContext(DatasetDetailVMContext);
     const user = useSelector((state: RootState) => state.auth.user);
     const { createFeedbackNotification } = useContext(NotificationsVMContext);
+    // const [scrollLeft, setScrollLeft] = useState(0);
+    // const [highlightedDot, setHighlightedDot] = useState(0);
+
+    const handleScroll = (event:any) => {
+        const scrollableContent = event.currentTarget;
+        const scrollWidth = scrollableContent.scrollWidth - scrollableContent.clientWidth;
+        const ratio = scrollableContent.scrollLeft / scrollWidth;
+        setScrollLeft(ratio);
+    };
+    useEffect(() => {
+        // Calculate the index of the highlighted dot based on the scroll ratio
+        const newIndex = Math.ceil(scrollLeft * (3 - 1));
+        setHighlightedDot(newIndex);
+    }, [scrollLeft]);
+    // const handleScroll = () => {
+    //     const scrollableDiv = document.getElementById('scrollable-div');
+    //     if (scrollableDiv) {
+    //         console.log('hiiiiii')
+    //         const scrollLeft = scrollableDiv.scrollLeft;
+    //         const scrollWidth = scrollableDiv.scrollWidth - scrollableDiv.clientWidth;
+    //         const horizontalPercentage = (scrollLeft / scrollWidth) * 100;
+    //         setHorizontalScrollPercentage(parseFloat(horizontalPercentage.toFixed(2)));
+    //     }
+    //     else {
+    //         console.log('byeee')
+    //     }
+    // };
+
+    useEffect(() => {
+        const scrollableDiv = document.getElementById('scrollable-div');
+        if (scrollableDiv) {
+            scrollableDiv.addEventListener('scroll', handleScroll);
+            return () => {
+                scrollableDiv.removeEventListener('scroll', handleScroll);
+            };
+        } 
+
+    }, []);
 
     if (!vm.dataset) {
         return <div />;
     }
-
     const onDowloadAll = () => {
         createFeedbackNotification(vm.dataset, user);
         if (typeof window !== "undefined") {
@@ -66,111 +105,96 @@ const DataFilesSection = ({ goToPreview }: { goToPreview: () => void }) => {
         );
     }
     return (
-        <div className="max-w-7xl">
-            <div className="mx-3 my-4   text-sm text-dtech-dark-grey">
-                All the data files available for this dataset are listed in the
-                table below.
+        <div className="max-w-screen">
+            <div className="flex flex-col font-semibold items-left mb-1 ">
+                <span>Data Files({urls?.length})</span>
+                <div className=" mt-4 font-normal  text-sm text-[#727272]">
+                    All the data files available for this dataset are listed in the
+                    table below.
+                </div>
             </div>
-                <div className="flex flex-row justify-between items-center mx-3 my-4 ">
-                    <span>Total files : {urls?.length}</span>
 
-                    <div className="flex flex-row">
-                        <a
-                            onClick={() => onDowloadAll()}
-                            className="mx-auto text-lg cursor-pointer flex"
-                            download
-                        >
-                            <span className="mr-2">Download all</span>
-                            <Image
-                                src={downloadIcon}
-                                alt=""
-                                height={24}
-                                width={24}
-                            />
-                        </a>
-                    </div>
-                </div>
-
-                <div className=" h-[40rem] overflow-x-hidden ">
-                    <table
-                        className="min-w-max w-full table-auto text-sm text-center border "
-                        cellPadding={5}
+            <div className="overflow-x-scroll no-scrollbar " id="scrollable-div" onScroll={handleScroll}>
+                <table
+                    className="min-w-max sm:min-w-full w-full table-auto text-sm text-center"
+                    cellPadding={5}
+                >
+                    <thead>
+                        <tr className="border border-dtech-middle-grey p-3 ">
+                            {META_FILE_HEADERS.map(
+                                (headName: string, index: number) => (
+                                    <th
+                                        key={index}
+                                        className="py-3 sm:px-6 text-center sm:text-[17px] font-medium bg-dtech-new-main-light text-white border-4 border-white"
+                                    >
+                                        {headName}
+                                    </th>
+                                )
+                            )}
+                        </tr>
+                    </thead>
+                    <tbody
+                        className="text-gray-600 text-sm font-light "
+                        data-testid="data-files"
                     >
-                        <thead>
-                            <tr className="border border-dtech-middle-grey p-3 ">
-                                {META_FILE_HEADERS.map(
-                                    (headName: string, index: number) => (
-                                        <th
-                                            key={index}
-                                            className="py-3 px-6 text-center text-[17px] font-medium bg-[#F5F5F5] "
-                                        >
-                                            {headName}
-                                        </th>
-                                    )
-                                )}
-                            </tr>
-                        </thead>
-                        <tbody
-                            className="text-gray-600 text-sm font-light "
-                            data-testid="data-files"
-                        >
-                            {
-                                urls?.map((url, i) => {
-                                    return (
-                                        <DataFileRow
-                                            url={url}
-                                            key={i}
-                                            goToPreview={goToPreview}
-                                            onDownload={() => {
-                                                vm.dataset !== undefined &&
-                                                    usereventDatasetDownload(
-                                                        vm.dataset,
-                                                        url.url
-                                                    );
-                                                if (typeof window !== "undefined") {
-                                                    const previousPath =
-                                                        localStorage.getItem(
-                                                            "previous_path"
-                                                        );
-                                                    if (
-                                                        previousPath?.includes(
-                                                            "/search?q="
-                                                        ) &&
-                                                        vm.dataset
-                                                    ) {
-                                                        const startIndex =
-                                                            previousPath.indexOf(
-                                                                "/search?q="
-                                                            ) + "/search?q=".length;
-                                                        const endIndex =
-                                                            previousPath.indexOf(
-                                                                "&",
-                                                                startIndex
-                                                            );
-                                                        const extractedString =
-                                                            previousPath.substring(
-                                                                startIndex,
-                                                                endIndex
-                                                            );
-                                                        usereventDatasetDownloadSearchTerms(
-                                                            vm.dataset,
-                                                            extractedString
-                                                        );
-                                                    }
-                                                }
-                                                createFeedbackNotification(
+                        {
+                            urls?.map((url, i) => {
+                                return (
+                                    <DataFileRow
+                                        url={url}
+                                        key={i}
+                                        goToPreview={goToPreview}
+                                        onDownload={() => {
+                                            vm.dataset !== undefined &&
+                                                usereventDatasetDownload(
                                                     vm.dataset,
-                                                    user
+                                                    url.url
                                                 );
-                                            }}
-                                        />
-                                    );
-                                })
-}
-                        </tbody>
-                    </table>
-                </div>
-     
+                                            if (typeof window !== "undefined") {
+                                                const previousPath =
+                                                    localStorage.getItem(
+                                                        "previous_path"
+                                                    );
+                                                if (
+                                                    previousPath?.includes(
+                                                        "/search?q="
+                                                    ) &&
+                                                    vm.dataset
+                                                ) {
+                                                    const startIndex =
+                                                        previousPath.indexOf(
+                                                            "/search?q="
+                                                        ) + "/search?q=".length;
+                                                    const endIndex =
+                                                        previousPath.indexOf(
+                                                            "&",
+                                                            startIndex
+                                                        );
+                                                    const extractedString =
+                                                        previousPath.substring(
+                                                            startIndex,
+                                                            endIndex
+                                                        );
+                                                    usereventDatasetDownloadSearchTerms(
+                                                        vm.dataset,
+                                                        extractedString
+                                                    );
+                                                }
+                                            }
+                                            createFeedbackNotification(
+                                                vm.dataset,
+                                                user
+                                            );
+                                        }}
+                                    />
+                                );
+                            })
+                        }
+                    </tbody>
+
+                </table>
+            </div>
+
         </div>
     );
 };
@@ -185,6 +209,7 @@ const DataFileRow = ({
     onDownload: () => void;
 }) => {
     const [preview, setPreview] = useState(false);
+    const [isActive, setIsActive] = useState(false);
     const downloadRef = useRef(null);
     let description = "Unknown";
     if (url.description?.replace(/['"]+/g, "") && url.description != "null") {
@@ -199,66 +224,61 @@ const DataFileRow = ({
     return (
         <>
             <tr
-                className={`border-b border-gray-200 bg-[#FEFEFE] hover:bg-dtech-main-light  ${
-                    preview && "bg-dtech-main-light"
-                }`}
+                className={`bg-[#EBEBEB] hover:bg-dtech-light-teal hover:bg-opacity-50 active:text-white !hover:text-white active:bg-dtech-main-dark focus:bg-dtech-main-dark focus-within:bg-dtech-main-dark  ${preview && "bg-dtech-light-teal  bg-opacity-50"
+                    }`}
             >
-                <td className="py-3 px-6 text-center whitespace-nowrap">
-                    <div className="flex justify-center items-center font-normal text-sm text-center">{`${description}`}</div>
+                <td className={`sm:px-6 text-center whitespace-nowrap  border-4 border-white text-[#2D2D32] active:text-white ${isActive&&"!text-white"} ${preview &&"border-b-dtech-new-main-light border-4 border-dtech-main-dark border-b-[3px]"}`}>
+                    <div className="flex justify-center items-center font-normal text-lg text-center ">{`${description}`}</div>
                 </td>
-                <td className="py-3 px-6 text-center">
+                <td className={`sm:px-6 text-center border-4 border-white  text-[#2D2D32] active:text-white ${isActive && "!text-white"} ${preview && "border-b-dtech-new-main-light border-4 border-dtech-main-dark border-b-[3px]"}`}>
                     <div className="flex justify-center items-center">
-                        <span className="py-1 px-3 rounded-full text-sm font-normal">
-                            {`${url.format}`}
+                        <span className="py-1 px-3 rounded-full text-lg font-normal">
+                            {`${url.format.toUpperCase()}`}
                         </span>
                     </div>
                 </td>
-                <td className="py-3 px-6 text-center">
-                    <div className="flex items-center justify-center font-normal">
+                <td className={`sm:px-6 text-center border-4 border-white  text-[#2D2D32] ${isActive && "!text-white"} ${preview && "border-b-dtech-new-main-light border-4 border-dtech-main-dark border-b-[3px]"}`}>
+                    <div className="flex items-center justify-center text-lg font-normal">
                         {sizemb}
                     </div>
                 </td>
-                <td className="py-3 px-6 text-center">
-                    <a
-                        onClick={() => onDownload()}
-                        href={url.url?.replace(/["']/g, "")}
-                        className="underline"
-                        download
-                        ref={downloadRef}
-                        id="downloadAll"
-                    >
-                        <Image
-                            src={downloadIcon}
-                            alt=""
-                            height={24}
-                            width={24}
-                        />
-                    </a>
+                <td className={`sm:px-6 text-center border-4  border-white  text-[#2D2D32] ${isActive && "!text-white"} ${preview && "border-b-dtech-new-main-light border-4 border-dtech-main-dark border-b-[3px]"}`}>
+                    <div className=" flex justify-center items-center">
+                        <a
+                            onClick={() => onDownload()}
+                            href={url.url?.replace(/["']/g, "")}
+                            className="underline"
+                            download
+                            ref={downloadRef}
+                            id="downloadAll"
+                        >
+                            <BiDownload size={24} className={` text-[#727272] ${isActive && "!text-white"} `} />
+
+                        </a>
+                    </div>
                 </td>
-                <td className="py-3 px-6 text-center ">
+                <td className={`sm:px-6 text-center border-4 border-white  text-[#2D2D32] ${isActive && "!text-white"} ${preview && "border-b-dtech-new-main-light  border-dtech-main-dark border-b-[3px]"}`}>
                     <div className="flex item-center justify-center ">
                         {!preview ? (
-                            <Image
-                                src={previewIcon}
-                                alt=""
-                                height={24}
-                                width={24}
+                            <AiFillEye
+                                size={24}
                                 onClick={() => {
                                     goToPreview();
                                     setPreview(!preview);
                                 }}
-                                className="mx-auto text-lg cursor-pointer"
+                                onMouseDown={() => setIsActive(!isActive)}
+                                onMouseUp={() => setIsActive(!isActive)}
+                                className={`mx-auto text-lg cursor-pointer text-[#727272] ${isActive && "!text-white"} `}
                             />
                         ) : (
-                            <Image
-                                src={previewIcon}
-                                alt=""
-                                height={24}
-                                width={24}
+                            <AiFillEye
+                                size={24}
                                 onClick={() => {
                                     setPreview(!preview);
-                                }}
-                                className="mx-auto text-lg cursor-pointer "
+                                    }}
+                                    onMouseDown={() => setIsActive(!isActive)}
+                                    onMouseUp={() => setIsActive(!isActive)}
+                                    className={`mx-auto text-lg cursor-pointer text-[#727272] ${isActive && "!text-white"} `}
                             />
                         )}
                     </div>
@@ -266,7 +286,7 @@ const DataFileRow = ({
             </tr>
             {preview && (
                 <tr className="border-b border-gray-200 bg-[#FEFEFE] hover:bg-dtech-main-light ">
-                    <td colSpan={5} className="bg-dtech-main-light">
+                    <td colSpan={5} className="bg-white">
                         <PreviewSection />
                     </td>
                 </tr>

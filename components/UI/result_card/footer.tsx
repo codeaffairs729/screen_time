@@ -5,20 +5,8 @@ import { DateTime } from "luxon";
 import { DataStats } from "models/organisation.model";
 import Link from "next/link";
 import { Data } from ".";
-import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
-// export interface DataProviders {
-//     datasetSource: string;
-//     ownerUrl: string;
-//     organisation: string;
-//     hostName: string;
-//     hostUuid?: string;
-//     ownerUuid?: string;
-//     hostUrl?: string;
-// }
-
-const entity = ["JSON", "CSV"];
 
 const CardFooter = ({
     data,
@@ -54,11 +42,10 @@ const CardFooter = ({
 
         return result;
     }
-
     return (
         <div className={clsx("w-full ", className)}>
             <div>
-                {router.pathname == "/search" && (
+                {(router.pathname == "/search" || router.pathname =="/datasets/[id]") && (
                     <MetaInfoEntity
                         entityName="File Type"
                         entities={getFileFormatCounts(data.urls)}

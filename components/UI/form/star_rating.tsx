@@ -62,18 +62,18 @@ const StarRatingInput = ({
                             >
                                 {/* <span className="star">&#9733;</span> */}
                                 {index <= (hover || rating) ? (
-                                    <BsStarFill className={starClassName} />
+                                    <BsStarFill className={starClassName} fill="#4CA7A5"/>
                                 ) : (
-                                    <BsStar className={starClassName} />
+                                    <BsStar className={starClassName}  />
                                 )}
                             </button>
                         );
                     })}
                     {dontKnow && (
-                        <div className="mx-4 mb-0.5">
+                        <div className="sm:mx-12 mb-0.5 ml-4">
                             <input
                                 type="checkbox"
-                                className="w-4 h-4 border-1 bg-gray-100 text-dtech-main-dark outline-none focus-none"
+                                className="w-5 h-5 border-[1.5px] border-[#333333]  text-dtech-main-dark outline-none focus-none"
                                 onChange={(e) => {
                                     if (e.target.checked) {
                                         setRating(0);

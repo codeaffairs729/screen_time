@@ -4,15 +4,22 @@ import { ReactNode, useContext, useEffect } from "react";
 import DatasetList from "components/UI/dataset_list";
 import { Tab } from "@headlessui/react";
 import { RelatedDatasetsVMContext } from "./related_datasets.vm";
-
+import DatasetTabHeaders from "../dataset_tabs";
+const datasetHeaders = [
+    {
+        name: "Domains & Topic",
+    },
+    {
+        name: "Description",
+    }
+]
 const TabHeader = ({ children }: { children: ReactNode }) => {
     return (
         <Tab
             className={({ selected }) =>
-                ` text-xl font-normal px-3 py-1 mx-5 ${
-                    selected
-                        ? "text-dtech-main-dark underline underline-offset-8 border-none"
-                        : ""
+                ` text-xl font-normal px-3 py-1 mx-5 ${selected
+                    ? "text-dtech-main-dark underline underline-offset-8 border-none"
+                    : ""
                 }`
             }
         >
@@ -59,20 +66,19 @@ const RelatedDatasets = () => {
     }
 
     return (
-        <div className="flex flex-col">
+        <div className="flex flex-col bg-white">
             <Tab.Group>
                 <Tab.List>
-                    <TabHeader>Related by Domains & Topics </TabHeader>
-                    <TabHeader>Related by Description</TabHeader>
+                    <DatasetTabHeaders selectedIndex={0} headers={datasetHeaders} />
                 </Tab.List>
                 <Tab.Panels>
                     <Tab.Panel>
-                        <div className=" mt-5 h-[44rem] overflow-auto">
-                            <div className="text-sm text-gray-600 w-full ml-8 mt-3">
+                        <div className="text-sm text-[#727272] w-full text-center my-2 px-4">
                                 Datasets displayed here share the same domains
                                 and topics - this gives a broader set of related
                                 datasets.
                             </div>
+                        <div className=" mt-5 h-[44rem] overflow-auto bg-white">
                             <DatasetList
                                 datasets={datasetsByCategory}
                                 stats={stats}
@@ -80,12 +86,12 @@ const RelatedDatasets = () => {
                         </div>
                     </Tab.Panel>
                     <Tab.Panel>
-                        <div className=" mt-5 h-[44rem] overflow-auto">
-                            <div className="text-sm text-gray-600 w-full ml-8 mt-3">
+                        <div className="text-sm text-gray-600 w-full text-center my-2 px-4">
                                 Datasets displayed here are based on the
                                 semantic similarity of their title and summary -
                                 this gives a narrower set of related datasets.
                             </div>
+                        <div className=" mt-3 h-[44rem] overflow-auto">
                             <DatasetList
                                 datasets={datasetsByDescription}
                                 stats={stats}

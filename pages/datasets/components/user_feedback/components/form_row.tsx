@@ -9,6 +9,9 @@ const FormRow = ({
     required = false,
     isTwoRow = false,
     tooltip = "none",
+    labelClass = "",
+    tooltipClass = "",
+    iconClasses=""
 }: {
     label: string;
     children: ReactNode;
@@ -16,6 +19,9 @@ const FormRow = ({
     required?: boolean;
     isTwoRow?: boolean;
     tooltip?: string;
+    labelClass?: string;
+    tooltipClass?: string;
+    iconClasses?: string;
 }) => {
     return (
         <div className={clsx("flex items-center mb-3", className)}>
@@ -25,13 +31,13 @@ const FormRow = ({
                     isTwoRow ? "mb-3 w-full" : "mr-2  max-w-[275px]"
                 )}
             >
-                <span>
+                <span className={clsx(labelClass)}>
                     {label}{" "}
-                {tooltip != "none" && (
-                    <span className="">
-                        <InfoIcon title={tooltip} />
-                    </span>
-                )}
+                    {tooltip != "none" && (
+                        <span className="">
+                            <InfoIcon title={tooltip} tooltipClassName={clsx(tooltipClass)} iconClasses={clsx(iconClasses)} />
+                        </span>
+                    )}
                 </span>
             </div>
             {children}

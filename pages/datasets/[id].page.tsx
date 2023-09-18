@@ -22,7 +22,14 @@ import RelatedDatasetsVM, {
 import BackBtn from "components/UI/buttons/back_btn";
 import { usereventDatasetView } from "services/usermetrics.service";
 import clsx from "clsx";
-
+const datasetHeaders = [
+    {
+        name: "User Feedback",
+    },
+    {
+        name: "Insights",
+    },
+]
 enum tabIndex {
     data_files,
     insights,
@@ -34,6 +41,8 @@ const DatasetDetail = ({ dataset }: { dataset: Dataset | undefined }) => {
     const [scrollPosition, setScrollPosition] = useState(0);
     const [isMobile, setIsMobile] = useState<boolean>(false);
     const { asPath } = useRouter();
+    const [scrollLeft, setScrollLeft] = useState(0);
+    const [highlightedDot, setHighlightedDot] = useState(0);
     const [selectedIndex, setSelectedIndex] = useState<any>(
         tabIndex[asPath.split("#")[1]?.split("/")[0] as any] || 0
     );
@@ -61,7 +70,6 @@ const DatasetDetail = ({ dataset }: { dataset: Dataset | undefined }) => {
             usereventDatasetView(dataset, extractedString);
         }
     }
-
     useEffect(() => {
         const hashParam: string = asPath.split("#")[1];
         setSelectedIndex(tabIndex[hashParam as any]);
@@ -96,6 +104,7 @@ const DatasetDetail = ({ dataset }: { dataset: Dataset | undefined }) => {
     const upperLimit2 = -270;
     const translationValue1 = Math.max(scrollPosition * 0.5, upperLimit1);
     const translationValue2 = Math.max(scrollPosition * 0.3, upperLimit2 * 1.2);
+
     useEffect(() => {
         if (imageRef.current) {
             const desiredHeight = `${250}px`;
@@ -103,6 +112,7 @@ const DatasetDetail = ({ dataset }: { dataset: Dataset | undefined }) => {
             imageRef.current.style.width = desiredHeight;
         }
     }, [])
+
     const setHeight = (size: any) => {
         if (imageRef.current) {
             const desiredHeight = `${250 - size}px`;
@@ -172,37 +182,52 @@ const DatasetDetail = ({ dataset }: { dataset: Dataset | undefined }) => {
                             <div className="flex border-t sm:mt-[600px]  flex-col bg-[#EBEBEB]"
                                 style={{ marginTop: `${translationValue2 + (isMobile ? 320 : 200)}px` }}
                             >
-                                <div className="lg:flex border-t px-4 shadow-container">
+                                <div className=" bg-white sm:px-8 px-4 sm:py-4 py-2 overflow-x-scroll " id="scrollable-div">
+
+                                    <DataFilesSection
+                                        goToPreview={() => {
+                                            setSelectedIndex(0);
+                                        }}
+                                        scrollLeft={scrollLeft}
+                                        setScrollLeft={setScrollLeft}
+                                        setHighlightedDot={setHighlightedDot}
+                                    />
+                                    <div className=" sm:hidden flex flex-row w-full items-center justify-center">
+                                        {[1, 2, 3].map((item, index) => (
+                                            <div
+                                                key={index}
+                                                className={` rounded-full w-3 h-3 m-1 ${index === highlightedDot ? 'bg-dtech-dark-teal' : 'bg-[#D9D9D9]'}`}
+                                            // onClick={() => handleDotClick(index)}
+                                            ></div>
+                                        ))}
+                                    </div>
+                                </div>
+                                <div className="flex flex-col border-t shadow-container">
                                     {!loading && (
                                         <Tab.Group defaultIndex={selectedIndex}>
                                             <DatasetTabHeaders
                                                 selectedIndex={selectedIndex}
+                                                headers={datasetHeaders}
                                             />
                                             <Tab.Panels className="h-[calc(100%-var(--dataset-detail-tab-header-height))] w-full flex">
-                                                <TabPanel className="!bg-white !p-0 lg:p-6">
-                                                    <DataFilesSection
-                                                        goToPreview={() => {
-                                                            setSelectedIndex(0);
-                                                        }}
-                                                    />
-                                                </TabPanel>
-                                                <TabPanel className="!bg-white">
-                                                    <DatasetInsights />
-                                                </TabPanel>
                                                 <TabPanel className="!bg-white">
                                                     <DatasetFeedbackSection />
                                                 </TabPanel>
                                                 <TabPanel className="!bg-white">
-                                                    <RelatedDatasetsVMContext.Provider
-                                                        value={relatedVM}
-                                                    >
-                                                        <RelatedDatasets />
-                                                    </RelatedDatasetsVMContext.Provider>
+                                                    <DatasetInsights />
                                                 </TabPanel>
                                             </Tab.Panels>
                                         </Tab.Group>
                                     )}
                                 </div>
+                                <div className=" text-[#2D2D32] lg:my-8 my-4 font-bold lg:text-2xl text-lg">
+                                    Related Datasets
+                                </div>
+                                <RelatedDatasetsVMContext.Provider
+                                    value={relatedVM}
+                                >
+                                    <RelatedDatasets />
+                                </RelatedDatasetsVMContext.Provider>
                             </div>
                         </div>
                     </div>

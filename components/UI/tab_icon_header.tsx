@@ -12,8 +12,8 @@ const TabIconHeader = ({
         <Tab
             className={({ selected }) =>
                 `${
-                selected && " !border-t-dtech-new-main-light bg-white"
-                } flex items-center hover:bg-dtech-light-teal justify-center border-t-4 sm:h-20 h-10 border-t-[#ACACAC] text-sm font-bold transition-all duration-300 outline-none w-full border-y border-gray`
+                selected && "!text-dtech-new-main-light !border-t-dtech-new-main-light !bg-white"
+                } flex items-center text-[#727272] hover:bg-dtech-light-teal justify-center border-t-4 sm:h-20 h-10 border-t-[#ACACAC] text-sm font-bold transition-all duration-300 outline-none w-full border-y border-gray bg-[#EBEBEB]`
             }
             onClick={() => onClick()}
         >

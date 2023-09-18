@@ -10,11 +10,13 @@ const CardHead = ({
     setData,
     handleFAQClick,
     datasetSource,
+    showToolTip = true
 }: {
     data: Data;
     setData: Function;
     handleFAQClick?: Function;
     datasetSource: string | undefined;
+    showToolTip: boolean
 }) => {
     const {
         title,
@@ -36,7 +38,7 @@ const CardHead = ({
                         </a>
                     </Link>
                 </div>
-                <div className=" my-3 flex flex-col md:flex-row justify-between md:items-center bg-[#EBEBEB] px-1.5 md:py-3 py-1.5">
+                <div className={`my-3 flex flex-col md:flex-row justify-between md:items-center bg-[#EBEBEB] px-1.5   ${router.pathname != '/datasets/[id]' ? "md:py-3" : "p-1.5 lg:items-center "}`}>
                     <MetaRating
                         dataQuality={dataQuality}
                         displayContext={"displayContext"}
@@ -52,20 +54,14 @@ const CardHead = ({
                             handleFAQClick
                                 ? handleFAQClick()
                                 : router.push({
-                                      pathname: `/faq`,
-                                  });
+                                    pathname: `/faq`,
+                                });
                         }}
+                        showToolTip={showToolTip}
                     />
-
                     {lastUpdate?.isValid && (
-                        // <div className="flex my-1.5">
-                        //     <span className="text-sm mr-1">Updated</span>
-                        //     <span className="text-sm font-medium">
-                        //         {lastUpdate.toRelative()}
-                        //     </span>
-                        // </div>
                         <LabelledRow
-                            className="mr-10"
+                            className={` ${router.pathname != '/datasets/[id]' ? "!mr-10" : "mr-1"}`}
                             label="Last updated"
                             labelClasses="!text-sm mr-1  font-normal text-[#333333]"
                             childClasses="text-[#727272]"
@@ -77,28 +73,6 @@ const CardHead = ({
                     )}
                 </div>
             </div>
-
-            {/* {licenseTypes?.map((tag: string, index: number) => (
-                    // <button
-                    //     key={index}
-                    //     className="ml-8 text-m h-6 px-4 border cursor-default rounded border-[#5F5F63]"
-                    // >
-                    //     <span className="my-auto"></span>
-                    // </button>
-                    <fieldset
-                        className="px-4 border rounded border-[#5F5F63] text-xs pb-0.5 my-2 mr-4"
-                        key={index}
-                    >
-                        <legend className="text-xs mr-8">Licence</legend>
-                        <div>
-                            <label>{`${tag?.[0].toUpperCase() ?? "-"}${tag?.slice(1) ?? ""
-                                }`}</label>
-                        </div>
-                    </fieldset>
-                ))} */}
-            {/* <div className="sm:flex items-center">
-                <ResultCardAction data={{ ...data, url: datasetSource }} setData={setData} href={href} />
-            </div> */}
         </div>
     );
 };

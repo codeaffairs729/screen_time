@@ -21,39 +21,37 @@ const DataQualityFeedback = () => {
     if (!dataset) return <div />;
 
     return (
-        <div>
-            <div className="text-sm text-gray-600 w-full ml-10">
+        <div className="">
+            <div className="text-md text-gray-600 w-full pb-2 sm:pb-0 text-center">
                 We are gathering this information from users to help data
-                providers improve the quality of their data files.
+                providers understand what the user needs are.
             </div>
-            {!vmForm.isFetchingQualityFeedback && <div className="text-sm text-gray-600 w-full ml-10">
-                You{" "}
-                {vmForm.qualityFeedback ? (
-                    <p className="inline font-bold"> have</p>
+            {!vmForm.isFetchingQualityFeedback && (
+                <div className="text-md text-gray-600 w-full pb-2 text-center">
+                    You{" "}
+                    {vmForm.qualityFeedback ? (
+                        <p className="inline font-bold"> have</p>
                     ) : (
                         <p className="inline font-bold">have not</p>
-                        )}{" "}
-                submitted a data quality feedback previously.
-            </div>}
+                    )}{" "}
+                    submitted a data quality feedback previously.
+                </div>
+            )}
             <div className="">
-                <div className="my-5 mx-3 px-5 py-4 mr-32">
-                    <div className="flex flex-row justify-between">
-                        <div className="flex flex-col">
+                <div className="my-5 mx-3 xl:px-32 md:px-20 py-4 ">
+                    <div className="flex flex-col justify-between">
                             <Accuracy vm={vmForm} />
                             <Consistency vm={vmForm} />
-                        </div>
-                        <div className="flex flex-col">
                             <Clarity vm={vmForm} />
                             <Readiness vm={vmForm} />
-                        </div>
                     </div>
                     <div className="flex flex-col">
                         <Comment vm={vmForm} />
-                        <div className="flex flex-row justify-between">
+                        <div className="flex flex-col">
                             <CommentAnonymous vm={vmForm} />
                             <PrimaryBtn
                                 label="Submit"
-                                className="bg-dtech-main-dark w-36 mt-5 mb-2 ml-32"
+                                className="bg-dtech-new-main-light !py-3 !px-8 w-min rounded-full mt-5 mb-2"
                                 isLoading={vmForm.isSubmitting}
                                 onClick={vmForm.form.handleSubmit(
                                     vmForm.submitDataQualityFeedback

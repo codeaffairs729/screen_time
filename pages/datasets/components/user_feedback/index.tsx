@@ -19,9 +19,9 @@ const TabHeader = ({ children }: { children: ReactNode }) => {
     return (
         <Tab
             className={({ selected }) =>
-                ` text-xl font-normal px-3 py-1 mx-5 ${
-                    selected
-                        ? "text-dtech-main-dark underline underline-offset-8 border-none"
+                ` text-[#727272] sm:py-3 text-sm font-semibold sm:text-xl hover:!border-[#727272]  hover:border-b-4 ${
+                    selected?
+                    `!border-b-dtech-light-teal hover:!border-b-dtech-light-teal sm:text-xl text-dtech-dark-teal bg-white border-b-4 font-semibold transition-all duration-300 `
                         : ""
                 }`
             }
@@ -41,13 +41,14 @@ const DatasetFeedbackSection = () => {
         return <LoginAlert />;
     }
     return (
-        <div className="ml-10">
+        <div className="">
             <div></div>
             <Tab.Group defaultIndex={selected}>
-                <Tab.List className="flex">
+                <Tab.List className="flex justify-around">
                     <TabHeader>Data use cases</TabHeader>
                     <TabHeader>Data quality</TabHeader>
                 </Tab.List>
+                    <div className=" sm:w-full w-[111%] bg-[#EBEBEB] -ml-[5.5%] sm:-ml-0 sm:h-1 h-[2px] mt-2 sm:-mt-1"></div>
                 <Tab.Panels className="mt-5">
                     <Tab.Panel className="w-full">
                         <DataUseFeedback />

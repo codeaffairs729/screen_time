@@ -73,26 +73,22 @@ const DatafilePreview = ({ previewData }) => {
     const getColsRows = () => {
         const keys = Object.keys(data);
         const cols = Object.keys(data[keys[0]]);
-        console.log(keys, cols, ready);
         setColumns(cols);
         setRows(keys);
         setReady(true);
-        // console.log(data, columns, rows)
-        console.log(rows, columns, ready);
     };
 
     return (
-        <div className="bg-dtech-main-light ">
-            <div className=" border-t-gray-300 bg-dtech-main-light ">
+        <div className="bg-white ">
+            <div className=" border-t-gray-300 bg-white ">
                 {/*  <SheetTab tabList={previewTabList} setActive={setActive} /> */}
 
-                <div className="my-4 bg-dtech-main-light flex ml-16">
-                    <div className="w-11/12 ">
-                        <div className=" text-left  border-solid bg-fuchsia-900  ">
-                            <span className="text-sm  font-bold m-2  text-white   ">
-                                Datafile Sample
-                            </span>
-
+                <div className="my-4 bg-white flex sm:ml-16">
+                    <div className="w-full text-left">
+                        <span className="text-lg font-bold">
+                            Data File Sample
+                        </span>
+                        <div className=" text-left my-2  border-solid  ">
                             {/* <PreviewTable data={previewHead[previewActiveTab]} /> */}
 
                             {previewHead[previewActiveTab] && (
@@ -102,11 +98,10 @@ const DatafilePreview = ({ previewData }) => {
                                 />
                             )}
                         </div>
-                        <div className=" text-left   border-solid bg-fuchsia-900 my-8 ">
-                            <span className="text-sm font-bold  m-2 text-white   ">
-                                Datafile Summary
-                            </span>
-
+                        <div className="text-lg font-bold mt-8">
+                            Data File Summary
+                        </div>
+                        <div className=" text-left   border-solid  ">
                             {/* <PreviewTable data={previewSummary[previewActiveTab]} /> */}
 
                             {previewSummary[previewActiveTab] && (
@@ -119,14 +114,16 @@ const DatafilePreview = ({ previewData }) => {
                     </div>
                 </div>
                 {previewType == "GeoJSON" && (
-                    <div className="my-4  ml-14">
-                        <p className="text-sm font-bold mb-4 ml-5">
-                            Datafile geographic bounds
-                        </p>
-                        <MapView
-                            totalBounds={previewTotalBounds}
-                            id={"previewGeographic"}
-                        />
+                    <div>
+                        <div className="text-lg text-left ml-16 font-bold mt-8">
+                            Data File Geographic Bound
+                        </div>
+                        <div className="my-4  ml-14">
+                            <MapView
+                                totalBounds={previewTotalBounds}
+                                id={"previewGeographic"}
+                            />
+                        </div>
                     </div>
                 )}
             </div>

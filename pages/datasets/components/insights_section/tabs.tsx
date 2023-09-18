@@ -6,6 +6,7 @@ import {
 import DatasetQualityInsightsHead from "./data_quality/header";
 import DatasetDownloadMetricsHead from "./download_metrics/header";
 import DatasetUseCasesHead from "./use_cases/header";
+import { VscTriangleDown } from "react-icons/vsc";
 
 const DatasetTabHeaders = ({
     selectedInsightTab,
@@ -21,14 +22,19 @@ const DatasetTabHeaders = ({
     };
 
     return (
-        <div className="ml-10 mr-28">
-            <Tab.List className={"flex justify-between items-center "}>
+        <div className="">
+            <Tab.List className={"flex justify-around space-x-10 items-center "}>
                 <div>
-                    <HeadTag
-                        isSelected={selectedInsightTab == 0}
-                        label={"dataset_quality"}
-                        setSelected={onTabSelect}
-                    ></HeadTag>
+                    <div className=" flex flex-row items-center">
+
+                        <HeadTag
+                            isSelected={selectedInsightTab == 0}
+                            label={"dataset_quality"}
+                            setSelected={onTabSelect}
+                        ></HeadTag>
+                        {selectedInsightTab !== 0 && <VscTriangleDown size={24} className=" text-[#727272] ml-1" />}
+
+                    </div>
                     {selectedInsightTab == 0 && <DatasetQualityInsightsHead />}
                 </div>
                 <div>
@@ -69,11 +75,10 @@ const HeadTag = ({
     return (
         <Tab onClick={() => setSelected(label)}>
             <div
-                className={`relative inline-block text-left select-none outline-none ${
-                    isSelected && "hidden"
-                }`}
+                className={`relative inline-block text-left select-none outline-none ${isSelected && "hidden"
+                    }`}
             >
-                <span className="text-dtech-main-dark text-xl hover:underline underline-offset-4">
+                <span className="text-[#727272] font-semibold text-xl hover:underline underline-offset-4">
                     {labelToShow}
                 </span>
             </div>

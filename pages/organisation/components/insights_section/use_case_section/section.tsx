@@ -7,7 +7,7 @@ import Table from "../../table";
 const PieChartComponent = dynamic(() => import("../download_section/pie_component"), {
     ssr: false,
 });
-const PIE_HEADER = ["Use case", "value"];
+export const PIE_HEADER = ["Use case", "value"];
 const UseCaseSection = () => {
     const useCaseMetricVM = UseCaseVM();
     const [isMobile, setIsMobile] = useState<boolean>(false)
@@ -42,19 +42,6 @@ const UseCaseSection = () => {
     ]);
     
 
-    function sortAndAggregate(categories: any) {
-        const sortedCategories = categories.slice().sort((a:any, b:any) => b.value - a.value);
-
-        if (sortedCategories.length > 10) {
-            const otherCategories = sortedCategories.slice(9);
-            const aggregatedValue = otherCategories.reduce((sum:any, category:any) => sum + category.value, 0);
-            sortedCategories[9] = { category: 'others', value: aggregatedValue };
-            return sortedCategories.slice(0, 10);
-        }
-
-        return sortedCategories;
-    }
-    
     return (
         <div className="flex flex-col items-center justify-center">
             <div className=" text- text-[#727272] sm:text-sm text-xs my-6 sm:my-10">{isMobile ? "Dataset downloads aggregated on the basis of user role for the whole organisation" : "Use cases of datasets gathered from user feedback aggregated on the data provider level."}.</div>
@@ -76,3 +63,15 @@ const UseCaseSection = () => {
     )
 }
 export default UseCaseSection;
+export function sortAndAggregate(categories: any) {
+    const sortedCategories = categories.slice().sort((a:any, b:any) => b.value - a.value);
+
+    if (sortedCategories.length > 10) {
+        const otherCategories = sortedCategories.slice(9);
+        const aggregatedValue = otherCategories.reduce((sum:any, category:any) => sum + category.value, 0);
+        sortedCategories[9] = { category: 'others', value: aggregatedValue };
+        return sortedCategories.slice(0, 10);
+    }
+
+    return sortedCategories;
+}
