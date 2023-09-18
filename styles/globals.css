@@ -90,3 +90,13 @@ figure{
   text-decoration: underline;
   cursor: pointer;
 }
+
+  .underline-anim {
+    text-underline-offset: 3px;
+    text-decoration: underline 0.12em white;
+    transition: text-decoration-color 300ms;
+  }
+
+  .underline-anim:hover {
+    text-decoration-color: #6E498E;
+  }

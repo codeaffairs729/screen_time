@@ -11,13 +11,11 @@ import { BsChevronDown } from "react-icons/bs";
 
 const FilterUsageRights = () => {
     const vm = useContext(SearchVMContext);
-    const { isMobile, mobileFilter, setMobileFilter } = vm;
     const [filterOptionItems, setFilterOptionItems] = useState<
         FilterOptionItem[] | undefined
     >([]);
     const [itemShow, setItemShow] = useState(6);
     const [seeMore, setSeeMore] = useState(true);
-
     useEffect(() => {
         const usageRights = vm.filterOptions?.usage_rights?.map(
             (format: any) => ({
@@ -25,7 +23,7 @@ const FilterUsageRights = () => {
                 label: format.count,
                 checkbox: false,
             })
-        );
+        ) ?? [];
         setFilterOptionItems(usageRights);
     }, [vm.filterOptions]);
 
@@ -63,7 +61,7 @@ const FilterUsageRights = () => {
                     ))}
             {fields.length > 6 && seeMore && (
                 <div
-                className="flex items-center font-normal text-sm text-[#0065BD] mx-7 cursor-pointer"
+                className="flex items-center font-normal text-sm text-[#0065BD] mx-7 cursor-pointer  mt-3"
                 onClick={() => {
                     setItemShow(fields.length), setSeeMore(!seeMore);
                 }}

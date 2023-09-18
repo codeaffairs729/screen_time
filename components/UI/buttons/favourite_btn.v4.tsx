@@ -58,6 +58,7 @@ const FavouriteBtn = ({
                 {!user ? (
                     <BsHeart
                         className={`sm:h-6 sm:w-6 h-4 w-4 text-dtech-new-main-light cursor-pointer active:bg-dtech-main-dark active:!text-white ${favouriteColor}`}
+                        strokeWidth="0.3"
                     />
                 ) : (
                     <>
@@ -70,6 +71,7 @@ const FavouriteBtn = ({
                                 ) : (
                                     <BsHeart
                                         className={`sm:h-6 sm:w-6 h-4 w-4  text-dtech-new-main-light cursor-pointer  active:bg-dtech-main-dark active:text-white ${favouriteColor}`}
+                                        strokeWidth="0.3"
                                     />
                                 )}
                             </>

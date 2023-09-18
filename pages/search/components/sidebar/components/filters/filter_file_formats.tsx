@@ -11,7 +11,6 @@ import { BsChevronDown } from "react-icons/bs";
 
 const FilterFileType = () => {
     const vm = useContext(SearchVMContext);
-    const { isMobile, mobileFilter, setMobileFilter } = vm;
     const [filterOptionItems, setFilterOptionItems] = useState<
         FilterOptionItem[] | undefined
     >([]);
@@ -32,7 +31,7 @@ const FilterFileType = () => {
                 label: format.count,
                 checkbox: false,
             })
-        );
+        ) ?? [];
         setFilterOptionItems(fileFormats);
     }, [vm.filterOptions]);
 
@@ -71,7 +70,7 @@ const FilterFileType = () => {
                     ))}
             {fields.length > 6 && seeMore && (
                 <div
-                className="flex items-center font-normal text-sm text-[#0065BD] mx-7 cursor-pointer"
+                className="flex items-center font-normal text-sm text-[#0065BD] mx-7 cursor-pointer  mt-3"
                 onClick={() => {
                     setItemShow(fields.length), setSeeMore(!seeMore);
                 }}
