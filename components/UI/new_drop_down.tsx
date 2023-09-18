@@ -249,6 +249,7 @@ const LinkTag = React.forwardRef(
                             typeof node === "string" ? left : Math.max(left, 0),
                     };
                 }}
+                textColor={'white'}  backgroundColor="#4CA7A5"
             />
         </div>
     }

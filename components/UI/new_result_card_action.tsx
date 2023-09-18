@@ -61,33 +61,33 @@ const NewResultCardAction = ({
         <div className={clsx("flex", className)}>
             <div
                 className={clsx(
-                    "grid grid-flow-col md:grid-cols-2 md:grid-flow-row gap-12 md:gap-6",
+                    "grid grid-flow-col md:grid-cols-2 md:grid-flow-row gap-8 md:gap-6",
                     gridClass
                 )}
             >
                 <div className=" flex flex-col justify-center items-center">
                     <a href={data?.url} target="_blank" rel="noreferrer">
                         {!href?.includes("dataset") ? (
-                            <div className="hover:bg-[#6DCDCB] hover:bg-opacity-50  px-2 pt-2">
+                            <div className="hover:bg-[#6DCDCB] hover:bg-opacity-[55%]  px-2 pt-2">
                                 <BsGlobe className="sm:h-6 sm:w-6 h-4 w-4 text-dtech-new-main-light cursor-pointer" />
                             </div>
                         ) : (
-                            <div className="hover:bg-[#6DCDCB] hover:bg-opacity-50  active:bg-dtech-main-dark !hover:text-white px-2 pt-2 ml-1"
+                            <div className="hover:bg-[#6DCDCB] hover:bg-opacity-[55%]  active:bg-dtech-main-dark !hover:text-white px-2 pt-2 ml-1"
                             onMouseDown={() => setArrowActive(true)}
                             onMouseUp={() => setArrowActive(false)}
                             onMouseLeave={() => setArrowActive(false)}
                             >
-                                <Image src={arrowActive ? SourceArrowWhite :SourceArrow} className=" " />
+                                <Image src={arrowActive ? SourceArrowWhite :SourceArrow} width={"25"} height={"25"} className="" />
                             </div>
                         )}
-                    <div className="text-dtech-main-dark underline underline-offset-2 cursor-pointer w-max text-base font-roboto">
+                    <div className="text-[#0065BD] underline underline-offset-2 cursor-pointer w-max text-base font-roboto">
                         {!href?.includes("dataset") ? "Website" : "Source"}
                     </div>
                     </a>
                 </div>
                 <div className=" flex flex-col justify-center items-center">
                     <div
-                        className={` hover:bg-[#6DCDCB] hover:bg-opacity-50  px-2 pt-2 mb-[-10px] active:bg-dtech-main-dark !hover:text-white ${favouriteColor}`}
+                        className={` hover:bg-[#6DCDCB] hover:bg-opacity-[55%]  px-2 pt-2 mb-[-10px] active:bg-dtech-main-dark !hover:text-white ${favouriteColor}`}
                         onMouseDown={() => setFavouriteClicked(true)}
                         onMouseUp={() => setFavouriteClicked(false)}
                         onMouseLeave={() => setFavouriteClicked(false)}
@@ -99,11 +99,11 @@ const NewResultCardAction = ({
                             onFavouriteChange={onFav}
                         />
                     </div>
-                    <div className="text-dtech-new-main-light mt-2 text-base font-roboto">Like</div>
+                    <div className="text-[#727272] mt-2 text-base font-roboto">Like</div>
                 </div>
                 <div className=" flex flex-col justify-center items-center">
                     <div
-                        className={`hover:bg-[#6DCDCB] hover:bg-opacity-50  px-2 pt-2 mb-[-10px]  active:bg-dtech-main-dark !hover:text-white ${bookmarkColor}`}
+                        className={`hover:bg-[#6DCDCB] hover:bg-opacity-[55%]  px-2 pt-2 mb-[-10px]  active:bg-dtech-main-dark !hover:text-white ${bookmarkColor}`}
                         onMouseDown={() => setBookmarkClicked(true)}
                         onMouseUp={() => setBookmarkClicked(false)}
                         onMouseLeave={() => setBookmarkClicked(false)}
@@ -115,7 +115,7 @@ const NewResultCardAction = ({
                             bookmarkColor={bookmarkColor}
                         />
                     </div>
-                    <div className="text-dtech-new-main-light mt-2 text-base font-roboto">Save</div>
+                    <div className= "text-[#727272] mt-2 text-base font-roboto ">Save</div>
                 </div>
                 <div className=" flex flex-col justify-center items-center">
                     <Menu>
@@ -124,7 +124,7 @@ const NewResultCardAction = ({
                                 <Menu.Button>
                                     <div
                                         data-tip="Share on social media"
-                                        className={`hover:bg-[#6DCDCB] hover:bg-opacity-50 text-dtech-main-light px-2 pt-2 pb-2 mb-[-10px]  ${shareColor}`}
+                                        className={`hover:bg-[#6DCDCB] hover:bg-opacity-[55%] text-dtech-main-light px-2 pt-2 pb-2 mb-[-10px]  ${shareColor}`}
                                         onMouseDown={() =>
                                             setShareClicked(true)
                                         }
@@ -153,7 +153,7 @@ const NewResultCardAction = ({
                             </>
                         )}
                     </Menu>
-                    <div className="text-dtech-new-main-light mt-2 text-base font-roboto">Share</div>
+                    <div className="text-[#727272] mt-2 text-base font-roboto">Share</div>
                 </div>
                 {router.pathname == "/datasets/[id]" && (
                     <div className=" flex flex-col justify-center items-center">

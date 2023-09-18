@@ -31,18 +31,19 @@ const CardHead = ({
             <div className="lg:flex flex-col w-full mb-3">
                 <div>
                     <Link href={href}>
-                        <a className="font-medium font-roboto text-md my-3 text-dtech-new-main-light text-[17px] cursor-pointer hover:underline underline-offset-4">
+                        <a className=" font-semibold font-roboto text-md my-3 text-dtech-new-main-light text-[17px] cursor-pointer hover:underline underline-offset-4">
                             {title}
                         </a>
                     </Link>
                 </div>
-                <div className=" my-3 flex flex-col md:flex-row justify-between bg-[#EBEBEB] px-1.5 py-3">
+                <div className=" my-3 flex flex-col md:flex-row justify-between md:items-center bg-[#EBEBEB] px-1.5 md:py-3 py-1.5">
                     <MetaRating
                         dataQuality={dataQuality}
                         displayContext={"displayContext"}
-                        labelClass="font-normal"
-                        className="!flex-row items-center !font-medium !text-lg"
-                        infoClassName="!text-dtech-new-main-light top-0 m-[1px] !ml-[5px]"
+                        labelClass="font-normal !text-[#333333]]"
+                        label={"Metadata Quality"}
+                        className="!flex-row items-center !font-medium !text-sm md:my-0 mb-1 md:justify-start justify-between"
+                        infoClassName="!text-dtech-new-main-light top-0 m-[1px] !ml-[5px] !mt-0"
                         starClassName="!text-dtech-new-main-light"
                         title={
                             "Estimated based on the European Commission's Metadata Quality Assessment method."
@@ -66,7 +67,8 @@ const CardHead = ({
                         <LabelledRow
                             className="mr-10"
                             label="Last updated"
-                            labelClasses="!text-sm mr-1"
+                            labelClasses="!text-sm mr-1  font-normal text-[#333333]"
+                            childClasses="text-[#727272]"
                         >
                             <span className="text-sm">
                                 {lastUpdate.toRelative()}

@@ -49,7 +49,7 @@ const ResultCard = ({ data, handleFAQClick }: ResultCardProps) => {
     }/${resultRecord.id}`;
 
     return (
-        <div className="rounded-lg px-5 py-1.5 flex flex-row justify-between border-gray-100  w-full min-w my-2 shadow-custom-2 hover:border-r-8 hover:border-[#6DCDCB] active:border-dtech-main-dark">
+        <div className="rounded-lg px-5 py-1.5 flex flex-row justify-between border-gray-100 border-r-8 border-transparent w-full min-w my-2 shadow-custom-2 hover:border-[#6DCDCB] active:border-dtech-main-dark">
             <div className="flex flex-col md:flex-row justify-between w-full">
                 <div className="flex flex-col flex-1 w-full my-3">
                     <CardHead
@@ -70,7 +70,7 @@ const ResultCard = ({ data, handleFAQClick }: ResultCardProps) => {
                 </div>
                 <div className=" md:flex md:flex-row">
                     <div className="mx-1 my-3 md:mx-3 md:my-2 border border-1 "></div>
-                    <div className="flex sm:flex-col md:flex-row">
+                    <div className="flex ">
                         <NewResultCardAction
                             data={{
                                 ...resultRecord,
@@ -78,7 +78,7 @@ const ResultCard = ({ data, handleFAQClick }: ResultCardProps) => {
                             }}
                             setData={setResultRecord}
                             href={href}
-                            className="flex-row md:flex-col items-center justify-center sm:py-8 w-full mx-5 max-h-min"
+                            className="flex-row md:flex-col items-center justify-center md:py-8 w-full md:mx-5 mx-0 max-h-min"
                         />
                     </div>
                 </div>

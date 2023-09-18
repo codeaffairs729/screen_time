@@ -31,8 +31,8 @@ const SearchPage = () => {
         <DefaultLayout>
             <SearchVMContext.Provider value={vm}>
                 {/* <Dataset /> */}
-                <div className="flex relative bg-white">
-                    <Sidebar className="md:w-48 shrink-0" />
+                <div className="flex relative bg-white min-h-screen">
+                    <Sidebar className="md:w-1/5 shrink-0" />
                     <div className="overflow-x-auto w-full">
                         <SearchHeaders
                             setCurrentPageNo={setCurrentPageNo}
