@@ -31,7 +31,7 @@ const LabelledRow = ({
                 )}
             >
                 {label}
-                {tooltip && <InfoIcon className="ml-1" title={tooltip} />}
+                {tooltip && <InfoIcon className="ml-1" title={tooltip} />}:
             </span>
             {children !== null || children !== undefined ? (
                 <span className={clsx("text-xs", childClasses)}>

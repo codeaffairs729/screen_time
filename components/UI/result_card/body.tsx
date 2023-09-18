@@ -23,7 +23,7 @@ const CardBody = ({ data, handleFAQClick }: { data: Data; handleFAQClick?: Funct
                 className={`${more ? "max-h-16" : "max-h-[100vh] "
                     } overflow-hidden transition-all duration-1000 ease-in-out w-full`}
             >
-                <p className="text-sm  text-gray-800 my-1.5">
+                <p className="text-sm  text-[#727272] my-1.5">
                     {wordCount > 30 ? (
                         <span>
                             {more
