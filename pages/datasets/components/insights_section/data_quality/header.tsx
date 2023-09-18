@@ -8,8 +8,8 @@ import DatasetLabel from "../label";
 import { QualityInsightsENUM, QualityMetricsVMContext } from "./quality_metric.vm";
 
 const ITEMS: MenuItemType[] = [
-    { label: "data" },
     { label: "metadata" },
+    { label: "data_file" },
 ];
 
 const DatasetQualityInsightsHead = () => {
@@ -26,20 +26,24 @@ const DatasetQualityInsightsHead = () => {
         label: formatLabel(item.label),
         onClick: () => handleChange(item.label),
     }));
-
     return (
         <Dropdown
-            className="border-b-[3px] border-dtech-main-dark"
-            labelClasses="!text-lg"
-            menuItems={menuItems}
+            // className="border-b-[3px] border-dtech-main-dark"
+            // labelClasses="!text-lg"
+            // iconClass="hover:text-dtech-dark-teal text-dtech-dark-teal"
+            // menuItems={menuItems}
             label={
                 <DatasetLabel
-                    labelPrefix="Dataset quality"
+                    labelPrefix="Dataset Quality"
                     label={selectedLabel}
                 />
             }
             itemsClasses="rounded-[10px] shadow-none "
             menuItemsClasses="rounded-[10px]"
+            className="border-b-[4px] font-semibold border-b-dtech-dark-teal text-dtech-dark-teal hover:!text-dtech-dark-teal"
+            labelClasses="!text-lg"
+            iconClass="hover:text-dtech-dark-teal text-dtech-dark-teal"
+            menuItems={menuItems}
         />
     );
 };

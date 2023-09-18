@@ -12,6 +12,7 @@ import SourceArrow from "public/images/icons/source_arrow.svg";
 import SourceArrowWhite from "public/images/icons/source_arrow_white.svg";
 import CiteQuotes from "public/images/icons/cite_quote.svg";
 import { useRouter } from "next/router";
+import Cite from "pages/datasets/components/cite";
 
 type NewResultCardActionProps = {
     data: Data | undefined;
@@ -19,6 +20,7 @@ type NewResultCardActionProps = {
     href: string;
     className?: string;
     gridClass?: string;
+    owner?:string
 };
 const NewResultCardAction = ({
     data,
@@ -26,16 +28,15 @@ const NewResultCardAction = ({
     href,
     className = "",
     gridClass = "",
+    owner=""
 }: NewResultCardActionProps) => {
     const [share, setShare] = useState(false);
-
     const [shareClicked, setShareClicked] = useState<boolean>(false);
     const [bookmarkClicked, setBookmarkClicked] = useState<boolean>(false);
     const [favouriteClicked, setFavouriteClicked] = useState<boolean>(false);
     const [arrowActive, setArrowActive] = useState<boolean>(false);
-
     const router = useRouter();
-
+    const cite = `${data?.dataProviders?.hostName}. ${data?.title}. ${owner}. `
     if (!data) {
         return null;
     }
@@ -155,14 +156,9 @@ const NewResultCardAction = ({
                     </Menu>
                     <div className="text-[#727272] mt-2 text-base font-roboto">Share</div>
                 </div>
-                {router.pathname == "/datasets/[id]" && (
-                    <div className=" flex flex-col justify-center items-center">
-                        <Image src={CiteQuotes} />
-                        <div className="text-dtech-new-main-light mt-2 text-base font-roboto">
-                            Cite
-                        </div>
-                    </div>
-                )}
+                {/* {router.pathname == "/datasets/[id]" && (
+                    <Cite citation={cite} url={`${process.env.NEXT_PUBLIC_WEBCLIENT_ROOT}${router.asPath}`} />
+                )} */}
             </div>
         </div>
     );

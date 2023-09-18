@@ -38,7 +38,7 @@ const PreviewSection = () => {
     };
 
     return (
-        <div className="bg-dtech-main-light">
+        <div className="bg-white">
             {previewData && previewIDList && previewID && previewDataList ? (
                 <div>
                     {/* <PreviewSelect
@@ -70,11 +70,11 @@ const PreviewSection = () => {
                                 </Tab.List>
                             </div>
                         )}
-                        <Tab.Panels className="w-full flex bg-dtech-main-light">
+                        <Tab.Panels className="w-full flex bg-white">
                             {previewDataList?.map((list: any, idx: any) => (
                                 <TabPanel
                                     key={idx}
-                                    className="bg-dtech-main-light"
+                                    className="!bg-white"
                                 >
                                     <DatafilePreview previewData={list} />
                                 </TabPanel>

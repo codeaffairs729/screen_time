@@ -20,13 +20,13 @@ const DataUseFeedback = () => {
     if (!dataset) return <div />;
 
     return (
-        <div>
-            <div className="text-sm text-gray-600 w-full ml-10">
+        <div className="">
+            <div className="text-sm text-gray-600 w-full pb-2 sm:pb-0 text-center">
                 We are gathering this information from users to help data
                 providers understand what the user needs are.
             </div>
             {!vmForm.isFetchingUsecaseFeedback && (
-                <div className="text-sm text-gray-600 w-full ml-10">
+                <div className="text-sm text-gray-600 w-full pb-2 text-center">
                     You{" "}
                     {vmForm.usecaseFeedback ? (
                         <p className="inline font-bold"> have</p>
@@ -37,15 +37,15 @@ const DataUseFeedback = () => {
                 </div>
             )}
             <div className="">
-                <div className="my-5 mx-3 px-5 py-3">
+                <div className="my-5 mx-3 sm:px-5 sm:py-3">
                     <DomainsTopics vm={vmForm} />
                     <PotentialUsecases vm={vmForm} />
                     <UsecaseDescription vm={vmForm} />
-                    <div className="flex flex-row justify-between w-[92%]">
+                    <div className="flex flex-col space-y-4">
                         <CommentAnonymous vm={vmForm} />
                         <PrimaryBtn
                             label="Submit"
-                            className="bg-dtech-main-dark w-36 mt-5 mb-2 ml-32"
+                            className="bg-dtech-new-main-light w-min rounded-full !text-xs !py-3 !px-6"
                             isLoading={vmForm.isSubmitting}
                             onClick={vmForm.form.handleSubmit(
                                 vmForm.submitDataUseFeedback

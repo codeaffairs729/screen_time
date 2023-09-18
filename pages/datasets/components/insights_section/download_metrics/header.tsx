@@ -31,9 +31,6 @@ const DatasetDownloadMetricsHead = () => {
     }));
     return (
         <Dropdown
-            className="border-b-[3px] border-dtech-main-dark"
-            labelClasses="!text-lg"
-            menuItems={menuItems}
             label={
                 <DatasetLabel
                     labelPrefix="Download metrics:"
@@ -42,6 +39,10 @@ const DatasetDownloadMetricsHead = () => {
             }
             itemsClasses="rounded-[10px] shadow-none "
             menuItemsClasses="rounded-[10px]"
+            className="border-b-[4px] font-semibold border-b-dtech-dark-teal text-dtech-dark-teal hover:!text-dtech-dark-teal"
+            labelClasses="!text-lg"
+            iconClass="hover:text-dtech-dark-teal text-dtech-dark-teal"
+            menuItems={menuItems}
         />
     );
 };

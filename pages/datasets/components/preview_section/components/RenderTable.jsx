@@ -6,11 +6,11 @@ export default function RenderTable({ tableData, id }) {
             <table id={id} className=" border-solid w-full  ">
                 <thead className="">
                     <tr className="">
-                        <th key={0} className="w-1/5  bg-fuchsia-800   "></th>
+                        <th key={0} className="w-1/5  bg-dtech-dark-teal font-semibold "></th>
                         {tableData.columns.map((col, idx) => (
                             <td
                                 key={idx + 1}
-                                className=" w-1/5  bg-fuchsia-800 text-white text-center "
+                                className=" w-1/5 sm:py-3 py-1 bg-dtech-dark-teal font-semibold text-white text-center "
                             >
                                 {col}
                             </td>
@@ -23,11 +23,11 @@ export default function RenderTable({ tableData, id }) {
                             key={idx}
                             className="border-2 bg-white text-center hover:bg-slate-300"
                         >
-                            <td key={0} className=" ">
+                            <td key={0} className="border-2 sm:py-3 py-1 text-[#2D2D32] font-semibold">
                                 {row}
                             </td>
                             {tableData.columns.map((col, idx) => (
-                                <td key={idx + 1} className="">
+                                <td key={idx + 1} className="border-2 sm:py-3 py-1 text-[#2D2D32] font-semibold">
                                     {tableData.data[row][col]}
                                 </td>
                             ))}

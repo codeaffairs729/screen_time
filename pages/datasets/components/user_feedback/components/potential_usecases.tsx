@@ -35,15 +35,15 @@ const PotentialUsecases = ({ vm }: { vm: any }) => {
     });
 
     return (
-        <div className="my-7">
-            <p className="font-light text-xl w-[70%] mb-2 ">
+        <div className="sm:my-7 my-4 w-full">
+            <p className="font-semibold sm:font-bold sm:text-lg text-sm text-[#333333] mb-2">
                 What are the potential use cases for this data?
             </p>
             <CreatableSelect
                 isMulti
                 name={name}
                 options={usecaseOptions}
-                className=" w-[45%]"
+                className=" w-inherit"
                 isSearchable={true}
                 components={{
                     Control,

@@ -8,9 +8,9 @@ const DatasetLabel = ({
     label: string;
 }) => {
     return (
-        <div className="flex select-none outline-none flex-col text-dtech-main-dark text-left">
+        <div className="flex select-none outline-none flex-col text-dtech-dark-teal text-left">
             <span>{labelPrefix}</span>
-            <span>{formatLabel(label)}</span>
+            {/* <span>{formatLabel(label)}</span> */}
         </div>
     );
 };

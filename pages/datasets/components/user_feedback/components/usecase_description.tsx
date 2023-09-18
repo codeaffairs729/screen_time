@@ -7,7 +7,8 @@ const UsecaseDescription = ({ vm }: { vm: any }) => {
         <FormRow
             label="Describe your data use case briefly"
             isTwoRow={true}
-            className="flex-col w-[92%]"
+            className="flex-col w-[100%]"
+            labelClass="font-semibold sm:font-bold sm:text-lg text-sm text-[#333333] -mb-2 -ml-2 -mt-3"
         >
             <TextField
                 rows={6}

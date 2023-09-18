@@ -172,8 +172,8 @@ const DomainsTopics = ({ vm }: { vm: any }) => {
 
     return (
         <div className="flex flex-row justify-between">
-            <div className="flex flex-col">
-                <p className="font-light text-xl w-[80%] mb-2">
+            <div className="flex flex-col w-full">
+                <p className="font-semibold sm:font-bold sm:text-lg text-sm text-[#333333] mb-2">
                     What are the domains related to your use case of this
                     dataset?
                 </p>
@@ -186,7 +186,7 @@ const DomainsTopics = ({ vm }: { vm: any }) => {
                         IndicatorsContainer,
                     }}
                     options={domainOptions}
-                    className=" w-[80%]"
+                    className=" w-inherit "
                     isSearchable={true}
                     onChange={(val: readonly SelectOption[]) => {
                         setSelDomains(val);

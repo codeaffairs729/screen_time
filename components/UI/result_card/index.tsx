@@ -37,11 +37,13 @@ export interface Data {
 interface ResultCardProps {
     data: Data;
     handleFAQClick?: Function;
+    hideResultCard?: boolean;
+    showToolTip?:boolean 
 }
 
 //TODO update the object of data in props to have both stats and dataProviders
 
-const ResultCard = ({ data, handleFAQClick }: ResultCardProps) => {
+const ResultCard = ({ data, handleFAQClick, hideResultCard, showToolTip=true }: ResultCardProps) => {
     const [resultRecord, setResultRecord] = useState(data);
     const { dataProviders, stats, lastUpdate } = data || {};
     const href = `/${
@@ -49,7 +51,7 @@ const ResultCard = ({ data, handleFAQClick }: ResultCardProps) => {
     }/${resultRecord.id}`;
 
     return (
-        <div className="rounded-lg px-5 py-1.5 flex flex-row justify-between border-gray-100 border-r-8 border-transparent w-full min-w my-2 shadow-custom-2 hover:border-[#6DCDCB] active:border-dtech-main-dark">
+        <div className={`rounded-lg px-5 py-1.5 flex flex-row justify-between  w-full min-w my-2 border-r-8  border-transparent  hover:border-[#6DCDCB] active:border-dtech-main-dark ${hideResultCard ? " shadow-underline" : "border-gray-100 shadow-custom-2"}`}>
             <div className="flex flex-col md:flex-row justify-between w-full">
                 <div className="flex flex-col flex-1 w-full my-3">
                     <CardHead
@@ -57,6 +59,7 @@ const ResultCard = ({ data, handleFAQClick }: ResultCardProps) => {
                         data={resultRecord}
                         setData={setResultRecord}
                         datasetSource={dataProviders?.datasetSource}
+                        showToolTip={showToolTip}
                     />
                     <CardBody
                         data={resultRecord}
@@ -68,7 +71,7 @@ const ResultCard = ({ data, handleFAQClick }: ResultCardProps) => {
                         // lastUpdate={lastUpdate}
                     />
                 </div>
-                <div className=" md:flex md:flex-row">
+                {!hideResultCard &&<div className=" md:flex md:flex-row">
                     <div className="mx-1 my-3 md:mx-3 md:my-2 border border-1 "></div>
                     <div className="flex ">
                         <NewResultCardAction
@@ -81,7 +84,7 @@ const ResultCard = ({ data, handleFAQClick }: ResultCardProps) => {
                             className="flex-row md:flex-col items-center justify-center md:py-8 w-full md:mx-5 mx-0 max-h-min"
                         />
                     </div>
-                </div>
+                </div>}
             </div>
         </div>
     );

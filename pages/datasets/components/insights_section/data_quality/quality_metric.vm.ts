@@ -5,13 +5,13 @@ import { createContext, useContext, useState } from "react";
 import toast from "react-hot-toast";
 
 export enum QualityInsightsENUM {
-    data,
+    data_file,
     metadata,
 }
 
 const QualityMetricsVM = () => {
     const [selectedQualityInsights, setSelectedQualityInsights] =
-        useState<number>(0);
+        useState<number>(1);
     const { dataset } = useContext(DatasetDetailVMContext);
     const {
         error,

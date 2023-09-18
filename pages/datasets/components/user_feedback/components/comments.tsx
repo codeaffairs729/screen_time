@@ -8,6 +8,7 @@ const Comment = ({ vm }: { vm: any }) => {
             label="Additional comments on data quality"
             isTwoRow={true}
             className="flex-col w-full"
+            labelClass="text-[#2D2D32] font-bold text-sm sm:text-lg"
             // tooltip={"Additional comments on data quality"}
         >
             <TextField
