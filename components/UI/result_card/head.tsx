@@ -31,7 +31,7 @@ const CardHead = ({
             <div className="lg:flex flex-col w-full mb-3">
                 <div>
                     <Link href={href}>
-                        <a className=" font-semibold font-roboto text-md my-3 text-dtech-new-main-light text-[17px] cursor-pointer hover:underline underline-offset-4">
+                        <a className=" font-semibold font-roboto text-md my-3 text-dtech-new-main-light text-[17px] cursor-pointer underline-anim">
                             {title}
                         </a>
                     </Link>
@@ -40,7 +40,7 @@ const CardHead = ({
                     <MetaRating
                         dataQuality={dataQuality}
                         displayContext={"displayContext"}
-                        labelClass="font-normal !text-[#333333]]"
+                        labelClass="font-normal !text-[#333333]"
                         label={"Metadata Quality"}
                         className="!flex-row items-center !font-medium !text-sm md:my-0 mb-1 md:justify-start justify-between"
                         infoClassName="!text-dtech-new-main-light top-0 m-[1px] !ml-[5px] !mt-0"

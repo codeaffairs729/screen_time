@@ -5,7 +5,6 @@ import FilterSection from "../filter_section";
 
 const FilterLastUpdate = () => {
   const vm = useContext(SearchVMContext);
-  const {isMobile, mobileFilter,setMobileFilter } = vm;
   const [filterOptions, setFilterOptions] = useState<
         FilterOptionItem[] | undefined
     >([]);
@@ -14,13 +13,7 @@ const FilterLastUpdate = () => {
       value: format.value,
       label: format.count,
       checkbox: false,
-    }));
-    // const filterValues = [
-    //   { checkbox: false, label: "Past Day", value: "Past day" },
-    //   { checkbox: false, label: "Past Week", value: "Past 7 days" },
-    //   { checkbox: false, label: "Past Month", value: "Past 30 days" },
-    //   { checkbox: false, label: "Past 3 Months", value: "Past 90 days" },
-    // ]
+    })) ?? [];
 
     setFilterOptions(filterValues);
   }, [vm.filterOptions]);
@@ -31,7 +24,7 @@ const FilterLastUpdate = () => {
   });
 
   return (
-    <FilterSection label="Last Updated" disable={(vm.isLoading)}>
+    <FilterSection label="Last Updated" disable={(vm.isLoading || !fields.length)}>
       {fields.map((field, i) => (
         <FilterCheckboxField
           key={field.id}

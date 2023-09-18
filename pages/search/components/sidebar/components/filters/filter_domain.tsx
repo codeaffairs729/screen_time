@@ -11,7 +11,6 @@ import { BsChevronDown } from "react-icons/bs";
 
 const FilterDomain = () => {
     const vm = useContext(SearchVMContext);
-    const { isMobile, mobileFilter, setMobileFilter } = vm;
     const [filterOptionItems, setFilterOptionItems] = useState<
         FilterOptionItem[] | undefined
     >([]);
@@ -19,16 +18,11 @@ const FilterDomain = () => {
     const [seeMore, setSeeMore] = useState(true);
 
     useEffect(() => {
-        // const domains = vm.datasets
-        //   ?.map((d) => d.detail.domain)
-        //   .filter((domain, i, a) => a.indexOf(domain) == i)
-        //   .map((domain) => ({ value: domain, label: domain, checkbox: false }));
-        // setFilterOptionItems(domains);
         const domains = vm.filterOptions?.domains?.map((domain: any) => ({
             value: domain.value,
             label: domain.count,
             checkbox: false,
-        }));
+        })) ?? [];
         setFilterOptionItems(domains);
     }, [vm.filterOptions]);
 
@@ -67,7 +61,7 @@ const FilterDomain = () => {
                     ))}
             {fields.length > 6 && seeMore && (
                 <div
-                    className="flex items-center font-normal text-sm text-[#0065BD] mx-7 cursor-pointer"
+                    className="flex items-center font-normal text-sm text-[#0065BD] mx-7 cursor-pointer mt-3"
                     onClick={() => {
                         setItemShow(fields.length), setSeeMore(!seeMore);
                     }}

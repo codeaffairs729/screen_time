@@ -10,7 +10,6 @@ import FilterSection from "../filter_section";
 
 const QualityFilter = () => {
     const vm = useContext(SearchVMContext);
-    const { isMobile,mobileFilter,setMobileFilter } = vm;
     const [filterOption, setFilterOptions] = useState<
         FilterOptionItem[] | undefined
         >([]);
@@ -19,25 +18,19 @@ const QualityFilter = () => {
             value: format.value,
             label: format.value,
             checkbox: false,
-        }));
-        // const filterValues = [
-        //     { checkbox: false, value: "1", label: "1" },
-        //     { checkbox: false, value: "2", label: "2" },
-        //     { checkbox: false, value: "3", label: "3" },
-        //     { checkbox: false, value: "4", label: "4" },
-        //     { checkbox: false, value: "5", label: "5" },
-        // ];
+        })) ?? [];
 
         setFilterOptions(filterValues?.slice().reverse());
-    }, [vm.datasets]);
+    }, [vm.filterOptions]);
 
     const { register, fields, control, setValue   } = useSearchFilter({
         name: "metadata_quality",
-        filterOptionItems: filterOption,
+        filterOptionItems: filterOption?.sort((a:any,b:any) => b.value - a.value),
     });
+
     return (
-        <FilterSection label="Metadata Quality" disable={vm.isLoading}>
-            {fields.reverse().map((field, i) => (
+        <FilterSection label="Metadata Quality" disable={(vm.isLoading || !fields.length)}>
+            {fields.map((field, i) => (
                     <FilterCheckboxField
                         className="mr-1.5 mb-0.5"
                         key={field.id}

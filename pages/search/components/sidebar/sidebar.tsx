@@ -20,7 +20,7 @@ import { AiOutlineClose } from "react-icons/ai";
 const Sidebar = ({ className = "" }: { className?: string }) => {
     const vm = useContext(SearchVMContext);
 
-    const { showMobileSidebar, setShowMobileSidebar, setActiveFilter } = vm;
+    const { showMobileSidebar, setShowMobileSidebar } = vm;
 
     useLayoutEffect(() => {
         window.addEventListener("resize", () => {});

@@ -11,7 +11,6 @@ import { BsChevronDown } from "react-icons/bs";
 
 const FilterOwner = () => {
   const vm = useContext(SearchVMContext);
-  const {isMobile, mobileFilter,setMobileFilter  } = vm;
   const [filterOptionItems, setFilterOptionItems] = useState<
     FilterOptionItem[] | undefined
   >([]);
@@ -19,18 +18,13 @@ const FilterOwner = () => {
   const [seeMore, setSeeMore] = useState(true);
 
   useEffect(() => {
-    // const owners = vm.datasets
-    //   ?.map((d) => d.owner.organisation)
-    //   .filter((owner, i, a) => a.indexOf(owner) == i)
-    //   .map((owner) => ({ value: owner, label: owner, checkbox: false }));
-    // setFilterOptionItems(owners);
     const owners = vm.filterOptions?.data_owner?.map((owner:any) => ({
       value: owner.value,
       label: owner.count,
       checkbox: false,
-    }));
+    })) ?? [];
     setFilterOptionItems(owners);
-  }, [vm.datasets]);
+  }, [vm.filterOptions]);
 
   const { register, fields, control, setValue   } = useSearchFilter({
     name: "data_owner",
@@ -67,7 +61,7 @@ const FilterOwner = () => {
                     ))}
             {fields.length > 6 && seeMore && (
                 <div
-                className="flex items-center font-normal text-sm text-[#0065BD] mx-7 cursor-pointer"
+                className="flex items-center font-normal text-sm text-[#0065BD] mx-7 cursor-pointer  mt-3"
                 onClick={() => {
                     setItemShow(fields.length), setSeeMore(!seeMore);
                 }}

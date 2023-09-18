@@ -63,6 +63,7 @@ const BookmarkBtn = ({
                     {!user ? (
                         <BsBookmark
                             className={`sm:h-6 sm:w-6 h-4 w-4  cursor-pointer text-dtech-new-main-light  active:bg-dtech-main-dark active:!text-white ${bookmarkColor}`}
+                            strokeWidth="0.3"
                         />
                     ) : (
                         <>
@@ -75,6 +76,7 @@ const BookmarkBtn = ({
                                     ) : (
                                         <BsBookmark
                                             className={`sm:h-6 sm:w-6 h-4 w-4 text-dtech-new-main-light  cursor-pointer  active:bg-dtech-main-dark active:!text-white ${bookmarkColor}`}
+                                            strokeWidth="0.3"
                                         />
                                     )}
                                 </>

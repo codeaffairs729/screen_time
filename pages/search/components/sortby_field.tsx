@@ -66,7 +66,7 @@ const RecordsSortBy = () => {
                     labelClasses="text-base text-gray-500 font-normal pr-2.5 whitespace-nowrap pr-3.5"
                     className="!ml-0 "
                     iconClass=" !font-medium text-xl !mx-5"
-                    itemsClasses="rounded-[10px] shadow-none "
+                    itemsClasses="rounded-[10px] shadow-none hover:!bg-[#6DCDCB] hover:!bg-opacity-50 "
                     dropdownIcon= "arrow"
                 />
             </div>

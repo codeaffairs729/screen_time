@@ -51,31 +51,31 @@ const SearchVM = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const [showMobileSidebar, setShowMobileSidebar] = useState<boolean>(false);
 
-    const [isMobile, setIsMobile] = useState(false);
-    const [mobileFilter, setMobileFilter] = useState({
-        sort_by: ["relevance"],
-    });
+    // const [isMobile, setIsMobile] = useState(false);
+    // const [mobileFilter, setMobileFilter] = useState({
+    //     sort_by: ["relevance"],
+    // });
 
 
-    useEffect(() => {
-        const handleResize = () => {
-            setIsMobile(window.innerWidth < 640); // Adjust the breakpoint as needed
-            if(window.innerWidth > 640){
-                setMobileFilter({sort_by: ["relevance"]})
-            }
-        };
+    // useEffect(() => {
+    //     const handleResize = () => {
+    //         setIsMobile(window.innerWidth < 640); // Adjust the breakpoint as needed
+    //         if(window.innerWidth > 640){
+    //             setMobileFilter({sort_by: ["relevance"]})
+    //         }
+    //     };
 
-        // Call handleResize on initial component render
-        handleResize();
+    //     // Call handleResize on initial component render
+    //     handleResize();
 
-        // Add event listener to window resize
-        window.addEventListener("resize", handleResize);
+    //     // Add event listener to window resize
+    //     window.addEventListener("resize", handleResize);
 
-        // Clean up event listener on component unmount
-        return () => {
-            window.removeEventListener("resize", handleResize);
-        };
-    }, []);
+    //     // Clean up event listener on component unmount
+    //     return () => {
+    //         window.removeEventListener("resize", handleResize);
+    //     };
+    // }, []);
 
 
     /**
@@ -308,9 +308,9 @@ const SearchVM = () => {
         setPageSize,
         showMobileSidebar,
         setShowMobileSidebar,
-        isMobile,
-        mobileFilter,
-        setMobileFilter
+        // isMobile,
+        // mobileFilter,
+        // setMobileFilter
     };
 };
 
@@ -336,9 +336,9 @@ interface ISearchVMContext {
     setPageSize: Function;
     showMobileSidebar: boolean;
     setShowMobileSidebar: Function;
-    isMobile: boolean;
-    mobileFilter: any ;
-    setMobileFilter: any;
+    // isMobile: boolean;
+    // mobileFilter: any ;
+    // setMobileFilter: any;
 }
 
 export default SearchVM;
@@ -357,15 +357,9 @@ export interface FilterOptions {
 export const useSearchFilter = ({
     name,
     filterOptionItems,
-    ismobile,
-    mobileFilter,
-    setMobileFilter
 }: {
     name: keyof Filter;
     filterOptionItems: FilterOptionItem[] | undefined;
-    ismobile?: boolean;
-    mobileFilter?:any
-    setMobileFilter?: any;
 }) => {
     const { activeFilter, setActiveFilter } = useContext(SearchVMContext);
     const { control, register, watch, reset, setValue } = useForm<FilterOptions>();

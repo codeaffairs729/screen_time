@@ -11,7 +11,6 @@ import { BsChevronDown } from "react-icons/bs";
 
 const FilterKeywords = () => {
     const vm = useContext(SearchVMContext);
-    const { isMobile, mobileFilter, setMobileFilter } = vm;
     const [filterOptionItems, setFilterOptionItems] = useState<
         FilterOptionItem[] | undefined
     >([]);
@@ -23,7 +22,7 @@ const FilterKeywords = () => {
             value: format.value,
             label: format.count,
             checkbox: false,
-        }));
+        })) ?? [];
         setFilterOptionItems(keywords);
     }, [vm.filterOptions]);
 
@@ -62,7 +61,7 @@ const FilterKeywords = () => {
                     ))}
             {fields.length > 6 && seeMore && (
                 <div
-                    className="flex items-center font-normal text-sm text-[#0065BD] mx-7 cursor-pointer"
+                    className="flex items-center font-normal text-sm text-[#0065BD] mx-7 cursor-pointer  mt-3"
                     onClick={() => {
                         setItemShow(fields.length), setSeeMore(!seeMore);
                     }}
