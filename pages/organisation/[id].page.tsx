@@ -37,7 +37,7 @@ const OrganisationDetailPage = ({
     organisation, requestProviders
 }: {
     organisation: Organisation | undefined, requestProviders: any
-}) => {
+    }) => {
     const [loading, setLoading] = useState<boolean>(false);
     const [isMobile, setIsMobile] = useState<boolean>(false);
     const [selectedIndex, setSelectedIndex] = useState<any>(0);
@@ -135,7 +135,7 @@ const OrganisationDetailPage = ({
                                 </a>
                             </div>
                         </div>
-                        <div className="flex sm:hidden flex-row px-4 py-2 my-2  items-center bg-white bg-opacity-80">
+                        <div className="flex sm:hidden flex-row px-4 py-2 my-2  items-center bg-dtech-light-teal xl:bg-white bg-opacity-80">
                             <a href={`${organisation.url}`} target="_blank" rel="noreferrer" className=" rounded-full overflow-hidden">
                                 <img
                                     // data-tip={"Click to open website"}

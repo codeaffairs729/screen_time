@@ -37,7 +37,10 @@ const DataQualityFeedback = () => {
                     submitted a data quality feedback previously.
                 </div>
             )}
-            <div className="">
+            <div className=" relative">
+                    <div>
+                        <img src="/images/data_quality.svg" width={300} className="hidden xl:block float-right absolute lg:right-[15%] md:hidden -top-10" />
+                    </div>
                 <div className="my-5 mx-3 xl:px-32 md:px-20 py-4 ">
                     <div className="flex flex-col justify-between">
                             <Accuracy vm={vmForm} />

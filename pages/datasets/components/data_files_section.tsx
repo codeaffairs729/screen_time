@@ -224,25 +224,25 @@ const DataFileRow = ({
     return (
         <>
             <tr
-                className={`bg-[#EBEBEB] hover:bg-dtech-light-teal hover:bg-opacity-50 active:text-white !hover:text-white active:bg-dtech-main-dark focus:bg-dtech-main-dark focus-within:bg-dtech-main-dark  ${preview && "bg-dtech-light-teal  bg-opacity-50"
+                className={`bg-[#EBEBEB] hover:bg-dtech-light-teal hover:bg-opacity-50  !hover:text-white    ${preview && "bg-dtech-light-teal  bg-opacity-50"
                     }`}
             >
-                <td className={`sm:px-6 text-center whitespace-nowrap  border-4 border-white text-[#2D2D32] active:text-white ${isActive&&"!text-white"} ${preview &&"border-b-dtech-new-main-light border-4 border-dtech-main-dark border-b-[3px]"}`}>
+                <td className={`sm:px-6 text-center whitespace-nowrap  border-4 border-white text-[#2D2D32]  ${preview &&"border-b-dtech-new-main-light border-4 border-dtech-main-dark border-b-[3px]"}`}>
                     <div className="flex justify-center items-center font-normal text-lg text-center ">{`${description}`}</div>
                 </td>
-                <td className={`sm:px-6 text-center border-4 border-white  text-[#2D2D32] active:text-white ${isActive && "!text-white"} ${preview && "border-b-dtech-new-main-light border-4 border-dtech-main-dark border-b-[3px]"}`}>
+                <td className={`sm:px-6 text-center border-4 border-white  text-[#2D2D32]   ${preview && "border-b-dtech-new-main-light border-4 border-dtech-main-dark border-b-[3px]"}`}>
                     <div className="flex justify-center items-center">
                         <span className="py-1 px-3 rounded-full text-lg font-normal">
                             {`${url.format.toUpperCase()}`}
                         </span>
                     </div>
                 </td>
-                <td className={`sm:px-6 text-center border-4 border-white  text-[#2D2D32] ${isActive && "!text-white"} ${preview && "border-b-dtech-new-main-light border-4 border-dtech-main-dark border-b-[3px]"}`}>
+                <td className={`sm:px-6 text-center border-4 border-white  text-[#2D2D32] ${preview && "border-b-dtech-new-main-light border-4 border-dtech-main-dark border-b-[3px]"}`}>
                     <div className="flex items-center justify-center text-lg font-normal">
                         {sizemb}
                     </div>
                 </td>
-                <td className={`sm:px-6 text-center border-4  border-white  text-[#2D2D32] ${isActive && "!text-white"} ${preview && "border-b-dtech-new-main-light border-4 border-dtech-main-dark border-b-[3px]"}`}>
+                <td className={`sm:px-6 text-center border-4  border-white  text-[#2D2D32] ${preview && "border-b-dtech-new-main-light border-4 border-dtech-main-dark border-b-[3px]"}`}>
                     <div className=" flex justify-center items-center">
                         <a
                             onClick={() => onDownload()}
@@ -252,12 +252,12 @@ const DataFileRow = ({
                             ref={downloadRef}
                             id="downloadAll"
                         >
-                            <BiDownload size={24} className={` text-[#727272] ${isActive && "!text-white"} `} />
+                            <BiDownload size={24} className={` text-[#727272]`} />
 
                         </a>
                     </div>
                 </td>
-                <td className={`sm:px-6 text-center border-4 border-white  text-[#2D2D32] ${isActive && "!text-white"} ${preview && "border-b-dtech-new-main-light  border-dtech-main-dark border-b-[3px]"}`}>
+                <td className={`sm:px-6 text-center border-4 border-white  text-[#2D2D32]  ${preview && "border-b-dtech-new-main-light  border-dtech-main-dark border-b-[3px]"}`}>
                     <div className="flex item-center justify-center ">
                         {!preview ? (
                             <AiFillEye
@@ -268,7 +268,7 @@ const DataFileRow = ({
                                 }}
                                 onMouseDown={() => setIsActive(!isActive)}
                                 onMouseUp={() => setIsActive(!isActive)}
-                                className={`mx-auto text-lg cursor-pointer text-[#727272] ${isActive && "!text-white"} `}
+                                className={`mx-auto text-lg cursor-pointer text-[#727272]  `}
                             />
                         ) : (
                             <AiFillEye
@@ -278,7 +278,7 @@ const DataFileRow = ({
                                     }}
                                     onMouseDown={() => setIsActive(!isActive)}
                                     onMouseUp={() => setIsActive(!isActive)}
-                                    className={`mx-auto text-lg cursor-pointer text-[#727272] ${isActive && "!text-white"} `}
+                                    className={`mx-auto text-lg cursor-pointer text-[#727272] `}
                             />
                         )}
                     </div>

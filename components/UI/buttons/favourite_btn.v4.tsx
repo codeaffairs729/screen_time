@@ -37,13 +37,8 @@ const FavouriteBtn = ({
     return (
         <div
             className="inline-block"
-            data-tip={
-                !user
-                    ? "Please login to add this dataset to your favourites"
-                    : !isFavourited
-                    ? "Add to favourites"
-                    : "Remove from favourites"
-            }
+            data-tip
+            data-for="dtechtive-favourite-btn-tooltip"
         >
             <button
                 aria-label="Favoruite dataset"
@@ -82,7 +77,7 @@ const FavouriteBtn = ({
                 )}
             </button>
             <ReactTooltip
-                uuid="dtechtive-favourite-btn-tooltip"
+                id="dtechtive-favourite-btn-tooltip"
                 textColor={"white"}
                 backgroundColor="#4CA7A5"
                 overridePosition={({ left, top }, _e, _t, node) => {
@@ -92,7 +87,14 @@ const FavouriteBtn = ({
                             typeof node === "string" ? left : Math.max(left, 0),
                     };
                 }}
-            />
+            >{
+                    !user
+                        ? "Please login to add this dataset to your favourites"
+                        : !isFavourited
+                            ? "Add to favourites"
+                            : "Remove from favourites"
+                }
+                </ReactTooltip>
         </div>
     );
 };

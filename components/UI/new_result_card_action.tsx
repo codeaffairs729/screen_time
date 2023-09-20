@@ -124,7 +124,8 @@ const NewResultCardAction = ({
                             <>
                                 <Menu.Button>
                                     <div
-                                        data-tip="Share on social media"
+                                        data-tip
+                                        data-for="dtechtive-share-btn-tooltip"
                                         className={`hover:bg-[#6DCDCB] hover:bg-opacity-[55%] text-dtech-main-light px-2 pt-2 pb-2 mb-[-10px]  ${shareColor}`}
                                         onMouseDown={() =>
                                             setShareClicked(true)
@@ -140,7 +141,7 @@ const NewResultCardAction = ({
                                             onClick={() => setShare(true)}
                                         />
                                     </div>
-                                    <ReactTooltip uuid="dtechtive-share-btn-tooltip" textColor={'white'}  backgroundColor="#4CA7A5" />
+                                    <ReactTooltip id="dtechtive-share-btn-tooltip" textColor={'white'} backgroundColor="#4CA7A5" >Share on social media</ReactTooltip>
                                 </Menu.Button>
                                 <Transition show={open && share}>
                                     <Menu.Items static className="">
@@ -156,9 +157,12 @@ const NewResultCardAction = ({
                     </Menu>
                     <div className="text-[#727272] mt-2 text-base font-roboto">Share</div>
                 </div>
-                {/* {router.pathname == "/datasets/[id]" && (
+                <div className=" cursor-pointer ">
+
+                {router.pathname == "/datasets/[id]" && (
                     <Cite citation={cite} url={`${process.env.NEXT_PUBLIC_WEBCLIENT_ROOT}${router.asPath}`} />
-                )} */}
+                    )}
+                    </div>
             </div>
         </div>
     );
