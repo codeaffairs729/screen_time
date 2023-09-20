@@ -1,9 +1,9 @@
 import clsx from "clsx";
 import ErrorAlert from "components/UI/alerts/error_alert";
-import Loader from "components/UI/loader";
 import ResultCard, { Data } from "components/UI/result_card";
 import { useRouter } from "next/router";
 import NoResults from "./no_results";
+import LoadingDatasetSearchCard from "components/UI/loading_dataset_search_card";
 
 type ResultLayoutProps = {
     error: any;
@@ -12,7 +12,12 @@ type ResultLayoutProps = {
     className?: string;
 };
 
-const ResultLayout = ({ error, isLoading, recordsData, className="" }: ResultLayoutProps) => {
+const ResultLayout = ({
+    error,
+    isLoading,
+    recordsData,
+    className = "",
+}: ResultLayoutProps) => {
     const router = useRouter();
     const {
         query: { q },
@@ -30,11 +35,7 @@ const ResultLayout = ({ error, isLoading, recordsData, className="" }: ResultLay
     }
 
     if (isLoading) {
-        return (
-            <div className="h-[calc(100vh-var(--nav-height))]  w-full flex items-center justify-center ">
-                <Loader />
-            </div>
-        );
+        return <div className="mt-20 ml-[-30px] w-[100%]"><LoadingDatasetSearchCard /></div>
     }
 
     if (!recordsData?.length) {
@@ -52,7 +53,10 @@ const ResultLayout = ({ error, isLoading, recordsData, className="" }: ResultLay
     }
 
     return (
-        <div className={clsx("flex flex-col mt-20 md:mt-0", className)} data-test-id="results table">
+        <div
+            className={clsx("flex flex-col mt-20 md:mt-0", className)}
+            data-test-id="results table"
+        >
             {recordsData.map((data: Data) => (
                 <ResultCard key={data.id} data={data} />
             ))}
