@@ -36,7 +36,7 @@ enum tabIndex {
     feedback,
     related_datasets,
 }
-const DatasetDetail = ({ dataset, imgUrl, topicImage }: { dataset: Dataset | undefined, imgUrl: string | undefined, topicImage: string|undefined }) => {
+const DatasetDetail = ({ dataset, imgUrl, topicImage }: { dataset: Dataset | undefined, imgUrl: string | undefined, topicImage: string | undefined }) => {
     const [loading, setLoading] = useState<boolean>(false);
     const [scrollPosition, setScrollPosition] = useState(0);
     const [isMobile, setIsMobile] = useState<boolean>(false);
@@ -161,7 +161,7 @@ const DatasetDetail = ({ dataset, imgUrl, topicImage }: { dataset: Dataset | und
                         </div>
                         <div className="flex sm:hidden flex-row px-4 py-2 my-2  items-center bg-dtech-light-teal xl:bg-white bg-opacity-80">
                             <a href={`${dataset.owner.ownerUrl}`} target="_blank" rel="noreferrer" className=" rounded-full overflow-hidden">
-                            {/* <a href={``} target="_blank" rel="noreferrer" className=" rounded-full overflow-hidden"> */}
+                                {/* <a href={``} target="_blank" rel="noreferrer" className=" rounded-full overflow-hidden"> */}
                                 <img
                                     // data-tip={"Click to open website"}
                                     src={imgUrl}
@@ -180,7 +180,7 @@ const DatasetDetail = ({ dataset, imgUrl, topicImage }: { dataset: Dataset | und
                                 <DatasetHead dataset={dataset} />
                             </div>
                             <div className="flex border-t mt-10 flex-col bg-[#EBEBEB]"
-                                // style={{ marginTop: `${translationValue2 + (isMobile ? 320 : 200)}px` }}
+                            // style={{ marginTop: `${translationValue2 + (isMobile ? 320 : 200)}px` }}
                             >
                                 <div className=" bg-white sm:px-8 px-4 sm:py-4 py-2 overflow-x-scroll " id="scrollable-div">
 
@@ -258,7 +258,7 @@ DatasetDetail.getInitialProps = async ({ query, req }: NextPageContext) => {
         );
         return { dataset, imgUrl: logoUrl.logo_url.logo_url, topicImage: logoUrl.topic_image_url };
     } catch (error) {
-        return { dataset: undefined, imgUrl:undefined };
+        return { dataset: undefined, imgUrl: undefined, logoUrl: undefined };
     }
 };
 export default DatasetDetail;
