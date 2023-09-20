@@ -226,7 +226,7 @@ const SearchVM = () => {
                     throw e;
                 })
                 .then((res) => {
-                    setLoading(false);
+                    // setLoading(false);
                     // setCurrentPageNo(res[0]["user_search"][0]["pagenum"]);
                     const totalRecords = res["total_matches"];
                     const limit = res["max_hits_limit"];
