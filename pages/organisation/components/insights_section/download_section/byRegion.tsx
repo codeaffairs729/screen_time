@@ -62,7 +62,7 @@ const ByRegion = ({ isMobile }: { isMobile: boolean }) => {
                 <Table
                     tableHeaders={TABLE_HEADERS}
                     tableData={tableData}
-                    headerClass="sm:text-[17px] !py-2 sm:!py-4 !text-xs border-2 border-white sm:!px-10 !px-4  text-white text-center sm:font-medium sm:bg-dtech-new-main-light bg-dtech-dark-teal "
+                    headerClass="sm:text-[17px] !py-2 sm:!py-4 !text-xs border-2 border-white sm:!px-10 !px-4  !text-white text-center sm:font-medium sm:bg-dtech-new-main-light bg-dtech-dark-teal "
                     tableClass=" text-sm border-white  !px-10 text-white text-center sm:font-medium bg-[#EBEBEB]"
                     cellPadding={20}
                     tableRow="sm:text-[17px] text-black font-normal py-2 sm:!py-4  sm:!px-10 !px-4  border-2 border-white"

@@ -171,8 +171,8 @@ const DomainsTopics = ({ vm }: { vm: any }) => {
     });
 
     return (
-        <div className="flex flex-row justify-between">
-            <div className="flex flex-col w-full">
+        <div className="flex flex-col justify-between">
+            <div className="flex flex-col w-full ">
                 <p className="font-semibold sm:font-bold sm:text-lg text-sm text-[#333333] mb-2">
                     What are the domains related to your use case of this
                     dataset?
@@ -200,7 +200,7 @@ const DomainsTopics = ({ vm }: { vm: any }) => {
                     }}
                 />
             </div>
-            <div className="mt-[-20px]">
+            <div className="mt-4">
                 {selDomains.map((domainOption, idx) => {
                     return (
                         <SelTopics
@@ -237,8 +237,8 @@ const SelTopics = ({
     });
 
     return (
-        <div className="mr-20 mt-4">
-            <p className="text-xl flex flex-col items-start mb-2 font-light">
+        <div className=" mt-4">
+            <p className="xl:text-xl flex flex-col items-start mb-2 font-light">
                 Select applicable topics within domain:{" "}
                 <span className="font-normal text-black">
                     {domainOption.label}
@@ -255,7 +255,7 @@ const SelTopics = ({
                 options={topicOptions.filter((topicOption) => {
                     return topicOption.domain == domainOption.value;
                 })}
-                className="w-96"
+                className="w-full"
                 isSearchable={true}
                 onChange={(val: readonly SelectOption[]) =>
                     onChange(val.map((opt) => opt.value))

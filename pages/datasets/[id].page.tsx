@@ -36,7 +36,7 @@ enum tabIndex {
     feedback,
     related_datasets,
 }
-const DatasetDetail = ({ dataset }: { dataset: Dataset | undefined }) => {
+const DatasetDetail = ({ dataset, imgUrl, topicImage }: { dataset: Dataset | undefined, imgUrl: string | undefined, topicImage: string|undefined }) => {
     const [loading, setLoading] = useState<boolean>(false);
     const [scrollPosition, setScrollPosition] = useState(0);
     const [isMobile, setIsMobile] = useState<boolean>(false);
@@ -49,7 +49,6 @@ const DatasetDetail = ({ dataset }: { dataset: Dataset | undefined }) => {
     const vm = DatasetDetailVM(dataset);
     const relatedVM = RelatedDatasetsVM(dataset);
     const imageRef = useRef<HTMLDivElement>(null)
-
     useEffect(() => {
         const hashParam: string = asPath.split("#")[1]?.split("/")[0];
         setSelectedIndex(tabIndex[hashParam as any]);
@@ -139,8 +138,8 @@ const DatasetDetail = ({ dataset }: { dataset: Dataset | undefined }) => {
 
                     </div>
                     <div
-                        className="bg-black  h-[414px] absolute right-0 z-0 w-full">
-                        {/* <img src={`data:image/jpeg;base64,${image}`} className=" w-full h-full" /> */}
+                        className="bg-black  h-[414px] overflow-hidden absolute left-0 z-0 w-full ">
+                        <img src={`data:image/jpeg;base64,${topicImage}`} className=" " />
                     </div>
                     <div className="px-4 relative">
                         <div
@@ -149,26 +148,27 @@ const DatasetDetail = ({ dataset }: { dataset: Dataset | undefined }) => {
                                 Dataset
                             </p>
                             <span></span>
-                            {/* <div ref={imageRef} className=" rounded-full min-h-[100px] min-w-[100px]">
-                                <a href={``} target="_blank" rel="noreferrer" className="h-full w-full overflow-hidden bg-[#0E9A8E] bg-opacity-60 rounded-full relative flex items-center justify-center">
+                            <div ref={imageRef} className=" rounded-full min-h-[100px] min-w-[100px]">
+                                <a href={`${dataset.owner.ownerUrl}`} target="_blank" rel="noreferrer" className="h-full w-full overflow-hidden bg-white bg-opacity-80 rounded-full relative flex items-center justify-center">
                                     <img
                                         // data-tip={"Click to open website"}
-                                        src={""}
+                                        src={imgUrl}
                                         alt=""
                                         className={clsx(`h-[70%] w-[70%] absolute z-10 `)}
                                     />
                                 </a>
-                            </div> */}
+                            </div>
                         </div>
-                        <div className="flex sm:hidden flex-row px-4 py-2 my-2  items-center bg-[#0E9A8E] bg-opacity-60">
-                            {/* <a href={``} target="_blank" rel="noreferrer" className=" rounded-full overflow-hidden">
+                        <div className="flex sm:hidden flex-row px-4 py-2 my-2  items-center bg-dtech-light-teal xl:bg-white bg-opacity-80">
+                            <a href={`${dataset.owner.ownerUrl}`} target="_blank" rel="noreferrer" className=" rounded-full overflow-hidden">
+                            {/* <a href={``} target="_blank" rel="noreferrer" className=" rounded-full overflow-hidden"> */}
                                 <img
                                     // data-tip={"Click to open website"}
-                                    src={"organisation.imgUrl"}
+                                    src={imgUrl}
                                     alt=""
                                     className="h-[80px] w-[80px] p-2 "
                                 />
-                            </a> */}
+                            </a>
                             <p className="text-center text-lg font-bold mx-4 text-white">
                                 Dataset
                             </p>
@@ -179,8 +179,8 @@ const DatasetDetail = ({ dataset }: { dataset: Dataset | undefined }) => {
                             <div className="w-full h-fit py-4 sm:mt-24 mt-32 bg-white rounded-lg">
                                 <DatasetHead dataset={dataset} />
                             </div>
-                            <div className="flex border-t sm:mt-[600px]  flex-col bg-[#EBEBEB]"
-                                style={{ marginTop: `${translationValue2 + (isMobile ? 320 : 200)}px` }}
+                            <div className="flex border-t mt-10 flex-col bg-[#EBEBEB]"
+                                // style={{ marginTop: `${translationValue2 + (isMobile ? 320 : 200)}px` }}
                             >
                                 <div className=" bg-white sm:px-8 px-4 sm:py-4 py-2 overflow-x-scroll " id="scrollable-div">
 
@@ -202,7 +202,7 @@ const DatasetDetail = ({ dataset }: { dataset: Dataset | undefined }) => {
                                         ))}
                                     </div>
                                 </div>
-                                <div className="flex flex-col border-t shadow-container">
+                                <div className="flex flex-col border-t mt-4 xl:mt-10 shadow-container">
                                     {!loading && (
                                         <Tab.Group defaultIndex={selectedIndex}>
                                             <DatasetTabHeaders
@@ -250,12 +250,15 @@ DatasetDetail.getInitialProps = async ({ query, req }: NextPageContext) => {
                 ? { Authorization: `Bearer ${authToken}` }
                 : {},
         });
+        const logoUrl = await Http.get(`/v1/datasets/${datasetId}/logo`, {
+            baseUrl: process.env.NEXT_PUBLIC_WEBPORTAL_API_ROOT,
+        })
         const dataset = Dataset.fromJson(
             datasetData["results"][0]
         );
-        return { dataset };
+        return { dataset, imgUrl: logoUrl.logo_url.logo_url, topicImage: logoUrl.topic_image_url };
     } catch (error) {
-        return { dataset: undefined };
+        return { dataset: undefined, imgUrl:undefined };
     }
 };
 export default DatasetDetail;

@@ -48,7 +48,7 @@ const Cite = ({ citation, url }: { citation: string, url: string }) => {
         }, [ref]);
     }
     return (
-        <div>
+        <div className="py-3">
             {<div onClick={handleSearchBlur}
                 className={viewAll ? ` bg-black absolute opacity-50 h-[3000px] top-0 right-0 sm:h-[3000px]  w-screen flex items-center  z-20` : "hidden"}></div>}
             <div className=" flex flex-col justify-center items-center"

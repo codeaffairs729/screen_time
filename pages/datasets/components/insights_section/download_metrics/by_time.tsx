@@ -113,7 +113,7 @@ const ByTime = ({ isMobile }: { isMobile: boolean }) => {
                                 <Table
                                     tableHeaders={TIME_HEADERS}
                                     tableData={tableData}
-                                    headerClass="sm:text-[17px] !py-2 sm:!py-4 !text-xs border-2 border-white  sm:!px-10 !px-4  text-white text-center sm:font-medium sm:bg-dtech-new-main-light bg-dtech-dark-teal "
+                                    headerClass="sm:text-[17px] !py-2 sm:!py-4 !text-xs border-2 border-white  sm:!px-10 !px-4  !text-white text-center sm:font-medium sm:bg-dtech-new-main-light bg-dtech-dark-teal "
                                     tableClass=" text-sm border-white w-full sm:min-w-[600px] !h-[300px] !px-10 !text-white text-center sm:font-medium bg-[#EBEBEB]"
                                     cellPadding={40}
                                     showDots={false}

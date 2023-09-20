@@ -43,15 +43,12 @@ const BookmarkBtn = ({
             />
             <div
                 className="inline-block active:bg-dtech-main-dark active:!text-white"
-                data-tip={
-                    !user
-                        ? "Please login to bookmark this dataset."
-                        : "Add to lists"
-                }
+                data-tip
+                data-for="dtechtive-bookmark-btn-tooltip"
             >
                 <button
                     aria-label="bookmark dataset"
-                    data-selector="bookmark-btn"
+                    // data-selector="bookmark-btn"
                     // onClick={handleBookmark}
                     onClick={() => setShowModal(true)}
                     disabled={!user}
@@ -87,7 +84,7 @@ const BookmarkBtn = ({
                     )}
                 </button>
                 <ReactTooltip
-                    uuid="dtechtive-bookmark-btn-tooltip"
+                    id="dtechtive-bookmark-btn-tooltip"
                     textColor={"white"}
                     backgroundColor="#4CA7A5"
 
@@ -98,7 +95,11 @@ const BookmarkBtn = ({
                                 typeof node === "string" ? left : Math.max(left, 0),
                         };
                     }}
-                />
+                >{
+                        !user
+                            ? "Please login to bookmark this dataset."
+                            : "Add to lists"
+                    }</ReactTooltip>
             </div>
         </>
     );

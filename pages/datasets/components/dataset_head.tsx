@@ -19,11 +19,12 @@ import DatasetStat from "pages/search/organisation/components/dataset_stat";
 import { BiDownload } from "react-icons/bi";
 import { AiFillEye, AiFillHeart } from "react-icons/ai";
 import NewResultCardAction from "components/UI/new_result_card_action";
+import { useRouter } from "next/router";
 const DatasetHead = ({ dataset }: any) => {
     // const vm = useContext(DatasetDetailVMContext);
     const { stats, fectchStats, isFetchingStats } = useFetchStats();
     const { headDataset, setHeadDataset } = useContext(DatasetDetailVMContext);
-
+    const router = useRouter()
     useEffect(() => {
         fectchStats([dataset?.id]);
     }, []);
@@ -55,13 +56,15 @@ const DatasetHead = ({ dataset }: any) => {
         hostName
     } = dataset.detail || {};
 
-    const stat = {
-        displayCount: displays,
-        favoritesCount: favourites,
-        viewCount: views,
-        downloadCount: downloads,
-    };
-    function getFileFormatCounts(fileArray: Array<{ format: string }>) {
+    const datasetId = router && router.query && router.query.id ? router.query.id.toString() : "";
+
+    // Ensure datasetId is not an empty string before accessing the stats array
+    let stat;
+    let favouriteCount;
+    if (datasetId && stats[parseInt(datasetId)]) {
+        stat = stats[parseInt(datasetId)].searchMetrics;
+        favouriteCount = stats[parseInt(datasetId)].favouriteCount
+    } function getFileFormatCounts(fileArray: Array<{ format: string }>) {
         // Define the type of formatCounts object
         const formatCounts: Record<string, number> = {};
 
@@ -81,8 +84,8 @@ const DatasetHead = ({ dataset }: any) => {
         const result = Object.entries(formatCounts).map(([format, count]) => {
             return `${format.toUpperCase()} (${count})`;
         });
-
-        return result;
+        if (result.includes('NULL (1)')) return []
+        else return result;
     }
     return (
         <div className="flex flex-col sm:flex-row">
@@ -149,21 +152,21 @@ const DatasetHead = ({ dataset }: any) => {
                     </div>
                     <div className="my-4 p-2 bg-[#EBEBEB]">
                         <div className="flex sm:flex-row flex-col py-1 w-full">
-                            {/* <DatasetStat stats={stats} /> */}
                             <div className="sm:w-1/3 sm:pl-10 flex flex-row items-center">
                                 <span className="text-md font-semibold text-[#2D2D32] ">
                                     Host{" "}
                                 </span>
-                                <span className="text-md text-[#727272] w-full font-normal ml-2">
-                                    {hostName}
+                                <span className="text-md text-[#0065BD] underline w-full font-normal ml-2">
+                                    <a href={hostUrl} rel="noreferrer" target="_blank">{hostName}</a>
                                 </span>
                             </div>
                             <div className="sm:w-1/3 sm:pl-10 flex flex-row items-center">
                                 <span className="text-md font-semibold text-[#2D2D32] ">
                                     Owner{""}
                                 </span>
-                                <span className="text-md text-[#727272] font-normal ml-2">
-                                    {dataset.owner.organisation}
+                                <span className="text-md text-[#0065BD] underline font-normal ml-2">
+                                    <a href={dataset.owner.ownerUrl} rel="noreferrer" target="_blank">{dataset.owner.organisation}</a>
+                                    
                                 </span>
                             </div>
                             <div className="sm:w-1/3 sm:pl-10 flex flex-row items-center">
@@ -187,7 +190,7 @@ const DatasetHead = ({ dataset }: any) => {
                                     <BiDownload size={20} className=" text-[#727272] mx-1" /> Downloads{" "}
                                 </span>
                                 <span className="text-md text-[#727272] font-normal ml-2">
-                                    {downloads}
+                                    {stat?.downloads}
                                 </span>
                             </div>
                             <div className="w-1/3 pl-10 flex flex-row items-center">
@@ -196,7 +199,7 @@ const DatasetHead = ({ dataset }: any) => {
                                 </span>
                                 <span className="text-md text-[#727272] font-normal ml-2">
 
-                                    {views}
+                                    {stat?.views}
                                 </span>
                             </div>
                             <div className="w-1/3 pl-10 flex flex-row items-center">
@@ -204,7 +207,7 @@ const DatasetHead = ({ dataset }: any) => {
                                     <AiFillHeart size={20} className=" text-[#727272] mx-1" /> Likes{" "}
                                 </span>
                                 <span className="text-md text-[#727272] font-normal ml-2">
-                                    {favourites}
+                                    {favouriteCount}
                                 </span>
                             </div>
                         </div>
@@ -224,7 +227,7 @@ const DatasetHead = ({ dataset }: any) => {
                                                 <BiDownload size={20} className=" text-[#727272] mx-1" /> Downloads{" "}
                                             </span>
                                             <span className="text-md text-[#727272] font-normal ml-2">
-                                                {downloads}
+                                                {stat?.downloads}
                                             </span>
                                         </div>
                                         <div className=" flex flex-row items-center">
@@ -233,7 +236,7 @@ const DatasetHead = ({ dataset }: any) => {
                                             </span>
                                             <span className="text-md text-[#727272] font-normal ml-2">
 
-                                                {views}
+                                                {stat?.views}
                                             </span>
                                         </div>
                                     </div>
@@ -244,14 +247,14 @@ const DatasetHead = ({ dataset }: any) => {
                                                 <AiFillHeart size={20} className=" text-[#727272] mx-1" /> Likes{" "}
                                             </span>
                                             <span className="text-md text-[#727272] font-normal ml-2">
-                                                {favourites}
+                                                {favouriteCount}
                                             </span>
                                         </div>
                                     </div>
 
                                 </div>
                             </div>
-                            <div className=" flex justify-between w-full sm:justify-start ">
+                           { license &&<div className=" flex justify-between w-full sm:justify-start ">
                                 <span className="sm:text-sm text-base font-normal m-1 text-[#333333] ">
                                     Licence
                                 </span>
@@ -259,7 +262,7 @@ const DatasetHead = ({ dataset }: any) => {
                                     className=" border-2 border-dtech-new-main-light px-2 sm:ml-2 sm:text-sm text-sm cursor-pointer text-dtech-new-main-light">
                                     {license.type}
                                 </span>
-                            </div>
+                            </div>}
                         </div>
 
                     </div>
