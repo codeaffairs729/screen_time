@@ -36,7 +36,7 @@ const NewResultCardAction = ({
     const [favouriteClicked, setFavouriteClicked] = useState<boolean>(false);
     const [arrowActive, setArrowActive] = useState<boolean>(false);
     const router = useRouter();
-    const cite = `${data?.dataProviders?.hostName}. ${data?.title}. ${owner}. `
+    const cite = `${data?.dataProviders?.hostName} [data owner]. \n${data?.title} [dataset title]. \n${owner} [dataset host]. \n`
     if (!data) {
         return null;
     }
@@ -160,7 +160,7 @@ const NewResultCardAction = ({
                 <div className=" cursor-pointer ">
 
                 {router.pathname == "/datasets/[id]" && (
-                    <Cite citation={cite} url={`${process.env.NEXT_PUBLIC_WEBCLIENT_ROOT}${router.asPath}`} />
+                    <Cite citation={cite} url={`${process.env.NEXT_PUBLIC_WEBCLIENT_ROOT}${router.asPath} [url]`} />
                     )}
                     </div>
             </div>

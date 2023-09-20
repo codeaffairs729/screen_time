@@ -23,9 +23,9 @@ const DatasetUseCasesBody = () => {
     useEffect(() => {
         fetchUseCaseMetrics && fetchUseCaseMetrics();
     }, []);
-    const useCases = useCaseMetrics?.map((item:any) =>( {
+    const useCases = useCaseMetrics?.map((item: any) => ({
         category: item.name,
-        value:item.value
+        value: item.value
     }))
     const pieData = sortAndAggregate(useCases).map((data: any) => [
         data.category.charAt(0).toUpperCase() + data.category.slice(1),
@@ -54,6 +54,16 @@ const DatasetUseCasesBody = () => {
             </div>
         );
     }
+    if (!isFetchingUseCaseMetrics && useCases.length < 1) {
+        return <div className=" flex flex-col-reverse sm:flex-col sm:mx-40 sm:mt-8 items-center justify-center">
+            <div>
+                <img src="/images/no_data_logo.svg" width={250} />
+            </div>
+            <div className=" sm:my-10 text-[#727272] text-center text-xl sm:text-2xl">
+                Oops! No data available.
+            </div>
+        </div>
+    }
     if (error) {
         return (
             <ErrorAlert
@@ -81,6 +91,6 @@ const DatasetUseCasesBody = () => {
                 />
             </div>
         </div>
-)
+    )
 };
 export default DatasetUseCasesBody;

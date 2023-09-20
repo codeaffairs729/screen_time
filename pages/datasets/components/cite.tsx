@@ -1,6 +1,7 @@
 import CiteQuotes from "public/images/icons/cite_quote.svg";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import ReactTooltip from "react-tooltip";
 
 const Cite = ({ citation, url }: { citation: string, url: string }) => {
     const [viewAll, setViewAll] = useState<boolean>(false);
@@ -65,8 +66,10 @@ const Cite = ({ citation, url }: { citation: string, url: string }) => {
                     <div className=" cursor-pointer" onClick={() => setViewAll(!viewAll)}><img src="/images/provider-detail-page/close.svg" /></div>
                 </div>
                 <div className=" flex flex-row justify-between">
-                    <span className=" w-[70%]">{citation} <a href={url} rel="noreferrer" target="_blank">{url}</a></span>
-                    <div className=" cursor-pointer" onClick={handleCopyClick}><img src="/images/icons/copy.svg"></img></div>
+                    <pre className=" w-[70%]">{citation}<a href={url} rel="noreferrer" target="_blank">{url}</a></pre>
+                    <div data-tip data-for="dtechtive-copy-btn-tooltip" className=" cursor-pointer" onClick={handleCopyClick}><img src="/images/icons/copy.svg"></img></div>
+                    <ReactTooltip id="dtechtive-copy-btn-tooltip" textColor={'white'} backgroundColor="#4CA7A5" >Copy to clipboard</ReactTooltip>
+
                 </div>
             </div>}
         </div>
