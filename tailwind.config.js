@@ -44,6 +44,7 @@ module.exports = {
             boxShadow: {
                 underline: "inset 0px -1px 0px rgba(95, 86, 86, 0.25)",
                 "custom-1": "0px 4px 7px rgba(95, 95, 99, 0.8)",
+                "custom-3": "0px 3.5px 2px rgba(95, 95, 99, 0.2)",
                 "list-shdaow": "0px 7px 3px rgba(95, 95, 99, 0.43)",
                 container:
                     "inset 0px 1px 0px #B5B6BC, inset -1px 0px 0px #CACACB, inset 1px 0px 0px #CACACB;",

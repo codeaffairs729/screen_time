@@ -53,9 +53,10 @@ const DatasetHead = ({ dataset }: any) => {
         dataQuality,
         datasetUrl,
         hostUrl,
-        hostName
+        hostName,
+        hostUuid
     } = dataset.detail || {};
-
+console.log({dataset})
     const datasetId = router && router.query && router.query.id ? router.query.id.toString() : "";
 
     // Ensure datasetId is not an empty string before accessing the stats array
@@ -157,7 +158,7 @@ const DatasetHead = ({ dataset }: any) => {
                                     Host{" "}
                                 </span>
                                 <span className="text-md text-[#0065BD] underline w-full font-normal ml-2">
-                                    <a href={hostUrl} rel="noreferrer" target="_blank">{hostName}</a>
+                                    <a href={`${process.env.NEXT_PUBLIC_WEBCLIENT_ROOT}/organisation/${hostUuid}`} rel="noreferrer" target="_blank">{hostName}</a>
                                 </span>
                             </div>
                             <div className="sm:w-1/3 sm:pl-10 flex flex-row items-center">
@@ -325,11 +326,11 @@ const MetaInfoEntity = ({
                         <span className="sm:text-sm text-md font-normal m-1 text-[#333333] ">
                             {entityName}
                         </span>
-                        <span
+                        {entities &&entities.length>2&&<span
                             onClick={() => setViewAll(!viewAll)}
                             className=" underline sm:text-sm text-md cursor-pointer text-dtech-main-dark">
                             View all
-                        </span>
+                        </span>}
                     </div>
                     <div className="flex flex-wrap flex-row  sm:max-w-xs  ml-2 ">
                         {entities.map((entity, index) => {
