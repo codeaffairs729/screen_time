@@ -5,6 +5,7 @@ import SortbyField from "./sortby_field";
 import { useContext } from "react";
 import { SearchVMContext } from "../search.vm";
 import MobileTotalResult from "./mobile_total_result";
+import clsx from "clsx";
 
 type SearchHeadersProps = {
     setCurrentPageNo: Function;
@@ -14,6 +15,9 @@ type SearchHeadersProps = {
     totalPages: number;
     pageSize: number;
     recordType?: string;
+    headerClass?: string;
+    dropDownClass?: string;
+    totalRecordHeader?: string;
 };
 
 const SearchHeaders = ({
@@ -24,31 +28,30 @@ const SearchHeaders = ({
     totalPages,
     pageSize,
     recordType,
+    headerClass,
+    dropDownClass,
+    totalRecordHeader
 }: SearchHeadersProps) => {
     const vm = useContext(SearchVMContext);
     return (
         <div>
             <div className="hidden md:block">
-                <div className="flex lg:flex-row items-start lg:items-center space-y-2 lg:space-y-0 px-4 m-4 md:my-10">
+                <div className={clsx("flex lg:flex-row items-start lg:items-center space-y-2 lg:space-y-0 px-4 m-4 md:my-10 ", headerClass)}>
                     <TotalRecords
                         totalRecords={totalRecords}
                         setPageSize={setPageSize}
                         pageSize={pageSize}
                         setPageNumber={setCurrentPageNo}
+                        totalRecordHeader ={totalRecordHeader}
+                        dropDownClass= {dropDownClass}
                     />
-                    {/* <Pagination
-                currentPage={currentPageNo}
-                setPageNumber={setCurrentPageNo}
-                totalPages={totalPages}
-            /> */}
-                    {recordType == "datasets" ? (
+                    {recordType == "datasets" && (
                         <SortbyField />
-                    ) : (
-                        <RecordsSortBy />
-                    )}
+                    ) 
+                    }
                 </div>
             </div>
-            {!vm.showMobileSidebar && (
+            {!vm.showMobileSidebar && recordType == "datasets" && (
                 <MobileTotalResult
                     pageSize={pageSize}
                     totalPages={totalPages}
