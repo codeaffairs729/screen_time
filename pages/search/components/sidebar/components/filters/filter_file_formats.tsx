@@ -25,7 +25,7 @@ const FilterFileType = () => {
         //     .filter((format, i, a) => a.indexOf(format) == i)
         //     .map((format) => ({ value: format, label: format, checkbox: false }));
         //   setFilterOptionItems(fileFormats);
-        const fileFormats = vm.filterOptions?.file_formats?.map(
+        const fileFormats = vm.filterOptions?.file_formats?.sort((a:any, b:any) => a.value.localeCompare(b.value)).map(
             (format: any) => ({
                 value: format.value,
                 label: format.count,

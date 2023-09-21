@@ -18,7 +18,7 @@ const FilterKeywords = () => {
     const [seeMore, setSeeMore] = useState(true);
 
     useEffect(() => {
-        const keywords = vm.filterOptions?.keywords?.map((format:any) => ({
+        const keywords = vm.filterOptions?.keywords?.sort((a:any, b:any) => a.value.localeCompare(b.value)).map((format:any) => ({
             value: format.value,
             label: format.count,
             checkbox: false,

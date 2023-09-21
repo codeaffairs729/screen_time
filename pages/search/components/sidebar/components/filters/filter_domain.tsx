@@ -18,7 +18,7 @@ const FilterDomain = () => {
     const [seeMore, setSeeMore] = useState(true);
 
     useEffect(() => {
-        const domains = vm.filterOptions?.domains?.map((domain: any) => ({
+        const domains = vm.filterOptions?.domains?.sort((a:any, b:any) => a.value.localeCompare(b.value)).map((domain: any) => ({
             value: domain.value,
             label: domain.count,
             checkbox: false,
