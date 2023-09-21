@@ -18,6 +18,10 @@ type ResultLayoutProps = {
     isLoading: boolean;
     recordsData: Data[];
     className?: string;
+    currentPage: number;
+    pageSize: number;
+    totalRecords: number;
+    totalPages: number;
 };
 
 const ResultLayoutCard = ({
@@ -25,6 +29,12 @@ const ResultLayoutCard = ({
     isLoading,
     recordsData,
     className = "",
+    currentPage,
+    pageSize,
+    totalRecords,
+    totalPages
+
+
 }: ResultLayoutProps) => {
     const router = useRouter();
     const {
@@ -66,11 +76,13 @@ const ResultLayoutCard = ({
         );
     }
 
+    const pageResult = totalPages == currentPage? totalRecords - pageSize * (currentPage - 1): pageSize;
+
     return (
         <Fragment>
             {isMobile && (
-                <div className=" font-roboto text-[#333333] bg-[#EBEBEB] w-[95%] mx-2 px-3 py-3 rounded-full text-sm font-normal">
-                    <span className=" mx-2">Showing 6 out of 6 result</span>
+                <div className=" font-roboto text-[#333333] bg-[#EBEBEB] w-[95%] mx-2 px-3 py-3 rounded-full text-sm font-normal leading-[16.41px]">
+                    <span className=" mx-2">Showing {pageResult} out of {totalRecords} results</span>
                 </div>
             )}
             <div

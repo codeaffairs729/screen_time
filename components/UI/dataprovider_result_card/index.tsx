@@ -17,7 +17,6 @@ const DataProviderCard = ({ data, isMobile }: DataProviderCardProps) => {
     const href = `/${data.recordType ? data.recordType : "datasets"}/${
         data.id
     }`;
-    console.log({ data });
     const { stats } = data || {};
     const [showProvider, setShowProvider] = useState<boolean>(false);
 
