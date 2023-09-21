@@ -31,14 +31,32 @@ const OrganizationSearchVM = () => {
     const [currentPageNo, setCurrentPageNo] = useState<number>(
         router.query.page ? parseInt(router.query.page as string) : 1
     );
-    const [totalPages, setTotalPages] = useState<number>(10); // pagination total pages
+    const [totalPages, setTotalPages] = useState<number>(1); // pagination total pages
     const [activeFilter, setActiveFilter] = useState<Filter>({
         sort_by: ["relevance"],
     });
     const [queryParams, setQueryParams] = useState<string>("&sort_by=relevance");
     const [organisations, setOrganisations] = useState<Organisation[]>([]);
     const [totalRecords, setTotalRecords] = useState<number>(0);
-    const [loading , setLoading] = useState<boolean>(false)
+    const [loading , setLoading] = useState<boolean>(false);
+    const [isMobile, setIsMobile] = useState<boolean>(false);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth < 640); // Adjust the breakpoint as needed
+        };
+
+        // Call handleResize on initial component render
+        handleResize();
+
+        // Add event listener to window resize
+        window.addEventListener("resize", handleResize);
+
+        // Clean up event listener on component unmount
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        };
+    }, []);
 
     useEffect(() => {
         const getQueryParam = (key: keyof Filter): string => {
@@ -84,6 +102,9 @@ const OrganizationSearchVM = () => {
                         res || {};
 
                     setTotalRecords(total_records);
+                    setTotalPages(
+                        Math.ceil(total_records / pageSize)
+                    );
                     setOrganisations(Organisation.fromJsonList(data_providers));
 
                     return Organisation.fromJsonList(data_providers);
@@ -98,11 +119,12 @@ const OrganizationSearchVM = () => {
         }
     );
     const isFetchingOrganisation = !!(!totalRecords && !organisationError && organisations?.length || loading);
-    useEffect(() => {
-        const len = organisations?.length || 0;
 
-        setTotalPages(pageSize ? Math.ceil(len / pageSize) : 0);
-    }, [pageSize]);
+    // useEffect(() => {
+    //     const len = organisations?.length || 0;
+
+    //     setTotalPages(pageSize ? Math.ceil(len / pageSize) : 0);
+    // }, [pageSize]);
 
     useEffect(() => {
         // if (router.pathname === "/search/organisation") {
@@ -121,6 +143,10 @@ const OrganizationSearchVM = () => {
         }
     }, [currentPageNo]);
 
+    useEffect(()=>{
+        setLoading(true);
+    },[currentPageNo])
+
     return {
         currentPageNo,
         setCurrentPageNo,
@@ -133,6 +159,7 @@ const OrganizationSearchVM = () => {
         setActiveFilter,
         isFetchingOrganisation,
         setLoading,
+        isMobile
     };
 };
 
@@ -150,6 +177,7 @@ interface IOrganizationSearchVMContext {
     setActiveFilter: Function;
     isFetchingOrganisation: boolean;
     setLoading: Function;
+    isMobile: boolean;
 }
 
 export const OrganizationSearchVMContext = createContext(

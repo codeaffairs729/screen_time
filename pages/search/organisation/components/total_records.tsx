@@ -19,11 +19,15 @@ const TotalRecords = ({
     totalRecords,
     setPageNumber,
     pageSize,
+    dropDownClass ="",
+    totalRecordHeader = ""
 }: {
     setPageSize: Function;
     totalRecords: number;
     setPageNumber: Function;
     pageSize: number;
+    dropDownClass?: string;
+    totalRecordHeader?: string;
 }) => {
     // const { setLoading } = useContext(OrganizationSearchVMContext)
 
@@ -38,7 +42,7 @@ const TotalRecords = ({
     }));
 
     return (
-        <div className="sm:flex justify-between items-center w-full">
+        <div className={`sm:flex justify-between items-center w-full ${totalRecordHeader}`}>
             <div className="flex flex-row justify-between items-center">
                 <div className=" text-base mt-0.1">
                     <span className="font-medium text-lg">Total</span>
@@ -51,7 +55,7 @@ const TotalRecords = ({
                         Display
                     </span>
                 </div>
-                <div className="flex justify-center items-center space-x-1 h-7 border-2 border-gray-500 rounded-full px-5 py-5 pr-1.5 mt-1">
+                <div className={`flex justify-center items-center space-x-1 h-7 border-2 border-gray-500 rounded-full px-5 py-5 pr-1.5 mt-1 ${dropDownClass}`}>
                     <Dropdown
                         label={`${pageSize} Results`}
                         menuItems={options}
