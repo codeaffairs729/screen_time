@@ -61,7 +61,7 @@ const ResultLayoutCard = ({
         return (
             <>
                 <div className="grid grid-cols-2 lg:grid-cols-3 gap-y-4 md:gap-y-16 md:gap-x-24 my-10 md:mx-20 place-items-center">
-                    {Array(pageResult)
+                    {Array(20)
                         .fill(1)
                         .map((_, index) => (
                             <div key={index} className="border border-gray-100 rounded-md md:rounded-xl shadow-custom-3  min-h-[100%] max-w-[90%]  md:max-h-[10%] md:min-w-[100%] p-2 w-[100%]">
