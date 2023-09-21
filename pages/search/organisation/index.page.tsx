@@ -48,6 +48,10 @@ const OrganisationSearch = () => {
                     error={false}
                     isLoading={isFetchingOrganisation}
                     recordsData={organisationToResultCardData(organisations)}
+                    currentPage={currentPageNo}
+                    pageSize={pageSize}
+                    totalRecords={totalRecords}
+                    totalPages={totalPages}
                 />
                 <Pagination
                     currentPage={currentPageNo}
