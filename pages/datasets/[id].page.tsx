@@ -36,7 +36,7 @@ enum tabIndex {
     feedback,
     related_datasets,
 }
-const DatasetDetail = ({ dataset, imgUrl, topicImage }: { dataset: Dataset | undefined, imgUrl: string | undefined, topicImage: string | undefined }) => {
+const DatasetDetail = ({ dataset}: { dataset: Dataset | undefined }) => {
     const [loading, setLoading] = useState<boolean>(false);
     const [scrollPosition, setScrollPosition] = useState(0);
     const [isMobile, setIsMobile] = useState<boolean>(false);
@@ -139,7 +139,7 @@ const DatasetDetail = ({ dataset, imgUrl, topicImage }: { dataset: Dataset | und
                     </div>
                     <div
                         className="bg-black  h-[414px] overflow-hidden absolute left-0 z-0 w-full ">
-                        <img src={`data:image/jpeg;base64,${topicImage}`} className=" " />
+                        {/* <img src={`data:image/jpeg;base64,${topicImage}`} className="" style={{ objectFit: "contain" }}/> */}
                     </div>
                     <div className="px-4 relative">
                         <div
@@ -148,7 +148,7 @@ const DatasetDetail = ({ dataset, imgUrl, topicImage }: { dataset: Dataset | und
                                 Dataset
                             </p>
                             <span></span>
-                            <div ref={imageRef} className=" rounded-full min-h-[100px] min-w-[100px]">
+                            {/* <div ref={imageRef} className=" rounded-full min-h-[100px] min-w-[100px]">
                                 <a href={`${dataset.owner.ownerUrl}`} target="_blank" rel="noreferrer" className="h-full w-full overflow-hidden bg-white bg-opacity-80 rounded-full relative flex items-center justify-center">
                                     <img
                                         // data-tip={"Click to open website"}
@@ -157,18 +157,16 @@ const DatasetDetail = ({ dataset, imgUrl, topicImage }: { dataset: Dataset | und
                                         className={clsx(`h-[70%] w-[70%] absolute z-10 `)}
                                     />
                                 </a>
-                            </div>
+                            </div> */}
                         </div>
                         <div className="flex sm:hidden flex-row px-4 py-2 my-2  items-center bg-dtech-light-teal xl:bg-white bg-opacity-80">
-                            <a href={`${dataset.owner.ownerUrl}`} target="_blank" rel="noreferrer" className=" rounded-full overflow-hidden">
-                                {/* <a href={``} target="_blank" rel="noreferrer" className=" rounded-full overflow-hidden"> */}
+                            {/* <a href={`${dataset.owner.ownerUrl}`} target="_blank" rel="noreferrer" className=" rounded-full overflow-hidden">
                                 <img
-                                    // data-tip={"Click to open website"}
                                     src={imgUrl}
                                     alt=""
                                     className="h-[80px] w-[80px] p-2 "
                                 />
-                            </a>
+                            </a> */}
                             <p className="text-center text-lg font-bold mx-4 text-white">
                                 Dataset
                             </p>
@@ -250,15 +248,15 @@ DatasetDetail.getInitialProps = async ({ query, req }: NextPageContext) => {
                 ? { Authorization: `Bearer ${authToken}` }
                 : {},
         });
-        const logoUrl = await Http.get(`/v1/datasets/${datasetId}/logo`, {
-            baseUrl: process.env.NEXT_PUBLIC_WEBPORTAL_API_ROOT,
-        })
+        // const logoUrl = await Http.get(`/v1/datasets/${datasetId}/logo`, {
+        //     baseUrl: process.env.NEXT_PUBLIC_WEBPORTAL_API_ROOT,
+        // })
         const dataset = Dataset.fromJson(
             datasetData["results"][0]
         );
-        return { dataset, imgUrl: logoUrl.logo_url.logo_url, topicImage: logoUrl.topic_image_url };
+        return { dataset };
     } catch (error) {
-        return { dataset: undefined, imgUrl: undefined, logoUrl: undefined };
+        return { dataset: undefined };
     }
 };
 export default DatasetDetail;
