@@ -22,7 +22,7 @@ const DataProviderCard = ({ data, isMobile }: DataProviderCardProps) => {
 
     return (
         <div
-            className={` border border-gray-100 rounded-md md:rounded-xl shadow-custom-2  min-h-[100%] max-w-[90%]  md:max-h-[10%] md:min-w-[100%] `}
+            className={` border border-gray-100 rounded-md md:rounded-xl shadow-custom-3  min-h-[100%] max-w-[90%]  md:max-h-[10%] md:min-w-[100%] `}
         >
             <div
                 className={`flex flex-col justify-center  items-center  ${
@@ -54,7 +54,7 @@ const DataProviderCard = ({ data, isMobile }: DataProviderCardProps) => {
             <div
                 className={`hover:bg-[#D9EFFC] active:bg-[#512C71] active:bg-opacity-[80%] text-dtech-new-main-light active:text-white  break-word overflow-hidden flex flex-col items-center justify-center py-4 md:py-6  relative  ${
                     !showProvider &&
-                    " border-t-[1px] md:border-t-2 border-gray-300"
+                    " border-t-[1px] md:border-t-2 border-[#EBEBEB]"
                 }`}
             >
                 <div

@@ -33,8 +33,6 @@ const ResultLayoutCard = ({
     pageSize,
     totalRecords,
     totalPages
-
-
 }: ResultLayoutProps) => {
     const router = useRouter();
     const {
@@ -42,6 +40,11 @@ const ResultLayoutCard = ({
     } = router;
     const vm = useContext(OrganizationSearchVMContext);
     const { isMobile } = vm;
+
+    const pageResult =
+    totalPages == currentPage
+        ? totalRecords - pageSize * (currentPage - 1)
+        : pageSize;
 
     if (error) {
         return (
@@ -56,9 +59,22 @@ const ResultLayoutCard = ({
 
     if (isLoading) {
         return (
-            <div className="h-[calc(100vh-var(--nav-height))]  w-full flex items-center justify-center">
-                <Loader />
-            </div>
+            <>
+                <div className="grid grid-cols-2 lg:grid-cols-3 gap-y-4 md:gap-y-16 md:gap-x-24 my-10 md:mx-20 place-items-center">
+                    {Array(pageResult)
+                        .fill(1)
+                        .map((_, index) => (
+                            <div key={index} className="border border-gray-100 rounded-md md:rounded-xl shadow-custom-3  min-h-[100%] max-w-[90%]  md:max-h-[10%] md:min-w-[100%] p-2 w-[100%]">
+                                <div className="border-2  bg-[#EBEBEB]  rounded ">
+                                    <div className="border-2 bg-gray-400 bg-opacity-60 animate-pulse rounded py-9 mx-1 my-2 md:py-16 md:my-4 md:mx-4 "></div>
+                                </div>
+                                <div className="border-2  animate-pulse bg-[#EBEBEB]  md:h-[50px]">
+                                <div className="animate-pulse bg-gray-400 bg-opacity-60 rounded-md w-[70%] p-1 md:p-2 mt-5 mb-2 md:mb-1 ml-2 md:ml-4"></div>
+                                </div>
+                            </div>
+                        ))}
+                </div>
+            </>
         );
     }
 
@@ -76,13 +92,15 @@ const ResultLayoutCard = ({
         );
     }
 
-    const pageResult = totalPages == currentPage? totalRecords - pageSize * (currentPage - 1): pageSize;
+ 
 
     return (
         <Fragment>
             {isMobile && (
                 <div className=" font-roboto text-[#333333] bg-[#EBEBEB] w-[95%] mx-2 px-3 py-3 rounded-full text-sm font-normal leading-[16.41px]">
-                    <span className=" mx-2">Showing {pageResult} out of {totalRecords} results</span>
+                    <span className=" mx-2">
+                        Showing {pageResult} out of {totalRecords} results
+                    </span>
                 </div>
             )}
             <div

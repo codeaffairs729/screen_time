@@ -31,7 +31,7 @@ const FilterTopic = () => {
         //       }))
         //     : undefined
         // );
-        const topics = vm.filterOptions?.topics?.map((t:any) => ({
+        const topics = vm.filterOptions?.topics?.sort((a:any, b:any) => a.value.localeCompare(b.value)).map((t:any) => ({
             checkbox: false,
             value: t.value,
             label: t.count,

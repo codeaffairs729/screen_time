@@ -63,7 +63,7 @@ const Sidebar = ({ className = "" }: { className?: string }) => {
             >
                 <div className="flex justify-between  text-sm font-normal pr-2 py-1.5 overflow-hidden my-2 mt-4 z-10 bg-[#6DCDCB]">
                     <span className=" mx-3 md:mx-3 ">Filters</span>
-                    {/* <div className=" hidden md:block">
+                    {vm.isFilterActive && !vm.isLoading && <div className=" hidden md:block">
                         <div
                             onClick={() => vm.resetAllFilters()}
                             className={`${
@@ -77,7 +77,7 @@ const Sidebar = ({ className = "" }: { className?: string }) => {
                             </span>
                             <FaFilter className="w-2 h-2 ml-1 text-inherit" />
                         </div>
-                    </div> */}
+                    </div>}
                 </div>
                 <FilterUsageRights />
                 <FilterDomain />
