@@ -90,34 +90,30 @@ const OrganizationSearchVM = () => {
         setQueryParams(cQueryParams ? `&${cQueryParams}` : "");
         setLoading(true);
     }, [activeFilter]);
-    const { data, error: organisationError }: any = useSWR(
+
+    const { data, error: organisationError, isValidating }: any = useSWR(
         q
-            ? `/v1/data_sources/?search_query=${q}&page_size=${pageSize}&page_num=${currentPageNo}${queryParams}`
-            : `/v1/data_sources/?search_query=&page_size=${pageSize}&page_num=${currentPageNo}${queryParams}`,
-        (url: string) => {
-            Http.get(url)
-                .then((res: any) => {
-                    setLoading(false);
-                    const { data_providers = [], total_records = 0 } =
-                        res || {};
+          ? `/v1/data_sources/?search_query=${q}&page_size=${pageSize}&page_num=${currentPageNo}${queryParams}`
+          : `/v1/data_sources/?search_query=&page_size=${pageSize}&page_num=${currentPageNo}${queryParams}`,
+        async (url: string) => {
+          setLoading(true);
+          try {
+                const res = await Http.get(url);
+                const { data_providers = [], total_records = 0 } = res || {};
 
-                    setTotalRecords(total_records);
-                    setTotalPages(
-                        Math.ceil(total_records / pageSize)
-                    );
-                    setOrganisations(Organisation.fromJsonList(data_providers));
+                setTotalRecords(total_records);
+                setTotalPages(Math.ceil(total_records / pageSize));
+                setOrganisations(Organisation.fromJsonList(data_providers));
+                setLoading(false);
+                return Organisation.fromJsonList(data_providers);
+            } catch (e) {
+                setLoading(false);
+                toast.error("Something went wrong while fetching search results");
+            }
+        },
+        { revalidateOnFocus: false }
+      );
 
-                    return Organisation.fromJsonList(data_providers);
-                })
-                .catch((e: any) => {
-                    setLoading(false);
-                    toast.error(
-                        "Something went wrong while fetching search results"
-                    );
-                }),
-                { revalidateOnFocus: false };
-        }
-    );
     const isFetchingOrganisation = !!(!totalRecords && !organisationError && organisations?.length || loading);
 
     // useEffect(() => {

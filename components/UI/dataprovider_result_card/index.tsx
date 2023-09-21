@@ -91,7 +91,9 @@ const FrontCard = ({ data, isMobile }: { data: Data; isMobile: boolean }) => {
                     style={{ objectFit: "contain" }}
                 />
             ) : (
-                <div className="object-cover">{dummyImg}</div>
+                <div className="object-contain md:h-40 md:w-full h-[77.94px] w-[225.35px] flex justify-center items-center text-3xl font-extrabold text-[#EBEBEB]">
+                    <div>{dummyImg}</div>
+                    </div>
             )}
             <div className=" h-[14px]"></div>
         </div>
