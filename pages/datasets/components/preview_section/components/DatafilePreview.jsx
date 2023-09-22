@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 import PreviewTable from "../components/PreviewTable";
 import SheetTab from "../components/SheetTab";
+
 import React from "react";
 
 const DatafilePreview = ({ previewData }) => {
@@ -16,13 +17,32 @@ const DatafilePreview = ({ previewData }) => {
     const [previewTabList, setPreviewTabList] = useState([
         { tab: "None", active: true },
     ]);
-
+    const[isMobile, setIsMobile] = useState(false)
     const [previewActiveTab, setPreviewActiveTab] = useState("None");
     const [previewTotalBounds, setPreviewTotalBounds] = useState([
         [0, 0],
         [0, 0],
     ]);
+useEffect(() => {
+    const handleResize = () => {
+        setIsMobile(window.innerWidth < 640); // Adjust the breakpoint as needed
+    };
 
+    // Call handleResize on initial component render
+    handleResize();
+
+    // Add event listener to window resize
+    window.addEventListener("resize", handleResize);
+
+    // Clean up event listener on component unmount
+    return () => {
+        window.removeEventListener("resize", handleResize);
+    };
+}, []);
+    const MapChartComponent = dynamic(() => import("./AmMap"), {
+        loading: () => <p>A map is loading</p>,
+        ssr: false, // This line is important. It's what prevents server-side render
+    });
     const MapView = dynamic(() => import("./MapView"), {
         loading: () => <p>A map is loading</p>,
         ssr: false, // This line is important. It's what prevents server-side render
@@ -77,7 +97,6 @@ const DatafilePreview = ({ previewData }) => {
         setRows(keys);
         setReady(true);
     };
-
     return (
         <div className="bg-white ">
             <div className=" border-t-gray-300 bg-white ">
@@ -118,10 +137,14 @@ const DatafilePreview = ({ previewData }) => {
                         <div className="text-lg text-left ml-16 font-bold mt-8">
                             Data File Geographic Bound
                         </div>
-                        <div className="my-4  ml-14">
-                            <MapView
+                        <div className="my-4  lg:ml-14">
+                            {/* <MapView
                                 totalBounds={previewTotalBounds}
                                 id={"previewGeographic"}
+                            /> */}
+                            <MapChartComponent
+                                totalBounds={previewTotalBounds}
+                                isMobile={isMobile}
                             />
                         </div>
                     </div>
