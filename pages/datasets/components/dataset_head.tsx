@@ -56,7 +56,6 @@ const DatasetHead = ({ dataset }: any) => {
         hostName,
         hostUuid
     } = dataset.detail || {};
-console.log({dataset})
     const datasetId = router && router.query && router.query.id ? router.query.id.toString() : "";
 
     // Ensure datasetId is not an empty string before accessing the stats array
@@ -255,7 +254,7 @@ console.log({dataset})
 
                                 </div>
                             </div>
-                           { license &&<div className=" flex justify-between w-full sm:justify-start ">
+                           { license.type &&<div className=" flex justify-between w-full sm:justify-start ">
                                 <span className="sm:text-sm text-base font-normal m-1 text-[#333333] ">
                                     Licence
                                 </span>
