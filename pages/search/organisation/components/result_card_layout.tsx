@@ -32,7 +32,7 @@ const ResultLayoutCard = ({
     currentPage,
     pageSize,
     totalRecords,
-    totalPages
+    totalPages,
 }: ResultLayoutProps) => {
     const router = useRouter();
     const {
@@ -42,9 +42,9 @@ const ResultLayoutCard = ({
     const { isMobile } = vm;
 
     const pageResult =
-    totalPages == currentPage
-        ? totalRecords - pageSize * (currentPage - 1)
-        : pageSize;
+        totalPages == currentPage
+            ? totalRecords - pageSize * (currentPage - 1)
+            : pageSize;
 
     if (error) {
         return (
@@ -80,19 +80,20 @@ const ResultLayoutCard = ({
 
     if (!recordsData?.length) {
         return (
-            <div className="h-[calc(100vh-var(--nav-height))] w-full flex items-start justify-center mt-20 md:mt-0">
-                <NoResults
-                    message={`No results found for ${q}.`}
-                    subMessages={[
-                        "Try different keywords.",
-                        "Make sure that all words are spelled correctly.",
-                    ]}
-                />
+            <div className=" flex flex-col justify-center items-center">
+                <img src="/images/no_data_logo.svg" width={250} />
+                <div>
+                    <div className="text-[#727272] text-center text-xl md:text-2xl  my-4">
+                        No results found for {q}.
+                    </div>
+                    <div className="text-[#727272] text-sm md:text-xl">
+                        <li>Try different keywords.</li>
+                        <li>Make sure that all words are spelled correctly.</li>
+                    </div>
+                </div>
             </div>
         );
     }
-
- 
 
     return (
         <Fragment>

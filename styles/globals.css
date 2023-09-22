@@ -93,7 +93,7 @@ figure{
 
 .underline-anim {
   text-underline-offset: 3px;
-  text-decoration: underline 0.12em white;
+  text-decoration: underline 0.12em transparent;
   transition: text-decoration-color 300ms;
 }
 
