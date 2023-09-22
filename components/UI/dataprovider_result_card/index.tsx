@@ -5,6 +5,7 @@ import Image from "next/image";
 import {  useState } from "react";
 import { BsChevronDown, BsEyeFill, BsHeartFill } from "react-icons/bs";
 import DataproviderStats from "pages/search/organisation/components/data_provider_stats";
+import { useRouter } from "next/router";
 
 
 interface DataProviderCardProps {
@@ -18,6 +19,8 @@ const DataProviderCard = ({ data, isMobile }: DataProviderCardProps) => {
         data.id
     }`;
     const { stats } = data || {};
+    const router = useRouter();
+    const [isHover, setIsHover] = useState<boolean>(false);
     const [showProvider, setShowProvider] = useState<boolean>(false);
 
     return (
@@ -52,19 +55,23 @@ const DataProviderCard = ({ data, isMobile }: DataProviderCardProps) => {
 
 
             <div
-                className={`hover:bg-[#D9EFFC] active:bg-[#512C71] active:bg-opacity-[80%] text-dtech-new-main-light active:text-white  break-word overflow-hidden flex flex-col items-center justify-center py-4 md:py-6  relative  ${
+                className={`hover:bg-[#6DCDCB] hover:bg-opacity-[55%] hover:rounded-b-xl active:text-white  active:bg-[#512C71] active:rounded-b-xl active:bg-opacity-[80%] text-dtech-new-main-light   break-word overflow-hidden flex flex-col items-center justify-center py-4 md:py-6  relative  cursor-pointer ${
                     !showProvider &&
                     " border-t-[1px] md:border-t-2 border-[#EBEBEB]"
                 }`}
+                onClick={() => router.push(href)}
+                onMouseEnter={() => setIsHover(true)}
+                onMouseDown={() => setIsHover(false)}
+                onMouseLeave={() => setIsHover(false)}
             >
                 <div
                     className={`flex flex-row items-center justify-between  flex-wrap w-full `}
                 >
-                    <Link href={href}>
-                        <a className="font-bold md:text-base text-xs  leading-[10.75px] absolute  left-1 md:left-3 ">
+                    {/* <Link href={href}> */}
+                        <span className={`font-bold md:text-base text-xs  leading-[10.75px] absolute  left-1 md:left-3  ${isHover && " underline underline-offset-2 text-dtech-main-dark"}`}>
                             {title}
-                        </a>
-                    </Link>
+                        </span>
+                    {/* </Link> */}
                 </div>
             </div>
 
@@ -106,7 +113,7 @@ const BackCard = ({ data, isMobile }: { data: Data; isMobile: boolean }) => {
     const descriptionWord = isMobile ? words.slice(0, 12) : words.slice(0, 15);
 
     return (
-        <div className={` mx-3 md:mx-5 md:my-3  `}>
+        <div className={` mx-3 md:mx-5 md:my-3  w-[95%]`}>
             <div className={`text-[12px] md:text-[16px] md:font-normal leading-[18.75px] overflow-hidden over md:my-3 ${isMobile && "min-h-[103px]"}`}>
                 {descriptionWord.join(" ")}...
             </div>

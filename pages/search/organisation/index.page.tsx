@@ -40,8 +40,8 @@ const OrganisationSearch = () => {
                     totalPages={totalPages}
                     pageSize={pageSize}
                     recordType={"organisation"}
-                    headerClass={" bg-[#EBEBEB] !px-0 rounded-full"}
-                    dropDownClass={" !mt-[-1px]"}
+                    headerClass={" bg-[#EBEBEB] !px-1 !py-1 rounded-full"}
+                    dropDownClass={" !mt-[-1px] !bg-[#FFFFFF]"}
                     totalRecordHeader={" ml-[20px] mr-[-10px]"}
                 />
                 <ResultLayoutCard
