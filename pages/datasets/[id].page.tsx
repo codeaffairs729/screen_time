@@ -36,7 +36,7 @@ enum tabIndex {
     feedback,
     related_datasets,
 }
-const DatasetDetail = ({ dataset}: { dataset: Dataset | undefined }) => {
+const DatasetDetail = ({ dataset }: { dataset: Dataset | undefined }) => {
     const [loading, setLoading] = useState<boolean>(false);
     const [scrollPosition, setScrollPosition] = useState(0);
     const [isMobile, setIsMobile] = useState<boolean>(false);
@@ -244,9 +244,9 @@ DatasetDetail.getInitialProps = async ({ query, req }: NextPageContext) => {
         }
         const datasetData = await Http.get(`/v5/datasets/by-dataset-ids?dataset_ids=${datasetId}`, {
             baseUrl: process.env.NEXT_PUBLIC_PUBLIC_API_ROOT,
-            extraHeaders: authToken
-                ? { Authorization: `Bearer ${authToken}` }
-                : {},
+            // extraHeaders: authToken
+            //     ? { Authorization: `Bearer ${authToken}` }
+            //     : {},
         });
         // const logoUrl = await Http.get(`/v1/datasets/${datasetId}/logo`, {
         //     baseUrl: process.env.NEXT_PUBLIC_WEBPORTAL_API_ROOT,
