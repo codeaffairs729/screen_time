@@ -139,7 +139,7 @@ const DatasetDetail = ({ dataset, imgUrl, topicImage }: { dataset: Dataset | und
                     </div>
                     <div
                         className="bg-black  h-[414px] overflow-hidden absolute left-0 z-0 w-full ">
-                        <img src={`data:image/jpeg;base64,${topicImage}`} className="" style={{ objectFit: "contain" }}/>
+                        <img src={`${topicImage}`} className="" style={{ objectFit: "contain" }}/>
                     </div>
                     <div className="px-4 relative">
                         <div

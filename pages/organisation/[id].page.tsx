@@ -115,7 +115,7 @@ const OrganisationDetailPage = ({
                     </div>
                     <div
                         className="bg-black  h-[414px] overflow-hidden absolute right-0 z-0 w-full">
-                        <img src={`data:image/jpeg;base64,${organisation.topic_image}`} className=" " />
+                        <img src={`${organisation.topic_image}`} className=" " />
                     </div>
                     <div className="px-4 relative">
                         <div
@@ -230,6 +230,7 @@ OrganisationDetailPage.getInitialProps = async ({
 
         return { organisation, requestProviders };
     } catch (error) {
+        console.error(error);
         return { organisation: undefined };
     }
 };
