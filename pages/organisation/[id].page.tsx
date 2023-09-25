@@ -23,6 +23,8 @@ import { useSelector } from "react-redux";
 import { RootState } from "store";
 import clsx from "clsx";
 import RelatedProviders from "./components/related_providers";
+import Image from "next/image";
+import customImageLoader from "components/image/customImage";
 
 const ORGANIZATION_ADMIN = "Organisation Admin";
 const ORGANIZATION_MEMBER = "Organisation Member";
@@ -115,7 +117,15 @@ const OrganisationDetailPage = ({
                     </div>
                     <div
                         className="bg-black  h-[414px] overflow-hidden absolute right-0 z-0 w-full">
-                        <img src={`${organisation.topic_image}`} className=" " />
+                        <Image
+                            src={`${organisation.topic_image}`}
+                            alt="topic image"
+                            layout="responsive" // Use "responsive" layout to achieve "object-fit: contain"
+                            width={50} // Set the desired width
+                            height={50} // Set the desired height
+                            loader={customImageLoader} // Use the custom loader
+                            className=""
+                        />
                     </div>
                     <div className="px-4 relative">
                         <div
@@ -126,23 +136,31 @@ const OrganisationDetailPage = ({
                             <span></span>
                             <div ref={imageRef} className=" rounded-full min-h-[100px] min-w-[100px]">
                                 <a href={`${organisation.url}`} target="_blank" rel="noreferrer" className="h-full w-full overflow-hidden bg-white bg-opacity-80 rounded-full relative flex items-center justify-center">
-                                    <img
+                                    <Image
                                         // data-tip={"Click to open website"}
                                         src={organisation.imgUrl}
-                                        alt=""
-                                        className={clsx(`h-[100%] w-[100%] absolute z-10 p-2 `)}
-                                        style={{ objectFit: "contain" }}                                    />
+                                        loader={customImageLoader}
+                                        alt="ORG"
+                                        // objectFit="cover"
+                                        layout="fill"
+                                        // height={100}
+                                        // width={100}
+                                        className=" !w-[200%] !h-full !p-6 object-contain"
+                                    />
                                 </a>
                             </div>
                         </div>
                         <div className="flex sm:hidden flex-row px-4 py-2 my-2  items-center bg-dtech-light-teal xl:bg-white bg-opacity-80">
-                            <a href={`${organisation.url}`} target="_blank" rel="noreferrer" className=" rounded-full overflow-hidden bg-white bg-opacity-80 h-[80px] w-[80px]">
-                                <img
+                            <a href={`${organisation.url}`} target="_blank" rel="noreferrer" className=" rounded-full overflow-hidden">
+                                <Image
                                     // data-tip={"Click to open website"}
                                     src={organisation.imgUrl}
-                                    alt=""
-                                    className="h-[100%] w-[100%] p-2 "
-                                    style={{ objectFit: "contain" }}
+                                    loader={customImageLoader}
+                                    alt="ORG"
+                                    // layout="fill"
+                                    width={50}
+                                    height={50}
+                                    className=" object-contain !p-1"
                                 />
                             </a>
                             <p className="text-center text-lg font-bold mx-4 text-white">

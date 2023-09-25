@@ -22,6 +22,8 @@ import RelatedDatasetsVM, {
 import BackBtn from "components/UI/buttons/back_btn";
 import { usereventDatasetView } from "services/usermetrics.service";
 import clsx from "clsx";
+import Image from "next/image";
+import customImageLoader from "../../components/image/customImage";
 const datasetHeaders = [
     {
         name: "User Feedback",
@@ -139,7 +141,20 @@ const DatasetDetail = ({ dataset, imgUrl, topicImage }: { dataset: Dataset | und
                     </div>
                     <div
                         className="bg-black  h-[414px] overflow-hidden absolute left-0 z-0 w-full ">
-                        <img src={`${topicImage}`} className="" style={{ objectFit: "contain" }}/>
+                        {topicImage && (
+                            <div className="">
+                                <Image
+                                    src={topicImage}
+                                    alt="topic image"
+                                    layout="responsive" // Use "responsive" layout to achieve "object-fit: contain"
+                                    width={50} // Set the desired width
+                                    height={50} // Set the desired height
+                                    loader={customImageLoader} // Use the custom loader
+                                    className=""
+                                />
+                            </div>
+                        )}
+
                     </div>
                     <div className="px-4 relative">
                         <div
@@ -148,27 +163,48 @@ const DatasetDetail = ({ dataset, imgUrl, topicImage }: { dataset: Dataset | und
                                 Dataset
                             </p>
                             <span></span>
-                            <div ref={imageRef} className=" rounded-full min-h-[100px] min-w-[100px]">
+                            <div ref={imageRef} className="rounded-full min-h-[100px] min-w-[100px]">
                                 <a href={`${dataset.owner.ownerUrl}`} target="_blank" rel="noreferrer" className="h-full w-full overflow-hidden bg-white bg-opacity-80 rounded-full relative flex items-center justify-center">
-                                    <img
-                                        // data-tip={"Click to open website"}
-                                        src={imgUrl}
-                                        alt=""
-                                        className={clsx(`h-[100%] w-[100%] absolute z-10 p-2 `)}
-                                        style={{ objectFit: "contain" }}
-                                    />
+                                    {imgUrl && (
+                                        <div className=" w-full h-full ">
+                                            <div className=" h-full w-full relative"> {/* Add padding here */}
+                                                <Image
+                                                    src={imgUrl}
+                                                    loader={customImageLoader}
+                                                    alt="ORG"
+                                                    // objectFit="cover"
+                                                    layout="fill"
+                                                    // height={100}
+                                                    // width={100}
+                                                    className=" !w-[100%] !h-full !p-6 object-contain"
+                                                />
+                                            </div>
+                                        </div>
+                                    )}
                                 </a>
                             </div>
+
+
                         </div>
                         <div className="flex sm:hidden flex-row px-4 py-2 my-2  items-center bg-dtech-light-teal xl:bg-white bg-opacity-80">
-                            <a href={`${dataset.owner.ownerUrl}`} target="_blank" rel="noreferrer" className=" rounded-full overflow-hidden bg-white bg-opacity-80 h-[80px] w-[80px]">
-                                <img
-                                    src={imgUrl}
-                                    alt=""
-                                    className="h-[100%] w-[100%] p-2 "
-                                    style={{ objectFit: "contain" }}
-                                />
+                            <div className=" ">
+
+                            <a href={`${dataset.owner.ownerUrl}`} target="_blank" rel="noreferrer" className=" rounded-full overflow-hidden">
+                                {imgUrl &&
+
+                                    <div className="  relative"> {/* Add padding here */}
+                                        <Image
+                                            src={imgUrl}
+                                            loader={customImageLoader}
+                                            alt="ORG"
+                                            // layout="fill"
+                                            width={50}
+                                            height={50}
+                                            className=" object-contain"
+                                            />
+                                    </div>}
                             </a>
+                                            </div>
                             <p className="text-center text-lg font-bold mx-4 text-white">
                                 Dataset
                             </p>
