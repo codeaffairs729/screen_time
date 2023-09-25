@@ -7,7 +7,7 @@ import { RelatedDatasetsVMContext } from "./related_datasets.vm";
 import DatasetTabHeaders from "../dataset_tabs";
 const datasetHeaders = [
     {
-        name: "Domains & Topic",
+        name: "Domains & Topics",
     },
     {
         name: "Description",

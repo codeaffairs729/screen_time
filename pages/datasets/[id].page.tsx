@@ -154,17 +154,19 @@ const DatasetDetail = ({ dataset, imgUrl, topicImage }: { dataset: Dataset | und
                                         // data-tip={"Click to open website"}
                                         src={imgUrl}
                                         alt=""
-                                        className={clsx(`h-[70%] w-[70%] absolute z-10 `)}
+                                        className={clsx(`h-[100%] w-[100%] absolute z-10 p-2 `)}
+                                        style={{ objectFit: "contain" }}
                                     />
                                 </a>
                             </div>
                         </div>
                         <div className="flex sm:hidden flex-row px-4 py-2 my-2  items-center bg-dtech-light-teal xl:bg-white bg-opacity-80">
-                            <a href={`${dataset.owner.ownerUrl}`} target="_blank" rel="noreferrer" className=" rounded-full overflow-hidden">
+                            <a href={`${dataset.owner.ownerUrl}`} target="_blank" rel="noreferrer" className=" rounded-full overflow-hidden bg-white bg-opacity-80 h-[80px] w-[80px]">
                                 <img
                                     src={imgUrl}
                                     alt=""
-                                    className="h-[80px] w-[80px] p-2 "
+                                    className="h-[100%] w-[100%] p-2 "
+                                    style={{ objectFit: "contain" }}
                                 />
                             </a>
                             <p className="text-center text-lg font-bold mx-4 text-white">

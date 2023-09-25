@@ -49,14 +49,16 @@ const Cite = ({ citation, url }: { citation: string, url: string }) => {
         }, [ref]);
     }
     return (
-        <div className="py-3">
+        <div className="">
             {<div onClick={handleSearchBlur}
                 className={viewAll ? ` bg-black absolute opacity-50 h-[3000px] top-0 right-0 sm:h-[3000px]  w-screen flex items-center  z-20` : "hidden"}></div>}
             <div data-tip data-for="dtechtive-cite-btn-tooltip" className=" flex flex-col justify-center items-center"
                 onClick={() => setViewAll(!viewAll)}
             >
-                <Image src={CiteQuotes} />
-                <div className="text-dtech-new-main-light mt-2 text-base font-roboto">
+                <div className="hover:bg-[#6DCDCB] hover:bg-opacity-[55%] p-1">
+                    <Image src={CiteQuotes} />
+                </div>
+                <div className="text-dtech-new-main-light text-base font-roboto">
                     Cite
                     <ReactTooltip id="dtechtive-cite-btn-tooltip" textColor={'white'} backgroundColor="#4CA7A5" >Cite</ReactTooltip>
                 </div>
