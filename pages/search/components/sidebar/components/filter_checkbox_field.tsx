@@ -79,7 +79,7 @@ const FilterCheckboxField = ({
                         </div>
                     )}
                     <div className="ml-2 text-xs flex flex-row">
-                        {`${count} & up`}
+                        {`${count}`}
                         {stars && (
                             <div className="ml-2">
                                 <StarRating rating={stars} />
