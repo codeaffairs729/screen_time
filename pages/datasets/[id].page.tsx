@@ -11,19 +11,30 @@ import Http from "common/http";
 import { AUTH_TOKEN } from "common/constants/cookie.key";
 import { NextPageContext } from "next";
 import DatasetTabHeaders from "./components/dataset_tabs";
-import DataFilesSection from "./components/data_files_section";
-import DatasetInsights from "./components/insights_section";
-import DatasetFeedbackSection from "./components/user_feedback";
-import RelatedDatasets from "./components/related_datasets";
+// import DataFilesSection from "./components/data_files_section";
+// import DatasetInsights from "./components/insights_section";
+// import DatasetFeedbackSection from "./components/user_feedback";
+// import RelatedDatasets from "./components/related_datasets";
 import ErrorAlert from "components/UI/alerts/error_alert";
 import RelatedDatasetsVM, {
     RelatedDatasetsVMContext,
 } from "./components/related_datasets/related_datasets.vm";
-import BackBtn from "components/UI/buttons/back_btn";
 import { usereventDatasetView } from "services/usermetrics.service";
-import clsx from "clsx";
 import Image from "next/image";
 import customImageLoader from "../../components/image/customImage";
+import dynamic from "next/dynamic";
+const DataFilesSection = dynamic(() => import("./components/data_files_section"), {
+    ssr: false,
+});
+const DatasetFeedbackSection = dynamic(() => import("./components/user_feedback"), {
+    ssr: false,
+});
+const RelatedDatasets = dynamic(() => import("./components/related_datasets"), {
+    ssr: false,
+});
+const DatasetInsights = dynamic(() => import("./components/insights_section"), {
+    ssr: false,
+});
 const datasetHeaders = [
     {
         name: "User Feedback",
@@ -38,10 +49,12 @@ enum tabIndex {
     feedback,
     related_datasets,
 }
-const DatasetDetail = ({ dataset, imgUrl, topicImage }: { dataset: Dataset | undefined, imgUrl: string | undefined, topicImage: string | undefined }) => {
+const DatasetDetail = ({ dataset}: { dataset: Dataset | undefined}) => {
     const [loading, setLoading] = useState<boolean>(false);
     const [scrollPosition, setScrollPosition] = useState(0);
     const [isMobile, setIsMobile] = useState<boolean>(false);
+    const [topicImage, setTopicImage] = useState("")
+    const [imgUrl, setImgUrl] = useState("")
     const { asPath } = useRouter();
     const [scrollLeft, setScrollLeft] = useState(0);
     const [highlightedDot, setHighlightedDot] = useState(0);
@@ -51,10 +64,25 @@ const DatasetDetail = ({ dataset, imgUrl, topicImage }: { dataset: Dataset | und
     const vm = DatasetDetailVM(dataset);
     const relatedVM = RelatedDatasetsVM(dataset);
     const imageRef = useRef<HTMLDivElement>(null)
+    const fetchImages = async () => {
+        const logoUrl = await Http.get(`/v1/datasets/${dataset?.id}/logo`, {
+            baseUrl: process.env.NEXT_PUBLIC_WEBPORTAL_API_ROOT,
+        })
+
+        return logoUrl
+    }
     useEffect(() => {
         const hashParam: string = asPath.split("#")[1]?.split("/")[0];
         setSelectedIndex(tabIndex[hashParam as any]);
         setLoading(false);
+        
+        const loadImage = async () => {
+            const image = await fetchImages();
+            setImgUrl(image.logo_url.logo_url)
+            setTopicImage(image.topic_image_url)
+        };
+
+        loadImage();
     }, []);
     if (typeof window !== "undefined") {
         const previousPath = localStorage.getItem("previous_path");
@@ -286,13 +314,11 @@ DatasetDetail.getInitialProps = async ({ query, req }: NextPageContext) => {
             //     ? { Authorization: `Bearer ${authToken}` }
             //     : {},
         });
-        const logoUrl = await Http.get(`/v1/datasets/${datasetId}/logo`, {
-            baseUrl: process.env.NEXT_PUBLIC_WEBPORTAL_API_ROOT,
-        })
+       
         const dataset = Dataset.fromJson(
             datasetData["results"][0]
         );
-        return { dataset, imgUrl: logoUrl.logo_url.logo_url, topicImage: logoUrl.topic_image_url };
+        return { dataset};
     } catch (error) {
         return { dataset: undefined };
     }
