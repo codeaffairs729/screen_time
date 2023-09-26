@@ -36,19 +36,29 @@ enum tabIndex {
 }
 
 const OrganisationDetailPage = ({
-    organisation, requestProviders
+    organisation,
+    // requestProviders
 }: {
-    organisation: Organisation | undefined, requestProviders: any
+        organisation: Organisation | undefined,
+        // requestProviders: any
     }) => {
     const [loading, setLoading] = useState<boolean>(false);
     const [isMobile, setIsMobile] = useState<boolean>(false);
     const [selectedIndex, setSelectedIndex] = useState<any>(0);
+    const [topicImage, setTopicImage] = useState("")
     const [isReportGenerated, setIsReportGenerated] = useState<boolean>(false)
     const [scrollPosition, setScrollPosition] = useState(0);
     const { asPath } = useRouter();
     const vm: any = OrganisationDetailVM(organisation, asPath.split("/")[2]);
     const user = useSelector((state: RootState) => state.auth.user);
     const imageRef = useRef<HTMLDivElement>(null)
+    const fetchImages = async () => {
+        const logoUrl = await Http.get(`/v1/data_sources/provider/topic_image/${organisation?.topics[0]}`, {
+            baseUrl: process.env.NEXT_PUBLIC_WEBPORTAL_API_ROOT,
+        })
+
+        return logoUrl
+    }
     useEffect(() => {
         const hashParam: string = asPath.split("#")[1];
         setSelectedIndex(tabIndex[hashParam as any]);
@@ -89,6 +99,12 @@ const OrganisationDetailPage = ({
             imageRef.current.style.height = desiredHeight;
             imageRef.current.style.width = desiredHeight;
         }
+        const loadImage = async () => {
+            const image = await fetchImages();
+            setTopicImage(image)
+        };
+
+        loadImage();
     }, [])
     const setHeight = (size: any) => {
         if (imageRef.current) {
@@ -117,15 +133,15 @@ const OrganisationDetailPage = ({
                     </div>
                     <div
                         className="bg-black  h-[414px] overflow-hidden absolute right-0 z-0 w-full">
-                        <Image
-                            src={`${organisation.topic_image}`}
+                        {topicImage &&<Image
+                            src={`${topicImage}`}
                             alt="topic image"
                             layout="responsive" // Use "responsive" layout to achieve "object-fit: contain"
                             width={50} // Set the desired width
                             height={50} // Set the desired height
                             loader={customImageLoader} // Use the custom loader
                             className=""
-                        />
+                        />}
                     </div>
                     <div className="px-4 relative">
                         <div
@@ -240,16 +256,18 @@ OrganisationDetailPage.getInitialProps = async ({
                 ? { Authorization: `Bearer ${authToken}` }
                 : {},
         });
-        const requestProviders = await Http.get(`/v1/data_sources/providers_for_homepage?offset=0&count=20`, {
-            extraHeaders: authToken
-                ? { Authorization: `Bearer ${authToken}` }
-                : {},
-        });
+        // const requestProviders = await Http.get(`/v1/data_sources/providers_for_homepage?offset=0&count=20`, {
+        //     extraHeaders: authToken
+        //         ? { Authorization: `Bearer ${authToken}` }
+        //         : {},
+        // });
         const organisation = Organisation.fromJson(res[0]);
 
-        return { organisation, requestProviders };
+        return {
+            organisation,
+            // requestProviders
+        };
     } catch (error) {
-        console.error(error);
         return { organisation: undefined };
     }
 };
