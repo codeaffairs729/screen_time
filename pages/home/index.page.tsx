@@ -24,7 +24,7 @@ import { getCookieFromServer } from "common/utils/cookie.util";
 import Http from "common/http";
 import { AUTH_TOKEN } from "common/constants/cookie.key";
 
-const HomePage = ({ home }: { home: any }) => {
+const HomePage = () => {
     const router = useRouter()
     const [isMobile, setIsMobile] = useState<boolean>(false)
     const [learnMore, setLearnMore] = useState<boolean>(false)
@@ -186,10 +186,10 @@ const HomePage = ({ home }: { home: any }) => {
                     />
                 </div>
             </div>
-            <Insights isMobile={isMobile} insightMetrics={home.metrics} />
+            {/* <Insights isMobile={isMobile} insightMetrics={home.metrics} />
             
-            <DiscoverByComponent isMobile={isMobile} discoveryData={home.discoveryData } />
-            <div className={clsx(`w-full py-3 sm:py-4 sm:text-3xl overflow-hidden cursor-pointer text-dtech-new-main-light font-bold  mt-14 ${learnMore && "!h-full"} ${!isMobile && "h-[360px]"}`)}
+            <DiscoverByComponent isMobile={isMobile} discoveryData={home.discoveryData } /> */}
+            {/* <div className={clsx(`w-full py-3 sm:py-4 sm:text-3xl overflow-hidden cursor-pointer text-dtech-new-main-light font-bold  mt-14 ${learnMore && "!h-full"} ${!isMobile && "h-[360px]"}`)}
                 style={{
                     background: "linear-gradient(to right, #CEFFFE, #CEB0D0)"
                 }}>
@@ -206,7 +206,8 @@ const HomePage = ({ home }: { home: any }) => {
                     <div className=" w-fit shadow-custom-1 bg-dtech-new-main-light rounded-full p-2 mt-2 hover:bg-[#D9EFFC] hover:rounded-full focus-within:rounded-full focus:rounded-full focus-visible:rounded-full active:rounded-full focus-within:bg-[#FDD522] focus-within:border-b-2 focus-within:border-black active:bg-[#FDD522] focus:bg-[#FDD522] animate-bounce">{!learnMore ? <HiOutlineChevronDown size={40} className=" !text-white hover:!text-[#00437E] " /> : <HiOutlineChevronUp size={40} className="!text-white hover:!text-[#00437E] " />}</div>
                 </div>
                 {!learnMore && !isMobile && <HowItWorks isMobile={isMobile} learnMore={learnMore} />}
-            </div>
+            </div> */}
+            <HowItWorks isMobile={isMobile} learnMore={learnMore} />
             {/* <Transition
                 show={learnMore}
                 enter="transition-all duration-500"
@@ -239,39 +240,39 @@ const HomePage = ({ home }: { home: any }) => {
 
 };
 
-HomePage.getInitialProps = async ({
-    query,
-    req,
-}: NextPageContext) => {
-    try {
-        let authToken;
-        if (req?.headers.cookie) {
-            authToken = getCookieFromServer(AUTH_TOKEN, req);
-        }
-        const requestMetrics = Http.get(`/v1/metrics/get_metrics_for_home`, {
-            extraHeaders: authToken
-                ? { Authorization: `Bearer ${authToken}` }
-                : {},
-        });
+// HomePage.getInitialProps = async ({
+//     query,
+//     req,
+// }: NextPageContext) => {
+//     try {
+//         let authToken;
+//         if (req?.headers.cookie) {
+//             authToken = getCookieFromServer(AUTH_TOKEN, req);
+//         }
+//         const requestMetrics = Http.get(`/v1/metrics/get_metrics_for_home`, {
+//             extraHeaders: authToken
+//                 ? { Authorization: `Bearer ${authToken}` }
+//                 : {},
+//         });
 
-        const requestProviders = Http.get(`/v1/data_sources/providers_for_homepage?offset=0&count=20`, {
-            extraHeaders: authToken
-                ? { Authorization: `Bearer ${authToken}` }
-                : {},
-        });
+//         const requestProviders = Http.get(`/v1/data_sources/providers_for_homepage?offset=0&count=20`, {
+//             extraHeaders: authToken
+//                 ? { Authorization: `Bearer ${authToken}` }
+//                 : {},
+//         });
 
-        const [metrics, providers] = await Promise.all([requestMetrics, requestProviders]);
-        const home = {
-            metrics: metrics,
-            discoveryData:{byDataProviders:providers}
-        }
-        // const home = HomePage.fromJson(res[0]);
+//         const [metrics, providers] = await Promise.all([requestMetrics, requestProviders]);
+//         const home = {
+//             metrics: metrics,
+//             discoveryData:{byDataProviders:providers}
+//         }
+//         // const home = HomePage.fromJson(res[0]);
 
-        return { home };
-    } catch (error) {
-        return { home: undefined };
-    }
-};
+//         return { home };
+//     } catch (error) {
+//         return { home: undefined };
+//     }
+// };
 
 export default HomePage;
 export interface RecommendationItem {
