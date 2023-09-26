@@ -99,8 +99,6 @@ const SearchTypeSelect = () => {
                                                         : "font-normal"
                                                 }`}
                                             >
-                                                {!active&&<div className=""><img src={searchType.path} /></div>}
-                                                {active&&<div className=""><img src={searchType.imagePathOnHover} /></div>}
                                                 <div className={clsx(active&&"text-white")}>{searchType.label}</div>
                                             </span>
                                             {selected ? (

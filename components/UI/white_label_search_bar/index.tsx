@@ -176,9 +176,6 @@ const NewSearchBar = ({
                     <Transition
                         show={open&&(oldOptions.length>0||newOptions.length>0)}
                         as={Fragment}
-                        leave="transition ease-in duration-100"
-                        leaveFrom="opacity-100"
-                        leaveTo="opacity-0"
                     >
                         <Combobox.Options className={`absolute mt-8 -ml-[0.4%] border-[3px] border-dtech-light-teal border-t-0 sm:mt-9 max-h-60 w-[100.7%] rounded-b-3xl scrollable-container overflow-auto bg-white  text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm z-20 ${oldOptions.length==0&&newOptions.length==0&&"hidden"}`} ref={myRef}>
                             {query.length > 0 && (

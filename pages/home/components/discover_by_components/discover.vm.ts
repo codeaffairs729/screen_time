@@ -1,10 +1,12 @@
 import { useHttpCall } from "common/hooks";
 import Http, { HttpBuilder } from "common/http";
 import { useState } from "react";
+import Organisation from "models/organisation.model";
+import { Data } from "components/UI/result_card";
 const DiscoverVM = () => {
     const { isLoading: isLoading, execute: executeFetchProviders } =
         useHttpCall();
-    const [fetchedProviders, setFetchedProviders] = useState();
+    const [fetchedProviders, setFetchedProviders] = useState<Organisation[]>([]);
     const fetchProviders = (offsset: number = 0, count: number = 20) =>
         executeFetchProviders(
             () => {
@@ -16,25 +18,27 @@ const DiscoverVM = () => {
             },
             {
                 onSuccess: (res: any) => {
-                    const convertedObjects = convertToJson(res);
+                    const convertedObjects = Organisation.fromJsonList(res);
                     setFetchedProviders(convertedObjects);
                 },
             }
         );
     return {
         fetchProviders,
-        fetchedProviders,
+        fetchedProviders: fetchedProviders || [],
         isLoading,
     };
 };
 export default DiscoverVM;
-const convertToJson = (input_data: any) => {
-    const output_data = input_data.map((item:any) => ({
-  title: item.name,
-  subTitle: null,
-  imageUrl: item.logo_url ||null,
-  recommended: false,
-  id: item.uuid
+
+export const discoverToResultCardData = (fetchedProviders: any): Data[] => {
+    if (!fetchedProviders?.length) {
+        return [];
+    }
+
+    return fetchedProviders?.map((organisation: any) => ({
+        ...organisation,
+        id: organisation?.uuid,
+        recordType: "organisation",
     }));
-    return output_data
-}
+};

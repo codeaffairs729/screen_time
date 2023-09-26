@@ -14,20 +14,33 @@ const InsightCard = ({ className, label, tooltip, metrics, isMobile, insightIcon
                     title={tooltip}
                 />
             </div>
-            {label === "Metadata quality" ?
-                <div className="flex flex-col justify-center items-center sm:px-16 sm:py-8 space-y-1 ">
-                    <div><NumberAnimation targetNumber={Math.floor(Math.ceil((metrics || 0) * 2) / 2)} duration={2000} /></div>
-                    <StarRating
-                        starClassName={"text-dtech-new-main-light sm:h-6 sm:w-6"}
-                        rating={metrics}
-                    />
-                </div>
-                :
-                <div className="flex flex-col sm:flex-row justify-center items-center sm:px-16 sm:py-8 space-y-2 sm:space-x-4">
-                    <div><img src={insightIcon} width={isMobile ? 22 : 50} /></div>
-                    {metrics && <div>{(typeof metrics == 'number') ? <NumberAnimation targetNumber={metrics} duration={2000} /> : <div className="flex flex-col items-center text-xs sm:text-xl -mt-1"><div className=" flex flex-row items-center">HOSTS&nbsp;<NumberAnimation targetNumber={metrics.host} duration={2000} /></div><div className=" flex flex-row items-center">OWNERS&nbsp;<NumberAnimation targetNumber={metrics.owner} duration={2000} /></div></div>}</div>}
-                </div>
-            }
+            <div className="flex flex-col xl:flex-row justify-center items-center 2xl:px-16 sm:py-8 space-y-2 sm:space-x-4">
+                {
+                    label === "Datasets"
+                        ?   <div><img src={insightIcon} width={isMobile ? 60 : 191} /></div>
+                        :   <div><img src={insightIcon} width={isMobile ? 22 : 130} /></div>
+                }
+                {
+                    label === "Metadata quality"
+                        ? <div className="text-center text-xs sm:text-xl -mt-1">
+                            <NumberAnimation targetNumber={metrics} duration={2000} />
+                            <span className="font-normal">out of 5</span>
+                          </div>
+                        : metrics && <div>
+                            {(typeof metrics == 'number')
+                                ? <NumberAnimation targetNumber={metrics} duration={2000} />
+                                : <div className="flex flex-col items-center text-xs sm:text-xl -mt-1">
+                                    <div className=" flex flex-row items-center">
+                                        <NumberAnimation targetNumber={metrics.host} duration={2000} />&nbsp;<span className="font-normal">hosts</span>
+                                    </div>
+                                    <div className=" flex flex-row items-center">
+                                        <NumberAnimation targetNumber={metrics.owner} duration={2000} />&nbsp;<span className="font-normal">owners</span>
+                                    </div>
+                                </div>
+                            }
+                          </div>
+                }
+            </div>
         </div>
     )
 }
