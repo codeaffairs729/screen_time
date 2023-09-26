@@ -8,6 +8,7 @@ import DiscoverByTopics from "./discover_by_topics";
 import DiscoverByRegions from "./discover_by_regions";
 import RecommendedDatasets from "./recommended_datasets";
 import DiscoverVM from "./discover.vm";
+import Loader from "components/UI/loader";
 // const recommendations: RecommendationItem[] = [{
 //     title: "fwefwef",
 //     subTitle: "SNH nature reserves (NR) are those SNH properties vwevewf ewfewfew ewfev cerferfewf   ewfewfewfewjmlkmlkmlkmlkmlkmwewfewf...",
@@ -71,28 +72,32 @@ import DiscoverVM from "./discover.vm";
 // }
 // ]
 const convertToJson = (input_data: any) => {
-    const output_data = input_data.map((item: any) => ({
-        title: item.name,
+    const output_data = input_data?.map((item: any) => ({
+        title: item.title,
         subTitle: null,
-        imageUrl: item.logo_url || null,
+        imageUrl: item.imageUrl || null,
         recommended: false,
-        id: item.uuid
+        id: item.id
     }));
     return output_data
 }
-const DiscoverByComponent = ({ isMobile, discoveryData }: { isMobile: boolean, discoveryData:any }) => {
-    // const [providers, setProviders] = useState<any[]>()
-    // const discoverVM = DiscoverVM()
-    // useEffect(() => {
-    //     setProviders(discoverVM.fetchedProviders)
-    // }, [discoverVM.fetchedProviders])
-    // useEffect(() => {
-    //     discoverVM.fetchProviders()
-    // }, []);
+const DiscoverByComponent = ({ isMobile }: { isMobile: boolean, }) => {
+    const [providers, setProviders] = useState<any[]>()
+    const discoverVM = DiscoverVM()
+    useEffect(() => {
+        setProviders(discoverVM.fetchedProviders)
+    }, [discoverVM.fetchedProviders])
+    useEffect(() => {
+        discoverVM.fetchProviders()
+    }, []);
+    if (discoverVM.isLoading)
+        return <div className=" h-screen w-screen flex items-center justify-center">
+            <Loader />
+        </div>
     return (
         <div>
             {/* <RecommendedDatasets  isMobile={isMobile} recommendations={recommendations}/> */}
-            <DiscoverByDataProviders isMobile={isMobile} recommendations={convertToJson(discoveryData.byDataProviders)} />
+            <DiscoverByDataProviders isMobile={isMobile} recommendations={convertToJson(providers)} />
             {/* <DiscoverByRegions isMobile={isMobile} recommendations={recommendations} />
             <DiscoverByTopics isMobile={isMobile} recommendations={recommendations} /> */}
         </div>
