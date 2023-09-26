@@ -5,9 +5,13 @@ import Link from "next/link";
 import { useDispatch } from "react-redux";
 import { updateSearchType } from "store/search/search.action";
 import { SearchTypes } from "components/UI/white_label_search_bar/components/search_type_select";
+import { Data } from "components/UI/result_card/index";
+import DiscoverVM from "./discover.vm";
 
-const DiscoverByDataProviders = ({ isMobile, recommendations }: { isMobile: boolean, recommendations: RecommendationItem[] }) => {
+const DiscoverByDataProviders = ({ isMobile, recommendations,isLoading }: { isMobile: boolean, recommendations: Data[],isLoading:boolean }) => {
     const dispatch = useDispatch()
+    const discoverVM = DiscoverVM()
+
     return (
         <div className="flex flex-col pl-6 sm:pl-[10%]  mt-10 ">
             <div className="flex flex-row sm:items-center justify-between sm:justify-start">
@@ -23,7 +27,7 @@ const DiscoverByDataProviders = ({ isMobile, recommendations }: { isMobile: bool
                 </div>
                 <div className="text-sm text-dtech-new-main-light hover:bg-[#D9EFFC] focus-within:bg-[#FDD522] focus-within:border-b-2 focus-within:border-black active:bg-[#FDD522] focus:bg-[#FDD522]"><div onClick={() => dispatch(updateSearchType(SearchTypes.ORGANISATION.value))}><Link href={"/search/organisation?page=1"}>(View All)</Link></div></div>
             </div>
-            <CardComponent dataObjects={recommendations} isMobile={isMobile} />
+            <CardComponent dataObjects={recommendations} isMobile={isMobile} isLoading={isLoading}/>
         </div>
     )
 }
