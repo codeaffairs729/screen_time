@@ -5,11 +5,11 @@ import OrganisationHead from "./components/organisation_head";
 import { Tab } from "@headlessui/react";
 import TabPanel from "components/UI/tabbed/panel";
 import { getCookieFromServer } from "common/utils/cookie.util";
-import OrganisationTabHeaders from "./components/organisation_tabs";
+// import OrganisationTabHeaders from "./components/organisation_tabs";
 import { useRouter } from "next/router";
-import Datasets from "./components/datasets/";
-import Insights from "./components/insights_section";
-import Report from "./components/report_section";
+// import Datasets from "./components/datasets/";
+// import Insights from "./components/insights_section";
+// import Report from "./components/report_section";
 import { NextPageContext } from "next";
 import { AUTH_TOKEN } from "common/constants/cookie.key";
 import Http from "common/http";
@@ -22,10 +22,22 @@ import User from "models/user.model";
 import { useSelector } from "react-redux";
 import { RootState } from "store";
 import clsx from "clsx";
-import RelatedProviders from "./components/related_providers";
+// import RelatedProviders from "./components/related_providers";
 import Image from "next/image";
 import customImageLoader from "components/image/customImage";
-
+import dynamic from "next/dynamic";
+const Datasets = dynamic(() => import("./components/datasets"), {
+    ssr: false,
+});
+const Report = dynamic(() => import("./components/report_section"), {
+    ssr: false,
+});
+const Insights = dynamic(() => import("./components/insights_section"), {
+    ssr: false,
+});
+const OrganisationTabHeaders = dynamic(() => import("./components/organisation_tabs"), {
+    ssr: false,
+});
 const ORGANIZATION_ADMIN = "Organisation Admin";
 const ORGANIZATION_MEMBER = "Organisation Member";
 
