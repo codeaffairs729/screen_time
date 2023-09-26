@@ -212,7 +212,7 @@ const SearchVM = () => {
     const { data: datasets, error } = useSWR(
         `/v5/datasets?query=${
             q ?? ""
-        }&page_size=${pageSize}&page_number=${currentPageNo}${queryParams}&dataset_metrics=false`,
+        }&page_size=${pageSize}&page_number=${currentPageNo}${queryParams}`,
         (url: string) =>
             Http.get(url, {
                 baseUrl: `${process.env.NEXT_PUBLIC_PUBLIC_API_ROOT}`,
