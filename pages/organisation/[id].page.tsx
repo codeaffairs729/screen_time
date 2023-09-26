@@ -232,7 +232,7 @@ const OrganisationDetailPage = ({
                                 )}
                             </div>
                             <div className=" sm:h-8">
-                                {/* <RelatedProviders isMobile={isMobile} recommendations={convertToJson(requestProviders)} /> */}
+                                {/* <RelatedProviders isMobile={isMobile} recommendations={convertToJson(requestProviders)} isLoading={vm.isLoading}/> */}
                             </div>
                         </div>
                     </div>
