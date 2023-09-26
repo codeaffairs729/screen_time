@@ -1,9 +1,9 @@
-import { RecommendationItem } from "pages/home/index.page";
+import { Data } from "components/UI/result_card/index";
 import InfoIcon from "components/UI/icons/info_icon";
 import Link from "next/link"
 import CardComponent from "pages/home/components/card_component";
 
-const RelatedProviders = ({ isMobile, recommendations }: { isMobile: boolean, recommendations: RecommendationItem[] }) => {
+const RelatedProviders = ({ isMobile, recommendations, isLoading }: { isMobile: boolean, recommendations: Data[], isLoading:boolean }) => {
     return (
         <div className="flex flex-col pl-6 sm:pl-4  mt-10 ">
             <div className="flex flex-row sm:items-center justify-between sm:justify-start">
@@ -21,7 +21,7 @@ const RelatedProviders = ({ isMobile, recommendations }: { isMobile: boolean, re
             </div>
             {recommendations.length > 0
                 ?
-                <CardComponent dataObjects={recommendations} isMobile={isMobile} />
+                <CardComponent dataObjects={recommendations} isMobile={isMobile} isLoading={isLoading} />
                 :
                 <div className=" h-40 w-full text-center mx-auto my-[5%]">
                     No data to show
