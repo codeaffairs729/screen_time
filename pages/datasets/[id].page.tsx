@@ -49,7 +49,7 @@ enum tabIndex {
     feedback,
     related_datasets,
 }
-const DatasetDetail = ({ dataset}: { dataset: Dataset | undefined}) => {
+const DatasetDetail = ({ dataset }: { dataset: Dataset | undefined }) => {
     const [loading, setLoading] = useState<boolean>(false);
     const [scrollPosition, setScrollPosition] = useState(0);
     const [isMobile, setIsMobile] = useState<boolean>(false);
@@ -75,7 +75,7 @@ const DatasetDetail = ({ dataset}: { dataset: Dataset | undefined}) => {
         const hashParam: string = asPath.split("#")[1]?.split("/")[0];
         setSelectedIndex(tabIndex[hashParam as any]);
         setLoading(false);
-        
+
         const loadImage = async () => {
             const image = await fetchImages();
             setImgUrl(image.logo_url.logo_url)
@@ -149,6 +149,62 @@ const DatasetDetail = ({ dataset}: { dataset: Dataset | undefined}) => {
             imageRef.current.style.width = desiredHeight;
         }
     };
+    const schemaMarkup = {
+        "@context": "http://schema.org",
+        "@type": "Dataset",
+        "title": dataset?.detail.name,
+        "description": dataset?.detail.description,
+        "uuid": dataset?.id,
+        "dataset_url": dataset?.detail.datasetUrl,
+        "created": dataset?.detail.createdAt,
+        "last_updated": dataset?.detail.lastUpdate,
+        "keywords": dataset?.detail.keywords,
+        "usage_rights": dataset?.detail.license.usageRights == "Closed" ? true : false,
+        "license": {
+            "@type": "CreativeWork",
+            "data_licences.type": dataset?.detail.license.type,
+            "data_licences.url": dataset?.detail.license.url,
+        },
+        "includedInDataCatalog": {
+            "@type": "DataCatalog",
+            "data_host organisation": dataset?.host.organisation,
+            "data_host uuid": dataset?.host.uuid,
+            "data_host url": dataset?.host.hostUrl,
+            "data_host logo_url": imgUrl,
+            "data_host description": null,
+            "@ContactPoint": {
+                "data_host contacts.name": dataset?.host.contact.name,
+                "data_host contacts.email": dataset?.host.contact.email,
+                "data_host contacts.phone": dataset?.host.contact.phone,
+                "data_host contacts.role": dataset?.host.contact.role,
+            }
+        },
+        "publisher": {
+            "@type": "Organisation",
+            "data_owner organisation": dataset?.owner.organisation,
+            "data_owner uuid": dataset?.owner.uuid,
+            "data_owner url": dataset?.owner.ownerUrl,
+            "data_owner logo_url": null,
+            "data_owner description": null,
+            "@ContactPoint": {
+                "data_owner contacts.name": dataset?.owner.contact.name,
+                "data_owner contacts.email": dataset?.owner.contact.email,
+                "data_owner contacts.phone": dataset?.owner.contact.phone,
+                "data_owner contacts.role": dataset?.owner.contact.role,
+            }
+        },
+        "distribution":dataset?.urls.map((item) => ({
+                "@type": "DataDownload",
+                "download_files.description": item.description,
+                "download_files.format": item.format,
+                "download_files.size_mb": item.sizemb,
+                "download_files.url": item.url,
+                "download_files.created": item.createdAt,
+                "download_files.last_updated": item.lastUpdated,
+            }))
+    }
+    const schemaMarkupJSON = JSON.stringify(schemaMarkup);
+
     if (!dataset) {
         return (
             <DefaultLayout>
@@ -163,6 +219,7 @@ const DatasetDetail = ({ dataset}: { dataset: Dataset | undefined}) => {
     return (
         <DefaultLayout>
             <DatasetDetailVMContext.Provider value={vm}>
+                <script type="application/ld+json">{schemaMarkupJSON}</script>
                 <div className=" bg-[#EBEBEB] ">
                     <div className=" bg-white h-16 sm:h-10 -mt-20 sm:mt-0">
 
@@ -217,22 +274,22 @@ const DatasetDetail = ({ dataset}: { dataset: Dataset | undefined}) => {
                         <div className="flex sm:hidden flex-row px-4 py-2 my-2  items-center bg-dtech-light-teal xl:bg-white bg-opacity-80">
                             <div className=" ">
 
-                            <a href={`${dataset.owner.ownerUrl}`} target="_blank" rel="noreferrer" className=" rounded-full overflow-hidden">
-                                {imgUrl &&
+                                <a href={`${dataset.owner.ownerUrl}`} target="_blank" rel="noreferrer" className=" rounded-full overflow-hidden">
+                                    {imgUrl &&
 
-                                    <div className="  relative"> {/* Add padding here */}
-                                        <Image
-                                            src={imgUrl}
-                                            loader={customImageLoader}
-                                            alt="ORG"
-                                            // layout="fill"
-                                            width={50}
-                                            height={50}
-                                            className=" object-contain"
+                                        <div className="  relative"> {/* Add padding here */}
+                                            <Image
+                                                src={imgUrl}
+                                                loader={customImageLoader}
+                                                alt="ORG"
+                                                // layout="fill"
+                                                width={50}
+                                                height={50}
+                                                className=" object-contain"
                                             />
-                                    </div>}
-                            </a>
-                                            </div>
+                                        </div>}
+                                </a>
+                            </div>
                             <p className="text-center text-lg font-bold mx-4 text-white">
                                 Dataset
                             </p>
@@ -314,11 +371,10 @@ DatasetDetail.getInitialProps = async ({ query, req }: NextPageContext) => {
             //     ? { Authorization: `Bearer ${authToken}` }
             //     : {},
         });
-       
         const dataset = Dataset.fromJson(
             datasetData["results"][0]
         );
-        return { dataset};
+        return { dataset };
     } catch (error) {
         return { dataset: undefined };
     }
