@@ -67,14 +67,31 @@ const ResultCardAction = ({
                         {({ open }) => (
                             <>
                                 <Menu.Button>
-                                    <div data-tip="Share on social media">
+                                    <div
+                                        data-tip
+                                        data-for="dtechtive-share-btn-tooltip"
+                                    >
                                         <BsShareFill
                                             className="sm:h-6 sm:w-6 h-4 w-4 text-dtech-new-main-light cursor-pointer "
                                             data-modal-toggle="popup"
                                             onClick={() => setShare(!share)}
                                         />
                                     </div>
-                                    <ReactTooltip uuid="dtechtive-share-btn-tooltip" textColor={'white'}  backgroundColor="#4CA7A5" className="w-60 !bg-dtech-dark-teal"/>
+                                    <ReactTooltip
+                                        id="dtechtive-share-btn-tooltip"
+                                        textColor={'white'}
+                                        backgroundColor="#4CA7A5"
+                                        className="w-60 !bg-dtech-dark-teal"
+                                        overridePosition={({ left, top }, _e, _t, node) => {
+                                            return {
+                                                top,
+                                                left:
+                                                    typeof node === "string" ? left : Math.max(left, 0),
+                                            };
+                                        }}
+                                    >
+                                        {"Share on social media"}
+                                    </ReactTooltip>
                                 </Menu.Button>
                                 <Transition show={open}>
                                     <Menu.Items static className="">

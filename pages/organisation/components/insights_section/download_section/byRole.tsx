@@ -29,6 +29,16 @@ const ByRole = ({ isMobile }: { isMobile: any }) => {
             </div>
         );
     }
+    if (!downloadByRole.length) {
+        return <div className=" flex flex-col-reverse sm:flex-col sm:mx-40 sm:mt-8 items-center justify-center">
+            <div>
+                <img src="/images/no_data_logo.svg" width={250} />
+            </div>
+            <div className=" sm:my-10 text-[#727272] text-center text-xl sm:text-2xl">
+                Oops! No data available.
+            </div>
+        </div>
+    }
     const chartData = downloadByRole.map((data: any) => ({
         category: data.name,
         value: data.value

@@ -13,7 +13,7 @@ import toast from "react-hot-toast";
 export enum insightTabIndex {
     dataset_quality,
     use_cases,
-    search_term,
+    search_terms,
     download_metrics,
 }
 

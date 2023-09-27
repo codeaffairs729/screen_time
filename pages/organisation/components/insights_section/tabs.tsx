@@ -54,7 +54,7 @@ const TabHeaders = ({
                     <div className=" flex flex-row items-center">
                         <HeadTag
                             isSelected={selectedInsightTab == 2}
-                            label={"search_term"}
+                            label={"search_terms"}
                             setSelected={onTabSelect}
                         ></HeadTag>
                         {selectedInsightTab !== 2 && <VscTriangleDown size={24} className=" text-[#727272] ml-1" />}
