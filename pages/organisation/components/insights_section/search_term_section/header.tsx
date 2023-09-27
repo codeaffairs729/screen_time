@@ -30,7 +30,7 @@ const SearchTermHeader = () => {
             // className="!m-0"
             menuItems={menuItems}
             label={
-                <Label labelPrefix="Search Term" label={selectedLabel} />
+                <Label labelPrefix="Search Terms" label={selectedLabel} />
             }
             itemsClasses="rounded-[10px] shadow-none "
             menuItemsClasses="rounded-[10px]"
