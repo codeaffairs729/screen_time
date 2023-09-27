@@ -152,7 +152,7 @@ const OrganisationDetailPage = ({
                             width={50} // Set the desired width
                             height={50} // Set the desired height
                             loader={customImageLoader} // Use the custom loader
-                            className=""
+                            className=" sm:!-mt-[50%] mt-0"
                         />}
                     </div>
                     <div className="px-4 relative">
