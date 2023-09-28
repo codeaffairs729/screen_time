@@ -59,11 +59,12 @@ const OrganisationDetailPage = ({
     const [selectedIndex, setSelectedIndex] = useState<any>(0);
     const [topicImage, setTopicImage] = useState("")
     const [isReportGenerated, setIsReportGenerated] = useState<boolean>(false)
-    const [scrollPosition, setScrollPosition] = useState(0);
     const { asPath } = useRouter();
     const vm: any = OrganisationDetailVM(organisation, asPath.split("/")[2]);
     const user = useSelector((state: RootState) => state.auth.user);
-    const imageRef = useRef<HTMLDivElement>(null)
+    const imageRef = useRef<HTMLDivElement>(null);
+    const translationValue1Ref = useRef<HTMLDivElement>(null)
+    const translationValue2Ref = useRef<HTMLDivElement>(null)
     const fetchImages = async () => {
         const logoUrl = await Http.get(`/v1/data_sources/provider/topic_image/${organisation?.topics[0]}`, {
             baseUrl: process.env.NEXT_PUBLIC_WEBPORTAL_API_ROOT,
@@ -98,13 +99,17 @@ const OrganisationDetailPage = ({
         };
     }, []);
     const handleScroll = () => {
-        setScrollPosition(-window.scrollY);
+        const upperLimit1 = -60;
+        const upperLimit2 = -270;
+        if (translationValue1Ref.current) {
+            translationValue1Ref.current.style.marginTop = `${Math.max(-window.scrollY * 0.5, upperLimit1)}px` || '';
+        }
+        if (translationValue2Ref.current) {
+            translationValue2Ref.current.style.marginTop = `${Math.max(-window.scrollY * 0.3, upperLimit2 * 1.2) + (isMobile ? 320 : 200)}px` || '';
+        }
         setHeight(window.scrollY)
     };
-    const upperLimit1 = -60;
-    const upperLimit2 = -270;
-    const translationValue1 = Math.max(scrollPosition * 0.5, upperLimit1);
-    const translationValue2 = Math.max(scrollPosition * 0.3, upperLimit2 * 1.2);
+
     useEffect(() => {
         if (imageRef.current) {
             const desiredHeight = `${250}px`;
@@ -144,17 +149,9 @@ const OrganisationDetailPage = ({
 
                     </div>
                     <div
-                        className="bg-black  h-[414px] overflow-hidden absolute right-0 z-0 w-full">
-                        {topicImage &&<Image
-                            src={`${topicImage}`}
-                            alt="topic image"
-                            layout="responsive" // Use "responsive" layout to achieve "object-fit: contain"
-                            width={50} // Set the desired width
-                            height={50} // Set the desired height
-                            loader={customImageLoader} // Use the custom loader
-                            className=" sm:!-mt-[50%] mt-0"
-                        />}
-                    </div>
+                        className="bg-black h-[414px] absolute right-0 z-0 w-full overflow-y-scroll bg-cover bg-fixed bg-center bg-no-repeat shadow-lg"
+                        style={{backgroundImage:`url(${topicImage})`}}
+                    ></div>
                     <div className="px-4 relative">
                         <div
                             className="hidden sm:flex flex-row justify-between mb-4 my-10 ml-4 items-center ">
@@ -196,7 +193,7 @@ const OrganisationDetailPage = ({
                             </p>
                         </div>
                         <div
-                            style={{ marginTop: `${translationValue1}px` }}
+                            ref={translationValue1Ref}
                         >
                             <div
                                 className="w-full h-fit py-4 sm:mt-24 mt-32 bg-white rounded-lg">
@@ -204,7 +201,7 @@ const OrganisationDetailPage = ({
                             </div>
 
                             <div className="flex border-t sm:mt-[600px]  flex-col bg-[#EBEBEB]"
-                                style={{ marginTop: `${translationValue2 + (isMobile ? 320 : 200)}px` }}
+                                ref={translationValue2Ref}
                             >
                                 {!loading && (
                                     <Tab.Group defaultIndex={selectedIndex}>
