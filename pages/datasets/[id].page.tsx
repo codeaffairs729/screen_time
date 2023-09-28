@@ -23,6 +23,9 @@ import { usereventDatasetView } from "services/usermetrics.service";
 import Image from "next/image";
 import customImageLoader from "../../components/image/customImage";
 import dynamic from "next/dynamic";
+import Head from 'next/head';
+import Script from 'next/script';
+
 const DataFilesSection = dynamic(() => import("./components/data_files_section"), {
     ssr: false,
 });
@@ -193,17 +196,16 @@ const DatasetDetail = ({ dataset }: { dataset: Dataset | undefined }) => {
                 "data_owner contacts.role": dataset?.owner.contact.role,
             }
         },
-        "distribution":dataset?.urls.map((item) => ({
-                "@type": "DataDownload",
-                "download_files.description": item.description,
-                "download_files.format": item.format,
-                "download_files.size_mb": item.sizemb,
-                "download_files.url": item.url,
-                "download_files.created": item.createdAt,
-                "download_files.last_updated": item.lastUpdated,
-            }))
+        "distribution": dataset?.urls.map((item) => ({
+            "@type": "DataDownload",
+            "download_files.description": item.description,
+            "download_files.format": item.format,
+            "download_files.size_mb": item.sizemb,
+            "download_files.url": item.url,
+            "download_files.created": item.createdAt,
+            "download_files.last_updated": item.lastUpdated,
+        }))
     }
-    const schemaMarkupJSON = JSON.stringify(schemaMarkup);
 
     if (!dataset) {
         return (
@@ -219,7 +221,11 @@ const DatasetDetail = ({ dataset }: { dataset: Dataset | undefined }) => {
     return (
         <DefaultLayout>
             <DatasetDetailVMContext.Provider value={vm}>
-                <script type="application/ld+json">{schemaMarkupJSON}</script>
+                <Head>
+                    <script
+                        type='application/ld+json'
+                        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaMarkup) }} />
+                </Head>
                 <div className=" bg-[#EBEBEB] ">
                     <div className=" bg-white h-16 sm:h-10 -mt-20 sm:mt-0">
 
