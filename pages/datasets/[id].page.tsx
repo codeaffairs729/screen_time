@@ -153,7 +153,7 @@ const DatasetDetail = ({ dataset }: { dataset: Dataset | undefined }) => {
         }
     };
     const schemaMarkup = {
-        "@context": "http://schema.org",
+        "@context": "https://schema.org",
         "@type": "Dataset",
         "title": dataset?.detail.name,
         "description": dataset?.detail.description,
