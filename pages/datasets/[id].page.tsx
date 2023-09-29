@@ -196,6 +196,14 @@ const DatasetDetail = ({ dataset }: { dataset: Dataset | undefined }) => {
                 "contactType": dataset?.owner.contact.role,
             }
         },
+        "spatialCoverage": {
+            "@type": "Place",
+            "name": dataset?.detail.locations,
+            "geo": {
+                "@type": "GeoShape",
+                "box": null
+            },
+        },
         "distribution": dataset?.urls.map((item) => ({
             "@type": "DataDownload",
             "name": item.description,
