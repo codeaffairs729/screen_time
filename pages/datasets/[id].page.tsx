@@ -162,7 +162,7 @@ const DatasetDetail = ({ dataset }: { dataset: Dataset | undefined }) => {
         "datePublished": dataset?.detail.createdAt,
         "dateModified": dataset?.detail.lastUpdate,
         "keywords": dataset?.detail.keywords,
-        "isAccesibleForFree": dataset?.detail.license.usageRights == "Closed" ? true : false,
+        "isAccessibleForFree": dataset?.detail.license.usageRights == "Closed" ? true : false,
         "license": {
             "@type": "CreativeWork",
             "name": dataset?.detail.license.type,
@@ -176,6 +176,7 @@ const DatasetDetail = ({ dataset }: { dataset: Dataset | undefined }) => {
             "image": imgUrl,
             "description": null,
             "@ContactPoint": {
+                "@type": "ContactPoint",
                 "name": dataset?.host.contact.name,
                 "email": dataset?.host.contact.email,
                 "telephone": dataset?.host.contact.phone,
@@ -183,13 +184,14 @@ const DatasetDetail = ({ dataset }: { dataset: Dataset | undefined }) => {
             }
         },
         "publisher": {
-            "@type": "Organisation",
+            "@type": "Organization",
             "name": dataset?.owner.organisation,
             "identifier": dataset?.owner.uuid,
             "url": dataset?.owner.ownerUrl,
             "image": null,
             "description": null,
             "@ContactPoint": {
+                "@type": "ContactPoint",
                 "name": dataset?.owner.contact.name,
                 "email": dataset?.owner.contact.email,
                 "telephone": dataset?.owner.contact.phone,
