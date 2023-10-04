@@ -228,7 +228,7 @@ const SearchVM = () => {
                     // setLoading(false);
                     // setCurrentPageNo(res[0]["user_search"][0]["pagenum"]);
                     const totalRecords = res["total_matches"];
-                    const limit = res["max_hits_limit"];
+                    const limit = res["max_hits_limit"]||1000;
                     setTotalPages(
                         totalRecords <= limit
                             ? Math.ceil(totalRecords / pageSize)
@@ -267,7 +267,6 @@ const SearchVM = () => {
                 })
                 .catch((e) => {
                     setLoading(false);
-                    console.log(e);
                     throw e;
                 }),
         { revalidateOnFocus: false }
