@@ -189,10 +189,10 @@ const HomePage = ({ home }: { home: any }) => {
             <Insights isMobile={isMobile} insightMetrics={home.metrics} />
             
             <DiscoverByComponent isMobile={isMobile} />
-            <div className={clsx(`w-full py-3 sm:py-4 sm:text-3xl overflow-hidden cursor-pointer text-dtech-new-main-light font-bold  mt-14 ${learnMore && "!h-full"} ${!isMobile && "h-[360px]"}`)}
-                style={{
-                    background: "linear-gradient(to right, #CEFFFE, #CEB0D0)"
-                }}>
+            <div className={clsx(`w-full py-3 sm:py-4 md:text-3xl text-[19px] overflow-hidden cursor-pointer text-dtech-new-main-light font-bold   ${learnMore ? "!h-full" :"sm:mb-28 mb-4"} }`)}
+                style={!isMobile?{
+                    background: "linear-gradient(92.55deg, #CEFFFE -36.67%, rgba(206, 176, 208, 0) 100.14%)"
+                } : { background:" linear-gradient(180deg, rgba(181, 133, 183, 0.53) -33.18%, rgba(109, 205, 203, 0.22) 46.47%, rgba(235, 246, 246, 0) 98.63%);"}}>
                 <div className=" flex flex-col items-center"
                     onClick={() => {
                         // Use setTimeout to trigger the transition after a few milliseconds
@@ -205,7 +205,6 @@ const HomePage = ({ home }: { home: any }) => {
                     <div>{!learnMore ? "Learn more" : "See less"}</div>
                     <div className=" w-fit shadow-custom-1 bg-dtech-new-main-light rounded-full p-2 mt-2 hover:bg-[#D9EFFC] hover:rounded-full focus-within:rounded-full focus:rounded-full focus-visible:rounded-full active:rounded-full focus-within:bg-[#FDD522] focus-within:border-b-2 focus-within:border-black active:bg-[#FDD522] focus:bg-[#FDD522] animate-bounce">{!learnMore ? <HiOutlineChevronDown size={40} className=" !text-white hover:!text-[#00437E] " /> : <HiOutlineChevronUp size={40} className="!text-white hover:!text-[#00437E] " />}</div>
                 </div>
-                {!learnMore && !isMobile && <HowItWorks isMobile={isMobile} learnMore={learnMore} />}
             </div>
             {/* <Transition
                 show={learnMore}
@@ -216,12 +215,16 @@ const HomePage = ({ home }: { home: any }) => {
                 leaveFrom="opacity-100 max-h-full"
                 leaveTo="opacity-0 max-h-0"
             > */}
-            <div className={!learnMore ? "" : "h-full"}>
-                <div className={!learnMore ? " hidden" : "block"}>
+            <div className={!learnMore ? "" : "h-full"}
+                style={!isMobile?{
+                    background: "linear-gradient(92.55deg, #CEFFFE -36.67%, rgba(206, 176, 208, 0) 100.14%)"
+                }:{}}
+            >
+                <div className={!learnMore ? " hidden" : "block md:mb-20 mb-10"}>
 
                     <div className="flex flex-row px-6 sm:px-[10%] sm:items-center justify-between sm:justify-start">
                         <div className=" flex flex-row py-10">
-                            <div className="font-bold sm:text-xl text-md text-dtech-main-dark">Helping Data Users, Providers & Enablers</div>
+                            <div className="font-bold sm:text-xl text-md md:text-3xl text-dtech-main-dark md:text-[#333333]">Helping Data Users & Providers</div>
                         </div>
                     </div>
                     {helpData.map((item, index) => {
@@ -230,7 +233,7 @@ const HomePage = ({ home }: { home: any }) => {
                         )
                     })}
                 </div>
-                {learnMore && <HowItWorks isMobile={isMobile} learnMore={learnMore} />}
+                {(isMobile||(!isMobile&&learnMore)) && <HowItWorks isMobile={isMobile} learnMore={learnMore} />}
             </div>
             {/* </Transition> */}
             <Footer />

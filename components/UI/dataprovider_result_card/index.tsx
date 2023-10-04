@@ -25,7 +25,7 @@ const DataProviderCard = ({ data, isMobile }: DataProviderCardProps) => {
 
     return (
         <div
-            className={` border border-gray-100 rounded-md md:rounded-xl shadow-custom-3  min-h-[100%] max-w-[90%]  md:max-h-[10%] md:min-w-[100%] `}
+            className={` border border-gray-100 rounded-md md:rounded-xl shadow-custom-4  min-h-[100%] max-w-[90%]  md:max-h-[10%] md:min-w-[100%] `}
         >
             <div
                 className={`flex flex-col justify-center  items-center  ${
@@ -94,7 +94,7 @@ const FrontCard = ({ data, isMobile }: { data: Data; isMobile: boolean }) => {
                 <img
                     src={imgUrl}
                     alt=""
-                    className="object-contain md:h-40 md:w-full h-[77.94px] w-[225.35px]"
+                    className="object-contain md:h-40 md:w-full h-[77.94px] w-[225.35px] px-[19px] py-[16px] md:px-[33px] md:py-[25px]"
                     style={{ objectFit: "contain" }}
                 />
             ) : (
@@ -118,7 +118,7 @@ const BackCard = ({ data, isMobile }: { data: Data; isMobile: boolean }) => {
                 {descriptionWord.join(" ")}...
             </div>
             {stats && !isMobile && (
-                <div className="w-[129px] md:w-[300px]">
+                <div className="">
                     <DataproviderStats stats={stats} className="mt-5" />
                 </div>
             )}

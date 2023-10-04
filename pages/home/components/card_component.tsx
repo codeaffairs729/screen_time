@@ -20,7 +20,7 @@ const CardComponent = ({
     isMobile: boolean;
     isLoading:boolean
 }) => {
-    const [slides, setSlides] = useState<number>(4);
+    const [slides, setSlides] = useState<number>(2);
     const discoverVM = DiscoverVM();
 
     // useEffect(() => {
@@ -40,7 +40,7 @@ const CardComponent = ({
     //     };
     // }, []);
     useEffect(() => {
-        isMobile ? setSlides(2.1) : setSlides(3.5);
+        isMobile ? setSlides(2) : setSlides(3.5);
     }, [isMobile]);
     function truncateString(str: string | undefined, maxLength: number) {
         if (str && str.length > maxLength) {
@@ -50,45 +50,16 @@ const CardComponent = ({
     }
 
     if(isLoading){
-        return <div className="mt-20 ml-[-30px] w-[100%]"><Carousel
+        return <div className="w-[100%]"><Carousel
         dynamic={true}
         show={slides}
         slide={slides}
         swiping={true}
         leftArrow={
-            <button
-                style={{
-                    background:
-                        "linear-gradient(to right, #1EABAF4F, #0065BD08)",
-                }}
-                className="absolute z-10 left-0 sm:h-[89%] h-[94%] mt-2 sm:mt-4 w-[30%] sm:w-40 text-white py-2 px-2 rounded"
-            >
-                <div className=" hover:bg-[#0065BD] hover:rounded-full hover:animate-pulse focus-within:rounded-full focus:rounded-full focus-visible:rounded-full active:rounded-full focus-within:bg-white focus-within:border-b-2 focus-within:border-black active:bg-white focus:bg-white w-16 h-16 sm:w-24 sm:h-24 flex items-center justify-center focus-within:text-dtech-dark-teal focus-visible:text-dtech-dark-teal active:text-dtech-dark-teal">
-                    <BiChevronLeft
-                        className=""
-                        size={isMobile ? 50 : 100}
-                    />
-                </div>
-            </button>
+            <div></div>
         }
         rightArrow={
-            <button
-                onClick={() => {
-                    discoverVM.fetchProviders(dataObjects.length, 4);
-                }}
-                style={{
-                    background:
-                        "linear-gradient(to left, #1EABAF4F, #0065BD08)",
-                }}
-                className="absolute z-10 right-0 sm:h-[89%] h-[94%] mt-2 sm:mt-4 w-[30%] sm:w-40 text-white py-2 px-2 rounded"
-            >
-                <div className=" hover:bg-[#0065BD] hover:rounded-full sm:w-24 sm:h-24 hover:animate-pulse focus-within:rounded-full focus:rounded-full focus-visible:rounded-full active:rounded-full focus-within:bg-white focus-within:border-b-2 focus-within:border-black active:bg-white focus:bg-white w-24 h-24 flex items-center justify-center focus-within:text-dtech-dark-teal focus-visible:text-dtech-dark-teal active:text-dtech-dark-teal">
-                    <BiChevronRight
-                        className=""
-                        size={isMobile ? 50 : 100}
-                    />
-                </div>
-            </button>
+           <div></div>
         }
         infinite={false}
         responsive={true}
@@ -118,15 +89,15 @@ const CardComponent = ({
         <Carousel
             dynamic={true}
             show={slides}
-            slide={slides}
+            slide={2}
             swiping={true}
-            leftArrow={
+            leftArrow={!isMobile?
                 <button
                     style={{
                         background:
                             "linear-gradient(to right, #1EABAF4F, #0065BD08)",
                     }}
-                    className="absolute z-10 left-0 sm:h-[89%] h-[94%] mt-2 sm:mt-4 w-[30%] sm:w-40 text-white py-2 px-2 rounded"
+                    className="absolute flex justify-center items-center z-10 left-0 sm:h-[89%] h-[94%] mt-2 sm:mt-4 w-[30%] sm:w-40 text-white py-2 px-2 rounded"
                 >
                     <div className=" hover:bg-[#0065BD] hover:rounded-full hover:animate-pulse focus-within:rounded-full focus:rounded-full focus-visible:rounded-full active:rounded-full focus-within:bg-white focus-within:border-b-2 focus-within:border-black active:bg-white focus:bg-white w-16 h-16 sm:w-24 sm:h-24 flex items-center justify-center focus-within:text-dtech-dark-teal focus-visible:text-dtech-dark-teal active:text-dtech-dark-teal">
                         <BiChevronLeft
@@ -134,18 +105,18 @@ const CardComponent = ({
                             size={isMobile ? 50 : 100}
                         />
                     </div>
-                </button>
+                </button>:<div></div>
             }
-            rightArrow={
+            rightArrow={!isMobile?
                 <button
-                    onClick={() => {
-                        discoverVM.fetchProviders(dataObjects.length, 4);
-                    }}
+                    // onClick={() => {
+                    //     discoverVM.fetchProviders(dataObjects.length, 4);
+                    // }}
                     style={{
                         background:
                             "linear-gradient(to left, #1EABAF4F, #0065BD08)",
                     }}
-                    className="absolute z-10 right-0 sm:h-[89%] h-[94%] mt-2 sm:mt-4 w-[30%] sm:w-40 text-white py-2 px-2 rounded"
+                    className="absolute flex justify-center items-center z-10 right-0 sm:h-[89%] h-[94%] mt-2 sm:mt-4 w-[30%] sm:w-40 text-white py-2 px-2 rounded"
                 >
                     <div className=" hover:bg-[#0065BD] hover:rounded-full sm:w-24 sm:h-24 hover:animate-pulse focus-within:rounded-full focus:rounded-full focus-visible:rounded-full active:rounded-full focus-within:bg-white focus-within:border-b-2 focus-within:border-black active:bg-white focus:bg-white w-24 h-24 flex items-center justify-center focus-within:text-dtech-dark-teal focus-visible:text-dtech-dark-teal active:text-dtech-dark-teal">
                         <BiChevronRight
@@ -153,19 +124,15 @@ const CardComponent = ({
                             size={isMobile ? 50 : 100}
                         />
                     </div>
-                </button>
+                </button>:<div></div>
             }
             infinite={false}
             responsive={true}
         >
             {dataObjects.map((item: Data, index: any) => {
-                const imageText = item?.title
-                    ?.split(" ")
-                    .map((word) => word[0])
-                    .join("");
                 return (
                     <div
-                        className="grid grid-col min-h-[100%] relative p-2 sm:p-4"
+                        className="grid grid-col min-h-[100%] relative sm:p-4"
                         key={index}
                     >
                         <DataProviderCard

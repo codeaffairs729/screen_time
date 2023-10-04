@@ -26,7 +26,7 @@ const NumberAnimation = ({ targetNumber=0, duration }: { targetNumber: number, d
         };
     }, [targetNumber]);
 
-    return <div className=' sm:text-3xl text-xs'>{Math.floor(currentNumber)}</div>;
+    return <div className=' sm:text-[24px] text-xs'>{Math.floor(currentNumber)}</div>;
 };
 
 export default NumberAnimation;
