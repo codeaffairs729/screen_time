@@ -43,7 +43,9 @@ const SearchVM = () => {
     const [filterOptions, setFilterOptions] = useState<Filter>({});
     const [queryParams, setQueryParams] =
         useState<string>("&sort_by=relevance");
-    const [currentPageNo, setCurrentPageNo] = useState<number>(parseInt(router.query.page as string) || 1);
+    const [currentPageNo, setCurrentPageNo] = useState<number>(
+        parseInt(router.query.page as string) || 1
+    );
     const [totalPages, setTotalPages] = useState(1);
     const [pageSize, setPageSize] = useState(20);
     const [totalRecords, setTotalRecords] = useState<number>(0);
@@ -55,7 +57,6 @@ const SearchVM = () => {
     // const [mobileFilter, setMobileFilter] = useState({
     //     sort_by: ["relevance"],
     // });
-
 
     // useEffect(() => {
     //     const handleResize = () => {
@@ -76,7 +77,6 @@ const SearchVM = () => {
     //         window.removeEventListener("resize", handleResize);
     //     };
     // }, []);
-
 
     /**
      * Update the query params on updating any filter
@@ -115,7 +115,7 @@ const SearchVM = () => {
     }, [activeFilter]);
 
     useEffect(() => {
-        if (parseInt(router.query.page as string)>50) {
+        if (parseInt(router.query.page as string) > 50) {
             const updatedPath = router?.asPath.replace(
                 `page=${router.query.page}`,
                 "page=50"
@@ -129,15 +129,15 @@ const SearchVM = () => {
      * Fired when the term on the search input on the search page is changed
      */
     useEffect(() => {
-        resetAllFilters(); 
-    },[router.query.q])
+        resetAllFilters();
+    }, [router.query.q]);
     useEffect(() => {
         // if (router.pathname === "/search") {
-            if (currentPageNo.toString() != router.query?.page) {
-                router.replace({
-                    query: { ...router.query, page: currentPageNo },
-                });
-            }
+        if (currentPageNo.toString() != router.query?.page) {
+            router.replace({
+                query: { ...router.query, page: currentPageNo },
+            });
+        }
         // }
     }, [currentPageNo]);
 
@@ -203,7 +203,6 @@ const SearchVM = () => {
     //         }
     //     );
     const { fectchStats, stats, isFetchingStats } = useFetchStats();
-    
 
     /**
      * Get search results
@@ -230,18 +229,14 @@ const SearchVM = () => {
                     // setCurrentPageNo(res[0]["user_search"][0]["pagenum"]);
                     const totalRecords = res["total_matches"];
                     const limit = res["max_hits_limit"];
-
                     setTotalPages(
                         totalRecords <= limit
                             ? Math.ceil(totalRecords / pageSize)
                             : Math.ceil(limit / pageSize)
                     );
-                    setTotalRecords(totalRecords);
-                    const resFitlerOptions = res["filter_options"];
-                    Object.keys(resFitlerOptions).map((filterOption: any) => {
-                        resFitlerOptions[filterOption].sort();
-                    });
 
+                    setTotalRecords(totalRecords);
+                    const resFitlerOptions = res["filter_options"]||{};
                     setFilterOptions({
                         domains: resFitlerOptions["domains"],
                         file_formats: resFitlerOptions["file_formats"],
@@ -272,6 +267,7 @@ const SearchVM = () => {
                 })
                 .catch((e) => {
                     setLoading(false);
+                    console.log(e);
                     throw e;
                 }),
         { revalidateOnFocus: false }
@@ -362,7 +358,8 @@ export const useSearchFilter = ({
     filterOptionItems: FilterOptionItem[] | undefined;
 }) => {
     const { activeFilter, setActiveFilter } = useContext(SearchVMContext);
-    const { control, register, watch, reset, setValue } = useForm<FilterOptions>();
+    const { control, register, watch, reset, setValue } =
+        useForm<FilterOptions>();
     const { fields, replace, update } = useFieldArray({ control, name });
 
     useEffect(() => {
@@ -376,7 +373,7 @@ export const useSearchFilter = ({
             }))
         );
     }, [filterOptionItems]);
-    
+
     useEffect(() => {
         const subscription = watch((formState) => {
             const currentFilterState = formState[name];
@@ -392,7 +389,7 @@ export const useSearchFilter = ({
         return () => subscription.unsubscribe();
     }, [watch]);
 
-    return { control, register, fields, replace,setValue };
+    return { control, register, fields, replace, setValue };
 };
 
 // export const datasetToResultCardData = (datasets: any, stats: any): Data[] => {

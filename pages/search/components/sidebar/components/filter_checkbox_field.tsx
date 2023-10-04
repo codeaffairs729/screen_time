@@ -79,7 +79,7 @@ const FilterCheckboxField = ({
                         </div>
                     )}
                     <div className="ml-2 text-xs flex flex-row">
-                        {`${count}`}
+                        {`${count}`}{(name.indexOf('metadata_quality') == 0) ? " & up" : ""}
                         {stars && (
                             <div className="ml-2">
                                 <StarRating rating={stars} />
@@ -97,21 +97,21 @@ export default FilterCheckboxField;
 /**
  * 
  * 
-	<div
-			data-selector={dataSelector}
-			className={clsx("flex items-start mb-1.5", className)}
-		>
-			<input
-				type="checkbox"
-				{...register}
-				className="focus:ring-0 rounded-sm border-dtech-main-dark text-dtech-main-dark"
-				value={value}
-				defaultChecked={defaultChecked}
-			/>
-			{label && (
-				<span className="ml-2 text-sm">{label}</span>
-			)}
-		</div>
+    <div
+            data-selector={dataSelector}
+            className={clsx("flex items-start mb-1.5", className)}
+        >
+            <input
+                type="checkbox"
+                {...register}
+                className="focus:ring-0 rounded-sm border-dtech-main-dark text-dtech-main-dark"
+                value={value}
+                defaultChecked={defaultChecked}
+            />
+            {label && (
+                <span className="ml-2 text-sm">{label}</span>
+            )}
+        </div>
  */
 
 const StarRow = ({
