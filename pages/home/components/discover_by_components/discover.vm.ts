@@ -7,7 +7,7 @@ const DiscoverVM = () => {
     const { isLoading: isLoading, execute: executeFetchProviders } =
         useHttpCall();
     const [fetchedProviders, setFetchedProviders] = useState<Organisation[]>([]);
-    const fetchProviders = (offsset: number = 0, count: number = 20) =>
+    const fetchProviders = (offsset: number = 0, count: number = 50) =>
         executeFetchProviders(
             () => {
                 return new HttpBuilder({
