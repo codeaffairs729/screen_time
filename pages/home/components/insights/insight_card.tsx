@@ -21,7 +21,7 @@ const InsightCard = ({ className, label, tooltip, metrics, isMobile, insightIcon
                         label === "Datasets"
                             ? <div><img src={insightIcon} width={isMobile ? 18 : 191} /></div>
                             : insightIcon.length > 0
-                                ? <div><img src={insightIcon} width={isMobile ? 25 : 120} className="xl:ml-8" /></div>
+                                ? <div><img src={insightIcon} width={isMobile ? 25 : 120} className="xl:ml-4 2xl:ml-1" /></div>
                                 : <div className="mt-3"><StarRating rating={metrics} /></div>
 
                     }
