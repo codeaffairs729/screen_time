@@ -28,7 +28,7 @@ const ResultLayout = ({
             <div className="w-full flex items-start justify-center mt-20 md:mt-0">
                 <ErrorAlert
                     className="max-w-xl mx-auto"
-                    message="Something went wrong while fetching data. Please try again later."
+                    message={"Something went wrong while fetching data. Please try again later."}
                 />
             </div>
         );
@@ -40,14 +40,17 @@ const ResultLayout = ({
 
     if (!recordsData?.length) {
         return (
-            <div className="h-[calc(100vh-var(--nav-height))] w-full flex items-start justify-center mt-20 md:mt-0">
-                <NoResults
-                    message={`No results found for ${q}.`}
-                    subMessages={[
-                        "Try different keywords.",
-                        "Make sure that all words are spelled correctly.",
-                    ]}
-                />
+            <div className=" flex flex-col justify-center items-center">
+                <img src="/images/no_data_logo.svg" width={250} />
+                <div>
+                    <div className="text-[#727272] text-center text-xl md:text-2xl  my-4">
+                        No results found for {q}.
+                    </div>
+                    <div className="text-[#727272] text-sm md:text-xl">
+                        <li>Try different keywords.</li>
+                        <li>Make sure that all words are spelled correctly.</li>
+                    </div>
+                </div>
             </div>
         );
     }
