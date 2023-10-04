@@ -26,7 +26,7 @@ const HomeVM = () => {
         executeRelatedProvidersQuery(
             () => {
                 return new HttpBuilder({
-                    url: `/v1/data_sources/providers_for_homepage?offset=0&count=20`,
+                    url: `/v1/data_sources/providers_for_homepage?offset=0&count=50`,
                     method: "GET",
                 }).run({ retries: 0, tryRefreshingToken: false });
                 // return Http.post(`/v1/users/signin`, data);

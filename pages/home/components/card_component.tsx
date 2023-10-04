@@ -49,6 +49,17 @@ const CardComponent = ({
         return str;
     }
 
+    function shuffleArray(cardItems:any) {
+        for (let i = cardItems.length - 1; i > 0; i--) {
+            // Generate a random index between 0 and i (inclusive)
+            const j = Math.floor(Math.random() * (i + 1));
+
+            // Swap cardItems[i] and cardItems[j]
+            [cardItems[i], cardItems[j]] = [cardItems[j], cardItems[i]];
+        }
+    }
+    shuffleArray(dataObjects)
+
     if(isLoading){
         return <div className="w-[100%]"><Carousel
         dynamic={true}
