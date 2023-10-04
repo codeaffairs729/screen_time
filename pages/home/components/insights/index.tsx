@@ -39,16 +39,21 @@ const Insights = ({ isMobile, insightMetrics }: { isMobile: boolean, insightMetr
         };
     }, []);
     return (
-        <div className="flex flex-col px-4 sm:px-[10%] mt-6 sm:mt-16 ">
+        <div className="flex flex-col pl-6 sm:px-[10%] mt-6 sm:mt-16 ">
             <div className="flex flex-row sm:items-center justify-between sm:justify-start">
                 <div className=" flex flex-row">
-                    <div className="font-bold sm:text-xl text-md text-dtech-main-dark">Insights</div>
+                    <div className="font-bold text-[16px] md:text-3xl text-md text-dtech-new-main-light">Insights</div>
                 </div>
             </div>
-            {insightMetrics &&<div className=" flex flex-row sm:p-4 py-2  text-dtech-new-main-light text-md sm:text-xl space-x-[18px] sm:space-x-1 font-bold">
+            {insightMetrics && <div className=" hidden sm:flex flex-row md:pb-20 md:pt-12 md:px-12  py-2  text-dtech-new-main-light text-md sm:text-xl md:space-x-[38px] space-x-4  justify-between font-bold">
                 <InsightCard className="sm:py-2 " label="Datasets" tooltip="Total number of datasets discoverable through Dtechtive" isMobile={isMobile} metrics={insightMetrics?.datasets} insightIcon="/images/datasets.svg" />
                 <InsightCard className="sm:py-2" label="Data Providers" tooltip="Total number of data hosts and owners whose datasets are discoverable through Dtechtive" isMobile={isMobile} metrics={{ host: insightMetrics?.host, owner: insightMetrics?.owner }} insightIcon="/images/data_providers.svg" />
                 <InsightCard className="sm:py-2" label="Metadata quality" tooltip="Average quality of dataset metadata based on the EU Metadata Quality Assessment method" isMobile={isMobile} metrics={insightMetrics?.quality} insightIcon="/images/metadata_quality.svg" />
+            </div>}
+            {insightMetrics && <div className=" sm:hidden flex flex-row  pr-6 py-2  text-dtech-new-main-light text-md sm:text-xl space-x-2 justify-between font-bold">
+                <InsightCard className="sm:py-2 " label="Datasets" tooltip="Total number of datasets discoverable through Dtechtive" isMobile={isMobile} metrics={insightMetrics?.datasets} insightIcon="/images/datasets_for_mobile.svg" />
+                <InsightCard className="sm:py-2" label="Data Providers" tooltip="Total number of data hosts and owners whose datasets are discoverable through Dtechtive" isMobile={isMobile} metrics={{ host: insightMetrics?.host, owner: insightMetrics?.owner }} insightIcon="/images/data_providers_for_mobile.svg" />
+                <InsightCard className="sm:py-2" label="Metadata quality" tooltip="Average quality of dataset metadata based on the EU Metadata Quality Assessment method" isMobile={isMobile} metrics={insightMetrics?.quality} insightIcon="" />
             </div>}
             <div className="">
                 {showScroll && <button

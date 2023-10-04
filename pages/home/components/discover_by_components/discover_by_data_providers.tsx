@@ -15,8 +15,8 @@ const DiscoverByDataProviders = ({ isMobile, recommendations,isLoading }: { isMo
     return (
         <div className="flex flex-col pl-6 sm:pl-[10%]  mt-10 ">
             <div className="flex flex-row sm:items-center justify-between sm:justify-start">
-                <div className=" flex flex-row text-dtech-main-dark">
-                    <div className="font-bold text-xl">Discover By Data Providers</div>
+                <div className=" flex flex-row text-dtech-new-main-light">
+                    <div className="font-bold md:text-3xl text-[16px] mb-2">Discover By Data Providers</div>
                     <div>
                         <InfoIcon
                             tooltipClassName="w-60 !bg-[#C5E8E7] !text-black"
@@ -25,7 +25,7 @@ const DiscoverByDataProviders = ({ isMobile, recommendations,isLoading }: { isMo
                         />
                     </div>
                 </div>
-                <div className="text-sm text-dtech-new-main-light hover:bg-[#D9EFFC] focus-within:bg-[#FDD522] focus-within:border-b-2 focus-within:border-black active:bg-[#FDD522] focus:bg-[#FDD522]"><div onClick={() => dispatch(updateSearchType(SearchTypes.ORGANISATION.value))}><Link href={"/search/organisation?page=1"}>(View All)</Link></div></div>
+                <div className="text-sm text-[#0065BD] hover:bg-[#D9EFFC] focus-within:bg-[#FDD522] focus-within:border-b-2 focus-within:border-black active:bg-[#FDD522] focus:bg-[#FDD522]"><div onClick={() => dispatch(updateSearchType(SearchTypes.ORGANISATION.value))}><Link href={"/search/organisation?page=1"}>(View All)</Link></div></div>
             </div>
             <CardComponent dataObjects={recommendations} isMobile={isMobile} isLoading={isLoading}/>
         </div>
