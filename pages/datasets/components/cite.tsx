@@ -51,7 +51,7 @@ const Cite = ({ citation, url }: { citation: string, url: string }) => {
     return (
         <div className="">
             {<div onClick={handleSearchBlur}
-                className={viewAll ? ` bg-black absolute opacity-90 h-[3000px] top-0 right-0 sm:h-[3000px]  w-screen flex items-center  z-20` : "hidden"}></div>}
+                className={viewAll ? ` bg-black fixed opacity-50 h-[3000px] top-0 left-0 right-0 bottom-0 sm:h-[3000px]  w-screen flex items-center  z-20` : "hidden"}></div>}
             <div data-tip data-for="dtechtive-cite-btn-tooltip" className=" flex flex-col justify-center items-center"
                 onClick={() => setViewAll(!viewAll)}
             >

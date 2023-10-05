@@ -29,7 +29,6 @@ const ResultCardAction = ({
     const handleClosePopup = () => {
         setShare(false);
     };
-
     return (
         // <div>
         <div className={clsx("flex", className)}>
@@ -40,7 +39,7 @@ const ResultCardAction = ({
                             className="sm:h-6 sm:w-6 h-4 w-4 text-dtech-new-main-light cursor-pointer "
                         />
                     </a>
-                    <div className="text-dtech-new-main-light w-max">{!href?.includes("dataset")?"Website":"Source"}</div>
+                    <div className="text-[#0065BD] underline w-max">{!href?.includes("dataset")?"Website":"Source"}</div>
                 </div>
                 <div className=" flex justify-center items-center flex-col sm:ml-0 ml-4">
 
@@ -97,8 +96,9 @@ const ResultCardAction = ({
                                         {"Share on social media"}
                                     </ReactTooltip>
                                 </Menu.Button>
-                                <Transition show={open && share}>
+                                <Transition show={share}>
                                     <Menu.Items static className="">
+                                        {<div onClick={handleClosePopup} className={share ? ` bg-black fixed opacity-50 h-[3000px] top-0 left-0 right-0 bottom-0 sm:h-[3000px] w-screen flex items-center  z-10` : ""}></div>}
                                         <Popup
                                             href={href}
                                             dataset={data.title}

@@ -164,9 +164,13 @@ const DatasetHead = ({ dataset }: any) => {
                                 <span className="text-md font-semibold text-[#2D2D32] ">
                                     Owner{""}
                                 </span>
-                                <span className="text-md text-[#0065BD] underline font-normal ml-2">
-                                    <a href={dataset.owner.ownerUrl} rel="noreferrer" target="_blank">{dataset.owner.organisation}</a>
-                                    
+                                <span className="text-md text-[#0065BD]  font-normal ml-2">
+                                    {
+                                        dataset?.owner.ownerUrl.indexOf("missing") == -1
+                                            ? <a className="underline" href={dataset.owner.ownerUrl} rel="noreferrer" target="_blank">{dataset.owner.organisation}</a>
+                                            : <div>{dataset.owner.organisation}</div>
+                                    }
+
                                 </span>
                             </div>
                             <div className="sm:w-1/3 sm:pl-10 flex flex-row items-center">
@@ -254,21 +258,21 @@ const DatasetHead = ({ dataset }: any) => {
 
                                 </div>
                             </div>
-                           { license.type &&<div className=" flex justify-between w-full sm:justify-start ">
+                            {license.type && <div className=" flex justify-between w-full sm:justify-start ">
                                 <span className="sm:text-sm text-base font-normal m-1 text-[#333333] ">
                                     Licence
                                 </span>
                                 {license?.url?.length > 0
                                     ? <a href={license.url} target="_blank" rel="noreferrer">
                                         <span
-                                        className=" border-2 underline underline-offset-2 border-dtech-new-main-light px-2 pb-1 sm:ml-2 sm:text-sm text-sm cursor-pointer text-dtech-new-main-light">
-                                        {license.type}
-                                    </span>
+                                            className=" border-2 underline underline-offset-2 border-dtech-new-main-light px-2 pb-1 sm:ml-2 sm:text-sm text-sm cursor-pointer text-[#0065BD]">
+                                            {license.type}
+                                        </span>
                                     </a>
                                     : <span
                                         className=" border-2 border-dtech-new-main-light px-1 flex items-center justify-center sm:ml-2 text-[0.875rem] cursor-pointer text-dtech-new-main-light">
-                                    {license.type}
-                                </span>}
+                                        {license.type}
+                                    </span>}
                             </div>}
                         </div>
 
@@ -279,8 +283,8 @@ const DatasetHead = ({ dataset }: any) => {
             <div className=" bg-[#2D2D32] bg-opacity-10 sm:w-1 h-[1px] sm:h-auto sm:my-4 mx-4 mb-4 sm:mx-0 sm:mb-0"> </div>
             <NewResultCardAction
                 className="flex-row sm:flex-col items-center justify-center sm:py-8 w-full"
-                gridClass = "md:!gap-16"
-                data={{ ...headDataset, url: headDataset?.dataProviders?.datasetSource}}
+                gridClass="md:!gap-16"
+                data={{ ...headDataset, url: headDataset?.dataProviders?.datasetSource }}
                 setData={setHeadDataset}
                 href={`/dataset/${dataset?.id}`}
                 owner={dataset.owner.organisation}
@@ -291,87 +295,87 @@ const DatasetHead = ({ dataset }: any) => {
 
 const
     MetaInfoEntity = ({
-    entityName,
-    entities,
-}: {
-    entityName: string;
-    entities: string[] | undefined;
-}) => {
-    const [viewAll, setViewAll] = useState<boolean>(false)
-    const handleSearchFocus = () => {
-        setViewAll(true);
-    };
+        entityName,
+        entities,
+    }: {
+        entityName: string;
+        entities: string[] | undefined;
+    }) => {
+        const [viewAll, setViewAll] = useState<boolean>(false)
+        const handleSearchFocus = () => {
+            setViewAll(true);
+        };
 
-    const handleSearchBlur = () => {
-        setViewAll(false);
-    };
-    const myRef = useRef(null);
-    useOutsideAlerter(myRef);
-    function useOutsideAlerter(ref: any) {
-        useEffect(() => {
-            // Function for click event
-            function handleOutsideClick(event: any) {
-                if (ref.current && !ref.current.contains(event.target)) {
-                    setViewAll(viewAll);
+        const handleSearchBlur = () => {
+            setViewAll(false);
+        };
+        const myRef = useRef(null);
+        useOutsideAlerter(myRef);
+        function useOutsideAlerter(ref: any) {
+            useEffect(() => {
+                // Function for click event
+                function handleOutsideClick(event: any) {
+                    if (ref.current && !ref.current.contains(event.target)) {
+                        setViewAll(viewAll);
+                    }
                 }
-            }
-            // Adding click event listener
-            document.addEventListener("click", handleOutsideClick);
-            return () =>
-                document.removeEventListener("click", handleOutsideClick);
-        }, [ref]);
-    }
+                // Adding click event listener
+                document.addEventListener("click", handleOutsideClick);
+                return () =>
+                    document.removeEventListener("click", handleOutsideClick);
+            }, [ref]);
+        }
 
-    return (
-        <div className="flex sm:mr-8 w-full "
-            ref={myRef}
-        >
-            {entities && entities.length > 0 && (
-                // <div className="flex flex-row space-x-2  w-full ">
-                <div className="flex w-full items-center sm:justify-start justify-between">
-                    <div className=" min-w-max">
-                        <span className="sm:text-sm text-md font-normal m-1 text-[#333333] ">
-                            {entityName}
-                        </span>
-                        {entities &&entities.length>2&&<span
-                            onClick={() => setViewAll(!viewAll)}
-                            className=" underline sm:text-sm text-md cursor-pointer text-[#0065BD]">
-                            View all
-                        </span>}
+        return (
+            <div className="flex sm:mr-8 w-full "
+                ref={myRef}
+            >
+                {entities && entities.length > 0 && (
+                    // <div className="flex flex-row space-x-2  w-full ">
+                    <div className="flex w-full items-center sm:justify-start justify-between">
+                        <div className=" min-w-max">
+                            <span className="sm:text-sm text-md font-normal m-1 text-[#333333] ">
+                                {entityName}
+                            </span>
+                            {entities && entities.length > 2 && <span
+                                onClick={() => setViewAll(!viewAll)}
+                                className=" underline sm:text-sm text-md cursor-pointer text-[#0065BD]">
+                                View all
+                            </span>}
+                        </div>
+                        <div className="flex flex-wrap flex-row  sm:max-w-xs  ml-2 ">
+                            {entities.map((entity, index) => {
+                                if (index < 2) return (
+                                    <span
+                                        key={index}
+                                        className="sm:text-sm text-md text-white m-1 bg-dtech-new-main-light rounded p-1 px-2 !pt-0"
+                                    >
+                                        {entity}
+                                    </span>
+                                )
+                            })}
+                        </div>
+                        {<div onClick={handleSearchBlur}
+                            className={viewAll ? ` bg-black fixed opacity-50 h-[3000px] top-0 left-0 right-0 bottom-0 sm:h-[3000px]  w-screen flex items-center  z-20` : "hidden"}></div>}
+                        {viewAll && <div className="flex flex-wrap flex-row px-6 py-4 sm:w-[616px] w-xs bg-white absolute z-20 rounded-xl">
+                            <div className="flex justify-between w-full pb-4"><div>{entityName}</div><div className=" cursor-pointer" onClick={() => setViewAll(!viewAll)}><img src="/images/provider-detail-page/close.svg" /></div></div>
+                            {entities.map((entity, index) => {
+                                return (
+                                    <span
+                                        key={index}
+                                        className="text-sm text-white m-1 bg-dtech-new-main-light rounded p-1 px-2 !pt-0"
+                                    >
+                                        {entity}
+                                    </span>
+                                )
+                            })}
+                        </div>}
                     </div>
-                    <div className="flex flex-wrap flex-row  sm:max-w-xs  ml-2 ">
-                        {entities.map((entity, index) => {
-                            if (index < 2) return (
-                                <span
-                                    key={index}
-                                    className="sm:text-sm text-md text-white m-1 bg-dtech-new-main-light rounded p-1 px-2 !pt-0"
-                                >
-                                    {entity}
-                                </span>
-                            )
-                        })}
-                    </div>
-                    {<div onClick={handleSearchBlur}
-                        className={viewAll ? ` bg-black absolute opacity-90 h-[3000px] right-0 sm:h-[3000px]  w-screen flex items-center  z-20` : "hidden"}></div>}
-                    {viewAll && <div className="flex flex-wrap flex-row px-6 py-4 sm:w-[616px] w-xs bg-white absolute z-20 rounded-xl">
-                        <div className="flex justify-between w-full pb-4"><div>{entityName}</div><div className=" cursor-pointer" onClick={() => setViewAll(!viewAll)}><img src="/images/provider-detail-page/close.svg" /></div></div>
-                        {entities.map((entity, index) => {
-                            return (
-                                <span
-                                    key={index}
-                                    className="text-sm text-white m-1 bg-dtech-new-main-light rounded p-1 px-2 !pt-0"
-                                >
-                                    {entity}
-                                </span>
-                            )
-                        })}
-                    </div>}
-                </div>
-                // </div>
-            )}
-        </div>
-    );
-};
+                    // </div>
+                )}
+            </div>
+        );
+    };
 export default DatasetHead;
 
 const datasetToResultCardData = (datasets: any, stats: any): Data[] => {

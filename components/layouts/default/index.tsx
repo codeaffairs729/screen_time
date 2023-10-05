@@ -83,7 +83,7 @@ const DefaultLayout = ({
                 className
             )}
         >
-            {<div className={searching?" bg-black absolute opacity-50 h-full w-full  z-20":"hidden"}></div>}
+            {<div className={searching ?" bg-black fixed opacity-50  top-0 left-0 right-0 bottom-0 sm:h-[3000px] h-full w-full  z-20":"hidden"}></div>}
             {/* <OrganizationSearchVMContext.Provider value={ovm}> */}
             {/* <SearchVMContext.Provider value={vm}> */}
             {/* <div className="mx-auto my-2 px-10 py-1 text-gray-800 bg-gray-100 text-sm">

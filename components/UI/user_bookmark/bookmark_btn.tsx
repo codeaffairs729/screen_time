@@ -46,7 +46,7 @@ const BookmarkBtn = ({
                 data-tip
                 data-for="dtechtive-bookmark-btn-tooltip"
             >
-                {<div className={showModal?` bg-black absolute opacity-90 h-[3000px] top-0 right-0 sm:h-[3000px]  w-screen flex items-center  z-20`:""}></div>}
+                {<div className={showModal ? ` bg-black fixed opacity-50 h-[3000px] top-0 left-0 right-0 bottom-0 sm:h-[3000px]  w-screen flex items-center  z-20` : ""}></div>}
 
                 <button
                     aria-label="bookmark dataset"
@@ -100,7 +100,9 @@ const BookmarkBtn = ({
                 >{
                         !user
                             ? "Please login to save this dataset."
-                            : "Edit lists"
+                            : isBookmarked
+                                ? "Edit lists"
+                                : "Add to lists"
                     }</ReactTooltip>
             </div>
         </>
