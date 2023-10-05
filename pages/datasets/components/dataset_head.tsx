@@ -27,7 +27,7 @@ const DatasetHead = ({ dataset }: any) => {
     const router = useRouter()
     useEffect(() => {
         fectchStats([dataset?.id]);
-    }, []);
+    }, [dataset]);
     useEffect(() => {
         setHeadDataset(datasetToResultCardData([dataset], stats)[0]);
     }, [stats]);
@@ -258,10 +258,17 @@ const DatasetHead = ({ dataset }: any) => {
                                 <span className="sm:text-sm text-base font-normal m-1 text-[#333333] ">
                                     Licence
                                 </span>
-                                <span
-                                    className=" border-2 border-dtech-new-main-light px-2 sm:ml-2 sm:text-sm text-sm cursor-pointer text-dtech-new-main-light">
+                                {license?.url?.length > 0
+                                    ? <a href={license.url} target="_blank" rel="noreferrer">
+                                        <span
+                                        className=" border-2 underline underline-offset-2 border-dtech-new-main-light px-2 pb-1 sm:ml-2 sm:text-sm text-sm cursor-pointer text-dtech-new-main-light">
+                                        {license.type}
+                                    </span>
+                                    </a>
+                                    : <span
+                                        className=" border-2 border-dtech-new-main-light px-1 flex items-center justify-center sm:ml-2 text-[0.875rem] cursor-pointer text-dtech-new-main-light">
                                     {license.type}
-                                </span>
+                                </span>}
                             </div>}
                         </div>
 
@@ -282,7 +289,8 @@ const DatasetHead = ({ dataset }: any) => {
     );
 };
 
-const MetaInfoEntity = ({
+const
+    MetaInfoEntity = ({
     entityName,
     entities,
 }: {
@@ -327,7 +335,7 @@ const MetaInfoEntity = ({
                         </span>
                         {entities &&entities.length>2&&<span
                             onClick={() => setViewAll(!viewAll)}
-                            className=" underline sm:text-sm text-md cursor-pointer text-dtech-main-dark">
+                            className=" underline sm:text-sm text-md cursor-pointer text-[#0065BD]">
                             View all
                         </span>}
                     </div>
@@ -344,7 +352,7 @@ const MetaInfoEntity = ({
                         })}
                     </div>
                     {<div onClick={handleSearchBlur}
-                        className={viewAll ? ` bg-black absolute opacity-50 h-[3000px] right-0 sm:h-[3000px]  w-screen flex items-center  z-20` : "hidden"}></div>}
+                        className={viewAll ? ` bg-black absolute opacity-90 h-[3000px] right-0 sm:h-[3000px]  w-screen flex items-center  z-20` : "hidden"}></div>}
                     {viewAll && <div className="flex flex-wrap flex-row px-6 py-4 sm:w-[616px] w-xs bg-white absolute z-20 rounded-xl">
                         <div className="flex justify-between w-full pb-4"><div>{entityName}</div><div className=" cursor-pointer" onClick={() => setViewAll(!viewAll)}><img src="/images/provider-detail-page/close.svg" /></div></div>
                         {entities.map((entity, index) => {

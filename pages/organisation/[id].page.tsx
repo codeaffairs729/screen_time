@@ -58,6 +58,7 @@ const OrganisationDetailPage = ({
     const [isMobile, setIsMobile] = useState<boolean>(false);
     const [selectedIndex, setSelectedIndex] = useState<any>(0);
     const [topicImage, setTopicImage] = useState("")
+    const [logoImage, setLogoImage] = useState("")
     const [isReportGenerated, setIsReportGenerated] = useState<boolean>(false)
     const { asPath } = useRouter();
     const vm: any = OrganisationDetailVM(organisation, asPath.split("/")[2]);
@@ -66,7 +67,7 @@ const OrganisationDetailPage = ({
     const translationValue1Ref = useRef<HTMLDivElement>(null)
     const translationValue2Ref = useRef<HTMLDivElement>(null)
     const fetchImages = async () => {
-        const logoUrl = await Http.get(`/v1/data_sources/provider/topic_image/${organisation?.topics[0]}`, {
+        const logoUrl = await Http.get(`/v1/data_sources/provider/topic_image/${organisation?.topics[0]}/${organisation?.uuid}`, {
             baseUrl: process.env.NEXT_PUBLIC_WEBPORTAL_API_ROOT,
         })
 
@@ -117,8 +118,9 @@ const OrganisationDetailPage = ({
             imageRef.current.style.width = desiredHeight;
         }
         const loadImage = async () => {
-            const image = await fetchImages();
-            setTopicImage(image)
+            const imageData = await fetchImages();
+            setTopicImage(imageData.topic_image)
+            setLogoImage(imageData.logo_image)
         };
 
         loadImage();
@@ -158,12 +160,12 @@ const OrganisationDetailPage = ({
                             <p className="text-center text-2xl font-bold  px-[37px] py-[18px] bg-[#0E9A8E] bg-opacity-60 text-white">
                                 Data Provider
                             </p>
-                            <span></span>
+                            <span></span><img src={logoImage.replace("","")} />
                             <div ref={imageRef} className=" rounded-full min-h-[100px] min-w-[100px]">
                                 <a href={`${organisation.url}`} target="_blank" rel="noreferrer" className="h-full w-full overflow-hidden bg-white bg-opacity-80 rounded-full relative flex items-center justify-center">
-                                    <Image
+                                    {logoImage &&<Image
                                         // data-tip={"Click to open website"}
-                                        src={organisation.imgUrl}
+                                        src={logoImage}
                                         loader={customImageLoader}
                                         alt="ORG"
                                         // objectFit="cover"
@@ -171,22 +173,22 @@ const OrganisationDetailPage = ({
                                         // height={100}
                                         // width={100}
                                         className=" !w-[200%] !h-full !p-6 object-contain"
-                                    />
+                                    />}
                                 </a>
                             </div>
                         </div>
                         <div className="flex sm:hidden flex-row px-4 py-2 my-2  items-center bg-dtech-light-teal xl:bg-white bg-opacity-80">
                             <a href={`${organisation.url}`} target="_blank" rel="noreferrer" className=" rounded-full overflow-hidden">
-                                <Image
+                                {logoImage &&<Image
                                     // data-tip={"Click to open website"}
-                                    src={organisation.imgUrl}
+                                    src={logoImage}
                                     loader={customImageLoader}
                                     alt="ORG"
                                     // layout="fill"
                                     width={50}
                                     height={50}
                                     className=" object-contain !p-1"
-                                />
+                                />}
                             </a>
                             <p className="text-center text-lg font-bold mx-4 text-white">
                                 Data Provider

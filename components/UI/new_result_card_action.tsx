@@ -45,7 +45,6 @@ const NewResultCardAction = ({
     const handleClosePopup = () => {
         setShare(false);
     };
-
     const shareColor = shareClicked
         ? " !text-white !bg-dtech-main-dark"
         : " !text-dtech-new-main-light ";
@@ -110,7 +109,7 @@ const NewResultCardAction = ({
                         onMouseLeave={() => setBookmarkClicked(false)}
                     >
                         <BookmarkBtn
-                            className="mx-auto"
+                            className="mx-auto "
                             data={data}
                             recordType={data.recordType}
                             bookmarkColor={bookmarkColor}
@@ -135,6 +134,7 @@ const NewResultCardAction = ({
                                             setShareClicked(false)
                                         }
                                     >
+
                                         <BsShareFill
                                             className={`sm:h-6 sm:w-6 h-4 w-4  cursor-pointer`}
                                             data-modal-toggle="popup"
@@ -142,9 +142,11 @@ const NewResultCardAction = ({
                                         />
                                     </div>
                                     <ReactTooltip id="dtechtive-share-btn-tooltip" textColor={'white'} backgroundColor="#4CA7A5" >Share on social media</ReactTooltip>
+                                        {<div className={open&&share ? ` bg-black absolute opacity-90 h-[3000px] -top-20 right-0 sm:h-[3000px]  w-screen flex items-center  z-10` : ""}></div>}
                                 </Menu.Button>
                                 <Transition show={open && share}>
                                     <Menu.Items static className="">
+                                        
                                         <Popup
                                             href={href}
                                             dataset={data.title}

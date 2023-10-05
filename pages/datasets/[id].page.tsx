@@ -58,7 +58,7 @@ const DatasetDetail = ({ dataset }: { dataset: Dataset | undefined }) => {
     const [isMobile, setIsMobile] = useState<boolean>(false);
     const [topicImage, setTopicImage] = useState("")
     const [imgUrl, setImgUrl] = useState("")
-    const { asPath } = useRouter();
+    const { asPath, query } = useRouter();
     const [scrollLeft, setScrollLeft] = useState(0);
     const [highlightedDot, setHighlightedDot] = useState(0);
     const [selectedIndex, setSelectedIndex] = useState<any>(
@@ -81,7 +81,7 @@ const DatasetDetail = ({ dataset }: { dataset: Dataset | undefined }) => {
 
         const loadImage = async () => {
             const image = await fetchImages();
-            setImgUrl(image.logo_url.logo_url)
+            setImgUrl(image.logo_url)
             setTopicImage(image.topic_image_url)
         };
 
@@ -136,7 +136,6 @@ const DatasetDetail = ({ dataset }: { dataset: Dataset | undefined }) => {
     const upperLimit2 = -270;
     const translationValue1 = Math.max(scrollPosition * 0.5, upperLimit1);
     const translationValue2 = Math.max(scrollPosition * 0.3, upperLimit2 * 1.2);
-
     useEffect(() => {
         if (imageRef.current) {
             const desiredHeight = `${250}px`;
@@ -216,7 +215,6 @@ const DatasetDetail = ({ dataset }: { dataset: Dataset | undefined }) => {
             "dateModified": item.lastUpdated,
         }))
     }
-
     if (!dataset) {
         return (
             <DefaultLayout>
@@ -227,150 +225,169 @@ const DatasetDetail = ({ dataset }: { dataset: Dataset | undefined }) => {
             </DefaultLayout>
         );
     }
-
     return (
-        <DefaultLayout>
-            <DatasetDetailVMContext.Provider value={vm}>
-                <Head>
-                    <script
-                        type='application/ld+json'
-                        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaMarkup) }} />
-                </Head>
-                <div className=" bg-[#EBEBEB] ">
-                    <div className=" bg-white h-16 sm:h-10 -mt-20 sm:mt-0">
+            <DefaultLayout>
+                <DatasetDetailVMContext.Provider value={vm}>
+                    <Head>
+                        <script
+                            type='application/ld+json'
+                            dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaMarkup) }} />
+                    </Head>
+                    <div className=" bg-[#EBEBEB] ">
+                        <div className=" bg-white h-16 sm:h-10 -mt-20 sm:mt-0">
 
-                    </div>
-                    <div
-                        className="bg-black  h-[414px] overflow-hidden absolute left-0 z-0 w-full ">
-                        {topicImage && (
-                            <div className="">
-                                <Image
-                                    src={topicImage}
-                                    alt="topic image"
-                                    layout="responsive" // Use "responsive" layout to achieve "object-fit: contain"
-                                    width={50} // Set the desired width
-                                    height={50} // Set the desired height
-                                    loader={customImageLoader} // Use the custom loader
-                                    className=" sm:!-mt-[50%] mt-0"
-                                />
-                            </div>
-                        )}
-
-                    </div>
-                    <div className="px-4 relative">
+                        </div>
                         <div
-                            className="hidden sm:flex flex-row justify-between mb-4 my-10 ml-4 items-center ">
-                            <p className="text-center text-2xl font-bold  px-[37px] py-[18px] bg-[#0E9A8E] bg-opacity-60 text-white">
-                                Dataset
-                            </p>
-                            <span></span>
-                            <div ref={imageRef} className="rounded-full min-h-[100px] min-w-[100px]">
-                                <a href={`${dataset.owner.ownerUrl}`} target="_blank" rel="noreferrer" className="h-full w-full overflow-hidden bg-white bg-opacity-80 rounded-full relative flex items-center justify-center">
-                                    {imgUrl && (
-                                        <div className=" w-full h-full ">
-                                            <div className=" h-full w-full relative"> {/* Add padding here */}
+                            className="bg-black  h-[414px] overflow-hidden absolute left-0 z-0 w-full ">
+                            {topicImage && (
+                                <div className="">
+                                    <Image
+                                        src={topicImage}
+                                        alt="topic image"
+                                        layout="responsive" // Use "responsive" layout to achieve "object-fit: contain"
+                                        width={50} // Set the desired width
+                                        height={50} // Set the desired height
+                                        loader={customImageLoader} // Use the custom loader
+                                        className=" sm:!-mt-[50%] mt-0"
+                                    />
+                                </div>
+                            )}
+
+                        </div>
+                        <div className="px-4 relative">
+                            <div
+                                className="hidden sm:flex flex-row justify-between mb-4 my-10 ml-4 items-center ">
+                                <p className="text-center text-2xl font-bold  px-[37px] py-[18px] bg-[#0E9A8E] bg-opacity-60 text-white">
+                                    Dataset
+                                </p>
+                                <span></span>
+                                {(dataset?.owner.ownerUrl.indexOf("missing") == -1) ? <div ref={imageRef} className="rounded-full min-h-[100px] min-w-[100px]">
+                                    <a href={(dataset?.owner.ownerUrl.indexOf("missing") == -1) ? `${dataset.owner.ownerUrl}` : ""} target="_blank" rel="noreferrer" className="h-full w-full overflow-hidden bg-white bg-opacity-80 rounded-full relative flex items-center justify-center">
+                                        {imgUrl && (
+                                            <div className=" w-full h-full ">
+                                                <div className=" h-full w-full relative"> {/* Add padding here */}
+                                                    <Image
+                                                        src={imgUrl}
+                                                        loader={customImageLoader}
+                                                        alt="logo image"
+                                                        // objectFit="cover"
+                                                        layout="fill"
+                                                        // height={100}
+                                                        // width={100}
+                                                        className=" !w-[100%] !h-full !p-6 object-contain"
+                                                    />
+                                                </div>
+                                            </div>
+                                        )}
+                                    </a>
+                                </div> :
+                                    <div ref={imageRef} className="rounded-full min-h-[100px] min-w-[100px]">
+                                        <div className="h-full w-full overflow-hidden bg-white bg-opacity-80 rounded-full relative flex items-center justify-center">
+                                            {imgUrl && (
+                                                <div className=" w-full h-full ">
+                                                    <div className=" h-full w-full relative"> {/* Add padding here */}
+                                                        <Image
+                                                            src={imgUrl}
+                                                            loader={customImageLoader}
+                                                            alt="logo image"
+                                                            // objectFit="cover"
+                                                            layout="fill"
+                                                            // height={100}
+                                                            // width={100}
+                                                            className=" !w-[100%] !h-full !p-6 object-contain"
+                                                        />
+                                                    </div>
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>}
+
+
+                            </div>
+                            <div className="flex sm:hidden flex-row px-4 py-2 my-2  items-center bg-dtech-light-teal xl:bg-white bg-opacity-80">
+                                <div className=" ">
+
+                                    <a href={`${dataset.owner.ownerUrl}`} target="_blank" rel="noreferrer" className=" rounded-full overflow-hidden">
+                                        {imgUrl &&
+
+                                            <div className="  relative"> {/* Add padding here */}
                                                 <Image
                                                     src={imgUrl}
                                                     loader={customImageLoader}
                                                     alt="ORG"
-                                                    // objectFit="cover"
-                                                    layout="fill"
-                                                    // height={100}
-                                                    // width={100}
-                                                    className=" !w-[100%] !h-full !p-6 object-contain"
+                                                    // layout="fill"
+                                                    width={50}
+                                                    height={50}
+                                                    className=" object-contain"
                                                 />
-                                            </div>
-                                        </div>
-                                    )}
-                                </a>
+                                            </div>}
+                                    </a>
+                                </div>
+                                <p className="text-center text-lg font-bold mx-4 text-white">
+                                    Dataset
+                                </p>
                             </div>
-
-
-                        </div>
-                        <div className="flex sm:hidden flex-row px-4 py-2 my-2  items-center bg-dtech-light-teal xl:bg-white bg-opacity-80">
-                            <div className=" ">
-
-                                <a href={`${dataset.owner.ownerUrl}`} target="_blank" rel="noreferrer" className=" rounded-full overflow-hidden">
-                                    {imgUrl &&
-
-                                        <div className="  relative"> {/* Add padding here */}
-                                            <Image
-                                                src={imgUrl}
-                                                loader={customImageLoader}
-                                                alt="ORG"
-                                                // layout="fill"
-                                                width={50}
-                                                height={50}
-                                                className=" object-contain"
-                                            />
-                                        </div>}
-                                </a>
-                            </div>
-                            <p className="text-center text-lg font-bold mx-4 text-white">
-                                Dataset
-                            </p>
-                        </div>
-                        <div
-                            style={{ marginTop: `${translationValue1}px` }}
-                        >
-                            <div className="w-full h-fit py-4 sm:mt-24 mt-32 bg-white rounded-lg">
-                                <DatasetHead dataset={dataset} />
-                            </div>
-                            <div className="flex border-t mt-10 flex-col bg-[#EBEBEB]"
-                            // style={{ marginTop: `${translationValue2 + (isMobile ? 320 : 200)}px` }}
+                            <div
+                                style={{ marginTop: `${translationValue1}px` }}
                             >
-                                <div className=" bg-white sm:px-8 px-4 sm:py-4 py-2 overflow-x-scroll " id="scrollable-div">
-
-                                    <DataFilesSection
-                                        goToPreview={() => {
-                                            setSelectedIndex(0);
-                                        }}
-                                        scrollLeft={scrollLeft}
-                                        setScrollLeft={setScrollLeft}
-                                        setHighlightedDot={setHighlightedDot}
-                                    />
-                                    <div className=" sm:hidden flex flex-row w-full items-center justify-center">
-                                        {[1, 2, 3].map((item, index) => (
-                                            <div
-                                                key={index}
-                                                className={` rounded-full w-3 h-3 m-1 ${index === highlightedDot ? 'bg-dtech-dark-teal' : 'bg-[#D9D9D9]'}`}
-                                            // onClick={() => handleDotClick(index)}
-                                            ></div>
-                                        ))}
-                                    </div>
+                                <div className="w-full h-fit py-4 sm:mt-24 mt-32 bg-white rounded-lg">
+                                    <DatasetHead dataset={dataset} />
                                 </div>
-                                <div className="flex flex-col border-t mt-4 xl:mt-10 shadow-container">
-                                    {!loading && (
-                                        <Tab.Group defaultIndex={selectedIndex}>
-                                            <DatasetTabHeaders
-                                                selectedIndex={selectedIndex}
-                                                headers={datasetHeaders}
-                                            />
-                                            <Tab.Panels className="h-[calc(100%-var(--dataset-detail-tab-header-height))] w-full flex">
-                                                <TabPanel className="!bg-white">
-                                                    <DatasetFeedbackSection />
-                                                </TabPanel>
-                                                <TabPanel className="!bg-white">
-                                                    <DatasetInsights />
-                                                </TabPanel>
-                                            </Tab.Panels>
-                                        </Tab.Group>
-                                    )}
-                                </div>
-                                <div className=" text-[#2D2D32] lg:my-8 my-4 font-bold lg:text-2xl text-lg">
-                                    Related Datasets
-                                </div>
-                                <RelatedDatasetsVMContext.Provider
-                                    value={relatedVM}
+                                <div className="flex border-t mt-10 flex-col bg-[#EBEBEB]"
+                                // style={{ marginTop: `${translationValue2 + (isMobile ? 320 : 200)}px` }}
                                 >
-                                    <RelatedDatasets />
-                                </RelatedDatasetsVMContext.Provider>
+                                    <div className=" bg-white sm:px-8 px-4 sm:py-4 py-2 overflow-x-scroll " id="scrollable-div">
+
+                                        <DataFilesSection
+                                            goToPreview={() => {
+                                                setSelectedIndex(0);
+                                            }}
+                                            scrollLeft={scrollLeft}
+                                            setScrollLeft={setScrollLeft}
+                                            setHighlightedDot={setHighlightedDot}
+                                        />
+                                        <div className=" sm:hidden flex flex-row w-full items-center justify-center">
+                                            {[1, 2, 3].map((item, index) => (
+                                                <div
+                                                    key={index}
+                                                    className={` rounded-full w-3 h-3 m-1 ${index === highlightedDot ? 'bg-dtech-dark-teal' : 'bg-[#D9D9D9]'}`}
+                                                // onClick={() => handleDotClick(index)}
+                                                ></div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                    <div className="flex flex-col border-t mt-4 xl:mt-10 shadow-container">
+                                        {!loading && (
+                                            <Tab.Group defaultIndex={selectedIndex}>
+                                                <DatasetTabHeaders
+                                                    selectedIndex={selectedIndex}
+                                                    headers={datasetHeaders}
+                                                />
+                                                <Tab.Panels className="h-[calc(100%-var(--dataset-detail-tab-header-height))] w-full flex">
+                                                    <TabPanel className="!bg-white">
+                                                        <DatasetFeedbackSection />
+                                                    </TabPanel>
+                                                    <TabPanel className="!bg-white">
+                                                        <DatasetInsights />
+                                                    </TabPanel>
+                                                </Tab.Panels>
+                                            </Tab.Group>
+                                        )}
+                                    </div>
+                                    <div className=" text-[#2D2D32] lg:my-8 my-4 font-bold lg:text-2xl text-lg">
+                                        Related Datasets
+                                    </div>
+                                    <RelatedDatasetsVMContext.Provider
+                                        value={relatedVM}
+                                    >
+                                        <RelatedDatasets />
+                                    </RelatedDatasetsVMContext.Provider>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </DatasetDetailVMContext.Provider>
-        </DefaultLayout>
+                </DatasetDetailVMContext.Provider>
+            </DefaultLayout>
     );
 };
 

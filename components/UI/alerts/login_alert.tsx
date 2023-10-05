@@ -19,13 +19,13 @@ const LoginAlert = ({ className = "" }: { className?: string }) => {
                 <div className="flex justify-around mt-6 mb-2">
                     <Link href="/login" passHref={true}>
                         <a className="text-xs font-medium bg-dtech-secondary-light text-white rounded px-3 py-1">
-                            Login
+                            Log in
                         </a>
                     </Link>
 
                     <Link href="/signup" passHref={true}>
                         <a className="text-xs font-medium border-[1px] border-dtech-secondary-light rounded px-3 py-1">
-                            Signup
+                            Sign up
                         </a>
                     </Link>
 
