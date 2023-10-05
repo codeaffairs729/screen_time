@@ -1,6 +1,6 @@
 import clsx from "clsx";
-import ReactTooltip from "react-tooltip";
 import Loader from "../loader";
+import { HiOutlineChevronDown, HiOutlineChevronUp } from "react-icons/hi";
 
 const PrimaryBtn = ({
     label,
@@ -9,6 +9,9 @@ const PrimaryBtn = ({
     isDisabled = false,
     className = "bg-dtech-primary-dark",
     dataSelector,
+    dropdownIcon = false,
+    isOpen = false,
+    iconClass = "",
 }: {
     label: string;
     onClick?: () => void;
@@ -16,6 +19,9 @@ const PrimaryBtn = ({
     isDisabled?: boolean;
     className?: string;
     dataSelector?: string;
+    dropdownIcon?: boolean;
+    isOpen?: boolean;
+    iconClass?: string;
 }) => {
     return (
         <button
@@ -28,7 +34,16 @@ const PrimaryBtn = ({
                 className
             )}
         >
-            {isLoading ? <Loader /> : label}
+            {
+                isLoading
+                  ? <Loader />
+                  : dropdownIcon
+                    ? (<div className="flex">
+                        {label}
+                        {isOpen ? <HiOutlineChevronUp className={clsx("w-5 h-5", iconClass)} /> : <HiOutlineChevronDown className={clsx("w-5 h-5", iconClass)} />}
+                      </div>)
+                    : label
+            }
         </button>
     );
 };

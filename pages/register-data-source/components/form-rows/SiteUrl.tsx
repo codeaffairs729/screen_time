@@ -11,10 +11,12 @@ const SiteUrl = ({ vm }: { vm: any }) => {
             label="Data source website URL"
             required={true}
             tooltip={formRowToolTipData.site_url}
-            className=" w-screen md:w-auto bg-white"
+            className=" md:w-auto bg-white flex-col sm:!mb-8"
+            labelClass="sm:text-[19px]"
+            iconClass="sm:h-[19px] sm:w-[19px] text-black"
         >
             <TextField
-                className="w-80"
+                textfieldClassName="border-black rounded-[5px] sm:text-[19px]"
                 formControl={{
                     control: vm.form.control,
                     name: "site_url",
@@ -27,7 +29,7 @@ const SiteUrl = ({ vm }: { vm: any }) => {
                         },
                     },
                 }}
-                placeholder="E.g. https://healthdata.gov"
+                placeholder="Enter Data Source Website URL"
             />
         </FormRow>
         

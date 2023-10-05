@@ -2,7 +2,7 @@ import { Combobox, Transition } from "@headlessui/react";
 import clsx from "clsx";
 import { FieldProps } from "common/type";
 import { Fragment, useState } from "react";
-import { HiOutlineSelector } from "react-icons/hi";
+import { HiOutlineChevronDown, HiOutlineSelector } from "react-icons/hi";
 import { BsCheck } from "react-icons/bs";
 import { useController } from "react-hook-form";
 
@@ -14,11 +14,15 @@ export type Option = {
 const DropdownFieldMulti = ({
     options,
     className = "",
+    inputfieldClassName = "",
     placeholder,
     formControl,
     dataSelector,
+    newDropdownIcon = false,
 }: {
     className?: string;
+    inputfieldClassName?: string;
+    newDropdownIcon?: boolean;
     options: Option[];
 } & FieldProps) => {
     const [selected, setSelected] = useState<Option[]>([]);
@@ -93,7 +97,8 @@ const DropdownFieldMulti = ({
                         <Combobox.Input
                             className={clsx(
                                 "w-full rounded-lg focus:ring-dtech-secondary-light border-2 border-dtech-main-dark focus:border-dtech-main-dark disabled:border-gray-300 disabled:bg-gray-50 py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 placeholder:text-gray-500 placeholder:text-sm placeholder:font-bold",
-                                { "border-red-700": hasError }
+                                { "border-red-700": hasError },
+                                inputfieldClassName
                             )}
                             displayValue={(selOpts: Option[]) => {
                                 let dispString = "";
@@ -111,7 +116,11 @@ const DropdownFieldMulti = ({
                             name={name}
                         />
                         <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2">
-                            <HiOutlineSelector className="w-5 h-5" />
+                            {
+                                newDropdownIcon
+                                    ? <HiOutlineChevronDown className="w-5 h-5" />
+                                    : <HiOutlineSelector className="w-5 h-5" />
+                            }
                         </Combobox.Button>
                     </Combobox.Button>
                 </div>

@@ -7,13 +7,15 @@ const formRowToolTipData: ToolTipJson = require("../form_tooltip.json");
 const UpdateFrequency = ({ vm }: { vm: any }) => {
     return (
         <FormRow
-            label="Website update frequency"
+            label="Website management frequency"
             tooltip={formRowToolTipData.update_frequency}
-            className="w-screen md:w-auto"
-
+            className=" md:w-auto flex-col sm:!mb-8"
+            labelClass="sm:text-[19px]"
+            iconClass="sm:h-[19px] sm:w-[19px] text-black"
         >
             <DropdownField
-                className="w-80"
+                inputClass="border-black rounded-[5px] sm:text-[19px]"
+                newDropdownIcon={true}
                 formControl={{
                     control: vm.form.control,
                     name: "update_frequency",
@@ -62,7 +64,7 @@ const UpdateFrequency = ({ vm }: { vm: any }) => {
                         label: "Don't know",
                     },
                 ]}
-                placeholder=""
+                placeholder="Select Website Update Frequency"
             />
         </FormRow>
     );

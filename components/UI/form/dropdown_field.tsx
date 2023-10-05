@@ -2,7 +2,7 @@ import { Combobox, Transition } from "@headlessui/react";
 import clsx from "clsx";
 import { FieldProps } from "common/type";
 import { Fragment, useEffect, useState, useRef } from "react";
-import { HiOutlineSelector } from "react-icons/hi";
+import { HiOutlineChevronDown, HiOutlineSelector } from "react-icons/hi";
 import { BsCheck } from "react-icons/bs";
 import { useController } from "react-hook-form";
 import ReactTooltip from "react-tooltip";
@@ -85,13 +85,14 @@ const DropdownField = ({
     dataSelector,
     inputClass = "",
     errorPosition = false,
-
+    newDropdownIcon=false
 }: {
     newDropdown?: boolean,
     className?: string;
     options: Option[];
     inputClass?: string;
     errorPosition?: boolean;
+    newDropdownIcon?: boolean;
 } & FieldProps) => {
     // const [selected, setSelected] = useState<Option>();
     const [selected, setSelected] = useState<Option>();
@@ -187,7 +188,13 @@ const DropdownField = ({
                         onClick={() => setIsOpen(!isOpen)}
                         className="absolute inset-y-0 right-0 flex items-center pr-2 mt-[1x]"
                     >
-                        {newDropdown?<img className={isOpen?" rounded-md bg-[#FDD522] relative left-2 p-[14px]":"rounded-md bg-dtech-main-dark relative left-2 p-[13px]"}  src={isOpen?"images/icons/arrows/black_down_arrow.svg":"images/icons/arrows/feArrowUp2.svg"}/>:<HiOutlineSelector className="w-5 h-5" />}
+                        {
+                            newDropdown
+                              ? <img className={isOpen?" rounded-md bg-[#FDD522] relative left-2 p-[14px]":"rounded-md bg-dtech-main-dark relative left-2 p-[13px]"}  src={isOpen?"images/icons/arrows/black_down_arrow.svg":"images/icons/arrows/feArrowUp2.svg"}/>
+                              : newDropdownIcon
+                                ? <HiOutlineChevronDown className="w-5 h-5" />
+                                : <HiOutlineSelector className="w-5 h-5" />
+                        }
                     </Combobox.Button>
                 </div>
                 <Transition

@@ -33,10 +33,13 @@ const DataManagementSystem = ({ vm }: { vm: any }) => {
                 label="Data management system"
                 required={false}
                 tooltip={formRowToolTipData.data_management_system}
-                className="w-screen md:w-auto"
+                className=" md:w-auto flex-col sm:!mb-8"
+                labelClass="sm:text-[19px]"
+                iconClass="sm:h-[19px] sm:w-[19px] text-black"
             >
                 <DropdownField
-                    className="w-80"
+                    inputClass="border-black rounded-[5px] sm:text-[19px]"
+                    newDropdownIcon={true}
                     formControl={{
                         control: vm.form.control,
                         name: "data_management_system",
@@ -88,16 +91,19 @@ const DataManagementSystem = ({ vm }: { vm: any }) => {
                             label: "Don't know",
                         },
                     ]}
-                    placeholder=""
+                    placeholder="Select Data Management System"
                 />
             </FormRow>
             <div className={`${showOther ? "" : "hidden"}`}>
                 <FormRow
                     label="Data management system (other)"
                     tooltip={formRowToolTipData.data_management_system_other}
+                    className=" md:w-auto flex-col sm:!mb-8"
+                    labelClass="sm:text-[19px]"
+                    iconClass="sm:h-[19px] sm:w-[19px] text-black"
                 >
                     <TextField
-                        className="w-80"
+                        textfieldClassName="border-black rounded-[5px] sm:text-[19px]"
                         formControl={{
                             control: vm.form.control,
                             name: "data_management_system_other",
