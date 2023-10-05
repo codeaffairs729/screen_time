@@ -56,7 +56,6 @@ const NewResultCardAction = ({
     const favouriteColor = favouriteClicked
     ? " !text-white !bg-dtech-main-dark "
     : " !text-dtech-new-main-light";
-
     return (
         <div className={clsx("flex", className)}>
             <div
@@ -134,19 +133,17 @@ const NewResultCardAction = ({
                                             setShareClicked(false)
                                         }
                                     >
-
                                         <BsShareFill
                                             className={`sm:h-6 sm:w-6 h-4 w-4  cursor-pointer`}
                                             data-modal-toggle="popup"
-                                            onClick={() => setShare(true)}
+                                            onClick={() => setShare(!share)}
                                         />
                                     </div>
                                     <ReactTooltip id="dtechtive-share-btn-tooltip" textColor={'white'} backgroundColor="#4CA7A5" >Share on social media</ReactTooltip>
-                                        {<div className={open&&share ? ` bg-black absolute opacity-90 h-[3000px] -top-20 right-0 sm:h-[3000px]  w-screen flex items-center  z-10` : ""}></div>}
                                 </Menu.Button>
-                                <Transition show={open && share}>
+                                <Transition show={ share}>
                                     <Menu.Items static className="">
-                                        
+                                        {<div onClick={handleClosePopup} className={share ? ` bg-black fixed opacity-50 h-[3000px] top-0 left-0 right-0 bottom-0 sm:h-[3000px] w-screen flex items-center  z-10` : ""}></div>}
                                         <Popup
                                             href={href}
                                             dataset={data.title}

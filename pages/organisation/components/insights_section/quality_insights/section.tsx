@@ -68,10 +68,10 @@ const QualityInsightsBody = () => {
     /**  Adding metaQuality same as overscore for metaFileQuality */
     const { dataFileQuality = {}, metaFileQuality = {}, totalMatches } = qualityMetrics || {};
     const items = selectedLabel == 0 ? dataFileQuality : metaFileQuality;
-    
+
     useEffect(() => {
         setCurrentSlide(0)
-    },[items])
+    }, [items])
     useEffect(() => {
         fetchQualityMetrics && fetchQualityMetrics();
         if (selectedLabel == 0) {
@@ -115,8 +115,8 @@ const QualityInsightsBody = () => {
             key={selectedLabel}
         >
             <div className="sm:flex flex-row hidden my-6 relative">
-                <div className=" w-[350px] text-dtech-main-dark absolute z-20">Insights &gt; Dataset Quality &gt; {selectedLabel == 0 ? "Data file" :"Metadata" }</div>
-                <div className=" flex justify-center items-center w-full text-[#727272] ">Rating out of 5 <BsFillStarFill className=" ml-3"/><BsFillStarFill /><BsFillStarFill /><BsFillStarFill /><BsFillStarFill /></div>
+                <div className=" w-[350px] text-dtech-main-dark absolute z-20">Insights &gt; Dataset Quality &gt; {selectedLabel == 0 ? "Data file" : "Metadata"}</div>
+                <div className=" flex justify-center items-center w-full text-[#727272] ">{selectedLabel == 0 ? "Data file quality scores out of 5" : "Metadata quality scores out of 5"}<BsFillStarFill className=" ml-3" /><BsFillStarFill /><BsFillStarFill /><BsFillStarFill /><BsFillStarFill /></div>
             </div>
             <div className="text-sm hidden sm:block text-dtech-dark-grey my-4">
                 {selectedLabel == 0 ? (
@@ -127,7 +127,7 @@ const QualityInsightsBody = () => {
                         individual dimensions are listed below.
                     </div>
                 ) : (
-                        <div className="my-8 text-sm text-dtech-dark-grey text-center mx-[180px]">
+                    <div className="my-8 text-sm text-dtech-dark-grey text-center mx-[180px]">
                         The metadata quality of all datasets of this
                         organisation has been algorithmically estimated based on
                         the &nbsp;
@@ -148,7 +148,7 @@ const QualityInsightsBody = () => {
                     <Tab.List className={"flex flex-row items-center justify-center"}>
                         {menuItems.map((item, index) => {
                             return (
-                                <div key={index} className={clsx("w-full text-center focus:text-green-200", )}>
+                                <div key={index} className={clsx("w-full text-center focus:text-green-200",)}>
                                     <Tab onClick={item.onClick} className={clsx(selectedLabel != index && " !text-dtech-dark-teal border-b-2 border-b-dtech-dark-teal")} >
                                         {item.label}
                                     </Tab>
@@ -177,32 +177,32 @@ const QualityInsightsBody = () => {
                                         ?
                                         <><th className="sm:w-[15%] p-2 text-xs sm:text-sm text-center pb-4">Overall
                                             <InfoIcon
-                                            tooltipClassName=" max- max-w-sm  !bg-dtech-dark-teal"
+                                                tooltipClassName=" max- max-w-sm  !bg-dtech-dark-teal"
                                                 iconClasses="text-dtech-dark-teal ml-1"
                                                 title={`${items['overallScore'].tooltipTitle}`}
-                                        /></th>
+                                            /></th>
                                             <th className="sm:w-[15%] p-2 text-xs sm:text-sm text-center pb-4">Accuracy
                                                 <InfoIcon
                                                     tooltipClassName=" max- max-w-sm  !bg-dtech-dark-teal"
-                                                iconClasses="text-dtech-dark-teal ml-1"
+                                                    iconClasses="text-dtech-dark-teal ml-1"
                                                     title={`${items['accuracy'].tooltipTitle}`}
                                                 /></th>
                                             <th className="sm:w-[15%] p-2 text-xs sm:text-sm text-center pb-4">Clarity
                                                 <InfoIcon
                                                     tooltipClassName=" max- max-w-sm  !bg-dtech-dark-teal"
-                                                iconClasses="text-dtech-dark-teal ml-1"
+                                                    iconClasses="text-dtech-dark-teal ml-1"
                                                     title={`${items['clarity'].tooltipTitle}`}
                                                 /></th>
                                             <th className="sm:w-[15%] p-2 text-xs sm:text-sm text-center pb-4">Consistency
                                                 <InfoIcon
                                                     tooltipClassName=" max-w-2xl !bg-dtech-dark-teal"
-                                                iconClasses="text-dtech-dark-teal ml-1"
+                                                    iconClasses="text-dtech-dark-teal ml-1"
                                                     title={`${items['consistency'].tooltipTitle}`}
                                                 /></th>
                                             <th className="sm:w-[15%] p-2 text-xs sm:text-sm text-center pb-4">Readiness
                                                 <InfoIcon
                                                     tooltipClassName=" max- max-w-sm  !bg-dtech-dark-teal"
-                                                iconClasses="text-dtech-dark-teal ml-1"
+                                                    iconClasses="text-dtech-dark-teal ml-1"
                                                     title={`${items['readiness'].tooltipTitle}`}
                                                 /></th></>
                                         :
@@ -228,19 +228,19 @@ const QualityInsightsBody = () => {
                                             <th className="sm:w-[15%] p-2 text-xs sm:text-sm text-center pb-4">Findability
                                                 <InfoIcon
                                                     tooltipClassName=" max-w-2xl !bg-dtech-dark-teal"
-                                                iconClasses="text-dtech-dark-teal ml-1"
+                                                    iconClasses="text-dtech-dark-teal ml-1"
                                                     title={`${items['findability'].tooltipTitle}`}
                                                 /></th>
                                             <th className="sm:w-[15%] p-2 text-xs sm:text-sm text-center pb-4">Interoperability
                                                 <InfoIcon
                                                     tooltipClassName=" max-w-2xl !bg-dtech-dark-teal"
-                                                iconClasses="text-dtech-dark-teal ml-1"
+                                                    iconClasses="text-dtech-dark-teal ml-1"
                                                     title={`${items['interoperability'].tooltipTitle}`}
                                                 /></th>
                                             <th className="sm:w-[15%] p-2 text-xs sm:text-sm text-center pb-4">Reusability
                                                 <InfoIcon
                                                     tooltipClassName=" max-w-2xl !bg-dtech-dark-teal"
-                                                iconClasses="text-dtech-dark-teal ml-1"
+                                                    iconClasses="text-dtech-dark-teal ml-1"
                                                     title={`${items['reusability'].tooltipTitle}`}
                                                 /></th></>
                                 }
@@ -444,6 +444,6 @@ const QualityInsightsBody = () => {
 //             starRating: value
 //         };
 //     })
-    // return data
+// return data
 // }
 export default QualityInsightsBody;

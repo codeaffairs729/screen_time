@@ -86,7 +86,7 @@ const DatasetDetail = ({ dataset }: { dataset: Dataset | undefined }) => {
         };
 
         loadImage();
-    }, []);
+    }, [query]);
     if (typeof window !== "undefined") {
         const previousPath = localStorage.getItem("previous_path");
         if (previousPath?.includes("/search?q=") && dataset) {
@@ -111,7 +111,6 @@ const DatasetDetail = ({ dataset }: { dataset: Dataset | undefined }) => {
             window.removeEventListener('scroll', handleScroll);
         };
     }, []);
-
     useEffect(() => {
         const handleResize = () => {
             setIsMobile(window.innerWidth < 640); // Adjust the breakpoint as needed

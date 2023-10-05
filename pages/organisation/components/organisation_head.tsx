@@ -157,7 +157,7 @@ const MetaInfoEntity = ({
                 document.removeEventListener("click", handleOutsideClick);
         }, [ref]);
     }
-    
+
     return (
         <div className="flex mr-8 w-full "
             ref={myRef}
@@ -188,7 +188,7 @@ const MetaInfoEntity = ({
                         })}
                     </div>
                     {<div onClick={handleSearchBlur}
-                        className={viewAll ? ` bg-black absolute opacity-90 h-[3000px] -right-4 sm:h-[3000px]  w-screen flex items-center  z-20` : "hidden"}></div>}
+                        className={viewAll ? ` bg-black fixed opacity-50 h-[3000px] top-0 left-0 right-0 bottom-0 sm:h-[3000px]  w-screen flex items-center  z-20` : "hidden"}></div>}
                     {viewAll && <div className="flex flex-wrap flex-row px-6 py-4 sm:w-[616px] w-xs bg-white absolute z-20 rounded-xl border-[2px] border-[#6DCDCB]">
                         <div className="flex justify-between w-full pb-4"><div>{entityName}</div><div className=" cursor-pointer" onClick={() => setViewAll(!viewAll)}><img src="/images/provider-detail-page/close.svg" /></div></div>
                         {entities.map((entity, index) => {
