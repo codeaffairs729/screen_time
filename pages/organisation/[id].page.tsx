@@ -160,7 +160,7 @@ const OrganisationDetailPage = ({
                             <p className="text-center text-2xl font-bold  px-[37px] py-[18px] bg-[#0E9A8E] bg-opacity-60 text-white">
                                 Data Provider
                             </p>
-                            <span></span><img src={logoImage.replace("","")} />
+                            <span></span>
                             <div ref={imageRef} className=" rounded-full min-h-[100px] min-w-[100px]">
                                 <a href={`${organisation.url}`} target="_blank" rel="noreferrer" className="h-full w-full overflow-hidden bg-white bg-opacity-80 rounded-full relative flex items-center justify-center">
                                     {logoImage &&<Image
