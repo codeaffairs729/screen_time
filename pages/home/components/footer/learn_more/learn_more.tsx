@@ -41,10 +41,10 @@ const LearnMoreObjects = [
 const LearnMore = () => {
     return (
         <div className="flex flex-col w-1/2">
-            <div className=" my-4 font-bold sm:text-lg">Learn More</div>
+            <div className=" my-4 font-[700] sm:text-[19px]">Learn More</div>
             <div className=" flex flex-row h-[100%]">
-                <div className=" bg-dtech-light-teal w-[2px] mr-4 "></div>
-                <div className=" text-dtech-main-grey">
+                <div className=" bg-[#6E498E] w-[2px] mr-4 "></div>
+                <div className=" text-dtech-main-grey sm:font-[400] sm:text-[16px]">
                     {LearnMoreObjects.map((item: any, index: number) => (
                         <div key={index}>
                             <CustomLink item={item} />

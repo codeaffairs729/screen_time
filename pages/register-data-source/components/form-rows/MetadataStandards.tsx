@@ -34,7 +34,7 @@ const MetadataStandards = ({ vm }: { vm: any }) => {
             <FormRow
                 label="Metadata standards"
                 required={false}
-                tooltip={formRowToolTipData.site_url}
+                tooltip={formRowToolTipData.metadata_standards}
                 className=" md:w-auto flex-col sm:!mb-8"
                 labelClass="sm:text-[19px]"
                 iconClass="sm:h-[19px] sm:w-[19px] text-black"

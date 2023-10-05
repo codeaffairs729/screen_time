@@ -39,7 +39,6 @@ const Register = () => {
                             <SiteUrl vm={vm} />
                             <Domain vm={vm} />
                             <DownloadStatus vm={vm} />
-                            <ContactEmail vm={vm} />
                             <SiteName vm={vm} />
                             <UsageRights vm={vm} />
                             <MetadataLevel vm={vm} />
@@ -74,6 +73,7 @@ const Register = () => {
                                     <DataProviderType vm={vm} />
                                     <MetadataStandards vm={vm} />
                                     <SitemapAvailability vm={vm} />
+                                    <ContactEmail vm={vm} />
                                     <Comment vm={vm} />
                                 </div>
                             </div>

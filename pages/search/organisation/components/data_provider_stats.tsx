@@ -20,6 +20,7 @@ const DataproviderStats = ({ stats,className }: { stats: DataStats, className?: 
                             alt=""
                             height={30}
                             width={30}
+                            className="!w-6 !h-6 !min-w-0 !min-h-0"
                         />
                         <span className="ml-2 font-normal text-base">
                             {datasetsCount}
@@ -32,7 +33,9 @@ const DataproviderStats = ({ stats,className }: { stats: DataStats, className?: 
 
                 <div className="flex flex-col justify-center items-center">
                     <div className="flex flex-row justify-center items-center ">
-                        <BsHeartFill className=" w-6 h-6 text-[#333333] " />
+                        <span className="w-[30px] h-[30px] flex">
+                            <BsHeartFill className=" w-6 h-6 text-[#333333] m-auto" />
+                        </span>
                         <span className="ml-2 font-normal text-base">
                             {favoritesCount}
                         </span>
@@ -44,7 +47,9 @@ const DataproviderStats = ({ stats,className }: { stats: DataStats, className?: 
 
                 <div className="flex flex-col justify-center items-center">
                     <div className="flex flex-row justify-center items-center ">
-                        <BsEyeFill className=" w-6 h-6 text-[#333333] " />
+                        <span className="w-[30px] h-[30px] flex">
+                            <BsEyeFill className=" w-6 h-6 text-[#333333] m-auto" />
+                        </span>
                         <span className="ml-2 font-normal text-base">
                             {viewCount}
                         </span>
@@ -61,6 +66,7 @@ const DataproviderStats = ({ stats,className }: { stats: DataStats, className?: 
                             alt=""
                             height={30}
                             width={30}
+                            className="!w-6 !h-6 !min-w-0 !min-h-0"
                         />
                         <span className="ml-2 font-normal text-base">
                             {downloadCount}

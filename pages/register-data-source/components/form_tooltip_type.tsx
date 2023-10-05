@@ -14,9 +14,11 @@ export interface ToolTipJson {
     contact_email: string;
     comment: string;
     usage_rights: string;
+    usage_rights_other: string;
     update_frequency: string;
     metadata_standards_other:string;
     data_type_other:string;
     data_management_system_other:string;
     data_provider_type:string;
+    metadata_availability: string;
 }
