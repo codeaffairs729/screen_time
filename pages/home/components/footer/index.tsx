@@ -7,7 +7,7 @@ const Footer = () => {
         <div className="  bg-[#EBEBEB]" style={{
             // background: "linear-gradient(to bottom, #B585B770, #6DCDCB59)"
         }}>
-            <div className=" sm:py-6 sm:px-[10%] ">
+            <div className=" sm:pt-[130px] sm:px-[10%] ">
                 <div className="flex flex-col sm:flex-row sm:px-[10%] px-6 max-w-full bg-white ">
                     <div className="flex flex-row sm:w-2/3 sm:px-2 sm:py-4 ">
                         <Resources />
@@ -18,14 +18,14 @@ const Footer = () => {
                     </div>
                 </div>
             </div>
-            <div className="flex flex-row bg-white items-center justify-center mt-1   p-2 sm:py-6 sm:px-[10%]">
+            <div className="flex flex-row items-end justify-center mt-1 p-2 sm:py-6 sm:px-[10%]">
                 <Link href="/">
                     <img src="/images/dtechtive_without_tagline.png" width={100}></img>
                 </Link>
-                <div className=" bg-dtech-main-dark w-[2px] mx-4 h-16">
+                <div className=" bg-[#6E498E] w-[2px] mx-4 h-[30px]">
                 </div>
-                <div className="flex flex-col sm:text-sm text-xs text-dtech-main-grey">
-                    <div className=" text-dtech-light-teal">Proudly brought to you by <a href="https://dtime.ai/home" rel="noreferrer" target="_blank"><span className=" font-bold text-dtech-new-main-light">DTIME.AI ©2023.</span></a>
+                <div className="flex flex-col sm:text-[16px] text-xs text-dtech-main-grey">
+                    <div className=" text-[#727272] font-[400]">Proudly brought to you by <a href="https://dtime.ai/home" rel="noreferrer" target="_blank"><span className=" font-[500] text-dtech-new-main-light">DTIME.AI ©2023.</span></a>
                     </div>
                 </div>
 

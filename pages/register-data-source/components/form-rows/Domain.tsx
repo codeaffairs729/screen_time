@@ -58,38 +58,19 @@ const Domain = ({ vm }: { vm: any }) => {
                         },
                     }}
                     options={[
-                        {
-                            value: "environment",
-                            label: "Environment",
-                        },
-                        {
-                            value: "health",
-                            label: "Health",
-                        },
-                        {
-                            value: "transport",
-                            label: "Transport",
-                        },
-                        {
-                            value: "education",
-                            label: "Education",
-                        },
-                        {
-                            value: "finance",
-                            label: "Finance",
-                        },
-                        {
-                            value: "energy",
-                            label: "Energy",
-                        },
-                        {
-                            value: "employment",
-                            label: "Employment",
-                        },
-                        {
-                            value: "other",
-                            label: "Other",
-                        },
+                        { value: "envnat", label: "Environment and nature" },
+                        { value: "govpub", label: "Government and public sector" },
+                        { value: "hlthcare", label: "Health and care" },
+                        { value: "popsoc", label: "Population and society" },
+                        { value: "agrfisfor", label: "Agriculture, fisheries and forestry" },
+                        { value: "busecofin", label: "Business, economics and finance" },
+                        { value: "culsprt", label: "Culture, leisure and sport" },
+                        { value: "crimjus", label: "Crime and justice" },
+                        { value: "edu", label: "Education" },
+                        { value: "engy", label: "Energy" },
+                        { value: "geo", label: "Geography" },
+                        { value: "sctech", label: "Science and technology" },
+                        { value: "trinfra", label: "Transport and infrastructure" },
                     ]}
                     placeholder="Select Domains"
                 />

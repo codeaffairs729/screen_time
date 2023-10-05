@@ -3,10 +3,10 @@
     "site_name": "Name of the data provider organisation.",
     "sitemap_exists": "Website blueprint to assist search engines find, crawl and index website's content.",
     "sitemap_url": "Web page where the sitemap is available.",
-    "metadata_standards": "Standards and schemas for structuring and understanding data.",
+    "metadata_standards": "Metadata standards for a dataset are established guidelines and formats used to describe and organise information about the contents, structure, and other relevant attributes of a dataset, facilitating its discoverability, usability, and interoperability.",
     "metadata_standards_other": "Other Metadata standards separated by comma",
     "metadata_level": "Metadata may be readily available and accessible.",
-    "downloadable_status": "Available for immediate download to user's device.",
+    "downloadable_status": "Data files can be downloaded without logging in or making payments.",
     "domain": "High-level domains that the datasets belong to.",
     "domain_other": "Other Domains separated by comma",
     "data_type": "Based on the types of values variables in the dataset have.",
@@ -16,7 +16,9 @@
     "data_duplication": "Possibility of finding a significant number of same datasets from another source.",
     "contact_email": "Email address of the data provider organisation.",
     "comment": "Any additional information.",
-    "usage_rights": "Legal permissions, conditions and limitations on usage.",
+    "usage_rights": "Denotes how the data files can be obtained. - Open: Available to use, free of charge, without a user account. - Semi-open: Available to use, free of charge, via a free user account. - Restricted: Access to the data involves an application process, possibly for reasons of security or sensitivity of the subject matter (application fees may apply). - Closed: Available on a commercial basis only (whether the commercial model is a one-time fee or a subscription).",
+    "usage_rights_other": "Other Usage Rights separated by comma",
     "update_frequency": "Frequency of updating the datasets in the data source.",
-    "data_provider_type":"Is the data provider a host, owner or both?"
+    "data_provider_type":"Is the data provider a host, owner or both?",
+    "metadata_availability": "Metadata refers to the title, description and other information about the contents, structure, and relevant attributes of a dataset that help's users understand and effectively use the dataset."
 }

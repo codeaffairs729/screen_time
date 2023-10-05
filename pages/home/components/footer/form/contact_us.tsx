@@ -36,14 +36,14 @@ const ContactUs = () => {
     };
     return (
         <div className="flex flex-col w-full ">
-            <div className=" my-4 font-bold sm:text-lg">Say Hello 👋</div>
+            <div className=" my-4 font-[700] sm:text-[19px]">Say Hello 👋</div>
             <div className=" flex flex-row w-full ">
-                <div className=" bg-dtech-light-teal min-w-[2px] mr-4 "></div>
+                <div className=" bg-[#6E498E] min-w-[2px] mr-4 "></div>
                 <div className="flex flex-col w-full">
                     <div className="mb-2">
                         <FormRow
                             label="Name"
-                            className="!bg-transparent text-[#333333] !text-base -m-2 sm:!text-md"
+                            className="!bg-transparent text-[#333333] !text-base -m-2 sm:!text-[16px] sm:!font-[700]"
                         >
                             {" "}
                         </FormRow>
@@ -55,7 +55,7 @@ const ContactUs = () => {
                     </div>
                     <TextField
                         className=" -mt-6 !static w-[100%]  sm:-mt-8 rounded-xl !bg-transparent"
-                        textfieldClassName="!bg-white !rounded-full "
+                        textfieldClassName="!bg-white border-0 border-b border-[#C3C3C3] rounded-none "
                         formControl={{
                             control: vm.form.control,
                             name: "name",
@@ -73,19 +73,19 @@ const ContactUs = () => {
                     <div className="my-4">
                         <FormRow
                             label="Email"
-                            className=" !bg-transparent text-[#333333] !text-base -m-2 sm:mt-0 sm:!text-md"
+                            className=" !bg-transparent text-[#333333] !text-base -m-2 sm:mt-0 sm:!text-[16px] sm:!font-[700]"
                         >
 
                         </FormRow>
-                        {/* <InfoIcon
+                        <InfoIcon
                             tooltipClassName="w-60 !bg-dtech-dark-teal"
                             iconClasses="text-[#333333] -mt-[46px] !ml-[52px] sm:ml-16"
                             title="Enter your email ID. If signing up as an organisation admin, enter your organisation email ID."
-                        /> */}
+                        />
                     </div>
                     <TextField
                         className=" sm:-mt-2 !static w-[100%] rounded-xl !bg-transparent "
-                        textfieldClassName="!bg-white !rounded-full"
+                        textfieldClassName="!bg-white border-0 border-b border-[#C3C3C3] rounded-none"
                         formControl={{
                             control: vm.form.control,
                             name: "email",
@@ -105,14 +105,19 @@ const ContactUs = () => {
                     <div className="my-4">
                         <FormRow
                             label="Message"
-                            className="!bg-transparent text-[#333333] !text-base -m-2 sm:!text-md"
+                            className="!bg-transparent text-[#333333] !text-base -m-2 sm:!text-[16px] sm:!font-[700]"
                         >
                             {" "}
                         </FormRow>
+                        <InfoIcon
+                            tooltipClassName="w-60 !bg-dtech-dark-teal"
+                            iconClasses="text-[#333333] -mt-[46px] !ml-18 sm:!ml-[75px]"
+                            title="Enter your message"
+                        />
                     </div>
                     <TextField
                         className=" !-mt-2 sm:-mt-8 !static w-[100%] rounded-xl !bg-transparent "
-                        textfieldClassName="!bg-white !rounded-full"
+                        textfieldClassName="!bg-white border-0 border-b border-[#C3C3C3] rounded-none"
                         placeholder="Enter Message"
                         formControl={{
                             control: vm.form.control,
@@ -123,7 +128,7 @@ const ContactUs = () => {
                         }}
                         errorPosition={true}
                     />
-                    <div className="my-4 text-dtech-main-grey">You can enter up to 100 characters</div>
+                    <div className="my-4 text-dtech-main-grey"></div>
                     <ReCAPTCHA
                         sitekey={siteKey}
                         ref={captchaRef}

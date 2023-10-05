@@ -9,7 +9,7 @@ const MetadataLevel = ({ vm }: { vm: any }) => {
         <FormRow
             label="Metadata availability"
             required={true}
-            tooltip={formRowToolTipData.site_url}
+            tooltip={formRowToolTipData.metadata_availability}
             className=" md:w-auto flex-col sm:!mb-8"
             labelClass="sm:text-[19px]"
             iconClass="sm:h-[19px] sm:w-[19px] text-black"
