@@ -51,19 +51,19 @@ const Cite = ({ citation, url }: { citation: string, url: string }) => {
     return (
         <div className="">
             {<div onClick={handleSearchBlur}
-                className={viewAll ? ` bg-black absolute opacity-50 h-[3000px] top-0 right-0 sm:h-[3000px]  w-screen flex items-center  z-20` : "hidden"}></div>}
+                className={viewAll ? ` bg-black absolute opacity-90 h-[3000px] top-0 right-0 sm:h-[3000px]  w-screen flex items-center  z-20` : "hidden"}></div>}
             <div data-tip data-for="dtechtive-cite-btn-tooltip" className=" flex flex-col justify-center items-center"
                 onClick={() => setViewAll(!viewAll)}
             >
                 <div className="hover:bg-[#6DCDCB] hover:bg-opacity-[55%] p-1">
                     <Image src={CiteQuotes} />
                 </div>
-                <div className="text-dtech-new-main-light text-base font-roboto">
+                <div className="text-[#727272] text-base font-roboto">
                     Cite
-                    <ReactTooltip id="dtechtive-cite-btn-tooltip" textColor={'white'} backgroundColor="#4CA7A5" >Cite</ReactTooltip>
+                    <ReactTooltip id="dtechtive-cite-btn-tooltip" textColor={'white'} backgroundColor="#4CA7A5" >View and copy citation</ReactTooltip>
                 </div>
             </div>
-            {viewAll && <div className="flex flex-wrap flex-row px-6 py-4 w-full lg:w-1/2 text-[#000000] w-xs bg-white absolute left-[0%] lg:left-[25%] z-20 rounded-xl">
+            {viewAll && <div className="flex flex-wrap flex-row px-6 py-4 w-full lg:w-1/2 text-[#000000] w-xs bg-white absolute left-[0%] lg:left-[25%] z-20 rounded-xl border-[2px]  border-[#6DCDCB] ">
                 <div className="flex justify-between w-full pb-4">
                     <div className=" w-[50%] pb-1 border-b-2">Cite</div>
                     <div className=" cursor-pointer" onClick={() => setViewAll(!viewAll)}><img src="/images/provider-detail-page/close.svg" /></div>

@@ -21,10 +21,14 @@ const ResultCardAction = ({
     className = "",
 }: ResultCardActionProps) => {
     const [share, setShare] = useState(false);
+
     if (!data) {
         return null;
     }
     const onFav = () => setData({ ...data, isFavourited: !data.isFavourited });
+    const handleClosePopup = () => {
+        setShare(false);
+    };
 
     return (
         // <div>
@@ -93,9 +97,13 @@ const ResultCardAction = ({
                                         {"Share on social media"}
                                     </ReactTooltip>
                                 </Menu.Button>
-                                <Transition show={open}>
+                                <Transition show={open && share}>
                                     <Menu.Items static className="">
-                                        <Popup href={href} dataset={data.title} />
+                                        <Popup
+                                            href={href}
+                                            dataset={data.title}
+                                            onClose={handleClosePopup}
+                                        />
                                     </Menu.Items>
                                 </Transition>
                             </>

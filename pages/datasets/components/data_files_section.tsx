@@ -16,17 +16,18 @@ import {
 import InfoAlert from "components/UI/alerts/info_alert";
 import { BiDownload } from "react-icons/bi";
 import { AiFillEye } from "react-icons/ai";
+import Http from "common/http";
 
 const META_FILE_HEADERS = ["Name", "Format", "Size", "Download", "Preview"];
 
-const DataFilesSection = ({ goToPreview, scrollLeft, setScrollLeft, setHighlightedDot }: { goToPreview: () => void, scrollLeft:any, setScrollLeft: any, setHighlightedDot:any }) => {
+const DataFilesSection = ({ goToPreview, scrollLeft, setScrollLeft, setHighlightedDot }: { goToPreview: () => void, scrollLeft: any, setScrollLeft: any, setHighlightedDot: any }) => {
     const vm = useContext(DatasetDetailVMContext);
     const user = useSelector((state: RootState) => state.auth.user);
     const { createFeedbackNotification } = useContext(NotificationsVMContext);
     // const [scrollLeft, setScrollLeft] = useState(0);
     // const [highlightedDot, setHighlightedDot] = useState(0);
 
-    const handleScroll = (event:any) => {
+    const handleScroll = (event: any) => {
         const scrollableContent = event.currentTarget;
         const scrollWidth = scrollableContent.scrollWidth - scrollableContent.clientWidth;
         const ratio = scrollableContent.scrollLeft / scrollWidth;
@@ -58,7 +59,7 @@ const DataFilesSection = ({ goToPreview, scrollLeft, setScrollLeft, setHighlight
             return () => {
                 scrollableDiv.removeEventListener('scroll', handleScroll);
             };
-        } 
+        }
 
     }, []);
 
@@ -94,27 +95,30 @@ const DataFilesSection = ({ goToPreview, scrollLeft, setScrollLeft, setHighlight
         });
     };
     const urls = vm.dataset.urls?.filter(obj => obj.format !== null);
-    if (!urls.length) {
-        return (
-            <InfoAlert
-                message="There is no data to show"
-                className="mt-5 ml-20 mr-32"
-                messageClassName="ml-56 font-semibold !text-lg !text-blue-800"
-                divClassName="flex flex-row"
-            />
-        );
-    }
+    // if (!urls.length) {
+    //     return (
+    //         <InfoAlert
+    //             message="There is no data to show"
+    //             className="mt-5 ml-20 mr-32"
+    //             messageClassName="ml-56 font-semibold !text-lg !text-blue-800"
+    //             divClassName="flex flex-row"
+    //         />
+    //     );
+    // }
     return (
         <div className="max-w-screen">
             <div className="flex flex-col font-semibold items-left mb-1 ">
                 <span>Data Files({urls?.length})</span>
-                <div className=" mt-4 font-normal  text-sm text-[#727272]">
+                {urls?.length >0?<div className=" mt-4 font-normal  text-sm text-[#727272]">
                     All the data files available for this dataset are listed in the
                     table below.
-                </div>
+                </div>:
+                <div className=" mt-4 font-normal  text-sm text-[#727272]">
+                    The data files for this dataset are not directly accessible.
+                </div>}
             </div>
 
-            <div className="overflow-x-scroll no-scrollbar " id="scrollable-div" onScroll={handleScroll}>
+            {urls?.length > 0 &&<div className="overflow-x-scroll no-scrollbar " id="scrollable-div" onScroll={handleScroll}>
                 <table
                     className="min-w-max sm:min-w-full w-full table-auto text-sm text-center"
                     cellPadding={5}
@@ -145,6 +149,7 @@ const DataFilesSection = ({ goToPreview, scrollLeft, setScrollLeft, setHighlight
                                         key={i}
                                         goToPreview={goToPreview}
                                         onDownload={() => {
+                                            vm.dataset !== undefined && Http.post(`/v1/datasets/${vm.dataset.id}/downloads`);
                                             vm.dataset !== undefined &&
                                                 usereventDatasetDownload(
                                                     vm.dataset,
@@ -193,7 +198,7 @@ const DataFilesSection = ({ goToPreview, scrollLeft, setScrollLeft, setHighlight
                     </tbody>
 
                 </table>
-            </div>
+            </div>}
 
         </div>
     );
@@ -227,7 +232,7 @@ const DataFileRow = ({
                 className={`bg-[#EBEBEB] hover:bg-dtech-light-teal hover:bg-opacity-50  !hover:text-white    ${preview && "bg-dtech-light-teal  bg-opacity-50"
                     }`}
             >
-                <td className={`sm:px-6 text-center whitespace-nowrap  border-4 border-white text-[#2D2D32]  ${preview &&"border-b-dtech-new-main-light border-4 border-dtech-main-dark border-b-[3px]"}`}>
+                <td className={`sm:px-6 text-center whitespace-nowrap  border-4 border-white text-[#2D2D32]  ${preview && "border-b-dtech-new-main-light border-4 border-dtech-main-dark border-b-[3px]"}`}>
                     <div className="flex justify-center items-center font-normal text-lg text-center ">{`${description}`}</div>
                 </td>
                 <td className={`sm:px-6 text-center border-4 border-white  text-[#2D2D32]   ${preview && "border-b-dtech-new-main-light border-4 border-dtech-main-dark border-b-[3px]"}`}>
@@ -249,6 +254,8 @@ const DataFileRow = ({
                             href={url.url?.replace(/["']/g, "")}
                             className="underline"
                             download
+                            target="_blank"
+                            rel="noreferrer"
                             ref={downloadRef}
                             id="downloadAll"
                         >
@@ -275,10 +282,10 @@ const DataFileRow = ({
                                 size={24}
                                 onClick={() => {
                                     setPreview(!preview);
-                                    }}
-                                    onMouseDown={() => setIsActive(!isActive)}
-                                    onMouseUp={() => setIsActive(!isActive)}
-                                    className={`mx-auto text-lg cursor-pointer text-[#727272] `}
+                                }}
+                                onMouseDown={() => setIsActive(!isActive)}
+                                onMouseUp={() => setIsActive(!isActive)}
+                                className={`mx-auto text-lg cursor-pointer text-[#727272] `}
                             />
                         )}
                     </div>

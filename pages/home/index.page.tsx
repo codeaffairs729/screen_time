@@ -98,7 +98,7 @@ const HomePage = ({ home }: { home: any }) => {
 
     return (
         <div className={`flex flex-col relative`}>
-            {<div className={searching ? " bg-black absolute opacity-50 h-full w-full z-40" : "hidden"}></div>}
+            {<div className={searching ? " bg-black absolute opacity-90 h-full w-full z-40" : "hidden"}></div>}
             <img src="/images/home.png" className=" -z-10 absolute hidden sm:block w-full sm:h-[750px] xl:h-[800px] 2xl:h-[900px]" />
             <img src="/images/home_for_mobile.png" width={window.innerWidth} className=" -z-100 absolute sm:hidden block" style={{ height: "570px" }} />
 

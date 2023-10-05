@@ -13,7 +13,7 @@ const Popup = ({ href, dataset, onClose }: PopupProps) => {
     return (
         <div
             id="popup"
-            className="z-10 absolute flex flex-col border-4  right-7 border-[#6DCDCB] bg-white text-sm  py-2 h-28 w-48   my-2 ml-[-75px] mr-4 rounded-lg "
+            className="z-10 absolute flex flex-col border-[2px] border-[#6DCDCB] right-7 bg-white text-sm  py-2 h-28 w-48   my-2 ml-[-75px] mr-4 rounded-lg "
         >
             <div>
                 <AiOutlineClose
