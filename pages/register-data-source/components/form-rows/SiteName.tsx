@@ -7,13 +7,15 @@ const formRowToolTipData: ToolTipJson = require("../form_tooltip.json");
 const SiteName = ({ vm }: { vm: any }) => {
     return (
         <FormRow
-            label="Organisation name"
+            label="Organisation"
             required={true}
             tooltip={formRowToolTipData.site_name}
-            className=" w-screen md:w-auto"
+            className=" md:w-auto flex-col !mb-8"
+            labelClass="sm:text-[19px]"
+            iconClass="sm:h-[19px] sm:w-[19px] text-black"
         >
             <TextField
-                className="w-80"
+                textfieldClassName="border-black rounded-[5px] sm:text-[19px]"
                 formControl={{
                     control: vm.form.control,
                     name: "site_name",
@@ -21,7 +23,7 @@ const SiteName = ({ vm }: { vm: any }) => {
                         required: "Organisation is required",
                     },
                 }}
-                placeholder="E.g. US Health Department"
+                placeholder="Enter Organisation"
             />
         </FormRow>
     );

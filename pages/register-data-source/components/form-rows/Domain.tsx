@@ -43,10 +43,13 @@ const Domain = ({ vm }: { vm: any }) => {
                 label="Domain"
                 required={true}
                 tooltip={formRowToolTipData.domain}
-                className=" w-screen md:w-auto"
+                className=" md:w-auto flex-col sm:!mb-8"
+                labelClass="sm:text-[19px]"
+                iconClass="sm:h-[19px] sm:w-[19px] text-black"
             >
                 <DropdownFieldMulti
-                    className="w-80"
+                    inputfieldClassName="border-black rounded-[5px] sm:text-[19px]"
+                    newDropdownIcon={true}
                     formControl={{
                         control: vm.form.control,
                         name: "domain",
@@ -88,7 +91,7 @@ const Domain = ({ vm }: { vm: any }) => {
                             label: "Other",
                         },
                     ]}
-                    placeholder=""
+                    placeholder="Select Domains"
                 />
             </FormRow>
             {showOther && (
@@ -97,9 +100,12 @@ const Domain = ({ vm }: { vm: any }) => {
                         label="Domain (other)"
                         tooltip={formRowToolTipData.domain_other}
                         required={true}
+                        className=" md:w-auto flex-col sm:!mb-8"
+                        labelClass="sm:text-[19px]"
+                        iconClass="sm:h-[19px] sm:w-[19px] text-black"
                     >
                         <TextField
-                            className="w-80"
+                            textfieldClassName="border-black rounded-[5px] sm:text-[19px]"
                             formControl={{
                                 control: vm.form.control,
                                 name: "domain_other",

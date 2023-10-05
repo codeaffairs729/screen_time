@@ -11,10 +11,12 @@ const ContactEmail = ({ vm }: { vm: any }) => {
             label="Contact email"
             required={true}
             tooltip={formRowToolTipData.contact_email}
-            className=" w-screen md:w-auto"
+            className=" md:w-auto flex-col !mb-8"
+            labelClass="sm:text-[19px]"
+            iconClass="sm:h-[19px] sm:w-[19px] text-black"
         >
             <TextField
-                className="w-80"
+                textfieldClassName="border-black rounded-[5px] sm:text-[19px]"
                 type="email"
                 formControl={{
                     control: vm.form.control,
@@ -28,7 +30,7 @@ const ContactEmail = ({ vm }: { vm: any }) => {
                         },
                     },
                 }}
-                placeholder="E.g. info@healthdata.gov"
+                placeholder="Enter Contact Email"
             />
         </FormRow>
     );
