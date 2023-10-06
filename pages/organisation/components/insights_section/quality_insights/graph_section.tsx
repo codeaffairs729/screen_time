@@ -44,13 +44,13 @@ const GraphSection = ({ items }: { items: any }) => {
         let totalSum = 0;
         let totalCount = 0;
 
-        ratings.forEach(ratingObj => {
+        ratings?.forEach(ratingObj => {
             const [ratingValue, count] = Object.entries(ratingObj)[0];
             totalSum += Number(ratingValue) * count;
             totalCount += count;
         });
 
-        const ratingPercentages: RatingObject[] = ratings.map(ratingObj => {
+        const ratingPercentages: RatingObject[] = ratings?.map(ratingObj => {
             const [ratingValue, count] = Object.entries(ratingObj)[0];
             const percentage = (count / totalCount) * 100;
             return { [ratingValue]: percentage };
