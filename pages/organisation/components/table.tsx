@@ -19,7 +19,7 @@ const Table = ({
     const handleDotClick = (index: any) => {
         setCurrentSlide(index);
     };
-    if (!tableData.length) {
+    if (!tableData?.length) {
         return <InfoAlert message="There is no data to show" className="mt-1 ml-20 mr-32" messageClassName="ml-56 font-semibold !text-lg !text-blue-800" divClassName="flex flex-row" />;
     }
     return (

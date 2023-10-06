@@ -94,7 +94,7 @@ const Report = ({ isReportGenerated, setIsReportGenerated }: { isReportGenerated
             downloadCounts.push(1);
         });
     });
-    const tableData = regions.map((region: any) => [
+    const tableData = regions?.map((region: any) => [
         region?.name,
         region?.count,
         getAge(region.date),
@@ -386,13 +386,13 @@ const getTableDataForSearchTerms = (searchTerms: SearchTermType[]) =>
     });
 const getRating = (ratings: any, index: any) => {
     let rating;
-    if (ratings.length == 6) {
+    if (ratings?.length == 6) {
         rating = ratings.slice(1).map((rate: any, index: any) => ({
             name: index + 1,
             rating: rate[index + 1],
         }));
     } else {
-        rating = ratings.map((rate: any, index: any) => ({
+        rating = ratings?.map((rate: any, index: any) => ({
             name: index + 1,
             rating: rate[index + 1],
         }));
@@ -403,17 +403,17 @@ const getRating = (ratings: any, index: any) => {
 const getAvg = (ratings: any, label: any) => {
         let ratingSum;
     let count;
-        const ratingData = ratings.map(
+        const ratingData = ratings?.map(
             (rate: any, index: number) => {
                 return rate[index / 2]
             }
         );
-        count = ratingData.reduce(
+        count = ratingData?.reduce(
             (accumulator: any, curValue: any) => accumulator + curValue,
             0
         );
 
-        ratingSum = ratings.reduce((accumulator: any, curValue: any) => {
+        ratingSum = ratings?.reduce((accumulator: any, curValue: any) => {
             const rating = parseFloat(Object.keys(curValue)[0]);
             const value = curValue[rating];
             return accumulator + rating * value;
