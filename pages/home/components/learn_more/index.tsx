@@ -51,7 +51,7 @@ const LearnMore = ({ isMobile}:{ isMobile:boolean}) => {
     return (
         <div>
             <div className={clsx(`w-full py-3 sm:py-16 md:text-3xl text-[19px] overflow-hidden cursor-pointer text-dtech-new-main-light font-bold   ${learnMore ? "!h-full" : "mb-0"} }`)}
-                style={!isMobile ? { backgroundImage: `url(images/bghome.svg)` }
+                style={!isMobile ? { backgroundImage: `url(images/bghome.svg)`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }
                     :
                     { background: `linear-gradient(180deg, rgba(181, 133, 183, 0.53) -33.18%, rgba(109, 205, 203, 0.22) 46.47%, rgba(235, 246, 246, 0) 98.63%)` }}
             >
@@ -69,7 +69,7 @@ const LearnMore = ({ isMobile}:{ isMobile:boolean}) => {
                 </div>
             </div>
             <div className={!learnMore ? "" : "h-full"}
-                style={!isMobile ? { backgroundImage: `url(images/bghome.svg)` } : {}}
+                style={!isMobile ? { backgroundImage: `url(images/bghome.svg)`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover' } : {}}
 
             >
                 <div className={!learnMore ? " hidden" : "block md:mb-20 mb-10"}>
