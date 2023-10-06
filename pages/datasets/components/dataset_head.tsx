@@ -164,11 +164,11 @@ const DatasetHead = ({ dataset }: any) => {
                                 <span className="text-md font-semibold text-[#2D2D32] ">
                                     Owner{""}
                                 </span>
-                                <span className="text-md text-[#0065BD]  font-normal ml-2">
+                                <span className="text-md   font-normal ml-2">
                                     {
                                         dataset?.owner.ownerUrl.indexOf("missing") == -1
-                                            ? <a className="underline" href={dataset.owner.ownerUrl} rel="noreferrer" target="_blank">{dataset.owner.organisation}</a>
-                                            : <div>{dataset.owner.organisation}</div>
+                                            ? <a className="underline text-[#0065BD]" href={dataset.owner.ownerUrl} rel="noreferrer" target="_blank">{dataset.owner.organisation}</a>
+                                            : <div className="text-[#727272]">{dataset.owner.organisation}</div>
                                     }
 
                                 </span>
