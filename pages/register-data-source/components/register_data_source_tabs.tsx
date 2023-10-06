@@ -43,12 +43,12 @@ const RegisterDataSourceTabHeaders = ({
 const getHeader = (user: string) => {
     return [
         {
-            name: "Register",
+            name: "Register data source",
             outlineIcon: cascadeFolderOutline,
             filledIcon: cascadeFolderFilled,
         },
         {
-            name: "View catalogue",
+            name: "View data source catalogue",
             outlineIcon: barGraphOutline,
             filledIcon: barGraphFilled,
         },
