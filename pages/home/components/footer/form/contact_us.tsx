@@ -55,7 +55,7 @@ const ContactUs = () => {
                     </div>
                     <TextField
                         className=" -mt-6 !static w-[100%]  sm:-mt-8 rounded-xl !bg-transparent"
-                        textfieldClassName="!bg-white border-0 border-b border-[#C3C3C3] rounded-none "
+                        textfieldClassName="!bg-[#FBFAFA] border-0 border-b border-[#C3C3C3] rounded-none "
                         formControl={{
                             control: vm.form.control,
                             name: "name",
@@ -85,7 +85,7 @@ const ContactUs = () => {
                     </div>
                     <TextField
                         className=" sm:-mt-2 !static w-[100%] rounded-xl !bg-transparent "
-                        textfieldClassName="!bg-white border-0 border-b border-[#C3C3C3] rounded-none"
+                        textfieldClassName="!bg-[#FBFAFA] border-0 border-b border-[#C3C3C3] rounded-none"
                         formControl={{
                             control: vm.form.control,
                             name: "email",
@@ -117,7 +117,7 @@ const ContactUs = () => {
                     </div>
                     <TextField
                         className=" !-mt-2 sm:-mt-8 !static w-[100%] rounded-xl !bg-transparent "
-                        textfieldClassName="!bg-white border-0 border-b border-[#C3C3C3] rounded-none"
+                        textfieldClassName="!bg-[#FBFAFA] border-0 border-b border-[#C3C3C3] rounded-none"
                         placeholder="Enter Message"
                         formControl={{
                             control: vm.form.control,
@@ -137,7 +137,7 @@ const ContactUs = () => {
                     <div className=" text-red-600">{formError}</div>
                     <PrimaryBtn
                         label="Send"
-                        className="bg-dtech-new-main-light  !rounded-full hover:bg-[#6DCDCB] hover:text-black active:bg-dtech-main-dark active:text-white active:animate-ping max-w-[120px] my-4 !p-5 "
+                        className="bg-dtech-new-main-light  !rounded-full hover:bg-[#6DCDCB] hover:text-black active:bg-dtech-main-dark active:text-white active:animate-ping max-w-[120px] my-4 !py-[12px] !px-[16px]"
                         isLoading={vm.isSendingMail}
                         onClick={async () => {
                             const validated = await vm.form.trigger()

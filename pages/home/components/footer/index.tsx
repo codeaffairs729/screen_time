@@ -8,7 +8,7 @@ const Footer = () => {
             // background: "linear-gradient(to bottom, #B585B770, #6DCDCB59)"
         }}>
             <div className=" sm:pt-[130px] sm:px-[10%] ">
-                <div className="flex flex-col sm:flex-row sm:px-[10%] px-6 max-w-full bg-white ">
+                <div className="flex flex-col sm:flex-row sm:px-[10%] px-6 max-w-full bg-[#FBFAFA] ">
                     <div className="flex flex-row sm:w-2/3 sm:px-2 sm:py-4 ">
                         <Resources />
                         <LearnMore />

@@ -89,11 +89,12 @@ const HomePage = ({ home }: { home: any }) => {
                         <div>
                             <img src="/images/dtechtive_without_tagline.png" width={300} />
                         </div>
-                        <div className=" text-dtech-new-main-light text-white font-bold text-xl sm:text-2xl my-7 sm:w-3/4">
+                        <div className=" text-dtech-new-main-light text-white font-[700] text-xl sm:text-[26px] my-7">
                             Discover the datasets other search engines cannot reach
                         </div>
-                        <div className=" sm:font-bold sm:text-lg text-dtech-new-main-light font-semibold text-sm sm:text-[#333333] mb-7 sm:w-3/4">
-                            We help you discover and obtain insights on open and commercial datasets using the power of AI.                        </div>
+                        <div className=" sm:font-[400] sm:text-[16px] text-dtech-new-main-light font-semibold text-sm sm:text-[#333333] mb-7">
+                            We help you discover and obtain insights on open and commercial datasets using the power of AI.
+                        </div>
                     </div>
                     <div className=" hidden lg:block">
                         {/* <img src="/images/icons/txt.svg" className="mt-[48px] ml-[11.5%] z-10 absolute" /> */}
