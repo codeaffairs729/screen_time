@@ -122,7 +122,7 @@ const CardComponent = ({
             rightArrow={!isMobile?
                 <button
                     // onClick={() => {
-                    //     discoverVM.fetchProviders(dataObjects.length, 4);
+                    //     discoverVM.fetchProviders(dataObjects.length, 4);;
                     // }}
                     style={{
                         background:
