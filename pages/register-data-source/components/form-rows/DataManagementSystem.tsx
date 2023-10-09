@@ -38,7 +38,7 @@ const DataManagementSystem = ({ vm }: { vm: any }) => {
                 iconClass="sm:h-[19px] sm:w-[19px] text-black"
             >
                 <DropdownField
-                    inputClass="border-black rounded-[5px] sm:text-[19px]"
+                    inputClass="border-[#C3C3C3] focus:border-[#C3C3C3] focus:ring-opacity-0 rounded-[5px] sm:text-[19px]"
                     newDropdownIcon={true}
                     formControl={{
                         control: vm.form.control,
@@ -103,7 +103,7 @@ const DataManagementSystem = ({ vm }: { vm: any }) => {
                     iconClass="sm:h-[19px] sm:w-[19px] text-black"
                 >
                     <TextField
-                        textfieldClassName="border-black rounded-[5px] sm:text-[19px]"
+                        textfieldClassName="border-0 border-b border-[#C3C3C3] focus:ring-opacity-0 rounded-none sm:text-[19px]"
                         formControl={{
                             control: vm.form.control,
                             name: "data_management_system_other",

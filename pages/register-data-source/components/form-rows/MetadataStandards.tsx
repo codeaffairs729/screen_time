@@ -3,7 +3,7 @@ import FormRow from "../form_row";
 import { ToolTipJson } from "../form_tooltip_type";
 import { useState } from "react";
 import TextField from "components/UI/form/text_field";
-import RadioButtonField from "components/UI/form/radio_button_field";
+import DropdownField from "components/UI/form/dropdown_field";
 const formRowToolTipData: ToolTipJson = require("../form_tooltip.json");
 
 const MetadataStandards = ({ vm }: { vm: any }) => {
@@ -39,7 +39,9 @@ const MetadataStandards = ({ vm }: { vm: any }) => {
                 labelClass="sm:text-[19px]"
                 iconClass="sm:h-[19px] sm:w-[19px] text-black"
             >
-                <RadioButtonField
+                <DropdownField
+                    inputClass="border-[#C3C3C3] focus:border-[#C3C3C3] focus:ring-opacity-0 rounded-[5px] sm:text-[19px]"
+                    newDropdownIcon={true}
                     formControl={{
                         control: vm.form.control,
                         name: "metadata_standards",
@@ -63,6 +65,7 @@ const MetadataStandards = ({ vm }: { vm: any }) => {
                             label: "Don't know",
                         },
                     ]}
+                    placeholder="Select Metadata standards"
                 />
             </FormRow>
             <div className={`${showOther ? "" : "hidden"}`}>
@@ -74,7 +77,7 @@ const MetadataStandards = ({ vm }: { vm: any }) => {
                     iconClass="sm:h-[19px] sm:w-[19px] text-black"
                 >
                     <TextField
-                        textfieldClassName="border-black rounded-[5px] sm:text-[19px]"
+                        textfieldClassName="border-0 border-b border-[#C3C3C3] focus:ring-opacity-0 rounded-none sm:text-[19px]"
                         formControl={{
                             control: vm.form.control,
                             name: "metadata_standards_other",
