@@ -18,7 +18,7 @@ const Comment = ({ vm }: { vm: any }) => {
         >
             <TextField
                 type="textarea"
-                textfieldClassName="border-black rounded-[5px] sm:text-[19px]"
+                textfieldClassName="border-[#C3C3C3] focus:border-[#C3C3C3] focus:ring-opacity-0 rounded-[5px] sm:text-[19px]"
                 rows={8}
                 formControl={{
                     control: vm.form.control,

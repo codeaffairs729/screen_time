@@ -55,7 +55,7 @@ const ContactUs = () => {
                     </div>
                     <TextField
                         className=" -mt-6 !static w-[100%]  sm:-mt-8 rounded-xl !bg-transparent"
-                        textfieldClassName="!bg-[#FBFAFA] border-0 border-b border-[#C3C3C3] rounded-none "
+                        textfieldClassName="!bg-[#FBFAFA] border-0 border-b border-[#C3C3C3] focus:ring-opacity-0 rounded-none "
                         formControl={{
                             control: vm.form.control,
                             name: "name",
@@ -85,7 +85,7 @@ const ContactUs = () => {
                     </div>
                     <TextField
                         className=" sm:-mt-2 !static w-[100%] rounded-xl !bg-transparent "
-                        textfieldClassName="!bg-[#FBFAFA] border-0 border-b border-[#C3C3C3] rounded-none"
+                        textfieldClassName="!bg-[#FBFAFA] border-0 border-b border-[#C3C3C3] focus:ring-opacity-0 rounded-none"
                         formControl={{
                             control: vm.form.control,
                             name: "email",
@@ -117,7 +117,7 @@ const ContactUs = () => {
                     </div>
                     <TextField
                         className=" !-mt-2 sm:-mt-8 !static w-[100%] rounded-xl !bg-transparent "
-                        textfieldClassName="!bg-[#FBFAFA] border-0 border-b border-[#C3C3C3] rounded-none"
+                        textfieldClassName="!bg-[#FBFAFA] border-0 border-b border-[#C3C3C3] focus:ring-opacity-0 rounded-none"
                         placeholder="Enter Message"
                         formControl={{
                             control: vm.form.control,
