@@ -69,8 +69,8 @@ const RadioButton = ({ option, name, onDataChange }: { option: Option, name: str
     return (
         <div className="flex items-center mb-2">
             <input onClick={(e) => onDataChange(e)} id={`${name}_${option.value}`} type="radio" value={option.value} name={name}
-                className="w-[30px] h-[30px] sm:w-[40px] sm:h-[40px] text-[#6E498E] bg-[#FFFFFF] border-2 border-[#333333] focus:ring-[#6E498E] dark:focus:ring-[#6E498E] dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-            <label htmlFor={`${name}_${option.value}`} className="ml-2 sm:text-[19px] font-normal text-gray-900 dark:text-gray-300">{option.label}</label>
+                className="w-[30px] h-[30px] sm:w-[40px] sm:h-[40px] text-[#6E498E] bg-[#FFFFFF] border-2 border-[#333333] focus:ring-[#6E498E]" />
+            <label htmlFor={`${name}_${option.value}`} className="ml-2 sm:text-[19px] font-normal text-gray-900">{option.label}</label>
         </div>
     );
 };
