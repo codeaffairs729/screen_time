@@ -65,7 +65,7 @@ const MetadataStandards = ({ vm }: { vm: any }) => {
                             label: "Don't know",
                         },
                         {
-                            value: "none",
+                            value: null,
                             label: "None",
                         },
                     ]}
