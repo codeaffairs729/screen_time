@@ -32,7 +32,7 @@ const UpdateFrequency = ({ vm }: { vm: any }) => {
                     },
                     {
                         value: "within",
-                        label: "Within",
+                        label: "Within-day",
                     },
                     {
                         value: "daily",

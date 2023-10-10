@@ -64,6 +64,10 @@ const MetadataStandards = ({ vm }: { vm: any }) => {
                             value: "unknown",
                             label: "Don't know",
                         },
+                        {
+                            value: "none",
+                            label: "None",
+                        },
                     ]}
                     placeholder="Select Metadata standards"
                 />

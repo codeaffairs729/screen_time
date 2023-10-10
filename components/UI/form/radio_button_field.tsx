@@ -56,7 +56,7 @@ const RadioButtonField = ({
                 ))
             }
 
-            {!errorPosition&& hasError && (
+            {!errorPosition && hasError && (
                 <div className="text-xs text-red-800 ml-1 mt-1">
                     {error["message"]}
                 </div>
@@ -69,7 +69,7 @@ const RadioButton = ({ option, name, onDataChange }: { option: Option, name: str
     return (
         <div className="flex items-center mb-2">
             <input onClick={(e) => onDataChange(e)} id={`${name}_${option.value}`} type="radio" value={option.value} name={name}
-                className="w-[30px] h-[30px] sm:w-[40px] sm:h-[40px] text-[#6E498E] bg-[#FFFFFF] border-2 border-[#333333] focus:ring-[#6E498E]" />
+                className="w-[24px] h-[24px] text-[#6E498E] bg-[#FFFFFF] border-2 border-[#333333] focus:ring-[#6E498E]" />
             <label htmlFor={`${name}_${option.value}`} className="ml-2 sm:text-[19px] font-normal text-gray-900">{option.label}</label>
         </div>
     );
