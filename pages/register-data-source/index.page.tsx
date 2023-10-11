@@ -9,9 +9,14 @@ import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { RootState } from "store";
 import User from "models/user.model";
-const RegisterDataSourceTabHeaders = dynamic(() => import("./components/register_data_source_tabs"), {
-    ssr: false,
-});
+import Catalogue from "./components/view_catalogue";
+import ViewCatalogueVM, { ViewCatalogueVMContext } from "./view_catalogue.vm";
+const RegisterDataSourceTabHeaders = dynamic(
+    () => import("./components/register_data_source_tabs"),
+    {
+        ssr: false,
+    }
+);
 const Register = dynamic(() => import("./components/register"), {
     ssr: false,
 });
@@ -33,7 +38,7 @@ const RegisterDataSourcePage = () => {
         const hashParam: string = asPath.split("#")[1];
         setSelectedIndex(tabIndex[hashParam as any]);
     }, []);
-
+    const viewCatalogueVm = ViewCatalogueVM();
     return (
         <DefaultLayout>
             <div className="mt-10">
@@ -47,7 +52,9 @@ const RegisterDataSourcePage = () => {
                             <Register />
                         </TabPanel>
                         <TabPanel className="!bg-white">
-                            {/* <Insights /> */}
+                            <ViewCatalogueVMContext.Provider value={viewCatalogueVm}>
+                                <Catalogue />
+                            </ViewCatalogueVMContext.Provider>
                         </TabPanel>
                     </Tab.Panels>
                 </Tab.Group>
