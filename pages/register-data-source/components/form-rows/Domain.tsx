@@ -71,6 +71,7 @@ const Domain = ({ vm }: { vm: any }) => {
                         { value: "geo", label: "Geography" },
                         { value: "sctech", label: "Science and technology" },
                         { value: "trinfra", label: "Transport and infrastructure" },
+                        { value: "unknown", label: "Don't Know"}
                     ]}
                     placeholder="Select Domains"
                 />

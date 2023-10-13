@@ -32,7 +32,7 @@ const Register = () => {
                 </div>
             </div>
             <div className="grow flex flex-col p-4">
-                {vm.isSubmissionSuccess && <SuccessScreen />}
+                {vm.isSubmissionSuccess && <SuccessScreen vm={vm} />}
                 {!vm.isSubmissionSuccess && (
                     <div className="justify-center">
                         <div className="md:gap-4 mt-4 ">
