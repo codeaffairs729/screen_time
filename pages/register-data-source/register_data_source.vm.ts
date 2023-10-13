@@ -74,11 +74,18 @@ const RegisterDataSourceVM = () => {
             }
         );
     };
+
+    const submitAnotherDataSource = () => {
+        form.reset();
+        setIsSubmissionSuccess(false);
+    };
+
     return {
         form,
         registerDataSource,
         isRegisteringDataSource,
         isSubmissionSuccess,
+        submitAnotherDataSource,
     };
 };
 export default RegisterDataSourceVM;
