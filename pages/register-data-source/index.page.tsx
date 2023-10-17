@@ -21,24 +21,25 @@ const Register = dynamic(() => import("./components/register"), {
     ssr: false,
 });
 
+enum tabIndex {
+    register,
+    viewCatalogue,
+}
+
 const RegisterDataSourcePage = () => {
     const [showAdvanced, setShowAdvanced] = useState(false);
-    const [selectedIndex, setSelectedIndex] = useState<any>(0);
     const { asPath } = useRouter();
+    const [selectedIndex, setSelectedIndex] = useState<any>(tabIndex[asPath.split("#")[1]?.split("/")[0] as any] || 0);
     const user = useSelector((state: RootState) => state.auth.user);
 
     const vm = RegisterDataSourceVM();
-
-    enum tabIndex {
-        register,
-        viewCatalogue,
-    }
 
     useEffect(() => {
         const hashParam: string = asPath.split("#")[1];
         setSelectedIndex(tabIndex[hashParam as any]);
     }, []);
     const viewCatalogueVm = ViewCatalogueVM();
+
     return (
         <DefaultLayout>
             <div className="mt-10">
