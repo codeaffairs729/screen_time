@@ -33,20 +33,8 @@ const CreateList = () => {
     };
 
     return (
-        <div className="ml-8 mr-auto">
-            <div className="flex items-center justify-between outline-offset-[-2px] outline-dashed outline-2 overflow-hidden outline-dtech-main-dark rounded-lg px-3 h-8 w-44 cursor-pointer">
-                {isCreatingList ? (
-                    <Loader />
-                ) : (
-                    <BsPlusLg
-                        className="text-dtech-main-dark h-[18px] w-[18px] hover:opacity-80"
-                        onClick={() =>
-                            newNameActive
-                                ? createList()
-                                : setNewNameActive(true)
-                        }
-                    />
-                )}
+        <div className="mr-auto">
+            <div className="flex items-center justify-between border-2 md:border-[#727272]  overflow-hidden border-dtech-main-dark rounded-full px-3 h-12 w-1/2 md:w-full cursor-pointer py-2 mx-3 md:mx-0">
                 {newNameActive ? (
                     <input
                         ref={ref}
@@ -56,12 +44,26 @@ const CreateList = () => {
                     />
                 ) : (
                     <span
-                        className="text-lg"
+                        className="text-lg  text-dtech-main-dark md:text-black"
                         onClick={() => setNewNameActive(true)}
                     >
                         Create new list
                     </span>
                 )}
+                {/* <div className=""> */}
+                    {isCreatingList ? (
+                        <Loader />
+                    ) : (
+                        <BsPlusLg
+                            className="text-[#727272]  h-[18px] w-[18px] hover:opacity-80"
+                            onClick={() =>
+                                newNameActive
+                                    ? createList()
+                                    : setNewNameActive(true)
+                            }
+                        />
+                    )}
+                {/* </div> */}
             </div>
         </div>
     );

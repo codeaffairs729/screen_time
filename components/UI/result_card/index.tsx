@@ -6,6 +6,8 @@ import { useState } from "react";
 import { DataStats } from "models/organisation.model";
 import ResultCardAction from "../result_card_action";
 import NewResultCardAction from "../new_result_card_action";
+import DataProviderCardHead from "./data_provider/head";
+import DataProviderCardFooter from "./data_provider/footer";
 
 export interface DataProviders {
     datasetSource: string;
@@ -39,12 +41,23 @@ interface ResultCardProps {
     data: Data;
     handleFAQClick?: Function;
     hideResultCard?: boolean;
-    showToolTip?:boolean 
+    showToolTip?: boolean;
+    className?: string;
+    pageName?: string;
+    label?: string;
 }
 
 //TODO update the object of data in props to have both stats and dataProviders
 
-const ResultCard = ({ data, handleFAQClick, hideResultCard, showToolTip=true }: ResultCardProps) => {
+const ResultCard = ({
+    data,
+    handleFAQClick,
+    hideResultCard,
+    showToolTip = true,
+    className = "",
+    pageName = "",
+    label = "",
+}: ResultCardProps) => {
     const [resultRecord, setResultRecord] = useState(data);
     const { dataProviders, stats, lastUpdate } = data || {};
     const href = `/${
@@ -52,40 +65,88 @@ const ResultCard = ({ data, handleFAQClick, hideResultCard, showToolTip=true }: 
     }/${resultRecord.id}`;
 
     return (
-        <div className={`rounded-lg px-5 py-1.5 flex flex-row justify-between  w-full min-w my-2 border-r-8  border-transparent  hover:border-[#6DCDCB] active:border-dtech-main-dark ${hideResultCard ? " shadow-underline" : "border-gray-100 shadow-custom-2"}`}>
-            <div className="flex flex-col md:flex-row justify-between w-full">
-                <div className="flex flex-col flex-1 w-full my-3">
-                    <CardHead
-                        handleFAQClick={handleFAQClick}
-                        data={resultRecord}
-                        setData={setResultRecord}
-                        datasetSource={dataProviders?.datasetSource}
-                        showToolTip={showToolTip}
-                    />
-                    <CardBody
-                        data={resultRecord}
-                        handleFAQClick={handleFAQClick}
-                    />
-                    <CardFooter
-                        data={data}
-                        // stats={stats}
-                        // lastUpdate={lastUpdate}
-                    />
-                </div>
-                {!hideResultCard &&<div className=" md:flex md:flex-row">
-                    <div className="mx-1 my-3 md:mx-3 md:my-2 border border-1 "></div>
-                    <div className="flex ">
-                        <NewResultCardAction
-                            data={{
-                                ...resultRecord,
-                                url: dataProviders?.datasetSource,
-                            }}
-                            setData={setResultRecord}
-                            href={href}
-                            className="flex-row md:flex-col items-center justify-center md:py-8 w-full md:mx-5 mx-0 max-h-min"
-                        />
+        <div>
+            <div className="md:hidden ">
+                {pageName === "workspace" && (
+                    <div
+                        className={` bg-dtech-new-main-light text-white items-center text-xs `}
+                    >
+                        <div className=" text-base font-bold whitespace-nowrap px-3">
+                            {label.split("_").join(" ").toUpperCase()}
+                        </div>
                     </div>
-                </div>}
+                )}
+            </div>
+            <div
+                className={`${className} rounded-lg px-5 py-1.5 flex flex-row justify-between  w-full min-w my-2 border-r-8  border-transparent  hover:border-[#6DCDCB] active:border-dtech-main-dark ${
+                    hideResultCard
+                        ? " shadow-underline"
+                        : "border-gray-100 shadow-custom-2"
+                }`}
+            >
+                <div className="flex flex-col md:flex-row justify-between w-full">
+                    <div className="flex flex-col flex-1 w-full my-3">
+                        {label != "data_provider" ? (
+                            <>
+                                <CardHead
+                                    handleFAQClick={handleFAQClick}
+                                    data={resultRecord}
+                                    setData={setResultRecord}
+                                    datasetSource={dataProviders?.datasetSource}
+                                    showToolTip={showToolTip}
+                                />
+                                <CardBody
+                                    data={resultRecord}
+                                    handleFAQClick={handleFAQClick}
+                                />
+                                <CardFooter data={data} />
+                            </>
+                        ) : (
+                            <>
+                                {<DataProviderCardHead
+                                    handleFAQClick={handleFAQClick}
+                                    data={resultRecord}
+                                    setData={setResultRecord}
+                                    datasetSource={dataProviders?.datasetSource}
+                                    showToolTip={showToolTip}
+                                />}
+                                <CardBody
+                                    data={resultRecord}
+                                    handleFAQClick={handleFAQClick}
+                                />
+                                <DataProviderCardFooter data={data} />
+                            </>
+                        )}
+                    </div>
+                    {!hideResultCard && (
+                        <div className=" md:flex md:flex-row">
+                            <div className="mx-1 my-3 md:mx-3 md:my-2 border border-1 "></div>
+                            <div className="flex ">
+                                <NewResultCardAction
+                                    data={{
+                                        ...resultRecord,
+                                        url: dataProviders?.datasetSource,
+                                    }}
+                                    setData={setResultRecord}
+                                    href={href}
+                                    className="flex-row md:flex-col items-center justify-center md:py-8 w-full md:mx-5 mx-0 max-h-min"
+                                />
+                            </div>
+                        </div>
+                    )}
+                </div>
+
+                {pageName === "workspace" && (
+                    <div
+                        className={` bg-dtech-new-main-light  text-white hidden flex-col justify-center items-center w-[24px] md:flex  ${
+                            label === "datasets" ? "rounded-r-lg" : ""
+                        }`}
+                    >
+                        <div className=" transform -rotate-90 text-base font-bold whitespace-nowrap">
+                            {label.split("_").join(" ").toUpperCase()}
+                        </div>
+                    </div>
+                )}
             </div>
         </div>
     );

@@ -7,6 +7,7 @@ import Http from "common/http";
 import { useEffect } from "react";
 import DatasetList from "components/UI/dataset_list";
 import SearchVM from "pages/search/search.vm";
+import { datasetToResultCardData } from "common/utils/datasets.util";
 
 const DatasetBookmarksSection = ({ datasetIDS }: { datasetIDS: any }) => {
     const bookmarkItemsData = useSelector(

@@ -25,6 +25,11 @@ const OrganisationBookmarksSection = ({ orgIDS }: { orgIDS: any }) => {
                             new Date("12-25-2022").toISOString()
                         ),
                     }}
+                    // hideResultCard={true}
+                    className=" md:!pr-0 !py-0 !border-r-0 !rounded-lg !bg-white !shadow-md !p-4"
+                    showToolTip={true}
+                    pageName="workspace"
+                    label="data_provider"
                 />
             ))}
             {/* <DatasetList datasets={datasets} stats={stats} /> */}

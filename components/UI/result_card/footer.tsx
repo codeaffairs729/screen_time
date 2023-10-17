@@ -45,7 +45,7 @@ const CardFooter = ({
     return (
         <div className={clsx("w-full ", className)}>
             <div>
-                {(router.pathname == "/search" || router.pathname =="/datasets/[id]") && (
+                {(router.pathname == "/search" || router.pathname =="/datasets/[id]" || router.pathname.includes("/workspace")) && (
                     <MetaInfoEntity
                         entityName="File Type"
                         entities={getFileFormatCounts(data.urls)}
@@ -53,7 +53,7 @@ const CardFooter = ({
                 )}
             </div>
             {stats && (
-                <div className="flex">
+                <div className="my-3 flex flex-col md:flex-row justify-between md:items-center bg-[#EBEBEB] px-1.5">
                     <DataStat stats={stats} />
                 </div>
             )}
