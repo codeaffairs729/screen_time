@@ -10,8 +10,8 @@ const NewNavMenuDropdown = ({isLoggedIn=false}:{isLoggedIn:boolean}) => {
     const router =useRouter()
     const menuItems =
         [
-            { label: "Data Source Registration", link: "/register-data-source", imagePath: "/images/icons/data_source.svg", imagePathOnHover: "/images/icons/transparent_data_source.svg", isAuthRequired:true },
-            // { label: "Data Source Catalogue", link: "https://api.dtechtive.com/docs", imagePath: "/images/icons/data_source_catalogue.svg", imagePathOnHover: "/images/icons/transparent_data_source_catalogue.svg", isBlank: true },
+            { label: "Data Source Registration", link: "/register-data-source#register", imagePath: "/images/icons/data_source.svg", imagePathOnHover: "/images/icons/transparent_data_source.svg", isAuthRequired:true },
+            { label: "Data Source Catalogue", link: "/register-data-source#viewCatalogue", imagePath: "/images/icons/data_source_catalogue.svg", imagePathOnHover: "/images/icons/transparent_data_source_catalogue.svg", isAuthRequired:true  },
             { label: "API", link: "https://api.dtechtive.com/docs", imagePath: "/images/icons/api.svg", imagePathOnHover: "/images/icons/transparent_api.svg" },
             // { label: "Subscription", link: "/account#subscription", imagePath: "/images/icons/subscription.svg", imagePathOnHover: "/images/icons/transparent_subscription.svg" },
         ]

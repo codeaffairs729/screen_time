@@ -32,10 +32,10 @@ const Catalogue = () => {
                     <thead className="text-xs sm:text-sm md:text-[19px] text-[#333333]">
                         <tr className="">
                             <th className="sm:w-[17%] p-2 border-r-[1px] sm:border-r-0  w-1/2 text-left  pb-4 min-w-[130px]">
-                                Data host Name
+                                Data Host Name
                             </th>
                             <th className="sm:w-[17%] p-2  text-center pb-4">
-                                Data host URL
+                                Data Host URL
                             </th>
                             <th className="sm:w-[17%] p-2  text-center pb-4">
                                 Data Management System
@@ -46,7 +46,7 @@ const Catalogue = () => {
                                 </span> */}
                             </th>
                             <th className="sm:w-[17%] p-2  text-center pb-4">
-                                Available on Dtechtive?
+                                Available On Dtechtive?
                             </th>
                         </tr>
                     </thead>
