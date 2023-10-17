@@ -59,7 +59,6 @@ export const FavouriteVM = () => {
     );
 
     const isError = providerError || datasetError;
-    console.log("isFetchingStats :",isFetchingStats);
     
     const isFetchingFavourites =
         !(favouriteDatasets?.length == Object.keys(stats).length) || isFetchingStats || (favouriteDatasets === undefined || favouriteProviders === undefined) &&

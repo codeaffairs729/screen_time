@@ -37,7 +37,7 @@ const NewProfileDropdown = () => {
         user ? [
             { label: "My Account", link: "/account", imagePath: "/images/icons/profile/my_account.svg", imagePathOnHover: "/images/icons/profile/transparent_my_account.svg" },
             { label: "My Workspace", link: "/workspace", imagePath: "/images/icons/profile/my_workspace.svg", imagePathOnHover: "/images/icons/profile/transparent_my_workspace.svg" },
-            { label: "Notifications", link: "/workspace", imagePath: "/images/icons/profile/notifications.svg", imagePathOnHover: "/images/icons/profile/transparent_notifications.svg" },
+            { label: "Notifications", link: "/workspace#notifications", imagePath: "/images/icons/profile/notifications.svg", imagePathOnHover: "/images/icons/profile/transparent_notifications.svg" },
             {
                 label: "Log Out",
                 imagePath: "/images/icons/lock.svg",

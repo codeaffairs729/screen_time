@@ -67,7 +67,7 @@ const NewResultCardAction = ({
                 <div className=" flex flex-col justify-center items-center">
                     <a href={data?.url} target="_blank" rel="noreferrer">
                         {!href?.includes("dataset") ? (
-                            <div className="hover:bg-[#6DCDCB] hover:bg-opacity-[55%]  px-2 pt-2">
+                            <div className="hover:bg-[#6DCDCB] hover:bg-opacity-[55%]  active:bg-dtech-main-dark !hover:text-white px-2 pt-2 ml-1">
                                 <BsGlobe className="sm:h-6 sm:w-6 h-4 w-4 text-dtech-new-main-light cursor-pointer" />
                             </div>
                         ) : (
@@ -79,7 +79,7 @@ const NewResultCardAction = ({
                                 <Image src={arrowActive ? SourceArrowWhite :SourceArrow} width={"25"} height={"25"} className="" />
                             </div>
                         )}
-                    <div className="text-[#0065BD] underline underline-offset-2 cursor-pointer w-max text-base font-roboto">
+                    <div className={`text-[#0065BD] underline underline-offset-2 cursor-pointer w-max text-base font-roboto ${!href?.includes("dataset") && "!text-[14px]"}`}>
                         {!href?.includes("dataset") ? "Website" : "Source"}
                     </div>
                     </a>

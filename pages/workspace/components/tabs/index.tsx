@@ -45,13 +45,13 @@ const TabHeaders = ({ selectedIndex = 0 }: { selectedIndex?: number }) => {
 
     return (
         <div>
-            <Tab.List className="relative text-dtech-main-dark flex flex-row md:flex-col overflow-x-auto">
+            <Tab.List className="relative text-dtech-main-dark flex flex-row  overflow-x-auto">
                 {HEADERS.map((header: Header, index: number) => (
                     <TabIconHeader
                         key={index}
                         onClick={() => setSelected(index)}
                     >
-                        <Image
+                        {/* <Image
                             src={
                                 selected === index
                                     ? header.filledIcon
@@ -60,8 +60,8 @@ const TabHeaders = ({ selectedIndex = 0 }: { selectedIndex?: number }) => {
                             width="36px"
                             height="36px"
                             alt={header.name}
-                        />
-                        <span className="text-dtech-main-dark">
+                        /> */}
+                        <span className="text-dtech-main-dark font-medium text-xl">
                             {header.name}
                         </span>
                     </TabIconHeader>

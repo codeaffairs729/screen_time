@@ -5,7 +5,8 @@ import { Data } from ".";
 import { useRouter } from "next/router";
 import LabelledRow from "components/dataset/labelled_row";
 
-const CardHead = ({
+const CardHead = (
+    {
     data,
     setData,
     handleFAQClick,
@@ -17,7 +18,8 @@ const CardHead = ({
     handleFAQClick?: Function;
     datasetSource: string | undefined;
     showToolTip: boolean
-}) => {
+}
+) => {
     const {
         title,
         dataQuality,

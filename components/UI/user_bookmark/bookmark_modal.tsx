@@ -17,6 +17,7 @@ import EditListNameVM from "./edit_list_name.vm";
 import { useState } from "react";
 import ReactTooltip from "react-tooltip";
 import { AiOutlineClose } from "react-icons/ai";
+import CreateList from "./create_list";
 
 export default function BookmarkModal({
     showModal,
@@ -88,12 +89,13 @@ export default function BookmarkModal({
 
                                 {/*footer*/}
                                 <div className="flex items-center justify-between px-5 py-3 rounded-b ">
-                                    <CreateNewList
+                                    {/* <CreateNewList
                                         inLists={false}
                                         labelClass={
                                             " rounded-full !py-3 !my-3 !px-4 !bg-dtech-new-main-light"
                                         }
-                                    />
+                                    /> */}
+                                    <CreateList />
                                 </div>
                             </div>
                         </div>

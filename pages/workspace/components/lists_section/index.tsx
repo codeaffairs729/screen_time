@@ -3,13 +3,23 @@ import BookmarksSection from "./bookmarks_section";
 import { Tab } from "@headlessui/react";
 import TabPanel from "components/UI/tabbed/panel";
 import clsx from "clsx";
-import { createRef, ReactNode } from "react";
+import { createRef, ReactNode, useEffect, useMemo, useState } from "react";
 import CreateNewList from "components/UI/user_bookmark/create_new_list";
 import { useSelector } from "react-redux";
 import { RootState } from "store";
-import { BsPlusLg } from "react-icons/bs";
+import {
+    BsCheck,
+    BsChevronDown,
+    BsPencil,
+    BsPlusLg,
+    BsTrash,
+} from "react-icons/bs";
 import CreateList from "components/UI/user_bookmark/create_list";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
+import Accordian from "components/UI/new_accordian";
+import DeleteListVM from "components/UI/user_bookmark/delete_list.vm";
+import EditListNameVM from "components/UI/user_bookmark/edit_list_name.vm";
+import TabHeader from "./bookmark_tab_header";
 
 const SCROLLABLE_VALUE: number = 150;
 
@@ -22,70 +32,128 @@ const ListsSection = () => {
     );
 
     const scrollableDiv = createRef<HTMLDivElement>();
+    const [selectedIndex, setSelectedIndex] = useState<any>(0);
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth < 640);
+        };
+        handleResize();
+        window.addEventListener("resize", handleResize);
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        };
+    }, []);
+
+    const ListHeader = useMemo(
+        () => [
+            { label: "Favourites" },
+            ...bookmark_lists?.map((list: any) => ({
+                label: list.listName,
+                id: list.listID,
+            })),
+        ],
+        [bookmark_lists]
+    );
+
     const scroll = (value: number) => {
         if (scrollableDiv?.current) scrollableDiv.current.scrollLeft += value;
     };
     return (
         <div>
-            <Tab.Group>
+            {!isMobile ? (
                 <div>
-                    <Tab.List className="flex items-center px-6">
-                        <div
-                            className="cursor-pointer py-1 px-4"
-                            onClick={() => scroll(-SCROLLABLE_VALUE)}
-                        >
-                            <BsChevronLeft />
+                    <Tab.Group defaultIndex={selectedIndex}>
+                        <div className=" md:flex ">
+                            <Tab.List className=" items-center px-6 my-7 w-[30%]">
+                                <FilterDropdown label="Lists">
+                                    {ListHeader?.map((list: any, idx: any) => (
+                                        <TabHeader
+                                            key={idx}
+                                            selectedIndex={selectedIndex}
+                                            index={idx}
+                                            list={list}
+                                            onClick={() =>
+                                                setSelectedIndex(idx)
+                                            }
+                                        >
+                                            {list.label}
+                                        </TabHeader>
+                                    ))}
+                                </FilterDropdown>
+                                <div className="my-10">
+                                    <CreateList />
+                                </div>
+                            </Tab.List>
+                            <Tab.Panels className="w-full flex">
+                                <TabPanel className="!bg-white">
+                                    <FavouritesSection />
+                                </TabPanel>
+                                {bookmark_lists?.map((list: any, idx: any) => (
+                                    <TabPanel
+                                        key={idx}
+                                        className="!bg-white !p-0"
+                                    >
+                                        <BookmarksSection list={list} />
+                                    </TabPanel>
+                                ))}
+                            </Tab.Panels>
                         </div>
-                        <div
-                            ref={scrollableDiv}
-                            id="scrollable-div"
-                            className="scroll-smooth no-scrollbar flex flex-1 flex-start gap-10 items-center overflow-x-auto overflow-y-hidden whitespace-nowrap"
-                        >
-                            <TabHeader>Favourites</TabHeader>
-
-                            {bookmark_lists?.map((list: any, idx: any) => (
-                                <TabHeader key={idx}>{list.listName}</TabHeader>
-                            ))}
-                        </div>
-                        <div
-                            className="cursor-pointer py-1 px-4"
-                            onClick={() => scroll(SCROLLABLE_VALUE)}
-                        >
-                            <BsChevronRight />
-                        </div>
-                        <CreateList />
-                    </Tab.List>
-                    <Tab.Panels className="w-full flex">
-                        <TabPanel className="!bg-white">
-                            <div className="text-sm text-dtech-dark-grey my-4 mx-4">
-                                 Your list of favourite datasets and data providers.
-                            </div>
-                            <FavouritesSection />
-                        </TabPanel>
-                        {bookmark_lists?.map((list: any, idx: any) => (
-                            <TabPanel key={idx} className="bg-white">
-                                <BookmarksSection list={list} />
-                            </TabPanel>
-                        ))}
-                    </Tab.Panels>
+                    </Tab.Group>
                 </div>
-            </Tab.Group>
+            ) : (
+                <div className="">
+                    <div className="my-10">
+                        <CreateList />
+                    </div>
+                    <Accordian
+                        className=" "
+                        label={"Favourites"}
+                        key="Favourites"
+                    >
+                        <FavouritesSection />
+                    </Accordian>
+
+                    {bookmark_lists?.map((list: any, idx: any) => (
+                        <Accordian
+                            label={list.listName}
+                            key={list.listName + idx}
+                        >
+                            <BookmarksSection list={list} />
+                        </Accordian>
+                    ))}
+                </div>
+            )}
         </div>
     );
 };
 
 export default ListsSection;
 
-const TabHeader = ({ children }: { children: ReactNode }) => {
+const FilterDropdown = ({
+    children,
+    label,
+}: {
+    children: ReactNode;
+    label: string;
+}) => {
+    // const [clicked, SetClicked] = useState<boolean>(false);
+
     return (
-        <Tab
-            className={({ selected }) =>
-                `transition-all h-fit text-lg outline-none text-dtech-main-dark border-dtech-main-dark text-center ${
-                    selected && "border-b-2"
-                }`
-            }
-        >
-            <span>{children}</span>
-        </Tab>
+        <div className="my-1">
+            <div
+                className=" flex  justify-between items-center py-1.5 bg-[#6DCDCB]  px-3 cursor-pointer"
+                // onClick={() => SetClicked(!clicked)}
+            >
+                <span>{label}</span>
+                {/* <BsChevronDown
+                    className={`
+                            transition-all h-4 w-6 ${clicked && "rotate-180"}`}
+                    strokeWidth="2"
+                /> */}
+            </div>
+            <div className="flex flex-col flex-start my-1">{children}</div>
+        </div>
     );
 };
