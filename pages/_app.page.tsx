@@ -45,8 +45,14 @@ function DtechtiveApp({ Component, pageProps }: AppProps) {
 
     useEffect(() => {
         const handleRouteChange = () => {
-            localStorage.setItem("previous_path", previousPath);
-            setPreviousPath(router.asPath);
+            const user = store.getState().auth.user;
+            if (!user && localStorage.getItem("previous_path") == '/account#subscription'){
+                localStorage.setItem("previous_path", '/account#subscription');
+            }
+            else {
+                localStorage.setItem("previous_path", previousPath);
+            }
+                setPreviousPath(router.asPath);
         };
 
         router.events.on("routeChangeComplete", handleRouteChange);
