@@ -26,6 +26,7 @@ import clsx from "clsx";
 import Image from "next/image";
 import customImageLoader from "components/image/customImage";
 import dynamic from "next/dynamic";
+import UpgradeAccountModal from "./components/upgrade_modal";
 const Datasets = dynamic(() => import("./components/datasets"), {
     ssr: false,
 });
@@ -38,8 +39,6 @@ const Insights = dynamic(() => import("./components/insights_section"), {
 const OrganisationTabHeaders = dynamic(() => import("./components/organisation_tabs"), {
     ssr: false,
 });
-const ORGANIZATION_ADMIN = "Organisation Admin";
-const ORGANIZATION_MEMBER = "Organisation Member";
 
 enum tabIndex {
     datasets,
@@ -49,18 +48,18 @@ enum tabIndex {
 
 const OrganisationDetailPage = ({
     organisation,
-    // requestProviders
 }: {
-        organisation: Organisation | undefined,
-        // requestProviders: any
-    }) => {
+    organisation: Organisation | undefined,
+}) => {
     const [loading, setLoading] = useState<boolean>(false);
     const [isMobile, setIsMobile] = useState<boolean>(false);
     const [selectedIndex, setSelectedIndex] = useState<any>(0);
     const [topicImage, setTopicImage] = useState("")
     const [logoImage, setLogoImage] = useState("")
     const [isReportGenerated, setIsReportGenerated] = useState<boolean>(false)
+    const [permissions, setPermissions] = useState([])
     const { asPath } = useRouter();
+    const router = useRouter()
     const vm: any = OrganisationDetailVM(organisation, asPath.split("/")[2]);
     const user = useSelector((state: RootState) => state.auth.user);
     const imageRef = useRef<HTMLDivElement>(null);
@@ -72,6 +71,12 @@ const OrganisationDetailPage = ({
         })
 
         return logoUrl
+    }
+    const fetchPermissions = async () => {
+
+        const permissions = await Http.post(`/v1/iam/get_permissions?user_id=${user ? user.id : 0}&page=${router.pathname.replace("/[id]", "")}`, {
+        });
+        return permissions
     }
     useEffect(() => {
         const hashParam: string = asPath.split("#")[1];
@@ -122,8 +127,14 @@ const OrganisationDetailPage = ({
             setTopicImage(imageData.topic_image)
             setLogoImage(imageData.logo_image)
         };
-
+        const loadPermissions = async () => {
+            const fetchedPermissions = await fetchPermissions()
+            setPermissions(fetchedPermissions
+                .filter((permission: any) => permission.permitted)
+                .map((permission: any) => permission.permission_name))
+        }
         loadImage();
+        loadPermissions()
     }, [])
     const setHeight = (size: any) => {
         if (imageRef.current) {
@@ -145,14 +156,14 @@ const OrganisationDetailPage = ({
     }
     return (
         <DefaultLayout>
-            <OrganisationDetailVMContext.Provider value={vm}>
+            <OrganisationDetailVMContext.Provider value={{ ...vm, permittedPermissions: permissions }} >
                 <div className=" bg-[#EBEBEB] ">
                     <div className=" bg-white h-16 sm:h-10 -mt-20 sm:mt-0">
 
                     </div>
                     <div
                         className="bg-black h-[414px] absolute right-0 z-0 w-full overflow-y-scroll bg-cover bg-fixed bg-center bg-no-repeat shadow-lg"
-                        style={{backgroundImage:`url(${topicImage})`}}
+                        style={{ backgroundImage: `url(${topicImage})` }}
                     ></div>
                     <div className="px-4 relative">
                         <div
@@ -163,7 +174,7 @@ const OrganisationDetailPage = ({
                             <span></span>
                             <div ref={imageRef} className=" rounded-full min-h-[100px] min-w-[100px]">
                                 <a href={`${organisation.url}`} target="_blank" rel="noreferrer" className="h-full w-full overflow-hidden bg-white bg-opacity-80 rounded-full relative flex items-center justify-center">
-                                    {logoImage &&<Image
+                                    {logoImage && <Image
                                         // data-tip={"Click to open website"}
                                         src={logoImage}
                                         loader={customImageLoader}
@@ -179,7 +190,7 @@ const OrganisationDetailPage = ({
                         </div>
                         <div className="flex sm:hidden flex-row px-4 py-2 my-2  items-center bg-dtech-light-teal xl:bg-white bg-opacity-80">
                             <a href={`${organisation.url}`} target="_blank" rel="noreferrer" className=" rounded-full overflow-hidden">
-                                {logoImage &&<Image
+                                {logoImage && <Image
                                     // data-tip={"Click to open website"}
                                     src={logoImage}
                                     loader={customImageLoader}
@@ -207,10 +218,7 @@ const OrganisationDetailPage = ({
                             >
                                 {!loading && (
                                     <Tab.Group defaultIndex={selectedIndex}>
-                                        <OrganisationTabHeaders
-                                            selectedIndex={selectedIndex}
-                                            user={User.getRole(user)?.name}
-                                        />
+                                        <OrganisationTabHeaders />
                                         <Tab.Panels className="h-[calc(100%-var(--dataset-detail-tab-header-height))] w-full flex">
                                             <TabPanel className="!bg-white">
                                                 <Datasets />
@@ -219,12 +227,7 @@ const OrganisationDetailPage = ({
                                                 <Insights />
                                             </TabPanel>
                                             <TabPanel className={clsx("!bg-white  ", isReportGenerated && "!bg-transparent sm:!bg-white")}>
-                                                {(User.getRole(user)?.name ===
-                                                    ORGANIZATION_ADMIN ||
-                                                    User.getRole(user)?.name ===
-                                                    ORGANIZATION_MEMBER) && (
-                                                        <Report setIsReportGenerated={setIsReportGenerated} isReportGenerated={isReportGenerated} />
-                                                    )}
+                                                <Report setIsReportGenerated={setIsReportGenerated} isReportGenerated={isReportGenerated} />
                                             </TabPanel>
                                         </Tab.Panels>
                                     </Tab.Group>

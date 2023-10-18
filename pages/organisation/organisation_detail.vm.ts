@@ -35,26 +35,28 @@ const OrganisationDetailVM = (
     const [organisation, setOrganisation] = useState(initialOrganisationData);
     const [orgDatasetsCount, setOrgDatasetsCount] = useState(7);
     const [pageNumber, setPageNumber] = useState(1);
-const [relatedProviders, setRelatedProviders] = useState();
-const {
-    isLoading: isFetchingRelatedProviders,
-    execute: executeRelatedProvidersQuery,
-} = useHttpCall();
-const fetchRelatedProviders = () =>
-    executeRelatedProvidersQuery(
-        () => {
-            return new HttpBuilder({
-                url: `/v1/data_sources/providers_for_homepage?offset=0&count=20`,
-                method: "GET",
-            }).run({ retries: 0, tryRefreshingToken: false });
-            // return Http.post(`/v1/users/signin`, data);
-        },
-        {
-            onSuccess: (res: any) => {
-                setRelatedProviders(res);
+    const [relatedProviders, setRelatedProviders] = useState();
+    const [permittedPermissions, setPermittedPermissions] = useState();
+
+    const {
+        isLoading: isFetchingRelatedProviders,
+        execute: executeRelatedProvidersQuery,
+    } = useHttpCall();
+    const fetchRelatedProviders = () =>
+        executeRelatedProvidersQuery(
+            () => {
+                return new HttpBuilder({
+                    url: `/v1/data_sources/providers_for_homepage?offset=0&count=20`,
+                    method: "GET",
+                }).run({ retries: 0, tryRefreshingToken: false });
+                // return Http.post(`/v1/users/signin`, data);
             },
-        }
-    );
+            {
+                onSuccess: (res: any) => {
+                    setRelatedProviders(res);
+                },
+            }
+        );
     useEffect(() => {
         if (orgDatasetsCount > 10) {
             fetchOrganisationDatasets();
@@ -243,6 +245,8 @@ export interface IOrganisationDetailVMContext {
     setOrganisation: Dispatch<SetStateAction<Organisation | undefined>>;
     isFetchingOrganisationDatasets: boolean;
     isFetchingOrganisationRankedDatasets: boolean;
+    permittedPermissions: any;
+    setPermittedPermissions: Function;
 }
 
 export const OrganisationDetailVMContext =
