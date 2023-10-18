@@ -7,6 +7,7 @@ import _ from "lodash";
 import { Fragment, useContext } from "react";
 import isEmail from "validator/lib/isEmail";
 import { AdminTabPanelVMContext } from "../admin_tab_panel.vm";
+import RadioButtonField from "components/UI/form/radio_button_field";
 
 function AddMemberModal({
     isOpen,
@@ -48,7 +49,7 @@ function AddMemberModal({
                             leaveFrom="opacity-100 scale-100"
                             leaveTo="opacity-0 scale-95"
                         >
-                            <Dialog.Panel className="w-full max-w-xl transform rounded bg-white p-10 px-12 text-left align-middle shadow-xl transition-all border border-dtech-main-dark">
+                            <Dialog.Panel className="w-full max-w-xl transform rounded-lg bg-white p-10 px-12 text-left align-middle shadow-xl transition-all ">
                                 <Dialog.Title className="w-min mx-auto text-gray-700 whitespace-nowrap mb-4 font-semibold">
                                     {/* <h3 className="w-min mx-auto text-gray-700 whitespace-nowrap mb-4 font-semibold"> */}
                                     Add member
@@ -58,7 +59,9 @@ function AddMemberModal({
                                     <div>
                                         <FormRow
                                             label="Email"
-                                            labelClass="!bg-white !w-auto z-10 mx-5 absolute mb-10 text-dtech-main-dark !py-1"
+                                            className=" md:w-auto bg-white flex-col sm:!mb-8"
+                                            labelClass="sm:text-[19px]"
+                                            iconClass="sm:h-[19px] sm:w-[19px] text-black"
                                         >
                                             <TextField
                                                 formControl={{
@@ -78,16 +81,39 @@ function AddMemberModal({
                                                 }}
                                                 placeholder="Example: jane@company.com"
                                                 type="email"
-                                                textfieldClassName="!focus:ring-dtech-main-dark border-2 !border-dtech-main-dark !focus:border-dtech-main-dark"
+                                                textfieldClassName="border-0 border-b border-[#C3C3C3] focus:ring-opacity-0 rounded-none sm:text-[19px]"
                                             />
                                         </FormRow>
                                     </div>
                                     <div className="mt-2">
                                         <FormRow
                                             label="Permission"
-                                            labelClass="!bg-white !w-auto z-10 mx-5 absolute mb-10 text-dtech-main-dark !py-1"
+                                            className=" md:w-auto bg-white flex-col sm:!mb-8"
+                                            labelClass="sm:text-[19px]"
+                                            iconClass="sm:h-[19px] sm:w-[19px] text-black"
                                         >
-                                            <DropdownField
+                                            <RadioButtonField
+                                                radioClass= " flex justify-between items-center pr-32"
+                                                formControl={{
+                                                    control: vm.control,
+                                                    name: "roles",
+                                                    rules: {
+                                                        required:
+                                                            "Permissions is required",
+                                                    },
+                                                }}
+                                                options={[
+                                                    {
+                                                        label: "Member",
+                                                        value: "Organisation Member",
+                                                    },
+                                                    {
+                                                        label: "Admin",
+                                                        value: "Organisation Admin",
+                                                    },
+                                                ]}
+                                            />
+                                            {/* <DropdownField
                                                 inputClass=" !focus:ring-dtech-main-dark border-1 !border-dtech-main-dark !focus:border-dtech-main-dark !bg-transparent"
                                                 placeholder="Choose whether member or admin"
                                                 options={[
@@ -109,7 +135,7 @@ function AddMemberModal({
                                                             "Permissions is required",
                                                     },
                                                 }}
-                                            />
+                                            /> */}
                                         </FormRow>
                                     </div>
                                 </div>

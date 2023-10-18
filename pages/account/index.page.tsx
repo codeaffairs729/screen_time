@@ -43,15 +43,14 @@ const WorkspacePage = () => {
                     </span>
                     {/* <Dropdown label={workspace} menuItems={menuItems} /> */}
                 </div>
-            <div className=" px-16">
+            <div className=" md:px-16 px-3">
                 <div className=" bg-white border-1 ">
-                    <div className="md:flex md:px-4">
+                    <div className="">
                         <Tab.Group defaultIndex={selectedIndex}>
                             <AccountTabHeaders selectedIndex={selectedIndex} />
                             <Tab.Panels className="h-[calc(100%-var(--dataset-detail-tab-header-height))] w-full flex">
                                 <TabPanel
-                                    className="!bg-white border-t border-
-                                gray !p-0"
+                                    className="!bg-white"
                                 >
                                  <AccountDetails />
                                  </TabPanel>
