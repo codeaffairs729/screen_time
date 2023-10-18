@@ -11,10 +11,12 @@ const RadioButtonField = ({
     className = "",
     formControl,
     errorPosition = false,
+    radioClass =""
 }: {
     options: Option[];
     className?: string;
     errorPosition?: boolean;
+    radioClass?: string;
 } & FieldProps) => {
     const {
         fieldState: { error },
@@ -42,7 +44,7 @@ const RadioButtonField = ({
     const hasError = error && Object.keys(error).length > 0;
 
     return (
-        <div className="w-full">
+        <div className={`${radioClass} w-full`}>
             {
                 options.map((option, i) => (
                     <RadioButton

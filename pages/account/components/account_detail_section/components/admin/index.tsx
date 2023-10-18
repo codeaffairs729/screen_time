@@ -14,6 +14,8 @@ import AddMemberModal from "./components/add_member_modal";
 import MembersTable from "./components/members_table";
 import { useRef, useState } from "react";
 import toast from "react-hot-toast";
+import { BiUserCircle } from "react-icons/bi";
+import RadioButtonField from "components/UI/form/radio_button_field";
 const AdminSection = () => {
     // const { control, handleSubmit } = useForm();
     const user = useSelector((state: RootState) => state.auth.user);
@@ -40,41 +42,58 @@ const AdminSection = () => {
             fileInputRef.current.click();
         }
     };
-    
+
     return (
         <div className="pt-16">
             <AdminTabPanelVMContext.Provider value={vm}>
-                <div className="lg:flex flex-row justify-between items-center max-w-3xl mx-auto">
-                <div>
-                    <div
-                        className=" absolute ml-[80px] mt-[-15px] cursor-pointer"
-                        onClick={() => {
-                            uploadImage();
-                        }}
-                    ><div>
-                        <input
-                            id="image-upload"
-                            ref={fileInputRef}
-                            // {...register}
-                            type="file"
-                            accept="image/*"
-                            onChange={handleFileChange}
-                            className="hidden"
-                        ></input>
-                            <Image
-                                src={cameraImage}
-                                width="40px"
-                                height="40px"
-                            /></div>
+                <div className="flex flex-col justify-between items-center max-w-3xl md:mx-auto mx-2">
+                    <div className="relative w-40 flex justify-center items-end">
+                        <div
+                            className={`select-none  outline-none text-lg w-32 h-32 flex justify-center items-center rounded-full text-[#F5F5F5] font-medium text-[96px]`}
+                        >
+                            {vm.file ? (
+                                <div className="p-2 flex flex-col justify-center items-center overflow-hidden rounded-full w-32 h-32">
+                                    <img
+                                        src={vm.file}
+                                        className="w-28 h-28 object-contain"
+                                    ></img>
+                                </div>
+                            ) : (
+                                <BiUserCircle className=" w-32 h-32 text-[#c3c3c3]" />
+                            )}
+                        </div>
+
+                        <div
+                            className=" absolute  cursor-pointer right-0"
+                            onClick={() => {
+                                uploadImage();
+                            }}
+                        >
+                            <div>
+                                <input
+                                    id="image-upload"
+                                    ref={fileInputRef}
+                                    // {...register}
+                                    type="file"
+                                    accept="image/*"
+                                    onChange={handleFileChange}
+                                    className="hidden"
+                                ></input>
+                                <Image
+                                    src={cameraImage}
+                                    width="30px"
+                                    height="30px"
+                                />
+                            </div>
+                        </div>
                     </div>
-                    <div className={`${!vm.file&&"bg-dtech-middle-grey"} "select-none  outline-none text-lg w-28 h-28 flex justify-center items-center rounded-full text-[#F5F5F5] font-medium text-[96px] mb-4 pb-6"`}>
-                        {vm.file ? <img src={vm.file} className="rounded-full"></img> : `${nameInitial}`}
-                    </div>
-                </div>
-                    <div className="grid md:grid-cols-2 gap-4">
+                    <div className="w-full">
                         <FormRow
                             label="Organisation"
-                            labelClass="!bg-[#F8F8F8] !w-auto z-10 mx-5 absolute mb-10 text-dtech-main-dark !py-1"
+                            className=" md:w-auto bg-white flex-col sm:!mb-8"
+                            labelClass="sm:text-[19px]"
+                            iconClass="sm:h-[19px] sm:w-[19px] text-black"
+                            required
                         >
                             <TextField
                                 className="bg-gray-50"
@@ -82,21 +101,50 @@ const AdminSection = () => {
                                 formControl={{
                                     control: vm.form.control,
                                     name: "name",
-                                    defaultValue:User.getOrganisation(admin_user)?.name,
-                                        // "",
+                                    defaultValue:
+                                        User.getOrganisation(admin_user)?.name,
+                                    // "",
                                     rules: {
                                         required: "Organisation is required",
                                     },
                                 }}
                                 placeholder="Organisation"
-                                textfieldClassName="!focus:ring-dtech-main-dark border-2 !border-dtech-main-dark !focus:border-dtech-main-dark"
+                                textfieldClassName="border-0 border-b border-[#C3C3C3] focus:ring-opacity-0 rounded-none sm:text-[19px]"
                             />
                         </FormRow>
                         <FormRow
                             label="Sector"
-                            labelClass="!bg-[#F8F8F8] !w-auto z-10 mx-5 absolute mb-10 text-dtech-main-dark !py-1"
+                            className=" md:w-auto bg-white flex-col sm:!mb-8"
+                            labelClass="sm:text-[19px]"
+                            iconClass="sm:h-[19px] sm:w-[19px] text-black"
                         >
-                            <DropdownField
+                            <RadioButtonField
+                                formControl={{
+                                    control: vm.form.control,
+                                    defaultValue:
+                                        User.getOrganisation(admin_user)
+                                            ?.sector,
+                                    name: "sector",
+                                    rules: {
+                                        required: "Sector is required",
+                                    },
+                                }}
+                                options={[
+                                    {
+                                        value: "public_sector",
+                                        label: "Public Sector",
+                                    },
+                                    {
+                                        value: "private_sector",
+                                        label: "Private Sector",
+                                    },
+                                    {
+                                        value: "third_sector",
+                                        label: "Third Sector",
+                                    },
+                                ]}
+                            />
+                            {/* <DropdownField
                                 inputClass=" !focus:ring-dtech-main-dark border-1 !border-dtech-main-dark !focus:border-dtech-main-dark !bg-transparent"
                                 placeholder="Sector"
                                 options={[
@@ -115,18 +163,22 @@ const AdminSection = () => {
                                 ]}
                                 formControl={{
                                     control: vm.form.control,
-                                    defaultValue:User.getOrganisation(admin_user)?.sector,
+                                    defaultValue:
+                                        User.getOrganisation(admin_user)
+                                            ?.sector,
                                     name: "sector",
                                     rules: {
                                         required: "Sector is required",
-
                                     },
                                 }}
-                            />
+                            /> */}
                         </FormRow>
                         <FormRow
                             label="Max Members"
-                            labelClass="!bg-[#F8F8F8] !w-auto z-10 mx-5 absolute mb-10 text-dtech-main-dark !py-1"
+                            className=" md:w-auto bg-white flex-col sm:!mb-8"
+                            labelClass="sm:text-[19px]"
+                            iconClass="sm:h-[19px] sm:w-[19px] text-black"
+                            required
                         >
                             <TextField
                                 className="bg-gray-100"
@@ -134,7 +186,7 @@ const AdminSection = () => {
                                 formControl={{
                                     control: vm.form.control,
                                     defaultValue:
-                                   User.getOrganisation(admin_user)
+                                        User.getOrganisation(admin_user)
                                             ?.maxMembers,
                                     name: "max_members",
                                     rules: {
@@ -142,48 +194,58 @@ const AdminSection = () => {
                                     },
                                 }}
                                 placeholder="role"
-                                textfieldClassName="!focus:ring-dtech-main-dark border-2 !border-dtech-main-dark !focus:border-dtech-main-dark"
+                                textfieldClassName="border-0 border-b border-[#C3C3C3] focus:ring-opacity-0 rounded-none sm:text-[19px]"
                             />
                         </FormRow>
                     </div>
-                </div>
-                <div className="flex flex-row justify-end items-center mt-5 cursor-pointer">
-                    <div className=" absolute mr-[12rem] mt-1.5 ">
-                        <Image src={plusWhite} />
-                    </div>
-                    <PrimaryBtn
-                        className="bg-dtech-main-dark w-min whitespace-nowrap  !px-16  !py-2 !rounded-lg !text-lg"
-                        label="Add member"
-                        onClick={() => vm.setIsAddMemberModalOpen(true)}
-                    />
-                </div>
-                <div className="flex flex-col">
-                    <AddMemberModal
-                        isOpen={vm.isAddMemberModalOpen}
-                        setIsOpen={vm.setIsAddMemberModalOpen}
-                    />
-                    <MembersTable className="max-w-5xl ml-auto w-full overflow-x-auto" />
-                    <div className=" flex justify-end items-end">
+
+                    <div className="mt-5 w-full">
                         <PrimaryBtn
-                            className="bg-dtech-main-dark w-min whitespace-nowrap  !px-16 !py-2 !rounded-lg !text-lg"
+                            className="dtech-new-main-light bg-white border-2 border-dtech-new-main-light w-min whitespace-nowrap  !px-10  !py-2 !rounded-full !text-lg  !text-dtech-new-main-light"
+                            label="Add member"
+                            onClick={() => vm.setIsAddMemberModalOpen(true)}
+                        />
+                
+                        <AddMemberModal
+                            isOpen={vm.isAddMemberModalOpen}
+                            setIsOpen={vm.setIsAddMemberModalOpen}
+                        />
+                        <MembersTable className="max-w-5xl ml-auto w-full overflow-x-auto" />
+                        <PrimaryBtn
+                            className="bg-dtech-new-main-light w-min whitespace-nowrap  !px-16 !py-2 !rounded-full !text-lg mt-8"
                             label="Update"
                             isLoading={vm.isSavingOrgDetails}
                             onClick={() => {
-                                if(vm.form.getValues().name!==User.getOrganisation(admin_user)?.name||vm.form.getValues().sector!==User.getOrganisation(admin_user)?.sector||vm.file!=user?.logo_url){
-                                vm.form.handleSubmit(() => {
-                                    const formData = new FormData();
-                                    formData.append("name", vm.form.getValues().name);
-                                    formData.append("sector", vm.form.getValues().sector);
-                                    formData.append("image", vm.file || "");
-                                    vm.saveOrgDetails({
-                                        ...vm.form.getValues(),
-                                        image: vm.file,
-                                    });
-                                })()
-                            }
-                            else{
-                                toast.error("There is not any change in the form")
-                            }
+                                if (
+                                    vm.form.getValues().name !==
+                                        User.getOrganisation(admin_user)
+                                            ?.name ||
+                                    vm.form.getValues().sector !==
+                                        User.getOrganisation(admin_user)
+                                            ?.sector ||
+                                    vm.file != user?.logo_url
+                                ) {
+                                    vm.form.handleSubmit(() => {
+                                        const formData = new FormData();
+                                        formData.append(
+                                            "name",
+                                            vm.form.getValues().name
+                                        );
+                                        formData.append(
+                                            "sector",
+                                            vm.form.getValues().sector
+                                        );
+                                        formData.append("image", vm.file || "");
+                                        vm.saveOrgDetails({
+                                            ...vm.form.getValues(),
+                                            image: vm.file,
+                                        });
+                                    })();
+                                } else {
+                                    toast.error(
+                                        "There is not any change in the form"
+                                    );
+                                }
                             }}
                         />
                     </div>

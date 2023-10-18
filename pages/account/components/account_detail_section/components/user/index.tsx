@@ -10,6 +10,7 @@ import { useController } from "react-hook-form";
 import { useRef } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "store";
+import { BiUserCircle } from "react-icons/bi";
 
 const UserSection = () => {
     const user = useSelector((state: RootState) => state.auth.user);
@@ -42,53 +43,72 @@ const UserSection = () => {
         : "G";
 
     return (
-        <div className="pt-16 max-w-4xl mx-auto">
-            <div className="lg:flex flex-row justify-between items-start">
-                <div>
+        <div className="pt-16 max-w-3xl md:mx-auto mx-2">
+            <div className="flex flex-col justify-between items-center">
+                <div className="relative w-40 flex justify-center items-end">
                     <div
-                        className=" absolute ml-[80px] mt-[-15px] cursor-pointer"
+                        className={`select-none  outline-none text-lg w-32 h-32 flex justify-center items-center rounded-full text-[#F5F5F5] font-medium text-[96px]`}
+                    >
+                        {vm.file ? (
+                            <div className="p-2 flex flex-col justify-center items-center overflow-hidden rounded-full w-32 h-32">
+                                <img
+                                    src={vm.file}
+                                    className="w-28 h-28 object-contain"
+                                ></img>
+                            </div>
+                        ) : (
+                            <BiUserCircle className=" w-32 h-32 text-[#c3c3c3]" />
+                        )}
+                    </div>
+                    <div
+                        className=" absolute  cursor-pointer right-0"
                         onClick={() => {
                             uploadImage();
                         }}
-                    ><div>
-                        <input
-                            id="image-upload"
-                            ref={fileInputRef}
-                            // {...register}
-                            type="file"
-                            accept="image/*"
-                            onChange={handleFileChange}
-                            className="hidden"
-                        ></input>
+                    >
+                        <div>
+                            <input
+                                id="image-upload"
+                                ref={fileInputRef}
+                                // {...register}
+                                type="file"
+                                accept="image/*"
+                                onChange={handleFileChange}
+                                className="hidden"
+                            ></input>
                             <Image
                                 src={cameraImage}
-                                width="40px"
-                                height="40px"
-                            /></div>
-                    </div>
-                    <div className={`${!vm.file&&"bg-dtech-middle-grey"} "select-none  outline-none text-lg w-28 h-28 flex justify-center items-center rounded-full text-[#F5F5F5] font-medium text-[96px] mb-4 pb-6"`}>
-                        {vm.file ? <img src={vm.file} className="rounded-full"></img> : `${nameInitial}`}
+                                width="30px"
+                                height="30px"
+                            />
+                        </div>
                     </div>
                 </div>
-                <div className="grid md:grid-cols-2 gap-4 mt-2">
+                <div className="w-full">
                     <FormRow
                         label="Name"
-                        labelClass=" !bg-[#F8F8F8] !w-auto z-10 mx-5 absolute mb-10 text-[#3F0068] !py-1"
+                        className=" md:w-auto bg-white flex-col sm:!mb-8"
+                        labelClass="sm:text-[19px]"
+                        iconClass="sm:h-[19px] sm:w-[19px] text-black"
+                        required
                     >
                         <TextField
-                            className="w-[330px]"
+                            className=""
                             formControl={{
                                 control: vm.form.control,
                                 name: "name",
                                 rules: { required: "Name is required" },
                             }}
-                            placeholder="Name"
-                            textfieldClassName="!focus:ring-dtech-main-dark border-2 !border-dtech-main-dark !focus:border-dtech-main-dark"
+                            placeholder="Enter Name"
+                            textfieldClassName="border-0 border-b border-[#C3C3C3] focus:ring-opacity-0 rounded-none sm:text-[19px]"
                         />
                     </FormRow>
                     <FormRow
                         label="Email"
-                        labelClass=" !bg-[#F8F8F8] !w-auto z-10 mx-5 absolute mb-10 text-[#3F0068] !py-1"
+                        className=" md:w-auto bg-white flex-col sm:!mb-8"
+                        labelClass="sm:text-[19px]"
+                        iconClass="sm:h-[19px] sm:w-[19px] text-black"
+                        required
                     >
                         <TextField
                             className=""
@@ -98,13 +118,16 @@ const UserSection = () => {
                                 name: "email",
                                 rules: { required: "Email is required" },
                             }}
-                            placeholder="Email"
-                            textfieldClassName="!focus:ring-dtech-main-dark border-2 !border-dtech-main-dark !focus:border-dtech-main-dark"
+                            placeholder="Enter Email"
+                            textfieldClassName="border-0 border-b border-[#C3C3C3] focus:ring-opacity-0 rounded-none sm:text-[19px]"
                         />
                     </FormRow>
                     <FormRow
                         label="Organisation"
-                        labelClass=" !bg-[#F8F8F8] !w-auto z-10 mx-5 absolute mb-10 text-[#3F0068] !py-1"
+                        className=" md:w-auto bg-white flex-col sm:!mb-8"
+                        labelClass="sm:text-[19px]"
+                        iconClass="sm:h-[19px] sm:w-[19px] text-black"
+                        required
                     >
                         <TextField
                             className=""
@@ -114,16 +137,19 @@ const UserSection = () => {
                                 name: "organisation",
                                 rules: { required: "Organisation is required" },
                             }}
-                            placeholder="Organisation"
-                            textfieldClassName="!focus:ring-dtech-main-dark border-2 !border-dtech-main-dark !focus:border-dtech-main-dark"
+                            placeholder="Enter Organisation"
+                            textfieldClassName="border-0 border-b border-[#C3C3C3] focus:ring-opacity-0 rounded-none sm:text-[19px]"
                         />
                     </FormRow>
                     <FormRow
                         label="Role"
-                        labelClass=" !bg-[#F8F8F8] !w-auto z-10 mx-5 absolute mb-10 text-[#3F0068] !py-1"
+                        className=" md:w-auto bg-white flex-col sm:!mb-8"
+                        labelClass="sm:text-[19px]"
+                        iconClass="sm:h-[19px] sm:w-[19px] text-black"
+                        required
                     >
                         <DropdownField
-                            inputClass=" !focus:ring-dtech-main-dark border-1 !border-dtech-main-dark !focus:border-dtech-main-dark !bg-transparent"
+                            inputClass="rounded-[5px] sm:text-[19px] border-[#C3C3C3] focus:border-[#C3C3C3] focus:ring-opacity-0"
                             placeholder="Please select your role"
                             options={vm.roleOptions}
                             dataSelector="role-dropdown"
@@ -137,8 +163,9 @@ const UserSection = () => {
                     {vm.form.watch("role") == "other" && (
                         <FormRow
                             label="Role Other"
-                            className="md:col-start-2"
-                            labelClass=" !bg-[#F8F8F8] !w-auto z-10 mx-5 absolute mb-10 text-dtech-main-dark !py-1"
+                            className=" md:w-auto bg-white flex-col sm:!mb-8"
+                            labelClass="sm:text-[19px]"
+                            iconClass="sm:h-[19px] sm:w-[19px] text-black"
                         >
                             <TextField
                                 className="bg-gray-50"
@@ -150,7 +177,7 @@ const UserSection = () => {
                                     },
                                 }}
                                 placeholder="Role Other"
-                                textfieldClassName="!focus:ring-dtech-main-dark border-2 !border-dtech-main-dark !focus:border-dtech-main-dark"
+                                textfieldClassName="border-0 border-b border-[#C3C3C3] focus:ring-opacity-0 rounded-none sm:text-[19px]"
                             />
                         </FormRow>
                     )}
@@ -158,37 +185,49 @@ const UserSection = () => {
             </div>
             {/* <div className="flex flex-row justify-end">
             </div> */}
-            <div className="flex flex-row justify-end items-center">
-                <span className="hover:underline underline-offset-4 mr-4 text-dtech-main-dark cursor-pointer">
-                    Cancel
-                </span>
+            <div className="flex flex-row justify-between items-center">
                 <PrimaryBtn
-                    className="bg-dtech-main-dark w-min whitespace-nowrap  !px-20 !py-2 !rounded-lg"
+                    className="bg-[#6E498E] w-[120px] sm:w-[170px] !p-[10px] sm:!p-[16px] rounded-[30px] mt-5 mb-2 text-xs sm:text-[16px]"
                     label="Update"
                     isLoading={vm.isSavingUserDetails}
                     onClick={() => {
-                        if(vm.form.getValues().name!==user?.name||vm.form.getValues().role!==user?.role||vm.file!=user?.user_image_url){
-                        vm.form.handleSubmit(() => {
-
-                            const formData = new FormData();
-                            formData.append("name", vm.form.getValues().name);
-                            formData.append("email", vm.form.getValues().email);
-                            formData.append("role", vm.form.getValues().role);
-                            formData.append(
-                                "organisation",
-                                vm.form.getValues().organisation
-                            );
-                            formData.append("image", vm.file || "");
-                            vm.saveUserDetails({
-                                ...vm.form.getValues(),
-                                image: vm.file,
-                            });
-                        })()}
-                        else{
-                            toast.error("There is not any change in the form")
-                    }
+                        if (
+                            vm.form.getValues().name !== user?.name ||
+                            vm.form.getValues().role !== user?.role ||
+                            vm.file != user?.user_image_url
+                        ) {
+                            vm.form.handleSubmit(() => {
+                                const formData = new FormData();
+                                formData.append(
+                                    "name",
+                                    vm.form.getValues().name
+                                );
+                                formData.append(
+                                    "email",
+                                    vm.form.getValues().email
+                                );
+                                formData.append(
+                                    "role",
+                                    vm.form.getValues().role
+                                );
+                                formData.append(
+                                    "organisation",
+                                    vm.form.getValues().organisation
+                                );
+                                formData.append("image", vm.file || "");
+                                vm.saveUserDetails({
+                                    ...vm.form.getValues(),
+                                    image: vm.file,
+                                });
+                            })();
+                        } else {
+                            toast.error("There is not any change in the form");
+                        }
                     }}
                 />
+                <span className="text-[#6E498E] border-[#6E498E] border-2 w-[120px] sm:w-[170px] !p-[10px] sm:!p-[16px] rounded-[30px] mt-5 mb-2 text-xs sm:text-[16px] text-center">
+                    Cancel
+                </span>
             </div>
         </div>
     );

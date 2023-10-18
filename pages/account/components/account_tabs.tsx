@@ -28,7 +28,7 @@ const HEADERS: Header[] = [
         filledIcon: subscriptionFilled,
     },
     {
-        name: "Payment",
+        name: "Billing",
         outlineIcon: paymentOutline,
         filledIcon: paymentFilled,
     },
@@ -42,10 +42,10 @@ const AccountTabHeaders = ({
     const [selected, setSelected] = useState<number>(selectedIndex);
 
     return (
-        <Tab.List className="relative text-dtech-main-dark flex flex-row md:flex-col overflow-x-auto">
+        <Tab.List className=" flex text-dtech-new-main-light w-full space-x-2">
             {HEADERS.map((header: Header, index: number) => (
                 <TabIconHeader key={index} onClick={() => setSelected(index)}>
-                    <Image
+                    {/* <Image
                         src={
                             selected === index
                                 ? header.filledIcon
@@ -54,8 +54,8 @@ const AccountTabHeaders = ({
                         width="36px"
                         height="36px"
                         alt={header.name}
-                    />
-                    <span className="text-dtech-main-dark text-lg font-medium">
+                    /> */}
+                    <span className="text-dtech-new-main-light text-xs sm:text-[22px]">
                         {header.name}
                     </span>
                 </TabIconHeader>

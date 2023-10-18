@@ -2,7 +2,7 @@ import { Combobox, Transition } from "@headlessui/react";
 import clsx from "clsx";
 import { FieldProps } from "common/type";
 import { Fragment, useEffect, useState, useRef } from "react";
-import { HiOutlineChevronDown, HiOutlineSelector } from "react-icons/hi";
+import { HiOutlineChevronDown, HiOutlineChevronUp, HiOutlineSelector } from "react-icons/hi";
 import { BsCheck } from "react-icons/bs";
 import { useController } from "react-hook-form";
 import ReactTooltip from "react-tooltip";
@@ -192,8 +192,8 @@ const DropdownField = ({
                             newDropdown
                               ? <img className={isOpen?" rounded-md bg-[#FDD522] relative left-2 p-[14px]":"rounded-md bg-dtech-main-dark relative left-2 p-[13px]"}  src={isOpen?"images/icons/arrows/black_down_arrow.svg":"images/icons/arrows/feArrowUp2.svg"}/>
                               : newDropdownIcon
-                                ? <HiOutlineChevronDown className="w-5 h-5" />
-                                : <HiOutlineSelector className="w-5 h-5" />
+                                ? <HiOutlineChevronUp className="w-5 h-5" />
+                                : <HiOutlineChevronDown className="w-5 h-5" />
                         }
                     </Combobox.Button>
                 </div>
