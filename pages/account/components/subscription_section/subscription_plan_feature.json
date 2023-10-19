@@ -1,0 +1,311 @@
+{
+    "plans": [
+        {
+            "label": "Announcement",
+            "description": "Discounted bundles available for  organisations"
+        },
+        {
+            "label": "Guest",
+            "description": "Free"
+        },
+        {
+            "label": "Essential",
+            "description": "Free"
+        },
+        {
+            "label": "Professional",
+            "description": "Paid customer quote"
+        },
+        {
+            "label": "Premium",
+            "description": "Paid customer quote"
+        }
+    ],
+    "features": [
+        {
+            "label": "Search & navigation features",
+            "guest": "3/7",
+            "essential": true,
+            "professional": true,
+            "premium": true,
+            "children": [
+                {
+                    "feature": "Search datasets, data providers, topics & regions",
+                    "guest": true,
+                    "essential": true,
+                    "professional": true,
+                    "premium": true
+                },
+                {
+                    "feature": "Filter & sort search results",
+                    "guest": true,
+                    "essential": true,
+                    "professional": true,
+                    "premium": true
+                },
+                {
+                    "feature": "Add datasets, data providers, topics & regions to favourites",
+                    "guest": false,
+                    "essential": true,
+                    "professional": true,
+                    "premium": true
+                },
+                {
+                    "feature": "Create dataset, data provider. topics & regions lists",
+                    "guest": false,
+                    "essential": true,
+                    "professional": true,
+                    "premium": true
+                },
+                {
+                    "feature": "Share datasets, data providers, topics & regions on social media",
+                    "guest": true,
+                    "essential": true,
+                    "professional": true,
+                    "premium": true
+                },
+                {
+                    "feature": "Buy data",
+                    "guest": false,
+                    "essential": true,
+                    "professional": true,
+                    "premium": true
+                },
+                {
+                    "feature": "Search API access",
+                    "guest": false,
+                    "essential": true,
+                    "professional": true,
+                    "premium": true
+                }
+            ]
+        },
+        {
+            "label": "Data Set View page",
+            "guest": "2/10",
+            "essential": true,
+            "professional": true,
+            "premium": true,
+            "children": [
+                {
+                    "feature": "View Data Files",
+                    "guest": true,
+                    "essential": true,
+                    "professional": true,
+                    "premium": true
+                },
+                {
+                    "feature": "Download individual data files",
+                    "guest": false,
+                    "essential": true,
+                    "professional": true,
+                    "premium": true
+                },
+                {
+                    "feature": "Download multiple data files",
+                    "guest": false,
+                    "essential": false,
+                    "professional": true,
+                    "premium": true
+                },
+                {
+                    "feature": "Preview data files",
+                    "guest": false,
+                    "essential": true,
+                    "professional": true,
+                    "premium": true
+                },
+                {
+                    "feature": "View Metadata Quality scores",
+                    "guest": false,
+                    "essential": true,
+                    "professional": true,
+                    "premium": true
+                },
+                {
+                    "feature": "View Data Quality scores",
+                    "guest": false,
+                    "essential": true,
+                    "professional": true,
+                    "premium": true
+                },
+                {
+                    "feature": "View Use Cases summary",
+                    "guest": false,
+                    "essential": true,
+                    "professional": true,
+                    "premium": true
+                },
+                {
+                    "feature": "View Download metrics",
+                    "guest": false,
+                    "essential": true,
+                    "professional": true,
+                    "premium": true
+                },
+                {
+                    "feature": "Give User Feedback",
+                    "guest": false,
+                    "essential": true,
+                    "professional": true,
+                    "premium": true
+                },
+                {
+                    "feature": " See Related Datasets",
+                    "guest": true,
+                    "essential": true,
+                    "professional": true,
+                    "premium": true
+                }
+            ]
+        },
+        {
+            "label": "Data provider, topic & region view page ",
+            "guest": "1/6",
+            "essential": "1/6",
+            "professional": "5/6",
+            "premium": true,
+            "children": [
+                {
+                    "feature": "View Datasets aggregated",
+                    "guest": true,
+                    "essential": true,
+                    "professional": true,
+                    "premium": true
+                },
+                {
+                    "feature": "View Metadata Quality Scores aggregated",
+                    "guest": false,
+                    "essential": false,
+                    "professional": true,
+                    "premium": true
+                },
+                {
+                    "feature": "View Data Quality Scores aggregated",
+                    "guest": false,
+                    "essential": false,
+                    "professional": true,
+                    "premium": true
+                },
+                {
+                    "feature": "View Search Terms aggregated",
+                    "guest": false,
+                    "essential": false,
+                    "professional": true,
+                    "premium": true
+                },
+                {
+                    "feature": "View Download Metrics aggregated",
+                    "guest": false,
+                    "essential": false,
+                    "professional": true,
+                    "premium": true
+                },
+                {
+                    "feature": "Generate dataset insights report",
+                    "guest": false,
+                    "essential": false,
+                    "professional": false,
+                    "premium": true
+                }
+            ]
+        },
+        {
+            "label": "My workspace page",
+            "guest": false,
+            "essential": "4/5",
+            "professional": "4/5",
+            "premium": true,
+            "children": [
+                {
+                    "feature": "Upload, manage & publish own datasets",
+                    "guest": false,
+                    "essential": true,
+                    "professional": true,
+                    "premium": true
+                },
+                {
+                    "feature": "View & manage Lists",
+                    "guest": false,
+                    "essential": true,
+                    "professional": true,
+                    "premium": true
+                },
+                {
+                    "feature": "View & manage History",
+                    "guest": false,
+                    "essential": true,
+                    "professional": true,
+                    "premium": true
+                },
+                {
+                    "feature": "View & manage Notifications",
+                    "guest": false,
+                    "essential": true,
+                    "professional": true,
+                    "premium": true
+                },
+                {
+                    "feature": "View User Feedback & Respond",
+                    "guest": false,
+                    "essential": false,
+                    "professional": false,
+                    "premium": true
+                }
+            ]
+        },
+        {
+            "label": "My accounts page ",
+            "guest": false,
+            "essential": true,
+            "professional": true,
+            "premium": true,
+            "children": [
+                {
+                    "feature": "Manage profile",
+                    "guest": false,
+                    "essential": true,
+                    "professional": true,
+                    "premium": true
+                },
+                {
+                    "feature": "Manage subscriptions & payments",
+                    "guest": false,
+                    "essential": true,
+                    "professional": true,
+                    "premium": true
+                }
+            ]
+        },
+        {
+            "label": "General",
+            "guest": false,
+            "essential": "2/3",
+            "professional": true,
+            "premium": true,
+            "children": [
+                {
+                    "feature": "Register a data source",
+                    "guest": false,
+                    "essential": true,
+                    "professional": true,
+                    "premium": true
+                },
+                {
+                    "feature": "View data source catalogue",
+                    "guest": false,
+                    "essential": true,
+                    "professional": true,
+                    "premium": true
+                },
+                {
+                    "feature": "Support ",
+                    "guest": false,
+                    "essential": false,
+                    "professional": true,
+                    "premium": true
+                }
+            ]
+        }
+    ]
+}
