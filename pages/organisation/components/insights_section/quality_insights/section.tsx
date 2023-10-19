@@ -116,39 +116,39 @@ const QualityInsightsBody = () => {
     }
     const totalPages = Math.ceil(totalMatches / datasetsCount)
     return (
-        <div className="relative">
 
-            <div className="w-full"
-                key={selectedLabel}
-            >
-                <div className="sm:flex flex-row hidden my-6 relative">
-                    <div className=" w-[350px] text-dtech-main-dark absolute z-20">Insights &gt; Dataset Quality &gt; {selectedLabel == 0 ? "Data file" : "Metadata"}</div>
-                    <div className=" flex justify-center items-center w-full text-[#727272] ">{selectedLabel == 0 ? "Data file quality scores out of 5" : "Metadata quality scores out of 5"}<BsFillStarFill className=" ml-3" /><BsFillStarFill /><BsFillStarFill /><BsFillStarFill /><BsFillStarFill /></div>
-                </div>
-                <div className="text-sm hidden sm:block text-dtech-dark-grey my-4">
-                    {selectedLabel == 0 ? (
-                        <div className="my-8 text-sm text-dtech-dark-grey text-center mx-[270px]">
-                            The data quality of datasets of this organisation has
-                            been estimated based on user feedback (where available).
-                            Datasets rated based on overall data quality and
-                            individual dimensions are listed below.
-                        </div>
-                    ) : (
-                        <div className="my-8 text-sm text-dtech-dark-grey text-center mx-[180px]">
-                            The metadata quality of all datasets of this
-                            organisation has been algorithmically estimated based on
-                            the &nbsp;
-                            <a
-                                href="https://data.europa.eu/mqa/methodology"
-                                className=" text-dtech-main-dark underline "
-                            >
-                                EU Metadata Quality Assessment method
-                            </a>
-                            . Datasets rated based on overall metadata quality and
-                            individual dimensions are listed below.
-                        </div>
-                    )}
-                </div>
+        <div className="w-full"
+            key={selectedLabel}
+        >
+            <div className="sm:flex flex-row hidden my-6 relative">
+                <div className=" w-[350px] text-dtech-main-dark absolute z-20">Insights &gt; Dataset Quality &gt; {selectedLabel == 0 ? "Data file" : "Metadata"}</div>
+                <div className=" flex justify-center items-center w-full text-[#727272] ">{selectedLabel == 0 ? "Data file quality scores out of 5" : "Metadata quality scores out of 5"}<BsFillStarFill className=" ml-3" /><BsFillStarFill /><BsFillStarFill /><BsFillStarFill /><BsFillStarFill /></div>
+            </div>
+            <div className="text-sm hidden sm:block text-dtech-dark-grey my-4">
+                {selectedLabel == 0 ? (
+                    <div className="my-8 text-sm text-dtech-dark-grey text-center mx-[270px]">
+                        The data quality of datasets of this organisation has
+                        been estimated based on user feedback (where available).
+                        Datasets rated based on overall data quality and
+                        individual dimensions are listed below.
+                    </div>
+                ) : (
+                    <div className="my-8 text-sm text-dtech-dark-grey text-center mx-[180px]">
+                        The metadata quality of all datasets of this
+                        organisation has been algorithmically estimated based on
+                        the &nbsp;
+                        <a
+                            href="https://data.europa.eu/mqa/methodology"
+                            className=" text-dtech-main-dark underline "
+                        >
+                            EU Metadata Quality Assessment method
+                        </a>
+                        . Datasets rated based on overall metadata quality and
+                        individual dimensions are listed below.
+                    </div>
+                )}
+            </div>
+            <div className="relative    ">
                 <div className=" sm:hidden py-2">
 
                     <Tab.Group>
@@ -167,7 +167,7 @@ const QualityInsightsBody = () => {
                 </div>
                 <div>
                     <div
-                        className="sm:overflow-none  overflow-x-hidden sm:py-10 sm:-mt-10"
+                        className="sm:overflow-none  overflow-x-hidden sm:py-10 "
                     >
                         <table className=" w-full h-full "
                             style={{ transform: `translateX(-${currentSlide * percentToSlide}%)` }}
@@ -311,6 +311,9 @@ const QualityInsightsBody = () => {
                     </button> */}
                     </div>
                 </div>
+                {((selectedLabel == 0 && !permittedPermissions.includes("providerInsights.dataQuality.view")) || (selectedLabel == 1 && !permittedPermissions.includes("providerInsights.metadataQuality.view"))) && <div className=" absolute top-0 left-0 w-full h-full">
+                    <div className="h-full"><UpgradeAccountModal /></div>
+                </div>}
                 <div className="hidden sm:flex justify-center mt-20">
                     <div className="w-[1000px] h-[10px] bg-[#D9D9D9] ">
                     </div>
@@ -320,9 +323,7 @@ const QualityInsightsBody = () => {
                 </div>
 
             </div>
-            {((selectedLabel == 0 && !permittedPermissions.includes("providerInsights.dataQuality.view")) || (selectedLabel == 1 && !permittedPermissions.includes("providerInsights.metadataQuality.view"))) && <div className=" absolute top-0 left-0 w-full h-full">
-                <div className="h-full"><UpgradeAccountModal /></div>
-            </div>}
+
         </div>
     );
 };

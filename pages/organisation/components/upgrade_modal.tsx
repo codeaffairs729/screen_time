@@ -4,7 +4,7 @@ const UpgradeAccountModal = () => {
     return (
         <div className="relative h-full">
             {/* Behind Div */}
-            <div className="h-full w-full bg-[#D9D9D9] opacity-[75%] absolute top-0 left-0"></div>
+            <div className="h-full w-full bg-[#D9D9D9] rounded-[10px] opacity-[75%] absolute top-0 left-0"></div>
 
             {/* Modal in Center */}
             <div className="flex items-center justify-center h-full relative">

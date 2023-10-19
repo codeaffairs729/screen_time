@@ -6,11 +6,14 @@ import { ResponsiveContainer } from "recharts";
 import Table from "../../table";
 import { DownloadMetricVMContext } from "./download_metric.vm";
 import PieChartComponent from "./pie_component";
+import { OrganisationDetailVMContext } from "pages/organisation/organisation_detail.vm";
+import UpgradeAccountModal from "../../upgrade_modal";
 const PIE_HEADER = ["name", "value"];
 const ByRole = ({ isMobile }: { isMobile: any }) => {
     const { downloadMetrics, error, isFetchingDownloadMetrics } = useContext(
         DownloadMetricVMContext
     );
+    const { permittedPermissions } = useContext(OrganisationDetailVMContext)
 
     const { downloadByRole = [] } = downloadMetrics || {};
 
@@ -56,21 +59,27 @@ const ByRole = ({ isMobile }: { isMobile: any }) => {
                     whole organisation.
                 </div>
             </div>
-            <div className=" sm:ml-[25%] w-full">
-                <div className=" block overflow-y-scroll no-scrollbar whitespace-nowrap">
-                    <PieChartComponent chartData={chartData} isMobile={isMobile} />
+            <div className="relative">
+
+                <div className=" sm:ml-[25%] w-full">
+                    <div className=" block overflow-y-scroll no-scrollbar whitespace-nowrap">
+                        <PieChartComponent chartData={chartData} isMobile={isMobile} />
+                    </div>
                 </div>
-            </div>
-            <div className=" items-center flex justify-center">
-                <Table
-                    tableHeaders={PIE_HEADER}
-                    tableData={pieData}
-                    headerClass="sm:text-[17px] !py-2 sm:!py-4 !text-xs border-2 border-white !w-full sm:!px-10 !px-4  !text-white text-center sm:font-medium sm:bg-dtech-new-main-light bg-dtech-dark-teal "
-                    tableClass=" text-sm border-white w-full sm:w-1/3 !px-10 text-white text-center sm:font-medium bg-[#EBEBEB]"
-                    cellPadding={20}
-                    showDots={false}
-                    tableRow="sm:text-[17px] text-black font-normal w-full py-2 sm:!py-4  sm:!px-10 !px-4 w-full border-2 border-white"
-                />
+                <div className=" items-center flex justify-center">
+                    <Table
+                        tableHeaders={PIE_HEADER}
+                        tableData={pieData}
+                        headerClass="sm:text-[17px] !py-2 sm:!py-4 !text-xs border-2 border-white !w-full sm:!px-10 !px-4  !text-white text-center sm:font-medium sm:bg-dtech-new-main-light bg-dtech-dark-teal "
+                        tableClass=" text-sm border-white w-full sm:w-1/3 !px-10 text-white text-center sm:font-medium bg-[#EBEBEB]"
+                        cellPadding={20}
+                        showDots={false}
+                        tableRow="sm:text-[17px] text-black font-normal w-full py-2 sm:!py-4  sm:!px-10 !px-4 w-full border-2 border-white"
+                    />
+                </div>
+                {(!permittedPermissions.includes("providerInsights.downloadMetrics.view")) && <div className=" absolute top-0 left-0 w-full h-full">
+                    <div className="h-full"><UpgradeAccountModal /></div>
+                </div>}
             </div>
         </div>
     );
