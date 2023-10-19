@@ -1,507 +1,156 @@
-import Dropdown from "components/UI/drop_down";
-import Image from "next/image";
-import tick from "public/images/icons/tick.svg";
-import { FC, useState } from "react";
-import dynamic from "next/dynamic";
-const Accordion = dynamic(() => import("components/about/accordion"), {
-    ssr: false,
-});
+import AddOns from "./components/add_ons";
+import SubscriptionDropdown from "./components/subscription_dropdown";
+import ListHeader from "./components/list";
+import Card from "./components/subscription_card";
+import { useIsMobile } from "common/hooks";
+const subscription = require("../subscription_section/subscription_plan_feature.json");
 
-const accordionData = [
-    {
-        feature: "Features",
-        guest: "Guest (free)",
-        essential: "Essential (Free)",
-        professional: "Professional (paid)",
-        premium: "Premium (paid)",
-    },
-    {
-        feature: "Search & navigation features (7)",
-        guest: "3/7",
-        essential: "5/6",
-        professional: "5/6",
-        premium: "5/6",
-        children: [
-            {
-                feature: "Search datasets, data providers, topics & regions",
-                guest: true,
-                essential: true,
-                professional: true,
-                premium: true,
-            },
-            {
-                feature: "Filter & sort search results",
-                guest: true,
-                essential: true,
-                professional: true,
-                premium: true,
-            },
-            {
-                feature:
-                    "Add datasets, data providers, topics & regions to favourites",
-                guest: false,
-                essential: true,
-                professional: true,
-                premium: true,
-            },
-            {
-                feature:
-                    "Create dataset, data provider. topics & regions lists",
-                guest: false,
-                essential: true,
-                professional: true,
-                premium: true,
-            },
-            {
-                feature:
-                    "Share datasets, data providers, topics & regions on social media",
-                guest: true,
-                essential: true,
-                professional: true,
-                premium: true,
-            },
-            {
-                feature: "Buy data",
-                guest: false,
-                essential: true,
-                professional: true,
-                premium: true,
-            },
-            {
-                feature: "Search API access",
-                guest: false,
-                essential: true,
-                professional: true,
-                premium: true,
-            },
-        ].map((item, index) => (
-            <Accordion
-                feature={item.feature}
-                //guest={item.guest}
-                essential={item.essential}
-                premium={item.premium}
-                professional={item.professional}
-                key={index}
-                index={index}
-            />
-        )),
-    },
-    {
-        feature: "Dataset View Page (10)",
-        guest: "2/10",
-        essential: "5/6",
-        professional: "5/6",
-        premium: "5/6",
-        children: [
-            {
-                feature: "View Data Files",
-                guest: true,
-                essential: true,
-                professional: true,
-                premium: true,
-            },
-            {
-                feature: "Download individual data files",
-                guest: false,
-                essential: true,
-                professional: true,
-                premium: true,
-            },
-            {
-                feature: "Download multiple data files",
-                guest: false,
-                essential: false,
-                professional: true,
-                premium: true,
-            },
-            {
-                feature: "Preview data files",
-                guest: false,
-                essential: true,
-                professional: true,
-                premium: true,
-            },
-            {
-                feature: "View Metadata Quality scores",
-                guest: false,
-                essential: true,
-                professional: true,
-                premium: true,
-            },
-            {
-                feature: "View Data Quality scores",
-                guest: false,
-                essential: true,
-                professional: true,
-                premium: true,
-            },
-            {
-                feature: "View Use Cases summary",
-                guest: false,
-                essential: true,
-                professional: true,
-                premium: true,
-            },
-            {
-                feature: "View Download metrics",
-                guest: false,
-                essential: true,
-                professional: true,
-                premium: true,
-            },
-            {
-                feature: "Give User Feedback",
-                guest: false,
-                essential: true,
-                professional: true,
-                premium: true,
-            },
-            {
-                feature: " See Related Datasets",
-                guest: true,
-                essential: true,
-                professional: true,
-                premium: true,
-            },
-        ].map((item, index) => (
-            <Accordion
-                feature={item.feature}
-                //guest={item.guest}
-                essential={item.essential}
-                premium={item.premium}
-                professional={item.professional}
-                key={index}
-                index={index}
-            />
-        )),
-    },
-    {
-        feature: "Data provider, topic & region view page (6)",
-        guest: "1/6",
-        essential: "5/6",
-        professional: "5/6",
-        premium: "5/6",
-        children: [
-            {
-                feature: "View Datasets aggregated",
-                guest: true,
-                essential: true,
-                professional: true,
-                premium: true,
-            },
-            {
-                feature: "View Metadata Quality Scores aggregated",
-                guest: false,
-                essential: false,
-                professional: true,
-                premium: true,
-            },
-            {
-                feature: "View Data Quality Scores aggregated",
-                guest: false,
-                essential: false,
-                professional: true,
-                premium: true,
-            },
-            {
-                feature: "View Search Terms aggregated",
-                guest: false,
-                essential: false,
-                professional: true,
-                premium: true,
-            },
-            {
-                feature: "View Download Metrics aggregated",
-                guest: false,
-                essential: false,
-                professional: true,
-                premium: true,
-            },
-            {
-                feature: "Generate dataset insights report",
-                guest: false,
-                essential: false,
-                professional: false,
-                premium: true,
-            },
-        ].map((item, index) => (
-            <Accordion
-                feature={item.feature}
-                //guest={item.guest}
-                essential={item.essential}
-                premium={item.premium}
-                professional={item.professional}
-                key={index}
-                index={index}
-            />
-        )),
-    },
-    {
-        feature: "My workspace page (5)",
-        guest: "_",
-        essential: "5/6",
-        professional: "5/6",
-        premium: "5/6",
-        children: [
-            {
-                feature: "Upload, manage & publish own datasets",
-                guest: false,
-                essential: true,
-                professional: true,
-                premium: true,
-            },
-            {
-                feature: "View & manage Lists",
-                guest: false,
-                essential: true,
-                professional: true,
-                premium: true,
-            },
-            {
-                feature: "View & manage History",
-                guest: false,
-                essential: true,
-                professional: true,
-                premium: true,
-            },
-            {
-                feature: "View & manage Notifications",
-                guest: false,
-                essential: true,
-                professional: true,
-                premium: true,
-            },
-            {
-                feature: "View User Feedback & Respond",
-                guest: false,
-                essential: false,
-                professional: false,
-                premium: true,
-            },
-        ].map((item, index) => (
-            <Accordion
-                feature={item.feature}
-                //guest={item.guest}
-                essential={item.essential}
-                premium={item.premium}
-                professional={item.professional}
-                key={index}
-                index={index}
-            />
-        )),
-    },
-    {
-        feature: "My accounts page (2)",
-        guest: "_",
-        essential: "5/6",
-        professional: "5/6",
-        premium: "5/6",
-        children: [
-            {
-                feature: "Manage profile",
-                guest: false,
-                essential: true,
-                professional: true,
-                premium: true,
-            },
-            {
-                feature: "Manage subscriptions & payments",
-                guest: false,
-                essential: true,
-                professional: true,
-                premium: true,
-            },
-        ].map((item, index) => (
-            <Accordion
-                feature={item.feature}
-                //guest={item.guest}
-                essential={item.essential}
-                premium={item.premium}
-                professional={item.professional}
-                key={index}
-                index={index}
-            />
-        )),
-    },
-    
-];
-const dataSearchEnhancementList = [
-    "Search query autocompletion",
-    "Custom filters",
-    "Sort results",
-];
-const PLANS = [
-    {
-        plan: "monthly",
-    },
-    {
-        plan: "yearly",
-    },
-];
-const reportingList = ["Search analytics", "Results analytics"];
 const SubscriptionSection = () => {
-    const [plan, setPlan] = useState("");
-    const options = PLANS.map((obj) => ({
-        label: `${obj.plan}`,
-        onClick: () => {
-            setPlan(obj.plan);
-        },
-    }));
+    const { isMobile } = useIsMobile();
+
     return (
-        <div  >
-            
-            {/* <div className="w-[50%] py-6 mx-10 flex flex-col mt-12 ml-6 mb-96 border-2 shadow-lg rounded-[44px]">
-                <div className="bg-dtech-main-light text-dtech-main-dark font-medium py-2 cursor-pointer w-full text-center">
-                    Enterprise Global
-                </div>
-                <div className="flex flex-row justify-around text-xl">
-                    <div className="flex flex-col  items-start my-4">
-                        <span className="text-dtech-main-dark font-medium">
-                            &#163;1k
-                        </span>
-                        <span>per month</span>
+        <>
+            {!isMobile ? (
+                <div className="flex flex-col">
+                    <div className="flex">
+                        {subscription.plans?.map((plan: any, index: number) => (
+                            <Card
+                                key={index}
+                                cardOuterClass={
+                                    plan.label.toLocaleLowerCase() ==
+                                    "announcement"
+                                        ? " h-[196px] w-[30%]"
+                                        : "h-[196px] w-[17.5%]"
+                                }
+                                label={plan.label}
+                                labelDivClass={`h-[82px]  ${
+                                    plan.label.toLocaleLowerCase() ==
+                                    "announcement"
+                                        ? ""
+                                        : "!items-center"
+                                }`}
+                                descriptionDivClass={`h-[114px] text-[#727272]
+                            ${
+                                plan.label.toLocaleLowerCase() == "announcement"
+                                    ? "  "
+                                    : " !items-center "
+                            }`}
+                                description={plan.description}
+                            />
+                        ))}
                     </div>
-                    <div className="my-6    ">or</div>
-                    <div className="flex flex-col  items-start my-4">
-                        <span className="text-dtech-main-dark font-medium">
-                            &#163;10k
-                        </span>
-                        <span>per month</span>
-                    </div>
-                </div>
-                <div className=" ml-14 my-6">
-                    <div className="my-2">
-                        <Image src={tick} />
-                        <span className="ml-2 font-medium">
-                            Data search enhancement
+                    <div className="flex ml-[25px] my-2">
+                        <span className=" text-[22px] font-bold text-[#4CA7A5]">
+                            Features
                         </span>
                     </div>
-                    {dataSearchEnhancementList?.map(
-                        (label: string, index: number) => (
-                            <Description label={label} key={index} />
+                    {subscription.features?.map(
+                        (feature: any, index: number) => (
+                            <ListHeader
+                                // index={index}
+                                key={index}
+                                label={feature.label}
+                                count={feature.children.length}
+                                guest={feature.guest}
+                                essential={feature.essential}
+                                professional={feature.professional}
+                                premium={feature.premium}
+                            >
+                                {feature.children.map(
+                                    (child: any, idx: number) => (
+                                        <ListHeader
+                                            index={idx}
+                                            key={idx}
+                                            label={child.feature}
+                                            guest={child.guest}
+                                            essential={child.essential}
+                                            professional={child.professional}
+                                            premium={child.premium}
+                                        />
+                                    )
+                                )}
+                            </ListHeader>
                         )
                     )}
-                    <div className="my-2">
-                        <Image src={tick} />
-                        <span className="ml-2 font-medium">
-                            Navigation features
-                        </span>
+                    <div className="flex flex-row mt-3">
+                        <div className="w-[47.5%]"></div>
+                        <div
+                            className="w-[17.5%] flex justify-center items-center"
+                            id={"essential_plan"}
+                        >
+                            <button className="flex justify-center items-center bg-dtech-new-main-light p-4 w-[150px] rounded-full mx-2 cursor-pointer">
+                                <span className="text-white">Select plan</span>
+                            </button>
+                        </div>
+                        {/* <div className="w-[17.5%] flex justify-center items-center">
+                            <button className="flex justify-center items-center bg-[#4CA7A5] p-4 w-[150px] rounded-full mx-2 cursor-pointer">
+                                <span className="text-white">Active plan</span>
+                            </button>
+                        </div> */}
+                        <div
+                            className="w-[17.5%] flex justify-center items-center"
+                            id={"professional_plan"}
+                        >
+                            <button className="flex justify-center items-center bg-dtech-new-main-light p-4 w-[150px] rounded-full mx-2 cursor-pointer">
+                                <span className="text-white">Select plan</span>
+                            </button>
+                        </div>
+                        <div
+                            className="w-[17.5%] flex justify-center items-center"
+                            id={"premium_plan"}
+                        >
+                            <button className="flex justify-center items-center bg-dtech-new-main-light p-4 w-[150px] rounded-full mx-2 cursor-pointer">
+                                <span className="text-white">Select plan</span>
+                            </button>
+                        </div>
                     </div>
-                    <div className="my-2">
-                        <Image src={tick} />
-                        <span className="ml-2 font-medium">Logs</span>
+
+                    <Card
+                        cardOuterClass={
+                            "w-full  !items-center  border-t-4 mt-10 border-b-none shadow-none"
+                        }
+                        label={"Add- ons (paid)"}
+                        labelDivClass={` px-5 h-[40px] !text-base !shadow-md  `}
+                    />
+                    <AddOns disableContact={true} />
+                </div>
+            ) : (
+                <div className="flex flex-col justify-center items-center my-12">
+                    <SubscriptionDropdown label={"Professional"} />
+                    <div className=" my-8">
+                        <SubscriptionDropdown label={"Essential"} />
+                        <div className="bg-[#6DCDCB] h-14 w-60 flex flex-row justify-center items-center my-0.5">
+                            <span>Free(active account)</span>
+                        </div>
                     </div>
-                    <div className="my-2">
-                        <Image src={tick} />
-                        <span className="ml-2 font-medium">Reporting</span>
-                    </div>
-                    {reportingList?.map((label: string, index: number) => (
-                        <Description label={label} key={index} />
-                    ))}
-                    <div className="my-2">
-                        <Image src={tick} />
-                        <span className="ml-2 font-medium">
-                            Customer support - 24 hours SLA
-                        </span>
+                    <SubscriptionDropdown label={"Premium"} />
+
+                    <div className="w-60">
+                        <Card
+                            cardOuterClass={
+                                "w-full rounded-lg !items-center  border-t-4"
+                            }
+                            label={"Announcement"}
+                            labelDivClass={`!items-center h-[40px] !text-base `}
+                            descriptionDivClass={`!justify-center !items-center  w-[218px] py-2 !text-sm !text-[#727272]`}
+                            description={
+                                "Discounted Bundles available for  organisations"
+                            }
+                        />
+
+                        <Card
+                            cardOuterClass={
+                                "w-full rounded-lg !items-center  border-t-4 mt-10 border-b-none shadow-none"
+                            }
+                            label={"Add- ons (paid)"}
+                            labelDivClass={`!items-center h-[40px] !text-base !shadow-md  rounded-lg`}
+                            descriptionDivClass={`!justify-center !items-center  w-[218px] py-2 !text-sm !text-[#727272]`}
+                        />
+                        <AddOns />
                     </div>
                 </div>
-                <div className="flex flex-row justify-between mx-20">
-                    <div className="flex flex-col">
-                        <div>Plan</div>
-                        <div className="w-20 border border-dtech-main-dark rounded ml- px-6">
-                            <Dropdown
-                                label={`${plan}`}
-                                menuItems={options}
-                                menuItemsClasses="!w-32 border border-dtech-main-dark"
-                                labelClasses=" text-m font-normal pr-2.5 "
-                                className="!ml-0 "
-                                iconClass="text-dtech-main-dark"
-                            />
-                        </div>
-                    </div>
-                    <div className="flex flex-col">
-                        <div>Queries</div>
-                        <div className="w-20 border border-dtech-main-dark rounded ml- px-6">
-                            <Dropdown
-                                label={`${plan}`}
-                                menuItems={options}
-                                menuItemsClasses="!w-32 border border-dtech-main-dark"
-                                labelClasses=" text-m font-normal pr-2.5 "
-                                className="!ml-0 "
-                                iconClass="text-dtech-main-dark"
-                            />
-                        </div>
-                    </div>
-                </div>
-                <div className="flex flex-row justify-between mx-20">
-                    <div className="flex flex-col">
-                        <div>Users</div>
-                        <div className="w-20 border border-dtech-main-dark rounded ml- px-6">
-                            <Dropdown
-                                label={`${plan}`}
-                                menuItems={options}
-                                menuItemsClasses="!w-32 border border-dtech-main-dark"
-                                labelClasses=" text-m font-normal pr-2.5 "
-                                className="!ml-0 "
-                                iconClass="text-dtech-main-dark"
-                            />
-                        </div>
-                    </div>
-                    <div className="flex flex-col">
-                        <div>Cloud integrations</div>
-                        <div className="w-20 border border-dtech-main-dark rounded ml- px-6">
-                            <Dropdown
-                                label={`${plan}`}
-                                menuItems={options}
-                                menuItemsClasses="!w-32 border border-dtech-main-dark"
-                                labelClasses=" text-m font-normal pr-2.5 "
-                                className="!ml-0 "
-                                iconClass="text-dtech-main-dark"
-                            />
-                        </div>
-                    </div>
-                </div>
-                <div className="flex flex-row justify-between mx-20">
-                    <div className="flex flex-col ">
-                        <div>Admins</div>
-                        <div className="w-20 border border-dtech-main-dark rounded ml- px-6">
-                            <Dropdown
-                                label={`${plan}`}
-                                menuItems={options}
-                                menuItemsClasses="!w-32 border border-dtech-main-dark"
-                                labelClasses=" text-m font-normal pr-2.5 "
-                                className="!ml-0 "
-                                iconClass="text-dtech-main-dark"
-                            />
-                        </div>
-                    </div>
-                </div>
-            </div> */}
-            <div >
-                {accordionData.map((item, index) => (
-                    <Accordion
-                        feature={item.feature}
-                        //guest={item.guest}
-                        essential={item.essential}
-                        premium={item.premium}
-                        professional={item.professional}
-                        key={index}
-                        index={index}
-                    >
-                        {item.children}
-                    </Accordion>
-                ))}
-            </div>
-        </div>
+            )}
+        </>
     );
 };
 export default SubscriptionSection;
-
-const Description = ({ label }: { label: string }): JSX.Element => {
-    return (
-        <div className="my-2 ml-5 flex flex-row  items-center ">
-            <div className="select-none outline-none  w-2 h-2 bg-black rounded-full"></div>
-            <span className="ml-3 ">{label}</span>
-        </div>
-    );
-};
