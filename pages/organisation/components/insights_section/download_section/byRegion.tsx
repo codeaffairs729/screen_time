@@ -6,6 +6,8 @@ import { useContext } from "react";
 import Table from "../../table";
 import { DownloadMetricVMContext } from "./download_metric.vm";
 import MapChartComponent from "./map_component";
+import { OrganisationDetailVMContext } from "pages/organisation/organisation_detail.vm";
+import UpgradeAccountModal from "../../upgrade_modal";
 const WorldMap = dynamic(() => import("components/UI/world_map"), {
     ssr: false,
 });
@@ -14,6 +16,7 @@ const ByRegion = ({ isMobile }: { isMobile: boolean }) => {
     const { downloadMetrics, error, isFetchingDownloadMetrics } = useContext(
         DownloadMetricVMContext
     );
+    const { permittedPermissions } = useContext(OrganisationDetailVMContext)
 
     const { regions = [] } = downloadMetrics || {};
 
@@ -64,11 +67,13 @@ const ByRegion = ({ isMobile }: { isMobile: boolean }) => {
                     whole organisation.
                 </div>
             </div>
-            <div className=" w-full">
-                <MapChartComponent regions={regions} isMobile={isMobile} />
-                {/* <WorldMap locations={loc} counts={downloadCounts} /> */}
-            </div>
-            {/* <div className="mt-8 w-full "> */}
+            <div className=" w-full relative ">
+
+                <div className=" w-full">
+                    <MapChartComponent regions={regions} isMobile={isMobile} />
+                    {/* <WorldMap locations={loc} counts={downloadCounts} /> */}
+                </div>
+                <div className="flex items-center justify-center w-full ">
                 <Table
                     tableHeaders={TABLE_HEADERS}
                     tableData={tableData}
@@ -77,7 +82,11 @@ const ByRegion = ({ isMobile }: { isMobile: boolean }) => {
                     cellPadding={20}
                     tableRow="sm:text-[17px] text-black font-normal py-2 sm:!py-4  sm:!px-10 !px-4  border-2 border-white"
                 />
-            {/* </div> */}
+            </div>
+                {(!permittedPermissions.includes("providerInsights.downloadMetrics.view")) && <div className=" absolute top-0 left-0 w-full h-full">
+                    <div className="h-full"><UpgradeAccountModal /></div>
+                </div>}
+            </div>
         </div>
     );
 };

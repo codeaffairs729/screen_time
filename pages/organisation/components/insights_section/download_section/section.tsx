@@ -1,17 +1,12 @@
 import { useContext, useEffect, useState } from "react";
-import Loader from "components/UI/loader";
 import ByRegion from "./byRegion";
 import ByTime from "./byTime";
 import ByRole from "./byRole";
 import { DownloadMetricVMContext } from "./download_metric.vm";
 import { Tab } from "@headlessui/react";
-import { BsFillStarFill } from "react-icons/bs";
-import { OrganisationDetailVMContext } from "pages/organisation/organisation_detail.vm";
-import UpgradeAccountModal from "../../upgrade_modal";
 const DownloadSection = () => {
     const { selectedDownload: selectedLabel, fetchDownloadMetrics, setSelectedDownload } =
         useContext(DownloadMetricVMContext);
-    const { permittedPermissions } = useContext(OrganisationDetailVMContext)
 
     const [isMobile, setIsMobile] = useState(false)
     useEffect(() => {
@@ -52,49 +47,44 @@ const DownloadSection = () => {
     }, []);
 
     return (
-        <div className="relative">
 
-            <div>
-                <div className="sm:hidden mt-2 mb-4">
-                    <Tab.Group selectedIndex={selectedLabel} >
-                        <Tab.List className={"flex justify-center space-x-10 items-center "}>
-                            <div>
-                                <HeadTag
-                                    isSelected={selectedLabel == 0}
-                                    label={"by_region"}
-                                    setSelected={onTabSelect}
-                                ></HeadTag>
-                                {/* {selectedLabel == 0 && <div>hi</div>} */}
-                            </div>
-                            <div>
-                                <HeadTag
-                                    isSelected={selectedLabel == 1}
-                                    label={"by_time"}
-                                    setSelected={onTabSelect}
-                                ></HeadTag>
-                                {/* {selectedLabel == 1 && <div>hiii</div>} */}
-                            </div>
-                            <div>
-                                <HeadTag
-                                    isSelected={selectedLabel == 2}
-                                    label={"by_role"}
-                                    setSelected={onTabSelect}
-                                ></HeadTag>
-                                {/* {selectedLabel == 2 && <div>hiiiiiiiiii</div>} */}
-                            </div>
-                        </Tab.List>
-                    </Tab.Group>
-                </div>
-                <div className="sm:flex flex-row hidden my-6 relative">
-                    <div className=" w-[350px] text-dtech-main-dark absolute z-20">Insights &gt; Download Metrics &gt; {selectedLabel == 0 ? "By Region" : selectedLabel == 1 ? "By Time" : "By Role"}</div>
-                </div>
-                {selectedLabel == 0 && <ByRegion isMobile={isMobile} />}
-                {selectedLabel == 1 && <ByTime isMobile={isMobile} />}
-                {selectedLabel == 2 && <ByRole isMobile={isMobile} />}
+        <div>
+            <div className="sm:hidden mt-2 mb-4">
+                <Tab.Group selectedIndex={selectedLabel} >
+                    <Tab.List className={"flex justify-center space-x-10 items-center "}>
+                        <div>
+                            <HeadTag
+                                isSelected={selectedLabel == 0}
+                                label={"by_region"}
+                                setSelected={onTabSelect}
+                            ></HeadTag>
+                            {/* {selectedLabel == 0 && <div>hi</div>} */}
+                        </div>
+                        <div>
+                            <HeadTag
+                                isSelected={selectedLabel == 1}
+                                label={"by_time"}
+                                setSelected={onTabSelect}
+                            ></HeadTag>
+                            {/* {selectedLabel == 1 && <div>hiii</div>} */}
+                        </div>
+                        <div>
+                            <HeadTag
+                                isSelected={selectedLabel == 2}
+                                label={"by_role"}
+                                setSelected={onTabSelect}
+                            ></HeadTag>
+                            {/* {selectedLabel == 2 && <div>hiiiiiiiiii</div>} */}
+                        </div>
+                    </Tab.List>
+                </Tab.Group>
             </div>
-            {(!permittedPermissions.includes("providerInsights.downloadMetrics.view")) && <div className=" absolute top-0 left-0 w-full h-full">
-                <div className="h-full"><UpgradeAccountModal /></div>
-            </div>}
+            <div className="sm:flex flex-row hidden my-6 relative">
+                <div className=" w-[350px] text-dtech-main-dark absolute z-20">Insights &gt; Download Metrics &gt; {selectedLabel == 0 ? "By Region" : selectedLabel == 1 ? "By Time" : "By Role"}</div>
+            </div>
+            {selectedLabel == 0 && <ByRegion isMobile={isMobile} />}
+            {selectedLabel == 1 && <ByTime isMobile={isMobile} />}
+            {selectedLabel == 2 && <ByRole isMobile={isMobile} />}
         </div>
     );
 };
