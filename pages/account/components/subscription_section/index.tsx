@@ -3,15 +3,22 @@ import SubscriptionDropdown from "./components/subscription_dropdown";
 import ListHeader from "./components/list";
 import Card from "./components/subscription_card";
 import { useIsMobile } from "common/hooks";
+import { Fragment, useState } from "react";
+import { Dialog, Transition } from "@headlessui/react";
+import { AiOutlineClose } from "react-icons/ai";
+import Link from "next/link";
 const subscription = require("../subscription_section/subscription_plan_feature.json");
 
 const SubscriptionSection = () => {
+    const [openPopup, setOpenPopup] = useState<boolean>(false);
     const { isMobile } = useIsMobile();
-
+    console.log("openPopup :", openPopup);
     return (
         <>
             {!isMobile ? (
                 <div className="flex flex-col">
+                    <Popup openPopup={openPopup} setOpenPopup={setOpenPopup} />
+
                     <div className="flex">
                         {subscription.plans?.map((plan: any, index: number) => (
                             <Card
@@ -78,7 +85,10 @@ const SubscriptionSection = () => {
                             className="w-[17.5%] flex justify-center items-center"
                             id={"essential_plan"}
                         >
-                            <button className="flex justify-center items-center bg-dtech-new-main-light p-4 w-[150px] rounded-full mx-2 cursor-pointer">
+                            <button
+                                onClick={() => setOpenPopup(true)}
+                                className="flex justify-center items-center bg-dtech-new-main-light p-4 w-[150px] rounded-full mx-2 cursor-pointer"
+                            >
                                 <span className="text-white">Select plan</span>
                             </button>
                         </div>
@@ -91,7 +101,10 @@ const SubscriptionSection = () => {
                             className="w-[17.5%] flex justify-center items-center"
                             id={"professional_plan"}
                         >
-                            <button className="flex justify-center items-center bg-dtech-new-main-light p-4 w-[150px] rounded-full mx-2 cursor-pointer">
+                            <button
+                                onClick={() => setOpenPopup(true)}
+                                className="flex justify-center items-center bg-dtech-new-main-light p-4 w-[150px] rounded-full mx-2 cursor-pointer"
+                            >
                                 <span className="text-white">Select plan</span>
                             </button>
                         </div>
@@ -99,7 +112,10 @@ const SubscriptionSection = () => {
                             className="w-[17.5%] flex justify-center items-center"
                             id={"premium_plan"}
                         >
-                            <button className="flex justify-center items-center bg-dtech-new-main-light p-4 w-[150px] rounded-full mx-2 cursor-pointer">
+                            <button
+                                onClick={() => setOpenPopup(true)}
+                                className="flex justify-center items-center bg-dtech-new-main-light p-4 w-[150px] rounded-full mx-2 cursor-pointer"
+                            >
                                 <span className="text-white">Select plan</span>
                             </button>
                         </div>
@@ -154,3 +170,72 @@ const SubscriptionSection = () => {
     );
 };
 export default SubscriptionSection;
+
+const Popup = ({
+    openPopup,
+    setOpenPopup,
+}: {
+    openPopup: boolean;
+    setOpenPopup: Function;
+}) => {
+    return (
+        <Transition appear show={openPopup} as={Fragment}>
+            <Dialog
+                as="div"
+                className="relative z-10"
+                open={openPopup}
+                onClose={() => setOpenPopup(false)}
+            >
+                <Transition.Child
+                    as={Fragment}
+                    enter="ease-out duration-300"
+                    enterFrom="opacity-0"
+                    enterTo="opacity-100"
+                    leave="ease-in duration-200"
+                    leaveFrom="opacity-100"
+                    leaveTo="opacity-0"
+                >
+                    <div className="fixed inset-0 bg-black bg-opacity-25" />
+                </Transition.Child>
+                <div className="fixed inset-0 overflow-y-auto">
+                    <div className="flex min-h-full items-center justify-center p-4 text-center">
+                        <Transition.Child
+                            as={Fragment}
+                            enter="ease-out duration-300"
+                            enterFrom="opacity-0 scale-95"
+                            enterTo="opacity-100 scale-100"
+                            leave="ease-in duration-200"
+                            leaveFrom="opacity-100 scale-100"
+                            leaveTo="opacity-0 scale-95"
+                        >
+                            <Dialog.Panel className="md:w-[407px] md:h-[250px] w-[242px] h-[203x] bg-white p-[38px] rounded-xl border-2 border-dtech-light-teal flex flex-col justify-center items-center relative">
+                                <AiOutlineClose
+                                    strokeWidth={2}
+                                    className={`w-5 h-5 absolute top-0 right-0 m-6 cursor-pointer`}
+                                    onClick={() => setOpenPopup(false)}
+                                />
+                                <div className="md:text-xl text-[12px] font-[400] text-[#000000] mt-4 z-50  text-left">
+                                    To change your subscription plan, email us
+                                    at &nbsp;
+                                    <span className="underline underline-offset-2 cursor-pointer text-[#0065BD]">
+                                        dtechtive@dtime.ai
+                                    </span>
+                                    &nbsp; or arrange a call via &nbsp;
+                                    <Link
+                                        href={
+                                            "https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ2Y_qEqE_AMtuxvSiL0GjO3wjJ-a3CrOiToFIgmn-t7FiPYduxdsdaprH2yetCTJzX8I5nnoGu1?pli=1"
+                                        }
+                                    >
+                                        <span className="underline underline-offset-2 cursor-pointer text-[#0065BD]">
+                                            dtime.ai/meeting
+                                        </span>
+                                    </Link>
+                                </div>
+                            </Dialog.Panel>
+                        </Transition.Child>
+                    </div>
+                </div>
+            </Dialog>
+        </Transition>
+    );
+};
