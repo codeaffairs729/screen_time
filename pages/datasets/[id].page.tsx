@@ -68,11 +68,15 @@ const DatasetDetail = ({ dataset }: { dataset: Dataset | undefined }) => {
     const relatedVM = RelatedDatasetsVM(dataset);
     const imageRef = useRef<HTMLDivElement>(null)
     const fetchImages = async () => {
-        const logoUrl = await Http.get(`/v1/datasets/${dataset?.detail.topics[0]}/${dataset?.id}/logo`, {
-            baseUrl: process.env.NEXT_PUBLIC_WEBPORTAL_API_ROOT,
-        })
-
-        return logoUrl
+        try {
+            const logoUrl = await Http.get(`/v1/datasets/${dataset?.detail.topics[0]}/${dataset?.id}/logo`, {
+                baseUrl: process.env.NEXT_PUBLIC_WEBPORTAL_API_ROOT,
+            })
+            return logoUrl
+        } catch (error) {
+            console.error(error);
+            return ""
+        }
     }
     useEffect(() => {
         const hashParam: string = asPath.split("#")[1]?.split("/")[0];
