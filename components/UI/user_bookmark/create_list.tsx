@@ -32,19 +32,31 @@ const CreateList = () => {
         setNewNameActive(false);
     };
 
+    const handleKeyPress = (event:any) => {
+        if (event.key === 'Enter') {
+          event.preventDefault();
+          if (newNameActive) {
+            createList();
+          } else {
+            setNewNameActive(true);
+          }
+        }
+      };
+
     return (
         <div className="mr-auto">
-            <div className="flex items-center justify-between border-2 md:border-[#727272]  overflow-hidden border-dtech-main-dark rounded-full px-3 h-12 w-1/2 md:w-full cursor-pointer py-2 mx-3 md:mx-0">
+            <div className="flex items-center justify-between border-2 md:border-[#727272]  overflow-hidden border-dtech-main-dark rounded-full px-3 h-12 w-1/2 min-w-max  md:w-full cursor-pointer py-2 mx-3 md:mx-0">
                 {newNameActive ? (
                     <input
                         ref={ref}
-                        className="text-lg w-32 outline-none"
+                        className="md:text-lg w-32 outline-none"
                         value={listName}
                         onChange={(event) => setListName(event.target.value)}
+                        onKeyPress={handleKeyPress}
                     />
                 ) : (
                     <span
-                        className="text-lg  text-dtech-main-dark md:text-black"
+                        className="md:text-lg  text-sm  text-dtech-main-dark md:text-black  whitespace-nowrap"
                         onClick={() => setNewNameActive(true)}
                     >
                         Create new list
@@ -61,6 +73,7 @@ const CreateList = () => {
                                     ? createList()
                                     : setNewNameActive(true)
                             }
+                            
                         />
                     )}
                 {/* </div> */}

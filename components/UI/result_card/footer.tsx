@@ -11,9 +11,13 @@ import { useRouter } from "next/router";
 const CardFooter = ({
     data,
     className = "",
+    cardClicked,
+    cardHover,
 }: {
     data: Data;
     className?: string;
+    cardClicked?: boolean;
+    cardHover?: boolean;
 }) => {
     const { dataProviders, stats, lastUpdate, domains, topics } = data;
     const router = useRouter();
@@ -45,10 +49,14 @@ const CardFooter = ({
     return (
         <div className={clsx("w-full ", className)}>
             <div>
-                {(router.pathname == "/search" || router.pathname =="/datasets/[id]" || router.pathname.includes("/workspace")) && (
+                {(router.pathname == "/search" ||
+                    router.pathname == "/datasets/[id]" ||
+                    router.pathname.includes("/workspace")) && (
                     <MetaInfoEntity
                         entityName="File Type"
                         entities={getFileFormatCounts(data.urls)}
+                        cardClicked ={cardClicked }
+                        cardHover ={cardHover}
                     />
                 )}
             </div>
@@ -73,9 +81,13 @@ const CardFooter = ({
 const MetaInfoEntity = ({
     entityName,
     entities,
+    cardClicked,
+    cardHover,
 }: {
     entityName: string;
     entities: string[] | undefined;
+    cardClicked?: boolean;
+    cardHover?: boolean;
 }) => {
     const [viewAll, setViewAll] = useState<boolean>(false);
     const handleSearchFocus = () => {
@@ -111,7 +123,7 @@ const MetaInfoEntity = ({
                             return (
                                 <span
                                     key={index}
-                                    className="sm:text-xs text-xs text-white m-1 bg-dtech-new-main-light py-0.5 px-2 pt-1"
+                                    className={`${(cardClicked ||cardHover) && "!bg-[#28A197]"} sm:text-xs text-xs text-white m-1 bg-dtech-new-main-light py-0.5 px-2 pt-1 `}
                                 >
                                     {entity}
                                 </span>

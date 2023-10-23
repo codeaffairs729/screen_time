@@ -19,12 +19,16 @@ const BookmarkBtn = ({
     recordType = "dataset",
     onBookmarkChange,
     bookmarkColor = "",
+    cardClicked,
+    cardHover
 }: {
     className?: string;
     data: any;
     recordType?: string;
     onBookmarkChange?: () => void;
     bookmarkColor?: string;
+    cardClicked?: boolean;
+    cardHover?: boolean;
 }) => {
     // const { handleBookmark, isBookmarked, isHandlingBookmark, user } =
     //     useBookmarkDataset(dataset, onBookmarkChange);
@@ -61,7 +65,9 @@ const BookmarkBtn = ({
                 >
                     {!user ? (
                         <BsBookmark
-                            className={`sm:h-6 sm:w-6 h-4 w-4  cursor-pointer text-dtech-new-main-light  active:bg-dtech-main-dark active:!text-white ${bookmarkColor}`}
+                            className={`sm:h-6 sm:w-6 h-4 w-4  cursor-pointer text-dtech-new-main-light  active:bg-dtech-main-dark active:!text-white ${bookmarkColor} ${
+                                (cardClicked || cardHover) && " !text-dtech-dark-teal"
+                            }`}
                             strokeWidth="0.3"
                         />
                     ) : (
@@ -70,11 +76,15 @@ const BookmarkBtn = ({
                                 <>
                                     {isBookmarked ? (
                                         <BsBookmarkFill
-                                            className={`sm:h-6 sm:w-6 h-4 w-4 text-dtech-new-main-light cursor-pointer  active:bg-dtech-main-dark active:!text-white ${bookmarkColor}`}
+                                            className={`sm:h-6 sm:w-6 h-4 w-4 text-dtech-new-main-light cursor-pointer  active:bg-dtech-main-dark active:!text-white ${bookmarkColor} ${
+                                                (cardClicked || cardHover) && " !text-dtech-dark-teal"
+                                            }`}
                                         />
                                     ) : (
                                         <BsBookmark
-                                            className={`sm:h-6 sm:w-6 h-4 w-4 text-dtech-new-main-light  cursor-pointer  active:bg-dtech-main-dark active:!text-white ${bookmarkColor}`}
+                                            className={`sm:h-6 sm:w-6 h-4 w-4 text-dtech-new-main-light  cursor-pointer  active:bg-dtech-main-dark active:!text-white ${bookmarkColor} ${
+                                                (cardClicked || cardHover) && " !text-dtech-dark-teal"
+                                            }`}
                                             strokeWidth="0.3"
                                         />
                                     )}

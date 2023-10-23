@@ -59,7 +59,7 @@ const FavouriteBtn = ({
                     </>
                 )}
             </button>
-            <ReactTooltip uuid="dtechtive-favourite-btn-tooltip" textColor={'white'}  backgroundColor="#4CA7A5" />
+            {/* <ReactTooltip uuid="dtechtive-favourite-btn-tooltip" textColor={'white'}  backgroundColor="#4CA7A5" /> */}
         </div>
     );
 };

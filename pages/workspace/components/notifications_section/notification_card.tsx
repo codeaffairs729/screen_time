@@ -16,28 +16,36 @@ const NotificationCard = ({
     notification: Notification;
     index: number;
 }) => {
-    const { notification_type, description, read_status, created_at } =
-        notification;
+    const {
+        notification_type,
+        description,
+        read_status,
+        created_at,
+        dataset_id,
+    } = notification;
+
     return (
-        <a
-            href={notificationActionUrl(notification)}
-            target="_blank"
-            rel="noreferrer"
-        >
+        <div>
             <div
                 id={"workspace-notification-" + index}
                 className={`${
                     !read_status ? "" : "bg-neutral-100"
-                } my-4 px-2.5 py-2 cursor-pointer flex flex-col items-end shadow-md text-dtech-new-main-light min-h-[100px] hover:bg-[#F5F5F5]`}
+                } my-4 px-2.5 py-2  flex flex-col items-end shadow-md text-dtech-new-main-light min-h-[100px] hover:bg-[#F5F5F5]`}
             >
                 <div className="flex items-center w-full">
                     <span
                         id={"workspace-notification-heading-" + index}
                         className={clsx(
-                            "text-inherit block text-sm font-semibold mr-auto"
+                            "text-inherit block text-sm font-semibold mr-auto cursor-pointer"
                         )}
                     >
-                        {formatHeading(notification_type)}
+                        <a
+                            href={`/datasets/${dataset_id}`}
+                            target="_blank"
+                            rel="noreferrer"
+                        >
+                            {formatHeading(notification_type)}
+                        </a>
                     </span>
                     <span
                         id={"workspace-notification-age-" + index}
@@ -60,17 +68,23 @@ const NotificationCard = ({
                             <span id={"workspace-notification-detail-" + index}>
                                 {getNotificationSubHeading(notification_type)}{" "}
                             </span>
-                            <span className="italic font-medium">
-                                {description}
+                            <span className=" font-medium text-[#0065BD] underline underline-offset-2 cursor-pointer">
+                                <a
+                                    href={notificationActionUrl(notification)}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                >
+                                    {description}
+                                </a>
                             </span>
                         </div>
-                        <div className="mr-16">
+                        {/* <div className="mr-16">
                             <BiDotsHorizontalRounded className=" w-10 h-6 text-[#727272]" onClick={() => {}}/>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>
-        </a>
+        </div>
     );
 };
 

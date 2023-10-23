@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import LabelledRow from "components/dataset/labelled_row";
 import { DateTime } from "luxon";
 import { useEffect, useState } from "react";
+import { useIsMobile } from "common/hooks";
 
 const DataProviderCardHead = ({
     data,
@@ -12,12 +13,16 @@ const DataProviderCardHead = ({
     handleFAQClick,
     datasetSource,
     showToolTip = true,
+    cardClicked,
+    cardHover,
 }: {
     data: any;
     setData: Function;
     handleFAQClick?: Function;
     datasetSource: string | undefined;
     showToolTip: boolean;
+    cardClicked: boolean;
+    cardHover: boolean;
 }) => {
     const {
         title,
@@ -28,19 +33,7 @@ const DataProviderCardHead = ({
     } = data;
     const href = `/${recordType ? recordType : "datasets"}/${data.id}`;
     const router = useRouter();
-
-    const [isMobile, setIsMobile] = useState(false);
-
-    useEffect(() => {
-        const handleResize = () => {
-            setIsMobile(window.innerWidth < 640);
-        };
-        handleResize();
-        window.addEventListener("resize", handleResize);
-        return () => {
-            window.removeEventListener("resize", handleResize);
-        };
-    }, []);
+    const { isMobile} = useIsMobile();
 
     return (
         <>
@@ -49,7 +42,9 @@ const DataProviderCardHead = ({
                     <div className="lg:flex flex-col w-full mb-3">
                         <div className="flex justify-between items-center">
                             <Link href={href}>
-                                <a className=" font-semibold font-roboto text-md my-3 text-dtech-new-main-light text-[17px] cursor-pointer underline-anim">
+                                <a
+                                    className={`${(cardClicked || cardHover) &&"!text-[#28A197]"} font-semibold font-roboto text-md my-3 text-dtech-new-main-light text-[17px] cursor-pointer underline-anim`}
+                                >
                                     {title}
                                 </a>
                             </Link>
@@ -57,11 +52,11 @@ const DataProviderCardHead = ({
                             <MetaRating
                                 dataQuality={dataQuality}
                                 displayContext={"displayContext"}
-                                labelClass="font-normal !text-[#6E498E]"
+                                labelClass={`font-normal text-[#6E498E] ${(cardClicked || cardHover) &&"!text-[#28A197]"}`}
                                 label={"Metadata Quality"}
-                                className="!flex-row items-center !font-medium !text-sm md:my-0 mb-1 md:justify-start justify-between md:mr-3"
-                                infoClassName="!text-dtech-new-main-light top-0 m-[1px] !ml-[5px] !mt-0"
-                                starClassName="!text-dtech-new-main-light"
+                                className={`!flex-row items-center !font-medium !text-sm md:my-0 mb-1 md:justify-start justify-between md:mr-3`}
+                                infoClassName={`text-dtech-new-main-light top-0 m-[1px] !ml-[5px] !mt-0 ${(cardClicked || cardHover) &&"!text-[#28A197]"}`}
+                                starClassName={`!text-dtech-new-main-light ${(cardClicked || cardHover) &&"!text-[#28A197]"}`}
                                 title={
                                     "Estimated based on the European Commission's Metadata Quality Assessment method."
                                 }
@@ -97,11 +92,11 @@ const DataProviderCardHead = ({
                             <MetaRating
                                 dataQuality={dataQuality}
                                 displayContext={"displayContext"}
-                                labelClass="font-normal !text-[#333333]"
+                                labelClass={`font-normal text-[#6E498E] ${(cardClicked || cardHover) &&"!text-[#28A197]"}`}
                                 label={"Metadata Quality"}
                                 className="!flex-row items-center !font-medium !text-sm md:my-0 mb-1 md:justify-start justify-between"
-                                infoClassName="!text-dtech-new-main-light top-0 m-[1px] !ml-[5px] !mt-0"
-                                starClassName="!text-dtech-new-main-light"
+                                infoClassName={`text-dtech-new-main-light top-0 m-[1px] !ml-[5px] !mt-0 ${(cardClicked || cardHover) &&"!text-[#28A197]"}`}
+                                starClassName={`!text-dtech-new-main-light ${(cardClicked || cardHover) &&"!text-[#28A197]"}`}
                                 title={
                                     "Estimated based on the European Commission's Metadata Quality Assessment method."
                                 }

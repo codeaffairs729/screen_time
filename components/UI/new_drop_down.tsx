@@ -2,12 +2,13 @@ import { Menu, Transition } from "@headlessui/react";
 import clsx from "clsx";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { Fragment, ReactNode, useState } from "react";
+import React, { Fragment, ReactNode, useContext, useState } from "react";
 import { VscTriangleDown } from "react-icons/vsc";
 import isURL from "validator/lib/isURL";
 import InfoIcon from "./icons/info_icon";
 import ReactTooltip from 'react-tooltip';
 import { v4 as uuidv4 } from "uuid";
+import { NotificationsVMContext } from "pages/workspace/notification.vm";
 
 function isImageString(image: string) {
     const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.svg', '.webp'];
@@ -64,6 +65,7 @@ const NewDropdown = ({
         e.stopPropagation();
         !showMenu && setShowMenu(true);
     };
+    const { notifications } = useContext(NotificationsVMContext);
     return (
         <Menu
             as="div"
@@ -72,7 +74,7 @@ const NewDropdown = ({
             <Menu.Button
                 onClick={onClick}
                 className={clsx(
-                    "cursor-pointer flex items-center  select-none outline- flex-col",
+                    "cursor-pointer flex items-center  select-none outline- flex-col relative",
                     className
                 )}
             >
@@ -89,6 +91,13 @@ const NewDropdown = ({
                         labelClasses
                     )}
                 >
+                    {notifications?.length > 0 &&
+                     !showMenu &&
+                     label ==="Profile" &&
+                     <div className=" absolute ml-10 mt-[-27px] h-4 w-4 bg-red-500 rounded-full text-white text-sm flex flex-row justify-center items-center">
+                        {notifications?.length}                        
+                     </div>
+                     }
                     {label}
                 </span> : <span
                     className={clsx(
@@ -205,6 +214,8 @@ const LinkTag = React.forwardRef(
         ref: any
     ) => {
         const tooltipId = `dtechtive-info-tooltip-${uuidv4()}`;
+
+        const { notifications } = useContext(NotificationsVMContext);
         return <div className=" w-full">
             {isAuthRequired && !isLoggedIn
                 ?
@@ -231,11 +242,16 @@ const LinkTag = React.forwardRef(
                     <span
                         ref={ref}
                         className={clsx(
-                            " px-2.5 py-2 text-sm w-full text-left boder-b-1 shadow-dtech-dark-grey text-dtech-dark-grey cursor-pointer flex flex-row items-center",
+                            " px-2.5 py-2 text-sm w-full text-left boder-b-1 shadow-dtech-dark-grey text-dtech-dark-grey cursor-pointer flex flex-row items-center relative",
                             className
                         )}
                     >
                         <div>{children}</div>
+                        {notifications?.length > 0 && label=="Notifications"  && (
+                            <div className=" absolute ml-[7.5rem] h-4 w-4 bg-red-500 rounded-full text-white text-sm flex flex-row justify-center items-center">
+                                {notifications?.length}
+                            </div>
+                        )}
                         <div>{label}</div>
                     </span>
                 </Link>

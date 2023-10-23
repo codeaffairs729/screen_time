@@ -20,6 +20,7 @@ import Accordian from "components/UI/new_accordian";
 import DeleteListVM from "components/UI/user_bookmark/delete_list.vm";
 import EditListNameVM from "components/UI/user_bookmark/edit_list_name.vm";
 import TabHeader from "./bookmark_tab_header";
+import { useIsMobile } from "common/hooks";
 
 const SCROLLABLE_VALUE: number = 150;
 
@@ -33,18 +34,7 @@ const ListsSection = () => {
 
     const scrollableDiv = createRef<HTMLDivElement>();
     const [selectedIndex, setSelectedIndex] = useState<any>(0);
-    const [isMobile, setIsMobile] = useState(false);
-
-    useEffect(() => {
-        const handleResize = () => {
-            setIsMobile(window.innerWidth < 640);
-        };
-        handleResize();
-        window.addEventListener("resize", handleResize);
-        return () => {
-            window.removeEventListener("resize", handleResize);
-        };
-    }, []);
+    const { isMobile } = useIsMobile();
 
     const ListHeader = useMemo(
         () => [
@@ -57,9 +47,9 @@ const ListsSection = () => {
         [bookmark_lists]
     );
 
-    const scroll = (value: number) => {
-        if (scrollableDiv?.current) scrollableDiv.current.scrollLeft += value;
-    };
+    // const scroll = (value: number) => {
+    //     if (scrollableDiv?.current) scrollableDiv.current.scrollLeft += value;
+    // };
     return (
         <div>
             {!isMobile ? (
@@ -111,6 +101,7 @@ const ListsSection = () => {
                         className=" "
                         label={"Favourites"}
                         key="Favourites"
+                        section={"workspace"}
                     >
                         <FavouritesSection />
                     </Accordian>
@@ -119,6 +110,7 @@ const ListsSection = () => {
                         <Accordian
                             label={list.listName}
                             key={list.listName + idx}
+                            section={"workspace"}
                         >
                             <BookmarksSection list={list} />
                         </Accordian>
