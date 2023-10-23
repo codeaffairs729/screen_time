@@ -402,14 +402,10 @@ DatasetDetail.getInitialProps = async ({ query, req }: NextPageContext) => {
         if (req?.headers.cookie) {
             authToken = getCookieFromServer(AUTH_TOKEN, req);
         }
-        const datasetData = await Http.get(`/v5/datasets/by-dataset-ids?dataset_ids=${datasetId}`, {
-            baseUrl: process.env.NEXT_PUBLIC_PUBLIC_API_ROOT,
-            // extraHeaders: authToken
-            //     ? { Authorization: `Bearer ${authToken}` }
-            //     : {},
-        });
+        const datasetData: any = await fetch(`${process.env.NEXT_PUBLIC_WEBCLIENT_ROOT}/api/datasets-by-ids?query=${datasetId}`);
+        const datasetJson =await datasetData.json()
         const dataset = Dataset.fromJson(
-            datasetData["results"][0]
+            datasetJson["results"][0]
         );
         return { dataset };
     } catch (error) {

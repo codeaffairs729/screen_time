@@ -25,13 +25,9 @@ const RelatedDatasetsVM = (dataset: any) => {
         excuteFetchDatasetsByCategory(
             () => {
                 return Http.get(
-                    `/v5/datasets/related-by-domains-and-topics/${dataset?.id}`,
+                    `/api/related-by-domains-and-topics?query=${dataset?.id}`,
                     {
-                        baseUrl: process.env.NEXT_PUBLIC_PUBLIC_API_ROOT,
-                        extraHeaders: {
-                            "Content-type": "application/json",
-                            "x-api-key": process.env.NEXT_PUBLIC_MARK_KEY,
-                        },
+                        baseUrl: process.env.NEXT_PUBLIC_WEBCLIENT_ROOT,
                     }
                 );
             },
@@ -69,13 +65,9 @@ const RelatedDatasetsVM = (dataset: any) => {
         excuteFetchDatasetsByDescription(
             () => {
                 return Http.get(
-                    `/v5/datasets/related-by-description/${dataset?.id}`,
+                    `/api/related-by-description?query=${dataset?.id}`,
                     {
-                        baseUrl: process.env.NEXT_PUBLIC_PUBLIC_API_ROOT,
-                        extraHeaders: {
-                            "Content-type": "application/json",
-                            "x-api-key": process.env.NEXT_PUBLIC_MARK_KEY,
-                        },
+                        baseUrl: "http://localhost:3000",
                     }
                 );
             },
@@ -152,7 +144,8 @@ const RelatedDatasetsVM = (dataset: any) => {
     //                 })
     //     );
 
-    const isLoading = isFetchingDatasetsByDescription || isFetchingDatasetsByCategory;
+    const isLoading =
+        isFetchingDatasetsByDescription || isFetchingDatasetsByCategory;
     // const isLoading =
     //     (!datasetsByCategory &&
     //         !datasetsByDescription &&
@@ -167,7 +160,7 @@ const RelatedDatasetsVM = (dataset: any) => {
         errorByCategory,
         errorByDescription,
         fetchDatasetsByCategory,
-        fetchDatasetsByDescription
+        fetchDatasetsByDescription,
     };
 };
 

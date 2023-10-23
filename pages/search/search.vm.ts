@@ -209,12 +209,12 @@ const SearchVM = () => {
      * TODO: uriencode searchquery, pagenum and pagesize
      */
     const { data: datasets, error } = useSWR(
-        `/v5/datasets?query=${
+        `/api/datasets-by-search?query=${
             q ?? ""
         }&page_size=${pageSize}&page_number=${currentPageNo}${queryParams}`,
         (url: string) =>
             Http.get(url, {
-                baseUrl: `${process.env.NEXT_PUBLIC_PUBLIC_API_ROOT}`,
+                baseUrl: process.env.NEXT_PUBLIC_WEBCLIENT_ROOT,
                 redirectToLoginPageIfAuthRequired: false,
             })
                 .catch((e) => {
@@ -228,7 +228,7 @@ const SearchVM = () => {
                     // setLoading(false);
                     // setCurrentPageNo(res[0]["user_search"][0]["pagenum"]);
                     const totalRecords = res["total_matches"];
-                    const limit = res["max_hits_limit"]||1000;
+                    const limit = res["max_hits_limit"] || 1000;
                     setTotalPages(
                         totalRecords <= limit
                             ? Math.ceil(totalRecords / pageSize)
@@ -236,7 +236,7 @@ const SearchVM = () => {
                     );
 
                     setTotalRecords(totalRecords);
-                    const resFitlerOptions = res["filter_options"]||{};
+                    const resFitlerOptions = res["filter_options"] || {};
                     setFilterOptions({
                         domains: resFitlerOptions["domains"],
                         file_formats: resFitlerOptions["file_formats"],
