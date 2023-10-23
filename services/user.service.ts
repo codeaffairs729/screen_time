@@ -84,9 +84,9 @@ class UserService {
 
             try {
                 const res_itemsdata = await Http.get(
-                    `/v5/datasets/by-dataset-ids?${item_req_param}`,
+                    `/api/by-dataset-id?item_req_param=${item_req_param}`,
                     {
-                        baseUrl: process.env.NEXT_PUBLIC_PUBLIC_API_V5_ROOT,
+                        baseUrl: process.env.NEXT_PUBLIC_WEBCLIENT_ROOT,
                         redirectToLoginPageIfAuthRequired: false,
                     }
                 );

@@ -79,13 +79,9 @@ const OrganisationDetailVM = (
         excuteFetchOrganisationDatasets(
             () => {
                 return Http.get(
-                    `/v5/datasets/by-data-host/${orgUUID}?page_number=${pageNumber}&page_size=${orgDatasetsCount}`,
+                    `/api/datasets-by-data-host?orgUUID=${orgUUID}&pageNumber=${pageNumber}&orgDatasetsCount=${orgDatasetsCount}`,
                     {
-                        baseUrl: process.env.NEXT_PUBLIC_PUBLIC_API_ROOT,
-                        extraHeaders: {
-                            "Content-type": "application/json",
-                            "x-api-key": process.env.NEXT_PUBLIC_MARK_KEY,
-                        },
+                        baseUrl: process.env.NEXT_PUBLIC_WEBCLIENT_ROOT,
                     }
                 );
             },
@@ -183,13 +179,12 @@ const GetRankedData = ({
         execute(
             () => {
                 //TODO replace TempUUID with orgUUID when working with orginal providers related data instead of dummy data
-                return Http.get(`/v5/datasets/${orgUUID}/ranked-by/${key}`, {
-                    baseUrl: process.env.NEXT_PUBLIC_PUBLIC_API_ROOT,
-                    extraHeaders: {
-                        "Content-type": "application/json",
-                        "x-api-key": process.env.NEXT_PUBLIC_MARK_KEY,
-                    },
-                });
+                return Http.get(
+                    `/api/datasets-ranked-by-factor?orgUUid=${orgUUID}&key=${key}`,
+                    {
+                        baseUrl: process.env.NEXT_PUBLIC_WEBCLIENT_ROOT,
+                    }
+                );
             },
             {
                 postProcess: (res) => {

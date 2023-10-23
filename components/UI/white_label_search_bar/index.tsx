@@ -49,18 +49,13 @@ const NewSearchBar = ({
                 (inputVal: string) =>
                     executeLodAutocomplete(
                         () =>
-                            Http.get(`/v5/autocomplete/suggestions/${inputVal}`, {
+                            Http.get(`/api/autocomplete?query=${inputVal}`, {
                                 baseUrl:
-                                    process.env.NEXT_PUBLIC_PUBLIC_API_ROOT,
-                                extraHeaders: {
-                                    "Content-type": "application/json",
-                                    "x-api-key":
-                                        process.env.NEXT_PUBLIC_MARK_KEY,
-                                },
+                                    process.env.NEXT_PUBLIC_WEBCLIENT_ROOT
                             }),
                         {
                             postProcess: (res) =>
-                                res.map((t: string, i: number) => ({
+                                res?.map((t: string, i: number) => ({
                                     id: i + 1,
                                     name: t,
                                 })),
@@ -111,9 +106,9 @@ const NewSearchBar = ({
             setQuery(q as string);
         }
     }, [q]);
-    const handleKeyDown = (event:any) => {
+    const handleKeyDown = (event: any) => {
         if (event.key === 'Enter') {
-             onChange(searchType, { label: "User input", value: query });
+            onChange(searchType, { label: "User input", value: query });
             handleOnBlur()
             setOpen(false)
         }
@@ -174,10 +169,10 @@ const NewSearchBar = ({
                         ></Combobox.Button>
                     </div>
                     <Transition
-                        show={open&&(oldOptions.length>0||newOptions.length>0)}
+                        show={open && (oldOptions.length > 0 || newOptions.length > 0)}
                         as={Fragment}
                     >
-                        <Combobox.Options className={`absolute mt-8 -ml-[0.4%] border-[3px] border-dtech-light-teal border-t-0 sm:mt-9 max-h-60 w-[100.7%] rounded-b-3xl scrollable-container overflow-auto bg-white  text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm z-20 ${oldOptions.length==0&&newOptions.length==0&&"hidden"}`} ref={myRef}>
+                        <Combobox.Options className={`absolute mt-8 -ml-[0.4%] border-[3px] border-dtech-light-teal border-t-0 sm:mt-9 max-h-60 w-[100.7%] rounded-b-3xl scrollable-container overflow-auto bg-white  text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm z-20 ${oldOptions.length == 0 && newOptions.length == 0 && "hidden"}`} ref={myRef}>
                             {query.length > 0 && (
                                 <ComboboxOption
                                     key={query.length}
