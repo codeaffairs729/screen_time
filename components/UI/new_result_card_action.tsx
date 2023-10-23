@@ -10,6 +10,7 @@ import clsx from "clsx";
 import Image from "next/image";
 import SourceArrow from "public/images/icons/source_arrow.svg";
 import SourceArrowWhite from "public/images/icons/source_arrow_white.svg";
+import SourceArrowTeal from "public/images/icons/source_arrow_teal.svg";
 import CiteQuotes from "public/images/icons/cite_quote.svg";
 import { useRouter } from "next/router";
 import Cite from "pages/datasets/components/cite";
@@ -20,7 +21,9 @@ type NewResultCardActionProps = {
     href: string;
     className?: string;
     gridClass?: string;
-    owner?:string
+    owner?: string;
+    cardClicked?: boolean;
+    cardHover?: boolean;
 };
 const NewResultCardAction = ({
     data,
@@ -28,7 +31,9 @@ const NewResultCardAction = ({
     href,
     className = "",
     gridClass = "",
-    owner=""
+    owner = "",
+    cardClicked,
+    cardHover,
 }: NewResultCardActionProps) => {
     const [share, setShare] = useState(false);
     const [shareClicked, setShareClicked] = useState<boolean>(false);
@@ -68,20 +73,40 @@ const NewResultCardAction = ({
                     <a href={data?.url} target="_blank" rel="noreferrer">
                         {!href?.includes("dataset") ? (
                             <div className="hover:bg-[#6DCDCB] hover:bg-opacity-[55%]  active:bg-dtech-main-dark !hover:text-white px-2 pt-2 ml-1">
-                                <BsGlobe className="sm:h-6 sm:w-6 h-4 w-4 text-dtech-new-main-light cursor-pointer" />
+                                <BsGlobe
+                                    className={`sm:h-6 sm:w-6 h-4 w-4 text-dtech-new-main-light cursor-pointer
+                                     ${
+                                         (cardClicked || cardHover) &&
+                                         " !text-dtech-dark-teal"
+                                     }`}
+                                />
                             </div>
                         ) : (
-                            <div className="hover:bg-[#6DCDCB] hover:bg-opacity-[55%]  active:bg-dtech-main-dark !hover:text-white px-2 pt-2 ml-1"
-                            onMouseDown={() => setArrowActive(true)}
-                            onMouseUp={() => setArrowActive(false)}
-                            onMouseLeave={() => setArrowActive(false)}
+                            <div
+                                className="hover:bg-[#6DCDCB] hover:bg-opacity-[55%]  active:bg-dtech-main-dark !hover:text-white px-2 pt-2 ml-1"
+                                onMouseDown={() => setArrowActive(true)}
+                                onMouseUp={() => setArrowActive(false)}
+                                onMouseLeave={() => setArrowActive(false)}
                             >
-                                <Image src={arrowActive ? SourceArrowWhite :SourceArrow} width={"25"} height={"25"} className="" />
+                                <Image
+                                    src={
+                                        cardClicked || cardHover ? SourceArrowTeal :arrowActive
+                                            ? SourceArrowWhite
+                                            : SourceArrow
+                                    }
+                                    width={"25"}
+                                    height={"25"}
+                                    className=""
+                                />
                             </div>
                         )}
-                    <div className={`text-[#0065BD] underline underline-offset-2 cursor-pointer w-max text-base font-roboto ${!href?.includes("dataset") && "!text-[14px]"}`}>
-                        {!href?.includes("dataset") ? "Website" : "Source"}
-                    </div>
+                        <div
+                            className={`text-[#0065BD] underline underline-offset-2 cursor-pointer w-max text-base font-roboto ${
+                                !href?.includes("dataset") && "!text-[14px]"
+                            }`}
+                        >
+                            {!href?.includes("dataset") ? "Website" : "Source"}
+                        </div>
                     </a>
                 </div>
                 <div className=" flex flex-col justify-center items-center">
@@ -96,9 +121,13 @@ const NewResultCardAction = ({
                             datasetStats={data}
                             recordType={data.recordType}
                             onFavouriteChange={onFav}
+                            cardClicked={cardClicked}
+                            cardHover={cardHover}
                         />
                     </div>
-                    <div className="text-[#727272] mt-2 text-base font-roboto">Like</div>
+                    <div className="text-[#727272] mt-2 text-base font-roboto">
+                        Like
+                    </div>
                 </div>
                 <div className=" flex flex-col justify-center items-center">
                     <div
@@ -112,9 +141,13 @@ const NewResultCardAction = ({
                             data={data}
                             recordType={data.recordType}
                             bookmarkColor={bookmarkColor}
+                            cardClicked={cardClicked}
+                            cardHover={cardHover}
                         />
                     </div>
-                    <div className= "text-[#727272] mt-2 text-base font-roboto ">Save</div>
+                    <div className="text-[#727272] mt-2 text-base font-roboto ">
+                        Save
+                    </div>
                 </div>
                 <div className=" flex flex-col justify-center items-center">
                     <Menu>
@@ -134,16 +167,34 @@ const NewResultCardAction = ({
                                         }
                                     >
                                         <BsShareFill
-                                            className={`sm:h-6 sm:w-6 h-4 w-4  cursor-pointer`}
+                                            className={`sm:h-6 sm:w-6 h-4 w-4  cursor-pointer ${
+                                                (cardClicked || cardHover) &&
+                                                " !text-dtech-dark-teal"
+                                            }`}
                                             data-modal-toggle="popup"
                                             onClick={() => setShare(!share)}
                                         />
                                     </div>
-                                    <ReactTooltip id="dtechtive-share-btn-tooltip" textColor={'white'} backgroundColor="#4CA7A5" >Share on social media</ReactTooltip>
+                                    <ReactTooltip
+                                        id="dtechtive-share-btn-tooltip"
+                                        textColor={"white"}
+                                        backgroundColor="#4CA7A5"
+                                    >
+                                        Share on social media
+                                    </ReactTooltip>
                                 </Menu.Button>
-                                <Transition show={ share}>
+                                <Transition show={share}>
                                     <Menu.Items static className="">
-                                        {<div onClick={handleClosePopup} className={share ? ` bg-black fixed opacity-50 h-[3000px] top-0 left-0 right-0 bottom-0 sm:h-[3000px] w-screen flex items-center  z-10` : ""}></div>}
+                                        {
+                                            <div
+                                                onClick={handleClosePopup}
+                                                className={
+                                                    share
+                                                        ? ` bg-black fixed opacity-50 h-[3000px] top-0 left-0 right-0 bottom-0 sm:h-[3000px] w-screen flex items-center  z-10`
+                                                        : ""
+                                                }
+                                            ></div>
+                                        }
                                         <Popup
                                             href={href}
                                             dataset={data.title}
@@ -154,14 +205,18 @@ const NewResultCardAction = ({
                             </>
                         )}
                     </Menu>
-                    <div className="text-[#727272] mt-2 text-base font-roboto">Share</div>
+                    <div className="text-[#727272] mt-2 text-base font-roboto">
+                        Share
+                    </div>
                 </div>
                 <div className=" cursor-pointer ">
-
-                {router.pathname == "/datasets/[id]" && (
-                    <Cite citation={cite} url={`${process.env.NEXT_PUBLIC_WEBCLIENT_ROOT}${router.asPath} [url]`} />
+                    {router.pathname == "/datasets/[id]" && (
+                        <Cite
+                            citation={cite}
+                            url={`${process.env.NEXT_PUBLIC_WEBCLIENT_ROOT}${router.asPath} [url]`}
+                        />
                     )}
-                    </div>
+                </div>
             </div>
         </div>
     );

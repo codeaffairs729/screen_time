@@ -34,7 +34,8 @@ export const getAge = (date: string) => {
     }
     interval = seconds / 86400;
     if (interval > 1) {
-        return Math.floor(interval) + " days ago";
+        const daysAgo = Math.floor(interval) + (Math.floor(interval) === 1 ? " day" : " days") + " ago";
+        return daysAgo;
     }
     interval = seconds / 3600;
     if (interval > 1) {
@@ -74,7 +75,8 @@ export const notificationActionUrl = (notification: Notification) => {
 
 export const formatHeading = (notification_type: string) => {
     const type = notification_type.replace("test_", "").replaceAll("_", " ");
-    const heading = `${type[0].toUpperCase()}${type.slice(1)}`;
+    const newType = type.split(" ")[0] === "usecase" ? "use case " + type.split(" ").splice(1).join(" ") : type
+    const heading = `${newType[0].toUpperCase()}${newType.slice(1)}`;
     return heading ? heading : "Feedback request";
 };
 

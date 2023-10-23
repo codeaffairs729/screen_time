@@ -36,7 +36,7 @@ const TabHeader = ({
 
     return (
         <div
-            className="transition-all h-fit text-lg outline-none   text-left  hover:bg-gray-300
+            className="transition-all h-fit text-lg outline-none text-left
         text-[#727272] my-0.5 relative"
         >
             {editActive && selectedIndex == index && (
@@ -61,7 +61,7 @@ const TabHeader = ({
             )}
             <Tab
                 className={({ selected }) =>
-                    `transition-all h-fit text-lg outline-none   text-left  hover:bg-gray-300 w-full
+                    `transition-all h-fit text-lg outline-none   text-left  hover:bg-[#EBEBEB] w-full
             text-[#727272] my-0.5  ${
                 selected && " bg-gray-300 !text-gray-500 hover:text-black  "
             }

@@ -14,6 +14,7 @@ import { Tab } from "@headlessui/react";
 import TabPanel from "components/UI/tabbed/panel";
 import { AiOutlineCheckCircle } from "react-icons/ai";
 import Accordian from "components/UI/new_accordian";
+import { useIsMobile } from "common/hooks";
 
 const Notifications = () => {
     const { markAllRead, notifications, isLoading } = useContext(
@@ -21,19 +22,7 @@ const Notifications = () => {
     );
     const [selectedIndex, setSelectedIndex] = useState<any>(0);
 
-    const dispatch = useDispatch();
-    const [isMobile, setIsMobile] = useState(false);
-
-    useEffect(() => {
-        const handleResize = () => {
-            setIsMobile(window.innerWidth < 640);
-        };
-        handleResize();
-        window.addEventListener("resize", handleResize);
-        return () => {
-            window.removeEventListener("resize", handleResize);
-        };
-    }, []);
+    const { isMobile } = useIsMobile();
 
     const qualityFeedbackNotifications = useMemo(
         () =>
@@ -55,7 +44,6 @@ const Notifications = () => {
         [notifications]
     );
 
-
     if (isLoading)
         return (
             <div className="w-full h-full flex items-center justify-center">
@@ -71,10 +59,10 @@ const Notifications = () => {
                         <div
                             id="mark-read"
                             onClick={() => markAllRead()}
-                            className="flex items-center justify-end cursor-pointer mr-8"
+                            className="flex items-center justify-end cursor-pointer mr-8 hover:font-bold"
                         >
                             <AiOutlineCheckCircle className="" />
-                            <span className="pl-1.5 pr-2.5 text-sm text-dtech-dark-grey">
+                            <span className="pl-1.5 pr-2.5 text-sm text-dtech-dark-grey ">
                                 Delete all
                             </span>
                         </div>
@@ -82,7 +70,7 @@ const Notifications = () => {
                     <Tab.Group defaultIndex={selectedIndex}>
                         <div className=" md:flex ">
                             <Tab.List className=" items-center px-6 my-7 w-[30%]">
-                                <FilterDropdown label="Filters">
+                                <FilterDropdown label="Categories">
                                     {[
                                         "All",
                                         "Use case feedback request",
@@ -180,7 +168,12 @@ const Notifications = () => {
                             </span>
                         </div>
                     </Link>
-                    <Accordian className=" " label={"All"} key="All">
+                    <Accordian
+                        className=" "
+                        label={"All"}
+                        key="All"
+                        section={"workspace"}
+                    >
                         {notifications.length > 0 ? (
                             notifications.map((notification, index) => (
                                 <NotificationCard
@@ -202,6 +195,7 @@ const Notifications = () => {
                         className=" "
                         label={"Use case feedback request"}
                         key="Use_case_feedback_request"
+                        section={"workspace"}
                     >
                         {usecaseFeedbackNotifications.length > 0 ? (
                             usecaseFeedbackNotifications?.map(
@@ -226,6 +220,7 @@ const Notifications = () => {
                         className=" "
                         label={"Data quality feedback request"}
                         key="Data_quality_feedback_request"
+                        section={"workspace"}
                     >
                         {qualityFeedbackNotifications.length > 0 ? (
                             qualityFeedbackNotifications?.map(
@@ -285,7 +280,7 @@ const TabHeader = ({
     return (
         <Tab
             className={({ selected }) =>
-                `transition-all h-fit text-base outline-none text-left  hover:bg-gray-300 whitespace-nowrap
+                `transition-all h-fit text-base outline-none text-left  hover:bg-[#EBEBEB] whitespace-nowrap
             text-[#727272] my-0.5 ${
                 selected && " bg-gray-300 !text-gray-500 hover:text-black  "
             }

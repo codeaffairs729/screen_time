@@ -9,9 +9,13 @@ import { DateTime } from "luxon";
 const DataProviderCardFooter = ({
     data,
     className = "",
+    cardClicked,
+    cardHover,
 }: {
     data: any;
     className?: string;
+    cardClicked?: boolean;
+    cardHover?: boolean;
 }) => {
     const { dataProviders, stats, lastUpdate, domains, topics } = data;
     const router = useRouter();
@@ -61,8 +65,10 @@ const DataProviderCardFooter = ({
             </div>
 
             <div className="flex flex-col sm:flex-row justify-start items-start my-0.5">
-                <MetaInfoEntity entityName="Domains" entities={domains} />
-                <MetaInfoEntity entityName="Topics" entities={topics} />
+                <MetaInfoEntity entityName="Domains" entities={domains} cardClicked={cardClicked}
+                                    cardHover={cardHover} />
+                <MetaInfoEntity entityName="Topics" entities={topics}  cardClicked={cardClicked}
+                                    cardHover={cardHover}/>
             </div>
             <div className="md:flex hidden">
                 <div
@@ -103,9 +109,13 @@ const DataProviderCardFooter = ({
 const MetaInfoEntity = ({
     entityName,
     entities,
+    cardClicked,
+    cardHover,
 }: {
     entityName: string;
     entities: string[] | undefined;
+    cardClicked?: boolean;
+    cardHover?: boolean;
 }) => {
     const [viewAll, setViewAll] = useState<boolean>(false);
     const handleSearchFocus = () => {
@@ -154,7 +164,7 @@ const MetaInfoEntity = ({
                                 return (
                                     <span
                                         key={index}
-                                        className="sm:text-sm text-md text-white m-1 bg-dtech-new-main-light rounded p-1 px-2 !pt-0"
+                                        className={`${(cardClicked ||cardHover) && "!bg-[#28A197]"} sm:text-sm text-md text-white m-1 bg-dtech-new-main-light rounded p-1 px-2 !pt-0`}
                                     >
                                         {entity}
                                     </span>

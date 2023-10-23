@@ -5,26 +5,11 @@ import { usereventLogout } from "services/usermetrics.service";
 import { RootState } from "store";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router"
+import { useIsMobile } from "common/hooks";
 const NewProfileDropdown = () => {
     const router = useRouter()
-    const [isMobile, setIsMobile] = useState(false)
     const user = useSelector((state: RootState) => state.auth.user);
-    useEffect(() => {
-        const handleResize = () => {
-            setIsMobile(window.innerWidth < 640); // Adjust the breakpoint as needed
-        };
-
-        // Call handleResize on initial component render
-        handleResize();
-
-        // Add event listener to window resize
-        window.addEventListener("resize", handleResize);
-
-        // Clean up event listener on component unmount
-        return () => {
-            window.removeEventListener("resize", handleResize);
-        };
-    }, []);
+    const  { isMobile } = useIsMobile();
     const nameInitial = user
         ? user?.name
             ?.split(" ")

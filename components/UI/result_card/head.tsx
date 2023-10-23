@@ -11,13 +11,17 @@ const CardHead = (
     setData,
     handleFAQClick,
     datasetSource,
-    showToolTip = true
+    showToolTip = true,
+    cardClicked,
+    cardHover
 }: {
     data: Data;
     setData: Function;
     handleFAQClick?: Function;
     datasetSource: string | undefined;
-    showToolTip: boolean
+    showToolTip: boolean;
+    cardClicked?: boolean;
+    cardHover?: boolean;
 }
 ) => {
     const {
@@ -35,20 +39,20 @@ const CardHead = (
             <div className="lg:flex flex-col w-full mb-3">
                 <div>
                     <Link href={href}>
-                        <a className=" font-semibold font-roboto text-md my-3 text-dtech-new-main-light text-[17px] cursor-pointer underline-anim">
+                        <a className={`${(cardClicked ||cardHover) && "!text-[#28A197]"} font-semibold font-roboto text-md my-3 text-dtech-new-main-light text-[17px] cursor-pointer underline-anim`}>
                             {title}
                         </a>
                     </Link>
                 </div>
-                <div className={`my-3 flex flex-col md:flex-row justify-between md:items-center bg-[#EBEBEB] px-1.5   ${router.pathname != '/datasets/[id]' ? "md:py-3" : "p-1.5 lg:items-center "}`}>
+                <div className={`my-3 flex flex-col lg:flex-row justify-between lg:items-center bg-[#EBEBEB] px-1.5   ${router.pathname != '/datasets/[id]' ? "md:py-3" : "p-1.5 lg:items-center "}`}>
                     <MetaRating
                         dataQuality={dataQuality}
                         displayContext={"displayContext"}
-                        labelClass="font-normal !text-[#333333]"
+                        labelClass={`font-normal text-[#6E498E] ${(cardClicked || cardHover) &&"!text-[#28A197]"}`}
                         label={"Metadata Quality"}
                         className="!flex-row items-center !font-medium !text-sm md:my-0 mb-1 md:justify-start justify-between"
-                        infoClassName="!text-dtech-new-main-light top-0 m-[1px] !ml-[5px] !mt-0"
-                        starClassName="!text-dtech-new-main-light"
+                        infoClassName={`text-dtech-new-main-light top-0 m-[1px] !ml-[5px] !mt-0 ${(cardClicked || cardHover) &&"!text-[#28A197]"}`}
+                        starClassName={`!text-dtech-new-main-light ${(cardClicked || cardHover) &&"!text-[#28A197]"}`}
                         title={
                             "Estimated based on the European Commission's Metadata Quality Assessment method."
                         }

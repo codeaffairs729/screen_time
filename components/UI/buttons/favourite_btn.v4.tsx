@@ -18,6 +18,8 @@ const FavouriteBtn = ({
     isLoading = false,
     onFavouriteChange,
     favouriteColor = "",
+    cardClicked,
+    cardHover,
 }: {
     className?: string;
     datasetStats: any;
@@ -25,6 +27,8 @@ const FavouriteBtn = ({
     recordType?: string;
     onFavouriteChange?: () => void;
     favouriteColor?: any;
+    cardClicked?: boolean;
+    cardHover?: boolean;
 }) => {
     const { handleFavourite, isFavourited, isHandlingFavourite, user } =
         useFavouriteDataset(
@@ -61,11 +65,17 @@ const FavouriteBtn = ({
                             <>
                                 {isFavourited ? (
                                     <BsHeartFill
-                                        className={`sm:h-6 sm:w-6 h-4 w-4  text-dtech-new-main-light cursor-pointer  active:bg-dtech-main-dark active:text-white ${favouriteColor}`}
+                                        className={`sm:h-6 sm:w-6 h-4 w-4  text-dtech-new-main-light cursor-pointer  active:bg-dtech-main-dark active:text-white ${favouriteColor}   
+                                        ${
+                                            (cardClicked || cardHover) && " !text-dtech-dark-teal"
+                                        }`
+                                    }
                                     />
                                 ) : (
                                     <BsHeart
-                                        className={`sm:h-6 sm:w-6 h-4 w-4  text-dtech-new-main-light cursor-pointer  active:bg-dtech-main-dark active:text-white ${favouriteColor}`}
+                                        className={`sm:h-6 sm:w-6 h-4 w-4  text-dtech-new-main-light cursor-pointer  active:bg-dtech-main-dark active:text-white ${favouriteColor}  ${
+                                            (cardClicked || cardHover) && " !text-dtech-dark-teal"
+                                        }`}
                                         strokeWidth="0.3"
                                     />
                                 )}

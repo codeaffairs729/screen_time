@@ -59,19 +59,30 @@ const ResultCard = ({
     label = "",
 }: ResultCardProps) => {
     const [resultRecord, setResultRecord] = useState(data);
+    const [cardClicked, setCardClicked] = useState(false);
+    const [cardHover, setCardHover] = useState(false);
     const { dataProviders, stats, lastUpdate } = data || {};
     const href = `/${
         resultRecord.recordType ? resultRecord.recordType : "datasets"
     }/${resultRecord.id}`;
 
     return (
-        <div>
+        <div
+            onMouseUp={() => pageName === "workspace" && setCardClicked(false)}
+            onMouseDown={(e) =>
+                pageName === "workspace" && setCardClicked(true)
+            }
+            onMouseEnter={(e) => pageName === "workspace" && setCardHover(true)}
+            onMouseLeave={(e) =>
+                pageName === "workspace" && setCardHover(false)
+            }
+        >
             <div className="md:hidden ">
                 {pageName === "workspace" && (
                     <div
                         className={` bg-dtech-new-main-light text-white items-center text-xs `}
                     >
-                        <div className=" text-base font-bold whitespace-nowrap px-3">
+                        <div className=" text-sm font-medium whitespace-nowrap px-3 py-1">
                             {label.split("_").join(" ").toUpperCase()}
                         </div>
                     </div>
@@ -94,27 +105,43 @@ const ResultCard = ({
                                     setData={setResultRecord}
                                     datasetSource={dataProviders?.datasetSource}
                                     showToolTip={showToolTip}
+                                    cardClicked={cardClicked}
+                                    cardHover={cardHover}
                                 />
                                 <CardBody
                                     data={resultRecord}
                                     handleFAQClick={handleFAQClick}
                                 />
-                                <CardFooter data={data} />
+                                <CardFooter
+                                    data={data}
+                                    cardClicked={cardClicked}
+                                    cardHover={cardHover}
+                                />
                             </>
                         ) : (
                             <>
-                                {<DataProviderCardHead
-                                    handleFAQClick={handleFAQClick}
-                                    data={resultRecord}
-                                    setData={setResultRecord}
-                                    datasetSource={dataProviders?.datasetSource}
-                                    showToolTip={showToolTip}
-                                />}
+                                {
+                                    <DataProviderCardHead
+                                        handleFAQClick={handleFAQClick}
+                                        data={resultRecord}
+                                        setData={setResultRecord}
+                                        datasetSource={
+                                            dataProviders?.datasetSource
+                                        }
+                                        showToolTip={showToolTip}
+                                        cardClicked={cardClicked}
+                                        cardHover={cardHover}
+                                    />
+                                }
                                 <CardBody
                                     data={resultRecord}
                                     handleFAQClick={handleFAQClick}
                                 />
-                                <DataProviderCardFooter data={data} />
+                                <DataProviderCardFooter
+                                    data={data}
+                                    cardClicked={cardClicked}
+                                    cardHover={cardHover}
+                                />
                             </>
                         )}
                     </div>
@@ -130,6 +157,8 @@ const ResultCard = ({
                                     setData={setResultRecord}
                                     href={href}
                                     className="flex-row md:flex-col items-center justify-center md:py-8 w-full md:mx-5 mx-0 max-h-min"
+                                    cardClicked={cardClicked}
+                                    cardHover={cardHover}
                                 />
                             </div>
                         </div>
@@ -138,7 +167,11 @@ const ResultCard = ({
 
                 {pageName === "workspace" && (
                     <div
-                        className={` bg-dtech-new-main-light  text-white hidden flex-col justify-center items-center w-[24px] md:flex  ${
+                        className={` bg-dtech-new-main-light ${
+                            cardClicked && "!bg-[#FDD522]"
+                        } ${
+                            cardHover && "bg-[#28A197]"
+                        }  text-white hidden flex-col justify-center items-center w-[24px] md:flex  ${
                             label === "datasets" ? "rounded-r-lg" : ""
                         }`}
                     >
