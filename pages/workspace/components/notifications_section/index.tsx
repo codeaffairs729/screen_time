@@ -15,6 +15,7 @@ import TabPanel from "components/UI/tabbed/panel";
 import { AiOutlineCheckCircle } from "react-icons/ai";
 import Accordian from "components/UI/new_accordian";
 import { useIsMobile } from "common/hooks";
+import Pagination from "components/UI/pagination_for_datasets";
 
 const Notifications = () => {
     const { markAllRead, notifications, isLoading } = useContext(
@@ -24,16 +25,41 @@ const Notifications = () => {
 
     const { isMobile } = useIsMobile();
 
-    const qualityFeedbackNotifications = useMemo(
-        () =>
-            notifications.filter((notification) =>
-                notification.notification_type.includes(
-                    "quality_feedback_request"
-                )
-            ),
-        [notifications]
-    );
+    const [pageSize, setPageSize] = useState(10);
+    // Notification
+    const [currentPageNo, setCurrentPageNo] = useState<number>(1);
+    const [totalPages, setTotalPages] = useState<number>(1);
+    // qualityFeedbackNotifications
+    const [currentPageNoQuality, setCurrentPageNoQuality] = useState<number>(1);
+    const [totalPagesQuality, setTotalPagesQuality] = useState<number>(1);
+    // qualityFeedbackNotifications
+    const [currentPageNoUsecase, setCurrentPageNoUsecase] = useState<number>(1);
+    const [totalPagesUsecase, setTotalPagesUsecase] = useState<number>(1);
 
+    useEffect(() => {
+        setTotalPages(Math.ceil((notifications?.length as number) / pageSize));
+        setTotalPagesQuality(
+            Math.ceil(
+                (qualityFeedbackNotifications?.length as number) / pageSize
+            )
+        );
+        setTotalPagesUsecase(
+            Math.ceil(
+                (usecaseFeedbackNotifications?.length as number) / pageSize
+            )
+        );
+    }, [notifications]);
+
+    const currentNotificationsRecords = useMemo(() => {
+        if (!notifications) return [];
+
+        const startIndex = (currentPageNo - 1) * pageSize;
+        const endIndex = startIndex + pageSize;
+
+        return notifications.slice(startIndex, endIndex);
+    }, [currentPageNo, pageSize, notifications]);
+
+    // Usecase feedbackNotification--------------------------------------
     const usecaseFeedbackNotifications = useMemo(
         () =>
             notifications.filter((notification) =>
@@ -44,6 +70,35 @@ const Notifications = () => {
         [notifications]
     );
 
+    const currentUsecaseFeedbackRecords = useMemo(() => {
+        if (!usecaseFeedbackNotifications) return [];
+
+        const startIndex = (currentPageNoUsecase - 1) * pageSize;
+        const endIndex = startIndex + pageSize;
+
+        return usecaseFeedbackNotifications.slice(startIndex, endIndex);
+    }, [currentPageNoUsecase, pageSize, usecaseFeedbackNotifications]);
+
+    // qualityFeedbackNotifications---------------------------------------------
+    const qualityFeedbackNotifications = useMemo(
+        () =>
+            notifications.filter((notification) =>
+                notification.notification_type.includes(
+                    "quality_feedback_request"
+                )
+            ),
+        [notifications]
+    );
+
+    const currentQualityFeedbackRecords = useMemo(() => {
+        if (!qualityFeedbackNotifications) return [];
+
+        const startIndex = (currentPageNoQuality - 1) * pageSize;
+        const endIndex = startIndex + pageSize;
+
+        return qualityFeedbackNotifications.slice(startIndex, endIndex);
+    }, [currentPageNoQuality, pageSize, qualityFeedbackNotifications]);
+//----------------------------------------------------------------------
     if (isLoading)
         return (
             <div className="w-full h-full flex items-center justify-center">
@@ -91,16 +146,25 @@ const Notifications = () => {
                             </Tab.List>
                             <Tab.Panels className="w-full flex">
                                 <TabPanel className="!bg-white">
-                                    {notifications.length > 0 ? (
-                                        notifications.map(
-                                            (notification, index) => (
-                                                <NotificationCard
-                                                    notification={notification}
-                                                    index={index}
-                                                    key={index}
-                                                />
-                                            )
-                                        )
+                                    {currentNotificationsRecords.length > 0 ? (
+                                        <>
+                                            {currentNotificationsRecords.map(
+                                                (notification, index) => (
+                                                    <NotificationCard
+                                                        notification={
+                                                            notification
+                                                        }
+                                                        index={index}
+                                                        key={index}
+                                                    />
+                                                )
+                                            )}
+                                            <Pagination
+                                                currentPage={currentPageNo}
+                                                totalPages={totalPages}
+                                                setPageNumber={setCurrentPageNo}
+                                            />
+                                        </>
                                     ) : (
                                         <div
                                             id="notification-tab"
@@ -111,16 +175,30 @@ const Notifications = () => {
                                     )}
                                 </TabPanel>
                                 <TabPanel className="!bg-white">
-                                    {usecaseFeedbackNotifications.length > 0 ? (
-                                        usecaseFeedbackNotifications?.map(
-                                            (notification, index) => (
-                                                <NotificationCard
-                                                    notification={notification}
-                                                    index={index}
-                                                    key={index}
-                                                />
-                                            )
-                                        )
+                                    {currentUsecaseFeedbackRecords.length >
+                                    0 ? (
+                                        <>
+                                            {currentUsecaseFeedbackRecords.map(
+                                                (notification, index) => (
+                                                    <NotificationCard
+                                                        notification={
+                                                            notification
+                                                        }
+                                                        index={index}
+                                                        key={index}
+                                                    />
+                                                )
+                                            )}
+                                            <Pagination
+                                                currentPage={
+                                                    currentPageNoUsecase
+                                                }
+                                                totalPages={totalPagesUsecase}
+                                                setPageNumber={
+                                                    setCurrentPageNoUsecase
+                                                }
+                                            />
+                                        </>
                                     ) : (
                                         <div
                                             id="notification-tab"
@@ -131,16 +209,30 @@ const Notifications = () => {
                                     )}
                                 </TabPanel>
                                 <TabPanel className="!bg-white">
-                                    {qualityFeedbackNotifications.length > 0 ? (
-                                        qualityFeedbackNotifications?.map(
-                                            (notification, index) => (
-                                                <NotificationCard
-                                                    notification={notification}
-                                                    index={index}
-                                                    key={index}
-                                                />
-                                            )
-                                        )
+                                    {currentQualityFeedbackRecords.length >
+                                    0 ? (
+                                        <>
+                                            {currentQualityFeedbackRecords.map(
+                                                (notification, index) => (
+                                                    <NotificationCard
+                                                        notification={
+                                                            notification
+                                                        }
+                                                        index={index}
+                                                        key={index}
+                                                    />
+                                                )
+                                            )}
+                                            <Pagination
+                                                currentPage={
+                                                    currentPageNoQuality
+                                                }
+                                                totalPages={totalPagesQuality}
+                                                setPageNumber={
+                                                    setCurrentPageNoQuality
+                                                }
+                                            />
+                                        </>
                                     ) : (
                                         <div
                                             id="notification-tab"

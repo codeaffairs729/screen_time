@@ -2,27 +2,15 @@ import FavouritesSection from "./favourites_section";
 import BookmarksSection from "./bookmarks_section";
 import { Tab } from "@headlessui/react";
 import TabPanel from "components/UI/tabbed/panel";
-import clsx from "clsx";
+// import clsx from "clsx";
 import { createRef, ReactNode, useEffect, useMemo, useState } from "react";
-import CreateNewList from "components/UI/user_bookmark/create_new_list";
+// import CreateNewList from "components/UI/user_bookmark/create_new_list";
 import { useSelector } from "react-redux";
 import { RootState } from "store";
-import {
-    BsCheck,
-    BsChevronDown,
-    BsPencil,
-    BsPlusLg,
-    BsTrash,
-} from "react-icons/bs";
 import CreateList from "components/UI/user_bookmark/create_list";
-import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import Accordian from "components/UI/new_accordian";
-import DeleteListVM from "components/UI/user_bookmark/delete_list.vm";
-import EditListNameVM from "components/UI/user_bookmark/edit_list_name.vm";
 import TabHeader from "./bookmark_tab_header";
 import { useIsMobile } from "common/hooks";
-
-const SCROLLABLE_VALUE: number = 150;
 
 const ListsSection = () => {
     const bookmark_items = useSelector(
@@ -31,10 +19,20 @@ const ListsSection = () => {
     const bookmark_lists = useSelector(
         (state: RootState) => state.user.bookmarkLists
     );
-
-    const scrollableDiv = createRef<HTMLDivElement>();
     const [selectedIndex, setSelectedIndex] = useState<any>(0);
     const { isMobile } = useIsMobile();
+
+    // const router = useRouter();
+
+    // useEffect(() => {
+    //     let newPath;
+    //     if (selectedIndex === 0) {
+    //         newPath = "/workspace?section=lists&subsection=favourites&page=1";
+    //     }else {
+    //         newPath = `/workspace?section=lists&subsection=${ListHeader[selectedIndex]["label"]}&page=1`;
+    //     }
+    //     router.replace(newPath);
+    // }, [selectedIndex]);
 
     const ListHeader = useMemo(
         () => [
@@ -47,9 +45,6 @@ const ListsSection = () => {
         [bookmark_lists]
     );
 
-    // const scroll = (value: number) => {
-    //     if (scrollableDiv?.current) scrollableDiv.current.scrollLeft += value;
-    // };
     return (
         <div>
             {!isMobile ? (

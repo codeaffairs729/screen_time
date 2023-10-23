@@ -9,7 +9,8 @@ import cascadeFolderFilled from "public/images/icons/cascade_folder_filled.svg";
 import listOutline from "public/images/icons/list_outline.svg";
 import listFilled from "public/images/icons/list_filled.svg";
 import TabIconHeader from "components/UI/tab_icon_header";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 type Header = {
     name: string;
@@ -42,7 +43,19 @@ const HEADERS: Header[] = [
 
 const TabHeaders = ({ selectedIndex = 0 }: { selectedIndex?: number }) => {
     const [selected, setSelected] = useState<number>(selectedIndex);
+    // const router = useRouter();
 
+    // useEffect(() => {
+    //     let newPath;
+    //     if (selected === 0) {
+    //       newPath = '/workspace?section=lists';
+    //     } else if (selected === 1) {
+    //       newPath = '/workspace?section=notification';
+    //     } else {
+    //       newPath = '/workspace';
+    //     }
+    //     router.replace(newPath);
+    //   }, [selected]);
     return (
         <div>
             <Tab.List className="relative text-dtech-main-dark flex flex-row  overflow-x-auto">
