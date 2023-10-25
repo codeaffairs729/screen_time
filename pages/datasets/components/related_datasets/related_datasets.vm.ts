@@ -67,7 +67,7 @@ const RelatedDatasetsVM = (dataset: any) => {
                 return Http.get(
                     `/api/related-by-description?query=${dataset?.id}`,
                     {
-                        baseUrl: "http://localhost:3000",
+                        baseUrl: process.env.NEXT_PUBLIC_WEBCLIENT_ROOT,
                     }
                 );
             },
