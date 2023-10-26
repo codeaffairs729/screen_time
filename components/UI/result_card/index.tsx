@@ -105,8 +105,8 @@ const ResultCard = ({
                                     setData={setResultRecord}
                                     datasetSource={dataProviders?.datasetSource}
                                     showToolTip={showToolTip}
-                                    cardClicked={cardClicked}
-                                    cardHover={cardHover}
+                                    // cardClicked={cardClicked}
+                                    // cardHover={cardHover}
                                 />
                                 <CardBody
                                     data={resultRecord}
@@ -114,8 +114,8 @@ const ResultCard = ({
                                 />
                                 <CardFooter
                                     data={data}
-                                    cardClicked={cardClicked}
-                                    cardHover={cardHover}
+                                    // cardClicked={cardClicked}
+                                    // cardHover={cardHover}
                                 />
                             </>
                         ) : (
@@ -129,8 +129,8 @@ const ResultCard = ({
                                             dataProviders?.datasetSource
                                         }
                                         showToolTip={showToolTip}
-                                        cardClicked={cardClicked}
-                                        cardHover={cardHover}
+                                        // cardClicked={cardClicked}
+                                        // cardHover={cardHover}
                                     />
                                 }
                                 <CardBody
@@ -139,8 +139,8 @@ const ResultCard = ({
                                 />
                                 <DataProviderCardFooter
                                     data={data}
-                                    cardClicked={cardClicked}
-                                    cardHover={cardHover}
+                                    // cardClicked={cardClicked}
+                                    // cardHover={cardHover}
                                 />
                             </>
                         )}
@@ -157,8 +157,8 @@ const ResultCard = ({
                                     setData={setResultRecord}
                                     href={href}
                                     className="flex-row md:flex-col items-center justify-center md:py-8 w-full md:mx-5 mx-0 max-h-min"
-                                    cardClicked={cardClicked}
-                                    cardHover={cardHover}
+                                    // cardClicked={cardClicked}
+                                    // cardHover={cardHover}
                                 />
                             </div>
                         </div>
@@ -167,10 +167,9 @@ const ResultCard = ({
 
                 {pageName === "workspace" && (
                     <div
-                        className={` bg-dtech-new-main-light ${
-                            cardClicked && "!bg-[#FDD522]"
-                        } ${
-                            cardHover && "bg-[#28A197]"
+                        className={` bg-dtech-new-main-light 
+                        ${
+                            cardHover && "bg-[#6DCDCB]"
                         }  text-white hidden flex-col justify-center items-center w-[24px] md:flex  ${
                             label === "datasets" ? "rounded-r-lg" : ""
                         }`}
