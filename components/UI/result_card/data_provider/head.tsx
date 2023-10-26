@@ -21,8 +21,8 @@ const DataProviderCardHead = ({
     handleFAQClick?: Function;
     datasetSource: string | undefined;
     showToolTip: boolean;
-    cardClicked: boolean;
-    cardHover: boolean;
+    cardClicked?: boolean;
+    cardHover?: boolean;
 }) => {
     const {
         title,

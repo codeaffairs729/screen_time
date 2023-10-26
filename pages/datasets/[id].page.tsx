@@ -47,10 +47,13 @@ const datasetHeaders = [
     },
 ]
 enum tabIndex {
-    data_files,
-    insights,
-    feedback,
-    related_datasets,
+    // data_files,
+    // insights,
+    // feedback,
+    // related_datasets,
+    user_feedback,
+    insights
+
 }
 const DatasetDetail = ({ dataset }: { dataset: Dataset | undefined }) => {
     const [loading, setLoading] = useState<boolean>(false);
