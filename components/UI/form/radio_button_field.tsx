@@ -54,6 +54,7 @@ const RadioButtonField = ({
                         onDataChange={(o: any) => {
                             onChange(o?.target.value);
                         }}
+                        selected={value === option.value}
                     />
                 ))
             }
@@ -67,11 +68,11 @@ const RadioButtonField = ({
     )
 }
 
-const RadioButton = ({ option, name, onDataChange }: { option: Option, name: string, onDataChange?: any }) => {
+const RadioButton = ({ option, name, onDataChange,selected }: { option: Option, name: string, onDataChange?: any;selected?:boolean }) => {
     return (
         <div className="flex items-center mb-2">
             <input onClick={(e) => onDataChange(e)} id={`${name}_${option.value}`} type="radio" value={option.value} name={name}
-                className="w-[24px] h-[24px] text-[#6E498E] bg-[#FFFFFF] border-2 border-[#333333] focus:ring-[#6E498E]" />
+                className="w-[24px] h-[24px] text-[#6E498E] bg-[#FFFFFF] border-2 border-[#333333] focus:ring-[#6E498E]" checked={selected} />
             <label htmlFor={`${name}_${option.value}`} className="ml-2 sm:text-[19px] font-normal text-gray-900">{option.label}</label>
         </div>
     );
