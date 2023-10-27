@@ -34,7 +34,7 @@ const SubscriptionSection = () => {
                                     plan.label.toLocaleLowerCase() ==
                                     "announcement"
                                         ? ""
-                                        : "!items-center"
+                                        : "!items-center !text-bold"
                                 }`}
                                 descriptionDivClass={`h-[114px] text-[#727272]
                             ${
@@ -43,6 +43,7 @@ const SubscriptionSection = () => {
                                     : " !items-center "
                             }`}
                                 description={plan.description}
+                                active={plan.active}
                             />
                         ))}
                     </div>
@@ -73,6 +74,7 @@ const SubscriptionSection = () => {
                                             essential={child.essential}
                                             professional={child.professional}
                                             premium={child.premium}
+                                            subCategories={true}
                                         />
                                     )
                                 )}
@@ -105,7 +107,7 @@ const SubscriptionSection = () => {
                                 onClick={() => setOpenPopup(true)}
                                 className="flex justify-center items-center bg-dtech-new-main-light p-4 w-[150px] rounded-full mx-2 cursor-pointer"
                             >
-                                <span className="text-white">Select plan</span>
+                                <span className="text-white">Active plan</span>
                             </button>
                         </div>
                         <div
@@ -142,7 +144,7 @@ const SubscriptionSection = () => {
                     <SubscriptionDropdown label={"Premium"} />
 
                     <div className="w-60">
-                        <Card
+                        {/* <Card
                             cardOuterClass={
                                 "w-full rounded-lg !items-center  border-t-4"
                             }
@@ -152,7 +154,7 @@ const SubscriptionSection = () => {
                             description={
                                 "Discounted Bundles available for  organisations"
                             }
-                        />
+                        /> */}
 
                         <Card
                             cardOuterClass={

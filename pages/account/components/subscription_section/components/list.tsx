@@ -11,6 +11,7 @@ const ListHeader = ({
     professional,
     premium,
     children,
+    subCategories= false
 }: {
     index?:number;
     label: string;
@@ -20,6 +21,7 @@ const ListHeader = ({
     professional: string | boolean;
     premium: string | boolean;
     children?: Array<any>;
+    subCategories?: boolean
 }) => {
     const [showSubscription, setShowSubscription] = useState<boolean>(false);
 
@@ -28,7 +30,7 @@ const ListHeader = ({
     };
     return (
         <div className=" flex flex-col  ">
-            <div className={`flex flex-row border-b-2 py-3 ${ index as number % 2 == 0 ?"bg-[#EBEBEB]": ""}`}>
+            <div className={`flex flex-row border-b-2 py-3 ${ subCategories && "bg-[#EBEBEB]"}`}>
                 <List
                     dropdown={count ? true : false}
                     label={count ? `${label} (${count})` : `${label} `}
@@ -56,7 +58,7 @@ const ListHeader = ({
                 />
                 {/* <hr className="mt-1 text-[#727272]" /> */}
             </div>
-            {showSubscription && <div className="my-2">{children}</div>}
+            {showSubscription && <div className="my-2 mb-10">{children}</div>}
         </div>
     );
 };

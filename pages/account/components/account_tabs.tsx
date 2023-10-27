@@ -27,11 +27,11 @@ const HEADERS: Header[] = [
         outlineIcon: subscriptionOutline,
         filledIcon: subscriptionFilled,
     },
-    {
-        name: "Billing",
-        outlineIcon: paymentOutline,
-        filledIcon: paymentFilled,
-    },
+    // {
+    //     name: "Billing",
+    //     outlineIcon: paymentOutline,
+    //     filledIcon: paymentFilled,
+    // },
 ];
 
 const AccountTabHeaders = ({
