@@ -29,7 +29,9 @@ enum tabIndex {
 const RegisterDataSourcePage = () => {
     const [showAdvanced, setShowAdvanced] = useState(false);
     const { asPath } = useRouter();
-    const [selectedIndex, setSelectedIndex] = useState<any>(tabIndex[asPath.split("#")[1]?.split("/")[0] as any] || 0);
+    const [selectedIndex, setSelectedIndex] = useState<any>(
+        tabIndex[asPath.split("#")[1]?.split("/")[0] as any] || 0
+    );
     const user = useSelector((state: RootState) => state.auth.user);
 
     const vm = RegisterDataSourceVM();
@@ -42,6 +44,11 @@ const RegisterDataSourcePage = () => {
 
     return (
         <DefaultLayout>
+            <div className="py-5 px-4  flex items-center md:bg-white bg-[#EBEBEB]">
+                <span className="text-left text-xl md:text-[26px] font-semibold md:text-[#727272]">
+                    {/* Data Source Registration */}
+                </span>
+            </div>
             <div className="mt-10">
                 <Tab.Group defaultIndex={selectedIndex}>
                     <RegisterDataSourceTabHeaders
@@ -53,7 +60,9 @@ const RegisterDataSourcePage = () => {
                             <Register />
                         </TabPanel>
                         <TabPanel className="!bg-white">
-                            <ViewCatalogueVMContext.Provider value={viewCatalogueVm}>
+                            <ViewCatalogueVMContext.Provider
+                                value={viewCatalogueVm}
+                            >
                                 <Catalogue />
                             </ViewCatalogueVMContext.Provider>
                         </TabPanel>

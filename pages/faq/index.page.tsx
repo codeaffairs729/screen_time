@@ -4,10 +4,12 @@ import Accordian from "components/UI/accordian";
 const FAQPage = () => {
     return (
         <DefaultLayout>
-            <div className="mx-4 md:mx-20 my-2">
-                <span className="text-dtech-dark-grey font-semibold text-2xl">
+            <div className="mx-4 md:mx-20  bg-[#EBEBEB]">
+                <div className="py-5 px-4  flex items-center md:bg-white bg-[#EBEBEB]">
+                    <span className="text-left text-xl md:text-[26px] font-semibold md:text-[#727272]">
                     Frequently asked questions
-                </span>
+                    </span>
+                </div>
                 <div className="py-6 mt-6 rounded-[20px] px-10 bg-dtech-light-grey min-h-[60vh]">
                     <Accordian
                         className="!bg-dtech-main-light"
@@ -185,18 +187,20 @@ const FAQPage = () => {
                                 className="text-blue-600"
                                 href="https://data.europa.eu/mqa/methodology?locale=en"
                             >
-                                {" "}Metadata Quality Assessment (MQA) methodology{" "}
+                                {" "}
+                                Metadata Quality Assessment (MQA) methodology{" "}
                             </a>{" "}
                             which is itself inspired by the
                             <a
                                 className="text-blue-600"
                                 href="https://www.go-fair.org/fair-principles/"
                             >
-                                {" "}FAIR principles{" "}
+                                {" "}
+                                FAIR principles{" "}
                             </a>{" "}
-                            for data management and stewardship. Data file quality is assessed based on user feedback
-                            gathered through Dtechtive.
-
+                            for data management and stewardship. Data file
+                            quality is assessed based on user feedback gathered
+                            through Dtechtive.
                         </span>
                     </Accordian>
                     <Accordian

@@ -2,23 +2,28 @@
     "plans": [
         {
             "label": "Announcement",
-            "description": "Discounted bundles available for  organisations"
+            "description": "Discounted bundles available for organisations",
+            "active": false
         },
         {
             "label": "Guest",
-            "description": "Free"
+            "description": "Free guest user",
+            "active": false
         },
         {
             "label": "Essential",
-            "description": "Free"
+            "description": "Free register user",
+            "active": false
         },
         {
             "label": "Professional",
-            "description": "Paid customer quote"
+            "description": "Paid user",
+            "active": true
         },
         {
             "label": "Premium",
-            "description": "Paid customer quote"
+            "description": "Paid user",
+            "active": false
         }
     ],
     "features": [

@@ -47,14 +47,14 @@ const AddOns = ({ disableContact = false }: { disableContact?: boolean }) => {
                                     <div className=" text-[#727272]">
                                         <span>{item.answer}</span>
                                     </div>
-                                    <div className=" text-[#4CA7A5]">
+                                    {/* <div className=" text-[#4CA7A5]">
                                         <Link href={""}>
                                             <span className="flex items-center">
                                                 <BiPound className="" />
                                                 /website
                                             </span>
                                         </Link>
-                                    </div>
+                                    </div> */}
                                 </div>
                             </div>
                         </div>
@@ -75,16 +75,22 @@ const AddOns = ({ disableContact = false }: { disableContact?: boolean }) => {
                 <div className="flex flex-col justify-center items-center w-full my-5">
                     <div className="">
                         <div className="flex justify-end items-center font-bold mr-2">
-                            <span>
+                            <span className="">
                                 To learn more about the following add-ons,
                                 <br /> email us at
-                                <a
-                                    href="dtechtive@dtime.ai"
-                                    className=" underline underline-offset-2 mx-1"
-                                >
+                                <span className=" underline underline-offset-2 mx-1">
                                     dtechtive@dtime.ai
-                                </a>
-                                or arrange a call via dtime.ai/meeting
+                                </span>
+                                or arrange a call via{" "}
+                                <Link href="https://dtime.ai/meeting" passHref>
+                                    <a
+                                        className="underline underline-offset-2"
+                                        target="_blank"
+                                        rel="noreferrer"
+                                    >
+                                        dtime.ai/meeting
+                                    </a>
+                                </Link>
                             </span>
                         </div>
                         {addOns?.map((item, index) => (
@@ -111,14 +117,14 @@ const AddOns = ({ disableContact = false }: { disableContact?: boolean }) => {
                                         <div className=" text-[#727272]">
                                             <span>{item.answer}</span>
                                         </div>
-                                        <div className=" text-[#4CA7A5] ">
+                                        {/* <div className=" text-[#4CA7A5] ">
                                             <Link href={""}>
                                                 <span className="flex items-center font-semibold">
                                                     <BiPound className="" />
                                                     /website
                                                 </span>
                                             </Link>
-                                        </div>
+                                        </div> */}
                                     </div>
                                 </div>
                             </div>
