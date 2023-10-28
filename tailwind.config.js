@@ -22,7 +22,10 @@ module.exports = {
                     "notification-alert-secondary": "#EBB731",
                     "dark-teal": "#28A197",
                     "light-teal":"#6DCDCB",
-                    "new-main-light":"#6E498E"
+                    "new-main-light":"#6E498E",
+                    "light-grey2": "#EBEBEB",
+                    "light-grey3": "#727272",
+                    "dark-grey2": "#2D2D32",
                 },
             },
             maxWidth: {

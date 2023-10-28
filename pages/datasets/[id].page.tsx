@@ -11,7 +11,7 @@ import Http from "common/http";
 import { AUTH_TOKEN } from "common/constants/cookie.key";
 import { NextPageContext } from "next";
 import DatasetTabHeaders from "./components/dataset_tabs";
-// import DataFilesSection from "./components/data_files_section";
+import DataFilesSection from "./components/data_files_section";
 // import DatasetInsights from "./components/insights_section";
 // import DatasetFeedbackSection from "./components/user_feedback";
 // import RelatedDatasets from "./components/related_datasets";
@@ -26,9 +26,9 @@ import dynamic from "next/dynamic";
 import Head from 'next/head';
 import Script from 'next/script';
 
-const DataFilesSection = dynamic(() => import("./components/data_files_section"), {
-    ssr: false,
-});
+// const DataFilesSection = dynamic(() => import("./components/1data_files_section"), {
+//     ssr: false,
+// });
 const DatasetFeedbackSection = dynamic(() => import("./components/user_feedback"), {
     ssr: false,
 });
@@ -340,30 +340,12 @@ const DatasetDetail = ({ dataset }: { dataset: Dataset | undefined }) => {
                                 <div className="w-full h-fit py-4 sm:mt-24 mt-32 bg-white rounded-lg">
                                     <DatasetHead dataset={dataset} />
                                 </div>
-                                <div className="flex border-t mt-10 flex-col bg-[#EBEBEB]"
+                                <DataFilesSection dataset={dataset} className="mt-10" />
+                                <div className="flex border-t mt-10 flex-col"
                                 // style={{ marginTop: `${translationValue2 + (isMobile ? 320 : 200)}px` }}
                                 >
-                                    <div className=" bg-white sm:px-8 px-4 sm:py-4 py-2 overflow-x-scroll " id="scrollable-div">
-
-                                        <DataFilesSection
-                                            goToPreview={() => {
-                                                setSelectedIndex(0);
-                                            }}
-                                            scrollLeft={scrollLeft}
-                                            setScrollLeft={setScrollLeft}
-                                            setHighlightedDot={setHighlightedDot}
-                                        />
-                                        <div className=" sm:hidden flex flex-row w-full items-center justify-center">
-                                            {[1, 2, 3].map((item, index) => (
-                                                <div
-                                                    key={index}
-                                                    className={` rounded-full w-3 h-3 m-1 ${index === highlightedDot ? 'bg-dtech-dark-teal' : 'bg-[#D9D9D9]'}`}
-                                                // onClick={() => handleDotClick(index)}
-                                                ></div>
-                                            ))}
-                                        </div>
-                                    </div>
-                                    <div className="flex flex-col border-t mt-4 xl:mt-10 shadow-container">
+                                    
+                                    <div className="flex flex-col border-t shadow-container">
                                         {!loading && (
                                             <Tab.Group defaultIndex={selectedIndex}>
                                                 <DatasetTabHeaders
