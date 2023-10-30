@@ -106,6 +106,7 @@ class Dataset {
             },
             urls: download_files.map(
                 (download_file: { [key: string]: any }) => ({
+                    id: download_file["id"],
                     description: download_file["description"],
                     type: download_file["type"],
                     format: download_file["format"],
@@ -189,6 +190,7 @@ export type DatasetHost = {
 };
 
 export type DatasetUrl = {
+    id: number;
     type: string;
     description: string;
     format: string;
