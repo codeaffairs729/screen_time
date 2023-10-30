@@ -1,10 +1,9 @@
-import { getHttpErrorMsg } from "common/util";
 import DataFilePreviewTable from "./components/data_file_preview_table";
 import DataFilePreviewVM from "./data_file_preview.vm";
 import Loader from "components/UI/loader";
-import WarnAlert from "components/UI/alerts/warn_alert";
 import InfoAlert from "components/UI/alerts/info_alert";
 import { Transition } from "@headlessui/react";
+import React from "react";
 
 const DataFilePreview = ({ dataFileId }: { dataFileId: number }) => {
     const vm = DataFilePreviewVM(dataFileId);
@@ -62,4 +61,4 @@ const DataFilePreview = ({ dataFileId }: { dataFileId: number }) => {
     }
 };
 
-export default DataFilePreview;
+export default React.memo(DataFilePreview);
