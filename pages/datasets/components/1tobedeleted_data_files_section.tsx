@@ -8,7 +8,7 @@ import downloadIcon from "public/images/icons/download.svg";
 import previewIcon from "public/images/icons/preview.svg";
 import doNotPreview from "public/images/icons/do_not_preview.svg";
 import Image from "next/image";
-import PreviewSection from "./1preview_section";
+import PreviewSection from "./1tobedeleted_preview_section";
 import {
     usereventDatasetDownload,
     usereventDatasetDownloadSearchTerms,
