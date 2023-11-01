@@ -1,5 +1,10 @@
 import React, { ReactNode } from "react";
 import { useEffect, useState } from "react";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { useIsMobile } from "common/hooks";
+
 interface ImageObjectType {
     src: string;
     text1: string;
@@ -31,7 +36,19 @@ const NewGradientUI = ({
     backgroundGradient?: string;
     imageObjects?: ImageObjectType[];
 }) => {
-    const [isMobile, setIsMobile] = useState(false);
+    const settings = {
+        dots: true,
+        infinite: true,
+        autoplay: true,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        autoplaySpeed: 3000,
+        arrows: false,
+        pauseOnHover: false,
+    };
+
+    const { isMobile} = useIsMobile();
     const [imageIndex, setImageIndex] = useState(0);
     const [imageSrc, setImageSrc] = useState(imageObjects);
 
@@ -39,74 +56,48 @@ const NewGradientUI = ({
         background: isMobile
             ? backgroundGradient
                 ? backgroundGradient
-                : "linear-gradient(to bottom right, #FFFFFF, #3F0068)"
+                : "linear-gradient(180deg, rgba(183, 133, 151, 0.30) -10.01%, rgba(109, 205, 203, 0.22) 58.69%)"
             : "",
     };
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setImageIndex((prevIndex) => (prevIndex + 1) % imageSrc.length);
-        }, 10000);
+    // useEffect(() => {
+    //     const interval = setInterval(() => {
+    //         setImageIndex((prevIndex) => (prevIndex + 1) % imageSrc.length);
+    //     }, 10000);
 
-        return () => {
-            clearInterval(interval);
-        };
-    }, [imageSrc.length]);
+    //     return () => {
+    //         clearInterval(interval);
+    //     };
+    // }, [imageSrc.length]);
 
-    useEffect(() => {
-        setImageSrc((prevSrc) =>
-            prevSrc.map((src, index) =>
-                index === imageIndex ? src : prevSrc[index]
-            )
-        );
-    }, [imageIndex]);
+    // useEffect(() => {
+    //     setImageSrc((prevSrc) =>
+    //         prevSrc.map((src, index) =>
+    //             index === imageIndex ? src : prevSrc[index]
+    //         )
+    //     );
+    // }, [imageIndex]);
 
-    useEffect(() => {
-        const handleResize = () => {
-            setIsMobile(window.innerWidth < 640); // Adjust the breakpoint as needed
-        };
-
-        // Call handleResize on initial component render
-        handleResize();
-
-        // Add event listener to window resize
-        window.addEventListener("resize", handleResize);
-
-        // Clean up event listener on component unmount
-        return () => {
-            window.removeEventListener("resize", handleResize);
-        };
-    }, []);
     return (
         <div className="flex flex-row justify-between h-screen z-0">
-            <div
-                className=" hidden md:w-2/3 max-h-screen bg-black text-center md:flex flex-col items-center justify-center p-8"
-                // style={{
-                //     background:
-                //         "linear-gradient(146.51deg, #0065BD -7.18%, rgba(40, 161, 151, 0.19) 98.96%)",
-                // }}
-
-                style={{
-                    background:"linear-gradient(to bottom right, #FFFFFF, #3F0068)"
-                        
-                }}
-            >
-                <h2 className=" text-white font-bold text-2xl px-24 hidden md:block">
-                    {imageSrc[imageIndex].text1}
-                </h2>
-                <h2 className="font-semibold text-dtech-main-dark text-2xl px-24 mt-6 hidden md:block">
-                    {imageSrc[imageIndex].text2}
-                </h2>
-                <img
-                    className=" hidden md:block"
-                    // style={{
-                    //     opacity: imageIndex === 0 ? 1 : 0,
-                    //     transition: "opacity  ease-in-out",
-                    //   }}
-                    src={imageSrc[imageIndex].src}
-                    width={350}
-                ></img>
+            <div className="md:w-2/3 max-h-screen hidden md:block">
+                <Slider {...settings} className="login-slickdots">
+                    {imageObjects?.map((item:any,index:number) => {
+                        return (
+                            <div key={index} className=" hidden h-screen bg-gradient-to-b from-[rgba(181,_133,_183,_0.53)_-10.01%] to-[rgba(109,_205,_203,_0.22)_102.15%] text-center md:!flex flex-col items-center justify-center p-8">
+                                <h2 className="font-semibold text-dtech-main-dark text-2xl px-24 mt-6 hidden md:block">
+                                    {item.text2}
+                                </h2>
+                                <img
+                                    className=" hidden md:block"
+                                    src={item.src}
+                                    width={550}
+                                ></img>
+                            </div>
+                        );
+                    })}
+                </Slider>
             </div>
-            <div className=" bg-dtech-dark-teal h-screen  w-2 ml-5 sm:ml-0 fixed md:relative md:w-8"></div>
+            <div className=" bg-[#6DCDCB] h-screen  w-2 ml-5 sm:ml-0 fixed md:relative md:w-8"></div>
             <div className=" bg-[#0065BD] h-screen  w-6 sm:hidden md:relative md:w-8"></div>
             <div
                 className="flex flex-col w-fixed md:w-1/2 w-screen md:bg-white overflow-scroll"

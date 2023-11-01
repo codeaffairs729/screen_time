@@ -89,7 +89,7 @@ const LoginUnlockPage = () => {
 
                 <div className="flex space-x-4 sm:mt-8 mt-12 justify-center">
                     <PrimaryBtn
-                        className=" bg-dtech-main-dark min-w-[150px] !justify-center !items-center !py-3 w-8 sm:w-full !rounded-lg"
+                        className=" bg-[#6E498E] min-w-[150px] !justify-center !items-center !py-3 w-8 sm:w-full !rounded-[30px]"
                         label="Send Link"
                         isLoading={vm.isRequestUnlockLoading}
                         isDisabled={vm.isRequestUnlockLoading}

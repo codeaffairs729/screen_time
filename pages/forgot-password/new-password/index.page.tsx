@@ -99,7 +99,7 @@ const ForgotPasswordPage = () => {
                             errorPosition={false}
                         />
                         <img
-                            className="  ml-[92%] absolute top-3 sm:top-3"
+                            className="  ml-[90%] xl:ml-[88%] lg:ml-[85%] md:ml-[80%] absolute top-3 sm:top-3"
                             onClick={() =>
                                 setIsPasswordVisible(!isPasswordVisible)
                             }
@@ -148,7 +148,7 @@ const ForgotPasswordPage = () => {
                             errorPosition={false}
                         />
                         <img
-                            className="  ml-[92%] absolute top-3 sm:top-3"
+                            className="   ml-[90%] xl:ml-[88%] lg:ml-[85%] md:ml-[80%] absolute top-3 sm:top-3"
                             onClick={() =>
                                 setIsConfirmPasswordVisible(
                                     !isConfirmPasswordVisible

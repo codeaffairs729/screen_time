@@ -8,6 +8,7 @@ type TextFieldProps = FieldProps & {
     rows?: number;
     textfieldClassName?: string;
     errorPosition?: boolean;
+    optionsClass?: string;
 };
 
 const TextField = ({
@@ -19,6 +20,7 @@ const TextField = ({
     rows = 3,
     formControl,
     errorPosition = false,
+    optionsClass = " ",
 }: TextFieldProps) => {
     const {
         fieldState: { error },
@@ -55,7 +57,8 @@ const TextField = ({
                     className={clsx(
                         "block px-3 py-2 w-full text-sm appearance-none bg-transparent rounded-lg focus:ring-dtech-secondary-light border-2 border-dtech-main-dark focus:border-dtech-secondary-light placeholder:text-gray-400 placeholder:text-sm disabled:border-gray-300 disabled:bg-gray-50",
                         { "border-red-700": hasError },
-                        textfieldClassName
+                        textfieldClassName,
+                        optionsClass
                     )}
                     rows={rows}
                     {...register}
@@ -67,9 +70,10 @@ const TextField = ({
                     type={type}
                     placeholder={placeholder}
                     className={clsx(
-                        "block px-3 py-2 w-full text-sm appearance-none bg-transparent rounded-lg focus:ring-dtech-secondary-light border-2 border-dtech-main-dark focus:border-dtech-secondary-light placeholder:text-gray-400 placeholder:text-sm disabled:border-gray-300 disabled:bg-gray-50",
+                        "block px-3 py-2 w-full text-sm appearance-none bg-transparent rounded-[30px] focus:ring-[#6DCDCB] border-2 border-[#333] focus:border-dtech-secondary-light placeholder:text-gray-400 placeholder:text-sm disabled:border-gray-300 disabled:bg-gray-50",
                         { "border-red-700": hasError },
-                        textfieldClassName
+                        textfieldClassName,
+                        optionsClass
                     )}
                     required={true}
                     {...register}
@@ -82,7 +86,7 @@ const TextField = ({
                 </div>
             )}
             {!errorPosition && hasError && isPassword && (
-                <div className="text-xs bg-[#EBEBEB] text-black-800 ml-1 mt-1 p-1">
+                <div className="text-xs sm:bg-[#EBEBEB] bg-[white] rounded-[10px] text-black-800 ml-1 mt-1 p-1">
                     {errorArray.map((item, index) => {
                         if (
                             error["message"]

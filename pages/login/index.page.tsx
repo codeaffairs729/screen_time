@@ -14,6 +14,7 @@ import { useRouter } from "next/router";
 import NewGradientUI from "components/layouts/gradientLayout";
 import isEmail from "validator/lib/isEmail";
 import Popup from "components/UI/Popop";
+import PopupSubscription from "components/UI/popup_subscription";
 
 const SigninPage = () => {
     const vm = SigninVM();
@@ -23,15 +24,15 @@ const SigninPage = () => {
     const [rememberMe, setRememberMe] = useState(false);
 
     useEffect(() => {
-        if (user){
+        if (user) {
             const timer = setTimeout(() => {
-            router.push('/');
-        }, 2000);
+                router.push("/");
+            }, 2000);
 
-        return () => clearTimeout(timer);
-    }
-    }, [router]); 
-    
+            return () => clearTimeout(timer);
+        }
+    }, [router]);
+
     return (
         <div className="relative">
             {user && <Popup duration={2000} />}
@@ -53,7 +54,7 @@ const SigninPage = () => {
                                     {" "}
                                     <InfoIcon
                                         tooltipClassName="max-w-sm  !bg-dtech-dark-teal"
-                                        iconClasses="text-[#333333]  -ml-24 sm:-ml-28"
+                                        iconClasses="text-[#333333]  -ml-24 sm:-ml-24"
                                         title="Enter your email ID. If logging in as an organisation admin, enter your organisation email ID."
                                     />
                                 </FormRow>
@@ -62,10 +63,10 @@ const SigninPage = () => {
                             {vm.signinErrorMsg?.includes(
                                 "password you entered is wrong"
                             ) && (
-                                    <div className="text-xs mb-7 sm:mb-10 -mt-10 text-red-800">
-                                        {vm.signinErrorMsg}
-                                    </div>
-                                )}
+                                <div className="text-xs mb-7 sm:mb-10 -mt-10 text-red-800 ml">
+                                    {vm.signinErrorMsg}
+                                </div>
+                            )}
                         </div>
                         <TextField
                             className=" -mt-6 sm:-mt-8 rounded-xl !bg-transparent "
@@ -85,6 +86,7 @@ const SigninPage = () => {
                             placeholder="E.g. jane.doe@abc.org"
                             type="email"
                             errorPosition={true}
+                            optionsClass="block px-3 py-2 w-full text-sm appearance-none bg-transparent rounded-lg focus:ring-[#6DCDCB] border-2 border-[#333] focus:border-dtech-secondary-light placeholder:text-gray-400 placeholder:text-sm disabled:border-gray-300 disabled:bg-gray-50"
                         />
                     </div>
                     <div className=" -mt-20 sm:-mt-10">
@@ -122,8 +124,10 @@ const SigninPage = () => {
                                 errorPosition={true}
                             />
                             <button
-                                onClick={() => setIsPasswordVisible(!isPasswordVisible)}
-                                className=" ml-[92%] -mt-16"
+                                onClick={() =>
+                                    setIsPasswordVisible(!isPasswordVisible)
+                                }
+                                className="-mt-16 ml-[90%] xl:ml-[88%] lg:ml-[85%] md:ml-[80%]"
                             >
                                 <img
                                     className=" absolute -mt-[44px]"
@@ -138,21 +142,21 @@ const SigninPage = () => {
                     </div>
                     <div className="flex flex-row justify-between mb-4 -mt-12 sm:mt-0 ">
                         <Link href="/login/account-unlock">
-                            <a className=" items-center self-end underline text-[#3F0068] text-sm">
+                            <a className=" items-center self-end underline text-[#0065BD] text-sm">
                                 Unlock account
                                 <InfoIcon
                                     tooltipClassName="max-w-sm  !bg-dtech-dark-teal"
-                                    iconClasses="text-[#3F0068] mx-2"
+                                    iconClasses="text-[#0065BD] mx-2"
                                     title="Enter email id to unlock account"
                                 />
                             </a>
                         </Link>
                         <Link href="/forgot-password">
-                            <a className=" items-center self-end underline text-[#3F0068]  text-sm">
+                            <a className=" items-center self-end underline text-[#0065BD] text-sm">
                                 Forgot your password?
                                 <InfoIcon
                                     tooltipClassName="max-w-sm  !bg-dtech-dark-teal"
-                                    iconClasses="text-[#3F0068] ml-2"
+                                    iconClasses="text-[#0065BD] ml-2"
                                     title="Reset your password"
                                 />
                             </a>
@@ -168,7 +172,7 @@ const SigninPage = () => {
                     </div>
                     <div className="flex space-x-4 sm:mt-8 justify-center">
                         <PrimaryBtn
-                            className=" bg-dtech-main-dark min-w-[150px] !justify-center !items-center !py-3 w-8 sm:w-full !rounded-lg"
+                            className=" bg-[#6E498E] min-w-[150px] !justify-center !items-center !py-3 w-8 sm:w-full !rounded-[30px]"
                             dataSelector="signin-button"
                             label="Log In"
                             isDisabled={vm.isSigningIn}
@@ -194,7 +198,7 @@ const SigninPage = () => {
                             Log In with
                         </div>
                         <div className="flex flex-row mt-4 justify-center">
-                            <div className=" mx-4 ">
+                            <div className=" mx-4">
                                 <img
                                     src="/images/icons/Google.svg"
                                     width={35}
@@ -220,7 +224,7 @@ const SigninPage = () => {
                                 </div>
                                 <Link href={"/signup"}>
                                     <a className="inline-flex space-x-1 mx-2">
-                                        <i className="mr-1 text-sm underline text-[#3F0068]">
+                                        <i className="mr-1 text-sm underline text-[#0065BD]">
                                             Sign up for free
                                         </i>{" "}
                                     </a>
@@ -238,7 +242,7 @@ const SigninPage = () => {
                                     }
                                 >
                                     <a className="inline-flex space-x-1 mx-2">
-                                        <i className="mr-1 text-sm underline text-[#3F0068]">
+                                        <i className="mr-1 text-sm underline text-[#0065BD]">
                                             Continue as a guest?
                                         </i>{" "}
                                     </a>

@@ -16,7 +16,6 @@ const RequestResetEmail = () => {
     const vm = useContext(ForgotPasswordVMContext);
     const router = useRouter();
 
-  
     if (vm.currentStep != PageStep.RequestResetEmail) {
         return <div />;
     }
@@ -79,7 +78,7 @@ const RequestResetEmail = () => {
 
                 <div className="flex space-x-4 sm:mt-8 -mt-48 justify-center">
                     <PrimaryBtn
-                        className=" bg-dtech-main-dark min-w-[150px] !justify-center !items-center !py-3 w-8 sm:w-full !rounded-lg"
+                        className=" bg-[#6E498E] min-w-[150px] !justify-center !items-center !py-3 w-8 sm:w-full !rounded-[30px]"
                         label="Send Email"
                         isLoading={vm.isSendingMail}
                         isDisabled={vm.isSendingMail}
