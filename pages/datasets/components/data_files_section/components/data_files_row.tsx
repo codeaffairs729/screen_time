@@ -105,7 +105,7 @@ const Row = ({ dataFile, dataset }: { dataFile: DatasetUrl, dataset: Dataset }) 
                     <Transition
                         enter="transition-[max-height] duration-700 overflow-hidden"
                         enterFrom="transform scale-75 max-h-0"
-                        enterTo="transform scale-100 max-h-96"
+                        enterTo="transform scale-100 max-h-[99999px]"
                         entered="!max-h-none"
                         leave="transition-[max-height] duration-700 overflow-hidden"
                         leaveFrom="transform scale-100 max-h-80"
