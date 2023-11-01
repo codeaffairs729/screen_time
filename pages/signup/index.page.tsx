@@ -63,7 +63,9 @@ const SecondStep = ({
                             required: "Required field",
                         },
                     }}
-                    optionClass=" border-2 border-[#6DCDCB] !rounded-[30px] !overflow-hidden "
+                    optionClass=" border-2 border-[#6DCDCB] !rounded-[30px]  "
+                    dropDownCss = "absolute w-full overflow-auto text-base bg-white  shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm border-[3px] border-dtech-light-teal border-t-0 w-[100%] rounded-b-3xl z-20 !overflow-hidden"
+                    newOptionclass = {true}
                 />
                 <div className="mt-4">
                     <FormRow
@@ -120,8 +122,10 @@ const SecondStep = ({
                         name: "role",
                         rules: { required: "Required field" },
                     }}
-                    optionClass=" border-2 border-[#6DCDCB] !rounded-[30px] !overflow-hidden "
+                    optionClass=" border-2 border-[#6DCDCB] !rounded-[30px]  "
                     signupDropdown = {true}
+                    newOptionclass = {true}
+                    dropDownCss = "absolute w-full py-1  overflow-auto text-base bg-white  shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm border-[3px] border-dtech-light-teal border-t-0 w-[100%] rounded-b-3xl z-20 !overflow-hidden"
                 />
 
                 {vm.form.watch("role") == "other" && (

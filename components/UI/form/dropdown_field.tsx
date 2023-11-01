@@ -92,6 +92,8 @@ const DropdownField = ({
     newDropdownIcon = false,
     optionClass = "",
     signupDropdown,
+    newOptionclass,
+    dropDownCss = "",
 }: {
     newDropdown?: boolean;
     className?: string;
@@ -101,6 +103,8 @@ const DropdownField = ({
     newDropdownIcon?: boolean;
     optionClass?: string;
     signupDropdown?: boolean;
+    newOptionclass?: boolean;
+    dropDownCss?: string;
 } & FieldProps) => {
     // const [selected, setSelected] = useState<Option>();
     const [selected, setSelected] = useState<Option>();
@@ -175,25 +179,44 @@ const DropdownField = ({
                 }}
                 nullable
             >
-                <div className="relative w-full text-left  rounded-lg cursor-default">
+                <div className="relative w-full text-left cursor-default ">
                     <Combobox.Button
                         onClick={() => setIsOpen(!isOpen)}
                         className="w-full"
                     >
-                        <Combobox.Input
-                            className={clsx(
-                                "w-full rounded-[30px] focus:ring-[#6DCDCB] border-2 border-dtech-main-dark focus:border-dtech-main-dark disabled:border-gray-300 disabled:bg-gray-50 py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 placeholder:text-gray-500 placeholder:text-sm placeholder:font-bold",
-                                // { "border-red-700": hasError },
-                                inputClass,
-                                newDropdown &&
-                                    isOpen &&
-                                    "focus:ring-yellow-400 "
-                            )}
-                            displayValue={(option: Option) => option?.label}
-                            onChange={(event) => setQuery(event.target.value)}
-                            placeholder={placeholder}
-                            name={name}
-                        />
+                        {isOpen && newOptionclass ? (
+                            <Combobox.Input
+                                className={clsx(
+                                    "w-full sm:ml-0 rounded-t-[30px] max-h-[99%] border-[3px] border-dtech-light-teal border-b-0 text-gray-900 h-full focus:!ring-0 focus:!outline-none focus:!border-dtech-light-teal",
+                                    inputClass,
+                                    newDropdown &&
+                                        isOpen &&
+                                        "focus:ring-yellow-400 "
+                                )}
+                                displayValue={(option: Option) => option?.label}
+                                onChange={(event) =>
+                                    setQuery(event.target.value)
+                                }
+                                placeholder={placeholder}
+                                name={name}
+                            />
+                        ) : (
+                            <Combobox.Input
+                                className={clsx(
+                                    "w-full rounded-[30px] focus:!ring-[#6DCDCB] border-2 border-dtech-main-dark focus:border-dtech-main-dark disabled:border-gray-300 disabled:bg-gray-50 py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 placeholder:text-gray-500 placeholder:text-sm placeholder:font-bold ",
+                                    inputClass,
+                                    newDropdown &&
+                                        isOpen &&
+                                        "focus:ring-yellow-400 "
+                                )}
+                                displayValue={(option: Option) => option?.label}
+                                onChange={(event) =>
+                                    setQuery(event.target.value)
+                                }
+                                placeholder={placeholder}
+                                name={name}
+                            />
+                        )}
                     </Combobox.Button>
                     <Combobox.Button
                         onClick={() => setIsOpen(!isOpen)}
@@ -218,46 +241,54 @@ const DropdownField = ({
                             <HiOutlineChevronDown className="w-5 h-5" />
                         )}
                     </Combobox.Button>
-                </div>
-                <Transition
-                    show={isOpen}
-                    as={Fragment}
-                    leave="transition ease-in duration-100"
-                    leaveFrom="opacity-100"
-                    leaveTo="opacity-0"
-                    afterLeave={() => setQuery("")}
-                >
-                    <Combobox.Options
-                        onClick={() => setIsOpen(!isOpen)}
-                        className={`absolute z-10 w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm  ${optionClass}`}
+                    <Transition
+                        show={isOpen}
+                        as={Fragment}
+                        leave="transition ease-in duration-100"
+                        leaveFrom="opacity-100"
+                        leaveTo="opacity-0"
+                        afterLeave={() => setQuery("")}
                     >
-                        {signupDropdown ? (
-                            <div className="overflow-auto max-h-60 custom-scrollbar">
-                                {filteredOtions.length === 0 && query === "" ? (
-                                    <div className="cursor-default select-none relative py-2 px-4 text-gray-700">
-                                        Nothing found.
-                                    </div>
-                                ) : (
-                                    filteredOtions.map((option, i) => (
-                                        <ComboOption key={i} option={option} />
-                                    ))
-                                )}
-                            </div>
-                        ) : (
-                            <div>
-                                {filteredOtions.length === 0 && query === "" ? (
-                                    <div className="cursor-default select-none relative py-2 px-4 text-gray-700">
-                                        Nothing found.
-                                    </div>
-                                ) : (
-                                    filteredOtions.map((option, i) => (
-                                        <ComboOption key={i} option={option} />
-                                    ))
-                                )}
-                            </div>
-                        )}
-                    </Combobox.Options>
-                </Transition>
+                        <Combobox.Options
+                            onClick={() => setIsOpen(!isOpen)}
+                            className={`absolute z-10 w-full py-1 overflow-auto text-base bg-white shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm  ${dropDownCss}`}
+                        >
+                            {signupDropdown ? (
+                                <div className="overflow-auto max-h-60 custom-scrollbar">
+                                    {filteredOtions.length === 0 &&
+                                    query === "" ? (
+                                        <div className="cursor-default select-none relative py-2 px-4 text-gray-700">
+                                            Nothing found.
+                                        </div>
+                                    ) : (
+                                        filteredOtions.map((option, i) => (
+                                            <ComboOption
+                                                key={i}
+                                                option={option}
+                                            />
+                                        ))
+                                    )}
+                                </div>
+                            ) : (
+                                <div>
+                                    {filteredOtions.length === 0 &&
+                                    query === "" ? (
+                                        <div className="cursor-default select-none relative py-2 px-4 text-gray-700">
+                                            Nothing found.
+                                        </div>
+                                    ) : (
+                                        filteredOtions.map((option, i) => (
+                                            <ComboOption
+                                                key={i}
+                                                option={option}
+                                            />
+                                        ))
+                                    )}
+                                </div>
+                            )}
+                        </Combobox.Options>
+                    </Transition>
+                </div>
             </Combobox>
             {!errorPosition && hasError && (
                 <div className="text-xs text-red-800 ml-1 mt-1">
