@@ -15,7 +15,6 @@ import InfoIcon from "components/UI/icons/info_icon";
 import NewGradientUI from "components/layouts/gradientLayout";
 import Link from "next/link";
 
-
 const SecondStep = ({
     vm,
     step,
@@ -53,7 +52,7 @@ const SecondStep = ({
                 <DropdownField
                     newDropdown={true}
                     errorPosition={true}
-                    className=" w-full -mt-6 sm:-mt-8 "
+                    className="w-full -mt-6 sm:-mt-8 "
                     placeholder="Select from the drop-down"
                     options={vm.accountTypeOptions}
                     dataSelector="account-dropdown"
@@ -64,6 +63,7 @@ const SecondStep = ({
                             required: "Required field",
                         },
                     }}
+                    optionClass=" border-2 border-[#6DCDCB] !rounded-[30px] !overflow-hidden "
                 />
                 <div className="mt-4">
                     <FormRow
@@ -120,6 +120,8 @@ const SecondStep = ({
                         name: "role",
                         rules: { required: "Required field" },
                     }}
+                    optionClass=" border-2 border-[#6DCDCB] !rounded-[30px] !overflow-hidden "
+                    signupDropdown = {true}
                 />
 
                 {vm.form.watch("role") == "other" && (
@@ -145,7 +147,7 @@ const SecondStep = ({
                 <div className=" -mt-1 ml-8 font-[Roboto] text-l">
                     I Accept Dtechtive’s{" "}
                     <a
-                        className=" text-dtech-main-dark underline"
+                        className=" text-[#0065BD] underline"
                         href="https://dtechtive.com/data-privacy-policy"
                     >
                         Data Privacy Policy
@@ -170,7 +172,7 @@ const SecondStep = ({
             <div className="flex justify-center !items-center space-x-4">
                 <PrimaryBtn
                     dataSelector="signup-button"
-                    className=" bg-dtech-main-dark min-w-[150px] my-2 !justify-center !items-center !py-3 w-8 sm:w-full !rounded-lg"
+                    className=" bg-[#6E498E] min-w-[150px] my-2 !justify-center !items-center !py-3 w-8 sm:w-full !rounded-[30px]"
                     label="Create my account"
                     isLoading={vm.isSigningUp}
                     isDisabled={vm.isSigningUp}
@@ -214,22 +216,26 @@ const SignupPage = () => {
     if (user || vm.signupErrorMsg || vm.signupSuccessMsg) {
         return (
             <div
-                className=" h-screen flex flex-col items-center justify-center "
-                style={{
-                    background:
-                        "linear-gradient(to bottom right, #3F0068, #FFFFFF)",
-                }}
+                className=" h-screen flex flex-col items-center justify-center sm:bg-[#6E498E] bg-gradient-to-b from-[rgba(181,_133,_183,_0.53)_-10.01%] to-[rgba(109,_205,_203,_0.22)_102.15%]"
+                // style={{
+                //     background:
+                //         "linear-gradient(to bottom right, #3F0068, #FFFFFF)",
+                // }}
             >
                 <img width={200}
                     className="-mt-8 hidden sm:block"
                     src="/gif/mail_sent.gif"
                 ></img>
-                <span className=" text-xl sm:text-4xl text-dtech-main-dark font-bold my-8">
+                <span className=" text-xl hidden sm:block sm:text-4xl text-white font-bold my-8">
                     A verification email has been sent.
                 </span>
-                <span className=" text-sm sm:text-2xl text-dtech-main-dark font-bold w-[32%] text-center">
+                <span className=" text-sm hidden sm:block sm:text-2xl text-white font-bold w-[32%] text-center">
                     Please use the link in the email to verify your account.
                     After this, you can login into your account.
+                </span>
+                <span className="uppercase text-2xl sm:hidden block text-[#6DCDCB] font-bold text-center">
+                    Sign Up <br/>
+                    Successfull!
                 </span>
             </div>
         );
@@ -372,7 +378,7 @@ const SignupPage = () => {
                                 errorPosition={false}
                             />
                             <img
-                                className="  ml-[92%] absolute top-3"
+                                className=" ml-[90%] xl:ml-[88%] lg:ml-[85%] md:ml-[80%] absolute top-3"
                                 onClick={() =>
                                     setIsPasswordVisible(!isPasswordVisible)
                                 }
@@ -387,7 +393,7 @@ const SignupPage = () => {
                         <div className="flex justify-center !items-center space-x-4 my-10 sm:my-10">
                             <PrimaryBtn
                                 dataSelector="next-button"
-                                className=" bg-dtech-main-dark min-w-[150px] !justify-center !items-center !py-3 w-8 sm:w-full !rounded-lg"
+                                className=" bg-[#6E498E] min-w-[150px] !justify-center !items-center !py-3 w-8 sm:w-full !rounded-[30px]"
                                 label="Next"
                                 onClick={vm.form.handleSubmit(() =>
                                     setStep(!step)
@@ -437,7 +443,7 @@ const SignupPage = () => {
                             </div>
                             <Link href={"/login"}>
                                 <a className="inline-flex space-x-1 mx-2">
-                                    <i className="mr-1 text-sm underline text-[#3F0068]">
+                                    <i className="mr-1 text-sm underline text-[#0065BD]">
                                         Log in
                                     </i>{" "}
                                 </a>

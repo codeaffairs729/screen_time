@@ -101,8 +101,23 @@ figure{
   text-decoration-color: #6E498E;
 }
 
-
-
 .animate-pulse {
   animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.login-slickdots > .slick-dots {
+  bottom: 100px !important;
+}
+
+.login-slickdots > .slick-dots > li button::before{
+    font-size: 1rem !important;
+  }
+
+.login-slickdots > .slick-dots > .slick-active button::before{
+  color: #6DCDCB !important;
+}
+
+.slick-dots li button:before {
+  color: white !important;
+  opacity: 40 !important;
 }
