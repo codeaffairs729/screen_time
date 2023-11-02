@@ -3,6 +3,7 @@ import Carousel from "./Carousel";
 // import BarChart from "./bar_graph";
 import dynamic from "next/dynamic";
 import clsx from "clsx";
+import { useIsMobile } from "common/hooks";
 const BarChart = dynamic(() => import("./bar_graph"), {
     loading: () => <p>A map is loading</p>,
     ssr: false, // This line is important. It's what prevents server-side render
@@ -14,23 +15,7 @@ const titles = {
 const GraphSection = ({ items }: { items: any }) => {
     const [currentSlide, setCurrentSlide] = useState<String>("overallScore");
     const [currentIndex, setCurrentIndex] = useState<number>(0);
-    const [isMobile, setIsMobile] = useState(false)
-    useEffect(() => {
-        const handleResize = () => {
-            setIsMobile(window.innerWidth < 640); // Adjust the breakpoint as needed
-        };
-
-        // Call handleResize on initial component render
-        handleResize();
-
-        // Add event listener to window resize
-        window.addEventListener("resize", handleResize);
-
-        // Clean up event listener on component unmount
-        return () => {
-            window.removeEventListener("resize", handleResize);
-        };
-    }, []);
+    const {isMobile} = useIsMobile();
     function splitAndCapitalize(input: String) {
         const words = input.split(/(?=[A-Z])/); // Split camel case using regex
         return words.map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
