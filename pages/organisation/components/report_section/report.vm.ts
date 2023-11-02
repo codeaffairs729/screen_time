@@ -19,6 +19,10 @@ type Header = {
     label: string;
     isChecked: boolean;
 };
+export type DownloadByTime = {
+    date: Date;
+    count: number;
+};
 
 const HEADER: Header[] = [
     { label: "Dataset Quality", isChecked: false },
@@ -68,33 +72,33 @@ const imageTag = (src: string, index: any) => {
 };
 
 const formatDate = (date: Date) =>
-    `${date.toLocaleString("default", {
+    `${date.getDate()} ${date.toLocaleString("default", {
         month: "short",
-    })}&#44&nbsp;${date.getDate()}&nbsp;${date.getFullYear()}`;
+    })} ${date.getFullYear()}`;
 
 const getReportDate = (fromDate: Date, toDate: Date) => {
     return format(fromDate, "dd-MM-yyyy") === format(toDate, "dd-MM-yyyy")
-        ? `<h6><strong style="padding-left: 100px;">${formatDate(
+        ? `<p><strong style="padding-left: 100px;">${formatDate(
               fromDate
-          )}</strong></h6><br/>`
-        : `<h6><strong>${formatDate(fromDate)}</strong> - <strong>${formatDate(
+          )}</strong></p>`
+        : `<p><strong>${formatDate(fromDate)}</strong> - <strong>${formatDate(
               toDate
-          )}</strong></h6><br/>`;
+          )}</strong></p>`;
 };
 const getReportTitle = (title: any) => {
-    return `<h1><strong>Dataset Insights Report</strong></h1><br/><h2><strong>${title}</strong></h2><br/>`;
+    return `<p><strong>Dataset Insights Report</strong></p><p><strong>${title}</strong></p>`;
 };
 const getImageCanvas = (src: any) =>
-    `<figure><img src="${src}"/></figure></br>`;
+    `<img src="${src}"/>`;
 
-const formatSubHeading = (text: string) => `<h4> ${text}</h4><br/><br/>`;
+const formatSubHeading = (text: string) => `<p> ${text}</p>`;
 
 const headerSelected = (
     selected: Array<Object>,
-    byTimeImageData: any,
-    imagePie: any,
-    mapRegion: any,
-    qualityMetric: any,
+    byTime: any,
+    byUseCase: any,
+    byRegion: any,
+    byquality: any,
     bySearchTermsCanvas: any,
     byUseCasesCanvas:any
 ) => {
@@ -102,49 +106,57 @@ const headerSelected = (
         .map((object: any, index: any) =>
             object === "Download metrics"
                 ? `
-                <br/><h5><strong id=label_${index}>&#09${object}</strong></h5><br/></br>
+                <p><strong id=label_${index}>${object}</strong>
                 ${formatSubHeading("Downloads by region")}
                 ${
-                    mapRegion
-                        ? getImageCanvas(mapRegion)
-                        : "<h3>No Data Presents for Location.</h3><br/><br/>"
+                    byRegion
+                        ? getImageCanvas(byRegion)
+                        : "<h4>No Data Presents for Location.</h4>"
                 }
+                </p>
+                <br/>
+                <p>
                 ${formatSubHeading("Downloads by time")}
                 ${
-                    byTimeImageData
-                        ? getImageCanvas(byTimeImageData)
-                        : "<h3>No Data Presents for Time.</h3><br/><br/>"
+                    byTime
+                        ? getImageCanvas(byTime)
+                        : "<h4>No Data Presents for Time.</h4>"
                 }
+                <p>
+                <br/>
                 ${formatSubHeading("Downloads by role")}
                 ${
-                    imagePie
-                        ? getImageCanvas(imagePie)
-                        : "<h3>No Data Presents for Role.</h3> <br/>"
-                }
-                <p>...</p>`
+                    byUseCase
+                        ? getImageCanvas(byUseCase)
+                        : "<h4>No Data Presents for Role.</h4> "
+                }</p>
+                <br/>`
                 : object === "Dataset Quality"
-                ? `<br/><h5><strong id=label_${index}>${object}</strong></h5><br/>
+                ? `<p><strong id=label_${index}>${object}</strong>
                 ${
-                    qualityMetric
-                        ? getImageCanvas(qualityMetric)
-                        : `<h3>No Data Presents for ${object}.</h3> <br/>`
+                    byquality
+                        ? getImageCanvas(byquality)
+                        : `<h4>No Data Presents for ${object}.</h4> `
                 }
-                `
+                </p>
+                <br/>`
                 : object == "Use Cases"
-                ? `<br/><h5><strong id=label_${index}>${object}</strong></h5><br/>
+                ? `<p><strong id=label_${index}>${object}</strong>
                 ${
-                    bySearchTermsCanvas
+                    byUseCasesCanvas
                         ? getImageCanvas(byUseCasesCanvas)
-                        : `<h3>No Data Presents for ${object}.</h3> <br/>`
+                        : `<h4>No Data Presents for ${object}.</h4> `
                 }
-                `
-                : `<br/><h5><strong id=label_${index}>${object}</strong></h5><br/>
+                </p>
+                <br/>`
+                : `<p><strong id=label_${index}>${object}</strong>
                 ${
                     bySearchTermsCanvas
                         ? getImageCanvas(bySearchTermsCanvas)
-                        : `<h3>No Data Presents for ${object}.</h3> <br/>`
+                        : `<h4>No Data Presents for ${object}.</h4> `
                 }
-                `
+                </p>
+                <br/>`
         )
         .join("");
 };
@@ -161,6 +173,8 @@ const ReportVM = () => {
     const [toDate, setToDate] = useState(new Date());
     currentDate.setFullYear(currentDate.getFullYear() - 1);
     const [fromDate, setFromDate] = useState(currentDate);
+    const [from, setFrom] = useState(format(new Date(), "yyyy-MM-dd"));
+    const [to, setTo] = useState(format(new Date(), "yyyy-MM-dd"));
     const { organisation } = useContext(OrganisationDetailVMContext);
     const { imgUrl } = organisation || {};
     const [downloadRef, setDownloadRef] = useState<any>();
@@ -169,6 +183,7 @@ const ReportVM = () => {
     const [editorState, onEditorStateChange] = useState<EditorState>(
         EditorState.createEmpty()
     );
+    const [editorValue, setEditorValue] = useState(``);
     const [previewContent, setPreviewContent] = useState("");
     const [isGeneratingReport, setIsGeneratingReport] = useState(false);
     useEffect(() => {
@@ -247,12 +262,11 @@ const ReportVM = () => {
             metricByUseCase &&
             (await html2canvas(metricByUseCase)).toDataURL("image/png");
         const byUseCasesCanvas =
-            useCases &&
-            (await html2canvas(useCases)).toDataURL("image/png");
+            useCases && (await html2canvas(useCases)).toDataURL("image/png");
         const base64 = await fetchImage(imgUrl);
         const data = `
                 <figure style='width:200px;margin-left:auto;margin-right:auto;'><img src='data:image/jpeg;base64,${base64}' /></figure>
-                <br/>
+                
                 ${getReportTitle(organisation?.title)}
                 ${getReportDate(fromDate, toDate)}
                 ${headerSelected(
@@ -275,6 +289,55 @@ const ReportVM = () => {
         );
         setIsGeneratingReport(false);
     };
+
+
+    const generateNewReport = async (qualityMetrics: any) =>{
+        setIsGeneratingReport(true);
+        const qualityMetric: any = document.getElementById("qualityMetrics");
+        const searchTerms: any = document.getElementById("searchTerms");
+        const metricesByRegion: any = document.getElementById("map");
+        const metricByTime: any = document.getElementById("screenshot");
+        const metricByUseCase: any = document.getElementById("pie");
+        const useCases: any = document.getElementById("useCases");
+
+        const byQualityMetricCanvas =
+            qualityMetric &&
+            (await html2canvas(qualityMetric)).toDataURL("image/png");
+        const bySearchTermsCanvas =
+            searchTerms &&
+            (await html2canvas(searchTerms)).toDataURL("image/png");
+        const byLocationCanvas =
+            metricesByRegion &&
+            (await html2canvas(metricesByRegion)).toDataURL("image/png");
+        const byTimeCanvas =
+            metricByTime &&
+            (await html2canvas(metricByTime)).toDataURL("image/png");
+        const byUseCaseCanvas =
+            metricByUseCase &&
+            (await html2canvas(metricByUseCase)).toDataURL("image/png");
+        const byUseCasesCanvas =
+            useCases && (await html2canvas(useCases)).toDataURL("image/png");
+
+        const data = `
+                <p style="text-align: center;"><img src="${imgUrl}" width=200 height=150 style="text-align: center;" /></p>
+                <p></p>
+                ${getReportTitle(organisation?.title)}
+                ${getReportDate(fromDate, toDate)}
+                ${headerSelected(
+                    selectedHeaders,
+                    byTimeCanvas,
+                    byUseCaseCanvas,
+                    byLocationCanvas,
+                    byQualityMetricCanvas,
+                    bySearchTermsCanvas,
+                    byUseCasesCanvas
+                )}
+            `;
+    
+        setEditorValue(data);
+        setIsGeneratingReport(false);
+
+    }
 
     const formatPreviewData = () => {
         let html = draftToHtml(convertToRaw(editorState.getCurrentContent()));
@@ -375,7 +438,12 @@ const ReportVM = () => {
         executeFetchByTime(
             () => {
                 return Http.get(
-                    `/v1/metrics/provider/${organisation?.uuid}/by_time?from_date=${from}&to_date=${to}`
+                    `/v1/metrics/provider/${
+                        organisation?.uuid
+                    }/by_time?from=${format(
+                        fromDate,
+                        "yyyy-MM-dd"
+                    )}&to=${format(toDate, "yyyy-MM-dd")}`
                 );
             },
             {
@@ -384,7 +452,7 @@ const ReportVM = () => {
                 },
                 onError: (e) => {
                     toast.error(
-                        "Something went wrong while fetching organisation metrics by Time."
+                        "Something went wrong while fetching organisation download metrics."
                     );
                 },
             }
@@ -440,7 +508,6 @@ const ReportVM = () => {
             }
         );
 
-   
     const jsonToQualityMetrics = (json: any): any => {
         return {
             dataFileQuality: {
@@ -539,6 +606,7 @@ const ReportVM = () => {
         setFromDate(new Date(from));
         setToDate(new Date(to));
         //Check if option selected
+        
         const promise1 = fetchMetricDataByTime(from, to);
         const promise2 = fetchMetricDataByRoles(from, to);
         const promise3 = fetchMetricDataByLocation(from, to);
@@ -546,11 +614,17 @@ const ReportVM = () => {
         const promise5 = fetchQualityMetrics();
         const promise6 = fetchUseCases();
 
-        Promise.all([promise1, promise2, promise3, promise4, promise5, promise6]).then(
-            () => {
-                generateReportContent(qualityMetrics);
-            }
-        );
+        Promise.all([
+            promise1,
+            promise2,
+            promise3,
+            promise4,
+            promise5,
+            promise6,
+        ]).then(() => {
+            // generateReportContent(qualityMetrics);
+            generateNewReport(qualityMetrics);
+        });
     };
     const isFetching =
         isFetchingByTime ||
@@ -591,35 +665,73 @@ const ReportVM = () => {
         downloadByLocation,
         searchTerms,
         qualityMetrics,
-        useCases
+        useCases,
+        editorValue,
+        setEditorValue
     };
 };
 
 export default ReportVM;
 
-export const getDateRange = (fromDate: any, toDate: any, dates: any) => {
-    let datesList: any = [];
-    let currentDate = new Date(fromDate);
-    while (currentDate <= new Date(toDate)) {
-        const downloadDate = dates.filter((downDate: any) =>
-            checkIfDateExists(downDate, currentDate)
-        )[0];
+const getDifferenceInDays = (fromDate: any, toDate: any) =>
+    (toDate.getTime() - fromDate.getTime()) / (1000 * 3600 * 24);
 
-        const dateToShow = downloadDate
-            ? new Date(downloadDate?.date)
-            : currentDate;
-        datesList.push({
-            date: dateToShow.toLocaleString("en", {
-                day: "numeric",
-                weekday: "short",
-                month: "short",
-                year: "numeric",
-            }),
-            download: downloadDate?.count || 0,
-        });
-        currentDate.setDate(currentDate.getDate() + 1);
+const getDataByMonth = (dates: any) => {
+    const tempDate = dates.map((data: DownloadByTime) => {
+        const date = new Date(data?.date);
+        const month = date.toLocaleString("en", { month: "short" });
+        const year = new Date(data?.date).getFullYear();
+        return { count: data.count, month: `${month} ${year}` };
+    });
+
+    const aggregated = tempDate.reduce((acc: any, curr: any) => {
+        const existingMonth = acc.find(
+            (monthObj: any) => monthObj.month === curr.month
+        );
+        if (existingMonth) {
+            existingMonth.count += curr.count;
+        } else {
+            acc.push({
+                month: curr.month,
+                count: curr.count,
+            });
+        }
+        return acc;
+    }, []);
+    return aggregated;
+};
+
+export const getDateRange = (fromDate: any, toDate: any, dates: any) => {
+    const differenceInDays: number = getDifferenceInDays(fromDate, toDate);
+    if (differenceInDays >= 90) {
+        const lineChartByMonth = getDataByMonth(dates).map((data: any) => ({
+            month: data.month,
+            download: data.count,
+        }));
+        return lineChartByMonth;
+    } else {
+        let datesList: any = [];
+        let currentDate = new Date(fromDate);
+        while (currentDate <= new Date(toDate)) {
+            const downloadDate = dates.filter((downDate: any) =>
+                checkIfDateExists(downDate, currentDate)
+            )[0];
+            const dateToShow = downloadDate
+                ? new Date(downloadDate?.date)
+                : currentDate;
+            datesList.push({
+                date: dateToShow.toLocaleString("en", {
+                    day: "numeric",
+                    weekday: "short",
+                    month: "short",
+                    year: "numeric",
+                }),
+                download: downloadDate?.count || 0,
+            });
+            currentDate.setDate(currentDate.getDate() + 1);
+        }
+        return datesList;
     }
-    return datesList;
 };
 
 interface IReportVMContext {
@@ -646,7 +758,9 @@ interface IReportVMContext {
     downloadByLocation: any;
     searchTerms: any;
     qualityMetrics: any;
-    useCases:any;
+    useCases: any;
+    editorValue:any;
+    setEditorValue: any;
 }
 
 export const ReportVMContext = createContext<IReportVMContext>(
