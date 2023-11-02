@@ -30,7 +30,7 @@ const ListHeader = ({
     };
     return (
         <div className=" flex flex-col  ">
-            <div className={`flex flex-row border-b-2 py-3 ${ subCategories && "bg-[#EBEBEB]"}`}>
+            <div className={`flex flex-row border-b-2 py-3 ${ subCategories && "bg-[#EBEBEB] pl-9"}`}>
                 <List
                     dropdown={count ? true : false}
                     label={count ? `${label} (${count})` : `${label} `}

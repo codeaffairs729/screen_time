@@ -18,6 +18,7 @@ import Footer from "pages/home/components/footer";
 import NewNavbar from "./components/newNavbar";
 import NewSearchBar from "components/UI/white_label_search_bar";
 import { opacity } from "html2canvas/dist/types/css/property-descriptors/opacity";
+import { useIsMobile } from "common/hooks";
 
 
 const DefaultLayout = ({
@@ -26,17 +27,19 @@ const DefaultLayout = ({
     showLogo = true,
     showSearchBar = true,
     navContent,
+    wrapperClass,
 }: {
     children: ReactNode;
     className?: string;
     showLogo?: boolean;
     showSearchBar?: boolean;
     navContent?: ReactNode;
+    wrapperClass?: string;
 }) => {
     // const vm = SearchVM(page == "dataset");
     // const ovm: any = OrganizationSearchVM(page == "organisation");
     const dispatch = useDispatch();
-    const [isMobile, setIsMobile] = useState(false)
+    const { isMobile} = useIsMobile();
     const [searching, setSearching] = useState(false);
 
     const handleSearchFocus = () => {
@@ -46,22 +49,7 @@ const DefaultLayout = ({
     const handleSearchBlur = () => {
         setSearching(false);
     };
-    useEffect(() => {
-        const handleResize = () => {
-            setIsMobile(window.innerWidth < 640); // Adjust the breakpoint as needed
-        };
 
-        // Call handleResize on initial component render
-        handleResize();
-
-        // Add event listener to window resize
-        window.addEventListener("resize", handleResize);
-
-        // Clean up event listener on component unmount
-        return () => {
-            window.removeEventListener("resize", handleResize);
-        };
-    }, []);
     const onSearchChange = (
         type: string,
         option: SingleValue<SearchOption>
@@ -137,7 +125,7 @@ const DefaultLayout = ({
                     className={`rounded-full !bg-white sm:h-10 h-8 w-[90%] border-2 border-black ${searching && "!border-dtech-light-teal"}`}
                 />
             </div>}
-            <div className="max-w-site mx-auto w-full">{children}</div>
+            <div className={clsx(`max-w-site mx-auto w-full`, wrapperClass)}>{children}</div>
             {/* <div className="mt-auto"> */}
             <Footer />
             {/* </div> */}

@@ -43,13 +43,8 @@ const RegisterDataSourcePage = () => {
     const viewCatalogueVm = ViewCatalogueVM();
 
     return (
-        <DefaultLayout>
-            <div className="py-5 px-4  flex items-center md:bg-white bg-[#EBEBEB]">
-                <span className="text-left text-xl md:text-[26px] font-semibold md:text-[#727272]">
-                    {/* Data Source Registration */}
-                </span>
-            </div>
-            <div className="mt-10">
+        <DefaultLayout wrapperClass="!max-w-none">
+            <div className="mx-4 md:my-8 md:mx-20 border-t !bg-white">
                 <Tab.Group defaultIndex={selectedIndex}>
                     <RegisterDataSourceTabHeaders
                         selectedIndex={selectedIndex}
