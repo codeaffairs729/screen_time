@@ -55,6 +55,7 @@ module.exports = {
                 "custom-2": "0 0 5px rgb(160, 174, 192)",
                 "custom-4": "1px 1px 5px 3px rgba(160, 174, 192, 1)",
                 "custom-5": "4px 4px 10px 4px rgba(160, 174, 192, 1)",
+                "custom-6": "0px 4px 10px 1px rgba(0, 0, 0, 0.50)",
             },
         },
     },

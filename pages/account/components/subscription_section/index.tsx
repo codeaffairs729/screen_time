@@ -105,7 +105,7 @@ const SubscriptionSection = () => {
                         >
                             <button
                                 onClick={() => setOpenPopup(true)}
-                                className="flex justify-center items-center bg-dtech-new-main-light p-4 w-[150px] rounded-full mx-2 cursor-pointer"
+                                className="flex justify-center items-center bg-dtech-new-main-light p-4 w-[150px] rounded-full mx-2 cursor-pointer shadow-custom-6"
                             >
                                 <span className="text-white">Active plan</span>
                             </button>

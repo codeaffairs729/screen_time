@@ -3,13 +3,13 @@ import Accordian from "components/UI/accordian";
 
 const FAQPage = () => {
     return (
-        <DefaultLayout>
-            <div className="mx-4 md:mx-20  bg-[#EBEBEB]">
-                <div className="py-5 px-4  flex items-center md:bg-white bg-[#EBEBEB]">
-                    <span className="text-left text-xl md:text-[26px] font-semibold md:text-[#727272]">
+        <DefaultLayout wrapperClass="!max-w-none">
+            <div className="py-5 px-4 w-full   flex items-center md:bg-white bg-[#EBEBEB]">
+                <span className="text-left text-xl md:text-[26px] font-semibold md:text-[#727272]">
                     Frequently asked questions
-                    </span>
-                </div>
+                </span>
+            </div>
+            <div className="mx-4 md:mx-20  bg-[#EBEBEB]">
                 <div className="py-6 mt-6 rounded-[20px] px-10 bg-dtech-light-grey min-h-[60vh]">
                     <Accordian
                         className="!bg-dtech-main-light"

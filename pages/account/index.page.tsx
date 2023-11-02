@@ -36,8 +36,8 @@ const WorkspacePage = () => {
     }
 
     return (
-        <DefaultLayout className="!bg-[#EBEBEB]">
-            <div className="py-5 px-4  md:mx-20 flex items-center md:bg-white bg-[#EBEBEB]">
+        <DefaultLayout  wrapperClass=" !max-w-none">
+            <div className="py-5 px-4 w-full   flex items-center md:bg-white bg-[#EBEBEB]">
                 <span className="text-left text-xl md:text-[26px] font-semibold md:text-[#727272]">
                     My Account
                 </span>

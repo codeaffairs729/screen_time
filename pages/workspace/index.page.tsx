@@ -48,12 +48,11 @@ const WorkspacePage = () => {
     }
 
     return (
-        <DefaultLayout className="!bg-[#EBEBEB]">
-            <div className="py-5 px-4  md:mx-20 flex items-center md:bg-white bg-[#EBEBEB]">
+        <DefaultLayout className="!bg-[#EBEBEB]" wrapperClass="!max-w-none">
+            <div className="py-5 px-4 w-full   flex items-center md:bg-white bg-[#EBEBEB]">
                 <span className="text-left text-xl md:text-[26px] font-semibold md:text-[#727272]">
                     My Workspace
                 </span>
-                {/* <Dropdown label={workspace} menuItems={menuItems} /> */}
             </div>
             <div className="mx-4 md:my-8 md:mx-20 border-t !bg-white">
                 {!loading && (
