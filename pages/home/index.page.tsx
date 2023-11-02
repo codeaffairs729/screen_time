@@ -18,7 +18,6 @@ const HomePage = ({ home }: { home: any }) => {
     const router = useRouter();
     const [isMobile, setIsMobile] = useState<boolean>(false);
     const [searching, setSearching] = useState(false);
-    const [isOpen, setIsOpen] = useState<boolean>(true)
 
     const handleSearchFocus = () => {
         setSearching(true);
@@ -45,23 +44,9 @@ const HomePage = ({ home }: { home: any }) => {
         };
     }, []);
 
-    const handlePopup = () => {
-        setIsOpen(false);
-    }
 
     return (
         <div className={`flex flex-col relative`}>
-            <Dialog
-                open={isOpen}
-                onClose={() => setIsOpen(false)}
-                className="relative z-50 bg-white"
-            >
-                <div className="fixed inset-0 flex w-screen items-center justify-center ">
-                    <Dialog.Panel className="w-full rounded bg-white">
-                        <PopupSubscription handlePopup={handlePopup}/>
-                    </Dialog.Panel>
-                </div>
-            </Dialog>
 
             {
                 <div
