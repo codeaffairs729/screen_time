@@ -37,7 +37,7 @@ const SigninPage = () => {
         <div className="relative">
             {user && <Popup duration={2000} />}
             <NewGradientUI>
-                <div className="grow flex flex-col items-left max-w-[30%px] justify-evenly sm:justify-center  sm:mx-[20%] sm:my-0 mx-[5%] my-[5%] ">
+                <div className="grow flex flex-col items-left max-w-[30%px] justify-evenly sm:justify-center  sm:mx-[18%] sm:my-0 mx-[5%] my-[5%] ">
                     <div className="text-center">
                         <h1 className="font-semibold text-[#333333] text-2xl mt-8 mb-2 sm:mt-16 sm:text-xl ">
                             Log In
@@ -217,37 +217,37 @@ const SigninPage = () => {
                                 ></img>
                             </div>
                         </div>
-                        <div className="flex flex-col">
-                            <div className="flex flex-row mt-4 justify-center">
-                                <div className="text-sm mx-2 text-[#333333]">
-                                    Do not have an account ?
-                                </div>
-                                <Link href={"/signup"}>
-                                    <a className="inline-flex space-x-1 mx-2">
-                                        <i className="mr-1 text-sm underline text-[#0065BD]">
-                                            Sign up for free
-                                        </i>{" "}
-                                    </a>
-                                </Link>
+                    </div>
+                    <div className="flex flex-col">
+                        <div className="flex flex-row mt-4 justify-center">
+                            <div className="text-sm mx-2 text-[#333333]">
+                                Do not have an account ?
                             </div>
-                            <div className="flex flex-row mt-4 justify-center">
-                                <div className="text-sm mx-2 text-[#333333]">
-                                    Do not want an account ?
-                                </div>
-                                <Link
-                                    href={
-                                        vm.lastSearchQueryUrl
-                                            ? `/search${vm.lastSearchQueryUrl}`
-                                            : "/"
-                                    }
-                                >
-                                    <a className="inline-flex space-x-1 mx-2">
-                                        <i className="mr-1 text-sm underline text-[#0065BD]">
-                                            Continue as a guest?
-                                        </i>{" "}
-                                    </a>
-                                </Link>
+                            <Link href={"/signup"}>
+                                <a className="inline-flex space-x-1 mx-2">
+                                    <i className="mr-1 text-sm underline text-[#0065BD]">
+                                        Sign up for free
+                                    </i>{" "}
+                                </a>
+                            </Link>
+                        </div>
+                        <div className="flex flex-row mt-4 justify-center">
+                            <div className="text-sm mr-1 text-[#333333]">
+                                Do not want an account ?
                             </div>
+                            <Link
+                                href={
+                                    vm.lastSearchQueryUrl
+                                        ? `/search${vm.lastSearchQueryUrl}`
+                                        : "/"
+                                }
+                            >
+                                <a className="inline-flex space-x-1 mx-2">
+                                    <i className="mr-1 text-sm underline text-[#0065BD]">
+                                        Continue as a guest?
+                                    </i>{" "}
+                                </a>
+                            </Link>
                         </div>
                     </div>
                 </div>

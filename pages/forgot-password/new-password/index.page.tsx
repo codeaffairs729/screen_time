@@ -164,7 +164,7 @@ const ForgotPasswordPage = () => {
                 </div>
                 <div className="flex space-x-4 -mt-20 sm:mt-8  justify-center">
                     <PrimaryBtn
-                        className=" bg-dtech-main-dark min-w-[150px] !justify-center !items-center !py-3 w-8 sm:w-full !rounded-lg"
+                        className=" bg-dtech-main-dark min-w-[150px] !justify-center !items-center !py-3 w-8 sm:w-full !rounded-[30px]"
                         label="Done"
                         isLoading={vm.submitingNewPassword}
                         isDisabled={vm.submitingNewPassword}

@@ -32,7 +32,7 @@ const SecondStep = ({
                 className=" mb-10 mt-4 w-fit cursor-pointer"
                 onClick={() => setStep(!step)}
             >
-                <img src="/images/icons/arrows/arrow_back.svg" />
+                <img src="/images/icons/arrows/arrow_back.svg" className="hover:bg-gray-300 rounded-full"/>
             </div>
             <div className=" -mt-12 sm:mt-0">
                 <div className="mt-4">
@@ -153,6 +153,8 @@ const SecondStep = ({
                     <a
                         className=" text-[#0065BD] underline"
                         href="https://dtechtive.com/data-privacy-policy"
+                        target="_blank"
+                        rel="noreferrer"
                     >
                         Data Privacy Policy
                     </a>
@@ -168,7 +170,7 @@ const SecondStep = ({
             )}
             <div className="flex flex-row my-10  sm:my-10 justify-center">
                 <div className=" bg-[#727272] h-[1px] w-[25%] sm:w-[35%]"></div>
-                <div className=" text-[#727272] -mt-3 mx-4">
+                <div className=" text-[#727272] -mt-3 ">
                     Step 2/2
                 </div>
                 <div className=" bg-[#727272] h-[1px] w-[25%] sm:w-[35%]"></div>
@@ -436,7 +438,7 @@ const SignupPage = () => {
                         </div>
                         <div className="flex flex-row my-10 sm:my-8 justify-center">
                             <div className=" bg-[#727272] h-[1px] w-[25%] sm:w-[35%]"></div>
-                            <div className=" text-[#727272] -mt-3 mx-4">
+                            <div className=" text-[#727272] -mt-3  ">
                                 Step 1/2
                             </div>
                             <div className=" bg-[#727272] h-[1px] w-[25%] sm:w-[35%]"></div>
@@ -446,7 +448,7 @@ const SignupPage = () => {
                                 Already have an account ?
                             </div>
                             <Link href={"/login"}>
-                                <a className="inline-flex space-x-1 mx-2">
+                                <a className="inline-flex space-x-1 ">
                                     <i className="mr-1 text-sm underline text-[#0065BD]">
                                         Log in
                                     </i>{" "}

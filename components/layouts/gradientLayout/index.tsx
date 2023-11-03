@@ -79,12 +79,15 @@ const NewGradientUI = ({
 
     return (
         <div className="flex flex-row justify-between h-screen z-0">
-            <div className="md:w-2/3 max-h-screen hidden md:block">
+            <div className="md:w-1/2 max-h-screen hidden md:block">
                 <Slider {...settings} className="login-slickdots">
                     {imageObjects?.map((item:any,index:number) => {
                         return (
                             <div key={index} className=" hidden h-screen bg-gradient-to-b from-[rgba(181,_133,_183,_0.53)_-10.01%] to-[rgba(109,_205,_203,_0.22)_102.15%] text-center md:!flex flex-col items-center justify-center p-8">
-                                <h2 className="font-semibold text-dtech-main-dark text-2xl px-24 mt-6 hidden md:block">
+                                <h2 className=" text-white font-bold hidden md:block lg:text-2xl md:text-xl lg:px-24 md:px-20">
+                                    {item.text1}
+                                </h2>
+                                <h2 className="font-semibold text-dtech-main-dark mt-6 hidden md:block lg:text-2xl md:text-xl lg:px-24 md:px-20">
                                     {item.text2}
                                 </h2>
                                 <img
@@ -97,7 +100,7 @@ const NewGradientUI = ({
                     })}
                 </Slider>
             </div>
-            <div className=" bg-[#6DCDCB] h-screen  w-2 ml-5 sm:ml-0 fixed md:relative md:w-8"></div>
+            <div className=" bg-[#6DCDCB] h-screen  w-2 ml-5 sm:ml-0 fixed md:relative md:w-4"></div>
             <div className=" bg-[#0065BD] h-screen  w-6 sm:hidden md:relative md:w-8"></div>
             <div
                 className="flex flex-col w-fixed md:w-1/2 w-screen md:bg-white overflow-scroll"
