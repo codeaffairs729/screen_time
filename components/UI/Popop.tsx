@@ -26,7 +26,7 @@ const Popup = ({ duration }: { duration: number }) => {
                             "",
                     }}
                 >
-                    <img
+                    {/* <img
                         className="-mt-8 hidden sm:block"
                         src="/gif/success.gif"
                         width={220}
@@ -34,11 +34,10 @@ const Popup = ({ duration }: { duration: number }) => {
                     <span className=" text-sm sm:text-2xl text-dtech-main-dark font-bold">
                         {" "}
                         LOG IN{" "}
-                    </span>
-                    <span className=" text-sm sm:text-2xl text-dtech-main-dark font-bold">
+                    </span> */}
+                    {/* <span className=" text-sm sm:text-2xl text-dtech-main-dark font-bold">
                         SUCCESSFULL!
-                    </span>
-
+                    </span> */}
                 </div>
             )}
         </div>

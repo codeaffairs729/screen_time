@@ -26,7 +26,7 @@ const RequestResetEmail = () => {
                     className="  -mt-[740px] sm:mt-0 mb-8 w-fit absolute sm:relative cursor-pointer"
                     onClick={() => router.push("/login")}
                 >
-                    <img src="/images/icons/arrows/arrow_back.svg" />
+                    <img src="/images/icons/arrows/arrow_back.svg" className=" hover:bg-gray-300 rounded-full"/>
                 </div>
                 <div className="text-center">
                     <h1 className="font-semibold text-[#333333] text-2xl mt-8 sm:mt-0 mb-2 sm:text-xl ">
