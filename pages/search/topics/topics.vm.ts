@@ -106,13 +106,13 @@ const TopicSearchVM = () => {
             setLoading(true);
             try {
                 const res = await Http.get(url);
-                const { data_providers = [], total_records = 0 } = res || {};
+                const { topics = [], total_records = 0 } = res[0] || {};
 
                 setTotalRecords(total_records);
                 setTotalPages(Math.ceil(total_records / pageSize));
-                setTopics(Topic.fromJsonList(data_providers));
+                setTopics(Topic.fromJsonList(topics));
                 setLoading(false);
-                return Topic.fromJsonList(data_providers);
+                return Topic.fromJsonList(topics);
             } catch (e) {
                 setLoading(false);
                 toast.error(

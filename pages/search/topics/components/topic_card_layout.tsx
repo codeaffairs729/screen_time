@@ -114,7 +114,7 @@ const TopicLayoutCard = ({
                 )}
                 data-test-id="results table"
             >
-                {recordsData[0].topics.map((data: any, index: number) => (
+                {recordsData.map((data: any, index: number) => (
                     <DataProviderCard
                         key={`${data.id}_${index}`}
                         data={data}
