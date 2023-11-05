@@ -196,7 +196,7 @@ export const TopicSearchVMContext = createContext(
 export const topicToResultCardData = (topics: any): any => {
 
     if (!topics?.length) {
-        return {};
+        return [];
     }
     return topics?.map((topic: any) => ({
         ...topic,
