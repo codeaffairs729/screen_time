@@ -41,7 +41,7 @@ class Dataset {
             dataset || {};
         const { user, global } = metrics || {};
         const { contacts } = data_owner || {};
-        const { contacts:contact } = data_host || {};
+        const { contacts: contact } = data_host || {};
         return new Dataset({
             id: Number(id),
             detail: {
@@ -61,7 +61,8 @@ class Dataset {
                     url: licence["url"],
                     usageRights: licence["usage_rights"],
                 },
-                topics: topics,
+                topics: json["dataset"]["topics"],
+                topic_ids: json["dataset"]["topic_ids"],
                 keywords: dataset["keywords"],
                 locations: dataset["location"]["name"],
                 popularity: dataset["popularity"],
@@ -114,7 +115,7 @@ class Dataset {
                     sizemb: download_file["size_mb"],
                     url: download_file["url"],
                     lastUpdated: download_file["last_updated"],
-                    createdAt:download_file["created"]
+                    createdAt: download_file["created"],
                 })
             ),
         });
@@ -130,7 +131,7 @@ export type DatasetLicense = {
     type: string;
     version: string;
     url: string;
-    usageRights:string
+    usageRights: string;
 };
 
 export type DatasetDetail = {
@@ -145,6 +146,7 @@ export type DatasetDetail = {
     lastUpdate: DateTime;
     license: DatasetLicense;
     topics: string[];
+    topic_ids: number[];
     keywords: string[];
     locations: string[];
     dataQuality: number;
