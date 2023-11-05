@@ -161,7 +161,7 @@ const jsonToOrgDownloadMetricByTime = (json: any): any =>
     }));
 
 const jsonToOrgDownloadMetrics = (json: any): any => ({
-    regions: json["provider_downloads_by_location"]?.map((region: any) => ({
+    regions: json["topic_downloads_by_location"]?.map((region: any) => ({
         name: region["name"],
         location: region["locations"]?.map((location: any) => ({
             lat: location["latitude"],
@@ -170,11 +170,11 @@ const jsonToOrgDownloadMetrics = (json: any): any => ({
         count: region["count"],
         date: region["date"],
     })),
-    downloadByTime: json["provider_downloads_by_time"]?.map((data: any) => ({
+    downloadByTime: json["topic_downloads_by_time"]?.map((data: any) => ({
         date: data["date"],
         count: data["count"],
     })),
-    downloadByRole: json["provider_downloads_by_role"]?.map(
+    downloadByRole: json["topic_downloads_by_role"]?.map(
         (role: any) => ({
             name: role["name"],
             value: role["count"],

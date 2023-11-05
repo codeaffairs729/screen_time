@@ -4,6 +4,7 @@ import { useContext, useEffect, useState } from "react"
 import ReportVM, { ReportVMContext } from "./report.vm";
 import { OrganisationDetailVMContext } from "pages/organisation/organisation_detail.vm";
 import { useIsMobile } from "common/hooks";
+import Report from "./report";
 
 const Index = ({
     setIsReportGenerated,

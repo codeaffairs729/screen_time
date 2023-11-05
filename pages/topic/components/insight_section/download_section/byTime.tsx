@@ -7,9 +7,7 @@ import {
 } from "./download_metric.vm";
 import ErrorAlert from "components/UI/alerts/error_alert";
 import Loader from "components/UI/loader";
-// import TimeSelect from "components/UI/time_select";
 import RangeSelector from "components/UI/range_selector";
-// import { OrganisationDetailVMContext } from "pages/organisation/organisation_detail.vm";
 import BarChart from "pages/organisation/components/insights_section/quality_insights/bar_graph";
 import Table from "pages/organisation/components/table";
 
@@ -59,7 +57,6 @@ const ByTime = ({ isMobile }: { isMobile: any }) => {
         if (new Date(a.date) < new Date(b.date)) return -1;
         else return 0;
     });
-    console.log({fromDate}, {toDate}, {dates})
     const lineChartData = getDateRange(fromDate, toDate, dates);
     const graphData = [];
     let dataAvailable = false;

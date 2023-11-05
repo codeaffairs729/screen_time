@@ -109,7 +109,7 @@ const FrontCard = ({ data, isMobile,imgCss="" }: { data: Data; isMobile: boolean
 
 const BackCard = ({ data, isMobile }: { data: Data; isMobile: boolean }) => {
     const { description, stats } = data ?? { description: '', stats: null };
-    const words = (description || '').split(/\s+/);
+    const words = (description || 'No description present').split(/\s+/);
 
     const descriptionWord = isMobile ? words.slice(0, 12) : words.slice(0, 15);
 
