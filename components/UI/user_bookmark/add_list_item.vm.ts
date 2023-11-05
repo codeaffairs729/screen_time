@@ -5,8 +5,8 @@ import User from "models/user.model";
 import UserService from "services/user.service";
 
 type Payload = {
-    datasetID?: number;
-    organisationUUID?: string;
+    bookmarkType?: string;
+    bookmarkId?: number | string ;
 };
 
 const AddListItemVM = (user: User | null) => {
@@ -14,18 +14,19 @@ const AddListItemVM = (user: User | null) => {
     const { execute: executeAddListItem, isLoading: isAddingListItem } =
         useHttpCall();
     const addNewListItem = (listID: number, payload: Payload) => {
-        const { datasetID, organisationUUID } = payload;
+        const { bookmarkType, bookmarkId } = payload;
         executeAddListItem(
             () =>
                 Http.post(`/v1/user-bookmarks/listadditem`, {
                     user_id: user?.id,
                     list_id: listID,
-                    dataset_id: datasetID,
-                    provider_uuid: organisationUUID,
+                    // dataset_id: datasetID,
+                    // provider_uuid: organisationUUID,
+                    bookmark_type: bookmarkType,
+                    bookmark_id: bookmarkId
                 }),
             {
                 onSuccess: (res) => {
-                    console.log(res);
                     UserService.update(res);
                 },
                 onError: (e) =>

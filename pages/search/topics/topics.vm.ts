@@ -192,14 +192,14 @@ export const TopicSearchVMContext = createContext(
     {} as IOrganizationSearchVMContext
 );
 
-export const TopicToResultCardData = (topics: any): Data[] => {
-    if (!topics?.length) {
-        return [];
-    }
 
-    return topics?.map((organisation: any) => ({
-        ...organisation,
-        id: organisation?.uuid,
-        recordType: "organisation",
+export const topicToResultCardData = (topics: any): any => {
+
+    if (!topics?.length) {
+        return {};
+    }
+    return topics?.map((topic: any) => ({
+        ...topic,
+        recordType: "topic",
     }));
 };

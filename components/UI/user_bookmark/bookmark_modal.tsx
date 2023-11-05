@@ -131,9 +131,9 @@ const ModelList = ({
 
     bookmark_items.forEach((list_item: any) => {
         if (
-            list_item.listID == list.listID &&
-            (data.id == list_item.datasetID ||
-                data.id == list_item.organisationID)
+            list_item.listID == list.listID && data.id == list_item.bookmarkID
+            // (data.id == list_item.datasetID ||
+            //     data.id == list_item.organisationID)
         ) {
             thisList = true;
             thisItemID = list_item.itemID;
@@ -143,12 +143,15 @@ const ModelList = ({
     const getItemPayload = () => {
         switch (recordType) {
             case "dataset":
-                return { datasetID: data.id };
+                return { bookmarkType:"dataset", bookmarkId: String(data.id) };
 
             case "organisation":
-                return { organisationUUID: data.id };
+                return { bookmarkType:"provider", bookmarkId: String(data.id) };
+
+            case "topic":
+                return { bookmarkType:"topic", bookmarkId: String(data.id) };
             default:
-                return { datasetID: data.id };
+                return {bookmarkType:"dataset", bookmarkId: String(data.id) };
         }
     };
 

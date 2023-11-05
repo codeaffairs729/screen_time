@@ -5,8 +5,8 @@ import User from "models/user.model";
 import UserService from "services/user.service";
 
 type Payload = {
-    datasetID?: number;
-    organisationUUID?: string;
+    bookmarkType?: string;
+    bookmarkId?: number | string ;
 };
 
 const DelListItemVM = (user: User | null) => {
@@ -18,19 +18,20 @@ const DelListItemVM = (user: User | null) => {
         itemID: number,
         payload: Payload
     ) => {
-        const { datasetID, organisationUUID } = payload;
+        const { bookmarkType, bookmarkId } = payload;
         executeDelListItem(
             () =>
                 Http.delete(`/v1/user-bookmarks/listdelitem`, {
                     user_id: user?.id,
                     list_id: listID,
-                    dataset_id: datasetID,
-                    provider_uuid: organisationUUID,
+                    // dataset_id: datasetID,
+                    // provider_uuid: organisationUUID,
                     item_id: itemID,
+                    bookmark_type: bookmarkType,
+                    // bookmark_id: bookmarkId
                 }),
             {
                 onSuccess: (res) => {
-                    console.log(res);
                     UserService.update(res);
                 },
                 onError: (e) =>

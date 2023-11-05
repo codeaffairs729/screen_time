@@ -42,6 +42,7 @@ const FavouritesSection = () => {
         return favouritedRecords.slice(startIndex, endIndex);
     }, [currentPageNo, pageSize, favouritedRecords]);
 
+
     if (isError) {
         return (
             <div className="w-full flex items-start justify-center my-3">
@@ -94,5 +95,14 @@ const FavouritesSection = () => {
 export default FavouritesSection;
 
 const getLabel = (recordType: string) => {
-    return recordType == "datasets" ? "datasets" : "data_provider";
+    switch (recordType) {
+        case "datasets":
+            return `datasets`;
+        case "organisation":
+            return `data_provider`;
+        case "topic":
+            return `topic`;
+        default:
+            return `datasets`;
+    }
 };

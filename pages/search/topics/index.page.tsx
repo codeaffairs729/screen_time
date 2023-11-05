@@ -1,6 +1,6 @@
 import DefaultLayout from "components/layouts/default";
 // import Organisation from ".";
-import TopicSearchVM, { TopicSearchVMContext } from "./topics.vm";
+import TopicSearchVM, { TopicSearchVMContext, topicToResultCardData } from "./topics.vm";
 import SearchHeaders from "../components/search_headers";
 import ResultLayout from "../components/result_layout";
 import { Data } from "components/UI/result_card";
@@ -38,7 +38,7 @@ const TopicSearchPage = () => {
                 <TopicLayoutCard
                     error={false}
                     isLoading={isFetchingOrganisation}
-                    recordsData={TopicToResultCardData(topics)}
+                    recordsData={topicToResultCardData(topics)}
                     currentPage={currentPageNo}
                     pageSize={pageSize}
                     totalRecords={totalRecords}
@@ -55,14 +55,3 @@ const TopicSearchPage = () => {
 };
 
 export default TopicSearchPage;
-
-export const TopicToResultCardData = (topics: any): Data[] => {
-    if (!topics?.length) {
-        return [];
-    }
-    return topics?.map((topic: any) => ({
-        ...topic,
-        id: topic?.uuid,
-        recordType: "topic",
-    }));
-};

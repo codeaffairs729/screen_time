@@ -16,7 +16,7 @@ interface DataProviderCardProps {
 const DataProviderCard = ({ data, isMobile }: DataProviderCardProps) => {
     const { title } = data || {};
     const href = `/${data.recordType ? data.recordType : "datasets"}/${
-        data.id
+        data?.id
     }`;
     const { stats } = data || {};
     const router = useRouter();
