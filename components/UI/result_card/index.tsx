@@ -4,10 +4,10 @@ import CardHead from "./head";
 import { DateTime } from "luxon";
 import { useState } from "react";
 import { DataStats } from "models/organisation.model";
-import ResultCardAction from "../result_card_action";
 import NewResultCardAction from "../new_result_card_action";
 import DataProviderCardHead from "./data_provider/head";
 import DataProviderCardFooter from "./data_provider/footer";
+
 
 export interface DataProviders {
     datasetSource: string;
@@ -97,52 +97,14 @@ const ResultCard = ({
             >
                 <div className="flex flex-col md:flex-row justify-between w-full">
                     <div className="flex flex-col flex-1 w-full my-3">
-                        {label != "data_provider" ? (
-                            <>
-                                <CardHead
-                                    handleFAQClick={handleFAQClick}
-                                    data={resultRecord}
-                                    setData={setResultRecord}
-                                    datasetSource={dataProviders?.datasetSource}
-                                    showToolTip={showToolTip}
-                                    // cardClicked={cardClicked}
-                                    // cardHover={cardHover}
-                                />
-                                <CardBody
-                                    data={resultRecord}
-                                    handleFAQClick={handleFAQClick}
-                                />
-                                <CardFooter
-                                    data={data}
-                                    // cardClicked={cardClicked}
-                                    // cardHover={cardHover}
-                                />
-                            </>
-                        ) : (
-                            <>
-                                {
-                                    <DataProviderCardHead
-                                        handleFAQClick={handleFAQClick}
-                                        data={resultRecord}
-                                        setData={setResultRecord}
-                                        datasetSource={
-                                            dataProviders?.datasetSource
-                                        }
-                                        showToolTip={showToolTip}
-                                        // cardClicked={cardClicked}
-                                        // cardHover={cardHover}
-                                    />
-                                }
-                                <CardBody
-                                    data={resultRecord}
-                                    handleFAQClick={handleFAQClick}
-                                />
-                                <DataProviderCardFooter
-                                    data={data}
-                                    // cardClicked={cardClicked}
-                                    // cardHover={cardHover}
-                                />
-                            </>
+                        {getResultCards(
+                            label,
+                            handleFAQClick,
+                            resultRecord,
+                            setResultRecord,
+                            dataProviders,
+                            showToolTip,
+                            data
                         )}
                     </div>
                     {!hideResultCard && (
@@ -185,3 +147,112 @@ const ResultCard = ({
 };
 
 export default ResultCard;
+
+const getResultCards = (
+    label: string,
+    handleFAQClick: any,
+    resultRecord: any,
+    setResultRecord: any,
+    dataProviders: any,
+    showToolTip: any,
+    data: any
+) => {
+    switch (label) {
+        case "datasets":
+            return (
+                <>
+                    <CardHead
+                        handleFAQClick={handleFAQClick}
+                        data={resultRecord}
+                        setData={setResultRecord}
+                        datasetSource={dataProviders?.datasetSource}
+                        showToolTip={showToolTip}
+                        // cardClicked={cardClicked}
+                        // cardHover={cardHover}
+                    />
+                    <CardBody
+                        data={resultRecord}
+                        handleFAQClick={handleFAQClick}
+                    />
+                    <CardFooter
+                        data={data}
+                        // cardClicked={cardClicked}
+                        // cardHover={cardHover}
+                    />
+                </>
+            );
+        case "data_provider":
+            return (
+                <>
+                    {
+                        <DataProviderCardHead
+                            handleFAQClick={handleFAQClick}
+                            data={resultRecord}
+                            setData={setResultRecord}
+                            datasetSource={dataProviders?.datasetSource}
+                            showToolTip={showToolTip}
+                            // cardClicked={cardClicked}
+                            // cardHover={cardHover}
+                        />
+                    }
+                    <CardBody
+                        data={resultRecord}
+                        handleFAQClick={handleFAQClick}
+                    />
+                    <DataProviderCardFooter
+                        data={data}
+                        // cardClicked={cardClicked}
+                        // cardHover={cardHover}
+                    />
+                </>
+            );
+        case "topic":
+            return (
+                <>
+                    {
+                        <DataProviderCardHead
+                            handleFAQClick={handleFAQClick}
+                            data={resultRecord}
+                            setData={setResultRecord}
+                            datasetSource={dataProviders?.datasetSource}
+                            showToolTip={showToolTip}
+                            // cardClicked={cardClicked}
+                            // cardHover={cardHover}
+                        />
+                    }
+                    <CardBody
+                        data={resultRecord}
+                        handleFAQClick={handleFAQClick}
+                    />
+                    <DataProviderCardFooter
+                        data={data}
+                        // cardClicked={cardClicked}
+                        // cardHover={cardHover}
+                    />
+                </>
+            );
+        default:
+            return (
+                <>
+                    <CardHead
+                        handleFAQClick={handleFAQClick}
+                        data={resultRecord}
+                        setData={setResultRecord}
+                        datasetSource={dataProviders?.datasetSource}
+                        showToolTip={showToolTip}
+                        // cardClicked={cardClicked}
+                        // cardHover={cardHover}
+                    />
+                    <CardBody
+                        data={resultRecord}
+                        handleFAQClick={handleFAQClick}
+                    />
+                    <CardFooter
+                        data={data}
+                        // cardClicked={cardClicked}
+                        // cardHover={cardHover}
+                    />
+                </>
+            );
+    }
+};

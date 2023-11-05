@@ -1,10 +1,5 @@
 import ReportFilter from "./report_filter";
-
-import { useContext, useEffect, useState } from "react"
 import ReportVM, { ReportVMContext } from "./report.vm";
-import { QualityMetricVMContext } from "../insights_section/quality_insights/quality_metric.vm";
-import UpgradeAccountModal from "../upgrade_modal";
-import { OrganisationDetailVMContext } from "pages/organisation/organisation_detail.vm";
 import { useIsMobile } from "common/hooks";
 import dynamic from "next/dynamic";
 
@@ -21,7 +16,6 @@ const Index = ({
 }) => {
     const vm: any = ReportVM();
     const { isMobile } = useIsMobile();
-    const { permittedPermissions } = useContext(OrganisationDetailVMContext);
 
     return (
         <ReportVMContext.Provider value={vm}>
@@ -75,9 +69,9 @@ const Index = ({
                             />
                         )}
                     </div>
-                    {(!permittedPermissions.includes("providerInsights.report.edit")) && <div className=" absolute top-0 left-0 w-full h-full">
+                    {/* {(!permittedPermissions.includes("providerInsights.report.edit")) && <div className=" absolute top-0 left-0 w-full h-full">
                     <div className="h-full"><UpgradeAccountModal /></div>
-                </div>}
+                </div>} */}
                 </div>
             </div>
         </ReportVMContext.Provider>

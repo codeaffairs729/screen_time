@@ -8,13 +8,13 @@ import DataproviderStats from "pages/search/organisation/components/data_provide
 import { useRouter } from "next/router";
 
 
-interface DataProviderCardProps {
+interface TopicProps {
     data: Data;
     isMobile: boolean;
     imgCss?: string;
 }
 
-const DataProviderCard = ({ data, isMobile, imgCss="" }: DataProviderCardProps) => {
+const TopicCard = ({ data, isMobile, imgCss="" }: TopicProps) => {
     const { title } = data || {};
     const href = `/${data.recordType ? data.recordType : "datasets"}/${
         data?.id
@@ -26,7 +26,7 @@ const DataProviderCard = ({ data, isMobile, imgCss="" }: DataProviderCardProps) 
 
     return (
         <div
-            className={` border border-gray-100 rounded-md md:rounded-xl shadow-custom-4  min-h-[100%] max-w-[90%]  md:max-h-[10%] md:min-w-[100%] `}
+            className={` border border-gray-100 rounded-md md:rounded-none shadow-topic-card-shadow  min-h-[100%] max-w-[90%]  md:max-h-[10%] md:min-w-[100%] `}
         >
             <div
                 className={`flex flex-col justify-center  items-center  ${
@@ -34,11 +34,11 @@ const DataProviderCard = ({ data, isMobile, imgCss="" }: DataProviderCardProps) 
                 }`}
             >
                 <div
-                    className="w-full px-3 py-2 relative "
+                    className="w-full  relative "
                     onClick={() => setShowProvider(!showProvider)}
                 >
                     <BsChevronDown
-                        className={`font-normal absolute right-2 h-6 w-6 p-1 cursor-pointer float-right text-gray-500 border border-none rounded-full hover:bg-[#6DCDCB] hover:bg-opacity-[55%] active:bg-[#512C71] active:bg-opacity-[80%] active:text-white ${
+                        className={`font-normal absolute right-2 top-2 h-6 w-6 p-1 cursor-pointer float-right text-gray-500 bg-white border border-none rounded-full hover:bg-[#6DCDCB] hover:bg-opacity-[55%] active:bg-[#512C71] active:bg-opacity-[80%] active:text-white ${
                             showProvider && "rotate-180"
                         } transition-all`}
                         strokeWidth="1.5"
@@ -50,13 +50,13 @@ const DataProviderCard = ({ data, isMobile, imgCss="" }: DataProviderCardProps) 
                     <BackCard data={data} isMobile={isMobile} />
                 )}
                 {!showProvider && isMobile && stats && (
-                    <DataproviderMobileFrontStats stats={stats} />
+                    <TopicMobileFrontStats stats={stats} />
                 )}
             </div>
 
 
             <div
-                className={`hover:bg-[#6DCDCB] hover:bg-opacity-[55%] hover:rounded-b-xl active:text-white  active:bg-[#512C71] active:rounded-b-xl active:bg-opacity-[80%] text-dtech-new-main-light   break-word overflow-hidden flex flex-col items-center justify-center py-4 md:py-6  relative  cursor-pointer ${
+                className={`hover:bg-[#6DCDCB] hover:bg-opacity-[55%] ${isMobile && "hover:rounded-b-xl active:rounded-b-xl"} active:text-white  active:bg-[#512C71]  active:bg-opacity-[80%] text-dtech-new-main-light   break-word overflow-hidden flex flex-col items-center justify-center py-4 md:py-6  relative  cursor-pointer ${
                     !showProvider &&
                     " border-t-[1px] md:border-t-2 border-[#EBEBEB]"
                 }`}
@@ -90,7 +90,7 @@ const FrontCard = ({ data, isMobile,imgCss="" }: { data: Data; isMobile: boolean
         .map((item) => item[0].toUpperCase())
         .join("");
     return (
-        <div className="p-2 flex flex-col justify-center items-center overflow-hidden h-[77.94px] md:h-40 w-full">
+        <div className=" flex flex-col justify-center items-center overflow-hidden h-[77.94px] md:h-40 w-full">
             {imgUrl ? (
                 <img
                     src={imgUrl}
@@ -109,7 +109,7 @@ const FrontCard = ({ data, isMobile,imgCss="" }: { data: Data; isMobile: boolean
 
 const BackCard = ({ data, isMobile }: { data: Data; isMobile: boolean }) => {
     const { description, stats } = data ?? { description: '', stats: null };
-    const words = (description || '').split(/\s+/);
+    const words = (description || 'No description present').split(/\s+/);
 
     const descriptionWord = isMobile ? words.slice(0, 12) : words.slice(0, 15);
 
@@ -127,9 +127,9 @@ const BackCard = ({ data, isMobile }: { data: Data; isMobile: boolean }) => {
     );
 };
 
-export default DataProviderCard;
+export default TopicCard;
 
-const DataproviderMobileFrontStats = ({
+const TopicMobileFrontStats = ({
     stats,
     className,
 }: {

@@ -155,11 +155,14 @@ const useFavouriteDataset = (
 export default FavouriteBtn;
 
 const getFavURL = (id: number, type = "datasets") => {
+    console.log("type :", type)
     switch (type) {
         case "datasets":
             return `/v1/datasets/${id}/favourite`;
         case "organisation":
             return `/v1/data_sources/${id}/favourite_data_provider`;
+        case "topic" :
+            return `/v1/topics/${id}/favourite/${type}`
         default:
             return `/v1/datasets/${id}/favourite`;
     }

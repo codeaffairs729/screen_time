@@ -131,7 +131,9 @@ const useBookmarkDataset = (data: any) => {
     const isHandlingBookmark = false;
 
     user_bookmarks?.forEach((item: any) => {
-        if (item.datasetID === data.id || item.organisationID === data.id) {
+        if (
+            // item.datasetID === data.id || item.organisationID === data.id ||
+            item.bookmarkID == data.id) {
             isBookmarked = true;
         }
     });

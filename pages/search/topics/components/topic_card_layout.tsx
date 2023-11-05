@@ -9,11 +9,12 @@ import { useRouter } from "next/router";
 import NoResults from "pages/search/components/no_results";
 import { Fragment, useContext, useState } from "react";
 import { BsChevronDown, BsEyeFill, BsHeartFill } from "react-icons/bs";
-import DataproviderStats from "./data_provider_stats";
+import DataproviderStats from "../../organisation/components/data_provider_stats";
 import DataProviderCard from "components/UI/dataprovider_result_card";
-import { OrganizationSearchVMContext } from "../organisation.vm";
+import { TopicSearchVMContext } from "../topics.vm";
+import TopicCard from "components/UI/topic_result_card";
 
-type ResultLayoutProps = {
+type TopicLayoutCardProps = {
     error: any;
     isLoading: boolean;
     recordsData: Data[];
@@ -24,7 +25,7 @@ type ResultLayoutProps = {
     totalPages: number;
 };
 
-const ResultLayoutCard = ({
+const TopicLayoutCard = ({
     error,
     isLoading,
     recordsData,
@@ -33,12 +34,13 @@ const ResultLayoutCard = ({
     pageSize,
     totalRecords,
     totalPages,
-}: ResultLayoutProps) => {
+}: TopicLayoutCardProps) => {
     const router = useRouter();
     const {
         query: { q },
     } = router;
-    const vm = useContext(OrganizationSearchVMContext);
+
+    const vm = useContext(TopicSearchVMContext);
     const { isMobile } = vm;
 
     const pageResult =
@@ -64,12 +66,15 @@ const ResultLayoutCard = ({
                     {Array(20)
                         .fill(1)
                         .map((_, index) => (
-                            <div key={index} className="border border-gray-100 rounded-md md:rounded-xl shadow-custom-3  min-h-[100%] max-w-[90%]  md:max-h-[10%] md:min-w-[100%] p-2 w-[100%]">
+                            <div
+                                key={index}
+                                className="border border-gray-100 rounded-md md:rounded-xl shadow-custom-3  min-h-[100%] max-w-[90%]  md:max-h-[10%] md:min-w-[100%] p-2 w-[100%]"
+                            >
                                 <div className="border-2  bg-[#EBEBEB]  rounded ">
                                     <div className="border-2 bg-gray-400 bg-opacity-60 animate-pulse rounded py-9 mx-1 my-2 md:py-16 md:my-4 md:mx-4 "></div>
                                 </div>
                                 <div className="border-2  animate-pulse bg-[#EBEBEB]  md:h-[50px]">
-                                <div className="animate-pulse bg-gray-400 bg-opacity-60 rounded-md w-[70%] p-1 md:p-2 mt-5 mb-2 md:mb-1 ml-2 md:ml-4"></div>
+                                    <div className="animate-pulse bg-gray-400 bg-opacity-60 rounded-md w-[70%] p-1 md:p-2 mt-5 mb-2 md:mb-1 ml-2 md:ml-4"></div>
                                 </div>
                             </div>
                         ))}
@@ -94,7 +99,6 @@ const ResultLayoutCard = ({
             </div>
         );
     }
-
     return (
         <Fragment>
             {isMobile && (
@@ -111,17 +115,16 @@ const ResultLayoutCard = ({
                 )}
                 data-test-id="results table"
             >
-                {recordsData.map((data: Data, index: number) => (
-                    <DataProviderCard
+                {recordsData.map((data: any, index: number) => (
+                    <TopicCard
                         key={`${data.id}_${index}`}
                         data={data}
                         isMobile={isMobile}
-                        imgCss="object-contain md:h-40 md:w-full h-[77.94px] w-[225.35px] px-[19px] py-[16px] md:px-[33px] md:py-[25px]"
+                        imgCss={"object-cover h-full w-full"}
                     />
                 ))}
             </div>
         </Fragment>
     );
 };
-
-export default ResultLayoutCard;
+export default TopicLayoutCard;
