@@ -26,7 +26,7 @@ import clsx from "clsx";
 import Image from "next/image";
 import customImageLoader from "components/image/customImage";
 import dynamic from "next/dynamic";
-import UpgradeAccountModal from "./components/upgrade_modal";
+import { fetchPermissions } from "common/util";
 const Datasets = dynamic(() => import("./components/datasets"), {
     ssr: false,
 });
@@ -71,12 +71,6 @@ const OrganisationDetailPage = ({
         })
 
         return logoUrl
-    }
-    const fetchPermissions = async () => {
-
-        const permissions = await Http.post(`/v1/iam/get_permissions?user_id=${user ? user.id : 0}&page=${router.pathname.replace("/[id]", "")}`, {
-        });
-        return permissions
     }
     useEffect(() => {
         const hashParam: string = asPath.split("#")[1];
@@ -128,7 +122,7 @@ const OrganisationDetailPage = ({
             setLogoImage(imageData.logo_image)
         };
         const loadPermissions = async () => {
-            const fetchedPermissions = await fetchPermissions()
+            const fetchedPermissions = await fetchPermissions(user ? user.id : 0, router.pathname.replace("/[id]", ""))
             setPermissions(fetchedPermissions
                 .filter((permission: any) => permission.permitted)
                 .map((permission: any) => permission.permission_name))
