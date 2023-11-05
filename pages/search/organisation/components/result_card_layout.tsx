@@ -116,6 +116,7 @@ const ResultLayoutCard = ({
                         key={`${data.id}_${index}`}
                         data={data}
                         isMobile={isMobile}
+                        imgCss="object-contain md:h-40 md:w-full h-[77.94px] w-[225.35px] px-[19px] py-[16px] md:px-[33px] md:py-[25px]"
                     />
                 ))}
             </div>

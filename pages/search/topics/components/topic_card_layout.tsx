@@ -12,6 +12,7 @@ import { BsChevronDown, BsEyeFill, BsHeartFill } from "react-icons/bs";
 import DataproviderStats from "../../organisation/components/data_provider_stats";
 import DataProviderCard from "components/UI/dataprovider_result_card";
 import { TopicSearchVMContext } from "../topics.vm";
+import TopicCard from "components/UI/topic_result_card";
 
 type TopicLayoutCardProps = {
     error: any;
@@ -115,10 +116,11 @@ const TopicLayoutCard = ({
                 data-test-id="results table"
             >
                 {recordsData.map((data: any, index: number) => (
-                    <DataProviderCard
+                    <TopicCard
                         key={`${data.id}_${index}`}
                         data={data}
                         isMobile={isMobile}
+                        imgCss={"object-cover h-full w-full"}
                     />
                 ))}
             </div>
