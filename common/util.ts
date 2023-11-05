@@ -1,5 +1,6 @@
 import log from "common/logger";
 import AuthService from "services/auth.service";
+import Http from "./http";
 
 export const isBrowser = () => {
     return !(typeof window === "undefined");
@@ -38,4 +39,13 @@ export const getHttpErrorMsg = async (
         log.error(error);
         return defaultMessage;
     }
+};
+export const fetchPermissions = async (userId:number,page:string) => {
+    const permissions = await Http.post(
+        `/v1/iam/get_permissions?user_id=${
+            userId
+        }&page=${page}`,
+        {}
+    );
+    return permissions;
 };

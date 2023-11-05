@@ -176,6 +176,12 @@ class User {
         }
         return user.roles?.[0];
     }
+    static getAllRoles(user: User | null) {
+        if (!user) {
+            return null;
+        }
+        return user.roles.map(item=>item.name);
+    }
 
     /**
      * Even though a user can have multiple organisations, at the moment

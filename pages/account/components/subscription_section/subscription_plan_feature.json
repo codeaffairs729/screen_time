@@ -3,27 +3,32 @@
         {
             "label": "Announcement",
             "description": "Discounted bundles available for organisations",
-            "active": false
+            "active": false,
+            "role": null
         },
         {
             "label": "Guest",
             "description": "Free guest user",
-            "active": false
+            "active": false,
+            "role": "guest"
         },
         {
             "label": "Essential",
             "description": "Free register user",
-            "active": false
+            "active": false,
+            "role": "essential_subscriber"
         },
         {
             "label": "Professional",
             "description": "Paid user",
-            "active": true
+            "active": false,
+            "role": "professional_subscriber"
         },
         {
             "label": "Premium",
             "description": "Paid user",
-            "active": false
+            "active": false,
+            "role": "premium_subscriber"
         }
     ],
     "features": [

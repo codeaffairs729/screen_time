@@ -7,12 +7,17 @@ import { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { AiOutlineClose } from "react-icons/ai";
 import Link from "next/link";
+import User from "models/user.model";
+
+import { useSelector } from "react-redux";
+import { RootState } from "store";
+
 const subscription = require("../subscription_section/subscription_plan_feature.json");
 
 const SubscriptionSection = () => {
     const [openPopup, setOpenPopup] = useState<boolean>(false);
     const { isMobile } = useIsMobile();
-    console.log("openPopup :", openPopup);
+    const user = useSelector((state: RootState) => state.auth.user);
     return (
         <>
             {!isMobile ? (
@@ -43,7 +48,7 @@ const SubscriptionSection = () => {
                                     : " !items-center "
                             }`}
                                 description={plan.description}
-                                active={plan.active}
+                                active={User.getAllRoles(user)?.includes(plan.role)}
                             />
                         ))}
                     </div>
