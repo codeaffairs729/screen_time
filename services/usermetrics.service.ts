@@ -38,7 +38,8 @@ export const usereventDatasetView = (
     posthog.capture("dataset view", {
         dataset_id: dataset.id,
         search_term: query,
-        provider_uuid: dataset.owner.uuid
+        provider_uuid: dataset.owner.uuid,
+        topic_id: dataset.detail.topic_ids,
     });
 };
 
@@ -46,14 +47,19 @@ export const usereventDatasetDownload = (dataset: Dataset, url: string) => {
     posthog.capture("datafile download", {
         dataset_id: dataset.id,
         datafile_id: url,
-        provider_uuid: dataset.owner.uuid
+        provider_uuid: dataset.owner.uuid,
+        topic_id: dataset.detail.topic_ids,
     });
 };
 
-export const usereventDatasetDownloadSearchTerms = (dataset: Dataset, query:string) => {
+export const usereventDatasetDownloadSearchTerms = (
+    dataset: Dataset,
+    query: string
+) => {
     posthog.capture("datafile download search term", {
         dataset_id: dataset.id,
         search_term: query,
-        provider_uuid: dataset.owner.uuid
+        provider_uuid: dataset.owner.uuid,
+        topic_id: dataset.detail.topic_ids,
     });
 };
