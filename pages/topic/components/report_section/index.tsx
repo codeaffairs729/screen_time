@@ -1,10 +1,11 @@
 import ReportFilter from "./report_filter";
-// import Report from "./report/";
-import { useContext, useEffect, useState } from "react"
 import ReportVM, { ReportVMContext } from "./report.vm";
-import { OrganisationDetailVMContext } from "pages/organisation/organisation_detail.vm";
 import { useIsMobile } from "common/hooks";
-import Report from "./report";
+import dynamic from "next/dynamic";
+
+const Report = dynamic(() => import("./report"), {
+    ssr: false,
+});
 
 const Index = ({
     setIsReportGenerated,
@@ -15,7 +16,6 @@ const Index = ({
 }) => {
     const vm: any = ReportVM();
     const { isMobile } = useIsMobile();
-    const { permittedPermissions } = useContext(OrganisationDetailVMContext);
 
     return (
         <ReportVMContext.Provider value={vm}>
@@ -49,16 +49,16 @@ const Index = ({
                 )}
                 <div className=" relative pt-6">
                     <div className="sm:flex hidden ">
-                        {/* <ReportFilter
+                        <ReportFilter
                             setIsReportGenerated={setIsReportGenerated}
                         />
                         <Report
                             isReportGenerated={isReportGenerated}
                             setIsReportGenerated={setIsReportGenerated}
-                        /> */}
+                        />
                     </div>
                     <div className="flex sm:hidden">
-                        {/* {isReportGenerated ? (
+                        {isReportGenerated ? (
                             <Report
                                 isReportGenerated={isReportGenerated}
                                 setIsReportGenerated={setIsReportGenerated}
@@ -67,7 +67,7 @@ const Index = ({
                             <ReportFilter
                                 setIsReportGenerated={setIsReportGenerated}
                             />
-                        )} */}
+                        )}
                     </div>
                     {/* {(!permittedPermissions.includes("providerInsights.report.edit")) && <div className=" absolute top-0 left-0 w-full h-full">
                     <div className="h-full"><UpgradeAccountModal /></div>

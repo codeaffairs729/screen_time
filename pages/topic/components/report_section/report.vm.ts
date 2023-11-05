@@ -15,6 +15,7 @@ import toast from "react-hot-toast";
 import { OrganisationDetailVMContext } from "pages/organisation/organisation_detail.vm";
 import draftToHtml from "draftjs-to-html";
 import { jsonToUseCaseMetrics } from "../insight_section/usecase_section/usecase.vm";
+import { TopicDetailVMContext } from "pages/topic/topic_detail.vm";
 
 type Header = {
     label: string;
@@ -89,8 +90,7 @@ const getReportDate = (fromDate: Date, toDate: Date) => {
 const getReportTitle = (title: any) => {
     return `<p><strong>Dataset Insights Report</strong></p><p><strong>${title}</strong></p>`;
 };
-const getImageCanvas = (src: any) =>
-    `<img src="${src}"/>`;
+const getImageCanvas = (src: any) => `<img src="${src}"/>`;
 
 const formatSubHeading = (text: string) => `<p> ${text}</p>`;
 
@@ -101,7 +101,7 @@ const headerSelected = (
     byRegion: any,
     byquality: any,
     bySearchTermsCanvas: any,
-    byUseCasesCanvas:any
+    byUseCasesCanvas: any
 ) => {
     return selected
         .map((object: any, index: any) =>
@@ -176,8 +176,8 @@ const ReportVM = () => {
     const [fromDate, setFromDate] = useState(currentDate);
     const [from, setFrom] = useState(format(new Date(), "yyyy-MM-dd"));
     const [to, setTo] = useState(format(new Date(), "yyyy-MM-dd"));
-    const { organisation } = useContext(OrganisationDetailVMContext);
-    const { imgUrl } = organisation || {};
+    const { topic } = useContext(TopicDetailVMContext);
+    const { imgUrl } = topic || {};
     const [downloadRef, setDownloadRef] = useState<any>();
     const [selectedHeaders, setSelectedHeaders] = useState<string[]>([]);
     const [activeHeaders, setActiveHeaders] = useState<Header[]>(HEADER);
@@ -213,86 +213,9 @@ const ReportVM = () => {
         setSelectedHeaders(selectedHeaderLabels);
         setActiveHeaders(updatedActiveHeaders);
     };
-    const {
-        execute: executeFetchImage,
-        data: image,
-        isLoading: isFetchingImage,
-    } = useHttpCall<{ [key: string]: any }>([]);
-
-    const fetchImage = (url: any) =>
-        executeFetchImage(
-            () => {
-                return Http.get(
-                    `/v1/data_sources/provider/image/?image_url=${url}`
-                );
-            },
-            {
-                postProcess: (res: any) => {
-                    return res;
-                },
-                onError: (e) => {
-                    toast.error(
-                        "Something went wrong while fetching organisation logo."
-                    );
-                },
-            }
-        );
-
-    const generateReportContent = async (qualityMetrics: any) => {
-        setIsGeneratingReport(true);
-        const metricByLocation: any = document.getElementById("map");
-        const metricByTime: any = document.getElementById("screenshot");
-        const metricByUseCase: any = document.getElementById("pie");
-        const useCases: any = document.getElementById("useCases");
-        const searchTerms: any = document.getElementById("searchTerms");
-        const qualityMetric: any = document.getElementById("qualityMetrics");
-
-        const byQualityMetricCanvas =
-            qualityMetric &&
-            (await html2canvas(qualityMetric)).toDataURL("image/png");
-        const bySearchTermsCanvas =
-            searchTerms &&
-            (await html2canvas(searchTerms)).toDataURL("image/png");
-        const byLocationCanvas =
-            metricByLocation &&
-            (await html2canvas(metricByLocation)).toDataURL("image/png");
-        const byTimeCanvas =
-            metricByTime &&
-            (await html2canvas(metricByTime)).toDataURL("image/png");
-        const byUseCaseCanvas =
-            metricByUseCase &&
-            (await html2canvas(metricByUseCase)).toDataURL("image/png");
-        const byUseCasesCanvas =
-            useCases && (await html2canvas(useCases)).toDataURL("image/png");
-        const base64 = await fetchImage(imgUrl);
-        const data = `
-                <figure style='width:200px;margin-left:auto;margin-right:auto;'><img src='data:image/jpeg;base64,${base64}' /></figure>
-                
-                ${getReportTitle(organisation?.title)}
-                ${getReportDate(fromDate, toDate)}
-                ${headerSelected(
-                    selectedHeaders,
-                    byTimeCanvas,
-                    byUseCaseCanvas,
-                    byLocationCanvas,
-                    byQualityMetricCanvas,
-                    bySearchTermsCanvas,
-                    byUseCasesCanvas
-                )}
-            `;
-
-        onEditorStateChange(
-            EditorState.createWithContent(
-                ContentState.createFromBlockArray(
-                    convertFromHTML(`<p>${data}</p>`).contentBlocks
-                )
-            )
-        );
-        setIsGeneratingReport(false);
-    };
 
 
-    const generateNewReport = async (qualityMetrics: any) =>{
+    const generateNewReport = async (qualityMetrics: any) => {
         setIsGeneratingReport(true);
         const qualityMetric: any = document.getElementById("qualityMetrics");
         const searchTerms: any = document.getElementById("searchTerms");
@@ -322,7 +245,7 @@ const ReportVM = () => {
         const data = `
                 <p style="text-align: center;"><img src="${imgUrl}" width=200 height=150 style="text-align: center;" /></p>
                 <p></p>
-                ${getReportTitle(organisation?.title)}
+                ${getReportTitle(topic?.title)}
                 ${getReportDate(fromDate, toDate)}
                 ${headerSelected(
                     selectedHeaders,
@@ -334,11 +257,10 @@ const ReportVM = () => {
                     byUseCasesCanvas
                 )}
             `;
-    
+
         setEditorValue(data);
         setIsGeneratingReport(false);
-
-    }
+    };
 
     const formatPreviewData = () => {
         let html = draftToHtml(convertToRaw(editorState.getCurrentContent()));
@@ -364,7 +286,7 @@ const ReportVM = () => {
         executeFetchQualityMetrics(
             () => {
                 return Http.get(
-                    `/v1/data_sources/${organisation?.uuid}/quality_metrics`
+                    `/v1/topics/quality_metrics?topic_id=${topic?.id}&sort_by=title&page_size=${7}&page_num=${1}`
                 );
             },
             {
@@ -389,7 +311,7 @@ const ReportVM = () => {
         executeFetchSearchTerms(
             () => {
                 return Http.get(
-                    `/v1/metrics/provider/${organisation?.uuid}/10`
+                    `/v1/metrics/${topic?.id}/10`
                 );
             },
             {
@@ -414,7 +336,7 @@ const ReportVM = () => {
         executeFetchByRoles(
             () => {
                 return Http.get(
-                    `/v1/metrics/provider/${organisation?.uuid}/by_role?from_date=${from}&to_date=${to}`
+                    `/v1/metrics/${topic?.id}/by_role?from_date=${from}&to_date=${to}`
                 );
             },
             {
@@ -439,8 +361,8 @@ const ReportVM = () => {
         executeFetchByTime(
             () => {
                 return Http.get(
-                    `/v1/metrics/provider/${
-                        organisation?.uuid
+                    `/v1/metrics/${
+                        topic?.id
                     }/by_time?from=${format(
                         fromDate,
                         "yyyy-MM-dd"
@@ -469,7 +391,7 @@ const ReportVM = () => {
         executeFetchByLocation(
             () => {
                 return Http.get(
-                    `/v1/metrics/provider/${organisation?.uuid}/by_location?from_date=${from}&to_date=${to}`
+                    `/v1/metrics/${topic?.id}/by_location?from_date=${from}&to_date=${to}`
                 );
             },
             {
@@ -493,7 +415,7 @@ const ReportVM = () => {
         excuteFetchUseCases(
             () => {
                 return Http.get(
-                    `/v1/data_sources/provider/use_cases/${organisation?.uuid}`
+                    `/v1/topics/use_cases/${topic?.id}`
                 );
             },
             {
@@ -607,7 +529,7 @@ const ReportVM = () => {
         setFromDate(new Date(from));
         setToDate(new Date(to));
         //Check if option selected
-        
+
         const promise1 = fetchMetricDataByTime(from, to);
         const promise2 = fetchMetricDataByRoles(from, to);
         const promise3 = fetchMetricDataByLocation(from, to);
@@ -644,7 +566,6 @@ const ReportVM = () => {
         isFetchingUseCases;
 
     return {
-        generateReportContent,
         onEditorStateChange,
         setSelectedHeaders,
         setActiveHeaders,
@@ -668,7 +589,7 @@ const ReportVM = () => {
         qualityMetrics,
         useCases,
         editorValue,
-        setEditorValue
+        setEditorValue,
     };
 };
 
@@ -760,7 +681,7 @@ interface IReportVMContext {
     searchTerms: any;
     qualityMetrics: any;
     useCases: any;
-    editorValue:any;
+    editorValue: any;
     setEditorValue: any;
 }
 

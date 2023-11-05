@@ -1,11 +1,16 @@
 import ReportFilter from "./report_filter";
-import Report from "./report/";
+
 import { useContext, useEffect, useState } from "react"
 import ReportVM, { ReportVMContext } from "./report.vm";
 import { QualityMetricVMContext } from "../insights_section/quality_insights/quality_metric.vm";
 import UpgradeAccountModal from "../upgrade_modal";
 import { OrganisationDetailVMContext } from "pages/organisation/organisation_detail.vm";
 import { useIsMobile } from "common/hooks";
+import dynamic from "next/dynamic";
+
+const Report = dynamic(() => import("./report"), {
+    ssr: false,
+});
 
 const Index = ({
     setIsReportGenerated,
