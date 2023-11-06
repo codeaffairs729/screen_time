@@ -74,7 +74,8 @@ export const notificationActionUrl = (notification: Notification) => {
 };
 
 export const formatHeading = (notification_type: string) => {
-    const type = notification_type.replace("test_", "").replaceAll("_", " ");
+    const notification = notification_type.replace("quality_feedback_request","data_quality_feedback_request") 
+    const type = notification.replace("test_", "").replaceAll("_", " ");
     const newType = type.split(" ")[0] === "usecase" ? "use case " + type.split(" ").splice(1).join(" ") : type
     const heading = `${newType[0].toUpperCase()}${newType.slice(1)}`;
     return heading ? heading : "Feedback request";

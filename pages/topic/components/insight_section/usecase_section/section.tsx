@@ -10,6 +10,7 @@ import { useIsMobile } from "common/hooks";
 // import PieChartComponent from "pages/organisation/components/insights_section/download_section/pie_component";
 import Table from "pages/organisation/components/table";
 import UpgradeAccountModal from "pages/organisation/components/upgrade_modal";
+import { TopicDetailVMContext } from "pages/topic/topic_detail.vm";
 const PieChartComponent = dynamic(
     () =>
         import(
@@ -21,7 +22,7 @@ const PieChartComponent = dynamic(
 );
 export const PIE_HEADER = ["Use case", "value"];
 const UseCaseSection = () => {
-    // const { permittedPermissions } = useContext(OrganisationDetailVMContext)
+    const { permittedPermissions } = useContext(TopicDetailVMContext);
     const useCaseMetricVM = UseCaseVM();
     const { isMobile } = useIsMobile();
 
@@ -85,9 +86,15 @@ const UseCaseSection = () => {
                         />
                     </div>
                 </div>
-                {/* {(!permittedPermissions.includes("providerInsights.useCases.view")) && <div className=" absolute top-0 left-0 w-full h-full">
-                    <div className="h-full"><UpgradeAccountModal /></div>
-                </div>} */}
+                {!permittedPermissions.includes(
+                    "topicInsights.useCases.view"
+                ) && (
+                    <div className=" absolute top-0 left-0 w-full h-full">
+                        <div className="h-full">
+                            <UpgradeAccountModal />
+                        </div>
+                    </div>
+                )}
             </div>
         </div>
     );

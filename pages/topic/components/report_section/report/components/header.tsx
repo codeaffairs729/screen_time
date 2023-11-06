@@ -36,7 +36,7 @@ const HeaderPreview = ({ header }: { header: any }) => {
             />
             <div className="flex justify-between items-center my-5">
                 <div className="flex flex-col justify-center items-center">
-                    <div>Reporting Period</div>
+                    <div>Select Period</div>
                     <div
                         id="preview_date"
                         className="text-[#727272] font-light"

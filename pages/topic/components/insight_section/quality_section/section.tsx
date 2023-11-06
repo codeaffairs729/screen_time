@@ -12,6 +12,8 @@ import { MenuItemType } from "components/UI/drop_down";
 import clsx from "clsx";
 import InfoIcon from "components/UI/icons/info_icon";
 import GraphSection from "pages/organisation/components/insights_section/quality_insights/graph_section";
+import UpgradeAccountModal from "pages/organisation/components/upgrade_modal";
+import { TopicDetailVMContext } from "pages/topic/topic_detail.vm";
 
 const ITEMS: MenuItemType[] = [{ label: "metadata" }, { label: "data_file" }];
 
@@ -49,7 +51,7 @@ const QualityInsightsBody = () => {
         setPageNumber,
         datasetsCount
     } = useContext(QualityMetricVMContext);
-
+    const { permittedPermissions } = useContext(TopicDetailVMContext)
     /**  Adding metaQuality same as overscore for metaFileQuality */
     const { dataFileQuality = {}, metaFileQuality = {}, totalMatches } = qualityMetrics || {};
     const items = selectedLabel == 0 ? dataFileQuality : metaFileQuality;
@@ -291,9 +293,9 @@ const QualityInsightsBody = () => {
                     </button> */}
                     </div>
                 </div>
-                {/* {((selectedLabel == 0 && !permittedPermissions.includes("providerInsights.dataQuality.view")) || (selectedLabel == 1 && !permittedPermissions.includes("providerInsights.metadataQuality.view"))) && <div className=" absolute top-0 left-0 w-full h-full">
+                {((selectedLabel == 0 && !permittedPermissions.includes("topicInsights.dataQuality.view")) || (selectedLabel == 1 && !permittedPermissions.includes("providerInsights.metadataQuality.view"))) && <div className=" absolute top-0 left-0 w-full h-full">
                     <div className="h-full"><UpgradeAccountModal /></div>
-                </div>} */}
+                </div>}
                 <div className="hidden sm:flex justify-center mt-20">
                     <div className="w-[1000px] h-[10px] bg-[#D9D9D9] ">
                     </div>

@@ -26,7 +26,7 @@ const TopicCard = ({ data, isMobile, imgCss="" }: TopicProps) => {
 
     return (
         <div
-            className={` border border-gray-100 rounded-md md:rounded-none shadow-topic-card-shadow  min-h-[100%] max-w-[90%]  md:max-h-[10%] md:min-w-[100%] `}
+            className={` border border-gray-100 rounded-md md:rounded-xl  shadow-custom-4  min-h-[100%] max-w-[90%]  md:max-h-[10%] md:min-w-[100%]  `}
         >
             <div
                 className={`flex flex-col justify-center  items-center  ${
@@ -95,7 +95,7 @@ const FrontCard = ({ data, isMobile,imgCss="" }: { data: Data; isMobile: boolean
                 <img
                     src={imgUrl}
                     alt=""
-                    className={`${imgCss} `}
+                    className={`${imgCss}  rounded-t-xl`}
                 />
             ) : (
                 <div className="object-contain md:h-40 md:w-full h-[77.94px] w-[225.35px] flex justify-center items-center text-3xl font-extrabold text-[#EBEBEB]">
