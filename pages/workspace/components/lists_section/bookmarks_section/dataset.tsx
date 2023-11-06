@@ -1,9 +1,6 @@
 import Loader from "components/UI/loader";
 import { useSelector } from "react-redux";
 import { RootState } from "store";
-import { useHttpCall } from "common/hooks";
-import DatasetStats from "models/dataset_stats.model";
-import Http from "common/http";
 import { useEffect } from "react";
 import DatasetList from "components/UI/dataset_list";
 import SearchVM from "pages/search/search.vm";
@@ -14,7 +11,6 @@ const DatasetBookmarksSection = ({ datasetIDS }: { datasetIDS: any }) => {
         (state: RootState) => state.user.bookmarkItemsData
     );
     const { fectchStats, stats, isFetchingStats } = SearchVM();
-        console.log(datasetIDS.filter((id: any) => typeof id === "number"))
     useEffect(() => {
         if (datasetIDS.length) {
             fectchStats(datasetIDS.filter((id: any) => typeof id === "number"));

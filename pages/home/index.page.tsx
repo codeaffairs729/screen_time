@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 // import SearchBar from "components/UI/search_bar_new";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import NewNavbar from "components/layouts/default/components/newNavbar";
 import NewSearchBar from "components/UI/white_label_search_bar";
 import Footer from "./components/footer";
@@ -11,13 +11,21 @@ import { getCookieFromServer } from "common/utils/cookie.util";
 import Http from "common/http";
 import { AUTH_TOKEN } from "common/constants/cookie.key";
 import LearnMore from "./components/learn_more";
-import { Dialog } from '@headlessui/react'
+import { Dialog } from "@headlessui/react";
 import PopupSubscription from "components/UI/popup_subscription";
+import { useSelector } from "react-redux";
+import { RootState } from "store";
+import { NotificationsVMContext } from "pages/workspace/notification.vm";
+import { AiOutlineClose } from "react-icons/ai";
 
 const HomePage = ({ home }: { home: any }) => {
     const router = useRouter();
     const [isMobile, setIsMobile] = useState<boolean>(false);
     const [searching, setSearching] = useState(false);
+    const [betaLabel, setBetaLabel] = useState(false);
+    const user = useSelector((state: RootState) => state.auth.user);
+    const { markAllRead, notifications, isLoading, fetchNotifications } =
+        useContext(NotificationsVMContext);
 
     const handleSearchFocus = () => {
         setSearching(true);
@@ -27,6 +35,9 @@ const HomePage = ({ home }: { home: any }) => {
         setSearching(false);
     };
 
+    // useEffect(() => {
+    //     !!notifications && fetchNotifications(user);
+    // }, []);
     useEffect(() => {
         const handleResize = () => {
             setIsMobile(window.innerWidth < 640); // Adjust the breakpoint as needed
@@ -44,10 +55,8 @@ const HomePage = ({ home }: { home: any }) => {
         };
     }, []);
 
-
     return (
         <div className={`flex flex-col relative`}>
-
             {
                 <div
                     className={
@@ -68,38 +77,49 @@ const HomePage = ({ home }: { home: any }) => {
                 style={{ height: "570px" }}
             />
 
-            <div className="sm:mt-4  flex flex-row px-6 sm:px-[10%] py-3 bg-dtech-middle-grey sm:bg-white z-10">
-                <div>
-                    <div className=" bg-dtech-new-main-light text-white font-semibold sm:mt-0 px-4 py-1 sm:py-0 rounded-md">
-                        BETA
+            {!betaLabel && (
+                <div className="sm:mt-4  flex flex-row justify-between items-center px-6 sm:px-[10%] py-3 bg-dtech-middle-grey sm:bg-white z-10">
+                    <div className=" flex flex-row justify-center items-center bg-dtech-middle-grey sm:bg-white z-10">
+                        <div>
+                            <div className=" bg-dtech-new-main-light text-white font-semibold sm:mt-0 px-4 py-1 sm:py-0 rounded-md">
+                                BETA
+                            </div>
+                        </div>
+                        <div className="text-xs sm:text-sm flex flex-col sm:flex-row ml-6 sm:mt-0 ">
+                            <div className=" ">
+                                This is a new service.&nbsp;
+                            </div>
+                            <div className="">
+                                Click to&nbsp;
+                                <a
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    href="https://f7xcuekc9xt.typeform.com/to/ff4rGkXc"
+                                    className="underline text-dtech-main-dark "
+                                >
+                                    Report a Bug
+                                </a>
+                                &nbsp;or
+                                <a
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    href="https://f7xcuekc9xt.typeform.com/to/Zpryygkm"
+                                    className="underline text-dtech-main-dark ml-1"
+                                >
+                                    Suggest a Feature
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="flex flex-col justify-center items-center">
+                        <AiOutlineClose
+                            className="w-4 h-4 font-extrabold cursor-pointer"
+                            strokeWidth={"2"}
+                            onClick={() => setBetaLabel(true)}
+                        />
                     </div>
                 </div>
-                <div className="text-xs sm:text-sm flex flex-col sm:flex-row ml-6 sm:mt-0 ">
-                    <div className=" ">This is a new service.&nbsp;</div>
-                    <div className="">
-                        Click to&nbsp;
-                        <a
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            href="https://f7xcuekc9xt.typeform.com/to/ff4rGkXc"
-                            className="underline text-dtech-main-dark "
-                        >
-                            Report a Bug
-                        </a>
-                        &nbsp;or
-                        <a
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            href="https://f7xcuekc9xt.typeform.com/to/Zpryygkm"
-                            className="underline text-dtech-main-dark ml-1"
-                        >
-                            Suggest a Feature
-                        </a>
-                    </div>
-
-                    {/* <div className=" text-xs sm:text-sm">Your <a className=" text-dtech-main-dark">feedback</a> will help us to improve it.</div> */}
-                </div>
-            </div>
+            )}
             {/* <CookieConsentForm /> */}
 
             <NewNavbar
