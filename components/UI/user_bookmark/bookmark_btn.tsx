@@ -132,7 +132,8 @@ const useBookmarkDataset = (data: any) => {
 
     user_bookmarks?.forEach((item: any) => {
         if (
-            // item.datasetID === data.id || item.organisationID === data.id ||
+            // item.organisationID === data.id ||
+            item.datasetID === data.id || 
             item.bookmarkID == data.id) {
             isBookmarked = true;
         }

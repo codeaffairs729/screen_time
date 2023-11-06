@@ -131,7 +131,7 @@ const ModelList = ({
 
     bookmark_items.forEach((list_item: any) => {
         if (
-            list_item.listID == list.listID && data.id == list_item.bookmarkID
+            list_item.listID == list.listID && (data.id == list_item.bookmarkID || data.uuid == list_item.bookmarkID)
             // (data.id == list_item.datasetID ||
             //     data.id == list_item.organisationID)
         ) {
@@ -143,15 +143,18 @@ const ModelList = ({
     const getItemPayload = () => {
         switch (recordType) {
             case "dataset":
-                return { bookmarkType:"dataset", bookmarkId: String(data.id) };
+                return { bookmarkType: "dataset", bookmarkId: data.uuid };
 
             case "organisation":
-                return { bookmarkType:"provider", bookmarkId: String(data.id) };
+                return {
+                    bookmarkType: "provider",
+                    bookmarkId: String(data.id),
+                };
 
             case "topic":
-                return { bookmarkType:"topic", bookmarkId: String(data.id) };
+                return { bookmarkType: "topic", bookmarkId: String(data.id) };
             default:
-                return {bookmarkType:"dataset", bookmarkId: String(data.id) };
+                return { bookmarkType: "dataset", bookmarkId: data.uuid };
         }
     };
 
@@ -205,7 +208,9 @@ const ModelList = ({
                                 return {
                                     top,
                                     left:
-                                        typeof node === "string" ? left : Math.max(left, 0),
+                                        typeof node === "string"
+                                            ? left
+                                            : Math.max(left, 0),
                                 };
                             }}
                         />
@@ -260,12 +265,18 @@ const ModelList = ({
                                         uuid="dtechtive-edit-btn-tooltip"
                                         textColor={"white"}
                                         backgroundColor="#4CA7A5"
-
-                                        overridePosition={({ left, top }, _e, _t, node) => {
+                                        overridePosition={(
+                                            { left, top },
+                                            _e,
+                                            _t,
+                                            node
+                                        ) => {
                                             return {
                                                 top,
                                                 left:
-                                                    typeof node === "string" ? left : Math.max(left, 0),
+                                                    typeof node === "string"
+                                                        ? left
+                                                        : Math.max(left, 0),
                                             };
                                         }}
                                     />
@@ -298,11 +309,18 @@ const ModelList = ({
                                         uuid="dtechtive-delete-btn-tooltip"
                                         textColor={"white"}
                                         backgroundColor="#4CA7A5"
-                                        overridePosition={({ left, top }, _e, _t, node) => {
+                                        overridePosition={(
+                                            { left, top },
+                                            _e,
+                                            _t,
+                                            node
+                                        ) => {
                                             return {
                                                 top,
                                                 left:
-                                                    typeof node === "string" ? left : Math.max(left, 0),
+                                                    typeof node === "string"
+                                                        ? left
+                                                        : Math.max(left, 0),
                                             };
                                         }}
                                     />

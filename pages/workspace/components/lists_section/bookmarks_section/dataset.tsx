@@ -14,10 +14,10 @@ const DatasetBookmarksSection = ({ datasetIDS }: { datasetIDS: any }) => {
         (state: RootState) => state.user.bookmarkItemsData
     );
     const { fectchStats, stats, isFetchingStats } = SearchVM();
-
+        console.log(datasetIDS.filter((id: any) => typeof id === "number"))
     useEffect(() => {
         if (datasetIDS.length) {
-            fectchStats(datasetIDS.filter((id: any) => id));
+            fectchStats(datasetIDS.filter((id: any) => typeof id === "number"));
         }
     }, [datasetIDS]);
 
