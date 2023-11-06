@@ -58,6 +58,7 @@ class UserService {
                         item.bookmarkType == "dataset"
                     ) {
                         listDatasets.push(item.bookmarkID);
+                        listDatasets.push(item.datasetID);
                     }
                     if (
                         item.bookmarkID &&
@@ -98,7 +99,7 @@ class UserService {
 
         const all_dataset_ids = bookmarkListsItems.list_items
             .filter((item: any) => item.bookmark_type == "dataset")
-            .map((item: any) => item.bookmark_id);
+            .map((item: any) => item.dataset_id);
 
         const all_provider_ids = bookmarkListsItems.list_items
             .filter((item: any) => item.bookmark_type == "provider")

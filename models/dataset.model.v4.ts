@@ -46,6 +46,7 @@ class Dataset {
             id: Number(id),
             detail: {
                 domain: dataset["domains"],
+                uuid: dataset["uuid"],
                 datasetUrl: dataset["dataset_url"],
                 hostUrl: data_host["url"], // url -> dataset/data_host/url
                 hostName: data_host["organisation"], // organisation -> /data_host/organisation
@@ -136,6 +137,7 @@ export type DatasetLicense = {
 
 export type DatasetDetail = {
     domain: string[];
+    uuid: string;
     datasetUrl: string;
     hostUrl: string;
     hostName: string;

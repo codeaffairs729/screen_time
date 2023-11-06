@@ -28,7 +28,7 @@ const DelListItemVM = (user: User | null) => {
                     // provider_uuid: organisationUUID,
                     item_id: itemID,
                     bookmark_type: bookmarkType,
-                    // bookmark_id: bookmarkId
+                    bookmark_id: bookmarkId
                 }),
             {
                 onSuccess: (res) => {
