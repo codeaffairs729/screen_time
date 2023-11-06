@@ -18,7 +18,7 @@ import { useIsMobile } from "common/hooks";
 import Pagination from "components/UI/pagination_for_datasets";
 
 const Notifications = () => {
-    const { markAllRead, notifications, isLoading } = useContext(
+    const { markAllRead, notifications, isLoading, fetchNotifications } = useContext(
         NotificationsVMContext
     );
     const [selectedIndex, setSelectedIndex] = useState<any>(0);
@@ -35,7 +35,11 @@ const Notifications = () => {
     // qualityFeedbackNotifications
     const [currentPageNoUsecase, setCurrentPageNoUsecase] = useState<number>(1);
     const [totalPagesUsecase, setTotalPagesUsecase] = useState<number>(1);
+    const user = useSelector((state: RootState) => state.auth.user);
 
+    useEffect(()=>{
+        fetchNotifications(user)
+    },[])
     useEffect(() => {
         setTotalPages(Math.ceil((notifications?.length as number) / pageSize));
         setTotalPagesQuality(

@@ -9,6 +9,7 @@ const TopicDetailVM = (initialTopicData: any, id: number | undefined) => {
     const [pageNumber, setPageNumber] = useState<number>(1);
     const [pageSize, setPageSize] = useState<number>(7);
     const [sortBy, setSortBy] = useState<any>("title");
+    const [permittedPermissions, setPermittedPermissions] = useState();
 
 
     useEffect(() => {
@@ -34,8 +35,6 @@ const TopicDetailVM = (initialTopicData: any, id: number | undefined) => {
             },
             {
                 postProcess: (res) => {
-                    console.log({ res });
-
                     return jsonToTopicDatasets(
                         res["results"],
                         res["total_matches"]
@@ -60,6 +59,8 @@ const TopicDetailVM = (initialTopicData: any, id: number | undefined) => {
         errorDatasetByTopic,
         pageNumber,
         setPageNumber,
+        permittedPermissions, 
+        setPermittedPermissions
     };
 };
 export default TopicDetailVM;
@@ -74,6 +75,8 @@ export interface ITopicDetailVMContext {
     errorDatasetByTopic: any;
     pageNumber: any;
     setPageNumber: any;
+    permittedPermissions: any;
+    setPermittedPermissions: any;
 }
 
 export const TopicDetailVMContext = createContext<ITopicDetailVMContext>(

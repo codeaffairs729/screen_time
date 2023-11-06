@@ -2,6 +2,7 @@ import ErrorAlert from "components/UI/alerts/error_alert";
 import Loader from "components/UI/loader";
 import Pagination from "components/UI/pagination_for_datasets";
 import UpgradeAccountModal from "pages/organisation/components/upgrade_modal";
+import { OrganisationDetailVMContext } from "pages/organisation/organisation_detail.vm";
 import { TopicDetailVMContext } from "pages/topic/topic_detail.vm";
 import { useContext, useEffect, useState } from "react";
 // import { DatasetTopicVMContext } from "./dataset_topic.vm";
@@ -16,7 +17,7 @@ const DatasetSection = () => {
         pageNumber,
         setPageNumber
     } = useContext(TopicDetailVMContext);
-
+    const { permittedPermissions } = useContext(TopicDetailVMContext)
     const [currentSlide, setCurrentSlide] = useState(0);
 
     useEffect(() => {
@@ -142,13 +143,13 @@ const DatasetSection = () => {
                     </div>
                 </div>
             </div>
-            {/* {!permittedPermissions.includes(
-                "providerInsights.datasets.view"
+            {!permittedPermissions.includes(
+                "topicInsights.datasets.view"
             ) && (
                 <div className=" absolute top-0 left-0 w-full h-full">
                     <UpgradeAccountModal />
                 </div>
-            )} */}
+            )}
         </div>
     );
 };

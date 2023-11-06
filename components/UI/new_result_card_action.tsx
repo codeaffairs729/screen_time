@@ -62,7 +62,6 @@ const NewResultCardAction = ({
         ? " !text-white !bg-dtech-main-dark "
         : " !text-dtech-new-main-light";
 
-    console.log("recodeTpe:", data.recordType);
     return (
         <div className={clsx("flex", className)}>
             <div

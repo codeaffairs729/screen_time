@@ -10,6 +10,9 @@ import Loader from "components/UI/loader";
 import RangeSelector from "components/UI/range_selector";
 import BarChart from "pages/organisation/components/insights_section/quality_insights/bar_graph";
 import Table from "pages/organisation/components/table";
+import { OrganisationDetailVMContext } from "pages/organisation/organisation_detail.vm";
+import UpgradeAccountModal from "pages/organisation/components/upgrade_modal";
+import { TopicDetailVMContext } from "pages/topic/topic_detail.vm";
 
 const LineGraph = dynamic(() => import("components/UI/line_graph"), {
     ssr: false,
@@ -27,7 +30,7 @@ const ByTime = ({ isMobile }: { isMobile: any }) => {
         error,
         isFetchingDownloadMetrics,
     } = useContext(DownloadMetricVMContext);
-    // const { permittedPermissions } = useContext(OrganisationDetailVMContext);
+    const { permittedPermissions } = useContext(TopicDetailVMContext);
 
     const { downloadByTime = [] } = downloadMetrics || {};
     if (error) {
@@ -129,15 +132,15 @@ const ByTime = ({ isMobile }: { isMobile: any }) => {
                         )}
                     </div>
                 </div>
-                {/* {!permittedPermissions.includes(
-                    "providerInsights.downloadMetrics.view"
+                {!permittedPermissions.includes(
+                    "topicInsights.downloadMetrics.view"
                 ) && (
                     <div className=" absolute top-0 left-0 w-full h-full">
                         <div className="h-full">
                             <UpgradeAccountModal />
                         </div>
                     </div>
-                )} */}
+                )}
             </div>
         </div>
     );

@@ -8,13 +8,15 @@ import { DownloadMetricVMContext } from "./download_metric.vm";
 import { OrganisationDetailVMContext } from "pages/organisation/organisation_detail.vm";
 import PieChartComponent from "pages/organisation/components/insights_section/download_section/pie_component";
 import Table from "pages/organisation/components/table";
+import UpgradeAccountModal from "pages/organisation/components/upgrade_modal";
+import { TopicDetailVMContext } from "pages/topic/topic_detail.vm";
 
 const PIE_HEADER = ["name", "value"];
 const ByRole = ({ isMobile }: { isMobile: any }) => {
     const { downloadMetrics, error, isFetchingDownloadMetrics } = useContext(
         DownloadMetricVMContext
     );
-    const { permittedPermissions } = useContext(OrganisationDetailVMContext);
+    const { permittedPermissions } = useContext(TopicDetailVMContext);
 
     const { downloadByRole = [] } = downloadMetrics || {};
 
@@ -79,15 +81,15 @@ const ByRole = ({ isMobile }: { isMobile: any }) => {
                         tableRow="sm:text-[17px] text-black font-normal w-full py-2 sm:!py-4  sm:!px-10 !px-4 w-full border-2 border-white"
                     />
                 </div>
-                {/* {!permittedPermissions.includes(
-                    "providerInsights.downloadMetrics.view"
+                {!permittedPermissions.includes(
+                    "topicInsights.downloadMetrics.view"
                 ) && (
                     <div className=" absolute top-0 left-0 w-full h-full">
                         <div className="h-full">
                             <UpgradeAccountModal />
                         </div>
                     </div>
-                )} */}
+                )}
             </div>
         </div>
     );

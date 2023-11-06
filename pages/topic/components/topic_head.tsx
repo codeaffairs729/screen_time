@@ -16,7 +16,6 @@ const TopicHead = () => {
     const { title, description, stats, lastUpdate, dataQuality } =
         topicCardData;
 
-    console.log({ topicCardData }); 
     return (
         <div className="flex flex-col sm:flex-row">
             <div className="sm:px-10 sm:py-4 px-4  sm:w-3/4 sm:min-w-[75%]">

@@ -13,6 +13,7 @@ import { OrganisationDetailVMContext } from "pages/organisation/organisation_det
 // import TagCloud2 from "pages/organisation/components/insights_section/search_term_section/tagCloud2";
 import Table from "pages/organisation/components/table";
 import UpgradeAccountModal from "pages/organisation/components/upgrade_modal";
+import { TopicDetailVMContext } from "pages/topic/topic_detail.vm";
 const TagCloud2 = dynamic(
     () =>
         import(
@@ -27,7 +28,7 @@ const TABLE_HEADERS = ["Search term", "Count", "Last used"];
 
 const SearchTermSection = () => {
     const [transformedData, setTransformedData] = useState([]);
-    const { permittedPermissions } = useContext(OrganisationDetailVMContext);
+    const { permittedPermissions } = useContext(TopicDetailVMContext);
     const { searchTerms, fetchSearchTerms, isFetchingSearchTerms, error } =
         useContext(SearchTermVMContext);
 
@@ -36,7 +37,6 @@ const SearchTermSection = () => {
     }, []);
 
     useEffect(() => transformData(searchTerms), [searchTerms]);
-    console.log("searchTerms :", searchTerms)
     if (error) {
         return (
             <ErrorAlert
@@ -109,15 +109,15 @@ const SearchTermSection = () => {
                         />
                     </div>
                 </div>
-                {/* {!permittedPermissions.includes(
-                    "providerInsights.useCases.view"
+                {!permittedPermissions.includes(
+                    "topicInsights.useCases.view"
                 ) && (
                     <div className=" absolute top-0 left-0 w-full h-full">
                         <div className="h-full">
                             <UpgradeAccountModal />
                         </div>
                     </div>
-                )} */}
+                )}
             </div>
         </div>
     );

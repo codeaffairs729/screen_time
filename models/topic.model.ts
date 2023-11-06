@@ -44,7 +44,7 @@ class Topic {
         return new Topic({
             id: json["id"],
             uuid: "af06e024-f6d7-51ca-a18a-805003ca393d",
-            imgUrl: json["logo_url"],
+            imgUrl: json["logo_url"] || "",
             title: json["title"],
             description: json["description"] || "No description Present",
             dataQuality: json["data_quality"],

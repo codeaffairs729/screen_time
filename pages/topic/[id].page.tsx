@@ -18,6 +18,9 @@ import { useIsMobile } from "common/hooks";
 import DatasetSection from "./components/dataset_section";
 import InsightSection from "./components/insight_section";
 import ReportSection from "./components/report_section";
+import { useSelector } from "react-redux";
+import { RootState } from "store";
+import { fetchPermissions } from "common/util";
 
 enum tabIndex {
     datasets,
@@ -32,10 +35,12 @@ const TopicDetail = ({ topic }: { topic: any }) => {
     const imageRef = useRef<HTMLDivElement>(null);
     const translationValue1Ref = useRef<HTMLDivElement>(null);
     const translationValue2Ref = useRef<HTMLDivElement>(null);
+    const user = useSelector((state: RootState) => state.auth.user);
     const vm: any = TopicDetailVM(topic, Number(asPath.split("/")[2]));
+    const [permissions, setPermissions] = useState([]);
+    const [coverImage, setCoverImage ] = useState("" || topic?.imgUrl)
+    const router = useRouter();
     const { isMobile } = useIsMobile();
-    // console.log({topic})
-    // const { imgUrl } = topic;
 
     useEffect(() => {
         const hashParam: string = asPath.split("#")[1];
@@ -45,6 +50,21 @@ const TopicDetail = ({ topic }: { topic: any }) => {
         return () => {
             window.removeEventListener("scroll", handleScroll);
         };
+    }, []);
+
+    useEffect(() => {
+        const loadPermissions = async () => {
+            const fetchedPermissions = await fetchPermissions(
+                user ? user.id : 0,
+                router.pathname.replace("/[id]", "")
+            );
+            setPermissions(
+                fetchedPermissions
+                    .filter((permission: any) => permission.permitted)
+                    .map((permission: any) => permission.permission_name)
+            );
+        };
+        loadPermissions();
     }, []);
 
     const handleScroll = () => {
@@ -71,14 +91,17 @@ const TopicDetail = ({ topic }: { topic: any }) => {
             imageRef.current.style.width = desiredHeight;
         }
     };
+
     return (
         <DefaultLayout wrapperClass="">
-            <TopicDetailVMContext.Provider value={vm}>
+            <TopicDetailVMContext.Provider
+                value={{ ...vm, permittedPermissions: permissions }}
+            >
                 <div className=" bg-[#EBEBEB] ">
                     <div className=" bg-white h-16 sm:h-10 -mt-20 sm:mt-0"></div>
                     <div
                         className="bg-black h-[414px] absolute right-0 z-0 w-full overflow-y-scroll bg-cover bg-fixed bg-center bg-no-repeat shadow-lg"
-                        // style={{ backgroundImage: `url(${imgUrl})` }}
+                        style={{ backgroundImage: `url(${coverImage})` }}
                     ></div>
                     <div className="px-4 relative">
                         <div className="hidden sm:flex flex-row justify-between mb-4 my-10 ml-4 items-center ">

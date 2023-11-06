@@ -25,7 +25,11 @@ const NotificationCard = ({
     } = notification;
 
     return (
-        <div>
+        <a
+            href={notificationActionUrl(notification)}
+            target="_blank"
+            rel="noreferrer"
+        >
             <div
                 id={"workspace-notification-" + index}
                 className={`${
@@ -84,7 +88,7 @@ const NotificationCard = ({
                     </div>
                 </div>
             </div>
-        </div>
+        </a>
     );
 };
 
