@@ -11,11 +11,13 @@ import { useIsMobile } from "common/hooks";
 import { NotificationsVMContext } from "pages/workspace/notification.vm";
 
 const NewNavbar = ({
+    searching,
     showSearchBar,
     showLogo,
     handleSearchFocus,
     handleSearchBlur,
 }: {
+    searching: boolean;
     showSearchBar: boolean;
     showLogo: boolean;
     handleSearchFocus: () => void;
@@ -56,7 +58,9 @@ const NewNavbar = ({
                             query: { q: option.value },
                         });
                     }}
-                    className="!border-dtech-light-teal border-[3px] rounded-full !bg-white sm:h-10 h-8 sm:w-[40%]"
+                    className={` !border-[#727272] border-[3px] rounded-full !bg-white sm:h-10 h-8 sm:w-[40%] ${
+                        searching && "!border-dtech-light-teal"
+                    }`}
                     onFocusSearchBar={handleSearchFocus}
                     onBlurSearchBar={handleSearchBlur}
                 />

@@ -19,7 +19,7 @@ const DiscoverByTopics = ({ isMobile, recommendations, isLoading }: { isMobile: 
                 </div>
                 <div className="text-sm text-dtech-new-main-light hover:bg-[#D9EFFC] focus-within:bg-[#FDD522] focus-within:borderb--2 focus-within:border-black active:bg-[#FDD522] focus:bg-[#FDD522]"><Link href={"/"}>(View All)</Link></div>
             </div>
-            <CardComponent dataObjects={recommendations} isMobile={isMobile} isLoading={isLoading} />
+            <CardComponent discoverby="topic" dataObjects={recommendations} isMobile={isMobile} isLoading={isLoading} />
         </div>
     )
 }

@@ -12,6 +12,7 @@ import Loader from "components/UI/loader";
 import {
     discoverToResultCardData
 } from "./discover.vm";
+import { topicToResultCardData } from "pages/search/topics/topics.vm";
 // const recommendations: RecommendationItem[] = [{
 //     title: "fwefwef",
 //     subTitle: "SNH nature reserves (NR) are those SNH properties vwevewf ewfewfew ewfev cerferfewf   ewfewfewfewjmlkmlkmlkmlkmlkmwewfewf...",
@@ -86,20 +87,29 @@ const convertToJson = (input_data: any) => {
 }
 const DiscoverByComponent = ({ isMobile }: { isMobile: boolean, }) => {
     const [providers, setProviders] = useState<any[]>()
+    const [topics, setTopics] = useState<any[]>()
     const discoverVM = DiscoverVM()
 
     useEffect(() => {
         setProviders(discoverVM.fetchedProviders)
     }, [discoverVM.fetchedProviders])
+
+    useEffect(() => {
+        setTopics(discoverVM.fetchedTopics)
+    }, [discoverVM.fetchedTopics])
+    console.log({topics})
+
     useEffect(() => {
         discoverVM.fetchProviders()
+        discoverVM.fetchTopics()
     }, []);
+
     return (
         <div className="mb-5 sm:mb-20">
             {/* <RecommendedDatasets  isMobile={isMobile} recommendations={recommendations}/> */}
             <DiscoverByDataProviders isMobile={isMobile} recommendations={discoverToResultCardData(providers)} isLoading={discoverVM.isLoading} />
-            {/* <DiscoverByRegions isMobile={isMobile} recommendations={recommendations} />
-            <DiscoverByTopics isMobile={isMobile} recommendations={recommendations} /> */}
+            {/* <DiscoverByRegions isMobile={isMobile} recommendations={recommendations} /> */}
+            <DiscoverByTopics isMobile={isMobile} recommendations={topicToResultCardData(topics)} isLoading={discoverVM.isLoadingTopic} />
         </div>
     )
 }

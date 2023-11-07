@@ -125,6 +125,7 @@ const HomePage = ({ home }: { home: any }) => {
             <NewNavbar
                 showSearchBar={false}
                 showLogo={false}
+                searching={searching}
                 handleSearchBlur={handleSearchBlur}
                 handleSearchFocus={handleSearchFocus}
             />
@@ -189,7 +190,7 @@ const HomePage = ({ home }: { home: any }) => {
                                 query: { q: option.value },
                             });
                         }}
-                        className={` rounded-full !border-[#727272] border-[3px] !bg-white sm:h-10 h-8 sm:w-[70%] ${
+                        className={` rounded-full !border-[#727272] border-[3px] !bg-white sm:h-10 h-8 sm:w-[70%]  ${
                             searching && "!border-dtech-light-teal"
                         }`}
                         onFocusSearchBar={handleSearchFocus}
