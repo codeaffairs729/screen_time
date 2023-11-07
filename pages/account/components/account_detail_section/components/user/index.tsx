@@ -225,9 +225,9 @@ const UserSection = () => {
                         }
                     }}
                 />
-                <span className="text-[#6E498E] border-[#6E498E] border-2 w-[120px] sm:w-[170px] !p-[10px] sm:!p-[16px] rounded-[30px] mt-5 mb-2 text-xs sm:text-[16px] text-center">
+                {/* <span className="text-[#6E498E] border-[#6E498E] border-2 w-[120px] sm:w-[170px] !p-[10px] sm:!p-[16px] rounded-[30px] mt-5 mb-2 text-xs sm:text-[16px] text-center">
                     Cancel
-                </span>
+                </span> */}
             </div>
         </div>
     );
