@@ -25,7 +25,7 @@ const Footer = () => {
                 <div className=" bg-[#6E498E] w-[2px] mx-4 h-[30px]">
                 </div>
                 <div className="flex flex-col sm:text-[16px] text-xs text-dtech-main-grey">
-                    <div className=" text-[#727272] font-[400]">Proudly brought to you by <a href="https://dtime.ai/home" rel="noreferrer" target="_blank"><span className=" font-[500] text-dtech-new-main-light">DTIME.AI ©2023.</span></a>
+                    <div className=" text-[#727272] font-[400]">Proudly brought to you by <a href="https://dtime.ai" rel="noreferrer" target="_blank"><span className=" font-[500] text-dtech-new-main-light">DTIME.AI ©2023.</span></a>
                     </div>
                 </div>
 

@@ -26,6 +26,7 @@ module.exports = {
                     "light-grey2": "#EBEBEB",
                     "light-grey3": "#727272",
                     "dark-grey2": "#2D2D32",
+                    "main-teal": "#4CA7A5"
                 },
             },
             maxWidth: {
