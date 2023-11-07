@@ -18,6 +18,7 @@ import {
 } from "./workspace/notification.vm";
 import Head from "next/head";
 import IdleTimeoutModal from "./components/idle_timeout";
+import CookiePopover from "components/cookies/cookie_popover";
 
 function DtechtiveApp({ Component, pageProps }: AppProps) {
     const router = useRouter();
@@ -46,13 +47,15 @@ function DtechtiveApp({ Component, pageProps }: AppProps) {
     useEffect(() => {
         const handleRouteChange = () => {
             const user = store.getState().auth.user;
-            if (!user && localStorage.getItem("previous_path") == '/account#subscription'){
-                localStorage.setItem("previous_path", '/account#subscription');
-            }
-            else {
+            if (
+                !user &&
+                localStorage.getItem("previous_path") == "/account#subscription"
+            ) {
+                localStorage.setItem("previous_path", "/account#subscription");
+            } else {
                 localStorage.setItem("previous_path", previousPath);
             }
-                setPreviousPath(router.asPath);
+            setPreviousPath(router.asPath);
         };
 
         router.events.on("routeChangeComplete", handleRouteChange);
@@ -117,6 +120,7 @@ function DtechtiveApp({ Component, pageProps }: AppProps) {
                     persistor={persistor}
                 >
                     <NotificationsVMContext.Provider value={vm}>
+                        <CookiePopover />
                         <Component {...pageProps} />
                     </NotificationsVMContext.Provider>
                     <Toaster
