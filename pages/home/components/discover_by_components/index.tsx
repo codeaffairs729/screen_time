@@ -107,9 +107,9 @@ const DiscoverByComponent = ({ isMobile }: { isMobile: boolean, }) => {
     return (
         <div className="mb-5 sm:mb-20">
             {/* <RecommendedDatasets  isMobile={isMobile} recommendations={recommendations}/> */}
+            <DiscoverByTopics isMobile={isMobile} recommendations={topicToResultCardData(topics)} isLoading={discoverVM.isLoadingTopic} />
             <DiscoverByDataProviders isMobile={isMobile} recommendations={discoverToResultCardData(providers)} isLoading={discoverVM.isLoading} />
             {/* <DiscoverByRegions isMobile={isMobile} recommendations={recommendations} /> */}
-            <DiscoverByTopics isMobile={isMobile} recommendations={topicToResultCardData(topics)} isLoading={discoverVM.isLoadingTopic} />
         </div>
     )
 }
