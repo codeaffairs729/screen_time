@@ -8,7 +8,7 @@ const LearnMoreObjects = [
     },
     {
         label: "Data Source Registration",
-        link: "/register-data-source",
+        link: "/register-data-source#viewCatalogue",
         target: false,
         isAuthRequired:true
     },

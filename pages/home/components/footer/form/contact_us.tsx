@@ -107,11 +107,10 @@ const ContactUs = () => {
                             label="Message"
                             className="!bg-transparent text-[#333333] !text-base -m-2 sm:!text-[16px] sm:!font-[700]"
                         >
-                            {" "}
                         </FormRow>
                         <InfoIcon
                             tooltipClassName="w-60 !bg-dtech-dark-teal"
-                            iconClasses="text-[#333333] -mt-[46px] !ml-18 sm:!ml-[75px]"
+                            iconClasses="text-[#333333] -mt-[46px] !ml-18 !ml-[75px]"
                             title="Enter your message"
                         />
                     </div>

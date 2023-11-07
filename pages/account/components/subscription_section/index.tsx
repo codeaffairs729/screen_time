@@ -18,6 +18,7 @@ const SubscriptionSection = () => {
     const [openPopup, setOpenPopup] = useState<boolean>(false);
     const { isMobile } = useIsMobile();
     const user = useSelector((state: RootState) => state.auth.user);
+
     return (
         <>
             {!isMobile ? (
@@ -48,12 +49,14 @@ const SubscriptionSection = () => {
                                     : " !items-center "
                             }`}
                                 description={plan.description}
-                                active={User.getAllRoles(user)?.includes(plan.role)}
+                                active={User.getAllRoles(user)?.includes(
+                                    plan.role
+                                )}
                             />
                         ))}
                     </div>
                     <div className="flex ml-[25px] my-2">
-                        <span className=" text-[22px] font-bold text-[#4CA7A5]">
+                        <span className=" text-[22px] font-bold text-dtech-main-teal">
                             Features
                         </span>
                     </div>
@@ -88,44 +91,44 @@ const SubscriptionSection = () => {
                     )}
                     <div className="flex flex-row mt-3">
                         <div className="w-[47.5%]"></div>
-                        <div
-                            className="w-[17.5%] flex justify-center items-center"
-                            id={"essential_plan"}
-                        >
-                            <button
-                                onClick={() => setOpenPopup(true)}
-                                className="flex justify-center items-center bg-dtech-new-main-light p-4 w-[150px] rounded-full mx-2 cursor-pointer"
-                            >
-                                <span className="text-white">Select plan</span>
-                            </button>
-                        </div>
-                        {/* <div className="w-[17.5%] flex justify-center items-center">
-                            <button className="flex justify-center items-center bg-[#4CA7A5] p-4 w-[150px] rounded-full mx-2 cursor-pointer">
-                                <span className="text-white">Active plan</span>
-                            </button>
-                        </div> */}
-                        <div
-                            className="w-[17.5%] flex justify-center items-center"
-                            id={"professional_plan"}
-                        >
-                            <button
-                                onClick={() => setOpenPopup(true)}
-                                className="flex justify-center items-center bg-dtech-new-main-light p-4 w-[150px] rounded-full mx-2 cursor-pointer shadow-custom-6"
-                            >
-                                <span className="text-white">Active plan</span>
-                            </button>
-                        </div>
-                        <div
-                            className="w-[17.5%] flex justify-center items-center"
-                            id={"premium_plan"}
-                        >
-                            <button
-                                onClick={() => setOpenPopup(true)}
-                                className="flex justify-center items-center bg-dtech-new-main-light p-4 w-[150px] rounded-full mx-2 cursor-pointer"
-                            >
-                                <span className="text-white">Select plan</span>
-                            </button>
-                        </div>
+                        {[
+                            "essential_subscriber",
+                            "professional_subscriber",
+                            "premium_subscriber",
+                        ].map((plan, index) => (
+                            <>
+                                {User.getAllRoles(user)?.includes(plan) ? (
+                                    <div
+                                        className="w-[17.5%] flex justify-center items-center"
+                                        id={plan}
+                                        key={`${plan}-${index}`}
+                                    >
+                                        <button
+                                            onClick={() => {}}
+                                            className="flex justify-center items-center bg-dtech-new-main-light p-4 w-[150px] rounded-full mx-2 cursor-pointer shadow-custom-6"
+                                        >
+                                            <span className="text-white">
+                                                Active
+                                            </span>
+                                        </button>
+                                    </div>
+                                ) : (
+                                    <div
+                                        className="w-[17.5%] flex justify-center items-center"
+                                        id={plan}
+                                    >
+                                        <button
+                                            onClick={() => setOpenPopup(true)}
+                                            className="flex justify-center items-center bg-dtech-main-teal p-4 w-[150px] rounded-full mx-2 cursor-pointer"
+                                        >
+                                            <span className="text-white">
+                                                Select plan
+                                            </span>
+                                        </button>
+                                    </div>
+                                )}
+                            </>
+                        ))}
                     </div>
 
                     <Card
