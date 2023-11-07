@@ -1,0 +1,16 @@
+{
+    "data": [
+      {
+        "title":"Cookies that remember your settings",
+        "description":"These cookies do things like remember pop-ups you’ve seen, so you're not shown them again."
+      },
+      {
+        "title":"Cookies that measure website use",
+        "description":"These cookies store information about how you use our website, such as what you click on."
+      },
+      {
+        "title":"Cookies that help with our communications and marketing",
+        "description":"These cookies may be set by third party websites and do things like measure how you view YouTube videos that are on this website."
+      }
+    ]
+}
