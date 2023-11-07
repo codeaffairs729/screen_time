@@ -29,7 +29,7 @@ const NewNavbar = ({
     return (
         <div
             className={clsx(
-                "sm:bg-[#512C71] text-white sm:pr-[10%] h-10 sm:h-full px-[5%] py-1 z-10 ",
+                "sm:bg-[#512C71] text-white sm:pr-[10%] h-10 sm:h-full px-[5%] py-2 z-10 ",
                 !isMobile && showLogo
                     ? "flex justify-between items-center"
                     : " bg-dtech-main-dark",
