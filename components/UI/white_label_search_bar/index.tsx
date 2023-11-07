@@ -107,7 +107,7 @@ const NewSearchBar = ({
         }
     }, [q]);
     const handleKeyDown = (event: any) => {
-        if (event.key === 'Enter') {
+        if (event.key === 'Enter'|| event.key === 'NumpadEnter') {
             onChange(searchType, { label: "User input", value: query });
             handleOnBlur()
             setOpen(false)

@@ -105,7 +105,7 @@ const DefaultLayout = ({
             /> */}
             <div className="">
 
-            <NewNavbar showSearchBar={true} showLogo={true} handleSearchFocus={handleSearchFocus} handleSearchBlur={handleSearchBlur} />
+            <NewNavbar searching={searching} showSearchBar={true} showLogo={true} handleSearchFocus={handleSearchFocus} handleSearchBlur={handleSearchBlur} />
             </div>
             {isMobile && <div className="flex items-center py-4 mb-4 justify-center">
                 <NewSearchBar
@@ -122,7 +122,7 @@ const DefaultLayout = ({
                     onFocusSearchBar={handleSearchFocus}
                     onBlurSearchBar={handleSearchBlur}
 
-                    className={`rounded-full !bg-white sm:h-10 h-8 w-[90%] border-2 border-black ${searching && "!border-dtech-light-teal"}`}
+                    className={` !border-[#727272] rounded-full !bg-white sm:h-10 h-8 w-[90%] border-2  ${searching && "!border-dtech-light-teal"}`}
                 />
             </div>}
             <div className={clsx(`max-w-site mx-auto w-full`, wrapperClass)}>{children}</div>

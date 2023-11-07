@@ -43,7 +43,7 @@ const TopicDetailVM = (initialTopicData: any, id: number | undefined) => {
                 onError: (e) => {
                     console.log(e);
                     toast.error(
-                        "Something went wrong while fetching organisation datasets."
+                        "Something went wrong while fetching Topic datasets."
                     );
                 },
             }

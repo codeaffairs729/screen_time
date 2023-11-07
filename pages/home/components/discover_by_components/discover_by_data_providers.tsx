@@ -27,7 +27,7 @@ const DiscoverByDataProviders = ({ isMobile, recommendations,isLoading }: { isMo
                 </div>
                 <div className="text-sm text-[#0065BD] hover:bg-[#D9EFFC] focus-within:bg-[#FDD522] focus-within:border-b-2 focus-within:border-black active:bg-[#FDD522] focus:bg-[#FDD522]"><div onClick={() => dispatch(updateSearchType(SearchTypes.ORGANISATION.value))}><Link href={"/search/organisation?page=1"}>(View All)</Link></div></div>
             </div>
-            <CardComponent dataObjects={recommendations} isMobile={isMobile} isLoading={isLoading}/>
+            <CardComponent discoverby="provider" dataObjects={recommendations} isMobile={isMobile} isLoading={isLoading}/>
         </div>
     )
 }

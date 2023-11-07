@@ -1,12 +1,12 @@
+import { useIsMobile } from "common/hooks";
 import ContactUs from "./form/contact_us";
 import LearnMore from "./learn_more/learn_more";
 import Resources from "./resources/resources";
 import Link from "next/link"
 const Footer = () => {
+    const {isMobile} = useIsMobile();
     return (
-        <div className="  bg-[#EBEBEB]" style={{
-            // background: "linear-gradient(to bottom, #B585B770, #6DCDCB59)"
-        }}>
+        <div className={`bg-[#EBEBEB] ${isMobile && "!bg-[#F4F4F4]"}`} >
             <div className=" sm:pt-[130px] sm:px-[10%] ">
                 <div className="flex flex-col sm:flex-row sm:px-[10%] px-6 max-w-full bg-[#FBFAFA] ">
                     <div className="flex flex-row sm:w-2/3 sm:px-2 sm:py-4 ">
