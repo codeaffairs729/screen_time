@@ -91,7 +91,8 @@ const NewSearchBar = ({
     useEffect(() => {
         if (
             query.trim() == "" ||
-            searchType == SearchTypes.ORGANISATION.value
+            searchType == SearchTypes.ORGANISATION.value ||
+            searchType == SearchTypes.TOPICS.value
         ) {
             return;
         }
