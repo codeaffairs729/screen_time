@@ -26,7 +26,7 @@ const DataProviderCard = ({ data, isMobile, imgCss="" }: DataProviderCardProps) 
 
     return (
         <div
-            className={` border border-gray-100 rounded-md md:rounded-xl shadow-custom-4  min-h-[100%] max-w-[90%]  md:max-h-[10%] md:min-w-[100%] `}
+            className={` border border-gray-100 rounded-md md:rounded-xl shadow-card-shadow  hover:shadow-hover-shadow  min-h-[100%] max-w-[90%]  md:max-h-[10%] md:min-w-[100%] `}
         >
             <div
                 className={`flex flex-col justify-center  items-center  ${
