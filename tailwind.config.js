@@ -60,6 +60,8 @@ module.exports = {
                 "card-shadow":"2px 2px 7px 7px rgba(146, 146, 146, 0.1)",
                 "hover-shadow":"2px 2px 7px 8px rgba(146, 146, 146, 0.15)",
                 "topic-card": "4px 4px 4px 0px rgba(146, 146, 146, 0.25)",
+                "search-card": "4px 4px 15px 0 rgba(0, 0, 0, 0.1)",
+                "search-card-hover": "4px 4px 15px 0 rgba(0, 0, 0, 0.15)",
             },
         },
     },

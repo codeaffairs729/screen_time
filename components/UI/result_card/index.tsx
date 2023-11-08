@@ -92,7 +92,7 @@ const ResultCard = ({
                 className={`${className} rounded-lg px-5 py-1.5 flex flex-row justify-between  w-full min-w my-2 border-r-8  border-transparent  hover:border-[#6DCDCB] active:border-dtech-main-dark active:bg-[#FCF9F9] ${
                     hideResultCard
                         ? " shadow-underline"
-                        : "border-gray-100 shadow-custom-2"
+                        : "border-gray-100 shadow-search-card hover:shadow-search-card-hover"
                 }`}
             >
                 <div className="flex flex-col md:flex-row justify-between w-full">

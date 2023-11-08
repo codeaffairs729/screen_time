@@ -26,34 +26,34 @@ const SubscriptionSection = () => {
                     <Popup openPopup={openPopup} setOpenPopup={setOpenPopup} />
 
                     <div className="flex">
-                        {subscription.plans?.map((plan: any, index: number) => (
-                            <Card
-                                key={index}
-                                cardOuterClass={
-                                    plan.label.toLocaleLowerCase() ==
-                                    "announcement"
-                                        ? " h-[196px] w-[30%]"
-                                        : "h-[196px] w-[17.5%]"
-                                }
-                                label={plan.label}
-                                labelDivClass={`h-[82px]  ${
-                                    plan.label.toLocaleLowerCase() ==
-                                    "announcement"
-                                        ? ""
-                                        : "!items-center !text-bold"
-                                }`}
-                                descriptionDivClass={`h-[114px] text-[#727272]
+                        {getPlans(subscription, user)?.map((plan: any, index: number) => {
+                            return (
+                                <Card
+                                    key={index}
+                                    cardOuterClass={
+                                        plan.label.toLocaleLowerCase() ==
+                                        "announcement"
+                                            ? " h-[196px] w-[30%] "
+                                            : "h-[196px] w-[17.5%]"
+                                    }
+                                    label={plan.label}
+                                    labelDivClass={`h-[82px]  ${
+                                        plan.label.toLocaleLowerCase() ==
+                                        "announcement"
+                                            ? ""
+                                            : "!items-center !text-bold"
+                                    }`}
+                                    descriptionDivClass={`h-[114px] text-[#727272]
                             ${
                                 plan.label.toLocaleLowerCase() == "announcement"
                                     ? "  "
                                     : " !items-center "
                             }`}
-                                description={plan.description}
-                                active={User.getAllRoles(user)?.includes(
-                                    plan.role
-                                )}
-                            />
-                        ))}
+                                    description={plan.description}
+                                    active={plan.active}
+                                />
+                            );
+                        })}
                     </div>
                     <div className="flex ml-[25px] my-2">
                         <span className=" text-[22px] font-bold text-dtech-main-teal">
@@ -91,44 +91,44 @@ const SubscriptionSection = () => {
                     )}
                     <div className="flex flex-row mt-3">
                         <div className="w-[47.5%]"></div>
-                        {[
-                            "essential_subscriber",
-                            "professional_subscriber",
-                            "premium_subscriber",
-                        ].map((plan, index) => (
-                            <>
-                                {User.getAllRoles(user)?.includes(plan) ? (
-                                    <div
-                                        className="w-[17.5%] flex justify-center items-center"
-                                        id={plan}
-                                        key={`${plan}-${index}`}
-                                    >
-                                        <button
-                                            onClick={() => {}}
-                                            className="flex justify-center items-center bg-dtech-new-main-light p-4 w-[150px] rounded-full mx-2 cursor-pointer shadow-custom-6"
+                        {getPlans(subscription, user)
+                            .slice(2)
+                            .map((plan: any, index: number) => (
+                                <>
+                                    {plan.active ? (
+                                        <div
+                                            className="w-[17.5%] flex justify-center items-center"
+                                            id={plan}
+                                            key={`${plan}-${index}`}
                                         >
-                                            <span className="text-white">
-                                                Active
-                                            </span>
-                                        </button>
-                                    </div>
-                                ) : (
-                                    <div
-                                        className="w-[17.5%] flex justify-center items-center"
-                                        id={plan}
-                                    >
-                                        <button
-                                            onClick={() => setOpenPopup(true)}
-                                            className="flex justify-center items-center bg-dtech-main-teal p-4 w-[150px] rounded-full mx-2 cursor-pointer"
+                                            <button
+                                                onClick={() => {}}
+                                                className="flex justify-center items-center bg-dtech-new-main-light p-4 w-[150px] rounded-full mx-2 cursor-pointer shadow-custom-6"
+                                            >
+                                                <span className="text-white">
+                                                    Active
+                                                </span>
+                                            </button>
+                                        </div>
+                                    ) : (
+                                        <div
+                                            className="w-[17.5%] flex justify-center items-center"
+                                            id={plan}
                                         >
-                                            <span className="text-white">
-                                                Select plan
-                                            </span>
-                                        </button>
-                                    </div>
-                                )}
-                            </>
-                        ))}
+                                            <button
+                                                onClick={() =>
+                                                    setOpenPopup(true)
+                                                }
+                                                className="flex justify-center items-center bg-dtech-main-teal p-4 w-[150px] rounded-full mx-2 cursor-pointer"
+                                            >
+                                                <span className="text-white">
+                                                    Select plan
+                                                </span>
+                                            </button>
+                                        </div>
+                                    )}
+                                </>
+                            ))}
                     </div>
 
                     <Card
@@ -248,4 +248,28 @@ const Popup = ({
             </Dialog>
         </Transition>
     );
+};
+
+const getPlans = (subscription: any, user: any) => {
+    const plans: any = subscription.plans.map((plan: any, index: any) => {
+        return {
+            ...plan,
+            active: User.getAllRoles(user)?.includes(plan.role),
+        };
+    });
+
+    let maxPriority = 0;
+
+    plans.forEach((item: any) => {
+        if (item.active && item.priorty > maxPriority) {
+            maxPriority = item.priorty;
+        }
+    });
+
+    const updatedPlans = plans.map((plan: any) => ({
+        ...plan,
+        active: plan.priorty === maxPriority,
+    }));
+
+    return updatedPlans;
 };
