@@ -86,7 +86,7 @@ const DatasetSection = () => {
                             {datasetByTopic?.datasets?.map(
                                 (item: any, index: any) => (
                                     <tr
-                                        className=" border-b-[1px] h-14"
+                                        className=" border-b-[1px] h-14 hover:bg-dtech-light-gray"
                                         key={index}
                                     >
                                         <td className="underline  p-2 text-xs border-r-[1px] sm:border-r-0 sm:text-sm text-dtech-main-dark w-1/2 min-w-[120px] sm:w-[32%]">

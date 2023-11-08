@@ -16,9 +16,10 @@ const TagCloud2 = dynamic(() => import("./tagCloud2"), {
     ssr: false, // This line is important. It's what prevents server-side render
 });
 const TABLE_HEADERS = ["Search term", "Count", "Last used"];
+
 const SearchTermSection = () => {
     const [transformedData, setTransformedData] = useState([]);
-    const { permittedPermissions } = useContext(OrganisationDetailVMContext)
+    const { permittedPermissions } = useContext(OrganisationDetailVMContext);
     const { searchTerms, fetchSearchTerms, isFetchingSearchTerms, error } =
         useContext(SearchTermVMContext);
 
@@ -26,17 +27,6 @@ const SearchTermSection = () => {
         fetchSearchTerms();
     }, []);
 
-    // const tagsItems = useMemo(
-    //     () => searchTerms.map((terms: SearchTermType) => terms.title),
-    //     [searchTerms]
-    // );
-    // const tagsCount = useMemo(
-    //     () => searchTerms.map((terms: SearchTermType) => terms.count),
-    //     [searchTerms]
-    // );
-    useEffect(() =>
-        transformData(searchTerms)
-        , [searchTerms])
 
     if (error) {
         return (
@@ -65,25 +55,6 @@ const SearchTermSection = () => {
             </div>
         );
     }
-    // function replacePlusWithSpace(inputArray:any) {
-    //     let outputArray = inputArray.map((word:String) => word.replace(/\+/g, ' '));
-    //     return outputArray;
-    // }
-    function transformData(inputData: any) {
-        const transformedData = inputData.map((item: any) => {
-            return {
-                tag: item.title.replace(/\+/g, ' '), // Replace '+' with space in the title
-                count: item.count
-            };
-        });
-        setTransformedData(transformedData)
-    }
-
-    const getTableData = (searchTerms: SearchTermType[]) =>
-        searchTerms.map((terms: any) => {
-            const date: any = DateTime.fromISO(terms["lastUsed"]);
-            return [terms["title"].replace(/\+/g, ' '), terms["count"], getAge(date.ts)];
-        });
 
     return (
         <div>
@@ -91,16 +62,17 @@ const SearchTermSection = () => {
                 Search terms used to discover the datasets of the data provider
             </div>
             <div className="sm:hidden text-xs px-2 py-2 text-center">
-                Terms in the tag cloud below are gathered from the search queries entered by users to view datasets. Larger the size of the term, the higher its occurrence
+                Terms in the tag cloud below are gathered from the search
+                queries entered by users to view datasets. Larger the size of
+                the term, the higher its occurrence
             </div>
             <div className="relative">
-
                 <div className="w-full">
-                    <TagCloud2 data={transformedData} />
+                    <TagCloud2 data={tagCloudDataTable(searchTerms, "cloud")} />
                     <div className="text-sm w-full overflow-scroll text-dtech-dark-grey my-8 ">
                         <Table
                             tableHeaders={TABLE_HEADERS}
-                            tableData={getTableData(searchTerms)}
+                            tableData={tagCloudDataTable(searchTerms, "table")}
                             headerClass="sm:text-[17px] !py-2 sm:!py-4 !text-xs border-2 border-white !w-full sm:!px-10 !px-4  !text-white text-center sm:font-medium sm:bg-dtech-new-main-light bg-dtech-dark-teal "
                             tableClass=" text-sm border-white w-full min-w-[180%] sm:min-w-fit !px-10 text-white text-center sm:font-medium bg-[#EBEBEB] table-fixed"
                             cellPadding={20}
@@ -108,16 +80,60 @@ const SearchTermSection = () => {
                         />
                     </div>
                 </div>
-                {
-                    (!permittedPermissions.includes("providerInsights.useCases.view")) && <div className=" absolute top-0 left-0 w-full h-full">
-                        <div className="h-full"><UpgradeAccountModal /></div>
+                {!permittedPermissions.includes(
+                    "providerInsights.useCases.view"
+                ) && (
+                    <div className=" absolute top-0 left-0 w-full h-full">
+                        <div className="h-full">
+                            <UpgradeAccountModal />
+                        </div>
                     </div>
-                }
+                )}
             </div>
         </div>
     );
 };
 
-
-
 export default SearchTermSection;
+
+const tagCloudDataTable = (searchTerms: SearchTermType[], label: string) => {
+    const aggregatedData: any = {};
+    searchTerms.forEach((item: any) => {
+        const title = item.title.toLowerCase();
+        if (
+            !aggregatedData[title] ||
+            item.lastUsed > aggregatedData[title].lastUsed
+        ) {
+            aggregatedData[title] = {
+                title: item.title,
+                count: item.count,
+                lastUsed: item.lastUsed,
+            };
+        } else {
+            aggregatedData[title].count += item.count;
+        }
+    });
+
+    if (label === "table") {
+        const data = Object.values(aggregatedData).map((terms: any) => {
+            const date: any = DateTime.fromISO(terms["lastUsed"]);
+            return [
+                terms["title"].replace(/\+/g, " "),
+                terms["count"],
+                getAge(date.ts),
+            ];
+        });
+
+        return data;
+    }else{
+        
+        const data = Object.values(aggregatedData).map((item: any) => {
+            return {
+                tag: item.title.replace(/\+/g, " "),
+                count: item.count,
+            };
+        })
+
+        return data;
+    }
+};
