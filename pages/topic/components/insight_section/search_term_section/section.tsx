@@ -36,7 +36,6 @@ const SearchTermSection = () => {
         fetchSearchTerms();
     }, []);
 
-    useEffect(() => transformData(searchTerms), [searchTerms]);
     if (error) {
         return (
             <ErrorAlert
@@ -64,27 +63,6 @@ const SearchTermSection = () => {
             </div>
         );
     }
-
-    function transformData(inputData: any) {
-        const transformedData = inputData.map((item: any) => {
-            return {
-                tag: item.title.replace(/\+/g, " "), // Replace '+' with space in the title
-                count: item.count,
-            };
-        });
-        setTransformedData(transformedData);
-    }
-
-    const getTableData = (searchTerms: SearchTermType[]) =>
-        searchTerms.map((terms: any) => {
-            const date: any = DateTime.fromISO(terms["lastUsed"]);
-            return [
-                terms["title"].replace(/\+/g, " "),
-                terms["count"],
-                getAge(date.ts),
-            ];
-        });
-
     return (
         <div>
             <div className="hidden sm:block text-sm text-center my-5 text-dtech-dark-grey">
@@ -97,11 +75,11 @@ const SearchTermSection = () => {
             </div>
             <div className="relative">
                 <div className="w-full">
-                    <TagCloud2 data={transformedData} />
+                    <TagCloud2 data={tagCloudDataTable(searchTerms, "cloud")} />
                     <div className="text-sm w-full overflow-scroll text-dtech-dark-grey my-8 ">
                         <Table
                             tableHeaders={TABLE_HEADERS}
-                            tableData={getTableData(searchTerms)}
+                            tableData={tagCloudDataTable(searchTerms, "table")}
                             headerClass="sm:text-[17px] !py-2 sm:!py-4 !text-xs border-2 border-white !w-full sm:!px-10 !px-4  !text-white text-center sm:font-medium sm:bg-dtech-new-main-light bg-dtech-dark-teal "
                             tableClass=" text-sm border-white w-full min-w-[180%] sm:min-w-fit !px-10 text-white text-center sm:font-medium bg-[#EBEBEB] table-fixed"
                             cellPadding={20}
@@ -124,3 +102,48 @@ const SearchTermSection = () => {
 };
 
 export default SearchTermSection;
+
+
+
+
+const tagCloudDataTable = (searchTerms: SearchTermType[], label: string) => {
+    const aggregatedData: any = {};
+    searchTerms.forEach((item: any) => {
+        const title = item.title.toLowerCase();
+        if (
+            !aggregatedData[title] ||
+            item.lastUsed > aggregatedData[title].lastUsed
+        ) {
+            aggregatedData[title] = {
+                title: item.title,
+                count: item.count,
+                lastUsed: item.lastUsed,
+            };
+        } else {
+            aggregatedData[title].count += item.count;
+        }
+    });
+
+    if (label === "table") {
+        const data = Object.values(aggregatedData).map((terms: any) => {
+            const date: any = DateTime.fromISO(terms["lastUsed"]);
+            return [
+                terms["title"].replace(/\+/g, " "),
+                terms["count"],
+                getAge(date.ts),
+            ];
+        });
+
+        return data;
+    }else{
+        
+        const data = Object.values(aggregatedData).map((item: any) => {
+            return {
+                tag: item.title.replace(/\+/g, " "),
+                count: item.count,
+            };
+        })
+
+        return data;
+    }
+};

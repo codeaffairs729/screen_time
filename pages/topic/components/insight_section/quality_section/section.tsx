@@ -238,7 +238,7 @@ const QualityInsightsBody = () => {
                             {Object.keys(items).length == 5
                                 ? <tbody className=" sm:border-t-[1px] border-black">
                                     {items["overallScore"]?.datasets?.map((item: any, index: any) => (
-                                        <tr className=" border-b-[1px] h-14" key={index}>
+                                        <tr className=" border-b-[1px] h-14 hover:bg-dtech-light-grey" key={index}>
                                             <td className="underline  p-2 text-xs border-r-[1px] sm:border-r-0 sm:text-sm text-dtech-main-dark w-1/2 min-w-[120px] sm:w-[25%]"><a href={`${process.env.NEXT_PUBLIC_WEBCLIENT_ROOT}/datasets/${item.id}`}>{item.title}</a></td>
                                             <td className="sm:w-[15%] p-2 text-xs sm:text-sm text-center">{typeof item.rating == "string" ? item.rating.replace("N/A", "-") : item.rating}</td>
                                             <td className="sm:w-[15%] p-2 text-xs sm:text-sm text-center">{item.factorWiseRating.accuracy ?? "-"}</td>
@@ -250,7 +250,7 @@ const QualityInsightsBody = () => {
                                 </tbody>
                                 : <tbody className=" sm:border-t-[1px] border-black">
                                     {items["overallScore"]?.datasets?.map((item: any, index: any) => (
-                                        <tr className=" border-b-[1px] h-14" key={index}>
+                                        <tr className=" border-b-[1px] h-14 hover:bg-dtech-light-grey" key={index}>
                                             <td className="underline  p-2 text-xs border-r-[1px] sm:border-r-0 sm:text-sm text-dtech-main-dark w-1/2 min-w-[120px] sm:w-[25%]"><a href={`${process.env.NEXT_PUBLIC_WEBCLIENT_ROOT}/datasets/${item.id}`}>{item.title}</a></td>
                                             <td className="sm:w-[15%] p-2 text-xs sm:text-sm text-center">{item.factorWiseRating.overall ?? "-"}</td>
                                             <td className="sm:w-[15%] p-2 text-xs sm:text-sm text-center">{item.factorWiseRating.accessibility ?? "-"}</td>
@@ -293,9 +293,6 @@ const QualityInsightsBody = () => {
                     </button> */}
                     </div>
                 </div>
-                {((selectedLabel == 0 && !permittedPermissions.includes("topicInsights.dataQuality.view")) || (selectedLabel == 1 && !permittedPermissions.includes("providerInsights.metadataQuality.view"))) && <div className=" absolute top-0 left-0 w-full h-full">
-                    <div className="h-full"><UpgradeAccountModal /></div>
-                </div>}
                 <div className="hidden sm:flex justify-center mt-20">
                     <div className="w-[1000px] h-[10px] bg-[#D9D9D9] ">
                     </div>
@@ -303,7 +300,9 @@ const QualityInsightsBody = () => {
                 <div>
                     <GraphSection items={items} />
                 </div>
-
+                {((selectedLabel == 0 && !permittedPermissions.includes("topicInsights.dataQuality.view")) || (selectedLabel == 1 && !permittedPermissions.includes("providerInsights.metadataQuality.view"))) && <div className=" absolute top-0 left-0 w-full h-full">
+                    <div className="h-full"><UpgradeAccountModal /></div>
+                </div>}
             </div>
 
         </div>
