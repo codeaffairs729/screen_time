@@ -38,7 +38,7 @@ const DiscoverVM = () => {
         executeFetchTopics(
             () => {
                 return new HttpBuilder({
-                    url: `/v1/topics/?search_query=t&page_size=20&page_num=1&sort_by=relevance`,
+                    url: `/v1/topics/?search_query=&page_size=20&page_num=1&sort_by=relevance`,
                     method: "GET",
                 }).run({ retries: 0, tryRefreshingToken: false });
             },

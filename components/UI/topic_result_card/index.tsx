@@ -26,7 +26,7 @@ const TopicCard = ({ data, isMobile, imgCss="" }: TopicProps) => {
 
     return (
         <div
-            className={` border border-gray-100 rounded-md md:rounded-xl  shadow-custom-4  min-h-[100%] max-w-[90%]  md:max-h-[10%] md:min-w-[100%]  `}
+            className={` border border-gray-100 rounded-md md:rounded-xl  shadow-custom-4  md:min-h-[100%] max-w-[90%]  md:max-h-[10%] md:min-w-[100%] min-w-[176px] min-h-[112px]  `}
         >
             <div
                 className={`flex flex-col justify-center  items-center  ${
@@ -90,7 +90,7 @@ const FrontCard = ({ data, isMobile,imgCss="" }: { data: Data; isMobile: boolean
         .map((item) => item[0].toUpperCase())
         .join("");
     return (
-        <div className=" flex flex-col justify-center items-center overflow-hidden h-[77.94px] md:h-40 w-full">
+        <div className=" flex flex-col justify-center items-center overflow-hidden h-[77.94px] md:h-40 w-full md:min-h-[138px] min-h-[114px]">
             {imgUrl ? (
                 <img
                     src={imgUrl}
@@ -114,8 +114,8 @@ const BackCard = ({ data, isMobile }: { data: Data; isMobile: boolean }) => {
     const descriptionWord = isMobile ? words.slice(0, 12) : words.slice(0, 15);
 
     return (
-        <div className={` mx-3 md:mx-5 md:my-3  w-[95%] md:min-h-[138px] min-h-[78px]`}>
-            <div className={`text-[12px] md:text-[16px] md:font-normal leading-[18.75px] overflow-hidden over md:my-3 ${isMobile && "min-h-[103px]"}`}>
+        <div className={` mx-3 md:mx-5 md:my-3  w-[95%] md:min-h-[138px] min-h-[136px] `}>
+            <div className={`text-[12px] md:text-[16px] md:font-normal leading-[18.75px] overflow-hidden over md:my-3 ${isMobile ? "min-h-[103px]":"min-h-[50px]"}`}>
                 {descriptionWord.join(" ")}...
             </div>
             {stats && !isMobile && (
