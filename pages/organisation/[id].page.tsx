@@ -47,15 +47,15 @@ enum tabIndex {
 }
 
 const OrganisationDetailPage = ({
-    organisation,
+    organisation, imgData
 }: {
-    organisation: Organisation | undefined,
-}) => {
+        organisation: Organisation | undefined, imgData:any
+    }) => {
     const [loading, setLoading] = useState<boolean>(false);
     const [isMobile, setIsMobile] = useState<boolean>(false);
     const [selectedIndex, setSelectedIndex] = useState<any>(0);
-    const [topicImage, setTopicImage] = useState("")
-    const [logoImage, setLogoImage] = useState("")
+    const [topicImage, setTopicImage] = useState(imgData.topic_image)
+    const [logoImage, setLogoImage] = useState(imgData.logo_image)
     const [isReportGenerated, setIsReportGenerated] = useState<boolean>(false)
     const [permissions, setPermissions] = useState([])
     const { asPath } = useRouter();
@@ -65,13 +65,13 @@ const OrganisationDetailPage = ({
     const imageRef = useRef<HTMLDivElement>(null);
     const translationValue1Ref = useRef<HTMLDivElement>(null)
     const translationValue2Ref = useRef<HTMLDivElement>(null)
-    const fetchImages = async () => {
-        const logoUrl = await Http.get(`/v1/data_sources/provider/topic_image/${organisation?.topics[0]}/${organisation?.uuid}`, {
-            baseUrl: process.env.NEXT_PUBLIC_WEBPORTAL_API_ROOT,
-        })
+    // const fetchImages = async () => {
+    //     const logoUrl = await Http.get(`/v1/data_sources/provider/topic_image/${organisation?.topics[0]}/${organisation?.uuid}`, {
+    //         baseUrl: process.env.NEXT_PUBLIC_WEBPORTAL_API_ROOT,
+    //     })
 
-        return logoUrl
-    }
+    //     return logoUrl
+    // }
     useEffect(() => {
         const hashParam: string = asPath.split("#")[1];
         setSelectedIndex(tabIndex[hashParam as any]);
@@ -116,18 +116,18 @@ const OrganisationDetailPage = ({
             imageRef.current.style.height = desiredHeight;
             imageRef.current.style.width = desiredHeight;
         }
-        const loadImage = async () => {
-            const imageData = await fetchImages();
-            setTopicImage(imageData.topic_image)
-            setLogoImage(imageData.logo_image)
-        };
+        // const loadImage = async () => {
+        //     const imageData = await fetchImages();
+        //     setTopicImage(imageData.topic_image)
+        //     setLogoImage(imageData.logo_image)
+        // };
         const loadPermissions = async () => {
             const fetchedPermissions = await fetchPermissions(user ? user.id : 0, router.pathname.replace("/[id]", ""))
             setPermissions(fetchedPermissions
                 .filter((permission: any) => permission.permitted)
                 .map((permission: any) => permission.permission_name))
         }
-        loadImage();
+        // loadImage();
         loadPermissions()
     }, [])
     const setHeight = (size: any) => {
@@ -270,10 +270,13 @@ OrganisationDetailPage.getInitialProps = async ({
         //         : {},
         // });
         const organisation = Organisation.fromJson(res[0]);
+        const logoUrl = await Http.get(`/v1/data_sources/provider/topic_image/${organisation?.topics[0]}/${organisation?.uuid}`, {
+            baseUrl: process.env.NEXT_PUBLIC_WEBPORTAL_API_ROOT,
+        })
 
         return {
             organisation,
-            // requestProviders
+            imgData:logoUrl
         };
     } catch (error) {
         return { organisation: undefined };

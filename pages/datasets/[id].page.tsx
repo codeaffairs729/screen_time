@@ -55,12 +55,12 @@ enum tabIndex {
     insights
 
 }
-const DatasetDetail = ({ dataset }: { dataset: Dataset | undefined }) => {
+const DatasetDetail = ({ dataset, logoUrl }: { dataset: Dataset | undefined, logoUrl:any }) => {
     const [loading, setLoading] = useState<boolean>(false);
     const [scrollPosition, setScrollPosition] = useState(0);
     const [isMobile, setIsMobile] = useState<boolean>(false);
-    const [topicImage, setTopicImage] = useState("")
-    const [imgUrl, setImgUrl] = useState("")
+    const [topicImage, setTopicImage] = useState(logoUrl.topic_image_url)
+    const [imgUrl, setImgUrl] = useState(logoUrl.logo_url)
     const { asPath, query } = useRouter();
     const [scrollLeft, setScrollLeft] = useState(0);
     const [highlightedDot, setHighlightedDot] = useState(0);
@@ -70,29 +70,28 @@ const DatasetDetail = ({ dataset }: { dataset: Dataset | undefined }) => {
     const vm = DatasetDetailVM(dataset);
     const relatedVM = RelatedDatasetsVM(dataset);
     const imageRef = useRef<HTMLDivElement>(null)
-    const fetchImages = async () => {
-        try {
-            const logoUrl = await Http.get(`/v1/datasets/${dataset?.detail.topics[0]}/${dataset?.id}/logo`, {
-                baseUrl: process.env.NEXT_PUBLIC_WEBPORTAL_API_ROOT,
-            })
-            return logoUrl
-        } catch (error) {
-            console.error(error);
-            return ""
-        }
-    }
+    // const fetchImages = async () => {
+    //     try {
+    //         const logoUrl = await Http.get(`/v1/datasets/${dataset?.detail.topics[0]}/${dataset?.id}/logo`, {
+    //             baseUrl: process.env.NEXT_PUBLIC_WEBPORTAL_API_ROOT,
+    //         })
+    //         return logoUrl
+    //     } catch (error) {
+    //         console.error(error);
+    //         return ""
+    //     }
+    // }
     useEffect(() => {
         const hashParam: string = asPath.split("#")[1]?.split("/")[0];
         setSelectedIndex(tabIndex[hashParam as any]);
         setLoading(false);
 
-        const loadImage = async () => {
-            const image = await fetchImages();
-            setTopicImage(image.topic_image_url)
-            setImgUrl(image.logo_url)
-        };
+        // const loadImage = async () => {
+        //     setTopicImage(image.topic_image_url)
+        //     setImgUrl(image.logo_url)
+        // };
 
-        loadImage();
+        // loadImage();
     }, [query]);
     if (typeof window !== "undefined") {
         const previousPath = localStorage.getItem("previous_path");
@@ -391,8 +390,11 @@ DatasetDetail.getInitialProps = async ({ query, req }: NextPageContext) => {
         const datasetJson =await datasetData.json()
         const dataset = Dataset.fromJson(
             datasetJson["results"][0]
-        );
-        return { dataset };
+            );
+            const logoUrl = await Http.get(`/v1/datasets/${dataset?.detail.topics[0]}/${dataset?.id}/logo`, {
+                baseUrl: process.env.NEXT_PUBLIC_WEBPORTAL_API_ROOT,
+            })
+            return { dataset, logoUrl };
     } catch (error) {
         return { dataset: undefined };
     }
