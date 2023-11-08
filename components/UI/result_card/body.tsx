@@ -31,7 +31,7 @@ const CardBody = ({ data, handleFAQClick }: { data: Data; handleFAQClick?: Funct
                                 : description}
                             <span
                                 onClick={() => setMore(!more)}
-                                className=" cursor-pointer hover:text-black hover:font-bold"
+                                className=" cursor-pointer text-black hover:font-bold"
                             >
                                 {more ? " ...more" : " ...less"}
                             </span>

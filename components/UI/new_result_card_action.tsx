@@ -42,6 +42,8 @@ const NewResultCardAction = ({
     const [arrowActive, setArrowActive] = useState<boolean>(false);
     const router = useRouter();
     const cite = `${data?.dataProviders?.hostName} [data owner]. \n${data?.title} [dataset title]. \n${owner} [dataset host]. \n`;
+
+    const { pathname } = router;
     if (!data) {
         return null;
     }
@@ -62,6 +64,7 @@ const NewResultCardAction = ({
         ? " !text-white !bg-dtech-main-dark "
         : " !text-dtech-new-main-light";
 
+
     return (
         <div className={clsx("flex", className)}>
             <div
@@ -71,10 +74,10 @@ const NewResultCardAction = ({
                 )}
             >
                 {data.recordType !== "topic" && (
-                    <div className=" flex flex-col justify-center items-center">
+                    <div className=" flex flex-col justify-center items-center hover:bg-[#6DCDCB] hover:bg-opacity-[55%] pb-2 px-1 hover:rounded-md">
                         <a href={data?.url} target="_blank" rel="noreferrer">
                             {!href?.includes("dataset") ? (
-                                <div className="hover:bg-[#6DCDCB] hover:bg-opacity-[55%]  active:bg-dtech-main-dark !hover:text-white px-2 pt-2 ml-1">
+                                <div className=" active:bg-dtech-main-dark !hover:text-white px-2 pt-2 ml-1">
                                     <BsGlobe
                                         className={`sm:h-6 sm:w-6 h-4 w-4 text-dtech-new-main-light cursor-pointer
                                      ${
@@ -85,7 +88,7 @@ const NewResultCardAction = ({
                                 </div>
                             ) : (
                                 <div
-                                    className="hover:bg-[#6DCDCB] hover:bg-opacity-[55%]  active:bg-dtech-main-dark !hover:text-white px-2 pt-2 ml-1"
+                                    className=" active:bg-dtech-main-dark !hover:text-white px-2 pt-2 ml-1"
                                     onMouseDown={() => setArrowActive(true)}
                                     onMouseUp={() => setArrowActive(false)}
                                     onMouseLeave={() => setArrowActive(false)}
@@ -116,47 +119,54 @@ const NewResultCardAction = ({
                         </a>
                     </div>
                 )}
-                <div className=" flex flex-col justify-center items-center">
-                    <div
-                        className={` hover:bg-[#6DCDCB] hover:bg-opacity-[55%]  px-2 pt-2 mb-[-10px] active:bg-dtech-main-dark !hover:text-white ${favouriteColor}`}
-                        onMouseDown={() => setFavouriteClicked(true)}
-                        onMouseUp={() => setFavouriteClicked(false)}
-                        onMouseLeave={() => setFavouriteClicked(false)}
-                    >
-                        <FavouriteBtn
-                            className="mx-auto"
-                            datasetStats={data}
-                            recordType={data.recordType}
-                            onFavouriteChange={onFav}
-                            cardClicked={cardClicked}
-                            cardHover={cardHover}
-                        />
-                    </div>
-                    <div className="text-[#727272] mt-2 text-base font-roboto">
-                        Like
-                    </div>
-                </div>
-                <div className=" flex flex-col justify-center items-center">
-                    <div
-                        className={`hover:bg-[#6DCDCB] hover:bg-opacity-[55%]  px-2 pt-2 mb-[-10px]  active:bg-dtech-main-dark !hover:text-white ${bookmarkColor}`}
-                        onMouseDown={() => setBookmarkClicked(true)}
-                        onMouseUp={() => setBookmarkClicked(false)}
-                        onMouseLeave={() => setBookmarkClicked(false)}
-                    >
-                        <BookmarkBtn
-                            className="mx-auto "
-                            data={data}
-                            recordType={data.recordType}
-                            bookmarkColor={bookmarkColor}
-                            cardClicked={cardClicked}
-                            cardHover={cardHover}
-                        />
-                    </div>
-                    <div className="text-[#727272] mt-2 text-base font-roboto ">
-                        Save
-                    </div>
-                </div>
-                <div className=" flex flex-col justify-center items-center">
+                {pathname !== "/search" && (
+                    <>
+                        <div className=" flex flex-col justify-center items-center">
+                            <div
+                                className={` hover:bg-[#6DCDCB] hover:bg-opacity-[55%]  px-2 pt-2 mb-[-10px] active:bg-dtech-main-dark !hover:text-white ${favouriteColor}`}
+                                onMouseDown={() => setFavouriteClicked(true)}
+                                onMouseUp={() => setFavouriteClicked(false)}
+                                onMouseLeave={() => setFavouriteClicked(false)}
+                            >
+                                <FavouriteBtn
+                                    className="mx-auto"
+                                    datasetStats={data}
+                                    recordType={data.recordType}
+                                    onFavouriteChange={onFav}
+                                    cardClicked={cardClicked}
+                                    cardHover={cardHover}
+                                />
+                            </div>
+                            <div className="text-[#727272] mt-2 text-base font-roboto">
+                                Like
+                            </div>
+                        </div>
+                        <div className=" flex flex-col justify-center items-center">
+                            <div
+                                className={`hover:bg-[#6DCDCB] hover:bg-opacity-[55%]  px-2 pt-2 mb-[-10px]  active:bg-dtech-main-dark !hover:text-white ${bookmarkColor}`}
+                                onMouseDown={() => setBookmarkClicked(true)}
+                                onMouseUp={() => setBookmarkClicked(false)}
+                                onMouseLeave={() => setBookmarkClicked(false)}
+                            >
+                                <BookmarkBtn
+                                    className="mx-auto "
+                                    data={data}
+                                    recordType={data.recordType}
+                                    bookmarkColor={bookmarkColor}
+                                    cardClicked={cardClicked}
+                                    cardHover={cardHover}
+                                />
+                            </div>
+                            <div className="text-[#727272] mt-2 text-base font-roboto ">
+                                Save
+                            </div>
+                        </div>
+                    </>
+                )}
+                <div
+                    className=" flex flex-col justify-center items-center hover:bg-[#6DCDCB] hover:bg-opacity-[55%] pb-2 hover:rounded-md cursor pointer"
+                    onClick={() => setShare(!share)}
+                >
                     <Menu>
                         {({ open }) => (
                             <>
@@ -164,7 +174,7 @@ const NewResultCardAction = ({
                                     <div
                                         data-tip
                                         data-for="dtechtive-share-btn-tooltip"
-                                        className={`hover:bg-[#6DCDCB] hover:bg-opacity-[55%] text-dtech-main-light px-2 pt-2 pb-2 mb-[-10px]  ${shareColor}`}
+                                        className={` text-dtech-main-light px-2 pt-2 pb-2 mb-[-10px]  ${shareColor}`}
                                         onMouseDown={() =>
                                             setShareClicked(true)
                                         }
