@@ -11,33 +11,49 @@ const Card = ({
     descriptionDivClass?: string;
     label?: string;
     description?: string;
-    active?: boolean
+    active?: boolean;
 }) => {
     return (
-        <div
-            className={`${cardOuterClass} bg-white shadow-lg mx-1 border-t-2 border-[#4CA7A5] ${active && "!border-dtech-new-main-light"}`}
-        >
-            <div
-                className={`${labelDivClass} border-t-3 shadow-lg text-[#4CA7A5]  flex flex-col justify-center items-start  text-[22px] ${active && "bg-dtech-new-main-light !text-white"}`}
-            >
-                <span
-                    className={`font-bold leading-4  ${
-                        label === "Announcement" && " ml-[25px]"
+        <>
+            {label !== "Announcement" ? (
+                <div
+                    className={`${cardOuterClass} bg-white shadow-lg mx-1 border-t-2 border-[#4CA7A5] ${
+                        active && "!border-dtech-new-main-light"
                     }`}
                 >
-                    {label}
-                </span>
-            </div>
-            <div
-                className={`flex flex-col justify-center items-start ${descriptionDivClass}`}
-            >
-                <span
-                    className={` ${label === "Announcement" && " ml-[25px]"}  ${active && "font-bold"}`}
-                >
-                    {description}
-                </span>
-            </div>
-        </div>
+                    <div
+                        className={`${labelDivClass} border-t-3 shadow-lg text-[#4CA7A5]  flex flex-col justify-center items-start  text-[22px] ${
+                            active && "bg-dtech-new-main-light !text-white"
+                        }`}
+                    >
+                        <span
+                            className={`font-bold leading-4  ${
+                                label === "Announcement" && " ml-[25px]"
+                            }`}
+                        >
+                            {label}
+                        </span>
+                    </div>
+                    <div
+                        className={`flex flex-col justify-center items-start ${descriptionDivClass}`}
+                    >
+                        <span
+                            className={` ${
+                                label === "Announcement" && " ml-[25px]"
+                            }  ${active && "font-bold"}`}
+                        >
+                            {description}
+                        </span>
+                    </div>
+                </div>
+            ) : (
+                <div
+                    className={`${cardOuterClass} bg-white  mx-1  ${
+                        active && "!border-dtech-new-main-light"
+                    }`}
+                ></div>
+            )}
+        </>
     );
 };
 
