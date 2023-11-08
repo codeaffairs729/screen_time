@@ -97,8 +97,8 @@ const ManagePreference = () => {
                                 alt="cookie"
                             />
                         </div>
-                        <div className="p-6 sm:p-0 sm:mt-2 ">
-                            <p className="text-[19px] text-[#333333] font-normal">
+                        <div className="p-5 sm:p-0 sm:mt-2 ">
+                            <p className="text-base sm:text-[19px] text-[#333333] font-normal">
                                 We use cookies to make your interactions with
                                 our website more meaningful. They help us better
                                 understand how our website is used, so we can
@@ -110,7 +110,7 @@ const ManagePreference = () => {
                             </p>
                         </div>
 
-                        <div className="mt-4 flex sm:justify-start sm:items-center gap-4 justify-center">
+                        <div className="mt-2 sm:mt-4 flex sm:justify-start sm:items-center gap-4 justify-center">
                             <button
                                 type="button"
                                 className="flex items-center justify-center p-3 rounded-[30px] bg-[#6E498E] text-white text-base font-bold border-0"
@@ -124,22 +124,22 @@ const ManagePreference = () => {
                         </div>
                     </div>
 
-                    <div className=" border-[1px] border-[#6DCDCB] px-12 pt-6 pb-12 mx-[30px] my-[10px] sm:mx-[50px] sm:my-[20px] rounded-xl ">
+                    <div className=" border-[1px] border-[#6DCDCB] px-6 pt-6 pb-12 mx-[30px] my-[10px] sm:px-12 sm:mx-[50px] sm:my-[20px] rounded-xl ">
                         <div className="text-[#333333] mb-14">
-                            <h1 className="text-[22px] font-bold mb-4">
+                            <h1 className="text-xl sm:text-[22px] font-bold mb-4">
                                 Turn cookies on or off
                             </h1>
-                            <h1 className="text-[19px] font-normal">
+                            <h1 className="text-base text-[19px] font-normal">
                                 You can choose which cookies you&apos;re happy for us
                                 to use. Any data collected is anonymous.
                             </h1>
                         </div>
-                        <div className="bg-[#F4F4F4] border-[#949494] ">
+                        <div className="bg-[#F4F4F4] border-[#949494] p-3">
                             <div className="py-0 px-0 sm:px-14 sm:py-5 ">
-                                <h1 className="text-[19px] text-[#333333] font-bold">
+                                <h1 className="text-base sm:text-[19px] text-[#333333] font-bold">
                                     Cookies needed for the website to work
                                 </h1>
-                                <p className="text-[19px] text-[##727272] font-normal">
+                                <p className="text-base sm:text-[19px] text-[##727272] font-normal">
                                     These cookies do things like keep the
                                     website secure. They always need to be on.
                                 </p>
@@ -149,12 +149,12 @@ const ManagePreference = () => {
                                     className="border-t-[1px] border-[#949494] py-0 px-0 sm:px-14 sm:py-5"
                                     key={index}
                                 >
-                                    <div className="flex-col sm:flex justify-between ">
+                                    <div className="flex sm:flex justify-between ">
                                         <div>
-                                            <h1 className="text-[19px] text-[#333333] font-bold">
+                                            <h1 className="text-base sm:text-[19px] text-[#333333] font-bold">
                                                 {item.title}
                                             </h1>
-                                            <p className="text-[19px] text-[##727272] font-normal">
+                                            <p className="text-base sm:text-[19px] text-[##727272] font-normal">
                                                 {item.description}
                                             </p>
                                         </div>
