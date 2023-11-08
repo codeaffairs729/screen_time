@@ -53,11 +53,13 @@ const OrganisationSearch = () => {
                     totalRecords={totalRecords}
                     totalPages={totalPages}
                 />
-                <Pagination
-                    currentPage={currentPageNo}
-                    setPageNumber={setCurrentPageNo}
-                    totalPages={totalPages}
-                />
+                <div className="my-14">
+                    <Pagination
+                        currentPage={currentPageNo}
+                        setPageNumber={setCurrentPageNo}
+                        totalPages={totalPages}
+                    />
+                </div>
             </OrganizationSearchVMContext.Provider>
         </DefaultLayout>
     );
