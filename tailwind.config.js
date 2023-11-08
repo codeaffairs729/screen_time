@@ -57,6 +57,8 @@ module.exports = {
                 "custom-4": "1px 1px 5px 3px rgba(160, 174, 192, 1)",
                 "custom-5": "4px 4px 10px 4px rgba(160, 174, 192, 1)",
                 "custom-6": "0px 4px 10px 1px rgba(0, 0, 0, 0.50)",
+                "card-shadow":"2px 2px 7px 7px rgba(146, 146, 146, 0.1)",
+                "hover-shadow":"2px 2px 7px 8px rgba(146, 146, 146, 0.15)",
                 "topic-card": "4px 4px 4px 0px rgba(146, 146, 146, 0.25)",
             },
         },
