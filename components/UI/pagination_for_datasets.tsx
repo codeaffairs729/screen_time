@@ -80,7 +80,7 @@ const Pagination = ({
 
     return (
         <div className="pagination flex flex-row justify-center items-center my-4">
-            <div>{renderPageNumbers()}</div>
+            <div>{totalPages >1 && renderPageNumbers()}</div>
             {/* {(totalPages > 1) || (totalPages > currentPage) &&
             (
             <div>

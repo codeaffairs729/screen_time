@@ -62,12 +62,12 @@ const RecordsSortBy = () => {
                 <Dropdown
                     label={`${activeOption ? activeOption.label : "Sort by"}`}
                     menuItems={options}
-                    menuItemsClasses="!w-60 rounded-[10px]"
-                    labelClasses="text-base text-gray-500 font-normal pr-2.5 whitespace-nowrap pr-3.5"
+                    menuItemsClasses="!w-44  !top-8 !px-1.5 !py-1.5"
+                    labelClasses=" !text-base text-gray-500 font-normal pr-2.5 whitespace-nowrap"
                     className="!ml-0 "
                     iconClass=" !font-medium text-xl !mx-5"
-                    itemsClasses="rounded-[10px] shadow-none hover:!bg-[#6DCDCB] hover:!bg-opacity-50 "
-                    dropdownIcon= "arrow"
+                    itemsClasses=" hover:!bg-dtech-main-dark hover:!text-white"
+                    dropdownIcon = "arrow"
                 />
             </div>
         </div>

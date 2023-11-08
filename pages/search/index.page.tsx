@@ -55,14 +55,18 @@ const SearchPage = () => {
                                     )}
                                     className="-mt-[18px] mx-4"
                                 />
-                                <Pagination
-                                    currentPage={currentPageNo}
-                                    setPageNumber={setCurrentPageNo}
-                                    totalPages={totalPages}
-                                />
+                                <div className="my-14">
+                                    <Pagination
+                                        currentPage={currentPageNo}
+                                        setPageNumber={setCurrentPageNo}
+                                        totalPages={totalPages}
+                                    />
+                                </div>
                             </>
-                        ): (
-                            <div className="mt-20 ml-[-30px] w-[100%]"><LoadingDatasetSearchCard /></div>
+                        ) : (
+                            <div className="mt-20 ml-[-30px] w-[100%]">
+                                <LoadingDatasetSearchCard />
+                            </div>
                         )}
                     </div>
                 </div>
