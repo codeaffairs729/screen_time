@@ -114,7 +114,7 @@ const BackCard = ({ data, isMobile }: { data: Data; isMobile: boolean }) => {
     const descriptionWord = isMobile ? words.slice(0, 12) : words.slice(0, 15);
 
     return (
-        <div className={` mx-3 md:mx-5 md:my-3  w-[95%]`}>
+        <div className={` mx-3 md:mx-5 md:my-3  w-[95%] md:min-h-[138px] min-h-[78px]`}>
             <div className={`text-[12px] md:text-[16px] md:font-normal leading-[18.75px] overflow-hidden over md:my-3 ${isMobile && "min-h-[103px]"}`}>
                 {descriptionWord.join(" ")}...
             </div>
