@@ -83,7 +83,8 @@ const NewNavbar = ({
                                     src={
                                         "/images/icons/profile/add_person_desktop.svg"
                                     }
-                                    width={15}
+                                    width={25}
+                                    // height={15}
                                 />
                                 <div className="hidden sm:block">Signup</div>
                             </div>

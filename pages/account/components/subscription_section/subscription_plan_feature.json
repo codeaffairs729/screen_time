@@ -16,7 +16,7 @@
         },
         {
             "label": "Essential",
-            "description": "Free register user",
+            "description": "Free registered user",
             "active": false,
             "role": "essential_subscriber",
             "priorty":2
