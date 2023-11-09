@@ -44,8 +44,9 @@ const Domain = ({ vm }: { vm: any }) => {
                 required={true}
                 tooltip={formRowToolTipData.domain}
                 className=" md:w-auto flex-col sm:!mb-8"
-                labelClass="sm:text-[19px]"
+                labelClass="sm:text-[19px] !justify-start"
                 iconClass="sm:h-[19px] sm:w-[19px] text-black"
+                tooltipClass="!ml-2"
             >
                 <DropdownFieldMulti
                     inputfieldClassName="rounded-[5px] sm:text-[19px] border-[#C3C3C3] focus:border-[#C3C3C3] focus:ring-opacity-0"

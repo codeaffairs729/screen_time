@@ -13,8 +13,9 @@ const Comment = ({ vm }: { vm: any }) => {
             // className="flex-col"
             tooltip={formRowToolTipData.comment}
             className=" md:w-auto flex-col"
-            labelClass="sm:text-[19px]"
+            labelClass="sm:text-[19px] !justify-start"
             iconClass="sm:h-[19px] sm:w-[19px] text-black"
+            tooltipClass="!ml-2"
         >
             <TextField
                 type="textarea"

@@ -52,12 +52,12 @@ const Catalogue = () => {
                     </thead>
                     <tbody className=" sm:border-t-[1px] border-black text-[#727272] sm:text-sm md:text-[19px]">
                         {catalouge?.data_sources?.map((catalouge_item: any, index: number) => (
-                            <tr className=" border-b-[1px] h-14" key={index}>
+                            <tr className=" border-b-[1px] h-14 hover:bg-dtech-light-grey" key={index}>
                                 <td className=" p-2  border-r-[1px] sm:border-r-0  w-1/2 min-w-[120px] sm:w-[17%]">
                                     {catalouge_item.site_name}
                                 </td>
                                 <td className="underline underline-offset-2 sm:w-[17%] p-2   min-w-[100px] text-center">
-                                    {catalouge_item.site_url}
+                                    <a href={catalouge_item.site_url} target="_blank" rel="noreferrer" className=" text-blue-600">{catalouge_item.site_url}</a>
                                 </td>
                                 <td className="sm:w-[17%] p-2   text-center">
                                     {catalouge_item.data_management_system}

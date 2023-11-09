@@ -12,8 +12,9 @@ const UsageRights = ({ vm }: { vm: any }) => {
                 required={true}
                 tooltip={formRowToolTipData.usage_rights}
                 className=" md:w-auto flex-col !mb-8"
-                labelClass="sm:text-[19px]"
+                labelClass="sm:text-[19px] !justify-start"
                 iconClass="sm:h-[19px] sm:w-[19px] text-black"
+                tooltipClass="!ml-2"
             >
                 <RadioButtonField
                     formControl={{

@@ -12,8 +12,9 @@ const SiteUrl = ({ vm }: { vm: any }) => {
             required={true}
             tooltip={formRowToolTipData.site_url}
             className=" md:w-auto bg-white flex-col sm:!mb-8"
-            labelClass="sm:text-[19px]"
+            labelClass="sm:text-[19px] !justify-start"
             iconClass="sm:h-[19px] sm:w-[19px] text-black"
+            tooltipClass="!ml-2"
         >
             <TextField
                 textfieldClassName="border-0 border-b border-[#C3C3C3] focus:ring-opacity-0 rounded-none sm:text-[19px]"

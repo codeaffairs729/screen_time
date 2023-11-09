@@ -68,7 +68,7 @@ const ListsSection = () => {
                                     ))}
                                 </FilterDropdown>
                                 <div className="my-10">
-                                    <CreateList />
+                                    <CreateList className={" hover:bg-[#FAFAFA] active:bg-[#FAFAFA]"} />
                                 </div>
                             </Tab.List>
                             <Tab.Panels className="w-full flex">
