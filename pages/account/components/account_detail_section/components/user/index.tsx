@@ -187,7 +187,7 @@ const UserSection = () => {
             </div> */}
             <div className="flex flex-row justify-between items-center">
                 <PrimaryBtn
-                    className="bg-[#6E498E] w-[120px] sm:w-[170px] !p-[10px] sm:!p-[16px] rounded-[30px] mt-5 mb-2 text-xs sm:text-[16px]"
+                    className="bg-dtech-new-main-light hover:bg-dtech-main-dark sm:hover:text-black sm:hover:bg-dtech-light-teal sm:hover:border-0 text-white  w-[120px] sm:w-[170px] !p-[10px] sm:!p-[16px] rounded-[30px] mt-5 mb-2 text-xs sm:text-[16px]"
                     label="Update"
                     isLoading={vm.isSavingUserDetails}
                     onClick={() => {

@@ -24,7 +24,10 @@ const Register = () => {
     return (
         <div className="md:px-[50px] base:px-[100px] lg:px-[170px] xl:px-[280px] 2xl:px-[370px]">
             <div className="flex flex-col justify-center items-center">
-                <img className="w-[200px] sm:w-[326px] my-5" src="/images/register_data_source_logo.svg" />
+                <img
+                    className="w-[200px] sm:w-[326px] my-5"
+                    src="/images/register_data_source_logo.svg"
+                />
                 <div className="text-[#727272] text-center text-s sm:text-[22px] font-[700]">
                     Register your favourite data source website using the form
                     below, and we&apos;ll work our magic to bring those awesome
@@ -45,8 +48,12 @@ const Register = () => {
                         </div>
                         {/* Optional-Advanced  */}
                         <div className="flex flex-col my-8 shadow-[4px_4px_20px_rgba(0,0,0,0.1)] text-center sm:w-[full] py-5 justify-center items-center">
-                            <p className="font-semibold mb-5 text-s sm:text-[19px]">Advanced Fields</p>
-                            <p className="text-gray-500 mb-5 text-s sm:text-[19px]">Additional information about this data source.</p>
+                            <p className="font-semibold mb-5 text-s sm:text-[19px]">
+                                Advanced Fields
+                            </p>
+                            <p className="text-gray-500 mb-5 text-s sm:text-[19px]">
+                                Additional information about this data source.
+                            </p>
                             <PrimaryBtn
                                 label={showAdvanced ? "Show Less" : "Show More"}
                                 dropdownIcon={true}
@@ -81,7 +88,7 @@ const Register = () => {
 
                         <PrimaryBtn
                             label="Submit"
-                            className="bg-[#6E498E] w-[120px] sm:w-[170px] !p-[10px] sm:!p-[16px] rounded-[30px] mt-5 mb-2 text-xs sm:text-[16px]"
+                            className="bg-dtech-new-main-light hover:bg-dtech-main-dark sm:hover:text-black sm:hover:bg-dtech-light-teal sm:hover:border-0 text-white  w-[120px] sm:w-[170px] !p-[10px] sm:!p-[16px] rounded-[30px] mt-5 mb-2 text-xs sm:text-[16px]"
                             isLoading={vm.isRegisteringDataSource}
                             onClick={vm.form.handleSubmit(
                                 vm.registerDataSource
@@ -92,5 +99,5 @@ const Register = () => {
             </div>
         </div>
     );
-}
+};
 export default Register;

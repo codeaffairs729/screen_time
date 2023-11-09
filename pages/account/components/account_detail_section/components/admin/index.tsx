@@ -205,14 +205,14 @@ const AdminSection = () => {
                             label="Add member"
                             onClick={() => vm.setIsAddMemberModalOpen(true)}
                         />
-                
+
                         <AddMemberModal
                             isOpen={vm.isAddMemberModalOpen}
                             setIsOpen={vm.setIsAddMemberModalOpen}
                         />
                         <MembersTable className="max-w-5xl ml-auto w-full overflow-x-auto" />
                         <PrimaryBtn
-                            className="bg-dtech-new-main-light w-min whitespace-nowrap  !px-16 !py-2 !rounded-full !text-lg mt-8"
+                            className="bg-dtech-new-main-light hover:bg-dtech-main-dark sm:hover:text-black sm:hover:bg-dtech-light-teal sm:hover:border-0 text-white w-min whitespace-nowrap  !px-16 !py-2 !rounded-full !text-lg mt-8"
                             label="Update"
                             isLoading={vm.isSavingOrgDetails}
                             onClick={() => {
