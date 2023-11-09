@@ -138,7 +138,7 @@ const HomePage = ({ home }: { home: any }) => {
                                 width={300}
                             />
                         </div>
-                        <div className=" text-dtech-new-main-light text-white font-[700] text-xl sm:text-[26px] my-7">
+                        <div className=" text-dtech-new-main-light font-[700] text-xl sm:text-[26px] my-7">
                             Discover the datasets other search engines cannot
                             reach
                         </div>

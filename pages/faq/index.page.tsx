@@ -1,21 +1,37 @@
 import DefaultLayout from "components/layouts/default";
 import Accordian from "components/UI/accordian";
+import Image from "next/image";
+import faqImage from "public/images/faq.svg";
 
 const FAQPage = () => {
     return (
-        <DefaultLayout wrapperClass="!max-w-none">
+        <DefaultLayout className="!bg-[#EBEBEB]" wrapperClass="!max-w-none">
             <div className="py-5 px-4 w-full   flex items-center md:bg-white bg-[#EBEBEB]">
-                <span className="text-left text-xl md:text-[26px] font-semibold md:text-[#727272]">
+                <span className="text-left text-xl md:text-[26px] font-semibold md:text-black">
                     Frequently asked questions
                 </span>
             </div>
-            <div className="mx-4 md:mx-20  bg-[#EBEBEB]">
-                <div className="py-6 mt-6 rounded-[20px] px-10 bg-dtech-light-grey min-h-[60vh]">
+
+            <div className="mx-4 md:my-8 md:mx-20 border-t !bg-white flex flex-col justify-center items-center md:px-[20%] px-[5%]">
+                <div className="mt-10">
+                    <Image src={faqImage} width={500} height={400} />
+                    <div className="text-[#727272] font-bold text-[22px]">
+                    Find answers to the most frequently asked questions 
+                    </div>
+                </div>
+                <div className=" my-10 w-full">
+                    <div className=" text-[#727272] font-normal text-[19px]">
+                        <span>Last updated:</span>
+                        <span>15 October 2023</span>
+                    </div>
                     <Accordian
-                        className="!bg-dtech-main-light"
+                        className="border border-gray-200 !bg-white px-2 !max-w-none"
                         label={"Why is Dtechtive interesting to Data Users?"}
+                        pageName="faq"
+                        labelClassName=" !text-dtech-new-main-light !font-bold text-[22px]"
+                        arrowIconClass= "!text-dtech-new-main-light"
                     >
-                        <span className="px-4 py-2 w-full text-sm">
+                        <span className="px-4 py-2 w-full text-sm leading-6 text-justify text-[#727272] text-[19px] mr-6 my-3">
                             Dtechtive is a search engine that helps people find
                             datasets from websites that existing search engines
                             fail to index. This is possible because of the
@@ -35,12 +51,15 @@ const FAQPage = () => {
                         </span>
                     </Accordian>
                     <Accordian
-                        className="!bg-dtech-main-light"
+                        className="border border-gray-200 !bg-white px-2 !max-w-none"
                         label={
                             "Why is Dtechtive interesting to Data Providers?"
                         }
+                        pageName="faq"
+                        labelClassName=" !text-dtech-new-main-light !font-bold text-[22px]"
+                        arrowIconClass= "!text-dtech-new-main-light"
                     >
-                        <span className="px-4 py-2 w-full text-sm">
+                        <span className="px-4 py-2 w-full text-sm leading-6 text-justify text-[#727272] text-[19px] mr-6  my-3">
                             Dtechtive onboards datasets (metadata only) from
                             open and commercial Data Providers onto the search
                             engine at no cost. This makes the datasets more
@@ -70,12 +89,15 @@ const FAQPage = () => {
                         </span>
                     </Accordian>
                     <Accordian
-                        className="!bg-dtech-main-light"
+                        className="border border-gray-200 !bg-white px-2 !max-w-none"
                         label={
                             "How can Dtechtive help Enterprises with custom needs?"
                         }
+                        pageName="faq"
+                        labelClassName=" !text-dtech-new-main-light !font-bold text-[22px]"
+                        arrowIconClass= "!text-dtech-new-main-light"
                     >
-                        <span className="px-4 py-2 w-full text-sm">
+                        <span className="px-4 py-2 w-full text-sm leading-6 text-justify text-[#727272] text-[19px] mr-6  my-3">
                             While Dtechtive makes open and commercial datasets
                             more discoverable, it can also help employees within
                             Enterprises find internal datasets easily. This will
@@ -96,12 +118,15 @@ const FAQPage = () => {
                         </span>
                     </Accordian>
                     <Accordian
-                        className="!bg-dtech-main-light"
+                        className="border border-gray-200 !bg-white px-2 !max-w-none"
                         label={
                             "Do I need to create an account to use Dtechtive?"
                         }
+                        pageName="faq"
+                        labelClassName=" !text-dtech-new-main-light !font-bold text-[22px]"
+                        arrowIconClass= "!text-dtech-new-main-light"
                     >
-                        <span className="px-4 py-2 w-full text-sm">
+                        <span className="px-4 py-2 w-full text-sm leading-6 text-justify text-[#727272] text-[19px] mr-6  my-3">
                             You can search for datasets (unlimited) and access
                             useful features (limited) as a guest user. However,
                             creating a free account will help you unlock a lot
@@ -139,12 +164,15 @@ const FAQPage = () => {
                         </span>
                     </Accordian>
                     <Accordian
-                        className="!bg-dtech-main-light"
+                        className="border border-gray-200 !bg-white px-2 !max-w-none"
                         label={
                             "What are the paid subscription plans on Dtechtive?"
                         }
+                        pageName="faq"
+                        labelClassName=" !text-dtech-new-main-light !font-bold text-[22px]"
+                        arrowIconClass= "!text-dtech-new-main-light"
                     >
-                        <span className="px-4 py-2 w-full text-sm">
+                        <span className="px-4 py-2 w-full text-sm leading-6 text-justify text-[#727272] text-[19px] mr-6  my-3">
                             Since we are in the early stages, all the features
                             will be accessible for free to the early adopter
                             Data Users and Data Providers who have created
@@ -176,10 +204,13 @@ const FAQPage = () => {
                         </span>
                     </Accordian>
                     <Accordian
-                        className="!bg-dtech-main-light"
+                        className="border border-gray-200 !bg-white px-2 !max-w-none"
                         label={"How does Dtechtive assess dataset quality?"}
+                        pageName="faq"
+                        labelClassName=" !text-dtech-new-main-light !font-bold text-[22px]"
+                        arrowIconClass= "!text-dtech-new-main-light"
                     >
-                        <span className="px-4 py-2 w-full text-sm">
+                        <span className="px-4 py-2 w-full text-sm leading-6 text-justify text-[#727272] text-[19px] mr-6  my-3">
                             Dtechtive assesses metadata quality and data file
                             quality using different approaches. Metadata quality
                             is based on the European Commission&lsquo;s{" "}
@@ -204,10 +235,13 @@ const FAQPage = () => {
                         </span>
                     </Accordian>
                     <Accordian
-                        className="!bg-dtech-main-light"
+                        className="border border-gray-200 !bg-white px-2 !max-w-none"
                         label={"How does Dtechtive assess dataset quality?"}
+                        pageName="faq"
+                        labelClassName=" !text-dtech-new-main-light !font-bold text-[22px]"
+                        arrowIconClass= "!text-dtech-new-main-light"
                     >
-                        <span className="px-4 py-2 w-full text-sm">
+                        <span className="px-4 py-2 w-full text-sm leading-6 text-justify text-[#727272] text-[19px] mr-6  my-3">
                             Yes, we are developing a feature that will enable
                             any registered user to upload their datasets to
                             Dtechtive and publish them for better
@@ -217,6 +251,7 @@ const FAQPage = () => {
                     </Accordian>
                 </div>
             </div>
+            <div className="mx-4 md:mx-20  bg-[#EBEBEB]"></div>
         </DefaultLayout>
     );
 };
