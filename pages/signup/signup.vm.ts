@@ -27,6 +27,7 @@ const SignupVM = () => {
         executeHandleSignup(
             () => {
                 setSignupErrorMsg(null);
+                data = data?.role !== "other" && {...data, role_other: ""}
                 return Http.post("/v1/users/signup", {
                     ...data,
                     // signup_type: signupType,
