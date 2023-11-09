@@ -39,13 +39,12 @@ const RegisterDataSourcePage = () => {
     useEffect(() => {
         const hashParam: string = asPath.split("#")[1];
         setSelectedIndex(tabIndex[hashParam as any]);
-    }, []);
+    }, [tabIndex[asPath.split("#")[1]?.split("/")[0] as any]]);
     const viewCatalogueVm = ViewCatalogueVM();
-
     return (
         <DefaultLayout wrapperClass="!max-w-none">
             <div className="mx-4 md:my-8 md:mx-20 border-t !bg-white">
-                <Tab.Group defaultIndex={selectedIndex}>
+                <Tab.Group key={selectedIndex} defaultIndex={selectedIndex}>
                     <RegisterDataSourceTabHeaders
                         selectedIndex={selectedIndex}
                         user={User.getRole(user)?.name}
