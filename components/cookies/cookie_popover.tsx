@@ -69,17 +69,26 @@ export default function CookiePopover() {
                                         </Dialog.Title>
                                         <div className="mt-2">
                                             <p className="text-sm text-gray-500">
-                                                We use cookies to make your
-                                                interactions with our website
-                                                more meaningful. They help us
-                                                better understand how our
-                                                website is used, so we can
-                                                tailor content for you. Click
-                                                &#39;Accept all cookies&#39; to
-                                                agree to all cookies that
-                                                collect anonymous data. You can
-                                                decide which optional cookies to
-                                                accept by clicking on ‘Manage
+                                                We use{" "}
+                                                <a
+                                                    href="https://ico.org.uk/for-the-public/online/cookies/"
+                                                    className="outline-none text-blue-700 hover:underline"
+                                                    target="_blank"
+                                                    rel="noreferrer"
+                                                >
+                                                    cookies
+                                                </a>{" "}
+                                                to make your interactions with
+                                                our website more meaningful.
+                                                They help us better understand
+                                                how our website is used, so we
+                                                can tailor content for you.
+                                                Click &#39;Accept all
+                                                cookies&#39; to agree to all
+                                                cookies that collect anonymous
+                                                data. You can decide which
+                                                optional cookies to accept by
+                                                clicking on ‘Manage
                                                 preferences&#39;.
                                             </p>
                                         </div>
@@ -87,7 +96,7 @@ export default function CookiePopover() {
                                         <div className="mt-4 flex items-center gap-4">
                                             <button
                                                 type="button"
-                                                className="flex items-center justify-center p-4 rounded-[30px] bg-[#6E498E] text-white text-base font-bold border-0"
+                                                className="flex items-center justify-center p-4 rounded-[30px] bg-dtech-new-main-light hover:bg-[#FDD522] hover:text-black sm:hover:text-white sm:hover:bg-dtech-main-dark hover:border-b-2 border-black sm:hover:border-0 text-white text-base font-bold border-0"
                                                 onClick={closeModal}
                                             >
                                                 Accept all cookies

@@ -69,9 +69,8 @@ const ManagePreference = () => {
                 </div>
             )}
 
-
             <NewNavbar
-                searching ={false}
+                searching={false}
                 showLogo={false}
                 showSearchBar={false}
                 handleSearchFocus={handleSearchFocus}
@@ -99,21 +98,29 @@ const ManagePreference = () => {
                         </div>
                         <div className="p-5 sm:p-0 sm:mt-2 ">
                             <p className="text-base sm:text-[19px] text-[#333333] font-normal">
-                                We use cookies to make your interactions with
-                                our website more meaningful. They help us better
-                                understand how our website is used, so we can
-                                tailor content for you. Click &#39;Accept all
-                                cookies&#39; to agree to all cookies that
-                                collect anonymous data. You can decide which
-                                optional cookies to accept by clicking on
-                                ‘Manage preferences&#39;.
+                                We use{" "}
+                                <a
+                                    href="https://ico.org.uk/for-the-public/online/cookies/"
+                                    className="outline-none text-blue-700 hover:underline"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                >
+                                    cookies
+                                </a>{" "}
+                                to make your interactions with our website more
+                                meaningful. They help us better understand how
+                                our website is used, so we can tailor content
+                                for you. Click &apos;Accept all cookies&apos; to
+                                agree to all cookies that collect anonymous data
+                                or manage your preferences further below and
+                                save them.
                             </p>
                         </div>
 
                         <div className="mt-2 sm:mt-4 flex sm:justify-start sm:items-center gap-4 justify-center">
                             <button
                                 type="button"
-                                className="flex items-center justify-center p-3 rounded-[30px] bg-[#6E498E] text-white text-base font-bold border-0"
+                                className="flex items-center justify-center p-3 rounded-[30px]  bg-dtech-new-main-light hover:bg-[#FDD522] hover:text-black sm:hover:text-white sm:hover:bg-dtech-main-dark hover:border-b-2 border-black sm:hover:border-0 text-white text-base font-bold border-0"
                                 onClick={() => {
                                     Cookies.set("user", "true");
                                     router.push("/");
@@ -130,8 +137,8 @@ const ManagePreference = () => {
                                 Turn cookies on or off
                             </h1>
                             <h1 className="text-base text-[19px] font-normal">
-                                You can choose which cookies you&apos;re happy for us
-                                to use. Any data collected is anonymous.
+                                You can choose which cookies you&apos;re happy
+                                for us to use. Any data collected is anonymous.
                             </h1>
                         </div>
                         <div className="bg-[#F4F4F4] border-[#949494] p-3">
@@ -165,7 +172,7 @@ const ManagePreference = () => {
                         </div>
 
                         <button
-                            className="bg-[#6E498E] text-white p-4 rounded-full mt-10 font-bold text-sm"
+                            className=" bg-dtech-new-main-light hover:bg-[#FDD522] hover:text-black sm:hover:text-white sm:hover:bg-dtech-main-dark hover:border-b-2 border-black sm:hover:border-0 text-white p-4 rounded-full mt-10 font-bold text-sm"
                             onClick={() => {
                                 Cookies.set("user", "true");
                                 router.push("/");
