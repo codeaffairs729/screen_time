@@ -24,15 +24,28 @@ const SecondStep = ({
     setIsChecked,
     showError,
     setOrganisationRequired,
-    setShowError
-}: { vm: any, step: boolean, setStep: any, organisationRequired: boolean, isChecked: boolean, setIsChecked: any, showError: boolean, setOrganisationRequired: any, setShowError: any }) => {
+    setShowError,
+}: {
+    vm: any;
+    step: boolean;
+    setStep: any;
+    organisationRequired: boolean;
+    isChecked: boolean;
+    setIsChecked: any;
+    showError: boolean;
+    setOrganisationRequired: any;
+    setShowError: any;
+}) => {
     return (
         <div className="grow flex flex-col items-left max-w-[30%px] justify-evenly sm:justify-center mt-10  sm:mx-[20%] sm:my-0 mx-[5%] my-[5%] ">
             <div
                 className=" mb-10 mt-4 w-fit cursor-pointer"
                 onClick={() => setStep(!step)}
             >
-                <img src="/images/icons/arrows/arrow_back.svg" className="hover:bg-gray-300 rounded-full"/>
+                <img
+                    src="/images/icons/arrows/arrow_back.svg"
+                    className="hover:bg-gray-300 rounded-full"
+                />
             </div>
             <div className=" -mt-12 sm:mt-0">
                 <div className="mt-4">
@@ -64,8 +77,8 @@ const SecondStep = ({
                         },
                     }}
                     optionClass=" border-2 border-[#6DCDCB] !rounded-[30px]  "
-                    dropDownCss = "absolute w-full overflow-auto text-base bg-white  shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm border-[3px] border-dtech-light-teal border-t-0 w-[100%] rounded-b-3xl z-20 !overflow-hidden"
-                    newOptionclass = {true}
+                    dropDownCss="absolute w-full overflow-auto text-base bg-white  shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm border-[3px] border-dtech-light-teal border-t-0 w-[100%] rounded-b-3xl z-20 !overflow-hidden"
+                    newOptionclass={true}
                 />
                 <div className="mt-4">
                     <FormRow
@@ -97,7 +110,7 @@ const SecondStep = ({
                     }}
                     placeholder="E.g. ABC Corp"
                 />
-                
+
                 <div className="mt-4">
                     <FormRow
                         label="Role"
@@ -123,9 +136,9 @@ const SecondStep = ({
                         rules: { required: "Required field" },
                     }}
                     optionClass=" border-2 border-[#6DCDCB] !rounded-[30px]  "
-                    signupDropdown = {true}
-                    newOptionclass = {true}
-                    dropDownCss = "absolute w-full py-1  overflow-auto text-base bg-white  shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm border-[3px] border-dtech-light-teal border-t-0 w-[100%] rounded-b-3xl z-20 !overflow-hidden"
+                    signupDropdown={true}
+                    newOptionclass={true}
+                    dropDownCss="absolute w-full py-1  overflow-auto text-base bg-white  shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm border-[3px] border-dtech-light-teal border-t-0 w-[100%] rounded-b-3xl z-20 !overflow-hidden"
                 />
 
                 {vm.form.watch("role") == "other" && (
@@ -170,9 +183,7 @@ const SecondStep = ({
             )}
             <div className="flex flex-row my-10  sm:my-10 justify-center">
                 <div className=" bg-[#727272] h-[1px] w-[25%] sm:w-[35%]"></div>
-                <div className=" text-[#727272] -mt-3 ">
-                    Step 2/2
-                </div>
+                <div className=" text-[#727272] -mt-3 ">Step 2/2</div>
                 <div className=" bg-[#727272] h-[1px] w-[25%] sm:w-[35%]"></div>
             </div>
             <div className="flex justify-center !items-center space-x-4">
@@ -188,22 +199,21 @@ const SecondStep = ({
                             : setOrganisationRequired(false);
                         isChecked
                             ? vm.form.handleSubmit(() =>
-                                vm.handleSignup({
-                                    ...vm.form.getValues(),
-                                    confirm_password:
-                                        vm.form.getValues().password,
-                                })
-                            )()
+                                  vm.handleSignup({
+                                      ...vm.form.getValues(),
+                                      // confirm_password:
+                                      //     vm.form.getValues().password,
+                                  })
+                              )()
                             : setShowError(true);
                     }}
                 />
             </div>
         </div>
-    )
-}
+    );
+};
 
 const SignupPage = () => {
-
     const vm = SignupVM();
     const user = useSelector((state: RootState) => state.auth.user);
     const router = useRouter();
@@ -228,21 +238,32 @@ const SignupPage = () => {
                 //         "linear-gradient(to bottom right, #3F0068, #FFFFFF)",
                 // }}
             >
-                <img width={200}
+                <img
+                    width={200}
                     className="-mt-8 hidden sm:block"
                     src="/gif/mail_sent.gif"
                 ></img>
-                <span className=" text-xl hidden sm:block sm:text-4xl text-white font-bold my-8">
-                    A verification email has been sent.
-                </span>
-                <span className=" text-sm hidden sm:block sm:text-2xl text-white font-bold w-[32%] text-center">
-                    Please use the link in the email to verify your account.
-                    After this, you can login into your account.
-                </span>
-                <span className="uppercase text-2xl sm:hidden block text-[#6DCDCB] font-bold text-center">
-                    Sign Up <br/>
-                    Successfull!
-                </span>
+
+                {vm.signupSuccessMsg ? (
+                    <>
+                        <span className=" text-xl hidden sm:block sm:text-4xl text-white font-bold my-8">
+                            A verification email has been sent.
+                        </span>
+                        <span className=" text-sm hidden sm:block sm:text-2xl text-white font-bold w-[32%] text-center">
+                            {vm.signupSuccessMsg}
+                        </span>
+                        <span className="uppercase text-2xl sm:hidden block text-[#6DCDCB] font-bold text-center">
+                            Sign Up <br />
+                            Successfull!
+                        </span>
+                    </>
+                ) : (
+                    <>
+                        <span className=" text-sm hidden sm:block sm:text-2xl text-white font-bold w-[32%] text-center">
+                            {vm.signupErrorMsg}
+                        </span>
+                    </>
+                )}
             </div>
         );
     }
@@ -362,7 +383,7 @@ const SignupPage = () => {
                                             if (err_msgs.length) {
                                                 let suffix =
                                                     err_msgs[
-                                                    err_msgs.length - 1
+                                                        err_msgs.length - 1
                                                     ];
                                                 if (err_msgs.length > 1) {
                                                     suffix = `${err_msgs
@@ -401,9 +422,7 @@ const SignupPage = () => {
                                 dataSelector="next-button"
                                 className=" bg-[#6E498E] min-w-[150px] !justify-center !items-center !py-3 w-8 sm:w-full !rounded-[30px]"
                                 label="Next"
-                                onClick={vm.form.handleSubmit(() =>
-                                    setStep(!step)
-                                )}
+                                onClick={() => setStep(!step)}
                             />
                         </div>
                         <div className="flex flex-row my-10 sm:my-8 mt- justify-center">
@@ -458,7 +477,17 @@ const SignupPage = () => {
                     </div>
                 </div>
             ) : (
-                <SecondStep showError={showError} setShowError={setShowError} isChecked={isChecked} setIsChecked={setIsChecked} vm={vm} step={step} setStep={setStep} organisationRequired={organisationRequired} setOrganisationRequired={setOrganisationRequired} />
+                <SecondStep
+                    showError={showError}
+                    setShowError={setShowError}
+                    isChecked={isChecked}
+                    setIsChecked={setIsChecked}
+                    vm={vm}
+                    step={step}
+                    setStep={setStep}
+                    organisationRequired={organisationRequired}
+                    setOrganisationRequired={setOrganisationRequired}
+                />
             )}
         </NewGradientUI>
     );
