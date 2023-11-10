@@ -121,9 +121,9 @@ const NewResultCardAction = ({
                 )}
                 {pathname !== "/search" && (
                     <>
-                        <div className=" flex flex-col justify-center items-center">
+                        <div className=" flex flex-col justify-center items-center hover:bg-[#6DCDCB] hover:bg-opacity-[55%] hover:rounded-md">
                             <div
-                                className={` hover:bg-[#6DCDCB] hover:bg-opacity-[55%]  px-2 pt-2 mb-[-10px] active:bg-dtech-main-dark !hover:text-white ${favouriteColor}`}
+                                className={`  px-2 pt-2 mb-[-10px] active:bg-dtech-main-dark !hover:text-white ${favouriteColor}`}
                                 onMouseDown={() => setFavouriteClicked(true)}
                                 onMouseUp={() => setFavouriteClicked(false)}
                                 onMouseLeave={() => setFavouriteClicked(false)}
@@ -141,7 +141,7 @@ const NewResultCardAction = ({
                                 Like
                             </div>
                         </div>
-                        <div className=" flex flex-col justify-center items-center">
+                        <div className=" flex flex-col justify-center items-center hover:bg-[#6DCDCB] hover:bg-opacity-[55%] hover:rounded-md">
                             <div
                                 className={`hover:bg-[#6DCDCB] hover:bg-opacity-[55%]  px-2 pt-2 mb-[-10px]  active:bg-dtech-main-dark !hover:text-white ${bookmarkColor}`}
                                 onMouseDown={() => setBookmarkClicked(true)}
@@ -226,7 +226,7 @@ const NewResultCardAction = ({
                         Share
                     </div>
                 </div>
-                <div className=" cursor-pointer ">
+                <div className=" cursor-pointer  hover:bg-[#6DCDCB] hover:bg-opacity-[55%] hover:rounded-md">
                     {router.pathname == "/datasets/[id]" && (
                         <Cite
                             citation={cite}
