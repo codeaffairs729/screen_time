@@ -32,8 +32,8 @@ const ResultCardAction = ({
     return (
         // <div>
         <div className={clsx("flex", className)}>
-            <div className=" flex flex-row justify-evenly items-center w-full h-full">
-                <div className=" flex justify-center items-center flex-col">
+            <div className=" flex flex-row justify-evenly items-center w-full h-full ">
+                <div className=" flex justify-center items-center flex-col  hover:bg-[#6DCDCB] hover:bg-opacity-[55%] hover:rounded-md px-2 py-4">
                     <a href={data?.url} target="_blank" rel="noreferrer" >
                         <BsGlobe
                             className="sm:h-6 sm:w-6 h-4 w-4 text-dtech-new-main-light cursor-pointer "
@@ -41,8 +41,8 @@ const ResultCardAction = ({
                     </a>
                     <div className="text-[#0065BD] underline w-max">{!href?.includes("dataset")?"Website":"Source"}</div>
                 </div>
-                <div className=" flex justify-center items-center flex-col sm:ml-0 ml-4">
-
+                <div className=" flex justify-center items-center flex-col sm:ml-0 ml-4   hover:bg-[#6DCDCB] hover:bg-opacity-[55%] hover:rounded-md px-3 py-4">
+ 
                     <FavouriteBtn
                         className="mx-auto "
                         datasetStats={data}
@@ -54,7 +54,7 @@ const ResultCardAction = ({
                 </div>
             </div>
             <div className=" flex flex-row justify-evenly items-center w-full h-full">
-                <div className=" flex justify-center items-center flex-col sm:ml-5">
+                <div className=" flex justify-center items-center flex-col sm:ml-5 hover:bg-[#6DCDCB] hover:bg-opacity-[55%] hover:rounded-md px-3 py-4">
 
                     <BookmarkBtn
                         className="mx-auto "
@@ -64,7 +64,7 @@ const ResultCardAction = ({
                     <div className="text-dtech-new-main-light">Save</div>
 
                 </div>
-                <div className=" flex justify-center items-center flex-col sm:ml-4">
+                <div className=" flex justify-center items-center flex-col sm:ml-4 hover:bg-[#6DCDCB] hover:bg-opacity-[55%] hover:rounded-md px-2 py-4">
 
                     <Menu>
                         {({ open }) => (
