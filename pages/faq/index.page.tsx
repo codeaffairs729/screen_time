@@ -12,7 +12,7 @@ const FAQPage = () => {
                 </span>
             </div>
 
-            <div className="mx-4 md:my-8 md:mx-20 border-t !bg-white flex flex-col justify-center items-center md:px-[20%] px-[5%]">
+            <div className="mx-4 md:my-8 md:mx-20 border-t !bg-white flex flex-col justify-center items-center md:px-[10%] px-[5%]">
                 <div className="mt-10">
                     <Image src={faqImage} width={500} height={400} />
                     <div className="text-[#727272] font-bold text-[22px]">
@@ -31,7 +31,7 @@ const FAQPage = () => {
                         labelClassName=" !text-dtech-new-main-light !font-bold text-[22px]"
                         arrowIconClass= "!text-dtech-new-main-light"
                     >
-                        <span className="px-4 py-2 w-full text-sm leading-6 text-justify text-[#727272] text-[19px] mr-6 my-3">
+                        <span className="px-4 py-2 w-full leading-6 text-justify text-[#727272] text-[19px] mr-6 my-3">
                             Dtechtive is a search engine that helps people find
                             datasets from websites that existing search engines
                             fail to index. This is possible because of the
@@ -59,7 +59,7 @@ const FAQPage = () => {
                         labelClassName=" !text-dtech-new-main-light !font-bold text-[22px]"
                         arrowIconClass= "!text-dtech-new-main-light"
                     >
-                        <span className="px-4 py-2 w-full text-sm leading-6 text-justify text-[#727272] text-[19px] mr-6  my-3">
+                        <span className="px-4 py-2 w-full  leading-6 text-justify text-[#727272] text-[19px] mr-6  my-3">
                             Dtechtive onboards datasets (metadata only) from
                             open and commercial Data Providers onto the search
                             engine at no cost. This makes the datasets more
@@ -97,7 +97,7 @@ const FAQPage = () => {
                         labelClassName=" !text-dtech-new-main-light !font-bold text-[22px]"
                         arrowIconClass= "!text-dtech-new-main-light"
                     >
-                        <span className="px-4 py-2 w-full text-sm leading-6 text-justify text-[#727272] text-[19px] mr-6  my-3">
+                        <span className="px-4 py-2 w-full  leading-6 text-justify text-[#727272] text-[19px] mr-6  my-3">
                             While Dtechtive makes open and commercial datasets
                             more discoverable, it can also help employees within
                             Enterprises find internal datasets easily. This will
@@ -127,7 +127,7 @@ const FAQPage = () => {
                         labelClassName=" !text-dtech-new-main-light !font-bold text-[22px]"
                         arrowIconClass= "!text-dtech-new-main-light"
                     >
-                        <span className="px-4 py-2 w-full text-sm leading-6 text-justify text-[#727272] text-[19px] mr-6  my-3">
+                        <span className="px-4 py-2 w-full  leading-6 text-justify text-[#727272] text-[19px] mr-6  my-3">
                             You can search for datasets (unlimited) and access
                             useful features (limited) as a guest user. However,
                             creating a free account will help you unlock a lot
@@ -173,7 +173,7 @@ const FAQPage = () => {
                         labelClassName=" !text-dtech-new-main-light !font-bold text-[22px]"
                         arrowIconClass= "!text-dtech-new-main-light"
                     >
-                        <span className="px-4 py-2 w-full text-sm leading-6 text-justify text-[#727272] text-[19px] mr-6  my-3">
+                        <span className="px-4 py-2 w-full  leading-6 text-justify text-[#727272] text-[19px] mr-6  my-3">
                             Since we are in the early stages, all the features
                             will be accessible for free to the early adopter
                             Data Users and Data Providers who have created
@@ -211,7 +211,7 @@ const FAQPage = () => {
                         labelClassName=" !text-dtech-new-main-light !font-bold text-[22px]"
                         arrowIconClass= "!text-dtech-new-main-light"
                     >
-                        <span className="px-4 py-2 w-full text-sm leading-6 text-justify text-[#727272] text-[19px] mr-6  my-3">
+                        <span className="px-4 py-2 w-full  leading-6 text-justify text-[#727272] text-[19px] mr-6  my-3">
                             Dtechtive assesses metadata quality and data file
                             quality using different approaches. Metadata quality
                             is based on the European Commission&lsquo;s{" "}
