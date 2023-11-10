@@ -63,7 +63,7 @@ const DataPrivacyPolicy = () => {
                         control cookies through the browser settings. You may
                         also manage your cookies preferences at{" "}
                         <a
-                            href="www.dtechtive.com/cookies"
+                            href="https://www.dtechtive.com/cookies"
                             target="_blank"
                             rel="noreferrer"
                             className="text-[#0065BD] hover:underline"
@@ -74,7 +74,7 @@ const DataPrivacyPolicy = () => {
                         what cookies have been set and how to manage and delete
                         them, visit{" "}
                         <a
-                            href="www.aboutcookies.org"
+                            href="https://www.aboutcookies.org"
                             target="_blank"
                             rel="noreferrer"
                             className="text-[#0065BD] hover:underline"

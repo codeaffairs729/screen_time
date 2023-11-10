@@ -17,10 +17,11 @@ import { useSelector } from "react-redux";
 import { RootState } from "store";
 import { NotificationsVMContext } from "pages/workspace/notification.vm";
 import { AiOutlineClose } from "react-icons/ai";
+import { useIsMobile } from "common/hooks";
 
 const HomePage = ({ home }: { home: any }) => {
     const router = useRouter();
-    const [isMobile, setIsMobile] = useState<boolean>(false);
+    const { isMobile } = useIsMobile();
     const [searching, setSearching] = useState(false);
     const [betaLabel, setBetaLabel] = useState(false);
     const user = useSelector((state: RootState) => state.auth.user);
@@ -35,28 +36,12 @@ const HomePage = ({ home }: { home: any }) => {
         setSearching(false);
     };
 
-    // useEffect(() => {
-    //     !!notifications && fetchNotifications(user);
-    // }, []);
-    useEffect(() => {
-        const handleResize = () => {
-            setIsMobile(window.innerWidth < 640); // Adjust the breakpoint as needed
-        };
 
-        // Call handleResize on initial component render
-        handleResize();
 
-        // Add event listener to window resize
-        window.addEventListener("resize", handleResize);
 
-        // Clean up event listener on component unmount
-        return () => {
-            window.removeEventListener("resize", handleResize);
-        };
-    }, []);
 
     return (
-        <div className={`flex flex-col relative`}>
+        <div className={`flex flex-col relative min-w-[22rem]`}>
             {
                 <div
                     className={
@@ -72,9 +57,9 @@ const HomePage = ({ home }: { home: any }) => {
             />
             <img
                 src="/images/home_for_mobile.png"
-                width={window.innerWidth}
-                className=" -z-100 absolute sm:hidden block"
-                style={{ height: "570px" }}
+                // width={window.innerWidth}
+                className=" -z-100 absolute sm:hidden block w-full "
+                style={{ height: "570px",}}
             />
 
             {!betaLabel && (

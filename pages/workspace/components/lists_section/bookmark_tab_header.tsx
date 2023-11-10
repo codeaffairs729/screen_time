@@ -61,7 +61,7 @@ const TabHeader = ({
             )}
             <Tab
                 className={({ selected }) =>
-                    `transition-all h-fit text-lg outline-none   text-left  hover:bg-[#EBEBEB] w-full
+                    `transition-all h-fit text-lg outline-none   text-left  hover:bg-[#EBEBED] w-full
             text-[#727272] my-0.5  ${
                 selected && " bg-gray-300 !text-gray-500 hover:text-black  "
             }

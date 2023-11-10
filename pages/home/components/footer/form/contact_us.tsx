@@ -136,7 +136,7 @@ const ContactUs = () => {
                     <div className=" text-red-600">{formError}</div>
                     <PrimaryBtn
                         label="Send"
-                        className="bg-dtech-new-main-light  !rounded-full hover:bg-[#6DCDCB] hover:text-black active:bg-dtech-main-dark active:text-white active:animate-ping max-w-[120px] my-4 !py-[12px] !px-[16px]"
+                        className="bg-dtech-new-main-light hover:bg-dtech-main-dark  sm:hover:text-black sm:hover:bg-dtech-light-teal !rounded-full  active:bg-dtech-main-dark active:text-white active:animate-ping max-w-[120px] my-4 !py-[12px] !px-[16px]"
                         isLoading={vm.isSendingMail}
                         onClick={async () => {
                             const validated = await vm.form.trigger()

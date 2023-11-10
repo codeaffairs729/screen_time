@@ -139,7 +139,7 @@ const NewSearchBar = ({
                     handleOnBlur()
                 }
             }}
-            className={clsx("flex z-20", className, `${(((query.length > 0 && open) || (newOptions.length > 0 && open)) || isLoading) && " !rounded-b-none border-b-0 rounded-t-3xl"
+            className={clsx("flex z-20", className, `${(((query.length > 0 && open && searchType == SearchTypes.DATASET.value) || (newOptions.length > 0 && open && searchType == SearchTypes.DATASET.value)) || (isLoading && searchType == SearchTypes.DATASET.value)) && " !rounded-b-none border-b-0 rounded-t-3xl"
                 }`)}>
             <Combobox value={selected} onChange={setSelected} nullable>
                 <div className="flex flex-row w-full h-full relative">
@@ -170,7 +170,7 @@ const NewSearchBar = ({
                         ></Combobox.Button>
                     </div>
                     <Transition
-                        show={open && (oldOptions.length > 0 || newOptions.length > 0)}
+                        show={open && searchType == SearchTypes.DATASET.value && (oldOptions.length > 0 || newOptions.length > 0)}
                         as={Fragment}
                     >
                         <Combobox.Options className={`absolute mt-8 -ml-[0.4%] border-[3px] border-dtech-light-teal border-t-0 sm:mt-9 max-h-60 w-[100.7%] rounded-b-3xl scrollable-container overflow-auto bg-white  text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm z-20 ${oldOptions.length == 0 && newOptions.length == 0 && "hidden"}`} ref={myRef}>

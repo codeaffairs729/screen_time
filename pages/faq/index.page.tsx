@@ -25,7 +25,7 @@ const FAQPage = () => {
                         <span>15 October 2023</span>
                     </div>
                     <Accordian
-                        className="border border-gray-200 !bg-white px-2 !max-w-none"
+                        className="border !border-[#EDEDED] hover:!bg-[#FAFAFA] !bg-white px-2 !max-w-none rounded-lg"
                         label={"Why is Dtechtive interesting to Data Users?"}
                         pageName="faq"
                         labelClassName=" !text-dtech-new-main-light !font-bold text-[22px]"
@@ -51,7 +51,7 @@ const FAQPage = () => {
                         </span>
                     </Accordian>
                     <Accordian
-                        className="border border-gray-200 !bg-white px-2 !max-w-none"
+                        className="border border-[#EDEDED] hover:!bg-[#FAFAFA] !bg-white px-2 !max-w-none"
                         label={
                             "Why is Dtechtive interesting to Data Providers?"
                         }
@@ -89,7 +89,7 @@ const FAQPage = () => {
                         </span>
                     </Accordian>
                     <Accordian
-                        className="border border-gray-200 !bg-white px-2 !max-w-none"
+                        className="border !border-[#EDEDED] hover:!bg-[#FAFAFA] !bg-white px-2 !max-w-none rounded-lg"
                         label={
                             "How can Dtechtive help Enterprises with custom needs?"
                         }
@@ -108,6 +108,7 @@ const FAQPage = () => {
                             with data and help accelerate data-informed decision
                             making with the organisation. 💡 If you are
                             representing an Enterprise with custom needs, please
+                            {" "}
                             <a
                                 className="text-blue-600"
                                 href="https://calendly.com/d/dmc-3n6-p55/dtechtive?month=2023-03"
@@ -118,7 +119,7 @@ const FAQPage = () => {
                         </span>
                     </Accordian>
                     <Accordian
-                        className="border border-gray-200 !bg-white px-2 !max-w-none"
+                        className="border !border-[#EDEDED] hover:!bg-[#FAFAFA] !bg-white px-2 !max-w-none rounded-lg"
                         label={
                             "Do I need to create an account to use Dtechtive?"
                         }
@@ -164,7 +165,7 @@ const FAQPage = () => {
                         </span>
                     </Accordian>
                     <Accordian
-                        className="border border-gray-200 !bg-white px-2 !max-w-none"
+                        className="border !border-[#EDEDED] hover:!bg-[#FAFAFA] !bg-white px-2 !max-w-none rounded-lg"
                         label={
                             "What are the paid subscription plans on Dtechtive?"
                         }
@@ -204,7 +205,7 @@ const FAQPage = () => {
                         </span>
                     </Accordian>
                     <Accordian
-                        className="border border-gray-200 !bg-white px-2 !max-w-none"
+                        className="border !border-[#EDEDED] hover:!bg-[#FAFAFA]  !bg-white px-2 !max-w-none rounded-lg"
                         label={"How does Dtechtive assess dataset quality?"}
                         pageName="faq"
                         labelClassName=" !text-dtech-new-main-light !font-bold text-[22px]"
@@ -232,21 +233,6 @@ const FAQPage = () => {
                             for data management and stewardship. Data file
                             quality is assessed based on user feedback gathered
                             through Dtechtive.
-                        </span>
-                    </Accordian>
-                    <Accordian
-                        className="border border-gray-200 !bg-white px-2 !max-w-none"
-                        label={"How does Dtechtive assess dataset quality?"}
-                        pageName="faq"
-                        labelClassName=" !text-dtech-new-main-light !font-bold text-[22px]"
-                        arrowIconClass= "!text-dtech-new-main-light"
-                    >
-                        <span className="px-4 py-2 w-full text-sm leading-6 text-justify text-[#727272] text-[19px] mr-6  my-3">
-                            Yes, we are developing a feature that will enable
-                            any registered user to upload their datasets to
-                            Dtechtive and publish them for better
-                            discoverability. This feature will be available in
-                            the My Workspace page.
                         </span>
                     </Accordian>
                 </div>

@@ -11,6 +11,7 @@ const FormRow = ({
     tooltip = "none",
     labelClass = "",
     iconClass = "",
+    tooltipClass= "",
 }: {
     label: string;
     children: ReactNode;
@@ -20,6 +21,7 @@ const FormRow = ({
     tooltip?: string;
     labelClass?: string;
     iconClass?: string;
+    tooltipClass?: string;
 }) => {
     return (
         <div className={clsx("flex items-center mb-3", className)}>
@@ -39,7 +41,7 @@ const FormRow = ({
                     </span>
                 </span>
                 {tooltip != "none" && (
-                    <span className={clsx("ml-6")}>
+                    <span className={clsx("ml-6",tooltipClass)}>
                         <InfoIcon title={tooltip} iconClasses={iconClass} />
                     </span>
                 )}

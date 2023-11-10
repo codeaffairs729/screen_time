@@ -10,12 +10,13 @@ const UpdateFrequency = ({ vm }: { vm: any }) => {
             label="Website management frequency"
             tooltip={formRowToolTipData.update_frequency}
             className=" md:w-auto flex-col sm:!mb-8"
-            labelClass="sm:text-[19px]"
+            labelClass="sm:text-[19px] !justify-start"
             iconClass="sm:h-[19px] sm:w-[19px] text-black"
+            tooltipClass="!ml-2"
         >
             <DropdownField
                 inputClass="border-[#C3C3C3] focus:border-[#C3C3C3] focus:ring-opacity-0 rounded-[5px] sm:text-[19px]"
-                newDropdownIcon={true}
+                newDropdownIcon={false}
                 formControl={{
                     control: vm.form.control,
                     name: "update_frequency",

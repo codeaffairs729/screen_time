@@ -80,7 +80,7 @@ const TOOLTIP_VALUE = [
         value: "Dataset updated once every 12 months.",
     },
 ];
-const DropdownField = ({
+const  DropdownField = ({
     newDropdown,
     options,
     className = "",
@@ -238,7 +238,7 @@ const DropdownField = ({
                         ) : newDropdownIcon ? (
                             <HiOutlineChevronUp className="w-5 h-5" />
                         ) : (
-                            <HiOutlineChevronDown className="w-5 h-5" />
+                            <HiOutlineChevronDown className={`w-5 h-5 transition-all ${isOpen && " rotate-180"}`} />
                         )}
                     </Combobox.Button>
                     <Transition
@@ -303,7 +303,7 @@ const ComboOption = ({ option }: { option: Option }) => {
         <Combobox.Option
             className={({ active }) =>
                 `cursor-default select-none border-b-[1px] border-[#EBEBEB] relative py-2 pl-10 pr-4 ${
-                    active ? "text-white bg-[#6E498E]" : "text-gray-900"
+                    active ? " bg-[#6DCDCB] bg-opacity-[55%]" : "text-gray-900"
                 }`
             }
             value={option}

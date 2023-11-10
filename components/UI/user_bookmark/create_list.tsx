@@ -5,7 +5,7 @@ import { RootState } from "store";
 import CreateListVM from "./create_list.vm";
 import Loader from "../loader";
 
-const CreateList = () => {
+const CreateList = ({className}:{className?: string}) => {
     const user = useSelector((state: RootState) => state.auth.user);
     const bookmark_lists = useSelector(
         (state: RootState) => state.user.bookmarkLists
@@ -45,7 +45,7 @@ const CreateList = () => {
 
     return (
         <div className="mr-auto">
-            <div className="flex items-center justify-between border-2 md:border-[#727272]  overflow-hidden border-dtech-main-dark rounded-full px-3 h-12 w-1/2 min-w-max  md:w-full cursor-pointer py-2 mx-3 md:mx-0">
+            <div className={` flex items-center justify-between border-2 md:border-[#727272]  overflow-hidden border-dtech-main-dark rounded-full px-3 h-12 w-1/2 min-w-max  md:w-full cursor-pointer py-2 mx-3 md:mx-0  ${className}`}>
                 {newNameActive ? (
                     <input
                         ref={ref}

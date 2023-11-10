@@ -10,8 +10,9 @@ const DataProviderType = ({ vm }: { vm: any }) => {
             label="Data provider type"
             tooltip={formRowToolTipData.data_provider_type}
             className=" md:w-auto flex-col sm:!mb-8"
-            labelClass="sm:text-[19px]"
+            labelClass="sm:text-[19px] !justify-start"
             iconClass="sm:h-[19px] sm:w-[19px] text-black"
+            tooltipClass="!ml-2"
         >
             <RadioButtonField
                 formControl={{
