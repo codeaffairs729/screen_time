@@ -10,11 +10,13 @@ const TopicDetailVM = (initialTopicData: any, id: number | undefined) => {
     const [pageSize, setPageSize] = useState<number>(7);
     const [sortBy, setSortBy] = useState<any>("title");
     const [permittedPermissions, setPermittedPermissions] = useState();
-
+    const protocol = window.location.protocol || "http:";
+    const host = window.location.hostname || "localhost:3000";
+    const fullUrl = `${protocol}//${host}`;
 
     useEffect(() => {
         fetchDatasetByTopic();
-    }, [pageNumber,sortBy]);
+    }, [pageNumber, sortBy]);
 
     const {
         execute: excuteFetchDatasetByTopic,
@@ -29,7 +31,7 @@ const TopicDetailVM = (initialTopicData: any, id: number | undefined) => {
                 return Http.get(
                     `/api/topic/dataset-by-topic?topic_id=${topic?.id}&pageNumber=${pageNumber}&page_size=${pageSize}&sort_by=${sortBy}`,
                     {
-                        baseUrl: process.env.NEXT_PUBLIC_WEBCLIENT_ROOT,
+                        baseUrl: fullUrl,
                     }
                 );
             },
@@ -59,8 +61,8 @@ const TopicDetailVM = (initialTopicData: any, id: number | undefined) => {
         errorDatasetByTopic,
         pageNumber,
         setPageNumber,
-        permittedPermissions, 
-        setPermittedPermissions
+        permittedPermissions,
+        setPermittedPermissions,
     };
 };
 export default TopicDetailVM;
@@ -82,8 +84,6 @@ export interface ITopicDetailVMContext {
 export const TopicDetailVMContext = createContext<ITopicDetailVMContext>(
     {} as ITopicDetailVMContext
 );
-
-
 
 const jsonToTopicDatasets = (jsons: any, totalMatches: number) => {
     // console.log({ jsons });

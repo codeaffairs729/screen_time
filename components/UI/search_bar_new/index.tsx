@@ -27,7 +27,9 @@
         const [query, setQuery] = useState("");
         const openAutoCompleteBtn = useRef(null);
         const [open, setOpen] = useState<boolean>(false)
-
+        const protocol = window.location.protocol || 'http:';
+        const host = window.location.hostname || 'localhost:3000';
+        const fullUrl = `${protocol}//${host}`;
         const searchType = useSelector((state: RootState) => state.search.type);
         const {
             data: options,
@@ -44,8 +46,7 @@
                         executeLodAutocomplete(
                             () =>
                                 Http.get(`/api/autocomplete?query=${inputVal}`, {
-                                    baseUrl:
-                                        process.env.NEXT_PUBLIC_WEBCLIENT_ROOT,
+                                    baseUrl: fullUrl
                                 }),
                             {
                                 postProcess: (res) =>

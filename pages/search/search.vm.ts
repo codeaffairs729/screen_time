@@ -52,7 +52,9 @@ const SearchVM = () => {
     const [isFilterActive, setIsFilterActive] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(false);
     const [showMobileSidebar, setShowMobileSidebar] = useState<boolean>(false);
-
+    const protocol = window.location.protocol || "http:";
+    const host = window.location.hostname || "localhost:3000";
+    const fullUrl = `${protocol}//${host}`;
     // const [isMobile, setIsMobile] = useState(false);
     // const [mobileFilter, setMobileFilter] = useState({
     //     sort_by: ["relevance"],
@@ -214,7 +216,7 @@ const SearchVM = () => {
         }&page_size=${pageSize}&page_number=${currentPageNo}${queryParams}`,
         (url: string) =>
             Http.get(url, {
-                baseUrl: process.env.NEXT_PUBLIC_WEBCLIENT_ROOT,
+                baseUrl: fullUrl,
                 redirectToLoginPageIfAuthRequired: false,
             })
                 .catch((e) => {
