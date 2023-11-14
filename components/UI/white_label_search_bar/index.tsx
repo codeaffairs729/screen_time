@@ -33,7 +33,9 @@ const NewSearchBar = ({
     const [open, setOpen] = useState(false)
     const [oldOptions, setOldOptions] = useState<Option[]>([]);
     const openAutoCompleteBtn = useRef(null);
-
+    const protocol = window.location.protocol || 'http:';
+    const host = window.location.hostname || 'localhost:3000';
+    const fullUrl = `${protocol}//${host}`;
     const searchType = useSelector((state: RootState) => state.search.type);
     const {
         data: options,
@@ -51,7 +53,7 @@ const NewSearchBar = ({
                         () =>
                             Http.get(`/api/autocomplete?query=${inputVal}`, {
                                 baseUrl:
-                                    process.env.NEXT_PUBLIC_WEBCLIENT_ROOT
+                                    fullUrl
                             }),
                         {
                             postProcess: (res) =>
