@@ -15,6 +15,8 @@ import toast from "react-hot-toast";
 const ForgotPasswordVM = () => {
   const router = useRouter();
   const form = useForm();
+  const getPrev_path = localStorage.getItem("previous_path")
+
   const goToStep = (step: PageStep) => {
     router.push(`?step=${step}`);
   };
@@ -24,14 +26,13 @@ const ForgotPasswordVM = () => {
     useHttpCall();
   const sendResetEmail = (data: any) =>
     executeSendResetEmail(
-      () => Http.post("/v1/users/send-reset-password-email", data),
+      () => Http.post("/v1/users/send-reset-password-email", {...data,path:getPrev_path}),
       {
         onSuccess: (res) => goToStep(PageStep.EmailSent),
         onError: (error) =>
           getHttpErrorMsg(error).then((msg) => toast.error(msg)),
       }
-    );
-
+    );   
   return {
     signinErrorMsg: "",
     form,
