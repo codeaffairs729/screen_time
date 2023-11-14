@@ -386,7 +386,10 @@ DatasetDetail.getInitialProps = async ({ query, req }: NextPageContext) => {
         if (req?.headers.cookie) {
             authToken = getCookieFromServer(AUTH_TOKEN, req);
         }
-        const datasetData: any = await fetch(`${process.env.NEXT_PUBLIC_WEBCLIENT_ROOT}/api/datasets-by-ids?query=${datasetId}`);
+        const protocol = window.location.protocol || 'http:';
+        const host = window.location.hostname || 'localhost:3000';
+        const fullUrl = `${protocol}//${host}`;
+        const datasetData: any = await fetch(`${fullUrl}/api/datasets-by-ids?query=${datasetId}`);
         const datasetJson =await datasetData.json()
         const dataset = Dataset.fromJson(
             datasetJson["results"][0]

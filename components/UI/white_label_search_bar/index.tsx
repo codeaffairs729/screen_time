@@ -52,8 +52,7 @@ const NewSearchBar = ({
                     executeLodAutocomplete(
                         () =>
                             Http.get(`/api/autocomplete?query=${inputVal}`, {
-                                baseUrl:
-                                    fullUrl
+                                baseUrl: fullUrl
                             }),
                         {
                             postProcess: (res) =>
@@ -110,7 +109,7 @@ const NewSearchBar = ({
         }
     }, [q]);
     const handleKeyDown = (event: any) => {
-        if (event.key === 'Enter'|| event.key === 'NumpadEnter') {
+        if (event.key === 'Enter' || event.key === 'NumpadEnter') {
             onChange(searchType, { label: "User input", value: query });
             handleOnBlur()
             setOpen(false)
@@ -126,7 +125,7 @@ const NewSearchBar = ({
     const handleOnBlur = () => {
         onBlurSearchBar()
     }
-    const handleSubmit = (e:any) => {
+    const handleSubmit = (e: any) => {
         e.stopPropagation()
         setOpen(!open)
     }

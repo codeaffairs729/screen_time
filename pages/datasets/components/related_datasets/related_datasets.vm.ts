@@ -11,7 +11,9 @@ const RelatedDatasetsVM = (dataset: any) => {
     /**
      * Fetch stats for datasets to highlight favourite status
      */
-
+    const protocol = window.location.protocol || "http:";
+    const host = window.location.hostname || "localhost:3000";
+    const fullUrl = `${protocol}//${host}`;
     const { fectchStats, stats, isFetchingStats } = useFetchStats();
 
     const {
@@ -27,7 +29,7 @@ const RelatedDatasetsVM = (dataset: any) => {
                 return Http.get(
                     `/api/related-by-domains-and-topics?query=${dataset?.id}`,
                     {
-                        baseUrl: process.env.NEXT_PUBLIC_WEBCLIENT_ROOT,
+                        baseUrl: fullUrl,
                     }
                 );
             },
@@ -67,7 +69,7 @@ const RelatedDatasetsVM = (dataset: any) => {
                 return Http.get(
                     `/api/related-by-description?query=${dataset?.id}`,
                     {
-                        baseUrl: process.env.NEXT_PUBLIC_WEBCLIENT_ROOT,
+                        baseUrl: fullUrl,
                     }
                 );
             },

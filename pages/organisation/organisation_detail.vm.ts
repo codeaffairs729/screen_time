@@ -68,6 +68,9 @@ const OrganisationDetailVM = (
     useEffect(() => {
         fetchOrganisationDatasets();
     }, [pageNumber]);
+    const protocol = window.location.protocol || "http:";
+    const host = window.location.hostname || "localhost:3000";
+    const fullUrl = `${protocol}//${host}`;
     const {
         execute: excuteFetchOrganisationDatasets,
         data: organisationDatasets,
@@ -81,7 +84,7 @@ const OrganisationDetailVM = (
                 return Http.get(
                     `/api/datasets-by-data-host?orgUUID=${orgUUID}&pageNumber=${pageNumber}&orgDatasetsCount=${orgDatasetsCount}`,
                     {
-                        baseUrl: process.env.NEXT_PUBLIC_WEBCLIENT_ROOT,
+                        baseUrl: fullUrl,
                     }
                 );
             },
@@ -171,6 +174,9 @@ const GetRankedData = ({
     key: string;
     orgUUID: string | undefined;
 }) => {
+    const protocol = window.location.protocol || "http:";
+    const host = window.location.hostname || "localhost:3000";
+    const fullUrl = `${protocol}//${host}`;
     const { execute, data, isLoading, error } = useHttpCall<{
         [key: string]: any;
     }>([]);
@@ -182,7 +188,7 @@ const GetRankedData = ({
                 return Http.get(
                     `/api/datasets-ranked-by-factor?orgUUid=${orgUUID}&key=${key}`,
                     {
-                        baseUrl: process.env.NEXT_PUBLIC_WEBCLIENT_ROOT,
+                        baseUrl: fullUrl,
                     }
                 );
             },
