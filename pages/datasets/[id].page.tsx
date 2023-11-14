@@ -383,21 +383,40 @@ DatasetDetail.getInitialProps = async ({ query, req }: NextPageContext) => {
     try {
         const datasetId = query["id"];
         let authToken;
-        if (req?.headers.cookie) {
-            authToken = getCookieFromServer(AUTH_TOKEN, req);
-        }
-        const protocol = window.location.protocol || 'http:';
-        const host = window.location.hostname || 'localhost:3000';
-        const fullUrl = `${protocol}//${host}`;
-        const datasetData: any = await fetch(`${fullUrl}/api/datasets-by-ids?query=${datasetId}`);
-        const datasetJson =await datasetData.json()
-        const dataset = Dataset.fromJson(
-            datasetJson["results"][0]
+
+        // Check if running on the server (req object exists) or client (window object exists)
+        const isServer = typeof window === 'undefined';
+        if (!isServer && window.location) {
+            // If on the client-side, use window.location
+            const protocol = window.location.protocol || 'http:';
+            const host = window.location.hostname || 'localhost:3000';
+            const fullUrl = `${protocol}//${host}`;
+            const datasetData: any = await fetch(`${fullUrl}/api/datasets-by-ids?query=${datasetId}`);
+            const datasetJson = await datasetData.json()
+            const dataset = Dataset.fromJson(
+                datasetJson["results"][0]
             );
             const logoUrl = await Http.get(`/v1/datasets/${dataset?.detail.topics[0]}/${dataset?.id}/logo`, {
                 baseUrl: process.env.NEXT_PUBLIC_WEBPORTAL_API_ROOT,
             })
             return { dataset, logoUrl };
+        }
+        else if (req?.headers.cookie) {
+            authToken = getCookieFromServer(AUTH_TOKEN, req);
+        
+            const protocol = req?.headers?.host !== "localhost:3000" ? 'https:' :'http:';
+            const host = req?.headers?.host
+            const fullUrl = `${protocol}//${host}`;
+            const datasetData: any = await fetch(`${fullUrl}/api/datasets-by-ids?query=${datasetId}`);
+            const datasetJson = await datasetData.json()
+            const dataset = Dataset.fromJson(
+                datasetJson["results"][0]
+            );
+            const logoUrl = await Http.get(`/v1/datasets/${dataset?.detail.topics[0]}/${dataset?.id}/logo`, {
+                baseUrl: process.env.NEXT_PUBLIC_WEBPORTAL_API_ROOT,
+            })
+            return { dataset, logoUrl };
+        }
     } catch (error) {
         return { dataset: undefined };
     }
