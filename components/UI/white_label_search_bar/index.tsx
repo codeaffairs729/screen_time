@@ -124,6 +124,10 @@ const NewSearchBar = ({
     const handleOnBlur = () => {
         onBlurSearchBar()
     }
+    const handleSubmit = (e:any) => {
+        e.stopPropagation()
+        setOpen(!open)
+    }
     useEffect(() => {
         setNewOptions(options)
     }, [options])
@@ -145,6 +149,7 @@ const NewSearchBar = ({
                 <div className="flex flex-row w-full h-full relative">
                     <div className="relative rounded-full ml-4 flex items-center w-full h-full  cursor-default  text-left focus-within:outline-none sm:text-sm">
                         <Combobox.Input
+                            type="search"
                             placeholder="Search"
                             className="w-full shadow-[0, 0, 0, 350px, #212121]  sm:ml-0 !rounded-l-full max-h-[99%] border-none px-1 align-middle text-gray-900 h-full focus:ring-0 text-[19px] leading-[22px]"
                             onFocus={() => {
@@ -159,10 +164,7 @@ const NewSearchBar = ({
                                 setOldOptions(newOptions);
                                 setQuery(event.target.value)
                             }}
-                            onClick={(e) => {
-                                e.stopPropagation()
-                                setOpen(!open)
-                            }}
+                            onSubmit={(e) => handleSubmit(e)}
                         />
                         <Combobox.Button
                             ref={openAutoCompleteBtn}
