@@ -385,6 +385,7 @@ const datasetToResultCardData = (datasets: any, stats: any): Data[] => {
 
     return datasets?.map((dataset: any) => ({
         id: dataset.id,
+        uuid:dataset?.detail?.uuid,
         title: dataset.detail.name,
         recordType: "datasets",
         description: dataset.detail.description,
