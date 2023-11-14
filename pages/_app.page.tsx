@@ -19,6 +19,7 @@ import {
 import Head from "next/head";
 import IdleTimeoutModal from "./components/idle_timeout";
 import CookiePopover from "components/cookies/cookie_popover";
+import ForgotPasswordVM from "./forgot-password/forgot-password.vm";
 
 function DtechtiveApp({ Component, pageProps }: AppProps) {
     const router = useRouter();
@@ -55,7 +56,18 @@ function DtechtiveApp({ Component, pageProps }: AppProps) {
             } else {
                 localStorage.setItem("previous_path", previousPath);
             }
-            setPreviousPath(router.asPath);
+
+            if (!router.pathname.includes("/login")) {
+                if (router.pathname.includes("/forgot-password")) {
+                    const searchParams = new URLSearchParams(router.asPath);
+                    const pathParam = searchParams.get("path");
+
+                    if (pathParam) {
+                        const pathValue = pathParam.split("&")[0];
+                        setPreviousPath(pathValue as string);
+                    } 
+                } else setPreviousPath(router.asPath);
+            }
         };
 
         router.events.on("routeChangeComplete", handleRouteChange);
@@ -83,7 +95,12 @@ function DtechtiveApp({ Component, pageProps }: AppProps) {
 
         const handleRouteChange = () => {
             posthog.capture("$pageview");
-            setPreviousPath(router.asPath);
+            if (
+                !router.pathname.includes("/login") &&
+                !router.pathname.includes("/forgot-password")
+            ) {
+                setPreviousPath(router.asPath);
+            }
         };
         //When the component is mounted, subscribe to router changes
         //and log those page views
