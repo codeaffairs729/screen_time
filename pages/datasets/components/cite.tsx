@@ -55,7 +55,7 @@ const Cite = ({ citation, url }: { citation: string, url: string }) => {
             <div data-tip data-for="dtechtive-cite-btn-tooltip" className=" flex flex-col justify-center items-center"
                 onClick={() => setViewAll(!viewAll)}
             >
-                <div className="hover:bg-[#6DCDCB] hover:bg-opacity-[55%] p-1">
+                <div className=" p-1">
                     <Image src={CiteQuotes} />
                 </div>
                 <div className="text-[#727272] text-base font-roboto">

@@ -143,7 +143,7 @@ const NewResultCardAction = ({
                         </div>
                         <div className=" flex flex-col justify-center items-center hover:bg-[#6DCDCB] hover:bg-opacity-[55%] hover:rounded-md">
                             <div
-                                className={`hover:bg-[#6DCDCB] hover:bg-opacity-[55%]  px-2 pt-2 mb-[-10px]  active:bg-dtech-main-dark !hover:text-white ${bookmarkColor}`}
+                                className={` px-2 pt-2 mb-[-10px]  active:bg-dtech-main-dark !hover:text-white ${bookmarkColor}`}
                                 onMouseDown={() => setBookmarkClicked(true)}
                                 onMouseUp={() => setBookmarkClicked(false)}
                                 onMouseLeave={() => setBookmarkClicked(false)}

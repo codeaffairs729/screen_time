@@ -98,7 +98,7 @@ const FrontCard = ({ data, isMobile,imgCss="" }: { data: Data; isMobile: boolean
                     className={`${imgCss} `}
                 />
             ) : (
-                <div className="object-contain md:h-40 md:w-full h-[77.94px] w-[225.35px] flex justify-center items-center text-3xl font-extrabold text-[#EBEBEB]">
+                <div className="p-2 flex flex-col justify-center items-center overflow-hidden h-[77.94px] md:h-40 w-full font-extrabold text-[#EBEBEB]">
                     <div>{dummyImg}</div>
                     </div>
             )}
