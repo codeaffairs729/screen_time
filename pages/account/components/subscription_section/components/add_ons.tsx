@@ -63,10 +63,10 @@ const AddOns = ({ disableContact = false }: { disableContact?: boolean }) => {
                     <div>
                         <div className="flex justify-center items-center">
                             <button
-                                className=" flex justify-center items-center bg-dtech-new-main-light m-4 p-4 w-[127px] h-[40px] rounded-full mx-2 cursor-pointer"
+                                className=" flex justify-center items-center bg-dtech-new-main-light m-4 p-4 w-[127px] h-[40px] rounded-full mx-2 cursor-pointer hover:bg-[#FDD522] text-white hover:border-b-2 border-black hover:text-black "
                                 onClick={() => {}}
                             >
-                                <span className="text-white">Contact Us</span>
+                                <span className="">Contact Us</span>
                             </button>
                         </div>
                     </div>
@@ -78,13 +78,13 @@ const AddOns = ({ disableContact = false }: { disableContact?: boolean }) => {
                             <span className="">
                                 To learn more about the following add-ons,
                                 <br /> email us at
-                                <span className=" underline underline-offset-2 mx-1">
+                                <span className=" underline underline-offset-2 mx-1 text-dtech-dark-blue hover:underline hover:decoration-dtech-light-blue hover:text-dtech-light-blue hover:bg-[#6DCDCB8C] active:bg-dtech-dark-yellow active:text-black ">
                                     dtechtive@dtime.ai
                                 </span>
                                 or arrange a call via{" "}
                                 <Link href="https://dtime.ai/meeting" passHref>
                                     <a
-                                        className="underline underline-offset-2"
+                                        className="underline underline-offset-2 text-dtech-dark-blue hover:underline hover:decoration-dtech-light-blue hover:text-dtech-light-blue hover:bg-[#6DCDCB8C] active:bg-dtech-dark-yellow active:text-black "
                                         target="_blank"
                                         rel="noreferrer"
                                     >

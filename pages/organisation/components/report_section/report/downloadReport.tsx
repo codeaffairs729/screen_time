@@ -55,7 +55,7 @@ const DownloadReport = () => {
                 // }}
                 onClick={generatePDF}
             >
-                <div className="flex flex-row mr-6 bg-dtech-new-main-light hover:bg-[#FDD522] hover:text-black sm:hover:text-white sm:hover:bg-dtech-main-dark hover:border-b-2 border-black sm:hover:border-0 items-center justify-center sm:p-4 sm:px-10 p-2 px-3 text-xs text-white font-semibold rounded-full">
+                <div className="flex flex-row mr-6 bg-dtech-new-main-light active:bg-[#FDD522] active:text-black text-white hover:bg-dtech-main-dark active:border-b-2 border-black hover:border-0 items-center justify-center sm:p-4 sm:px-10 p-2 px-3 text-xs font-semibold rounded-full">
                     {/* <Image src={downloadIcon} alt="" height={24} width={24} /> */}
                     <span className="">Download</span>
                 </div>

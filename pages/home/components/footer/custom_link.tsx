@@ -6,7 +6,7 @@ import { RootState } from "store";
 const CustomLink = ({ item }: any) => {
     const user = useSelector((state: RootState) => state.auth.user);
     return (
-        <div className=" sm:mb-3 mb-1 hover:bg-[#D9EFFC] focus-within:bg-[#FDD522] focus-within:border-b-2 focus-within:border-black active:border-b-2 active:bg-[#FDD522] focus:bg-[#FDD522]">
+        <div className="w-fit sm:mb-3 mb-1 text-dtech-dark-blue hover:underline hover:decoration-dtech-light-blue hover:text-dtech-light-blue hover:bg-[#6DCDCB8C] active:bg-dtech-dark-yellow active:text-black ">
             {
                 item.target
                     ?

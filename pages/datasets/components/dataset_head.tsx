@@ -156,7 +156,7 @@ const DatasetHead = ({ dataset }: any) => {
                                 <span className="text-md font-semibold text-[#2D2D32] ">
                                     Host{" "}
                                 </span>
-                                <span className="text-md text-[#0065BD] underline w-full font-normal ml-2">
+                                <span className="w-fit text-md text-dtech-dark-blue hover:underline hover:decoration-dtech-light-blue hover:text-dtech-light-blue hover:bg-[#6DCDCB8C] active:bg-dtech-dark-yellow active:text-black underline font-normal ml-2">
                                     <a href={`${process.env.NEXT_PUBLIC_WEBCLIENT_ROOT}/organisation/${hostUuid}`} rel="noreferrer" target="_blank">{hostName}</a>
                                 </span>
                             </div>
@@ -167,7 +167,7 @@ const DatasetHead = ({ dataset }: any) => {
                                 <span className="text-md   font-normal ml-2">
                                     {
                                         dataset?.owner.ownerUrl.indexOf("missing") == -1
-                                            ? <a className="underline text-[#0065BD]" href={dataset.owner.ownerUrl} rel="noreferrer" target="_blank">{dataset.owner.organisation}</a>
+                                            ? <a className="underline text-dtech-dark-blue hover:underline hover:decoration-dtech-light-blue hover:text-dtech-light-blue hover:bg-[#6DCDCB8C] active:bg-dtech-dark-yellow active:text-black" href={dataset.owner.ownerUrl} rel="noreferrer" target="_blank">{dataset.owner.organisation}</a>
                                             : <div className="text-[#727272]">{dataset.owner.organisation}</div>
                                     }
 
@@ -265,7 +265,7 @@ const DatasetHead = ({ dataset }: any) => {
                                 {license?.url?.length > 0
                                     ? <a href={license.url} target="_blank" rel="noreferrer">
                                         <span
-                                            className=" border-2 underline underline-offset-2 border-dtech-new-main-light px-2 pb-1 sm:ml-2 sm:text-sm text-sm cursor-pointer text-[#0065BD]">
+                                            className="underline underline-offset-2 px-2 pb-1 sm:ml-2 sm:text-sm text-sm cursor-pointer text-[#0065BD]">
                                             {license.type}
                                         </span>
                                     </a>
@@ -339,7 +339,7 @@ const
                             </span>
                             {entities && entities.length > 2 && <span
                                 onClick={() => setViewAll(!viewAll)}
-                                className=" underline sm:text-sm text-md cursor-pointer text-[#0065BD]">
+                                className=" underline sm:text-sm text-md cursor-pointer text-dtech-dark-blue hover:underline hover:decoration-dtech-light-blue hover:text-dtech-light-blue hover:bg-[#6DCDCB8C] active:bg-dtech-dark-yellow active:text-black">
                                 View all
                             </span>}
                         </div>

@@ -22,10 +22,10 @@ const Footer = () => {
                 <Link href="/">
                     <img src="/images/dtechtive_without_tagline.png" width={100}></img>
                 </Link>
-                <div className=" bg-[#6E498E] w-[2px] mx-4 h-[30px]">
+                <div className="bg-[#6E498E] w-[2px] mx-4 h-[30px]">
                 </div>
                 <div className="flex flex-col sm:text-[16px] text-xs text-dtech-main-grey">
-                    <div className=" text-[#727272] font-[400]">Proudly brought to you by <a href="https://dtime.ai" rel="noreferrer" target="_blank"><span className=" font-[500] text-dtech-dark-blue hover:underline sm:hover:decoration-dtech-light-blue sm:hover:text-dtech-light-blue sm:hover:bg-[#6DCDCB8C] hover:bg-dtech-dark-yellow hover:text-black ">DTIME.AI ©2023.</span></a>
+                    <div className=" text-[#727272] font-[400]">Proudly brought to you by <a href="https://dtime.ai" rel="noreferrer" target="_blank"><span className=" font-[500] text-dtech-dark-blue hover:underline hover:decoration-dtech-light-blue hover:text-dtech-light-blue hover:bg-[#6DCDCB8C] active:bg-dtech-dark-yellow active:text-black">DTIME.AI ©2023.</span></a>
                     </div>
                 </div>
 
