@@ -153,7 +153,7 @@ const MetaInfoEntity = ({
                         </span>
                         <span
                             onClick={() => setViewAll(!viewAll)}
-                            className=" underline sm:text-sm text-md cursor-pointer text-[#0065BD]"
+                            className=" underline sm:text-sm text-md cursor-pointer text-dtech-dark-blue hover:underline hover:decoration-dtech-light-blue hover:text-dtech-light-blue hover:bg-[#6DCDCB8C] active:bg-dtech-dark-yellow active:text-black"
                         >
                             View all
                         </span>

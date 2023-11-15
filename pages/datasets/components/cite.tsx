@@ -3,7 +3,7 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import ReactTooltip from "react-tooltip";
 
-const Cite = ({ citation, url }: { citation: string, url: string }) => {
+const Cite = ({ citation, url }: { citation: string; url: string }) => {
     const [viewAll, setViewAll] = useState<boolean>(false);
     const handleSearchFocus = () => {
         setViewAll(true);
@@ -14,7 +14,7 @@ const Cite = ({ citation, url }: { citation: string, url: string }) => {
     };
     const handleCopyClick = () => {
         // Create a textarea element and set its value to the citation text
-        const textArea = document.createElement('textarea');
+        const textArea = document.createElement("textarea");
         textArea.value = citation + url;
 
         // Append the textarea to the document
@@ -24,13 +24,13 @@ const Cite = ({ citation, url }: { citation: string, url: string }) => {
         textArea.select();
 
         // Copy the selected text to the clipboard
-        document.execCommand('copy');
+        document.execCommand("copy");
 
         // Remove the textarea from the document
         document.body.removeChild(textArea);
 
         // Provide some visual feedback to the user (optional)
-        alert('Citation copied to clipboard');
+        alert("Citation copied to clipboard");
     };
     const myRef = useRef(null);
     useOutsideAlerter(myRef);
@@ -50,9 +50,20 @@ const Cite = ({ citation, url }: { citation: string, url: string }) => {
     }
     return (
         <div className="">
-            {<div onClick={handleSearchBlur}
-                className={viewAll ? ` bg-black fixed opacity-50 h-[3000px] top-0 left-0 right-0 bottom-0 sm:h-[3000px]  w-screen flex items-center  z-20` : "hidden"}></div>}
-            <div data-tip data-for="dtechtive-cite-btn-tooltip" className=" flex flex-col justify-center items-center"
+            {
+                <div
+                    onClick={handleSearchBlur}
+                    className={
+                        viewAll
+                            ? ` bg-black fixed opacity-50 h-[3000px] top-0 left-0 right-0 bottom-0 sm:h-[3000px]  w-screen flex items-center  z-20`
+                            : "hidden"
+                    }
+                ></div>
+            }
+            <div
+                data-tip
+                data-for="dtechtive-cite-btn-tooltip"
+                className=" flex flex-col justify-center items-center"
                 onClick={() => setViewAll(!viewAll)}
             >
                 <div className=" p-1">
@@ -60,29 +71,64 @@ const Cite = ({ citation, url }: { citation: string, url: string }) => {
                 </div>
                 <div className="text-[#727272] text-base font-roboto">
                     Cite
-                    <ReactTooltip id="dtechtive-cite-btn-tooltip" textColor={'white'} backgroundColor="#4CA7A5" >View and copy citation</ReactTooltip>
+                    <ReactTooltip
+                        id="dtechtive-cite-btn-tooltip"
+                        textColor={"white"}
+                        backgroundColor="#4CA7A5"
+                    >
+                        View and copy citation
+                    </ReactTooltip>
                 </div>
             </div>
-            {viewAll && <div className="flex flex-wrap flex-row px-6 py-4 w-full lg:w-1/2 text-[#000000] w-xs bg-white absolute left-[0%] lg:left-[25%] z-20 rounded-xl border-[2px]  border-[#6DCDCB] ">
-                <div className="flex justify-between w-full pb-4">
-                    <div className=" w-[50%] pb-1 border-b-2">Cite</div>
-                    <div className=" cursor-pointer" onClick={() => setViewAll(!viewAll)}><img src="/images/provider-detail-page/close.svg" /></div>
-                </div>
-                <div className=" flex flex-row justify-between w-full">
-                    <div className=" flex flex-col w-full ">
-
-                        {[citation.split(".")].map((item, i) => (
-
-                            <div key={i} className=" w-[70%]">{item}</div>
-                        ))}
-                        <a href={url} rel="noreferrer" target="_blank">{url}</a>
+            {viewAll && (
+                <div className="flex flex-wrap flex-row px-6 py-4 w-full lg:w-1/2 text-[#000000] w-xs bg-white absolute left-[0%] lg:left-[25%] z-20 rounded-xl border-[2px]  border-[#6DCDCB] ">
+                    <div className="flex justify-between w-full pb-4">
+                        <div className=" w-[50%] pb-1 border-b-2">Cite</div>
+                        <div
+                            className=" cursor-pointer"
+                            onClick={() => setViewAll(!viewAll)}
+                        >
+                            <img src="/images/provider-detail-page/close.svg" />
+                        </div>
                     </div>
-                    <div data-tip data-for="dtechtive-copy-btn-tooltip" className=" cursor-pointer" onClick={handleCopyClick}><img src="/images/icons/copy.svg"></img></div>
-                    <ReactTooltip id="dtechtive-copy-btn-tooltip" textColor={'white'} backgroundColor="#4CA7A5" >Copy to clipboard</ReactTooltip>
-
+                    <div className=" flex flex-row justify-between w-full">
+                        <div className=" flex flex-col w-full ">
+                            {[citation.split(".")].map((item, i) => (
+                                <div key={i} className=" w-[70%]">
+                                    {item}
+                                </div>
+                            ))}
+                            <div>
+                                <a
+                                    href={url}
+                                    rel="noreferrer"
+                                    target="_blank"
+                                    className="w-fit text-dtech-dark-blue hover:underline hover:decoration-dtech-light-blue hover:text-dtech-light-blue hover:bg-[#6DCDCB8C] active:bg-dtech-dark-yellow active:text-black"
+                                >
+                                    {url}{" "}
+                                </a>
+                                <span>[url]</span>
+                            </div>
+                        </div>
+                        <div
+                            data-tip
+                            data-for="dtechtive-copy-btn-tooltip"
+                            className=" cursor-pointer"
+                            onClick={handleCopyClick}
+                        >
+                            <img src="/images/icons/copy.svg"></img>
+                        </div>
+                        <ReactTooltip
+                            id="dtechtive-copy-btn-tooltip"
+                            textColor={"white"}
+                            backgroundColor="#4CA7A5"
+                        >
+                            Copy to clipboard
+                        </ReactTooltip>
+                    </div>
                 </div>
-            </div>}
+            )}
         </div>
-    )
-}
+    );
+};
 export default Cite;

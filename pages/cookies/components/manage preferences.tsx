@@ -120,7 +120,7 @@ const ManagePreference = () => {
                         <div className="mt-2 sm:mt-4 flex sm:justify-start sm:items-center gap-4 justify-center">
                             <button
                                 type="button"
-                                className="flex items-center justify-center p-3 rounded-[30px] bg-dtech-new-main-light hover:bg-[#FDD522] hover:text-black sm:hover:text-white sm:hover:bg-dtech-main-dark hover:border-b-2 border-black sm:hover:border-0 text-white text-base font-bold border-0"
+                                className="flex items-center justify-center p-3 rounded-[30px] bg-dtech-new-main-light active:bg-dtech-dark-yellow hover:bg-dtech-main-dark active:border-b-2 border-black hover:border-0 active:text-black text-white text-base font-bold border-0"
                                 onClick={() => {
                                     Cookies.set("user", "true");
                                     router.push("/");
@@ -172,7 +172,7 @@ const ManagePreference = () => {
                         </div>
 
                         <button
-                            className=" bg-dtech-new-main-light hover:bg-[#FDD522] hover:text-black sm:hover:text-white sm:hover:bg-dtech-main-dark hover:border-b-2 border-black sm:hover:border-0 text-white p-4 rounded-full mt-10 font-bold text-sm"
+                            className=" bg-dtech-new-main-light active:bg-dtech-dark-yellow hover:bg-dtech-main-dark active:border-b-2 border-black hover:border-0 active:text-black text-white p-4 rounded-full mt-10 font-bold text-sm"
                             onClick={() => {
                                 Cookies.set("user", "true");
                                 router.push("/");

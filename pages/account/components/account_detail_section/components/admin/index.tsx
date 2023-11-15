@@ -212,7 +212,7 @@ const AdminSection = () => {
                         />
                         <MembersTable className="max-w-5xl ml-auto w-full overflow-x-auto" />
                         <PrimaryBtn
-                            className="bg-dtech-new-main-light hover:bg-[#FDD522] hover:text-black sm:hover:text-white sm:hover:bg-dtech-main-dark hover:border-b-2 border-black sm:hover:border-0 text-white w-min whitespace-nowrap  !px-16 !py-2 !rounded-full !text-lg mt-8"
+                            className="bg-dtech-new-main-light active:bg-dtech-dark-yellow hover:bg-dtech-main-dark active:border-b-2 border-black hover:border-0 active:text-black text-white w-min whitespace-nowrap  !px-16 !py-2 !rounded-full !text-lg mt-8"
                             label="Update"
                             isLoading={vm.isSavingOrgDetails}
                             onClick={() => {

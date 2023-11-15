@@ -31,7 +31,7 @@ const DiscoverByTopics = ({
                         />
                     </div>
                 </div>
-                <div className="text-sm text-[#0065BD] hover:bg-[#D9EFFC] focus-within:bg-[#FDD522] focus-within:border-b-2 focus-within:border-black active:bg-[#FDD522] focus:bg-[#FDD522]">
+                <div className="text-sm h-fit text-dtech-dark-blue hover:underline hover:decoration-dtech-light-blue hover:text-dtech-light-blue hover:bg-[#6DCDCB8C] active:bg-dtech-dark-yellow active:text-black   ">
                     <div
                         onClick={() =>
                             dispatch(updateSearchType(SearchTypes.TOPICS.value))

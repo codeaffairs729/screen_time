@@ -38,14 +38,14 @@ const Index = ({
                             at&nbsp;
                             <a
                                 href="mailto:dtechtive@dtime.ai"
-                                className=" text-dtech-main-dark underline "
+                                className=" text-dtech-dark-blue hover:underline hover:decoration-dtech-light-blue hover:text-dtech-light-blue hover:bg-[#6DCDCB8C] active:bg-dtech-dark-yellow active:text-black underline "
                             >
                                 dtechtive@dtime.ai
                             </a>
                             &nbsp;or&nbsp;
                             <a
                                 href="https://dtime.ai/meeting"
-                                className=" text-dtech-main-dark underline "
+                                className=" text-dtech-dark-blue hover:underline hover:decoration-dtech-light-blue hover:text-dtech-light-blue hover:bg-[#6DCDCB8C] active:bg-dtech-dark-yellow active:text-black underline "
                             >
                                 arrange a call
                             </a>

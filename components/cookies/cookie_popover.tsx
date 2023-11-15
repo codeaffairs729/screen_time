@@ -96,13 +96,13 @@ export default function CookiePopover() {
                                         <div className="mt-4 flex items-center gap-4">
                                             <button
                                                 type="button"
-                                                className="flex items-center justify-center p-4 rounded-[30px] bg-dtech-new-main-light hover:bg-[#FDD522] hover:text-black sm:hover:text-white sm:hover:bg-dtech-main-dark hover:border-b-2 border-black sm:hover:border-0 text-white text-base font-bold border-0"
+                                                className="flex items-center justify-center p-4 rounded-[30px] bg-dtech-new-main-light active:bg-dtech-dark-yellow hover:bg-dtech-main-dark active:border-b-2 border-black hover:border-0 active:text-black text-white text-base font-bold border-0"
                                                 onClick={closeModal}
                                             >
                                                 Accept all cookies
                                             </button>
                                             <p
-                                                className="text-dtech-dark-blue hover:underline sm:hover:decoration-dtech-light-blue sm:hover:text-dtech-light-blue sm:hover:bg-[#6DCDCB8C] hover:bg-dtech-dark-yellow hover:text-black "
+                                                className="text-dtech-dark-blue hover:underline hover:decoration-dtech-light-blue hover:text-dtech-light-blue hover:bg-[#6DCDCB8C] active:bg-dtech-dark-yellow active:text-black "
                                                 onClick={() => {
                                                     setIsOpen(false);
                                                 }}
