@@ -54,7 +54,7 @@ const DataQualityFeedback = () => {
                             <CommentAnonymous vm={vmForm} />
                             <PrimaryBtn
                                 label="Submit"
-                                className="bg-dtech-new-main-light !py-3 !px-8 w-min rounded-full mt-5 mb-2"
+                                className="bg-dtech-new-main-light hover:bg-[#FDD522] hover:text-black sm:hover:text-white sm:hover:bg-dtech-main-dark hover:border-b-2 border-black sm:hover:border-0 text-white !py-3 !px-8 w-min rounded-full mt-5 mb-2"
                                 isLoading={vmForm.isSubmitting}
                                 onClick={vmForm.form.handleSubmit(
                                     vmForm.submitDataQualityFeedback

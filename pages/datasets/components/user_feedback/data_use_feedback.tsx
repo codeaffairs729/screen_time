@@ -45,7 +45,7 @@ const DataUseFeedback = () => {
                         <CommentAnonymous vm={vmForm} />
                         <PrimaryBtn
                             label="Submit"
-                            className="bg-dtech-new-main-light w-min rounded-full !text-xs !py-3 !px-6"
+                            className="bg-dtech-new-main-light hover:bg-[#FDD522] hover:text-black sm:hover:text-white sm:hover:bg-dtech-main-dark hover:border-b-2 border-black sm:hover:border-0 text-white w-min rounded-full !text-xs !py-3 !px-6"
                             isLoading={vmForm.isSubmitting}
                             onClick={vmForm.form.handleSubmit(
                                 vmForm.submitDataUseFeedback

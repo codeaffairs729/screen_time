@@ -27,7 +27,10 @@ module.exports = {
                     "light-grey3": "#727272",
                     "dark-grey2": "#2D2D32",
                     "main-teal": "#4CA7A5",
-                    "light-gray": "#FAFAFA"
+                    "light-gray": "#FAFAFA",
+                    "dark-blue":"#0065BD",
+                    "light-blue":"#00437E",
+                    "dark-yellow":"#FDD522"
                 },
             },
             maxWidth: {

@@ -88,7 +88,7 @@ const Register = () => {
 
                         <PrimaryBtn
                             label="Submit"
-                            className="bg-dtech-new-main-light hover:bg-dtech-main-dark sm:hover:text-black sm:hover:bg-dtech-light-teal sm:hover:border-0 text-white  w-[120px] sm:w-[170px] !p-[10px] sm:!p-[16px] rounded-[30px] mt-5 mb-2 text-xs sm:text-[16px]"
+                            className="bg-dtech-new-main-light hover:bg-[#FDD522] hover:text-black sm:hover:text-white sm:hover:bg-dtech-main-dark hover:border-b-2 border-black sm:hover:border-0 text-white  w-[120px] sm:w-[170px] !p-[10px] sm:!p-[16px] rounded-[30px] mt-5 mb-2 text-xs sm:text-[16px]"
                             isLoading={vm.isRegisteringDataSource}
                             onClick={vm.form.handleSubmit(
                                 vm.registerDataSource
