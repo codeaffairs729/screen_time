@@ -43,7 +43,7 @@ export default function CookiePopover() {
                             <div className="fixed inset-0 bg-black/25" />
                         </Transition.Child>
 
-                        <div className="fixed inset-0 overflow-y-auto">
+                        <Dialog.Panel className="fixed inset-0 overflow-y-auto" as="div">
                             <div className="flex justify-center p-4 text-center">
                                 <Transition.Child
                                     as={Fragment}
@@ -96,13 +96,13 @@ export default function CookiePopover() {
                                         <div className="mt-4 flex items-center gap-4">
                                             <button
                                                 type="button"
-                                                className="flex items-center justify-center p-4 rounded-[30px] bg-dtech-new-main-light hover:bg-dtech-main-dark sm:hover:text-black sm:hover:bg-dtech-light-teal sm:hover:border-0 text-white text-base font-bold border-0"
+                                                className="flex items-center justify-center p-4 rounded-[30px] bg-dtech-new-main-light hover:bg-[#FDD522] hover:text-black sm:hover:text-white sm:hover:bg-dtech-main-dark hover:border-b-2 border-black sm:hover:border-0 text-white text-base font-bold border-0"
                                                 onClick={closeModal}
                                             >
                                                 Accept all cookies
                                             </button>
                                             <p
-                                                className="text-[#0065BD]"
+                                                className="text-dtech-dark-blue hover:underline sm:hover:decoration-dtech-light-blue sm:hover:text-dtech-light-blue sm:hover:bg-[#6DCDCB8C] hover:bg-dtech-dark-yellow hover:text-black "
                                                 onClick={() => {
                                                     setIsOpen(false);
                                                 }}
@@ -115,7 +115,7 @@ export default function CookiePopover() {
                                     </div>
                                 </Transition.Child>
                             </div>
-                        </div>
+                        </Dialog.Panel>
                     </Dialog>
                 </Transition>
             )}

@@ -66,7 +66,7 @@ const NewNavbar = ({
                 />
             )}
             <div>
-                {user || isMobile || router.asPath != "/" ? (
+                {user || isMobile ? (
                     <div className="flex flex-col p-2 float-right items-center hover:bg-opacity-60 hover:bg-white relative hover:rounded-[5px]">
                         {/* {notifications?.length > 0  && (
                             <div className=" absolute ml-10 mt-[-9px] h-4 w-4 bg-red-500 rounded-full text-white text-sm flex flex-row justify-center items-center">
@@ -86,7 +86,7 @@ const NewNavbar = ({
                                     width={25}
                                     // height={15}
                                 />
-                                <div className="hidden sm:block">Signup</div>
+                                <div className="hidden sm:block pt-[1px]">Signup</div>
                             </div>
                         </Link>
                         <Link href="/login">
@@ -132,7 +132,7 @@ const NewNavbar = ({
                             }
                             width={15}
                         />
-                        <div className="hidden sm:block">Home</div>
+                        <div className="hidden sm:block pt-[1px]">Home</div>
                         {router.route === "/" && (
                             <div
                                 className={

@@ -79,7 +79,7 @@ const ReportFilter = ({setIsReportGenerated}: {setIsReportGenerated:Function}) =
                     <button
                         onClick={handleGenerateReport}
                         data-selector="back-btn"
-                        className="text-sm mt-8 p-2 py-3 whitespace-nowrap w-full bg-dtech-new-main-light text-white  flex items-center justify-center rounded-full px-6"
+                        className="text-sm mt-8 p-2 py-3 whitespace-nowrap w-full bg-dtech-new-main-light hover:bg-[#FDD522] hover:text-black sm:hover:text-white sm:hover:bg-dtech-main-dark hover:border-b-2 border-black sm:hover:border-0 text-white flex items-center justify-center rounded-full px-6"
                     >
                             Autogenerate report
                     </button>

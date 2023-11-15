@@ -80,7 +80,7 @@ const HomePage = ({ home }: { home: any }) => {
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     href="https://f7xcuekc9xt.typeform.com/to/ff4rGkXc"
-                                    className="underline text-dtech-main-dark "
+                                    className="underline text-dtech-dark-blue hover:underline sm:hover:decoration-dtech-light-blue sm:hover:text-dtech-light-blue sm:hover:bg-[#6DCDCB8C] hover:bg-dtech-dark-yellow hover:text-black"
                                 >
                                     Report a Bug
                                 </a>
@@ -89,7 +89,7 @@ const HomePage = ({ home }: { home: any }) => {
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     href="https://f7xcuekc9xt.typeform.com/to/Zpryygkm"
-                                    className="underline text-dtech-main-dark ml-1"
+                                    className="underline text-dtech-dark-blue hover:underline sm:hover:decoration-dtech-light-blue sm:hover:text-dtech-light-blue sm:hover:bg-[#6DCDCB8C] hover:bg-dtech-dark-yellow hover:text-black ml-1"
                                 >
                                     Suggest a Feature
                                 </a>

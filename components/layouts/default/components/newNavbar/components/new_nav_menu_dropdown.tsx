@@ -21,8 +21,8 @@ const NewNavMenuDropdown = ({isLoggedIn=false}:{isLoggedIn:boolean}) => {
         <NewDropdown
             menuItems={menuItems}
             label="Menu"
-            labelClasses=" hidden sm:block mt-[1px]"
-            itemsClasses=" hover:bg-dtech-main-dark hover:text-white "
+            labelClasses=" hidden sm:block pt-[2px]"
+            itemsClasses=" hover:bg-dtech-light-teal hover:text-white rounded-[10px] "
             dropDownImage={(isMobile && (router.route == "/")) ? "/images/icons/profile/menu_mobile.svg" :"/images/icons/profile/menu.svg"}
             imageWidth={22}
             isMobile={isMobile}
