@@ -22,7 +22,7 @@ const NewNavMenuDropdown = ({isLoggedIn=false}:{isLoggedIn:boolean}) => {
             menuItems={menuItems}
             label="Menu"
             labelClasses=" hidden sm:block pt-[2px]"
-            itemsClasses=" hover:bg-dtech-light-teal hover:text-white rounded-[10px] "
+            itemsClasses=" hover:bg-dtech-light-teal hover:text-white rounded-[5px] "
             dropDownImage={(isMobile && (router.route == "/")) ? "/images/icons/profile/menu_mobile.svg" :"/images/icons/profile/menu.svg"}
             imageWidth={22}
             isMobile={isMobile}
