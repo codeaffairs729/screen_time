@@ -2,6 +2,7 @@ import { useHttpCall } from "common/hooks";
 import Http from "common/http";
 import { getHttpErrorMsg } from "common/util";
 import { Option } from "components/UI/form/dropdown_field";
+import Cookies from "js-cookie";
 import User, { UserRole } from "models/user.model";
 import { useRouter } from "next/router";
 import { NotificationsVMContext } from "pages/workspace/notification.vm";
@@ -26,8 +27,23 @@ const SignupVM = () => {
     const handleSignup = (data: any) =>
         executeHandleSignup(
             () => {
+                if(Cookies.get("userData")){
+                    const userData = JSON.parse(Cookies.get("userData") as string);
+                    if (userData) {
+                        data = data?.email == "" &&
+                            data?.name == "" &&
+                            data?.password == "" && {
+                                ...data,
+                                email: userData.email,
+                                name: userData.name,
+                                password: userData.password,
+                            };
+                    }
+                }
                 setSignupErrorMsg(null);
-                data = data?.role !== "other" && {...data, role_other: ""}
+                data = data?.role !== "other" && { ...data, role_other: "" };
+
+                console.log({data})
                 return Http.post("/v1/users/signup", {
                     ...data,
                     // signup_type: signupType,
@@ -41,8 +57,11 @@ const SignupVM = () => {
                     //     "/",
                     //     fetchNotifications
                     // );
-                    toast.success("You have signed up successfully.")
-                    setSignupSuccessMsg("Verification email has been sent, please use the link in the email to verify your account. After which you can login into your account.")
+                    Cookies.get("userData") && Cookies.set("userData", '')
+                    toast.success("You have signed up successfully.");
+                    setSignupSuccessMsg(
+                        "Verification email has been sent, please use the link in the email to verify your account. After which you can login into your account."
+                    );
                 },
                 onError: async (error: any) =>
                     setSignupErrorMsg(await getHttpErrorMsg(error)),
@@ -54,10 +73,10 @@ const SignupVM = () => {
         label: k,
     }));
 
-    const accountTypeOptions: Option[]= [
-        { value: 'individual', label: "Individual" },
-        { value: 'org_admin', label: "Organisation" },
-    ]
+    const accountTypeOptions: Option[] = [
+        { value: "individual", label: "Individual" },
+        { value: "org_admin", label: "Organisation" },
+    ];
 
     const dataOwnerOptions: Option[] = [
         { value: true, label: "Yes" },

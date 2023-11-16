@@ -19,6 +19,8 @@ import NewNavbar from "./components/newNavbar";
 import NewSearchBar from "components/UI/white_label_search_bar";
 import { opacity } from "html2canvas/dist/types/css/property-descriptors/opacity";
 import { useIsMobile } from "common/hooks";
+import { useRouter } from "next/router";
+import Cookies from "js-cookie";
 
 
 const DefaultLayout = ({
@@ -41,6 +43,13 @@ const DefaultLayout = ({
     const dispatch = useDispatch();
     const { isMobile} = useIsMobile();
     const [searching, setSearching] = useState(false);
+
+    const route = useRouter();
+    useEffect(()=>{
+        if(!["/login", "/signup"].includes(route.pathname)){
+            Cookies.remove('userData');
+        }
+    },[])
 
     const handleSearchFocus = () => {
         setSearching(true);

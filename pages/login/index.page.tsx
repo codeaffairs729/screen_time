@@ -14,7 +14,8 @@ import { useRouter } from "next/router";
 import NewGradientUI from "components/layouts/gradientLayout";
 import isEmail from "validator/lib/isEmail";
 import Popup from "components/UI/Popop";
-import PopupSubscription from "components/UI/popup_subscription";
+import Cookies from "js-cookie";
+import SocialLogin from "components/UI/social/social_login";
 
 const SigninPage = () => {
     const vm = SigninVM();
@@ -24,6 +25,7 @@ const SigninPage = () => {
     const [rememberMe, setRememberMe] = useState(false);
 
     useEffect(() => {
+        Cookies.remove('userData');
         if (user) {
             const timer = setTimeout(() => {
                 router.push("/");
@@ -197,26 +199,7 @@ const SigninPage = () => {
                         <div className="flex flex-row mt-6 justify-center text-[#333333]">
                             Log In with
                         </div>
-                        <div className="flex flex-row mt-4 justify-center">
-                            <div className=" mx-4">
-                                <img
-                                    src="/images/icons/Google.svg"
-                                    width={35}
-                                ></img>
-                            </div>
-                            <div className=" mx-4 ">
-                                <img
-                                    src="/images/icons/Microsoft.svg"
-                                    width={35}
-                                ></img>
-                            </div>
-                            <div className=" mx-4 ">
-                                <img
-                                    src="/images/icons/LinkedIn.svg"
-                                    width={35}
-                                ></img>
-                            </div>
-                        </div>
+                        <SocialLogin />
                     </div>
                     <div className="flex flex-col">
                         <div className="flex flex-row mt-4 justify-center">

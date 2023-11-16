@@ -18,6 +18,7 @@ import { RootState } from "store";
 import { NotificationsVMContext } from "pages/workspace/notification.vm";
 import { AiOutlineClose } from "react-icons/ai";
 import { useIsMobile } from "common/hooks";
+import Cookies from "js-cookie";
 
 const HomePage = ({ home }: { home: any }) => {
     const router = useRouter();
@@ -27,6 +28,12 @@ const HomePage = ({ home }: { home: any }) => {
     const user = useSelector((state: RootState) => state.auth.user);
     const { markAllRead, notifications, isLoading, fetchNotifications } =
         useContext(NotificationsVMContext);
+
+    useEffect(()=>{
+        if(!["/login", "/signup"].includes(router.pathname)){
+            Cookies.remove('userData');
+        }
+    },[])
 
     const handleSearchFocus = () => {
         setSearching(true);

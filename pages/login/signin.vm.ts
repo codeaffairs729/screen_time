@@ -12,6 +12,7 @@ import { usereventLogin } from "services/usermetrics.service";
 import { NotificationsVMContext } from "pages/workspace/notification.vm";
 import { useRouter } from "next/router";
 import { Non200ResponseError } from "common/exceptions";
+import Cookies from "js-cookie";
 
 const getPathBool = (previousPath: any) => {
     switch (previousPath) {
@@ -85,12 +86,70 @@ const SigninVM = () => {
             }
         );
 
+    const {
+        isLoading: isGoogleSigningIn,
+        execute: executePerformGoogleSignIn,
+    } = useHttpCall();
+
+    const performGoogleSignIn = (data:any) => {
+        Cookies.remove('userData');
+        executePerformGoogleSignIn(
+            () =>
+                Http.post(`/v1/users/google_sign_in?token=${data['access_token']}`),
+            {
+                onSuccess: (res) => {
+                    if(!res['user']){
+                        const value = {
+                            name: res["email"].replace(/[^a-zA-Z]/g, '').replace(/gmail\.com/g, ''),
+                            email: res["email"],
+                            password: data['access_token']
+                        }
+                        Cookies.set('userData', JSON.stringify(value))
+                        router.push("/signup");
+                    }else{
+                        AuthService.signin(
+                            User.fromJson(res["user"]),
+                            res["token"],
+                            { rememberMe: res?.remember_me },
+                            getPathBool(localStorage.getItem("previous_path")),
+                            localStorage.getItem("previous_path") ?? "/",
+                            fetchNotifications
+                        );
+                        usereventLogin(User.fromJson(res["user"]));
+                    }
+                },
+                onError: async (error: Non200ResponseError) => {
+                    const res = error.response.clone();
+                    const errorMsg = await getHttpErrorMsg(error);
+                    setSigninErrorMsg(errorMsg);
+                    const body = await res.json();
+                    if (body["action"] == "redirect_verify_email") {
+                        toast.error(
+                            "You will now be redirected to request verification email page."
+                        );
+                        setTimeout(() => {
+                            router.push({
+                                pathname: encodeURI(`/login/verify-email`),
+                                query: {
+                                    email: data["email"],
+                                    action: "send_email",
+                                },
+                            });
+                        }, 3000);
+                    }
+                },
+            }
+        );
+    };
+
     return {
         form,
         performLogin,
         isSigningIn,
         lastSearchQueryUrl,
         signinErrorMsg,
+        performGoogleSignIn,
+        isGoogleSigningIn,
     };
 };
 

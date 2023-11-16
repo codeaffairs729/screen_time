@@ -14,6 +14,8 @@ import { useSelector } from "react-redux";
 import InfoIcon from "components/UI/icons/info_icon";
 import NewGradientUI from "components/layouts/gradientLayout";
 import Link from "next/link";
+import Cookies from "js-cookie";
+import SocialLogin from "components/UI/social/social_login";
 
 const SecondStep = ({
     vm,
@@ -36,17 +38,26 @@ const SecondStep = ({
     setOrganisationRequired: any;
     setShowError: any;
 }) => {
+    const [socialUser, setSocialUser] = useState(false);
+    useEffect(() => {
+        const userData = Cookies.get("userData");
+        if (userData) {
+            setSocialUser(true);
+        }
+    }, []);
     return (
         <div className="grow flex flex-col items-left max-w-[30%px] justify-evenly sm:justify-center mt-10  sm:mx-[20%] sm:my-0 mx-[5%] my-[5%] ">
-            <div
-                className=" mb-10 mt-4 w-fit cursor-pointer"
-                onClick={() => setStep(!step)}
-            >
-                <img
-                    src="/images/icons/arrows/arrow_back.svg"
-                    className="hover:bg-gray-300 rounded-full"
-                />
-            </div>
+            {!socialUser && (
+                <div
+                    className=" mb-10 mt-4 w-fit cursor-pointer"
+                    onClick={() => setStep(!step)}
+                >
+                    <img
+                        src="/images/icons/arrows/arrow_back.svg"
+                        className="hover:bg-gray-300 rounded-full"
+                    />
+                </div>
+            )}
             <div className=" -mt-12 sm:mt-0">
                 <div className="mt-4">
                     <FormRow
@@ -226,6 +237,11 @@ const SignupPage = () => {
     useEffect(() => {
         if (user) {
             router.push("/");
+        }
+        const userData = Cookies.get("userData");
+        if (userData) {
+            const signUpData = JSON.parse(userData);
+            setStep(signUpData.length !== 0);
         }
     }, []);
 
@@ -434,26 +450,7 @@ const SignupPage = () => {
                             <div className="flex flex-row justify-center text-[#333333]">
                                 Sign Up with
                             </div>
-                            <div className="flex flex-row mt-4 justify-center">
-                                <div className=" mx-4 ">
-                                    <img
-                                        src="/images/icons/Google.svg"
-                                        width={35}
-                                    ></img>
-                                </div>
-                                <div className=" mx-4 ">
-                                    <img
-                                        src="/images/icons/Microsoft.svg"
-                                        width={35}
-                                    ></img>
-                                </div>
-                                <div className=" mx-4 ">
-                                    <img
-                                        src="/images/icons/LinkedIn.svg"
-                                        width={35}
-                                    ></img>
-                                </div>
-                            </div>
+                            <SocialLogin />
                         </div>
                         <div className="flex flex-row my-10 sm:my-8 justify-center">
                             <div className=" bg-[#727272] h-[1px] w-[25%] sm:w-[35%]"></div>
