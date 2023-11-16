@@ -43,7 +43,7 @@ const ManagePreference = () => {
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     href="https://f7xcuekc9xt.typeform.com/to/ff4rGkXc"
-                                    className="underline text-dtech-main-dark "
+                                    className="underline text-dtech-dark-blue hover:underline hover:decoration-dtech-light-blue hover:text-dtech-light-blue hover:bg-[#6DCDCB8C] active:bg-dtech-dark-yellow active:text-black "
                                 >
                                     Report a Bug
                                 </a>
@@ -52,7 +52,7 @@ const ManagePreference = () => {
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     href="https://f7xcuekc9xt.typeform.com/to/Zpryygkm"
-                                    className="underline text-dtech-main-dark ml-1"
+                                    className="underline text-dtech-dark-blue hover:underline hover:decoration-dtech-light-blue hover:text-dtech-light-blue hover:bg-[#6DCDCB8C] active:bg-dtech-dark-yellow active:text-black"
                                 >
                                     Suggest a Feature
                                 </a>
