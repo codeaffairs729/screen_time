@@ -20,6 +20,7 @@ import Head from "next/head";
 import IdleTimeoutModal from "./components/idle_timeout";
 import CookiePopover from "components/cookies/cookie_popover";
 import ForgotPasswordVM from "./forgot-password/forgot-password.vm";
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 function DtechtiveApp({ Component, pageProps }: AppProps) {
     const router = useRouter();
@@ -136,10 +137,12 @@ function DtechtiveApp({ Component, pageProps }: AppProps) {
                     }
                     persistor={persistor}
                 >
-                    <NotificationsVMContext.Provider value={vm}>
-                        <CookiePopover />
-                        <Component {...pageProps} />
-                    </NotificationsVMContext.Provider>
+                    <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_KEY as string}>
+                        <NotificationsVMContext.Provider value={vm}>
+                            <CookiePopover />
+                            <Component {...pageProps} />
+                        </NotificationsVMContext.Provider>
+                    </GoogleOAuthProvider>
                     <Toaster
                         position="bottom-center"
                         reverseOrder={false}
