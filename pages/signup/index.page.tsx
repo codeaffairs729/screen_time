@@ -245,7 +245,7 @@ const SignupPage = () => {
         }
     }, []);
 
-    if (user || vm.signupErrorMsg || vm.signupSuccessMsg) {
+    if (vm.signupErrorMsg || vm.signupSuccessMsg) {
         return (
             <div
                 className=" h-screen flex flex-col items-center justify-center sm:bg-[#6E498E] bg-gradient-to-b from-[rgba(181,_133,_183,_0.53)_-10.01%] to-[rgba(109,_205,_203,_0.22)_102.15%]"

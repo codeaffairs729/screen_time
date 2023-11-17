@@ -5,6 +5,7 @@ import { Option } from "components/UI/form/dropdown_field";
 import Cookies from "js-cookie";
 import User, { UserRole } from "models/user.model";
 import { useRouter } from "next/router";
+import SigninVM from "pages/login/signin.vm";
 import { NotificationsVMContext } from "pages/workspace/notification.vm";
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -15,6 +16,8 @@ const SignupVM = () => {
     const form = useForm();
     const [signupErrorMsg, setSignupErrorMsg] = useState<string | null>();
     const [signupSuccessMsg, setSignupSuccessMsg] = useState<string | null>();
+    const vm = SigninVM();
+
     const {
         execute: executeHandleSignup,
         isLoading: isSigningUp,
@@ -27,8 +30,10 @@ const SignupVM = () => {
     const handleSignup = (data: any) =>
         executeHandleSignup(
             () => {
-                if(Cookies.get("userData")){
-                    const userData = JSON.parse(Cookies.get("userData") as string);
+                if (Cookies.get("userData")) {
+                    const userData = JSON.parse(
+                        Cookies.get("userData") as string
+                    );
                     if (userData) {
                         data = data?.email == "" &&
                             data?.name == "" &&
@@ -37,13 +42,14 @@ const SignupVM = () => {
                                 email: userData.email,
                                 name: userData.name,
                                 password: userData.password,
+                                provider: "google",
                             };
                     }
+                } else {
+                    data = { ...data, provider: "" };
                 }
                 setSignupErrorMsg(null);
                 data = data?.role !== "other" && { ...data, role_other: "" };
-
-                console.log({data})
                 return Http.post("/v1/users/signup", {
                     ...data,
                     // signup_type: signupType,
@@ -57,11 +63,20 @@ const SignupVM = () => {
                     //     "/",
                     //     fetchNotifications
                     // );
-                    Cookies.get("userData") && Cookies.set("userData", '')
-                    toast.success("You have signed up successfully.");
-                    setSignupSuccessMsg(
-                        "Verification email has been sent, please use the link in the email to verify your account. After which you can login into your account."
-                    );
+                    if (Cookies.get("userData")) {
+                        const userData = JSON.parse(
+                            Cookies.get("userData") as string
+                        );
+                        vm.performGoogleSignIn({
+                            "access_token" : userData?.password
+                        });
+                        Cookies.remove("userData");
+                    } else {
+                        toast.success("You have signed up successfully.");
+                        setSignupSuccessMsg(
+                            "Verification email has been sent, please use the link in the email to verify your account. After which you can login into your account."
+                        );
+                    }
                 },
                 onError: async (error: any) =>
                     setSignupErrorMsg(await getHttpErrorMsg(error)),
