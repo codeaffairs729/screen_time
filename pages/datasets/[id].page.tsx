@@ -267,7 +267,7 @@ const DatasetDetail = ({ dataset, logoUrl }: { dataset: Dataset | undefined, log
                                     Dataset
                                 </p>
                                 <span></span>
-                                {(dataset?.owner.ownerUrl.indexOf("missing") == -1) ? <div ref={imageRef} className="rounded-full min-h-[100px] min-w-[100px]">
+                                {(dataset?.owner?.ownerUrl?.indexOf("missing") == -1) ? <div ref={imageRef} className="rounded-full min-h-[100px] min-w-[100px]">
                                     <a href={(dataset?.owner.ownerUrl.indexOf("missing") == -1) ? `${dataset.owner.ownerUrl}` : ""} target="_blank" rel="noreferrer" className="h-full w-full overflow-hidden bg-white bg-opacity-80 rounded-full relative flex items-center justify-center">
                                         {imgUrl && (
                                             <div className=" w-full h-full ">

@@ -166,7 +166,7 @@ const DatasetHead = ({ dataset }: any) => {
                                 </span>
                                 <span className="text-md   font-normal ml-2">
                                     {
-                                        dataset?.owner.ownerUrl.indexOf("missing") == -1
+                                        dataset?.owner?.ownerUrl?.indexOf("missing") == -1
                                             ? <a className="underline text-dtech-dark-blue hover:underline hover:decoration-dtech-light-blue hover:text-dtech-light-blue hover:bg-[#6DCDCB8C] active:bg-dtech-dark-yellow active:text-black" href={dataset.owner.ownerUrl} rel="noreferrer" target="_blank">{dataset.owner.organisation}</a>
                                             : <div className="text-[#727272]">{dataset.owner.organisation}</div>
                                     }
