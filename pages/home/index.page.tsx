@@ -190,6 +190,8 @@ const HomePage = ({ home }: { home: any }) => {
                     />
                 </div>
             </div>
+            <Insights isMobile={isMobile} insightMetrics={home.metrics} />
+
             <DiscoverByComponent isMobile={isMobile} />
             <LearnMore isMobile={isMobile} />
             <Footer />
