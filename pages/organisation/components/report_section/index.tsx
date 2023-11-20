@@ -46,6 +46,8 @@ const Index = ({
                             <a
                                 href="https://dtime.ai/meeting"
                                 className=" text-dtech-dark-blue hover:underline hover:decoration-dtech-light-blue hover:text-dtech-light-blue hover:bg-[#6DCDCB8C] active:bg-dtech-dark-yellow active:text-black underline "
+                                target="_blank"
+                                rel="noreferrer"
                             >
                                 arrange a call
                             </a>
@@ -75,9 +77,9 @@ const Index = ({
                             />
                         )}
                     </div>
-                    {(!permittedPermissions.includes("providerInsights.report.edit")) && <div className=" absolute top-0 left-0 w-full h-full">
+                    {/* {(!permittedPermissions.includes("providerInsights.report.edit")) && <div className=" absolute top-0 left-0 w-full h-full">
                     <div className="h-full"><UpgradeAccountModal /></div>
-                </div>}
+                </div>} */}
                 </div>
             </div>
         </ReportVMContext.Provider>

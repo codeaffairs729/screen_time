@@ -65,7 +65,7 @@ const DatasetSection = () => {
                         <thead className="">
                             <tr className="">
                                 <th className="sm:w-[32%] p-2 text-xs border-r-[1px] sm:border-r-0 sm:text-sm w-1/2 text-left  pb-4 min-w-[130px]">
-                                    Datasets Title(
+                                    Dataset Title(
                                     {datasetByTopic?.total_matches})
                                 </th>
                                 <th className="sm:w-[17%] p-2 text-xs sm:text-sm min-w-[130px] text-center pb-4">
@@ -89,9 +89,10 @@ const DatasetSection = () => {
                                         className=" border-b-[1px] h-14 hover:bg-dtech-light-gray"
                                         key={index}
                                     >
-                                        <td className="underline  p-2 text-xs border-r-[1px] sm:border-r-0 sm:text-sm text-dtech-main-dark w-1/2 min-w-[120px] sm:w-[32%]">
+                                        <td className="underline  p-2 text-xs border-r-[1px] sm:border-r-0 sm:text-sm w-1/2 min-w-[120px] sm:w-[32%]">
                                             <a
                                                 href={`${process.env.NEXT_PUBLIC_WEBCLIENT_ROOT}/datasets/${item.id}`}
+                                                className="text-dtech-dark-blue hover:underline hover:decoration-dtech-light-blue hover:text-dtech-light-blue hover:bg-[#6DCDCB8C] active:bg-dtech-dark-yellow active:text-black"
                                             >
                                                 {item.title}
                                             </a>

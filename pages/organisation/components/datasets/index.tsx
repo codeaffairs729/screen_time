@@ -99,7 +99,7 @@ const Datasets = () => {
                     >
                         <thead className="">
                             <tr className="">
-                                <th className="sm:w-[32%] p-2 text-xs border-r-[1px] sm:border-r-0 sm:text-sm w-1/2 text-left  pb-4 min-w-[130px]">Datasets Title({organisationDatasets?.total_matches})</th>
+                                <th className="sm:w-[32%] p-2 text-xs border-r-[1px] sm:border-r-0 sm:text-sm w-1/2 text-left  pb-4 min-w-[130px]">Dataset Title({organisationDatasets?.total_matches})</th>
                                 <th className="sm:w-[17%] p-2 text-xs sm:text-sm min-w-[130px] text-center pb-4">Last Updated</th>
                                 <th className="sm:w-[17%] p-2 text-xs sm:text-sm text-center pb-4">Views</th>
                                 <th className="sm:w-[17%] p-2 text-xs sm:text-sm text-center pb-4">Downloads</th>
@@ -109,7 +109,7 @@ const Datasets = () => {
                         <tbody className=" sm:border-t-[1px] border-black">
                             {organisationDatasets?.datasets?.map((item: any, index: any) => (
                                 <tr className=" border-b-[1px] h-14 hover:bg-dtech-light-grey" key={index}>
-                                    <td className="underline  p-2 text-xs border-r-[1px] sm:border-r-0 sm:text-sm text-dtech-main-dark w-1/2 min-w-[120px] sm:w-[32%]"><a href={`${process.env.NEXT_PUBLIC_WEBCLIENT_ROOT}/datasets/${item.id}`}>{item.title}</a></td>
+                                    <td className="underline  p-2 text-xs border-r-[1px] sm:border-r-0 sm:text-sm w-1/2 min-w-[120px] sm:w-[32%] "><a href={`${process.env.NEXT_PUBLIC_WEBCLIENT_ROOT}/datasets/${item.id}`} className="text-dtech-dark-blue hover:underline hover:decoration-dtech-light-blue hover:text-dtech-light-blue hover:bg-[#6DCDCB8C] active:bg-dtech-dark-yellow active:text-black">{item.title}</a></td>
                                     <td className="sm:w-[17%] p-2 text-xs sm:text-sm min-w-[100px] text-center">{new Date(item.last_updated).toLocaleDateString('en-GB')}</td>
                                     <td className="sm:w-[17%] p-2 text-xs sm:text-sm text-center">{item.views}</td>
                                     <td className="sm:w-[17%] p-2 text-xs sm:text-sm text-center">{item.downloads}</td>
@@ -153,9 +153,9 @@ const Datasets = () => {
                 </div>
 
             </div>
-             {!permittedPermissions.includes("providerInsights.datasets.view")&&<div className=" absolute top-0 left-0 w-full h-full">
+             {/* {!permittedPermissions.includes("providerInsights.datasets.view")&&<div className=" absolute top-0 left-0 w-full h-full">
                  <UpgradeAccountModal />
-             </div>}
+             </div>} */}
          </div>
     );
 }

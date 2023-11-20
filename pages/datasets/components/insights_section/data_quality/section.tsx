@@ -17,7 +17,7 @@ const DatasetQualityInsightsBody = () => {
         fetchQualityMetrics,
         qualityMetrics,
         isFetchingQualityMetrics,
-        setSelectedQualityInsights:onChange
+        setSelectedQualityInsights: onChange
     } = useContext(QualityMetricsVMContext);
     // const [selectedLabelState, setSelectedLabelState] = useState(ITEMS[1].label);
     const { dataset } = useContext(DatasetDetailVMContext);
@@ -50,7 +50,7 @@ const DatasetQualityInsightsBody = () => {
         );
     }
     const ratings = selectedLabel == 0 ? dataFileQuality : metaDataQuality;
-console.log(selectedLabel)
+    console.log(selectedLabel)
     return (
         <div>
             <div className=" w-[350px] text-dtech-main-dark ml-4 my-8 hidden sm:block">Insights &gt; Dataset Quality &gt; {selectedLabel == 0 ? "Data file" : "Metadata"}</div>
@@ -80,6 +80,8 @@ console.log(selectedLabel)
                     The metadata quality of this dataset has been
                     algorithmically estimated based on the &nbsp;
                     <a
+                        target="_blank"
+                        rel="noreferrer"
                         href="https://data.europa.eu/mqa/methodology?locale=en"
                         className=" text-dtech-dark-blue hover:underline hover:decoration-dtech-light-blue hover:text-dtech-light-blue hover:bg-[#6DCDCB8C] active:bg-dtech-dark-yellow active:text-black underline "
                     >
@@ -88,7 +90,7 @@ console.log(selectedLabel)
                     .
                 </div>
             )}
-           
+
             <div className=" sm:w-[40%] mx-auto my-4 ">
                 {Object.keys(ratings)?.map((item: any, index: number) => {
                     return (
@@ -120,7 +122,7 @@ const FileQuality = ({
     return (
         <div className="flex flex-row justify-between items-center mt-10 px-2">
             <div className=" flex flex-row">
-                <span className="text-[#333333] font-bold sm:text-lg">{getLabel(items[item].label).replace("OverallScore","Overall")}</span>
+                <span className="text-[#333333] font-bold sm:text-lg">{getLabel(items[item].label).replace("OverallScore", "Overall")}</span>
                 <InfoIcon
                     title={items[item].tooltipTitle}
                     className=" ml-2"

@@ -265,7 +265,7 @@ const DatasetHead = ({ dataset }: any) => {
                                 {license?.url?.length > 0
                                     ? <a href={license.url} target="_blank" rel="noreferrer">
                                         <span
-                                            className="underline underline-offset-2 px-2 pb-1 sm:ml-2 sm:text-sm text-sm cursor-pointer text-[#0065BD]">
+                                            className="underline underline-offset-2 px-2 pb-1 sm:ml-2 sm:text-sm text-sm cursor-pointer text-dtech-dark-blue hover:underline hover:decoration-dtech-light-blue hover:text-dtech-light-blue hover:bg-[#6DCDCB8C] active:bg-dtech-dark-yellow active:text-black">
                                             {license.type}
                                         </span>
                                     </a>
