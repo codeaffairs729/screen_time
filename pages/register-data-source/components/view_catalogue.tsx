@@ -57,7 +57,7 @@ const Catalogue = () => {
                                     {catalouge_item.site_name}
                                 </td>
                                 <td className="underline underline-offset-2 sm:w-[17%] p-2   min-w-[100px] text-center">
-                                    <a href={catalouge_item.site_url} target="_blank" rel="noreferrer" className=" text-blue-600">{catalouge_item.site_url}</a>
+                                    <a href={catalouge_item.site_url} target="_blank" rel="noreferrer" className=" text-dtech-dark-blue hover:underline hover:decoration-dtech-light-blue hover:text-dtech-light-blue hover:bg-[#6DCDCB8C] active:bg-dtech-dark-yellow active:text-black">{catalouge_item.site_url}</a>
                                 </td>
                                 <td className="sm:w-[17%] p-2   text-center">
                                     {catalouge_item.data_management_system}

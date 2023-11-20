@@ -77,9 +77,9 @@ const Index = ({
                             />
                         )}
                     </div>
-                    {(!permittedPermissions.includes("providerInsights.report.edit")) && <div className=" absolute top-0 left-0 w-full h-full">
+                    {/* {(!permittedPermissions.includes("providerInsights.report.edit")) && <div className=" absolute top-0 left-0 w-full h-full">
                     <div className="h-full"><UpgradeAccountModal /></div>
-                </div>}
+                </div>} */}
                 </div>
             </div>
         </ReportVMContext.Provider>

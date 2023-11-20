@@ -46,7 +46,7 @@ const NewProfileDropdown = () => {
             itemsClasses=" hover:bg-dtech-light-teal hover:text-white rounded-[5px]"
             dropDownImage={image ?? nameInitial}
             imageWidth={20}
-            imageClasses="rounded-full overflow-hidden flex items-center justify-center"
+            imageClasses="rounded-full overflow-hidden flex items-center justify-center h-[19px]"
         />
     )
 }
