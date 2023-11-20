@@ -99,7 +99,7 @@ const Datasets = () => {
                     >
                         <thead className="">
                             <tr className="">
-                                <th className="sm:w-[32%] p-2 text-xs border-r-[1px] sm:border-r-0 sm:text-sm w-1/2 text-left  pb-4 min-w-[130px]">Datasets Title({organisationDatasets?.total_matches})</th>
+                                <th className="sm:w-[32%] p-2 text-xs border-r-[1px] sm:border-r-0 sm:text-sm w-1/2 text-left  pb-4 min-w-[130px]">Dataset Title({organisationDatasets?.total_matches})</th>
                                 <th className="sm:w-[17%] p-2 text-xs sm:text-sm min-w-[130px] text-center pb-4">Last Updated</th>
                                 <th className="sm:w-[17%] p-2 text-xs sm:text-sm text-center pb-4">Views</th>
                                 <th className="sm:w-[17%] p-2 text-xs sm:text-sm text-center pb-4">Downloads</th>

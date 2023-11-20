@@ -1,6 +1,7 @@
 import Dropdown from "components/UI/drop_down";
 import { useContext } from "react";
 import { OrganizationSearchVMContext } from "../organisation.vm";
+import { SearchVMContext } from "pages/search/search.vm";
 
 const OPTIONS = [
     {
@@ -32,6 +33,8 @@ const TotalRecords = ({
     // const { setLoading } = useContext(OrganizationSearchVMContext)
 
     // console.log("><><><><", setLoading)
+    const vm = useContext(SearchVMContext);
+
     const options = OPTIONS.map((option) => ({
         label: `${option.label}`,
         onClick: () => {
@@ -46,7 +49,7 @@ const TotalRecords = ({
             <div className="flex flex-row justify-between items-center">
                 <div className=" text-base mt-0.1">
                     <span className="font-medium text-lg">Total</span>
-                    <span className="font-medium text-lg">{` ${totalRecords} results`}</span>
+                    {<span className="font-medium text-lg">{`${totalRecords} results`}</span>}
                 </div>
             </div>
             <div className="flex flex-row items-center mx-2">

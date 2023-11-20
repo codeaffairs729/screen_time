@@ -138,6 +138,8 @@ const QualityInsightsBody = () => {
                         organisation has been algorithmically estimated based on
                         the &nbsp;
                         <a
+                            target="_blank"
+                            rel="noreferrer"
                             href="https://data.europa.eu/mqa/methodology"
                             className=" text-dtech-dark-blue hover:underline hover:decoration-dtech-light-blue hover:text-dtech-light-blue hover:bg-[#6DCDCB8C] active:bg-dtech-dark-yellow active:text-black underline "
                         >
