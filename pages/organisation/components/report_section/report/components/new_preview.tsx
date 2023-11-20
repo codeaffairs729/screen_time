@@ -79,25 +79,32 @@ const PreviewReport = ({
 
     const displayResult = result.map((subarray) => subarray.join(""));
 
-
-
-
-    console.log()
+    console.log();
     return (
-        <div
-            className="shadow-paper-shadow mt-4 h-[656px] bg-white border-none p-4 overflow-y-scroll"
-        >
+        <div className="shadow-paper-shadow mt-4 h-[656px] bg-[#EBEBEB] border-none overflow-y-scroll">
             {!loading && isReportGenerated && (
-                <div className="editor_preview " ref={(ref) => setDownloadRef(ref)}>
-                    <div
-                        id={"header"}
-                        className=" section-preview flex flex-col justify-center items-center"
-                    >
-                        <div className="border p-1 my-20 mx-12  w-[28rem]">
-                            <HeaderPreview header = {header} />
+                <div
+                    className="editor_preview"
+                    ref={(ref) => setDownloadRef(ref)}
+                >
+                    <div className="flex relative justify-end">
+                        <div
+                            id={"header"}
+                            className="w-5/6 section-preview flex flex-col justify-center items-center bg-[url('/images/bubbleBg.svg')] bg-no-repeat bg-cover"
+                        >
+                            <div className="border p-1 my-20 mx-12  w-[28rem]">
+                                <HeaderPreview header={header} />
+                            </div>
+                            <div className="border p-1 my-20 mx-12 w-[28rem] ">
+                                <Summary
+                                    organisation={organisation}
+                                    qualityMetrics={qualityMetrics}
+                                />
+                            </div>
                         </div>
-                        <div className="border p-1 my-20 mx-12 w-[28rem] ">
-                            <Summary  organisation={organisation} qualityMetrics={qualityMetrics}/>
+                        <div className=" left-0 absolute h-full sm:flex hidden w-fit ">
+                            <div className=" bg-dtech-new-main-light w-10 mr-2 "></div>
+                            <div className=" bg-[#6DCDCB] w-6 ml-5 sm:ml-0 fixed md:relative"></div>
                         </div>
                     </div>
 

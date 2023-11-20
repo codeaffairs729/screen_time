@@ -1,13 +1,11 @@
-import { useContext,useState } from "react";
+import { useContext, useState } from "react";
 import Head from "./head";
 import dynamic from "next/dynamic";
 import { Tab } from "@headlessui/react";
 import { DateTime } from "luxon";
 import Loader from "components/UI/loader";
 import Table from "../../table";
-import {
-    getTableData,
-} from "../../insights_section/download_section/download_metric.vm";
+import { getTableData } from "../../insights_section/download_section/download_metric.vm";
 import { SearchTermType } from "../../insights_section/search_term_section/search_term.vm";
 import TagsCloud from "../../insights_section/search_term_section/tagCloud";
 import { getAge } from "pages/workspace/notification.vm";
@@ -51,10 +49,7 @@ const PIE_HEADER = ["name", "value"];
 const LOCATION_HEADERS = ["Region", "Count", "Last used"];
 const SEARCH_TERM_HEADERS = ["Search term", "Count", "Last used"];
 
-
-function calculateRatingPercentages(
-    ratings: RatingObject[]
-): RatingObject[] {
+function calculateRatingPercentages(ratings: RatingObject[]): RatingObject[] {
     let totalSum = 0;
     let totalCount = 0;
 
@@ -71,8 +66,6 @@ function calculateRatingPercentages(
     });
     return ratingPercentages;
 }
-
-
 
 const Report = ({
     isReportGenerated,
@@ -99,9 +92,6 @@ const Report = ({
 
     const items = qualityMetrics?.dataFileQuality;
     //------------------------------------------------------------------
-
-
-
 
     const transformedData = searchTerms.map((item: any) => {
         return {
@@ -194,46 +184,44 @@ const Report = ({
                         id="qualityMetrics"
                     >
                         <BarChart
-                            data={calculateRatingPercentages(
-                                [
-                                    {
-                                        "0": 1
-                                    },
-                                    {
-                                        "0.5": 0
-                                    },
-                                    {
-                                        "1": 0
-                                    },
-                                    {
-                                        "1.5": 0
-                                    },
-                                    {
-                                        "2": 0
-                                    },
-                                    {
-                                        "2.5": 0
-                                    },
-                                    {
-                                        "3": 2
-                                    },
-                                    {
-                                        "3.5": 0
-                                    },
-                                    {
-                                        "4": 3
-                                    },
-                                    {
-                                        "4.5": 0
-                                    },
-                                    {
-                                        "5": 2
-                                    }
-                                ]
-                            )}
+                            data={calculateRatingPercentages([
+                                {
+                                    "0": 1,
+                                },
+                                {
+                                    "0.5": 0,
+                                },
+                                {
+                                    "1": 0,
+                                },
+                                {
+                                    "1.5": 0,
+                                },
+                                {
+                                    "2": 0,
+                                },
+                                {
+                                    "2.5": 0,
+                                },
+                                {
+                                    "3": 2,
+                                },
+                                {
+                                    "3.5": 0,
+                                },
+                                {
+                                    "4": 3,
+                                },
+                                {
+                                    "4.5": 0,
+                                },
+                                {
+                                    "5": 2,
+                                },
+                            ])}
                             isMobile={isMobile}
                             titles={titles}
-                            divID ="qualityMetricsDiv"
+                            divID="qualityMetricsDiv"
                         />
                     </div>
                 )}
@@ -287,7 +275,7 @@ const Report = ({
                             data={graphData}
                             isMobile={isMobile}
                             titles={byTimetitles}
-                            divID= "downloadByTimeID"
+                            divID="downloadByTimeID"
                         />
                         <Table
                             tableHeaders={TIME_HEADERS}
@@ -365,7 +353,10 @@ const Report = ({
                     <Tab.Panels>
                         <Tab.Panel>
                             {/* <Preview loading={loading} isReportGenerated={isReportGenerated} /> */}
-                            <PreviewReport loading={loading} isReportGenerated={isReportGenerated} />
+                            <PreviewReport
+                                loading={loading}
+                                isReportGenerated={isReportGenerated}
+                            />
                         </Tab.Panel>
                         <Tab.Panel>
                             {/* <EditReport /> */}
@@ -414,7 +405,10 @@ const Report = ({
                                 //     loading={loading}
                                 //     isReportGenerated={isReportGenerated}
                                 // />
-                                <PreviewReport loading={loading} isReportGenerated={isReportGenerated} />
+                                <PreviewReport
+                                    loading={loading}
+                                    isReportGenerated={isReportGenerated}
+                                />
                             ) : (
                                 <EditReport />
                             )}
@@ -422,7 +416,7 @@ const Report = ({
                     </Tab.Panels>
                 </Tab.Group>
             </div>
-            {isReportGenerated && (
+            {isReportGenerated && !edit && (
                 <div className=" mt-4">
                     <DownloadReport />
                 </div>
