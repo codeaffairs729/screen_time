@@ -92,8 +92,9 @@ const DropdownFieldMulti = ({
                 nullable
                 multiple
             >
-                <div className="relative w-full text-left bg-white rounded-lg cursor-default">
-                    <Combobox.Button className=" w-full " onClick={() => setIsOpen(!isOpen)}>
+                <div className="relative w-full text-left bg-white rounded-lg cursor-default"
+                    onClick={() => setIsOpen(!isOpen)}>
+                    <Combobox.Button className=" w-full ">
                         <Combobox.Input
                             className={clsx(
                                 "w-full rounded-lg focus:ring-dtech-secondary-light border-2 border-dtech-main-dark focus:border-dtech-main-dark disabled:border-gray-300 disabled:bg-gray-50 py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 placeholder:text-gray-500 placeholder:text-sm placeholder:font-bold",

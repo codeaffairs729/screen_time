@@ -41,7 +41,7 @@ const DataType = ({ vm }: { vm: any }) => {
                 tooltipClass="!ml-2"
             >
                 <DropdownField
-                    inputClass="border-[#C3C3C3] focus:border-[#C3C3C3] focus:ring-opacity-0 rounded-[5px] sm:text-[19px]"
+                    inputClass="border-[#C3C3C3] focus:border-[#C3C3C3] focus:ring-opacity-0 rounded-[5px] sm:text-[19px]  placeholder:!text-gray-400 placeholder:!font-normal"
                     newDropdownIcon={false}
                     formControl={{
                         control: vm.form.control,
@@ -82,7 +82,7 @@ const DataType = ({ vm }: { vm: any }) => {
                     iconClass="sm:h-[19px] sm:w-[19px] text-black"
                 >
                     <TextField
-                        textfieldClassName="border-0 border-b border-[#C3C3C3] focus:ring-opacity-0 rounded-none sm:text-[19px]"
+                        textfieldClassName="border-0 border-b border-[#C3C3C3] focus:ring-opacity-0 rounded-none sm:text-[19px] "
                         formControl={{
                             control: vm.form.control,
                             name: "data_type_other",

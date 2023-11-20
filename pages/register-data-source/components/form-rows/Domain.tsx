@@ -49,7 +49,7 @@ const Domain = ({ vm }: { vm: any }) => {
                 tooltipClass="!ml-2"
             >
                 <DropdownFieldMulti
-                    inputfieldClassName="rounded-[5px] sm:text-[19px] border-[#C3C3C3] focus:border-[#C3C3C3] focus:ring-opacity-0"
+                    inputfieldClassName="rounded-[5px] sm:text-[19px] border-[#C3C3C3] focus:border-[#C3C3C3] focus:ring-opacity-0 placeholder:!text-gray-400 placeholder:!font-normal"
                     newDropdownIcon={true}
                     formControl={{
                         control: vm.form.control,

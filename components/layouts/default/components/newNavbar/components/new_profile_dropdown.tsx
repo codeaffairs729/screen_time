@@ -43,7 +43,7 @@ const NewProfileDropdown = () => {
             menuItems={menuItems}
             label="Profile"
             labelClasses=" hidden sm:block"
-            itemsClasses=" hover:bg-dtech-light-teal hover:text-white rounded-[10px]"
+            itemsClasses=" hover:bg-dtech-light-teal hover:text-white rounded-[5px]"
             dropDownImage={image ?? nameInitial}
             imageWidth={20}
             imageClasses="rounded-full overflow-hidden flex items-center justify-center"
