@@ -1,5 +1,5 @@
 import Dropdown from "components/UI/drop_down";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { OrganizationSearchVMContext } from "../organisation.vm";
 import { SearchVMContext } from "pages/search/search.vm";
 
@@ -20,8 +20,8 @@ const TotalRecords = ({
     totalRecords,
     setPageNumber,
     pageSize,
-    dropDownClass ="",
-    totalRecordHeader = ""
+    dropDownClass = "",
+    totalRecordHeader = "",
 }: {
     setPageSize: Function;
     totalRecords: number;
@@ -40,34 +40,50 @@ const TotalRecords = ({
         onClick: () => {
             setPageSize(option.label);
             // setLoading(true);
-            setPageNumber(1)
+            setPageNumber(1);
         },
     }));
 
     return (
-        <div className={`sm:flex justify-between items-center w-full ${totalRecordHeader}`}>
-            <div className="flex flex-row justify-between items-center">
-                <div className=" text-base mt-0.1">
-                    <span className="font-medium text-lg">Total</span>
-                    {<span className="font-medium text-lg">{`${totalRecords} results`}</span>}
+        <div
+            className={`sm:flex justify-between items-center w-full ${totalRecordHeader}`}
+        >
+            {totalRecords > 0 ? (
+                <div className="flex flex-row justify-between items-center">
+                    <div className=" text-base mt-0.1">
+                        <span className="font-medium text-lg">Total </span>
+                        {
+                            <span className="font-medium text-lg">{`${totalRecords} results`}</span>
+                        }
+                    </div>
                 </div>
-            </div>
+            ) : (
+                <div className="flex flex-row justify-between items-center">
+                    <div className=" text-base mt-0.1">
+                        <span className="font-medium text-lg"></span>
+                        {/* {
+                            <span className="font-medium text-lg">{`${totalRecords} results`}</span>
+                        } */}
+                    </div>
+                </div>
+            )}
+
             <div className="flex flex-row items-center mx-2">
                 <div>
-                    <span className=" text-base font-medium mx-3">
-                        Display
-                    </span>
+                    <span className=" text-base font-medium mx-3">Display</span>
                 </div>
-                <div className={`flex justify-center items-center space-x-1 h-7 border-2 border-gray-500 rounded-full px-5 py-5 pr-1.5 mt-1 ${dropDownClass}`}>
+                <div
+                    className={`flex justify-center items-center space-x-1 h-7 border-2 border-gray-500 rounded-full px-5 py-5 pr-1.5 mt-1 ${dropDownClass}`}
+                >
                     <Dropdown
                         label={`${pageSize} Results`}
                         menuItems={options}
-                        menuItemsClasses="!w-44  !top-8 !px-1.5 !py-1.5"
+                        menuItemsClasses="!w-44  !top-8 !px-1.5 !py-1.5 rounded-[5px]"
                         labelClasses=" !text-base text-gray-500 font-normal pr-2.5 whitespace-nowrap"
                         className="!ml-0 "
                         iconClass=" !font-medium text-xl !mx-5"
-                        itemsClasses=" hover:!bg-dtech-main-dark hover:!text-white"
-                        dropdownIcon = "arrow"
+                        itemsClasses=" hover:!bg-dtech-light-teal hover:!text-white rounded-[5px]"
+                        dropdownIcon="arrow"
                     />
                 </div>
             </div>

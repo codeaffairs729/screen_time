@@ -2,11 +2,10 @@ import Link from "next/link";
 import { Data } from "components/UI/result_card";
 import DataStats from "components/UI/result_card/data_stat";
 import Image from "next/image";
-import {  useState } from "react";
+import { useState } from "react";
 import { BsChevronDown, BsEyeFill, BsHeartFill } from "react-icons/bs";
 import DataproviderStats from "pages/search/organisation/components/data_provider_stats";
 import { useRouter } from "next/router";
-
 
 interface TopicProps {
     data: Data;
@@ -14,7 +13,7 @@ interface TopicProps {
     imgCss?: string;
 }
 
-const TopicCard = ({ data, isMobile, imgCss="" }: TopicProps) => {
+const TopicCard = ({ data, isMobile, imgCss = "" }: TopicProps) => {
     const { title } = data || {};
     const href = `/${data.recordType ? data.recordType : "datasets"}/${
         data?.id
@@ -26,10 +25,10 @@ const TopicCard = ({ data, isMobile, imgCss="" }: TopicProps) => {
 
     return (
         <div
-            className={` border border-gray-100 rounded-md md:rounded-xl  shadow-custom-4  md:min-h-[100%] max-w-[90%]  md:max-h-[10%] md:min-w-[100%] min-w-[176px] min-h-[112px]  `}
+            className={` border border-gray-100 rounded-md md:rounded-xl shadow-card-shadow hover:shadow-hover-shadow  md:min-h-[100%]  md:max-h-[10%] md:min-w-[100%] min-h-[112px]  mr-4 `}
         >
             <div
-                className={`flex flex-col justify-center  items-center  ${
+                className={`flex flex-col justify-center items-center  ${
                     isMobile && showProvider && "!justify-end"
                 }`}
             >
@@ -45,7 +44,11 @@ const TopicCard = ({ data, isMobile, imgCss="" }: TopicProps) => {
                     />
                 </div>
                 {!showProvider ? (
-                    <FrontCard data={data} isMobile={isMobile} imgCss={imgCss} />
+                    <FrontCard
+                        data={data}
+                        isMobile={isMobile}
+                        imgCss={imgCss}
+                    />
                 ) : (
                     <BackCard data={data} isMobile={isMobile} />
                 )}
@@ -54,11 +57,11 @@ const TopicCard = ({ data, isMobile, imgCss="" }: TopicProps) => {
                 )}
             </div>
 
-
             <div
-                className={`hover:bg-[#6DCDCB] hover:bg-opacity-[55%] ${isMobile && "hover:rounded-b-xl active:rounded-b-xl"} active:text-white  active:bg-[#512C71]  active:bg-opacity-[80%] text-dtech-new-main-light   break-word overflow-hidden flex flex-col items-center justify-center py-4 md:py-6  relative  cursor-pointer ${
-                    !showProvider &&
-                    " border-t-[1px] md:border-t-2 border-[#EBEBEB]"
+                className={`hover:bg-dtech-light-teal hover:bg-opacity-[55%] ${
+                    isMobile && "hover:rounded-b-xl active:rounded-b-xl"
+                } active:text-black active:border-b-2 active:border-black active:bg-dtech-dark-yellow active:rounded-b-xl  active:bg-opacity-[80%] text-dtech-new-main-light   break-word overflow-hidden flex flex-col items-center justify-center py-4 md:py-6  relative  cursor-pointer ${
+                    !showProvider && " border-[#EBEBEB]"
                 }`}
                 onClick={() => router.push(href)}
                 onMouseEnter={() => setIsHover(true)}
@@ -69,18 +72,30 @@ const TopicCard = ({ data, isMobile, imgCss="" }: TopicProps) => {
                     className={`flex flex-row items-center justify-between  flex-wrap w-full `}
                 >
                     {/* <Link href={href}> */}
-                        <span className={`font-bold md:text-base text-xs  leading-[10.75px] absolute  left-1 md:left-3  ${isHover && " underline underline-offset-2 text-dtech-main-dark"}`}>
-                            {title}
-                        </span>
+                    <span
+                        className={`font-bold md:text-base text-xs  leading-[10.75px] absolute  left-1 md:left-3  ${
+                            isHover &&
+                            " underline underline-offset-2 text-dtech-main-dark"
+                        }`}
+                    >
+                        {title}
+                    </span>
                     {/* </Link> */}
                 </div>
             </div>
-
         </div>
     );
 };
 
-const FrontCard = ({ data, isMobile,imgCss="" }: { data: Data; isMobile: boolean, imgCss?: string }) => {
+const FrontCard = ({
+    data,
+    isMobile,
+    imgCss = "",
+}: {
+    data: Data;
+    isMobile: boolean;
+    imgCss?: string;
+}) => {
     const { imgUrl, title } = data || {};
 
     const dummyImg = title
@@ -98,9 +113,9 @@ const FrontCard = ({ data, isMobile,imgCss="" }: { data: Data; isMobile: boolean
                     className={`${imgCss}  rounded-t-xl`}
                 />
             ) : (
-                <div className="object-contain md:h-40 md:w-full h-[77.94px] w-[225.35px] flex justify-center items-center text-3xl font-extrabold text-[#EBEBEB]">
+                <div className="object-contain md:h-40 md:w-full h-[77.94px] w-fit flex justify-center items-center text-3xl font-extrabold text-[#EBEBEB]">
                     <div>{dummyImg}</div>
-                    </div>
+                </div>
             )}
             <div className=" h-[14px]"></div>
         </div>
@@ -108,14 +123,20 @@ const FrontCard = ({ data, isMobile,imgCss="" }: { data: Data; isMobile: boolean
 };
 
 const BackCard = ({ data, isMobile }: { data: Data; isMobile: boolean }) => {
-    const { description, stats } = data ?? { description: '', stats: null };
-    const words = (description || 'No description present').split(/\s+/);
+    const { description, stats } = data ?? { description: "", stats: null };
+    const words = (description || "No description present").split(/\s+/);
 
     const descriptionWord = isMobile ? words.slice(0, 12) : words.slice(0, 15);
 
     return (
-        <div className={` mx-3 md:mx-5 md:my-3  w-[95%] md:min-h-[138px] min-h-[136px] `}>
-            <div className={`text-[12px] md:text-[16px] md:font-normal leading-[18.75px] overflow-hidden over md:my-3 ${isMobile ? "min-h-[103px]":"min-h-[50px]"}`}>
+        <div
+            className={` mx-3 md:mx-5 md:my-3  w-[95%] md:min-h-[138px] min-h-[136px] `}
+        >
+            <div
+                className={`text-[12px] md:text-[16px] md:font-normal leading-[18.75px] overflow-hidden over md:my-3 ${
+                    isMobile ? "min-h-[103px]" : "min-h-[50px]"
+                }`}
+            >
                 {descriptionWord.join(" ")}...
             </div>
             {stats && !isMobile && (
