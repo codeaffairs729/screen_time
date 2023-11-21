@@ -1,5 +1,6 @@
 import { AiOutlineClose } from "react-icons/ai";
-import { BsFacebook, BsLinkedin, BsTwitter } from "react-icons/bs";
+import { BsFacebook, BsLinkedin, BsTwitter, BsX } from "react-icons/bs";
+import img from "public/images/icons/twitterx.svg"
 type PopupProps = {
     href: String;
     dataset: String;
@@ -39,7 +40,7 @@ const Popup = ({ href, dataset, onClose }: PopupProps) => {
                     target="_blank"
                     rel="noreferrer"
                 >
-                    <BsTwitter className="h-6 w-8 ml-1 my-2 cursor-pointer" />
+                    <img src="/images/icons/twitterx.svg" className="h-8 w-8 ml-1 cursor-pointer" />
                 </a>
                 <a
                     href={`${FacebookURL}${process.env.NEXT_PUBLIC_WEBCLIENT_ROOT}${href}`}

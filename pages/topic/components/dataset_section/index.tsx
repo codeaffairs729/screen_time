@@ -15,9 +15,9 @@ const DatasetSection = () => {
         errorDatasetByTopic,
         isFetchingDatasetByTopic,
         pageNumber,
-        setPageNumber
+        setPageNumber,
     } = useContext(TopicDetailVMContext);
-    const { permittedPermissions } = useContext(TopicDetailVMContext)
+    const { permittedPermissions } = useContext(TopicDetailVMContext);
     const [currentSlide, setCurrentSlide] = useState(0);
 
     useEffect(() => {
@@ -92,6 +92,8 @@ const DatasetSection = () => {
                                         <td className="underline  p-2 text-xs border-r-[1px] sm:border-r-0 sm:text-sm w-1/2 min-w-[120px] sm:w-[32%]">
                                             <a
                                                 href={`${process.env.NEXT_PUBLIC_WEBCLIENT_ROOT}/datasets/${item.id}`}
+                                                target="_blank"
+                                                rel="noreferrer"
                                                 className="text-dtech-dark-blue hover:underline hover:decoration-dtech-light-blue hover:text-dtech-light-blue hover:bg-[#6DCDCB8C] active:bg-dtech-dark-yellow active:text-black"
                                             >
                                                 {item.title}
@@ -144,9 +146,7 @@ const DatasetSection = () => {
                     </div>
                 </div>
             </div>
-            {!permittedPermissions.includes(
-                "topicInsights.datasets.view"
-            ) && (
+            {!permittedPermissions.includes("topicInsights.datasets.view") && (
                 <div className=" absolute top-0 left-0 w-full h-full">
                     <UpgradeAccountModal />
                 </div>
