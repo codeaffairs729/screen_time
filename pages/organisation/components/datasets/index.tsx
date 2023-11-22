@@ -51,7 +51,7 @@ const Datasets = () => {
         errorOrganisationDatasets,
         pageNumber,
         setPageNumber,
-        permittedPermissions
+        permittedPermissions,
     } = useContext(OrganisationDetailVMContext);
 
     useEffect(() => {
@@ -83,39 +83,76 @@ const Datasets = () => {
             <div className="h-full w-full flex items-center justify-center mt-24">
                 <Loader />
             </div>
-        )
+        );
     }
-    const totalPages = Math.ceil(organisationDatasets?.total_matches / orgDatasetsCount)
+    const totalPages = Math.ceil(
+        organisationDatasets?.total_matches / orgDatasetsCount
+    );
     // return <AllDatasets />
     return (
         <div className="relative">
-
             <div className="" key={currentSlide}>
-                <div
-                    className="sm:overflow-auto overflow-x-hidden"
-                >
-                    <table className=" w-full h-full "
-                        style={{ transform: `translateX(-${currentSlide * 16}%)` }}
+                <div className="sm:overflow-auto overflow-x-hidden">
+                    <table
+                        className=" w-full h-full "
+                        style={{
+                            transform: `translateX(-${currentSlide * 16}%)`,
+                        }}
                     >
                         <thead className="">
                             <tr className="">
-                                <th className="sm:w-[32%] p-2 text-xs border-r-[1px] sm:border-r-0 sm:text-sm w-1/2 text-left  pb-4 min-w-[130px]">Dataset Title({organisationDatasets?.total_matches})</th>
-                                <th className="sm:w-[17%] p-2 text-xs sm:text-sm min-w-[130px] text-center pb-4">Last Updated</th>
-                                <th className="sm:w-[17%] p-2 text-xs sm:text-sm text-center pb-4">Views</th>
-                                <th className="sm:w-[17%] p-2 text-xs sm:text-sm text-center pb-4">Downloads</th>
-                                <th className="sm:w-[17%] p-2 text-xs sm:text-sm text-center pb-4">Likes</th>
+                                <th className="sm:w-[32%] p-2 text-xs border-r-[1px] sm:border-r-0 sm:text-sm w-1/2 text-left  pb-4 min-w-[130px]">
+                                    Dataset Title(
+                                    {organisationDatasets?.total_matches})
+                                </th>
+                                <th className="sm:w-[17%] p-2 text-xs sm:text-sm min-w-[130px] text-center pb-4">
+                                    Last Updated
+                                </th>
+                                <th className="sm:w-[17%] p-2 text-xs sm:text-sm text-center pb-4">
+                                    Views
+                                </th>
+                                <th className="sm:w-[17%] p-2 text-xs sm:text-sm text-center pb-4">
+                                    Downloads
+                                </th>
+                                <th className="sm:w-[17%] p-2 text-xs sm:text-sm text-center pb-4">
+                                    Likes
+                                </th>
                             </tr>
                         </thead>
                         <tbody className=" sm:border-t-[1px] border-black">
-                            {organisationDatasets?.datasets?.map((item: any, index: any) => (
-                                <tr className=" border-b-[1px] h-14 hover:bg-dtech-light-grey" key={index}>
-                                    <td className="underline  p-2 text-xs border-r-[1px] sm:border-r-0 sm:text-sm w-1/2 min-w-[120px] sm:w-[32%] "><a href={`${process.env.NEXT_PUBLIC_WEBCLIENT_ROOT}/datasets/${item.id}`} className="text-dtech-dark-blue hover:underline hover:decoration-dtech-light-blue hover:text-dtech-light-blue hover:bg-[#6DCDCB8C] active:bg-dtech-dark-yellow active:text-black">{item.title}</a></td>
-                                    <td className="sm:w-[17%] p-2 text-xs sm:text-sm min-w-[100px] text-center">{new Date(item.last_updated).toLocaleDateString('en-GB')}</td>
-                                    <td className="sm:w-[17%] p-2 text-xs sm:text-sm text-center">{item.views}</td>
-                                    <td className="sm:w-[17%] p-2 text-xs sm:text-sm text-center">{item.downloads}</td>
-                                    <td className="sm:w-[17%] p-2 text-xs sm:text-sm text-center">{item.likes}</td>
-                                </tr>
-                            ))}
+                            {organisationDatasets?.datasets?.map(
+                                (item: any, index: any) => (
+                                    <tr
+                                        className=" border-b-[1px] h-14 hover:bg-dtech-light-grey"
+                                        key={index}
+                                    >
+                                        <td className="underline  p-2 text-xs border-r-[1px] sm:border-r-0 sm:text-sm w-1/2 min-w-[120px] sm:w-[32%] ">
+                                            <a
+                                                href={`${process.env.NEXT_PUBLIC_WEBCLIENT_ROOT}/datasets/${item.id}`}
+                                                target="_blank"
+                                                rel="noreferrer"
+                                                className="text-dtech-dark-blue hover:underline hover:decoration-dtech-light-blue hover:text-dtech-light-blue hover:bg-[#6DCDCB8C] active:bg-dtech-dark-yellow active:text-black"
+                                            >
+                                                {item.title}
+                                            </a>
+                                        </td>
+                                        <td className="sm:w-[17%] p-2 text-xs sm:text-sm min-w-[100px] text-center">
+                                            {new Date(
+                                                item.last_updated
+                                            ).toLocaleDateString("en-GB")}
+                                        </td>
+                                        <td className="sm:w-[17%] p-2 text-xs sm:text-sm text-center">
+                                            {item.views}
+                                        </td>
+                                        <td className="sm:w-[17%] p-2 text-xs sm:text-sm text-center">
+                                            {item.downloads}
+                                        </td>
+                                        <td className="sm:w-[17%] p-2 text-xs sm:text-sm text-center">
+                                            {item.likes}
+                                        </td>
+                                    </tr>
+                                )
+                            )}
                             {/* Add more rows as needed */}
                             {/* <button onClick={()=>setPageNumber(2)}>2</button> */}
 
@@ -132,15 +169,17 @@ const Datasets = () => {
                         {[1, 2, 3].map((item, index) => (
                             <div
                                 key={index}
-                                className={` rounded-full w-3 h-3 m-1 ${index === currentSlide ? 'bg-dtech-dark-teal' : 'bg-[#D9D9D9]'}`}
+                                className={` rounded-full w-3 h-3 m-1 ${
+                                    index === currentSlide
+                                        ? "bg-dtech-dark-teal"
+                                        : "bg-[#D9D9D9]"
+                                }`}
                                 onClick={() => handleDotClick(index)}
                             ></div>
                         ))}
                     </div>
 
-
                     <div className=" flex flex-row items-center justify-center">
-
                         <Pagination
                             currentPage={pageNumber}
                             setPageNumber={setPageNumber}
@@ -151,12 +190,11 @@ const Datasets = () => {
                     </button> */}
                     </div>
                 </div>
-
             </div>
-             {/* {!permittedPermissions.includes("providerInsights.datasets.view")&&<div className=" absolute top-0 left-0 w-full h-full">
+            {!permittedPermissions.includes("providerInsights.datasets.view")&&<div className=" absolute top-0 left-0 w-full h-full">
                  <UpgradeAccountModal />
-             </div>} */}
-         </div>
+             </div>}
+        </div>
     );
-}
+};
 export default Datasets;
