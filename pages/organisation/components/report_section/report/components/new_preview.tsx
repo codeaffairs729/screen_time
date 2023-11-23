@@ -81,7 +81,7 @@ const PreviewReport = ({
 
     console.log();
     return (
-        <div className="shadow-paper-shadow mt-4 h-[656px] bg-[#EBEBEB] border-none overflow-y-scroll">
+        <div className="shadow-paper-shadow mt-4 h-[656px] bg-gradient-to-br from-[rgba(255,255,255,0.75)] via-[rgba(206,255,254,0.28)] to-[rgba(206,176,208,0.20)] border-none overflow-y-scroll">
             {!loading && isReportGenerated && (
                 <div
                     className="editor_preview"
@@ -90,12 +90,12 @@ const PreviewReport = ({
                     <div className="flex relative justify-end">
                         <div
                             id={"header"}
-                            className="w-5/6 section-preview flex flex-col justify-center items-center bg-[url('/images/bubbleBg.svg')] bg-no-repeat bg-cover"
+                            className="w-[90%] section-preview flex flex-col justify-center items-center bg-[url('/images/GroupPreviewBackground.svg')] bg-cover bg-no-repeat bg-top"
                         >
-                            <div className="border p-1 my-20 mx-12  w-[28rem]">
+                            <div className="border p-1 mr-2 mt-40 w-[28rem]">
                                 <HeaderPreview header={header} />
                             </div>
-                            <div className="border p-1 my-20 mx-12 w-[28rem] ">
+                            <div className="border p-1 mt-16 mb-36 mr-2 w-[28rem] ">
                                 <Summary
                                     organisation={organisation}
                                     qualityMetrics={qualityMetrics}
@@ -103,21 +103,28 @@ const PreviewReport = ({
                             </div>
                         </div>
                         <div className=" left-0 absolute h-full sm:flex hidden w-fit ">
-                            <div className=" bg-dtech-new-main-light w-10 mr-2 "></div>
-                            <div className=" bg-[#6DCDCB] w-6 ml-5 sm:ml-0 fixed md:relative"></div>
+                            <div className=" bg-dtech-new-main-light w-10 mr-2"></div>
+                            <div className=" bg-[#6DCDCB] w-6 ml-0 fixed md:relative"></div>
+                            <div className="bg-[#EBEBEB] w-4 ml-2 fixed md:relative"></div>
                         </div>
                     </div>
-
-                    {displayResult?.map((result, index) => (
-                        <div
-                            key={index}
-                            id={findID(result)}
-                            className="section-preview mx-5 my-5"
-                            dangerouslySetInnerHTML={{
-                                __html: result,
-                            }}
-                        />
-                    ))}
+                    {displayResult?.map((result, index) => {
+                        return (
+                            <div
+                                key={index}
+                                className="section-preview mx-7 my-8 border-[0.5px] border-grey rounded-[5px] bg-white"
+                            >
+                                <div
+                                    key={index}
+                                    id={findID(result)}
+                                    className="section-preview mx-5 my-5"
+                                    dangerouslySetInnerHTML={{
+                                        __html: result,
+                                    }}
+                                />
+                            </div>
+                        );
+                    })}
                 </div>
             )}
             {/* <div
