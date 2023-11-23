@@ -15,7 +15,13 @@ import NewGradientUI from "components/layouts/gradientLayout";
 import isEmail from "validator/lib/isEmail";
 import Popup from "components/UI/Popop";
 import Cookies from "js-cookie";
-import SocialLogin from "components/UI/social/social_login";
+// import SocialLogin from "components/UI/social/social_login";
+import dynamic from "next/dynamic";
+
+const SocialLogin = dynamic(() => import("components/UI/social/social_login"), {
+    ssr: false,
+});
+
 
 const SigninPage = () => {
     const vm = SigninVM();
@@ -25,7 +31,7 @@ const SigninPage = () => {
     const [rememberMe, setRememberMe] = useState(false);
 
     useEffect(() => {
-        Cookies.remove('userData');
+        Cookies.remove("userData");
         if (user) {
             const timer = setTimeout(() => {
                 router.push("/");

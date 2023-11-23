@@ -42,7 +42,7 @@ const SignupVM = () => {
                                 email: userData.email,
                                 name: userData.name,
                                 password: userData.password,
-                                provider: "google",
+                                provider: userData.provider,
                             };
                     }
                 } else {
@@ -67,7 +67,8 @@ const SignupVM = () => {
                         const userData = JSON.parse(
                             Cookies.get("userData") as string
                         );
-                        vm.performGoogleSignIn({
+                        vm.performSsoSignIn({
+                            "provider": userData.provider,
                             "access_token" : userData?.password
                         });
                         Cookies.remove("userData");
