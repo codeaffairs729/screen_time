@@ -78,6 +78,7 @@ const TextField = ({
                     required={true}
                     {...register}
                     disabled={disabled}
+                    readOnly={register.name === "max_members"}
                 />
             )}
             {!errorPosition && hasError && !isPassword && (
