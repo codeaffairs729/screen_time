@@ -15,7 +15,12 @@ import InfoIcon from "components/UI/icons/info_icon";
 import NewGradientUI from "components/layouts/gradientLayout";
 import Link from "next/link";
 import Cookies from "js-cookie";
-import SocialLogin from "components/UI/social/social_login";
+import dynamic from "next/dynamic";
+// import SocialLogin from "components/UI/social/social_login";
+
+const SocialLogin = dynamic(() => import("components/UI/social/social_login"), {
+    ssr: false,
+});
 
 const SecondStep = ({
     vm,
@@ -247,13 +252,7 @@ const SignupPage = () => {
 
     if (vm.signupErrorMsg || vm.signupSuccessMsg) {
         return (
-            <div
-                className=" h-screen flex flex-col items-center justify-center sm:bg-[#6E498E] bg-gradient-to-b from-[rgba(181,_133,_183,_0.53)_-10.01%] to-[rgba(109,_205,_203,_0.22)_102.15%]"
-                // style={{
-                //     background:
-                //         "linear-gradient(to bottom right, #3F0068, #FFFFFF)",
-                // }}
-            >
+            <div className=" h-screen flex flex-col items-center justify-center sm:bg-[#6E498E] bg-gradient-to-b from-[rgba(181,_133,_183,_0.53)_-10.01%] to-[rgba(109,_205,_203,_0.22)_102.15%]">
                 <img
                     width={200}
                     className="-mt-8 hidden sm:block"

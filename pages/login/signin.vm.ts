@@ -87,22 +87,23 @@ const SigninVM = () => {
         );
 
     const {
-        isLoading: isGoogleSigningIn,
-        execute: executePerformGoogleSignIn,
+        isLoading: isSsoSigningIn,
+        execute: executePerformSsoSignIn,
     } = useHttpCall();
 
-    const performGoogleSignIn = (data:any) => {
+    const performSsoSignIn = (data:any) => {
         Cookies.remove('userData');
-        executePerformGoogleSignIn(
+        executePerformSsoSignIn(
             () =>
-                Http.post(`/v1/users/google_sign_in?token=${data['access_token']}`),
+                Http.post(`/v1/users/provider_sign_in?token=${data['access_token']}&provider=${data['provider']}`),
             {
                 onSuccess: (res) => {
                     if(!res['user']){
                         const value = {
                             name: res["email"].replace(/[^a-zA-Z]/g, '').replace(/gmail\.com/g, ''),
                             email: res["email"],
-                            password: data['access_token']
+                            password: data['access_token'],
+                            provider: res['provider']
                         }
                         Cookies.set('userData', JSON.stringify(value))
                         router.push("/signup");
@@ -148,8 +149,8 @@ const SigninVM = () => {
         isSigningIn,
         lastSearchQueryUrl,
         signinErrorMsg,
-        performGoogleSignIn,
-        isGoogleSigningIn,
+        performSsoSignIn,
+        isSsoSigningIn,
     };
 };
 
