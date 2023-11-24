@@ -32,6 +32,7 @@ const firebaseConfig: any = {
 const SocialLogin = () => {
     const vm = SigninVM();
     const [googleHover, setGoogleHover] = useState<boolean>(false);
+    const [microsoftHover, setMicrosoftHover] = useState<boolean>(false);
     const protocol = window.location.protocol || "http:";
     const host = window.location.hostname || "localhost:3000";
     const fullUrl = `${protocol}//${host}`;
@@ -107,12 +108,28 @@ const SocialLogin = () => {
                 data-tip
                 data-for="dtechtive-Microsoft-btn-tooltip"
             >
-                <img
-                    src="/images/icons/Microsoft.svg"
-                    width={35}
-                    className=" cursor-pointer"
-                    onClick={signInWithMicrosoft}
-                ></img>
+                <div
+                    onMouseEnter={() => setMicrosoftHover(true)}
+                    onMouseLeave={() => setMicrosoftHover(false)}
+                >
+                    {!microsoftHover ? (
+                        <img
+                            src="/images/icons/Microsoft.svg"
+                            width={35}
+                            height={35}
+                            className=" cursor-pointer"
+                            onClick={signInWithMicrosoft}
+                        ></img>
+                    ) : (
+                        <img
+                            src="/images/logo/microsoft-icon.svg"
+                            width={35}
+                            height={35}
+                            className=" cursor-pointer"
+                            onClick={signInWithMicrosoft}
+                        ></img>
+                    )}
+                </div>
                 <Tooltip
                     id="dtechtive-Microsoft-btn-tooltip"
                     title={"Microsoft"}

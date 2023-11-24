@@ -246,16 +246,17 @@ const SignupPage = () => {
         }
     }, [user]);
 
-    useEffect(()=>{
+    useEffect(() => {
         const userData = Cookies.get("userData");
         if (userData) {
             const signUpData = JSON.parse(userData);
             setStep(signUpData.length !== 0);
         }
-    },[Cookies.get("userData")])
+    }, [Cookies.get("userData")]);
+
 
     if (vm.signupErrorMsg || vm.signupSuccessMsg) {
-        return <SignupMessage />;
+        return <SignupMessage successMessage={vm.signupSuccessMsg} errorMessage={vm.signupErrorMsg }/>;
     }
     return (
         <NewGradientUI>
@@ -412,7 +413,9 @@ const SignupPage = () => {
                                 dataSelector="next-button"
                                 className=" bg-[#6E498E] min-w-[150px] !justify-center !items-center !py-3 w-8 sm:w-full !rounded-[30px]"
                                 label="Next"
-                                onClick={() => setStep(!step)}
+                                onClick={vm.form.handleSubmit(() =>
+                                    setStep(!step)
+                                )}
                             />
                         </div>
                         <div className="flex flex-row my-10 sm:my-8 mt- justify-center">
