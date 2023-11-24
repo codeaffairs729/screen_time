@@ -243,12 +243,15 @@ const SignupPage = () => {
         if (user) {
             router.push("/");
         }
+    }, [user]);
+
+    useEffect(()=>{
         const userData = Cookies.get("userData");
         if (userData) {
             const signUpData = JSON.parse(userData);
             setStep(signUpData.length !== 0);
         }
-    }, []);
+    },[Cookies.get("userData")])
 
     if (vm.signupErrorMsg || vm.signupSuccessMsg) {
         return (
