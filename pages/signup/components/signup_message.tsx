@@ -1,7 +1,11 @@
-import SignupVM from "../signup.vm";
 
-const SignupMessage = () => {
-    const vm = SignupVM();
+const SignupMessage = ({
+    successMessage,
+    errorMessage,
+}: {
+    successMessage: any;
+    errorMessage: any;
+}) => {
 
     return (
         <div className=" h-screen flex flex-col items-center justify-center sm:bg-[#6E498E] bg-gradient-to-b from-[rgba(181,_133,_183,_0.53)_-10.01%] to-[rgba(109,_205,_203,_0.22)_102.15%]">
@@ -11,13 +15,13 @@ const SignupMessage = () => {
                 src="/gif/mail_sent.gif"
             ></img>
 
-            {vm.signupSuccessMsg ? (
+            {successMessage? (
                 <>
                     <span className=" text-xl hidden sm:block sm:text-4xl text-white font-bold my-8">
                         A verification email has been sent.
                     </span>
                     <span className=" text-sm hidden sm:block sm:text-2xl text-white font-bold w-[32%] text-center">
-                        {vm.signupSuccessMsg}
+                        {successMessage}
                     </span>
                     <span className="uppercase text-2xl sm:hidden block text-[#6DCDCB] font-bold text-center">
                         Sign Up <br />
@@ -32,7 +36,7 @@ const SignupMessage = () => {
             ) : (
                 <>
                     <span className=" text-sm hidden sm:block sm:text-2xl text-white font-bold w-[32%] text-center">
-                        {vm.signupErrorMsg}
+                        {errorMessage}
                     </span>
                 </>
             )}
