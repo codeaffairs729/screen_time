@@ -32,6 +32,9 @@ const firebaseConfig: any = {
 const SocialLogin = () => {
     const vm = SigninVM();
     const [googleHover, setGoogleHover] = useState<boolean>(false);
+    const protocol = window.location.protocol || "http:";
+    const host = window.location.hostname || "localhost:3000";
+    const fullUrl = `${protocol}//${host}`;
 
     firebase.initializeApp(firebaseConfig);
 
@@ -120,25 +123,25 @@ const SocialLogin = () => {
                 data-tip
                 data-for="dtechtive-linkedIn-btn-tooltip"
             >
-                <img
-                    src="/images/icons/LinkedIn.svg"
-                    width={35}
-                    className=" opacity-50"
-                ></img>
-
-                {/* <LoginSocialLinkedin
-                    client_id={"778pqcso7m5yq1"}
-                    client_secret={"BAGH3KkR3NLPp28r"}
-                    redirect_uri={""}
-                    scope="email"
+                <LoginSocialLinkedin
+                    client_id={
+                        process.env.NEXT_PUBLIC_LINKEDIN_CLIENT_ID ||
+                        "7785p7da8wq52x"
+                    }
+                    client_secret={
+                        process.env.NEXT_PUBLIC_LINKEDIN_CLIENT_SECRET_ID ||
+                        "ktXRwbugXXz4GqHh"
+                    }
+                    redirect_uri={`${fullUrl}/login`}
+                    scope="openid profile email"
                     onResolve={({ provider, data }) => {
                         console.log({ provider }, { data });
-                        // if (data) {
-                        //     vm.performSsoSignIn({
-                        //         provider: provider,
-                        //         access_token: data["access_token"],
-                        //     });
-                        // }
+                        if (data) {
+                            vm.performSsoSignIn({
+                                provider: provider,
+                                access_token: data["access_token"],
+                            });
+                        }
                     }}
                     onReject={(err) => {
                         console.log(err);
@@ -147,9 +150,9 @@ const SocialLogin = () => {
                     <img
                         src="/images/icons/LinkedIn.svg"
                         width={35}
-                        className=" opacity-50"
+                        className=" cursor-pointer"
                     ></img>
-                </LoginSocialLinkedin> */}
+                </LoginSocialLinkedin>
             </div>
             <Tooltip id="dtechtive-linkedIn-btn-tooltip" title={"LinkedIn"} />
         </div>

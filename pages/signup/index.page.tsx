@@ -16,6 +16,7 @@ import NewGradientUI from "components/layouts/gradientLayout";
 import Link from "next/link";
 import Cookies from "js-cookie";
 import dynamic from "next/dynamic";
+import SignupMessage from "./components/signup_message";
 // import SocialLogin from "components/UI/social/social_login";
 
 const SocialLogin = dynamic(() => import("components/UI/social/social_login"), {
@@ -254,36 +255,7 @@ const SignupPage = () => {
     },[Cookies.get("userData")])
 
     if (vm.signupErrorMsg || vm.signupSuccessMsg) {
-        return (
-            <div className=" h-screen flex flex-col items-center justify-center sm:bg-[#6E498E] bg-gradient-to-b from-[rgba(181,_133,_183,_0.53)_-10.01%] to-[rgba(109,_205,_203,_0.22)_102.15%]">
-                <img
-                    width={200}
-                    className="-mt-8 hidden sm:block"
-                    src="/gif/mail_sent.gif"
-                ></img>
-
-                {vm.signupSuccessMsg ? (
-                    <>
-                        <span className=" text-xl hidden sm:block sm:text-4xl text-white font-bold my-8">
-                            A verification email has been sent.
-                        </span>
-                        <span className=" text-sm hidden sm:block sm:text-2xl text-white font-bold w-[32%] text-center">
-                            {vm.signupSuccessMsg}
-                        </span>
-                        <span className="uppercase text-2xl sm:hidden block text-[#6DCDCB] font-bold text-center">
-                            Sign Up <br />
-                            Successfull!
-                        </span>
-                    </>
-                ) : (
-                    <>
-                        <span className=" text-sm hidden sm:block sm:text-2xl text-white font-bold w-[32%] text-center">
-                            {vm.signupErrorMsg}
-                        </span>
-                    </>
-                )}
-            </div>
-        );
+        return <SignupMessage />;
     }
     return (
         <NewGradientUI>
