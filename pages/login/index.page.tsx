@@ -183,8 +183,8 @@ const SigninPage = () => {
                             className=" bg-[#6E498E] min-w-[150px] !justify-center !items-center !py-3 w-8 sm:w-full !rounded-[30px]"
                             dataSelector="signin-button"
                             label="Log In"
-                            isDisabled={vm.isSigningIn}
-                            isLoading={vm.isSigningIn}
+                            isDisabled={vm.isSigningIn || vm.isSsoSigningIn}
+                            isLoading={vm.isSigningIn || vm.isSsoSigningIn}
                             onClick={() => {
                                 vm.form.handleSubmit(() =>
                                     vm.performLogin({
@@ -205,7 +205,7 @@ const SigninPage = () => {
                         <div className="flex flex-row mt-6 justify-center text-[#333333]">
                             Log In with
                         </div>
-                        <SocialLogin />
+                        <SocialLogin vm={vm}  />
                     </div>
                     <div className="flex flex-col">
                         <div className="flex flex-row mt-4 justify-center">
