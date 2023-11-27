@@ -88,8 +88,7 @@ const getReportDate = (fromDate: Date, toDate: Date) => {
 const getReportTitle = (title: any) => {
     return `<p><strong>Dataset Insights Report</strong></p><p><strong>${title}</strong></p>`;
 };
-const getImageCanvas = (src: any) =>
-    `<img src="${src}"/>`;
+const getImageCanvas = (src: any) => `<img src="${src}"/>`;
 
 const formatSubHeading = (text: string) => `<p> ${text}</p>`;
 
@@ -100,7 +99,7 @@ const headerSelected = (
     byRegion: any,
     byquality: any,
     bySearchTermsCanvas: any,
-    byUseCasesCanvas:any
+    byUseCasesCanvas: any
 ) => {
     return selected
         .map((object: any, index: any) =>
@@ -239,6 +238,7 @@ const ReportVM = () => {
 
     const generateReportContent = async (qualityMetrics: any) => {
         setIsGeneratingReport(true);
+        const newMetric: any = document.getElementById("newMetrics");
         const metricByLocation: any = document.getElementById("map");
         const metricByTime: any = document.getElementById("screenshot");
         const metricByUseCase: any = document.getElementById("pie");
@@ -246,6 +246,8 @@ const ReportVM = () => {
         const searchTerms: any = document.getElementById("searchTerms");
         const qualityMetric: any = document.getElementById("qualityMetrics");
 
+        const byNewMetricCanvas =
+            newMetric && (await html2canvas(newMetric)).toDataURL("image/png");
         const byQualityMetricCanvas =
             qualityMetric &&
             (await html2canvas(qualityMetric)).toDataURL("image/png");
@@ -290,9 +292,9 @@ const ReportVM = () => {
         setIsGeneratingReport(false);
     };
 
-
-    const generateNewReport = async (qualityMetrics: any) =>{
+    const generateNewReport = async (qualityMetrics: any) => {
         setIsGeneratingReport(true);
+        const newMetric: any = document.getElementById("newMetrics");
         const qualityMetric: any = document.getElementById("qualityMetrics");
         const searchTerms: any = document.getElementById("searchTerms");
         const metricesByRegion: any = document.getElementById("map");
@@ -300,6 +302,8 @@ const ReportVM = () => {
         const metricByUseCase: any = document.getElementById("pie");
         const useCases: any = document.getElementById("useCases");
 
+        const byNewMetricCanvas =
+            newMetric && (await html2canvas(newMetric)).toDataURL("image/png");
         const byQualityMetricCanvas =
             qualityMetric &&
             (await html2canvas(qualityMetric)).toDataURL("image/png");
@@ -318,6 +322,7 @@ const ReportVM = () => {
         const byUseCasesCanvas =
             useCases && (await html2canvas(useCases)).toDataURL("image/png");
 
+
         const data = `
                 <p style="text-align: center;"><img src="${imgUrl}" width=200 height=150 style="text-align: center;" /></p>
                 <p></p>
@@ -333,11 +338,9 @@ const ReportVM = () => {
                     byUseCasesCanvas
                 )}
             `;
-    
         setEditorValue(data);
         setIsGeneratingReport(false);
-
-    }
+    };
 
     const formatPreviewData = () => {
         let html = draftToHtml(convertToRaw(editorState.getCurrentContent()));
@@ -606,7 +609,7 @@ const ReportVM = () => {
         setFromDate(new Date(from));
         setToDate(new Date(to));
         //Check if option selected
-        
+
         const promise1 = fetchMetricDataByTime(from, to);
         const promise2 = fetchMetricDataByRoles(from, to);
         const promise3 = fetchMetricDataByLocation(from, to);
@@ -667,7 +670,7 @@ const ReportVM = () => {
         qualityMetrics,
         useCases,
         editorValue,
-        setEditorValue
+        setEditorValue,
     };
 };
 
@@ -759,7 +762,7 @@ interface IReportVMContext {
     searchTerms: any;
     qualityMetrics: any;
     useCases: any;
-    editorValue:any;
+    editorValue: any;
     setEditorValue: any;
 }
 

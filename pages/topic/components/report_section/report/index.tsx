@@ -426,7 +426,7 @@ const Report = ({
                     </Tab.Panels>
                 </Tab.Group>
             </div>
-            {isReportGenerated && (
+            {isReportGenerated && !edit &&(
                 <div className=" mt-4">
                     <DownloadReport />
                 </div>
