@@ -38,6 +38,11 @@ const SignupMessage = ({
                     <span className=" text-sm hidden sm:block sm:text-2xl text-white font-bold w-[32%] text-center">
                         {errorMessage}
                     </span>
+                    <span className=" text-base block text-white text-center my-4 hover:text-[#6DCDCB] active:text-">
+                        <a href="/" className=" underline underline-offset-2">
+                            Go to home page
+                        </a>
+                    </span>
                 </>
             )}
         </div>
