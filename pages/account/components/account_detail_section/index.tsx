@@ -39,7 +39,7 @@ const AccountDetails = () => {
         );
     };
     const { permissions } = useContext(AccountContext); // Access permissions from the context
-    const rolesToCheck = ['organisation_admininistrator'];
+    const rolesToCheck = ['organisation_administrator'];
     return (
         <div className="mb-6">
             <Tab.Group selectedIndex={selectedAccountTab}>

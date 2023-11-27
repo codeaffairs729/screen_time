@@ -50,7 +50,7 @@ class Organisation {
 }
 export class Role {
     static REGISTERED_USER = "Registered User";
-    static ORGANIZATION_ADMIN = "Organisation Admin";
+    static ORGANIZATION_ADMIN = "organisation_administrator";
     static ORGANIZATION_MEMBER = "Organisation Member";
 
     constructor({ role_id, name }: { role_id: number; name: string }) {

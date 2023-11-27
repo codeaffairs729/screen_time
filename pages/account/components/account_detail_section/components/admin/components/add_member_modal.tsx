@@ -105,11 +105,11 @@ function AddMemberModal({
                                                 options={[
                                                     {
                                                         label: "Member",
-                                                        value: "Organisation Member",
+                                                        value: "essential_subscriber",
                                                     },
                                                     {
                                                         label: "Admin",
-                                                        value: "Organisation Admin",
+                                                        value: "organisation_administrator",
                                                     },
                                                 ]}
                                             />
@@ -147,7 +147,7 @@ function AddMemberModal({
                                             async (data: any) => {
                                                 await vm.inviteMember({
                                                     ...data,
-                                                    roles: [data["roles"]],
+                                                    roles: data["roles"].includes("organisation_administrator")?[data["roles"],"essential_subscriber"]:[data["roles"]],
                                                 });
                                             }
                                         )}

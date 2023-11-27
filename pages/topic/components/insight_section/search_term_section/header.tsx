@@ -32,8 +32,8 @@ const SearchTermHeader = () => {
             label={
                 <Label labelPrefix="Search Terms" label={selectedLabel} />
             }
-            itemsClasses="rounded-[10px] shadow-none "
-            menuItemsClasses="rounded-[10px]"
+            itemsClasses="rounded-[5px] shadow-none hover:!bg-dtech-light-teal hover:text-white"
+            menuItemsClasses="rounded-[5px]"
         />
     );
 };

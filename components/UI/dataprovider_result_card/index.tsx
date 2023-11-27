@@ -56,9 +56,9 @@ const DataProviderCard = ({ data, isMobile, imgCss="" }: DataProviderCardProps) 
 
 
             <div
-                className={`hover:bg-[#6DCDCB] hover:bg-opacity-[55%] hover:rounded-b-xl active:text-white  active:bg-[#512C71] active:rounded-b-xl active:bg-opacity-[80%] text-dtech-new-main-light   break-word overflow-hidden flex flex-col items-center justify-center py-4 md:py-6  relative  cursor-pointer ${
+                className={`hover:bg-dtech-light-teal hover:bg-opacity-[55%] hover:rounded-b-xl active:text-black active:border-b-2 active:border-black active:bg-dtech-dark-yellow active:rounded-b-xl active:bg-opacity-[80%] text-dtech-new-main-light   break-word overflow-hidden flex flex-col items-center justify-center py-4 md:py-6  relative  cursor-pointer ${
                     !showProvider &&
-                    " border-t-[1px] md:border-t-2 border-[#EBEBEB]"
+                    " border-[#EBEBEB]"
                 }`}
                 onClick={() => router.push(href)}
                 onMouseEnter={() => setIsHover(true)}

@@ -69,7 +69,7 @@ const InsightCard = ({
                                                 duration={2000}
                                             />
                                             &nbsp;
-                                            <span className="font-normal sm:text-[16px] text-[12px]">
+                                            <span className="font-normal lg:text-[13px] sm:text-[16px] text-[12px]">
                                                 hosts
                                             </span>
                                         </div>
@@ -79,7 +79,7 @@ const InsightCard = ({
                                                 duration={2000}
                                             />
                                             &nbsp;
-                                            <span className="font-normal sm:text-[16px] text-[12px]">
+                                            <span className="font-normal lg:text-[13px] sm:text-[16px] text-[12px]">
                                                 owners
                                             </span>
                                         </div>

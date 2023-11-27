@@ -37,8 +37,8 @@ const DatasetDownloadMetricsHead = () => {
                     label={selectedLabel}
                 />
             }
-            itemsClasses="rounded-[10px] shadow-none "
-            menuItemsClasses="rounded-[10px]"
+            itemsClasses="rounded-[5px] shadow-none hover:!bg-dtech-light-teal hover:!text-white "
+            menuItemsClasses="rounded-[5px]"
             className="border-b-[4px] font-semibold border-b-dtech-dark-teal text-dtech-dark-teal hover:!text-dtech-dark-teal"
             labelClasses="!text-lg"
             iconClass="hover:text-dtech-dark-teal text-dtech-dark-teal"

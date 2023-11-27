@@ -46,6 +46,8 @@ const Index = ({
                             <a
                                 href="https://dtime.ai/meeting"
                                 className=" text-dtech-dark-blue hover:underline hover:decoration-dtech-light-blue hover:text-dtech-light-blue hover:bg-[#6DCDCB8C] active:bg-dtech-dark-yellow active:text-black underline "
+                                target="_blank"
+                                rel="noreferrer"
                             >
                                 arrange a call
                             </a>

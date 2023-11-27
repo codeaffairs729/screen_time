@@ -15,7 +15,18 @@ import InfoIcon from "components/UI/icons/info_icon";
 import NewGradientUI from "components/layouts/gradientLayout";
 import Link from "next/link";
 import Cookies from "js-cookie";
-import SocialLogin from "components/UI/social/social_login";
+import dynamic from "next/dynamic";
+import SignupMessage from "./components/signup_message";
+
+const SocialLogin = dynamic(() => import("components/UI/social/social_login"), {
+    ssr: false,
+});
+const SocialSignup = dynamic(
+    () => import("components/UI/social/social_signup"),
+    {
+        ssr: false,
+    }
+);
 
 const SecondStep = ({
     vm,
@@ -101,7 +112,7 @@ const SecondStep = ({
                     <InfoIcon
                         tooltipClassName=" max-w-sm  !bg-dtech-dark-teal"
                         iconClasses="text-[#333333] -mt-[54px] ml-36 sm:ml-[118px]"
-                        title="Enter the name of the organisation that you are affiliated to"
+                        title="Select Organisation only if you are signing up as an Admin"
                     />
                 </div>
 
@@ -175,7 +186,8 @@ const SecondStep = ({
                 <div className=" -mt-1 ml-8 font-[Roboto] text-l">
                     I Accept Dtechtive’s{" "}
                     <a
-                        className=" text-[#0065BD] underline"
+                        // className=" text-[#0065BD] underline"
+                        className="items-center self-end underline text-[#0065BD] text-dtech-dark-blue hover:underline hover:decoration-dtech-light-blue hover:text-dtech-light-blue hover:bg-[#6DCDCB8C] active:bg-dtech-dark-yellow active:text-black"
                         href="https://dtechtive.com/data-privacy-policy"
                         target="_blank"
                         rel="noreferrer"
@@ -200,7 +212,7 @@ const SecondStep = ({
             <div className="flex justify-center !items-center space-x-4">
                 <PrimaryBtn
                     dataSelector="signup-button"
-                    className=" bg-[#6E498E] min-w-[150px] my-2 !justify-center !items-center !py-3 w-8 sm:w-full !rounded-[30px]"
+                    className="  bg-dtech-new-main-light active:bg-dtech-dark-yellow hover:bg-dtech-main-dark active:border-b-2 border-black hover:border-0 active:text-black text-white text-base font-bold border-0 min-w-[150px] !justify-center !items-center !py-3 w-8 sm:w-full !rounded-[30px]"
                     label="Create my account"
                     isLoading={vm.isSigningUp}
                     isDisabled={vm.isSigningUp}
@@ -233,54 +245,28 @@ const SignupPage = () => {
     const [step, setStep] = useState(false);
     const [isChecked, setIsChecked] = useState(false);
     const [showError, setShowError] = useState(false);
+    const [valueErrorPosition, setValueErrorPosition] = useState(false);
 
     useEffect(() => {
         if (user) {
             router.push("/");
         }
+    }, [user]);
+
+    useEffect(() => {
         const userData = Cookies.get("userData");
         if (userData) {
             const signUpData = JSON.parse(userData);
             setStep(signUpData.length !== 0);
         }
-    }, []);
+    }, [Cookies.get("userData")]);
 
     if (vm.signupErrorMsg || vm.signupSuccessMsg) {
         return (
-            <div
-                className=" h-screen flex flex-col items-center justify-center sm:bg-[#6E498E] bg-gradient-to-b from-[rgba(181,_133,_183,_0.53)_-10.01%] to-[rgba(109,_205,_203,_0.22)_102.15%]"
-                // style={{
-                //     background:
-                //         "linear-gradient(to bottom right, #3F0068, #FFFFFF)",
-                // }}
-            >
-                <img
-                    width={200}
-                    className="-mt-8 hidden sm:block"
-                    src="/gif/mail_sent.gif"
-                ></img>
-
-                {vm.signupSuccessMsg ? (
-                    <>
-                        <span className=" text-xl hidden sm:block sm:text-4xl text-white font-bold my-8">
-                            A verification email has been sent.
-                        </span>
-                        <span className=" text-sm hidden sm:block sm:text-2xl text-white font-bold w-[32%] text-center">
-                            {vm.signupSuccessMsg}
-                        </span>
-                        <span className="uppercase text-2xl sm:hidden block text-[#6DCDCB] font-bold text-center">
-                            Sign Up <br />
-                            Successfull!
-                        </span>
-                    </>
-                ) : (
-                    <>
-                        <span className=" text-sm hidden sm:block sm:text-2xl text-white font-bold w-[32%] text-center">
-                            {vm.signupErrorMsg}
-                        </span>
-                    </>
-                )}
-            </div>
+            <SignupMessage
+                successMessage={vm.signupSuccessMsg}
+                errorMessage={vm.signupErrorMsg}
+            />
         );
     }
     return (
@@ -292,7 +278,17 @@ const SignupPage = () => {
                             Create an Account
                         </h1>
                     </div>
-
+                    {
+                        <div
+                            className=" mb-10 mt-4 w-fit cursor-pointer"
+                            onClick={() => router.back()}
+                        >
+                            <img
+                                src="/images/icons/arrows/arrow_back.svg"
+                                className="hover:bg-gray-300 rounded-full"
+                            />
+                        </div>
+                    }
                     <div>
                         <div className="mt-4">
                             <FormRow
@@ -314,7 +310,7 @@ const SignupPage = () => {
                                 control: vm.form.control,
                                 name: "name",
                                 rules: {
-                                    required: "Name is required",
+                                    required: "Required field",
                                     pattern: {
                                         value: /^[A-Za-z\s]+$/,
                                         message: "Use only letters",
@@ -376,6 +372,10 @@ const SignupPage = () => {
                                     name: "password",
                                     rules: {
                                         validate: (val: string) => {
+                                            if (!val || val.length === 0) {
+                                                setValueErrorPosition(true);
+                                                return "Required field";
+                                            }
                                             const prefix =
                                                 "Password should contain atleast,";
                                             const specialChars = /[ !@#$%^&*]/;
@@ -411,17 +411,23 @@ const SignupPage = () => {
                                                             ", "
                                                         )} , ${suffix}`;
                                                 }
+                                                setValueErrorPosition(false);
                                                 return `${prefix} ${suffix}`;
                                             }
+
+                                            setValueErrorPosition(false);
+                                            return true;
                                         },
                                     },
                                 }}
                                 placeholder="Enter password"
                                 type={isPasswordVisible ? "text" : "password"}
-                                errorPosition={false}
+                                errorPosition={valueErrorPosition}
                             />
                             <img
-                                className=" ml-[90%] xl:ml-[88%] lg:ml-[85%] md:ml-[80%] absolute top-3"
+                                className={`ml-[90%] xl:ml-[88%] lg:ml-[85%] md:ml-[80%] absolute ${
+                                    valueErrorPosition ? "top-9" : "top-3"
+                                }`}
                                 onClick={() =>
                                     setIsPasswordVisible(!isPasswordVisible)
                                 }
@@ -436,9 +442,11 @@ const SignupPage = () => {
                         <div className="flex justify-center !items-center space-x-4 my-10 sm:my-10">
                             <PrimaryBtn
                                 dataSelector="next-button"
-                                className=" bg-[#6E498E] min-w-[150px] !justify-center !items-center !py-3 w-8 sm:w-full !rounded-[30px]"
+                                className="  bg-dtech-new-main-light active:bg-dtech-dark-yellow hover:bg-dtech-main-dark active:border-b-2 border-black hover:border-0 active:text-black text-white text-base font-bold border-0 min-w-[150px] !justify-center !items-center !py-3 w-8 sm:w-full !rounded-[30px]"
                                 label="Next"
-                                onClick={() => setStep(!step)}
+                                onClick={vm.form.handleSubmit(() =>
+                                    setStep(!step)
+                                )}
                             />
                         </div>
                         <div className="flex flex-row my-10 sm:my-8 mt- justify-center">
@@ -450,7 +458,7 @@ const SignupPage = () => {
                             <div className="flex flex-row justify-center text-[#333333]">
                                 Sign Up with
                             </div>
-                            <SocialLogin />
+                            <SocialSignup />
                         </div>
                         <div className="flex flex-row my-10 sm:my-8 justify-center">
                             <div className=" bg-[#727272] h-[1px] w-[25%] sm:w-[35%]"></div>
@@ -459,15 +467,15 @@ const SignupPage = () => {
                             </div>
                             <div className=" bg-[#727272] h-[1px] w-[25%] sm:w-[35%]"></div>
                         </div>
-                        <div className="flex flex-row mt-4 mb-8 justify-center">
+                        <div className="flex flex-row mt-4 mb-8 justify-center items-center">
                             <div className="text-sm mx-2 text-[#333333]">
                                 Already have an account ?
                             </div>
                             <Link href={"/login"}>
-                                <a className="inline-flex space-x-1 ">
-                                    <i className="mr-1 text-sm underline text-[#0065BD]">
+                                <a className="items-center self-end underline text-sm text-dtech-dark-blue hover:underline hover:decoration-dtech-light-blue hover:text-dtech-light-blue hover:bg-[#6DCDCB8C] active:bg-dtech-dark-yellow active:text-black px-1 rounded-sm">
+                                    <i className="items-center active:text-black">
                                         Log in
-                                    </i>{" "}
+                                    </i>
                                 </a>
                             </Link>
                         </div>

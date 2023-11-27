@@ -28,8 +28,8 @@ const firebaseConfig: any = {
         process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID || "G-HYVJP2M340",
 };
 
-const SocialLogin = ({vm}:{vm:any}) => {
-    // const vm = SigninVM();
+const SocialSignup = () => {
+    const vm = SigninVM();
     const [socialHover, setSocialHover] = useState({
         google: false,
         microsoft: false,
@@ -107,7 +107,7 @@ const SocialLogin = ({vm}:{vm:any}) => {
                 <Tooltip id="dtechtive-Google-btn-tooltip" title={"Google"} />
             </div>
             <div
-                className=" mx-4 w-10 flex justify-center items-center"
+                className=" mx-4  w-10 flex justify-center items-center"
                 data-tip
                 data-for="dtechtive-Microsoft-btn-tooltip"
             >
@@ -124,9 +124,8 @@ const SocialLogin = ({vm}:{vm:any}) => {
                         ></img>
                     ) : (
                         <img
-                            src="/images/logo/microsoft-icon.svg"
-                            width={30}
-                            height={35}
+                            src="/images/logo/microsoft-logo.png"
+                            width={25}
                             className=" cursor-pointer"
                             onClick={signInWithMicrosoft}
                         ></img>
@@ -187,7 +186,7 @@ const SocialLogin = ({vm}:{vm:any}) => {
         </div>
     );
 };
-export default SocialLogin;
+export default SocialSignup;
 
 const Tooltip = ({ id, title }: { id: string; title: string }) => {
     return (

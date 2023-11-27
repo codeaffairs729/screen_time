@@ -37,8 +37,8 @@ const DownloadHeader = () => {
                 <Label labelPrefix="Download metrics:" label={selectedLabel} />
             }
             iconClass="hover:text-dtech-dark-teal text-dtech-dark-teal"
-            itemsClasses="rounded-[10px] shadow-none "
-            menuItemsClasses="rounded-[10px]"
+            itemsClasses="rounded-[5px] shadow-none hover:!bg-dtech-light-teal hover:text-white"
+            menuItemsClasses="rounded-[5px]"
         />
     );
 };

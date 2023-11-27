@@ -100,7 +100,7 @@ const Dropdown = ({
                 <Menu.Items
                     aria-label="profile dropdown menu"
                     className={clsx(
-                        "outline-none flex flex-col right-0 absolute z-30 mt-2 w-56 origin-top-right bg-white shadow-custom-1",
+                        "outline-none flex flex-col right-0 absolute z-30 mt-2 w-56 origin-top-right bg-white shadow-custom-1 p-2",
                         menuItemsClasses
                     )}
                 >

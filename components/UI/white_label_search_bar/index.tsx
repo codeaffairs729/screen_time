@@ -148,11 +148,11 @@ const NewSearchBar = ({
                 }`)}>
             <Combobox value={selected} onChange={setSelected} nullable>
                 <div className="flex flex-row w-full h-full relative">
-                    <div className="relative rounded-full ml-4 flex items-center w-full h-full  cursor-default  text-left focus-within:outline-none sm:text-sm">
+                    <div className="relative rounded-full sm:ml-4 flex items-center w-full h-full  cursor-default  text-left focus-within:outline-none sm:text-sm">
                         <Combobox.Input
                             type="search"
                             placeholder="Search"
-                            className="w-full shadow-[0, 0, 0, 350px, #212121]  sm:ml-0 !rounded-l-full max-h-[99%] border-none px-1 align-middle text-gray-900 h-full focus:ring-0 text-[19px] leading-[22px]"
+                            className="w-full shadow-[0, 0, 0, 350px, #212121]  sm:ml-0 !rounded-l-full max-h-[99%] border-none px-1 pl-4 align-middle text-gray-900 h-full focus:ring-0 text-[19px] leading-[22px]"
                             onFocus={() => {
                                 (openAutoCompleteBtn.current as any)?.click()
                             }
@@ -212,8 +212,8 @@ const NewSearchBar = ({
                             )}
                         </Combobox.Options>
                     </Transition>
-                    <div className="  text-dtech-main-dark flex flex-row px-1">
-                        <div className="h-3/4 w-[1px] mx-3 my-[4px] bg-[#333333]">&nbsp;</div>
+                    <div className="  text-dtech-main-dark flex flex-row sm:px-1">
+                        <div className="h-3/4 w-[1px] sm:mx-3 mr-3 my-[4px] bg-[#333333] ">&nbsp;</div>
                         <SearchTypeSelect />
                         {/* <SearchIcon isLoading={false} /> */}
                     </div>

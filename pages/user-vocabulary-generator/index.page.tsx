@@ -136,7 +136,8 @@ const KeywordSynonym = () => {
                         />
                     </FormRow>
                     <PrimaryBtn
-                        className="mt-8 bg-dtech-primary-dark max-w-[150px]"
+                        // className="mt-8 bg-dtech-primary-dark max-w-[150px]"
+                        className="bg-dtech-new-main-light active:bg-dtech-dark-yellow hover:bg-dtech-main-dark active:border-b-2 border-black hover:border-0 active:text-black text-white !rounded-full active:animate-ping max-w-[120px] my-4 !py-[12px] !px-[16px]"
                         label="Submit"
                         isLoading={isSubmittingSynonymKeyword}
                         onClick={ss_vm_form.handleSubmit(submitSynonymKeyword)}
