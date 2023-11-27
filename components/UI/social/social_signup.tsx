@@ -152,7 +152,7 @@ const SocialSignup = () => {
                         process.env.NEXT_PUBLIC_LINKEDIN_CLIENT_SECRET_ID ||
                         "ktXRwbugXXz4GqHh"
                     }
-                    redirect_uri={`http://localhost:3000/login`}
+                    redirect_uri={`${fullUrl}/login`}
                     scope="openid profile email"
                     onResolve={({ provider, data }) => {
                         console.log({ provider }, { data });
