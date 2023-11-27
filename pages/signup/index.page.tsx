@@ -17,9 +17,11 @@ import Link from "next/link";
 import Cookies from "js-cookie";
 import dynamic from "next/dynamic";
 import SignupMessage from "./components/signup_message";
-// import SocialLogin from "components/UI/social/social_login";
 
 const SocialLogin = dynamic(() => import("components/UI/social/social_login"), {
+    ssr: false,
+});
+const SocialSignup = dynamic(() => import("components/UI/social/social_signup"), {
     ssr: false,
 });
 
@@ -254,9 +256,13 @@ const SignupPage = () => {
         }
     }, [Cookies.get("userData")]);
 
-
     if (vm.signupErrorMsg || vm.signupSuccessMsg) {
-        return <SignupMessage successMessage={vm.signupSuccessMsg} errorMessage={vm.signupErrorMsg }/>;
+        return (
+            <SignupMessage
+                successMessage={vm.signupSuccessMsg}
+                errorMessage={vm.signupErrorMsg}
+            />
+        );
     }
     return (
         <NewGradientUI>
@@ -427,7 +433,7 @@ const SignupPage = () => {
                             <div className="flex flex-row justify-center text-[#333333]">
                                 Sign Up with
                             </div>
-                            <SocialLogin />
+                            <SocialSignup />
                         </div>
                         <div className="flex flex-row my-10 sm:my-8 justify-center">
                             <div className=" bg-[#727272] h-[1px] w-[25%] sm:w-[35%]"></div>
