@@ -22,6 +22,7 @@ import { sortAndAggregate } from "../../insights_section/use_case_section/sectio
 import RichTextEditor from "./components/editor";
 import PreviewReport from "./components/new_preview";
 import MapChartComponent from "./components/map_chart";
+import img from "public/images/cookie.svg";
 
 const DownloadReport = dynamic(() => import("./downloadReport"), {
     ssr: false,
@@ -64,6 +65,7 @@ function calculateRatingPercentages(ratings: RatingObject[]): RatingObject[] {
         const percentage = (count / totalCount) * 100;
         return { [ratingValue]: percentage };
     });
+
     return ratingPercentages;
 }
 
@@ -178,56 +180,131 @@ const Report = ({
                 </div>
             )}
             <div className=" h-[56rem] overflow-y-scroll no-scrollbar whitespace-nowrap absolute">
+                <div
+                    id="newMetrics"
+                    className="flex fixed justify-center items-center flex-col z-[-10] w-full my-10"
+                >
+                    {/* <BarChart
+                        data={[
+                            {
+                                "0": 12.5,
+                            },
+
+                            {
+                                "1": 0,
+                            },
+
+                            {
+                                "2": 0,
+                            },
+
+                            {
+                                "3": 25,
+                            },
+
+                            {
+                                "4": 37.5,
+                            },
+
+                            {
+                                "5": 25,
+                            },
+                        ]}
+                        isMobile={isMobile}
+                        titles={titles}
+                        divID="newMetricsDiv"
+                    /> */}
+                    <BarChart
+                        data={graphData}
+                        isMobile={isMobile}
+                        titles={byTimetitles}
+                        divID="newMetricsDiv"
+                    />
+                </div>
+
                 {items && (
                     <div
                         className="flex fixed justify-center items-center flex-col z-[-10] w-full"
                         id="qualityMetrics"
                     >
                         <BarChart
-                            data={calculateRatingPercentages([
+                            data={calculateRatingPercentages(
+                                [
+                                    {
+                                        "0": 1
+                                    },
+                                    {
+                                        "0.5": 0
+                                    },
+                                    {
+                                        "1": 0
+                                    },
+                                    {
+                                        "1.5": 0
+                                    },
+                                    {
+                                        "2": 0
+                                    },
+                                    {
+                                        "2.5": 0
+                                    },
+                                    {
+                                        "3": 2
+                                    },
+                                    {
+                                        "3.5": 0
+                                    },
+                                    {
+                                        "4": 3
+                                    },
+                                    {
+                                        "4.5": 0
+                                    },
+                                    {
+                                        "5": 2
+                                    }
+                                ]
+                            )}
+                            isMobile={isMobile}
+                            titles={titles}
+                            divID ="qualityMetricsDiv"
+                        />
+
+                        {/* <BarChart
+                            data={[
                                 {
-                                    "0": 1,
+                                    "0": 12.5,
                                 },
-                                {
-                                    "0.5": 0,
-                                },
+
                                 {
                                     "1": 0,
                                 },
-                                {
-                                    "1.5": 0,
-                                },
+
                                 {
                                     "2": 0,
                                 },
+
                                 {
-                                    "2.5": 0,
+                                    "3": 25,
                                 },
+
                                 {
-                                    "3": 2,
+                                    "4": 37.5,
                                 },
+
                                 {
-                                    "3.5": 0,
+                                    "5": 25,
                                 },
-                                {
-                                    "4": 3,
-                                },
-                                {
-                                    "4.5": 0,
-                                },
-                                {
-                                    "5": 2,
-                                },
-                            ])}
+                            ]}
                             isMobile={isMobile}
                             titles={titles}
-                            divID="qualityMetricsDiv"
-                        />
+                            divID="qualityMetricsDIV"
+                        /> */}
                     </div>
                 )}
                 {searchTerms.length > 0 && (
                     <div
-                        className="flex fixed  justify-center items-center flex-col z-[-10] w-full "
+                        className="flex fixed justify-center items-center flex-col z-[-10] w-full "
                         id="searchTerms"
                     >
                         <TagCloud2 data={transformedData} />

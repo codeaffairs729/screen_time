@@ -77,17 +77,21 @@ const PreviewReport = ({
         return splittedArray.slice(startIndex, endIndex);
     });
 
+    const gradientStyle = {
+        background: 'radial-gradient(2196.08% 210.97% at 144.72% -36.42%, rgba(255, 255, 255, 0.75) 0%, rgba(206, 255, 254, 0.28) 27.7%, rgba(206, 176, 208, 0.20) 84.03%)',
+        // Add other styles as needed
+      };
     const displayResult = result.map((subarray) => subarray.join(""));
 
     console.log();
     return (
-        <div className="shadow-paper-shadow mt-4 h-[656px] bg-gradient-to-br from-[rgba(255,255,255,0.75)] via-[rgba(206,255,254,0.28)] to-[rgba(206,176,208,0.20)] border-none overflow-y-scroll">
+        <div className="shadow-paper-shadow mt-4 h-[656px] border-none overflow-y-scroll !bg-[#EBEBEB]">
             {!loading && isReportGenerated && (
                 <div
                     className="editor_preview"
                     ref={(ref) => setDownloadRef(ref)}
                 >
-                    <div className="flex relative justify-end">
+                    <div className="flex relative justify-end" style={gradientStyle}>
                         <div
                             id={"header"}
                             className="w-[90%] section-preview flex flex-col justify-center items-center bg-[url('/images/GroupPreviewBackground.svg')] bg-cover bg-no-repeat bg-top"
@@ -122,6 +126,7 @@ const PreviewReport = ({
                                         __html: result,
                                     }}
                                 />
+                                <div className="text-center text-black">Page {index+1}/{displayResult.length}</div>
                             </div>
                         );
                     })}
