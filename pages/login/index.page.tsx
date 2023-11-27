@@ -22,7 +22,6 @@ const SocialLogin = dynamic(() => import("components/UI/social/social_login"), {
     ssr: false,
 });
 
-
 const SigninPage = () => {
     const vm = SigninVM();
     const user = useSelector((state: RootState) => state.auth.user);
@@ -51,7 +50,7 @@ const SigninPage = () => {
                             Log In
                         </h1>
                     </div>
-                    {(
+                    {
                         <div
                             className=" mb-10 mt-4 w-fit cursor-pointer"
                             onClick={() => router.back()}
@@ -61,7 +60,7 @@ const SigninPage = () => {
                                 className="hover:bg-gray-300 rounded-full"
                             />
                         </div>
-                    )}
+                    }
                     <div className=" -mt-20 sm:-mt-10">
                         <div className="mt-4 flex flex-col">
                             <div className="flex flex-row justify-items-start my-8">
@@ -81,10 +80,10 @@ const SigninPage = () => {
                             {vm.signinErrorMsg?.includes(
                                 "password you entered is wrong"
                             ) && (
-                                    <div className="text-xs mb-7 sm:mb-10 -mt-10 text-red-800 ml">
-                                        {vm.signinErrorMsg}
-                                    </div>
-                                )}
+                                <div className="text-xs mb-7 sm:mb-10 -mt-10 text-red-800 ml">
+                                    {vm.signinErrorMsg}
+                                </div>
+                            )}
                         </div>
                         <TextField
                             className=" -mt-6 sm:-mt-8 rounded-xl !bg-transparent "
@@ -160,26 +159,28 @@ const SigninPage = () => {
                     </div>
                     <div className="flex flex-row justify-between mb-4 -mt-12 sm:mt-0 ">
                         <Link href="/login/account-unlock">
-                            {/* <a className=" items-center self-end underline text-[#0065BD] text-sm"> */}
-                            <a className="items-center self-end underline text-[#0065BD] text-sm text-dtech-dark-blue hover:underline hover:decoration-dtech-light-blue hover:text-dtech-light-blue hover:bg-[#6DCDCB8C] active:bg-dtech-dark-yellow active:text-black">
-                                Unlock account
+                            <div className="cursor-pointer">
+                                <a className="items-center p-1 rounded-sm self-end underline text-sm text-dtech-dark-blue hover:underline hover:decoration-dtech-light-blue hover:text-dtech-light-blue hover:bg-[#6DCDCB8C] active:bg-dtech-dark-yellow active:text-black">
+                                    Unlock account
+                                </a>
                                 <InfoIcon
                                     tooltipClassName="max-w-sm  !bg-dtech-dark-teal"
                                     iconClasses="text-[#0065BD] mx-2"
                                     title="Enter email id to unlock account"
                                 />
-                            </a>
+                            </div>
                         </Link>
                         <Link href="/forgot-password">
-                            {/* <a className=" items-center self-end underline text-[#0065BD] text-sm"> */}
-                            <a className="items-center self-end underline text-[#0065BD] text-sm text-dtech-dark-blue hover:underline hover:decoration-dtech-light-blue hover:text-dtech-light-blue hover:bg-[#6DCDCB8C] active:bg-dtech-dark-yellow active:text-black">
-                                Forgot your password?
+                            <div className="cursor-pointer">
+                                <a className="items-center p-1 rounded-sm self-end underline text-sm text-dtech-dark-blue hover:underline hover:decoration-dtech-light-blue hover:text-dtech-light-blue hover:bg-[#6DCDCB8C] active:bg-dtech-dark-yellow active:text-black">
+                                    Forgot your password?
+                                </a>
                                 <InfoIcon
                                     tooltipClassName="max-w-sm  !bg-dtech-dark-teal"
                                     iconClasses="text-[#0065BD] ml-2"
                                     title="Reset your password"
                                 />
-                            </a>
+                            </div>
                         </Link>
                     </div>
                     <div className=" -mt-8 sm:mt-0">
@@ -192,7 +193,7 @@ const SigninPage = () => {
                     </div>
                     <div className="flex space-x-4 sm:mt-8 justify-center">
                         <PrimaryBtn
-                            className=" bg-[#6E498E] min-w-[150px] !justify-center !items-center !py-3 w-8 sm:w-full !rounded-[30px]"
+                            className="  bg-dtech-new-main-light active:bg-dtech-dark-yellow hover:bg-dtech-main-dark active:border-b-2 border-black hover:border-0 active:text-black text-white text-base font-bold border-0 min-w-[150px] !justify-center !items-center !py-3 w-8 sm:w-full !rounded-[30px]"
                             dataSelector="signin-button"
                             label="Log In"
                             isDisabled={vm.isSigningIn || vm.isSsoSigningIn}
@@ -217,23 +218,22 @@ const SigninPage = () => {
                         <div className="flex flex-row mt-6 justify-center text-[#333333]">
                             Log In with
                         </div>
-                        <SocialLogin vm={vm}  />
+                        <SocialLogin vm={vm} />
                     </div>
                     <div className="flex flex-col">
-                        <div className="flex flex-row mt-4 justify-center">
+                        <div className="flex flex-row mt-4 justify-center items-center">
                             <div className="text-sm mx-2 text-[#333333]">
                                 Do not have an account ?
                             </div>
                             <Link href={"/signup"}>
-                                <a className="inline-flex space-x-1 mx-2">
-                                    {/* <i className="mr-1 text-sm underline text-[#0065BD]"> */}
-                                    <i className="items-center self-end underline text-[#0065BD] text-sm text-dtech-dark-blue hover:underline hover:decoration-dtech-light-blue hover:text-dtech-light-blue hover:bg-[#6DCDCB8C] active:bg-dtech-dark-yellow active:text-black">
+                                <a className="items-center self-end underline text-sm text-dtech-dark-blue hover:underline hover:decoration-dtech-light-blue hover:text-dtech-light-blue hover:bg-[#6DCDCB8C] active:bg-dtech-dark-yellow active:text-black px-1 rounded-sm">
+                                    <i className="items-center active:text-black">
                                         Sign up for free
                                     </i>{" "}
                                 </a>
                             </Link>
                         </div>
-                        <div className="flex flex-row mt-4 justify-center">
+                        <div className="flex flex-row mt-4 justify-center items-center">
                             <div className="text-sm mr-1 text-[#333333]">
                                 Do not want an account ?
                             </div>
@@ -244,9 +244,8 @@ const SigninPage = () => {
                                         : "/"
                                 }
                             >
-                                {/* <a className="inline-flex space-x-1 mx-2"> */}
-                                <a className="items-center self-end underline text-[#0065BD] text-sm text-dtech-dark-blue hover:underline hover:decoration-dtech-light-blue hover:text-dtech-light-blue hover:bg-[#6DCDCB8C] active:bg-dtech-dark-yellow active:text-black">
-                                    <i className="mr-1 text-sm underline text-[#0065BD]">
+                                <a className="items-center self-end underline text-sm text-dtech-dark-blue hover:underline hover:decoration-dtech-light-blue hover:text-dtech-light-blue hover:bg-[#6DCDCB8C] active:bg-dtech-dark-yellow active:text-black px-1 rounded-sm">
+                                    <i className="items-center active:text-black">
                                         Continue as a guest?
                                     </i>{" "}
                                 </a>

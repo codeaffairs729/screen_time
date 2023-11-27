@@ -21,9 +21,12 @@ import SignupMessage from "./components/signup_message";
 const SocialLogin = dynamic(() => import("components/UI/social/social_login"), {
     ssr: false,
 });
-const SocialSignup = dynamic(() => import("components/UI/social/social_signup"), {
-    ssr: false,
-});
+const SocialSignup = dynamic(
+    () => import("components/UI/social/social_signup"),
+    {
+        ssr: false,
+    }
+);
 
 const SecondStep = ({
     vm,
@@ -209,7 +212,7 @@ const SecondStep = ({
             <div className="flex justify-center !items-center space-x-4">
                 <PrimaryBtn
                     dataSelector="signup-button"
-                    className=" bg-[#6E498E] min-w-[150px] my-2 !justify-center !items-center !py-3 w-8 sm:w-full !rounded-[30px]"
+                    className="  bg-dtech-new-main-light active:bg-dtech-dark-yellow hover:bg-dtech-main-dark active:border-b-2 border-black hover:border-0 active:text-black text-white text-base font-bold border-0 min-w-[150px] !justify-center !items-center !py-3 w-8 sm:w-full !rounded-[30px]"
                     label="Create my account"
                     isLoading={vm.isSigningUp}
                     isDisabled={vm.isSigningUp}
@@ -242,6 +245,7 @@ const SignupPage = () => {
     const [step, setStep] = useState(false);
     const [isChecked, setIsChecked] = useState(false);
     const [showError, setShowError] = useState(false);
+    const [valueErrorPosition, setValueErrorPosition] = useState(false);
 
     useEffect(() => {
         if (user) {
@@ -274,7 +278,7 @@ const SignupPage = () => {
                             Create an Account
                         </h1>
                     </div>
-                    {(
+                    {
                         <div
                             className=" mb-10 mt-4 w-fit cursor-pointer"
                             onClick={() => router.back()}
@@ -284,7 +288,7 @@ const SignupPage = () => {
                                 className="hover:bg-gray-300 rounded-full"
                             />
                         </div>
-                    )}
+                    }
                     <div>
                         <div className="mt-4">
                             <FormRow
@@ -368,6 +372,10 @@ const SignupPage = () => {
                                     name: "password",
                                     rules: {
                                         validate: (val: string) => {
+                                            if (!val || val.length === 0) {
+                                                setValueErrorPosition(true);
+                                                return "Required field";
+                                            }
                                             const prefix =
                                                 "Password should contain atleast,";
                                             const specialChars = /[ !@#$%^&*]/;
@@ -403,17 +411,23 @@ const SignupPage = () => {
                                                             ", "
                                                         )} , ${suffix}`;
                                                 }
+                                                setValueErrorPosition(false);
                                                 return `${prefix} ${suffix}`;
                                             }
+
+                                            setValueErrorPosition(false);
+                                            return true;
                                         },
                                     },
                                 }}
                                 placeholder="Enter password"
                                 type={isPasswordVisible ? "text" : "password"}
-                                errorPosition={false}
+                                errorPosition={valueErrorPosition}
                             />
                             <img
-                                className=" ml-[90%] xl:ml-[88%] lg:ml-[85%] md:ml-[80%] absolute top-3"
+                                className={`ml-[90%] xl:ml-[88%] lg:ml-[85%] md:ml-[80%] absolute ${
+                                    valueErrorPosition ? "top-9" : "top-3"
+                                }`}
                                 onClick={() =>
                                     setIsPasswordVisible(!isPasswordVisible)
                                 }
@@ -428,7 +442,7 @@ const SignupPage = () => {
                         <div className="flex justify-center !items-center space-x-4 my-10 sm:my-10">
                             <PrimaryBtn
                                 dataSelector="next-button"
-                                className=" bg-[#6E498E] min-w-[150px] !justify-center !items-center !py-3 w-8 sm:w-full !rounded-[30px]"
+                                className="  bg-dtech-new-main-light active:bg-dtech-dark-yellow hover:bg-dtech-main-dark active:border-b-2 border-black hover:border-0 active:text-black text-white text-base font-bold border-0 min-w-[150px] !justify-center !items-center !py-3 w-8 sm:w-full !rounded-[30px]"
                                 label="Next"
                                 onClick={vm.form.handleSubmit(() =>
                                     setStep(!step)
@@ -453,16 +467,15 @@ const SignupPage = () => {
                             </div>
                             <div className=" bg-[#727272] h-[1px] w-[25%] sm:w-[35%]"></div>
                         </div>
-                        <div className="flex flex-row mt-4 mb-8 justify-center">
+                        <div className="flex flex-row mt-4 mb-8 justify-center items-center">
                             <div className="text-sm mx-2 text-[#333333]">
                                 Already have an account ?
                             </div>
                             <Link href={"/login"}>
-                                {/* <a className="inline-flex space-x-1 "> */}
-                              <a  className="items-center self-end underline text-[#0065BD] text-sm text-dtech-dark-blue hover:underline hover:decoration-dtech-light-blue hover:text-dtech-light-blue hover:bg-[#6DCDCB8C] active:bg-dtech-dark-yellow active:text-black">
-                                    <i className="mr-1 text-sm underline text-[#0065BD]">
+                                <a className="items-center self-end underline text-sm text-dtech-dark-blue hover:underline hover:decoration-dtech-light-blue hover:text-dtech-light-blue hover:bg-[#6DCDCB8C] active:bg-dtech-dark-yellow active:text-black px-1 rounded-sm">
+                                    <i className="items-center active:text-black">
                                         Log in
-                                    </i>{" "}
+                                    </i>
                                 </a>
                             </Link>
                         </div>
