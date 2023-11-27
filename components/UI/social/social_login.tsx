@@ -124,8 +124,9 @@ const SocialLogin = ({vm}:{vm:any}) => {
                         ></img>
                     ) : (
                         <img
-                            src="/images/logo/microsoft-logo.png"
-                            width={25}
+                            src="/images/logo/microsoft-icon.svg"
+                            width={30}
+                            height={35}
                             className=" cursor-pointer"
                             onClick={signInWithMicrosoft}
                         ></img>

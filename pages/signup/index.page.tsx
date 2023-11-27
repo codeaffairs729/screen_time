@@ -109,7 +109,7 @@ const SecondStep = ({
                     <InfoIcon
                         tooltipClassName=" max-w-sm  !bg-dtech-dark-teal"
                         iconClasses="text-[#333333] -mt-[54px] ml-36 sm:ml-[118px]"
-                        title="Enter the name of the organisation that you are affiliated to"
+                        title="Select Organisation only if you are signing up as an Admin"
                     />
                 </div>
 
@@ -183,7 +183,8 @@ const SecondStep = ({
                 <div className=" -mt-1 ml-8 font-[Roboto] text-l">
                     I Accept Dtechtive’s{" "}
                     <a
-                        className=" text-[#0065BD] underline"
+                        // className=" text-[#0065BD] underline"
+                        className="items-center self-end underline text-[#0065BD] text-dtech-dark-blue hover:underline hover:decoration-dtech-light-blue hover:text-dtech-light-blue hover:bg-[#6DCDCB8C] active:bg-dtech-dark-yellow active:text-black"
                         href="https://dtechtive.com/data-privacy-policy"
                         target="_blank"
                         rel="noreferrer"
@@ -273,7 +274,17 @@ const SignupPage = () => {
                             Create an Account
                         </h1>
                     </div>
-
+                    {(
+                        <div
+                            className=" mb-10 mt-4 w-fit cursor-pointer"
+                            onClick={() => router.back()}
+                        >
+                            <img
+                                src="/images/icons/arrows/arrow_back.svg"
+                                className="hover:bg-gray-300 rounded-full"
+                            />
+                        </div>
+                    )}
                     <div>
                         <div className="mt-4">
                             <FormRow
@@ -295,7 +306,7 @@ const SignupPage = () => {
                                 control: vm.form.control,
                                 name: "name",
                                 rules: {
-                                    required: "Name is required",
+                                    required: "Required field",
                                     pattern: {
                                         value: /^[A-Za-z\s]+$/,
                                         message: "Use only letters",
@@ -447,7 +458,8 @@ const SignupPage = () => {
                                 Already have an account ?
                             </div>
                             <Link href={"/login"}>
-                                <a className="inline-flex space-x-1 ">
+                                {/* <a className="inline-flex space-x-1 "> */}
+                              <a  className="items-center self-end underline text-[#0065BD] text-sm text-dtech-dark-blue hover:underline hover:decoration-dtech-light-blue hover:text-dtech-light-blue hover:bg-[#6DCDCB8C] active:bg-dtech-dark-yellow active:text-black">
                                     <i className="mr-1 text-sm underline text-[#0065BD]">
                                         Log in
                                     </i>{" "}
