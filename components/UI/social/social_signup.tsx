@@ -114,6 +114,7 @@ const SocialSignup = () => {
                     }
                 >
                     <LoginSocialGoogle
+                        scope="email"
                         client_id={
                             process.env.NEXT_PUBLIC_GOOGLE_CLIENT_KEY as string
                         }
