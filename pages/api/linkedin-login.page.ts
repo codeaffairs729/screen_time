@@ -13,8 +13,8 @@ export default async function linkedinLogin(req: any, res: any) {
                     grant_type: "authorization_code",
                     code: code,
                     redirect_uri: redirect_uri,
-                    client_id: LINKEDIN_CLIENT_ID,
-                    client_secret: LINKEDIN_CLIENT_SECRET,
+                    client_id: "7785p7da8wq52x",
+                    client_secret: "ktXRwbugXXz4GqHh",
                 }),
             }
         ).then((response) => response.json());
