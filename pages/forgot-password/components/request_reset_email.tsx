@@ -26,7 +26,10 @@ const RequestResetEmail = () => {
                     className="  -mt-[740px] sm:mt-0 mb-8 w-fit absolute sm:relative cursor-pointer"
                     onClick={() => router.push("/login")}
                 >
-                    <img src="/images/icons/arrows/arrow_back.svg" className=" hover:bg-gray-300 rounded-full"/>
+                    <img
+                        src="/images/icons/arrows/arrow_back.svg"
+                        className=" hover:bg-gray-300 rounded-full"
+                    />
                 </div>
                 <div className="text-center">
                     <h1 className="font-semibold text-[#333333] text-2xl mt-8 sm:mt-0 mb-2 sm:text-xl ">
@@ -57,7 +60,7 @@ const RequestResetEmail = () => {
                     </div>
                     <TextField
                         className=" -mt-6 sm:-mt-8 rounded-xl  "
-                        textfieldClassName="!bg-white"
+                        textfieldClassName="!bg-white focus:!border-dtech-light-teal"
                         formControl={{
                             control: vm.form.control,
                             name: "email",
@@ -80,7 +83,6 @@ const RequestResetEmail = () => {
                     <PrimaryBtn
                         // className=" bg-[#6E498E] min-w-[150px] !justify-center !items-center !py-3 w-8 sm:w-full !rounded-[30px]"
                         className="bg-dtech-new-main-light active:bg-dtech-dark-yellow hover:bg-dtech-main-dark active:border-b-2 border-black hover:border-0 active:text-black text-white !rounded-full  max-w-[120px] my-4 !py-[12px] !px-[16px]"
-
                         label="Send Email"
                         isLoading={vm.isSendingMail}
                         isDisabled={vm.isSendingMail}
