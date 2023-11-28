@@ -5,7 +5,7 @@ import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
 import ReactTooltip from "react-tooltip";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 const firebaseConfig: any = {
@@ -37,8 +37,44 @@ const SocialSignup = () => {
     });
 
     const protocol = window.location.protocol || "http:";
-    const host = window.location.hostname || "localhost:3000";
+    const host =
+        window.location.hostname !== "localhost"
+            ? window.location.hostname
+            : "localhost:3000";
     const fullUrl = `${protocol}//${host}`;
+
+    const LINKEDIN_CLIENT_SECRET =
+        process.env.NEXT_PUBLIC_LINKEDIN_CLIENT_SECRET_ID || "";
+    const LINKEDIN_CLIENT_ID = process.env.NEXT_PUBLIC_LINKEDIN_CLIENT_ID || "";
+    const LINKEDIN_CALLBACK_URL = `${fullUrl}/login`;
+    const linkedinOAuthURL = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${LINKEDIN_CLIENT_ID}&redirect_uri=${encodeURIComponent(
+        LINKEDIN_CALLBACK_URL
+    )}&scope=openid%20profile%20email`;
+
+    console.log("LINKEDIN_CALLBACK_URL: ", LINKEDIN_CALLBACK_URL);
+
+    const handleLinkedInCallback = async () => {
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const code = urlParams.get("code");
+        if (code) {
+            fetch(
+                `/api/linkedin-login?code=${code}&redirect_uri=${LINKEDIN_CALLBACK_URL}`
+            )
+                .then((res: any) => res.json())
+                .then((data: any) => {
+                    console.log("data :", data);
+                    vm.performSsoSignIn({
+                        provider: "linkedin",
+                        access_token: data?.accessToken,
+                    });
+                });
+        }
+    };
+
+    useEffect(() => {
+        handleLinkedInCallback();
+    }, []);
 
     firebase.initializeApp(firebaseConfig);
 
@@ -70,8 +106,12 @@ const SocialSignup = () => {
             <div data-tip data-for="dtechtive-Google-btn-tooltip">
                 <div
                     className=" mx-4 cursor-pointer"
-                    onMouseEnter={() => setSocialHover({...socialHover, google: true})}
-                    onMouseLeave={() => setSocialHover({...socialHover, google: false})}
+                    onMouseEnter={() =>
+                        setSocialHover({ ...socialHover, google: true })
+                    }
+                    onMouseLeave={() =>
+                        setSocialHover({ ...socialHover, google: false })
+                    }
                 >
                     <LoginSocialGoogle
                         client_id={
@@ -112,8 +152,12 @@ const SocialSignup = () => {
                 data-for="dtechtive-Microsoft-btn-tooltip"
             >
                 <div
-                    onMouseEnter={() => setSocialHover({...socialHover, microsoft: true})}
-                    onMouseLeave={() => setSocialHover({...socialHover, microsoft: false})}
+                    onMouseEnter={() =>
+                        setSocialHover({ ...socialHover, microsoft: true })
+                    }
+                    onMouseLeave={() =>
+                        setSocialHover({ ...socialHover, microsoft: false })
+                    }
                 >
                     {!socialHover.microsoft ? (
                         <img
@@ -140,33 +184,14 @@ const SocialSignup = () => {
                 className=" mx-4 "
                 data-tip
                 data-for="dtechtive-linkedIn-btn-tooltip"
-                onMouseEnter={() => setSocialHover({...socialHover, linkedIn: true})}
-                onMouseLeave={() => setSocialHover({...socialHover, linkedIn: false})}
+                onMouseEnter={() =>
+                    setSocialHover({ ...socialHover, linkedIn: true })
+                }
+                onMouseLeave={() =>
+                    setSocialHover({ ...socialHover, linkedIn: false })
+                }
             >
-                <LoginSocialLinkedin
-                    client_id={
-                        process.env.NEXT_PUBLIC_LINKEDIN_CLIENT_ID ||
-                        "7785p7da8wq52x"
-                    }
-                    client_secret={
-                        process.env.NEXT_PUBLIC_LINKEDIN_CLIENT_SECRET_ID ||
-                        "ktXRwbugXXz4GqHh"
-                    }
-                    redirect_uri={`${fullUrl}/login`}
-                    scope="openid profile email"
-                    onResolve={({ provider, data }) => {
-                        console.log({ provider }, { data });
-                        if (data) {
-                            vm.performSsoSignIn({
-                                provider: provider,
-                                access_token: data["access_token"],
-                            });
-                        }
-                    }}
-                    onReject={(err) => {
-                        console.log(err);
-                    }}
-                >
+                <a href={linkedinOAuthURL}>
                     {!socialHover.linkedIn ? (
                         <img
                             src="/images/icons/LinkedIn.svg"
@@ -180,7 +205,7 @@ const SocialSignup = () => {
                             className=" cursor-pointer"
                         ></img>
                     )}
-                </LoginSocialLinkedin>
+                </a>
             </div>
             <Tooltip id="dtechtive-linkedIn-btn-tooltip" title={"LinkedIn"} />
         </div>
