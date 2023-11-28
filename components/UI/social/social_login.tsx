@@ -49,8 +49,6 @@ const SocialLogin = ({ vm }: { vm: any }) => {
         LINKEDIN_CALLBACK_URL
     )}&scope=openid%20profile%20email`;
 
-
-
     const handleLinkedInCallback = async () => {
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
@@ -73,7 +71,6 @@ const SocialLogin = ({ vm }: { vm: any }) => {
     useEffect(() => {
         handleLinkedInCallback();
     }, []);
-
 
     firebase.initializeApp(firebaseConfig);
     const provider = new firebase.auth.OAuthProvider("microsoft.com");
@@ -145,41 +142,36 @@ const SocialLogin = ({ vm }: { vm: any }) => {
                 <Tooltip id="dtechtive-Google-btn-tooltip" title={"Google"} />
             </div>
             <div
-                className=" mx-4 w-10 flex justify-center items-center"
+                className="mx-4 w-10"
                 data-tip
                 data-for="dtechtive-Microsoft-btn-tooltip"
+                onMouseEnter={() =>
+                    setSocialHover({ ...socialHover, microsoft: true })
+                }
+                onMouseLeave={() =>
+                    setSocialHover({ ...socialHover, microsoft: false })
+                }
             >
-                <div
-                    onMouseEnter={() =>
-                        setSocialHover({ ...socialHover, microsoft: true })
-                    }
-                    onMouseLeave={() =>
-                        setSocialHover({ ...socialHover, microsoft: false })
-                    }
-                >
-                    {!socialHover.microsoft ? (
-                        <img
-                            src="/images/icons/Microsoft.svg"
-                            width={35}
-                            className=" cursor-pointer"
-                            onClick={signInWithMicrosoft}
-                        ></img>
-                    ) : (
-                        <img
-                            src="/images/logo/microsoft-logo.png"
-                            width={25}
-                            className=" cursor-pointer"
-                            onClick={signInWithMicrosoft}
-                        ></img>
-                    )}
-                </div>
-                <Tooltip
-                    id="dtechtive-Microsoft-btn-tooltip"
-                    title={"Microsoft"}
-                />
+                {!socialHover.microsoft ? (
+                    <img
+                        src="/images/icons/Microsoft.svg"
+                        width={35}
+                        className=" cursor-pointer"
+                        onClick={signInWithMicrosoft}
+                    ></img>
+                ) : (
+                    <img
+                        src="/images/logo/microsoft-logo.png"
+                        width={34.1}
+                        className=" cursor-pointer"
+                        onClick={signInWithMicrosoft}
+                    ></img>
+                )}
             </div>
+            <Tooltip id="dtechtive-Microsoft-btn-tooltip" title={"Microsoft"} />
+
             <div
-                className=" mx-4 "
+                className="mx-4"
                 data-tip
                 data-for="dtechtive-linkedIn-btn-tooltip"
                 onMouseEnter={() =>
@@ -190,7 +182,7 @@ const SocialLogin = ({ vm }: { vm: any }) => {
                 }
             >
                 <a href={linkedinOAuthURL}>
-                {!socialHover.linkedIn ? (
+                    {!socialHover.linkedIn ? (
                         <img
                             src="/images/icons/LinkedIn.svg"
                             width={35}
