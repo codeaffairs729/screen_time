@@ -12,7 +12,6 @@ import isEmail from "validator/lib/isEmail";
 import { useRouter } from "next/router";
 import NewGradientUI from "components/layouts/gradientLayout";
 
-
 const LoginUnlockPage = () => {
     const vm = LoginUnlockVM();
     const router = useRouter();
@@ -24,7 +23,10 @@ const LoginUnlockPage = () => {
                     className="  -mt-[740px] sm:mt-0 mb-8 w-fit absolute sm:relative cursor-pointer"
                     onClick={() => router.push("/login")}
                 >
-                    <img src="/images/icons/arrows/arrow_back.svg" className=" hover:bg-gray-300 rounded-full"/>
+                    <img
+                        src="/images/icons/arrows/arrow_back.svg"
+                        className=" hover:bg-gray-300 rounded-full"
+                    />
                 </div>
                 <div className="text-center">
                     <h1 className="font-semibold text-[#333333] text-2xl  mb-2 sm:text-xl ">
@@ -33,19 +35,18 @@ const LoginUnlockPage = () => {
                 </div>
                 {vm.requestUnlockData && (
                     <SuccessAlert
-                        message={getMessageFromResponse(
-                            vm.requestUnlockData,
-                            { defaultMessage: "Success. If the account exists and was locked, you will receive an email." }
-                        )}
+                        message={getMessageFromResponse(vm.requestUnlockData, {
+                            defaultMessage:
+                                "Success. If the account exists and was locked, you will receive an email.",
+                        })}
                         className="max-w-[450px] w-full mb-4"
                     />
                 )}
                 {vm.requestUnlockEror && (
                     <ErrorAlert
-                        message={getMessageFromResponse(
-                            vm.requestUnlockEror,
-                            { defaultMessage: "Something went wrong" }
-                        )}
+                        message={getMessageFromResponse(vm.requestUnlockEror, {
+                            defaultMessage: "Something went wrong",
+                        })}
                         className="max-w-[450px] w-full mb-4"
                     />
                 )}
@@ -68,7 +69,7 @@ const LoginUnlockPage = () => {
                     </div>
                     <TextField
                         className=" -mt-6 sm:-mt-8 rounded-xl  "
-                        textfieldClassName="!bg-white"
+                        textfieldClassName="!bg-white focus:!border-dtech-light-teal"
                         formControl={{
                             control: vm.form.control,
                             name: "email",

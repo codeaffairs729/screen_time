@@ -32,30 +32,50 @@ const SecondStep = ({
     vm,
     step,
     setStep,
-    organisationRequired,
-    isChecked,
-    setIsChecked,
     showError,
-    setOrganisationRequired,
     setShowError,
 }: {
     vm: any;
     step: boolean;
     setStep: any;
-    organisationRequired: boolean;
-    isChecked: boolean;
-    setIsChecked: any;
     showError: boolean;
-    setOrganisationRequired: any;
     setShowError: any;
 }) => {
     const [socialUser, setSocialUser] = useState(false);
+    const [organisationRequired, setOrganisationRequired] = useState(false);
+    const [isChecked, setIsChecked] = useState(false);
+
     useEffect(() => {
         const userData = Cookies.get("userData");
         if (userData) {
             setSocialUser(true);
         }
     }, []);
+
+    const handleSignupClick = () => {
+        const isRoleOther = vm.form.watch("role") === "other";
+        const isOrganisationValid =
+            !isRoleOther ||
+            (isRoleOther &&
+                vm.form.formState.errors.organisation === undefined);
+
+        if (!isOrganisationValid) {
+            setShowError(true);
+            return;
+        }
+
+        setOrganisationRequired(
+            vm.form.getValues().signup_type === "org_admin"
+        );
+
+        // Proceed with form submission
+        vm.form.handleSubmit(() => {
+            if (!isChecked) {
+                setShowError(true);
+            } else vm.handleSignup(vm.form.getValues());
+        })();
+    };
+
     return (
         <div className="grow flex flex-col items-left max-w-[30%px] justify-evenly sm:justify-center mt-10  sm:mx-[20%] sm:my-0 mx-[5%] my-[5%] ">
             {!socialUser && (
@@ -80,7 +100,7 @@ const SecondStep = ({
                     <InfoIcon
                         tooltipClassName=" max- max-w-sm  !bg-dtech-dark-teal"
                         iconClasses="text-[#333333] ml-36 -mt-[54px] sm:!ml-[118px]"
-                        title="Select one account type "
+                        title="Select Organisation only if you are signing up as an Admin"
                     />
                 </div>
 
@@ -95,7 +115,7 @@ const SecondStep = ({
                         control: vm.form.control,
                         name: "signup_type",
                         rules: {
-                            required: "Required field",
+                            required: "Required field ",
                         },
                     }}
                     optionClass=" border-2 border-[#6DCDCB] !rounded-[30px]  "
@@ -119,15 +139,15 @@ const SecondStep = ({
                 <TextField
                     type="text"
                     errorPosition={true}
-                    className=" -mt-6 sm:-mt-8 rounded-xl !bg-transparent "
-                    textfieldClassName="!bg-white"
+                    className=" -mt-6 sm:-mt-8 rounded-xl !bg-transparent"
+                    textfieldClassName="!bg-white focus:!border-dtech-light-teal"
                     formControl={{
                         control: vm.form.control,
                         name: "organisation",
                         rules: {
-                            ...(organisationRequired
-                                ? { required: "Required field" }
-                                : { required: false }),
+                            required: organisationRequired
+                                ? "Required field"
+                                : false,
                         },
                     }}
                     placeholder="E.g. ABC Corp"
@@ -165,7 +185,7 @@ const SecondStep = ({
 
                 {vm.form.watch("role") == "other" && (
                     <TextField
-                        className=" mt-4     rounded-xl !bg-white "
+                        className=" mt-4 rounded-xl !bg-white "
                         formControl={{
                             control: vm.form.control,
                             name: "role_other",
@@ -216,20 +236,7 @@ const SecondStep = ({
                     label="Create my account"
                     isLoading={vm.isSigningUp}
                     isDisabled={vm.isSigningUp}
-                    onClick={() => {
-                        vm.form.getValues().signup_type == "org_admin"
-                            ? setOrganisationRequired(true)
-                            : setOrganisationRequired(false);
-                        isChecked
-                            ? vm.form.handleSubmit(() =>
-                                  vm.handleSignup({
-                                      ...vm.form.getValues(),
-                                      // confirm_password:
-                                      //     vm.form.getValues().password,
-                                  })
-                              )()
-                            : setShowError(true);
-                    }}
+                    onClick={handleSignupClick}
                 />
             </div>
         </div>
@@ -241,9 +248,7 @@ const SignupPage = () => {
     const user = useSelector((state: RootState) => state.auth.user);
     const router = useRouter();
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-    const [organisationRequired, setOrganisationRequired] = useState(false);
     const [step, setStep] = useState(false);
-    const [isChecked, setIsChecked] = useState(false);
     const [showError, setShowError] = useState(false);
     const [valueErrorPosition, setValueErrorPosition] = useState(false);
 
@@ -305,7 +310,7 @@ const SignupPage = () => {
                         </div>
                         <TextField
                             className=" -mt-6 sm:-mt-8 rounded-xl !bg-transparent "
-                            textfieldClassName="!bg-white"
+                            textfieldClassName="!bg-white focus:!border-dtech-light-teal"
                             formControl={{
                                 control: vm.form.control,
                                 name: "name",
@@ -333,7 +338,7 @@ const SignupPage = () => {
                         </div>
                         <TextField
                             className=" -mt-6 sm:-mt-8 rounded-xl !bg-transparent "
-                            textfieldClassName="!bg-white"
+                            textfieldClassName="!bg-white focus:!border-dtech-light-teal"
                             formControl={{
                                 control: vm.form.control,
                                 name: "email",
@@ -366,7 +371,7 @@ const SignupPage = () => {
                         <div className="relative">
                             <TextField
                                 className=" -mt-6 sm:-mt-8 rounded-xl !bg-transparent "
-                                textfieldClassName="!bg-white"
+                                textfieldClassName="!bg-white focus:!border-dtech-light-teal"
                                 formControl={{
                                     control: vm.form.control,
                                     name: "password",
@@ -485,13 +490,11 @@ const SignupPage = () => {
                 <SecondStep
                     showError={showError}
                     setShowError={setShowError}
-                    isChecked={isChecked}
-                    setIsChecked={setIsChecked}
                     vm={vm}
                     step={step}
                     setStep={setStep}
-                    organisationRequired={organisationRequired}
-                    setOrganisationRequired={setOrganisationRequired}
+                    // organisationRequired={organisationRequired}
+                    // setOrganisationRequired={setOrganisationRequired}
                 />
             )}
         </NewGradientUI>
