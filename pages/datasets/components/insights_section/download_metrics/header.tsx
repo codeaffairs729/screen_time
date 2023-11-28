@@ -33,14 +33,14 @@ const DatasetDownloadMetricsHead = () => {
         <Dropdown
             label={
                 <DatasetLabel
-                    labelPrefix="Download metrics:"
+                    labelPrefix="Download metrics"
                     label={selectedLabel}
                 />
             }
             itemsClasses="rounded-[5px] shadow-none hover:!bg-dtech-light-teal hover:!text-white "
             menuItemsClasses="rounded-[5px]"
             className="border-b-[4px] font-semibold border-b-dtech-dark-teal text-dtech-dark-teal hover:!text-dtech-dark-teal"
-            labelClasses="!text-lg"
+            labelClasses="!text-xl"
             iconClass="hover:text-dtech-dark-teal text-dtech-dark-teal"
             menuItems={menuItems}
         />

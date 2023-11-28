@@ -114,7 +114,8 @@ const CardComponent = ({
                         style={{
                             background:
                                 "linear-gradient(90deg, rgba(181, 133, 183, 0.53) -33.18%, rgba(109, 205, 203, 0.22) 46.47%, rgba(235, 246, 246, 0) 98.63%)",
-                            left: "10px",
+                            left: "15px",
+                            borderRadius: "13px",
                         }}
                         className="absolute flex justify-center items-center z-10 left-0 sm:h-[80%] md:h-[89%] h-[94%] mt-2 sm:mt-4 w-[30%] sm:w-[14%] text-white py-2 px-2 rounded"
                     >
@@ -139,7 +140,7 @@ const CardComponent = ({
                             background:
                                 "linear-gradient(-90deg, rgba(181, 133, 183, 0.53) -33.18%, rgba(109, 205, 203, 0.22) 46.47%, rgba(235, 246, 246, 0) 98.63%)",
                         }}
-                        className="absolute flex justify-center items-center z-10 right-0 sm:h-[80%] md:h-[89%] h-[94%] mt-2 sm:mt-4 w-[30%] sm:w-[14%] text-white py-2 px-2 rounded"
+                        className="absolute flex justify-center items-center z-10 right-0 sm:h-[80%] md:h-[88%] h-[94%] mt-2 sm:mt-4 w-[30%] sm:w-[14%] text-white py-2 px-2 rounded"
                     >
                         <div className=" hover:bg-[#0065BD] hover:rounded-full w-10 h-10 md:w-16 md:h-16 lg:w-20 lg:h-20 xl:w-24 xl:h-24 hover:animate-pulse focus-within:rounded-full focus:rounded-full focus-visible:rounded-full active:rounded-full focus-within:bg-white focus-within:border-b-2 focus-within:border-black active:bg-white focus:bg-white flex items-center justify-center focus-within:text-dtech-dark-teal focus-visible:text-dtech-dark-teal active:text-dtech-dark-teal">
                             <BiChevronRight

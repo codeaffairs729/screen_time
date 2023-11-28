@@ -104,7 +104,7 @@ const FrontCard = ({
         .map((item) => item[0].toUpperCase())
         .join("");
     return (
-        <div className=" flex flex-col justify-center items-center overflow-hidden h-[77.94px] md:h-40 w-full md:min-h-[138px] min-h-[114px]">
+        <div className=" flex flex-col justify-center items-center overflow-hidden h-[77.94px] md:h-full w-full md:min-h-[138px] min-h-[114px] cursor-auto">
             {imgUrl ? (
                 <img
                     src={imgUrl}
@@ -112,7 +112,7 @@ const FrontCard = ({
                     className={`${imgCss}  rounded-t-xl`}
                 />
             ) : (
-                <div className="object-contain md:h-40 md:w-full h-[77.94px] w-fit flex justify-center items-center text-3xl font-extrabold text-[#EBEBEB]">
+                <div className="object-contain md:h-40 md:w-full h-[77.94px] w-fit flex justify-center items-center text-3xl font-extrabold text-[#EBEBEB] ">
                     <div>{dummyImg}</div>
                 </div>
             )}

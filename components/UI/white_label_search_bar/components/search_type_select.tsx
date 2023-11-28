@@ -10,7 +10,7 @@ import clsx from "clsx";
 export const SearchTypes = {
     DATASET: { label: "Dataset", value: "dataset", imgPath: "/images/icons/datasets.svg", imagePathOnHover: "/images/icons/datasets_hover.svg"},
     ORGANISATION: { label: "Data Provider", value: "organisation", imgPath: "/images/icons/data_providers.svg", imagePathOnHover: "/images/icons/data_providers_hover.svg" },
-    TOPICS: { label: "Topics", value: "topics", imgPath: "/images/icons/topics.svg", imagePathOnHover: "/images/icons/topics_hover.svg" },
+    TOPICS: { label: "Topic", value: "topics", imgPath: "/images/icons/topics.svg", imagePathOnHover: "/images/icons/topics_hover.svg" },
     REGIONS: { label: "Regions", value: "regions", imgPath: "/images/icons/regions.svg", imagePathOnHover: "/images/icons/regions_hover.svg" },
 
 };

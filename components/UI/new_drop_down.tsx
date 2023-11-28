@@ -163,7 +163,7 @@ const NewDropdown = ({
                         `outline-none flex flex-col ${
                             !isMobile && "right-0"
                         } absolute z-30 mt-2 p-2 w-max origin-top-right bg-white shadow-custom-1 rounded-[5px] ${
-                            !isLoggedIn &&
+                            !isLoggedIn && isMobile &&
                             "transition-all delay-700 duration-75"
                         }`,
                         menuItemsClasses

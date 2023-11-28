@@ -64,12 +64,15 @@ const ResultLayoutCard = ({
                     {Array(20)
                         .fill(1)
                         .map((_, index) => (
-                            <div key={index} className="border border-gray-100 rounded-md md:rounded-xl shadow-custom-3  min-h-[100%] max-w-[90%]  md:max-h-[10%] md:min-w-[100%] p-2 w-[100%]">
+                            <div
+                                key={index}
+                                className="border border-gray-100 rounded-md md:rounded-xl shadow-custom-3  min-h-[100%] max-w-[90%]  md:max-h-[10%] md:min-w-[100%] p-2 w-[100%]"
+                            >
                                 <div className="border-2  bg-[#EBEBEB]  rounded ">
                                     <div className="border-2 bg-gray-400 bg-opacity-60 animate-pulse rounded py-9 mx-1 my-2 md:py-16 md:my-4 md:mx-4 "></div>
                                 </div>
                                 <div className="border-2  animate-pulse bg-[#EBEBEB]  md:h-[50px]">
-                                <div className="animate-pulse bg-gray-400 bg-opacity-60 rounded-md w-[70%] p-1 md:p-2 mt-5 mb-2 md:mb-1 ml-2 md:ml-4"></div>
+                                    <div className="animate-pulse bg-gray-400 bg-opacity-60 rounded-md w-[70%] p-1 md:p-2 mt-5 mb-2 md:mb-1 ml-2 md:ml-4"></div>
                                 </div>
                             </div>
                         ))}

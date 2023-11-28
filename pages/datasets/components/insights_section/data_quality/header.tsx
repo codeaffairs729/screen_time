@@ -5,12 +5,12 @@ import {
 } from "pages/datasets/dataset_detail.vm";
 import { useContext, useState } from "react";
 import DatasetLabel from "../label";
-import { QualityInsightsENUM, QualityMetricsVMContext } from "./quality_metric.vm";
+import {
+    QualityInsightsENUM,
+    QualityMetricsVMContext,
+} from "./quality_metric.vm";
 
-const ITEMS: MenuItemType[] = [
-    { label: "metadata" },
-    { label: "data_file" },
-];
+const ITEMS: MenuItemType[] = [{ label: "metadata" }, { label: "data_file" }];
 
 const DatasetQualityInsightsHead = () => {
     const [selectedLabel, setSelectedLabel] = useState(ITEMS[0].label);
@@ -41,7 +41,7 @@ const DatasetQualityInsightsHead = () => {
             itemsClasses="rounded-[5px] shadow-none hover:!bg-dtech-light-teal hover:!text-white"
             menuItemsClasses="rounded-[5px] "
             className="border-b-[4px] font-semibold border-b-dtech-dark-teal text-dtech-dark-teal hover:!text-dtech-dark-teal"
-            labelClasses="!text-lg"
+            labelClasses="!text-xl"
             iconClass="hover:text-dtech-dark-teal text-dtech-dark-teal"
             menuItems={menuItems}
         />

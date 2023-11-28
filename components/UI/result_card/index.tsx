@@ -8,7 +8,6 @@ import NewResultCardAction from "../new_result_card_action";
 import DataProviderCardHead from "./data_provider/head";
 import DataProviderCardFooter from "./data_provider/footer";
 
-
 export interface DataProviders {
     datasetSource: string;
     ownerUrl: string;
@@ -66,12 +65,16 @@ const ResultCard = ({
         resultRecord.recordType ? resultRecord.recordType : "datasets"
     }/${resultRecord.id}`;
 
+    const handleClick = () => {
+        if (pageName === "workspace") {
+            setCardClicked(!cardClicked);
+        }
+    };
+
     return (
         <div
-            onMouseUp={() => pageName === "workspace" && setCardClicked(false)}
-            onMouseDown={(e) =>
-                pageName === "workspace" && setCardClicked(true)
-            }
+            onMouseUp={handleClick}
+            onMouseDown={handleClick}
             onMouseEnter={(e) => pageName === "workspace" && setCardHover(true)}
             onMouseLeave={(e) =>
                 pageName === "workspace" && setCardHover(false)
@@ -89,10 +92,14 @@ const ResultCard = ({
                 )}
             </div>
             <div
-                className={`${className} rounded-lg px-5 py-1.5 flex flex-row justify-between  w-full min-w my-2 border-r-8  border-transparent  hover:border-[#6DCDCB] active:border-dtech-main-dark active:bg-[#FCF9F9] ${
+                className={`${className} rounded-lg px-5 py-1.5 flex flex-row justify-between  w-full min-w my-2 border-r-8  border-transparent  hover:border-[#6DCDCB8C] active:border-dtech-dark-yellow active:bg-[#FCF9F9] ${
                     hideResultCard
                         ? " shadow-underline"
                         : "border-gray-100 shadow-search-card hover:shadow-search-card-hover"
+                } ${
+                    cardClicked
+                        ? "active:border-dtech-dark-yellow active:bg-dtech-dark-yellow"
+                        : "active:border-dtech-main-dark active:bg-[#FCF9F9]"
                 }`}
             >
                 <div className="flex flex-col md:flex-row justify-between w-full">
@@ -130,8 +137,8 @@ const ResultCard = ({
                 {pageName === "workspace" && (
                     <div
                         className={` bg-dtech-new-main-light 
-                        ${
-                            cardHover && "bg-[#6DCDCB]"
+                        ${cardHover && "bg-[#6DCDCB]"} ${
+                            cardClicked && "bg-[#FDD522]"
                         }  text-white hidden flex-col justify-center items-center w-[24px] md:flex  ${
                             label === "datasets" ? "rounded-r-lg" : ""
                         }`}
