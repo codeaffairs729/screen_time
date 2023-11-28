@@ -8,7 +8,6 @@ import NewResultCardAction from "../new_result_card_action";
 import DataProviderCardHead from "./data_provider/head";
 import DataProviderCardFooter from "./data_provider/footer";
 
-
 export interface DataProviders {
     datasetSource: string;
     ownerUrl: string;
@@ -89,7 +88,7 @@ const ResultCard = ({
                 )}
             </div>
             <div
-                className={`${className} rounded-lg px-5 py-1.5 flex flex-row justify-between  w-full min-w my-2 border-r-8  border-transparent  hover:border-[#6DCDCB] active:border-dtech-main-dark active:bg-[#FCF9F9] ${
+                className={`${className} rounded-lg px-5 py-1.5 flex flex-row justify-between  w-full min-w my-2 border-r-8  border-transparent  hover:border-[#6DCDCB8C] active:border-dtech-dark-yellow active:bg-[#FCF9F9] ${
                     hideResultCard
                         ? " shadow-underline"
                         : "border-gray-100 shadow-search-card hover:shadow-search-card-hover"
@@ -129,9 +128,9 @@ const ResultCard = ({
 
                 {pageName === "workspace" && (
                     <div
-                        className={` bg-dtech-new-main-light 
+                        className={` bg-dtech-main-dark
                         ${
-                            cardHover && "bg-[#6DCDCB]"
+                            cardHover && "bg-[#6DCDCB8C] "
                         }  text-white hidden flex-col justify-center items-center w-[24px] md:flex  ${
                             label === "datasets" ? "rounded-r-lg" : ""
                         }`}

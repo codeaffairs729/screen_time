@@ -6,6 +6,8 @@ import {  useState } from "react";
 import { BsChevronDown, BsEyeFill, BsHeartFill } from "react-icons/bs";
 import DataproviderStats from "pages/search/organisation/components/data_provider_stats";
 import { useRouter } from "next/router";
+// Import the routeChange utility
+
 
 
 interface DataProviderCardProps {
@@ -90,7 +92,7 @@ const FrontCard = ({ data, isMobile,imgCss="" }: { data: Data; isMobile: boolean
         .map((item) => item[0].toUpperCase())
         .join("");
     return (
-        <div className="p-2 flex flex-col justify-center items-center overflow-hidden h-[77.94px] md:h-40 w-full">
+        <div className="p-2 flex flex-col justify-center items-center overflow-hidden h-[77.94px] md:h-40 w-full cursor-auto">
             {imgUrl ? (
                 <img
                     src={imgUrl}
@@ -98,7 +100,7 @@ const FrontCard = ({ data, isMobile,imgCss="" }: { data: Data; isMobile: boolean
                     className={`${imgCss} `}
                 />
             ) : (
-                <div className="p-2 flex flex-col justify-center items-center overflow-hidden h-[77.94px] md:h-40 w-full font-extrabold text-[#EBEBEB]">
+                <div className="p-2 flex flex-col justify-center items-center overflow-hidden h-[77.94px] md:h-40 w-full font-extrabold text-[#EBEBEB] ">
                     <div>{dummyImg}</div>
                     </div>
             )}
