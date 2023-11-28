@@ -1,7 +1,7 @@
 
-export default async function relatedByDescription(req: any, res: any) {
-    const LINKEDIN_CLIENT_SECRET ="7785p7da8wq52x";
-    const LINKEDIN_CLIENT_ID = "ktXRwbugXXz4GqHh";
+export default async function linkedinLogin(req: any, res: any) {
+    const LINKEDIN_CLIENT_ID = "7785p7da8wq52x";
+    const LINKEDIN_CLIENT_SECRET ="ktXRwbugXXz4GqHh";
 
     try {
         const { code,redirect_uri } = req.query;
