@@ -6,6 +6,7 @@ import "firebase/compat/auth";
 import "firebase/compat/firestore";
 import ReactTooltip from "react-tooltip";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 const firebaseConfig: any = {
     apiKey:
@@ -27,7 +28,8 @@ const firebaseConfig: any = {
         process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID || "G-HYVJP2M340",
 };
 
-const SocialLogin = ({ vm }: { vm: any }) => {
+const SocialSignup = () => {
+    const vm = SigninVM();
     const [socialHover, setSocialHover] = useState({
         google: false,
         microsoft: false,
@@ -49,7 +51,7 @@ const SocialLogin = ({ vm }: { vm: any }) => {
         LINKEDIN_CALLBACK_URL
     )}&scope=openid%20profile%20email`;
 
-
+    console.log("LINKEDIN_CALLBACK_URL: ", LINKEDIN_CALLBACK_URL);
 
     const handleLinkedInCallback = async () => {
         const queryString = window.location.search;
@@ -74,8 +76,8 @@ const SocialLogin = ({ vm }: { vm: any }) => {
         handleLinkedInCallback();
     }, []);
 
-
     firebase.initializeApp(firebaseConfig);
+
     const provider = new firebase.auth.OAuthProvider("microsoft.com");
     provider.setCustomParameters({
         prompt: "select_account",
@@ -145,7 +147,7 @@ const SocialLogin = ({ vm }: { vm: any }) => {
                 <Tooltip id="dtechtive-Google-btn-tooltip" title={"Google"} />
             </div>
             <div
-                className=" mx-4 w-10 flex justify-center items-center"
+                className=" mx-4  w-10 flex justify-center items-center"
                 data-tip
                 data-for="dtechtive-Microsoft-btn-tooltip"
             >
@@ -190,7 +192,7 @@ const SocialLogin = ({ vm }: { vm: any }) => {
                 }
             >
                 <a href={linkedinOAuthURL}>
-                {!socialHover.linkedIn ? (
+                    {!socialHover.linkedIn ? (
                         <img
                             src="/images/icons/LinkedIn.svg"
                             width={35}
@@ -209,7 +211,7 @@ const SocialLogin = ({ vm }: { vm: any }) => {
         </div>
     );
 };
-export default SocialLogin;
+export default SocialSignup;
 
 const Tooltip = ({ id, title }: { id: string; title: string }) => {
     return (

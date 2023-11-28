@@ -1,13 +1,11 @@
-import { useContext,useState } from "react";
+import { useContext, useState } from "react";
 import Head from "./head";
 import dynamic from "next/dynamic";
 import { Tab } from "@headlessui/react";
 import { DateTime } from "luxon";
 import Loader from "components/UI/loader";
 import Table from "../../table";
-import {
-    getTableData,
-} from "../../insights_section/download_section/download_metric.vm";
+import { getTableData } from "../../insights_section/download_section/download_metric.vm";
 import { SearchTermType } from "../../insights_section/search_term_section/search_term.vm";
 import TagsCloud from "../../insights_section/search_term_section/tagCloud";
 import { getAge } from "pages/workspace/notification.vm";
@@ -24,6 +22,7 @@ import { sortAndAggregate } from "../../insights_section/use_case_section/sectio
 import RichTextEditor from "./components/editor";
 import PreviewReport from "./components/new_preview";
 import MapChartComponent from "./components/map_chart";
+import img from "public/images/cookie.svg";
 
 const DownloadReport = dynamic(() => import("./downloadReport"), {
     ssr: false,
@@ -51,10 +50,7 @@ const PIE_HEADER = ["name", "value"];
 const LOCATION_HEADERS = ["Region", "Count", "Last used"];
 const SEARCH_TERM_HEADERS = ["Search term", "Count", "Last used"];
 
-
-function calculateRatingPercentages(
-    ratings: RatingObject[]
-): RatingObject[] {
+function calculateRatingPercentages(ratings: RatingObject[]): RatingObject[] {
     let totalSum = 0;
     let totalCount = 0;
 
@@ -69,10 +65,9 @@ function calculateRatingPercentages(
         const percentage = (count / totalCount) * 100;
         return { [ratingValue]: percentage };
     });
+
     return ratingPercentages;
 }
-
-
 
 const Report = ({
     isReportGenerated,
@@ -99,9 +94,6 @@ const Report = ({
 
     const items = qualityMetrics?.dataFileQuality;
     //------------------------------------------------------------------
-
-
-
 
     const transformedData = searchTerms.map((item: any) => {
         return {
@@ -188,6 +180,48 @@ const Report = ({
                 </div>
             )}
             <div className=" h-[56rem] overflow-y-scroll no-scrollbar whitespace-nowrap absolute">
+                <div
+                    id="newMetrics"
+                    className="flex fixed justify-center items-center flex-col z-[-10] w-full my-10"
+                >
+                    {/* <BarChart
+                        data={[
+                            {
+                                "0": 12.5,
+                            },
+
+                            {
+                                "1": 0,
+                            },
+
+                            {
+                                "2": 0,
+                            },
+
+                            {
+                                "3": 25,
+                            },
+
+                            {
+                                "4": 37.5,
+                            },
+
+                            {
+                                "5": 25,
+                            },
+                        ]}
+                        isMobile={isMobile}
+                        titles={titles}
+                        divID="newMetricsDiv"
+                    /> */}
+                    <BarChart
+                        data={graphData}
+                        isMobile={isMobile}
+                        titles={byTimetitles}
+                        divID="newMetricsDiv"
+                    />
+                </div>
+
                 {items && (
                     <div
                         className="flex fixed justify-center items-center flex-col z-[-10] w-full"
@@ -235,11 +269,42 @@ const Report = ({
                             titles={titles}
                             divID ="qualityMetricsDiv"
                         />
+
+                        {/* <BarChart
+                            data={[
+                                {
+                                    "0": 12.5,
+                                },
+
+                                {
+                                    "1": 0,
+                                },
+
+                                {
+                                    "2": 0,
+                                },
+
+                                {
+                                    "3": 25,
+                                },
+
+                                {
+                                    "4": 37.5,
+                                },
+
+                                {
+                                    "5": 25,
+                                },
+                            ]}
+                            isMobile={isMobile}
+                            titles={titles}
+                            divID="qualityMetricsDIV"
+                        /> */}
                     </div>
                 )}
                 {searchTerms.length > 0 && (
                     <div
-                        className="flex fixed  justify-center items-center flex-col z-[-10] w-full "
+                        className="flex fixed justify-center items-center flex-col z-[-10] w-full "
                         id="searchTerms"
                     >
                         <TagCloud2 data={transformedData} />
@@ -287,7 +352,7 @@ const Report = ({
                             data={graphData}
                             isMobile={isMobile}
                             titles={byTimetitles}
-                            divID= "downloadByTimeID"
+                            divID="downloadByTimeID"
                         />
                         <Table
                             tableHeaders={TIME_HEADERS}
@@ -365,7 +430,10 @@ const Report = ({
                     <Tab.Panels>
                         <Tab.Panel>
                             {/* <Preview loading={loading} isReportGenerated={isReportGenerated} /> */}
-                            <PreviewReport loading={loading} isReportGenerated={isReportGenerated} />
+                            <PreviewReport
+                                loading={loading}
+                                isReportGenerated={isReportGenerated}
+                            />
                         </Tab.Panel>
                         <Tab.Panel>
                             {/* <EditReport /> */}
@@ -414,7 +482,10 @@ const Report = ({
                                 //     loading={loading}
                                 //     isReportGenerated={isReportGenerated}
                                 // />
-                                <PreviewReport loading={loading} isReportGenerated={isReportGenerated} />
+                                <PreviewReport
+                                    loading={loading}
+                                    isReportGenerated={isReportGenerated}
+                                />
                             ) : (
                                 <EditReport />
                             )}
@@ -422,7 +493,7 @@ const Report = ({
                     </Tab.Panels>
                 </Tab.Group>
             </div>
-            {isReportGenerated && (
+            {isReportGenerated && !edit && (
                 <div className=" mt-4">
                     <DownloadReport />
                 </div>

@@ -11,7 +11,7 @@ const HeaderPreview = ({ header }: { header: any }) => {
     )} ${currentDate.getFullYear()}`;
 
     return (
-        <div className=" border-2 border-dtech-light-teal border-opacity-30 p-4">
+        <div className=" border-2 border-dtech-light-teal border-opacity-30 p-4 bg-white">
             <div
                 id="preview_logo"
                 className="flex flex-col justify-center items-center "

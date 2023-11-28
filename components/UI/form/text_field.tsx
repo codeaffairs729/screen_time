@@ -87,7 +87,7 @@ const TextField = ({
                 </div>
             )}
             {!errorPosition && hasError && isPassword && (
-                <div className="text-xs sm:bg-[#EBEBEB] bg-[white] rounded-[10px] text-black-800 ml-1 mt-1 p-1">
+                <div className="text-xs sm:bg-[#EBEBEB] bg-[white] rounded-[10px] text-black-800 ml-1 mt-2 p-1">
                     {errorArray.map((item, index) => {
                         if (
                             error["message"]

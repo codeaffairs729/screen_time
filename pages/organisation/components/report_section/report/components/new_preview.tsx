@@ -77,40 +77,59 @@ const PreviewReport = ({
         return splittedArray.slice(startIndex, endIndex);
     });
 
+    const gradientStyle = {
+        background: 'radial-gradient(2196.08% 210.97% at 144.72% -36.42%, rgba(255, 255, 255, 0.75) 0%, rgba(206, 255, 254, 0.28) 27.7%, rgba(206, 176, 208, 0.20) 84.03%)',
+        // Add other styles as needed
+      };
     const displayResult = result.map((subarray) => subarray.join(""));
 
-
-
-
-    console.log()
+    console.log();
     return (
-        <div
-            className="shadow-paper-shadow mt-4 h-[656px] bg-white border-none p-4 overflow-y-scroll"
-        >
+        <div className="shadow-paper-shadow mt-4 h-[656px] border-none overflow-y-scroll !bg-[#EBEBEB]">
             {!loading && isReportGenerated && (
-                <div className="editor_preview " ref={(ref) => setDownloadRef(ref)}>
-                    <div
-                        id={"header"}
-                        className=" section-preview flex flex-col justify-center items-center"
-                    >
-                        <div className="border p-1 my-20 mx-12  w-[28rem]">
-                            <HeaderPreview header = {header} />
+                <div
+                    className="editor_preview"
+                    ref={(ref) => setDownloadRef(ref)}
+                >
+                    <div className="flex relative justify-end" style={gradientStyle}>
+                        <div
+                            id={"header"}
+                            className="w-[90%] section-preview flex flex-col justify-center items-center bg-[url('/images/GroupPreviewBackground.svg')] bg-cover bg-no-repeat bg-top"
+                        >
+                            <div className="border p-1 mr-2 mt-40 w-[28rem]">
+                                <HeaderPreview header={header} />
+                            </div>
+                            <div className="border p-1 mt-16 mb-36 mr-2 w-[28rem] ">
+                                <Summary
+                                    organisation={organisation}
+                                    qualityMetrics={qualityMetrics}
+                                />
+                            </div>
                         </div>
-                        <div className="border p-1 my-20 mx-12 w-[28rem] ">
-                            <Summary  organisation={organisation} qualityMetrics={qualityMetrics}/>
+                        <div className=" left-0 absolute h-full sm:flex hidden w-fit ">
+                            <div className=" bg-dtech-new-main-light w-10 mr-2"></div>
+                            <div className=" bg-[#6DCDCB] w-6 ml-0 fixed md:relative"></div>
+                            <div className="bg-[#EBEBEB] w-4 ml-2 fixed md:relative"></div>
                         </div>
                     </div>
-
-                    {displayResult?.map((result, index) => (
-                        <div
-                            key={index}
-                            id={findID(result)}
-                            className="section-preview mx-5 my-5"
-                            dangerouslySetInnerHTML={{
-                                __html: result,
-                            }}
-                        />
-                    ))}
+                    {displayResult?.map((result, index) => {
+                        return (
+                            <div
+                                key={index}
+                                className="section-preview mx-7 my-8 border-[0.5px] border-grey rounded-[5px] bg-white"
+                            >
+                                <div
+                                    key={index}
+                                    id={findID(result)}
+                                    className="section-preview mx-5 my-5"
+                                    dangerouslySetInnerHTML={{
+                                        __html: result,
+                                    }}
+                                />
+                                <div className="text-center text-black">Page {index+1}/{displayResult.length}</div>
+                            </div>
+                        );
+                    })}
                 </div>
             )}
             {/* <div
