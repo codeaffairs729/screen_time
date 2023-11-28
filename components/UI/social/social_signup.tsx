@@ -105,7 +105,7 @@ const SocialSignup = () => {
         <div className="flex flex-row mt-4 justify-center items-center">
             <div data-tip data-for="dtechtive-Google-btn-tooltip">
                 <div
-                    className=" mx-4 cursor-pointer"
+                    className="mx-4 cursor-pointer"
                     onMouseEnter={() =>
                         setSocialHover({ ...socialHover, google: true })
                     }
@@ -147,42 +147,38 @@ const SocialSignup = () => {
                 </div>
                 <Tooltip id="dtechtive-Google-btn-tooltip" title={"Google"} />
             </div>
+
             <div
-                className=" mx-4  w-10 flex justify-center items-center"
+                className="mx-4 w-10"
                 data-tip
                 data-for="dtechtive-Microsoft-btn-tooltip"
+                onMouseEnter={() =>
+                    setSocialHover({ ...socialHover, microsoft: true })
+                }
+                onMouseLeave={() =>
+                    setSocialHover({ ...socialHover, microsoft: false })
+                }
             >
-                <div
-                    onMouseEnter={() =>
-                        setSocialHover({ ...socialHover, microsoft: true })
-                    }
-                    onMouseLeave={() =>
-                        setSocialHover({ ...socialHover, microsoft: false })
-                    }
-                >
-                    {!socialHover.microsoft ? (
-                        <img
-                            src="/images/icons/Microsoft.svg"
-                            width={35}
-                            className=" cursor-pointer"
-                            onClick={signInWithMicrosoft}
-                        ></img>
-                    ) : (
-                        <img
-                            src="/images/logo/microsoft-logo.png"
-                            width={25}
-                            className=" cursor-pointer"
-                            onClick={signInWithMicrosoft}
-                        ></img>
-                    )}
-                </div>
-                <Tooltip
-                    id="dtechtive-Microsoft-btn-tooltip"
-                    title={"Microsoft"}
-                />
+                {!socialHover.microsoft ? (
+                    <img
+                        src="/images/icons/Microsoft.svg"
+                        width={35}
+                        className=" cursor-pointer"
+                        onClick={signInWithMicrosoft}
+                    ></img>
+                ) : (
+                    <img
+                        src="/images/logo/microsoft-logo.png"
+                        width={34.1}
+                        className=" cursor-pointer"
+                        onClick={signInWithMicrosoft}
+                    ></img>
+                )}
             </div>
+            <Tooltip id="dtechtive-Microsoft-btn-tooltip" title={"Microsoft"} />
+
             <div
-                className=" mx-4 "
+                className="mx-4"
                 data-tip
                 data-for="dtechtive-linkedIn-btn-tooltip"
                 onMouseEnter={() =>
