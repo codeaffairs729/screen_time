@@ -65,12 +65,16 @@ const ResultCard = ({
         resultRecord.recordType ? resultRecord.recordType : "datasets"
     }/${resultRecord.id}`;
 
+    const handleClick = () => {
+        if (pageName === "workspace") {
+            setCardClicked(!cardClicked);
+        }
+    };
+
     return (
         <div
-            onMouseUp={() => pageName === "workspace" && setCardClicked(false)}
-            onMouseDown={(e) =>
-                pageName === "workspace" && setCardClicked(true)
-            }
+            onMouseUp={handleClick}
+            onMouseDown={handleClick}
             onMouseEnter={(e) => pageName === "workspace" && setCardHover(true)}
             onMouseLeave={(e) =>
                 pageName === "workspace" && setCardHover(false)
@@ -92,6 +96,10 @@ const ResultCard = ({
                     hideResultCard
                         ? " shadow-underline"
                         : "border-gray-100 shadow-search-card hover:shadow-search-card-hover"
+                } ${
+                    cardClicked
+                        ? "active:border-dtech-dark-yellow active:bg-dtech-dark-yellow"
+                        : "active:border-dtech-main-dark active:bg-[#FCF9F9]"
                 }`}
             >
                 <div className="flex flex-col md:flex-row justify-between w-full">
@@ -128,9 +136,9 @@ const ResultCard = ({
 
                 {pageName === "workspace" && (
                     <div
-                        className={` bg-dtech-main-dark
-                        ${
-                            cardHover && "bg-[#6DCDCB8C] "
+                        className={` bg-dtech-new-main-light 
+                        ${cardHover && "bg-[#6DCDCB]"} ${
+                            cardClicked && "bg-[#FDD522]"
                         }  text-white hidden flex-col justify-center items-center w-[24px] md:flex  ${
                             label === "datasets" ? "rounded-r-lg" : ""
                         }`}

@@ -53,7 +53,7 @@ const MembersTable = ({ className = "" }: { className?: string }) => {
                                     return (
                                         <tr
                                             key={user.email}
-                                            className="border-b border-gray-200 bg-[#FEFEFE] hover:bg-dtech-main-light"
+                                            className="border-b border-gray-200 bg-[#FEFEFE] hover:bg-dtech-light-grey text-left"
                                         >
                                             <TD>{user.name}</TD>
                                             <TD>{user.email}</TD>
@@ -139,10 +139,7 @@ const TD = ({
 }) => {
     return (
         <td
-            className={clsx(
-                "py-3 px-6 text-center whitespace-nowrap",
-                className
-            )}
+            className={clsx("py-3 px-6 text-left whitespace-nowrap", className)}
         >
             {children}
         </td>
