@@ -5,8 +5,7 @@ import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
 import ReactTooltip from "react-tooltip";
-import { useState } from "react";
-import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 const firebaseConfig: any = {
     apiKey:
@@ -28,8 +27,7 @@ const firebaseConfig: any = {
         process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID || "G-HYVJP2M340",
 };
 
-const SocialLogin = ({vm}:{vm:any}) => {
-    // const vm = SigninVM();
+const SocialLogin = ({ vm }: { vm: any }) => {
     const [socialHover, setSocialHover] = useState({
         google: false,
         microsoft: false,
@@ -37,11 +35,47 @@ const SocialLogin = ({vm}:{vm:any}) => {
     });
 
     const protocol = window.location.protocol || "http:";
-    const host = window.location.hostname || "localhost:3000";
+    const host =
+        window.location.hostname !== "localhost"
+            ? window.location.hostname
+            : "localhost:3000";
     const fullUrl = `${protocol}//${host}`;
 
-    firebase.initializeApp(firebaseConfig);
+    const LINKEDIN_CLIENT_SECRET =
+        process.env.NEXT_PUBLIC_LINKEDIN_CLIENT_SECRET_ID || "";
+    const LINKEDIN_CLIENT_ID = process.env.NEXT_PUBLIC_LINKEDIN_CLIENT_ID || "";
+    const LINKEDIN_CALLBACK_URL = `${fullUrl}/login`;
+    const linkedinOAuthURL = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${LINKEDIN_CLIENT_ID}&redirect_uri=${encodeURIComponent(
+        LINKEDIN_CALLBACK_URL
+    )}&scope=openid%20profile%20email`;
 
+
+
+    const handleLinkedInCallback = async () => {
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const code = urlParams.get("code");
+        if (code) {
+            fetch(
+                `/api/linkedin-login?code=${code}&redirect_uri=${LINKEDIN_CALLBACK_URL}`
+            )
+                .then((res: any) => res.json())
+                .then((data: any) => {
+                    console.log("data :", data);
+                    vm.performSsoSignIn({
+                        provider: "linkedin",
+                        access_token: data?.accessToken,
+                    });
+                });
+        }
+    };
+
+    useEffect(() => {
+        handleLinkedInCallback();
+    }, []);
+
+
+    firebase.initializeApp(firebaseConfig);
     const provider = new firebase.auth.OAuthProvider("microsoft.com");
     provider.setCustomParameters({
         prompt: "select_account",
@@ -70,8 +104,12 @@ const SocialLogin = ({vm}:{vm:any}) => {
             <div data-tip data-for="dtechtive-Google-btn-tooltip">
                 <div
                     className=" mx-4 cursor-pointer"
-                    onMouseEnter={() => setSocialHover({...socialHover, google: true})}
-                    onMouseLeave={() => setSocialHover({...socialHover, google: false})}
+                    onMouseEnter={() =>
+                        setSocialHover({ ...socialHover, google: true })
+                    }
+                    onMouseLeave={() =>
+                        setSocialHover({ ...socialHover, google: false })
+                    }
                 >
                     <LoginSocialGoogle
                         client_id={
@@ -112,8 +150,12 @@ const SocialLogin = ({vm}:{vm:any}) => {
                 data-for="dtechtive-Microsoft-btn-tooltip"
             >
                 <div
-                    onMouseEnter={() => setSocialHover({...socialHover, microsoft: true})}
-                    onMouseLeave={() => setSocialHover({...socialHover, microsoft: false})}
+                    onMouseEnter={() =>
+                        setSocialHover({ ...socialHover, microsoft: true })
+                    }
+                    onMouseLeave={() =>
+                        setSocialHover({ ...socialHover, microsoft: false })
+                    }
                 >
                     {!socialHover.microsoft ? (
                         <img
@@ -124,9 +166,8 @@ const SocialLogin = ({vm}:{vm:any}) => {
                         ></img>
                     ) : (
                         <img
-                            src="/images/logo/microsoft-icon.svg"
-                            width={30}
-                            height={35}
+                            src="/images/logo/microsoft-logo.png"
+                            width={25}
                             className=" cursor-pointer"
                             onClick={signInWithMicrosoft}
                         ></img>
@@ -141,17 +182,36 @@ const SocialLogin = ({vm}:{vm:any}) => {
                 className=" mx-4 "
                 data-tip
                 data-for="dtechtive-linkedIn-btn-tooltip"
-                onMouseEnter={() => setSocialHover({...socialHover, linkedIn: true})}
-                onMouseLeave={() => setSocialHover({...socialHover, linkedIn: false})}
+                onMouseEnter={() =>
+                    setSocialHover({ ...socialHover, linkedIn: true })
+                }
+                onMouseLeave={() =>
+                    setSocialHover({ ...socialHover, linkedIn: false })
+                }
             >
-                <LoginSocialLinkedin
+                <a href={linkedinOAuthURL}>
+                {!socialHover.linkedIn ? (
+                        <img
+                            src="/images/icons/LinkedIn.svg"
+                            width={35}
+                            className=" cursor-pointer"
+                        ></img>
+                    ) : (
+                        <img
+                            src="/images/logo/linkedin-logo.svg"
+                            width={35}
+                            className=" cursor-pointer"
+                        ></img>
+                    )}
+                </a>
+                {/* <LoginSocialLinkedin
                     client_id={
                         process.env.NEXT_PUBLIC_LINKEDIN_CLIENT_ID ||
-                        "7785p7da8wq52x"
+                        "778pqcso7m5yq1"
                     }
                     client_secret={
                         process.env.NEXT_PUBLIC_LINKEDIN_CLIENT_SECRET_ID ||
-                        "ktXRwbugXXz4GqHh"
+                        "BAGH3KkR3NLPp28r"
                     }
                     redirect_uri={`${fullUrl}/login`}
                     scope="openid profile email"
@@ -181,7 +241,7 @@ const SocialLogin = ({vm}:{vm:any}) => {
                             className=" cursor-pointer"
                         ></img>
                     )}
-                </LoginSocialLinkedin>
+                </LoginSocialLinkedin> */}
             </div>
             <Tooltip id="dtechtive-linkedIn-btn-tooltip" title={"LinkedIn"} />
         </div>
