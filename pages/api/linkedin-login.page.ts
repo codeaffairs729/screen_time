@@ -1,9 +1,7 @@
-import Http from "common/http";
 
 export default async function relatedByDescription(req: any, res: any) {
-    const LINKEDIN_CLIENT_SECRET =
-        process.env.NEXT_PUBLIC_LINKEDIN_CLIENT_SECRET_ID || "";
-    const LINKEDIN_CLIENT_ID = process.env.NEXT_PUBLIC_LINKEDIN_CLIENT_ID || "";
+    const LINKEDIN_CLIENT_SECRET ="7785p7da8wq52x";
+    const LINKEDIN_CLIENT_ID = "ktXRwbugXXz4GqHh";
 
     try {
         const { code,redirect_uri } = req.query;

@@ -204,44 +204,6 @@ const SocialLogin = ({ vm }: { vm: any }) => {
                         ></img>
                     )}
                 </a>
-                {/* <LoginSocialLinkedin
-                    client_id={
-                        process.env.NEXT_PUBLIC_LINKEDIN_CLIENT_ID ||
-                        "778pqcso7m5yq1"
-                    }
-                    client_secret={
-                        process.env.NEXT_PUBLIC_LINKEDIN_CLIENT_SECRET_ID ||
-                        "BAGH3KkR3NLPp28r"
-                    }
-                    redirect_uri={`${fullUrl}/login`}
-                    scope="openid profile email"
-                    onResolve={({ provider, data }) => {
-                        console.log({ provider }, { data });
-                        if (data) {
-                            vm.performSsoSignIn({
-                                provider: provider,
-                                access_token: data["access_token"],
-                            });
-                        }
-                    }}
-                    onReject={(err) => {
-                        console.log(err);
-                    }}
-                >
-                    {!socialHover.linkedIn ? (
-                        <img
-                            src="/images/icons/LinkedIn.svg"
-                            width={35}
-                            className=" cursor-pointer"
-                        ></img>
-                    ) : (
-                        <img
-                            src="/images/logo/linkedin-logo.svg"
-                            width={35}
-                            className=" cursor-pointer"
-                        ></img>
-                    )}
-                </LoginSocialLinkedin> */}
             </div>
             <Tooltip id="dtechtive-linkedIn-btn-tooltip" title={"LinkedIn"} />
         </div>
