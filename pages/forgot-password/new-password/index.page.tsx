@@ -52,7 +52,7 @@ const ForgotPasswordPage = () => {
                     <div className="relative">
                         <TextField
                             className=" -mt-6 sm:-mt-8 rounded-xl !bg-transparent "
-                            textfieldClassName="!bg-white"
+                            textfieldClassName="!bg-white focus:!border-dtech-light-teal"
                             formControl={{
                                 control: vm.form.control,
                                 name: "password",
@@ -128,7 +128,7 @@ const ForgotPasswordPage = () => {
                     <div className="relative">
                         <TextField
                             className=" -mt-6 sm:-mt-8 rounded-xl !bg-transparent "
-                            textfieldClassName="!bg-white"
+                            textfieldClassName="!bg-white focus:!border-dtech-light-teal"
                             formControl={{
                                 control: vm.form.control,
                                 name: "confirm_password",
