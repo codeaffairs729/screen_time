@@ -204,6 +204,7 @@ class User {
             throw Error("User doesnt have an organisation");
         }
         user.organisations[0] = { ...org, ...orgDetails };
+        user.logo_url=orgDetails.logo_url
         return user;
     }
 }
