@@ -17,6 +17,7 @@ import Popup from "components/UI/Popop";
 import Cookies from "js-cookie";
 // import SocialLogin from "components/UI/social/social_login";
 import dynamic from "next/dynamic";
+import NewLoader from "components/cookies/newloader";
 
 const SocialLogin = dynamic(() => import("components/UI/social/social_login"), {
     ssr: false,
@@ -43,6 +44,7 @@ const SigninPage = () => {
     return (
         <div className="relative">
             {user && <Popup duration={2000} />}
+            {vm.isSsoSigningIn && <NewLoader duration={2000} />}
             <NewGradientUI>
                 <div className="grow flex flex-col items-left max-w-[30%px] justify-evenly sm:justify-center  sm:mx-[18%] sm:my-0 mx-[5%] my-[5%] ">
                     <div className="text-center">

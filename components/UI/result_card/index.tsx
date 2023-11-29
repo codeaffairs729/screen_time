@@ -97,9 +97,9 @@ const ResultCard = ({
                         ? " shadow-underline"
                         : "border-gray-100 shadow-search-card hover:shadow-search-card-hover"
                 } ${
-                    cardClicked
-                        ? "active:border-dtech-dark-yellow active:bg-dtech-dark-yellow"
-                        : "active:border-dtech-main-dark active:bg-[#FCF9F9]"
+                    cardClicked &&
+                    "active:border-dtech-dark-yellow active:bg-dtech-dark-yellow"
+                    // : "active:border-dtech-main-dark active:bg-[#FCF9F9]"
                 }`}
             >
                 <div className="flex flex-col md:flex-row justify-between w-full">
@@ -133,10 +133,9 @@ const ResultCard = ({
                         </div>
                     )}
                 </div>
-
                 {pageName === "workspace" && (
                     <div
-                        className={` bg-dtech-new-main-light 
+                        className={`
                         ${cardHover && "bg-[#6DCDCB]"} ${
                             cardClicked && "bg-[#FDD522]"
                         }  text-white hidden flex-col justify-center items-center w-[24px] md:flex  ${

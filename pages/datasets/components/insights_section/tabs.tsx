@@ -25,7 +25,7 @@ const DatasetTabHeaders = ({
         <div className="">
             <Tab.List className={"flex justify-around space-x-10 items-center "}>
                 <div>
-                    <div className=" flex flex-row items-center">
+                    <div className="flex flex-row items-center">
 
                         <HeadTag
                             isSelected={selectedInsightTab == 0}
@@ -75,10 +75,10 @@ const HeadTag = ({
     return (
         <Tab onClick={() => setSelected(label)}>
             <div
-                className={`relative inline-block text-left select-none outline-none ${isSelected && "hidden"
+                className={`relative inline-block text-left select-none outline-none hover:top-[-2px] ${isSelected && "hidden"
                     }`}
             >
-                <span className="text-[#727272] font-semibold text-xl hover:underline underline-offset-4">
+                <span className=" text-[#727272] text-sm font-semibold sm:text-xl hover:!border-[#727272] pb-2 hover:border-b-4 ">
                     {labelToShow}
                 </span>
             </div>
