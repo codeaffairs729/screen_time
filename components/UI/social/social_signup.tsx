@@ -169,8 +169,8 @@ const SocialSignup = () => {
                 ) : (
                     <img
                         src="/images/logo/microsoft-logo.png"
-                        width={34.1}
-                        className=" cursor-pointer"
+                        width={35}
+                        className="p-1 cursor-pointer"
                         onClick={signInWithMicrosoft}
                     ></img>
                 )}
@@ -189,13 +189,13 @@ const SocialSignup = () => {
                 }
             >
                 {/* <a href={linkedinOAuthURL}> */}
-                    {/* {!socialHover.linkedIn ? ( */}
-                    <img
-                            src="/images/icons/LinkedIn.svg"
-                            width={35}
-                            className=" opacity-50"
-                        ></img>
-                    {/* ) : (
+                {/* {!socialHover.linkedIn ? ( */}
+                <img
+                    src="/images/icons/LinkedIn.svg"
+                    width={35}
+                    className=" opacity-50"
+                ></img>
+                {/* ) : (
                         <img
                             src="/images/logo/linkedin-logo.svg"
                             width={35}

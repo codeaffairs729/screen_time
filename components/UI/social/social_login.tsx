@@ -157,14 +157,14 @@ const SocialLogin = ({ vm }: { vm: any }) => {
                     <img
                         src="/images/icons/Microsoft.svg"
                         width={35}
-                        className=" cursor-pointer"
+                        className="cursor-pointer"
                         onClick={signInWithMicrosoft}
                     ></img>
                 ) : (
                     <img
                         src="/images/logo/microsoft-logo.png"
-                        width={34.1}
-                        className=" cursor-pointer"
+                        width={35}
+                        className="p-1 cursor-pointer"
                         onClick={signInWithMicrosoft}
                     ></img>
                 )}
