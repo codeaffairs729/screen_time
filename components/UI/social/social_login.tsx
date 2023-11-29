@@ -182,23 +182,23 @@ const SocialLogin = ({ vm }: { vm: any }) => {
                     setSocialHover({ ...socialHover, linkedIn: false })
                 }
             >
-                <a href={linkedinOAuthURL}>
-                    {!socialHover.linkedIn ? (
+                {/* <a href={linkedinOAuthURL}> */}
+                    {/* {!socialHover.linkedIn ? ( */}
                         <img
                             src="/images/icons/LinkedIn.svg"
                             width={35}
-                            className=" cursor-pointer"
+                            className=" opacity-50"
                         ></img>
-                    ) : (
+                    {/* ) : (
                         <img
                             src="/images/logo/linkedin-logo.svg"
                             width={35}
                             className=" cursor-pointer"
                         ></img>
-                    )}
-                </a>
+                    )} */}
+                {/* </a> */}
             </div>
-            <Tooltip id="dtechtive-linkedIn-btn-tooltip" title={"LinkedIn"} />
+            {/* <Tooltip id="dtechtive-linkedIn-btn-tooltip" title={"LinkedIn"} /> */}
         </div>
     );
 };
