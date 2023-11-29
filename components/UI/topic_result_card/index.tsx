@@ -58,9 +58,8 @@ const TopicCard = ({ data, isMobile, imgCss = "" }: TopicProps) => {
             </div>
 
             <div
-                 className={`hover:bg-dtech-light-teal hover:bg-opacity-[55%] hover:rounded-b-xl active:text-black active:border-b-2 active:border-black active:bg-dtech-dark-yellow active:rounded-b-xl active:bg-opacity-[80%] text-dtech-new-main-light   break-word overflow-hidden flex flex-col items-center justify-center py-4 md:py-6  relative  cursor-pointer ${
-                    !showProvider &&
-                    " border-[#EBEBEB]"
+                className={`hover:bg-dtech-light-teal hover:bg-opacity-[55%] hover:rounded-b-xl active:text-black active:border-b-2 active:border-black active:bg-dtech-dark-yellow active:rounded-b-xl active:bg-opacity-[80%] text-dtech-new-main-light   break-word overflow-hidden flex flex-col items-center justify-center py-4 md:py-6  relative  cursor-pointer ${
+                    !showProvider && " border-[#EBEBEB]"
                 }`}
                 onClick={() => router.push(href)}
                 onMouseEnter={() => setIsHover(true)}
@@ -104,7 +103,7 @@ const FrontCard = ({
         .map((item) => item[0].toUpperCase())
         .join("");
     return (
-        <div className=" flex flex-col justify-center items-center overflow-hidden h-[77.94px] md:h-full w-full md:min-h-[138px] min-h-[114px] cursor-auto">
+        <div className=" flex flex-col justify-center items-center overflow-hidden h-[77.94px] md:h-40 w-full md:min-h-[138px] min-h-[114px] cursor-auto">
             {imgUrl ? (
                 <img
                     src={imgUrl}
