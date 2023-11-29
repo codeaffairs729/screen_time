@@ -41,36 +41,36 @@ const SocialLogin = ({ vm }: { vm: any }) => {
             : "localhost:3000";
     const fullUrl = `${protocol}//${host}`;
 
-    const LINKEDIN_CLIENT_SECRET =
-        process.env.NEXT_PUBLIC_LINKEDIN_CLIENT_SECRET_ID || "";
-    const LINKEDIN_CLIENT_ID = process.env.NEXT_PUBLIC_LINKEDIN_CLIENT_ID || "";
-    const LINKEDIN_CALLBACK_URL = `${fullUrl}/login`;
-    const linkedinOAuthURL = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${LINKEDIN_CLIENT_ID}&redirect_uri=${encodeURIComponent(
-        LINKEDIN_CALLBACK_URL
-    )}&scope=openid%20profile%20email`;
+    // const LINKEDIN_CLIENT_SECRET =
+    //     process.env.NEXT_PUBLIC_LINKEDIN_CLIENT_SECRET_ID || "";
+    // const LINKEDIN_CLIENT_ID = process.env.NEXT_PUBLIC_LINKEDIN_CLIENT_ID || "";
+    // const LINKEDIN_CALLBACK_URL = `${fullUrl}/login`;
+    // const linkedinOAuthURL = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${LINKEDIN_CLIENT_ID}&redirect_uri=${encodeURIComponent(
+    //     LINKEDIN_CALLBACK_URL
+    // )}&scope=openid%20profile%20email`;
 
-    const handleLinkedInCallback = async () => {
-        const queryString = window.location.search;
-        const urlParams = new URLSearchParams(queryString);
-        const code = urlParams.get("code");
-        if (code) {
-            fetch(
-                `/api/linkedin-login?code=${code}&redirect_uri=${LINKEDIN_CALLBACK_URL}`
-            )
-                .then((res: any) => res.json())
-                .then((data: any) => {
-                    console.log("data :", data);
-                    vm.performSsoSignIn({
-                        provider: "linkedin",
-                        access_token: data?.accessToken,
-                    });
-                });
-        }
-    };
+    // const handleLinkedInCallback = async () => {
+    //     const queryString = window.location.search;
+    //     const urlParams = new URLSearchParams(queryString);
+    //     const code = urlParams.get("code");
+    //     if (code) {
+    //         fetch(
+    //             `/api/linkedin-login?code=${code}&redirect_uri=${LINKEDIN_CALLBACK_URL}`
+    //         )
+    //             .then((res: any) => res.json())
+    //             .then((data: any) => {
+    //                 console.log("data :", data);
+    //                 vm.performSsoSignIn({
+    //                     provider: "linkedin",
+    //                     access_token: data?.accessToken,
+    //                 });
+    //             });
+    //     }
+    // };
 
-    useEffect(() => {
-        handleLinkedInCallback();
-    }, []);
+    // useEffect(() => {
+    //     handleLinkedInCallback();
+    // }, []);
 
     firebase.initializeApp(firebaseConfig);
     const provider = new firebase.auth.OAuthProvider("microsoft.com");
@@ -96,6 +96,25 @@ const SocialLogin = ({ vm }: { vm: any }) => {
             });
     };
 
+    const signInWithGoogle = () => {
+        const googleProvider = new firebase.auth.GoogleAuthProvider();
+        firebase
+            .auth()
+            .signInWithPopup(googleProvider)
+            .then((result: any) => {
+                const credential = result.credential;
+                if (credential) {
+                    vm.performSsoSignIn({
+                        provider: "google",
+                        access_token: credential.accessToken,
+                    });
+                }
+            })
+            .catch((error) => {
+                console.error("Error signing in with Google:", error);
+            });
+    };
+
     return (
         <div className="flex flex-row mt-4 justify-center items-center">
             <div data-tip data-for="dtechtive-Google-btn-tooltip">
@@ -108,7 +127,7 @@ const SocialLogin = ({ vm }: { vm: any }) => {
                         setSocialHover({ ...socialHover, google: false })
                     }
                 >
-                    <LoginSocialGoogle
+                    {/* <LoginSocialGoogle
                         scope="email"
                         client_id={
                             process.env.NEXT_PUBLIC_GOOGLE_CLIENT_KEY as string
@@ -124,21 +143,23 @@ const SocialLogin = ({ vm }: { vm: any }) => {
                         onReject={(err) => {
                             console.log(err);
                         }}
-                    >
+                    > */}
                         {!socialHover.google ? (
                             <img
                                 src="/images/icons/Google.svg"
                                 className="cursor-pointer"
                                 width={35}
+                                onClick={signInWithGoogle}
                             />
                         ) : (
                             <img
                                 src="/images/logo/google-logo.png"
                                 className="cursor-pointer"
                                 width={35}
+                                onClick={signInWithGoogle}
                             />
                         )}
-                    </LoginSocialGoogle>
+                    {/* </LoginSocialGoogle> */}
                 </div>
                 <Tooltip id="dtechtive-Google-btn-tooltip" title={"Google"} />
             </div>
@@ -183,13 +204,13 @@ const SocialLogin = ({ vm }: { vm: any }) => {
                 }
             >
                 {/* <a href={linkedinOAuthURL}> */}
-                    {/* {!socialHover.linkedIn ? ( */}
-                        <img
-                            src="/images/icons/LinkedIn.svg"
-                            width={35}
-                            className=" opacity-50"
-                        ></img>
-                    {/* ) : (
+                {/* {!socialHover.linkedIn ? ( */}
+                <img
+                    src="/images/icons/LinkedIn.svg"
+                    width={35}
+                    className=" opacity-50"
+                ></img>
+                {/* ) : (
                         <img
                             src="/images/logo/linkedin-logo.svg"
                             width={35}

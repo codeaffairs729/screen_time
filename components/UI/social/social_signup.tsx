@@ -101,6 +101,26 @@ const SocialSignup = () => {
             });
     };
 
+    const signInWithGoogle = () => {
+        const googleProvider = new firebase.auth.GoogleAuthProvider();
+        firebase
+            .auth()
+            .signInWithPopup(googleProvider)
+            .then((result: any) => {
+                const credential = result.credential;
+                if (credential) {
+                    vm.performSsoSignIn({
+                        provider: "google",
+                        access_token: credential.accessToken,
+                    });
+                }
+            })
+            .catch((error) => {
+                console.error("Error signing in with Google:", error);
+            });
+    };
+
+
     return (
         <div className="flex flex-row mt-4 justify-center items-center">
             <div data-tip data-for="dtechtive-Google-btn-tooltip">
@@ -113,7 +133,7 @@ const SocialSignup = () => {
                         setSocialHover({ ...socialHover, google: false })
                     }
                 >
-                    <LoginSocialGoogle
+                    {/* <LoginSocialGoogle
                         scope="email"
                         client_id={
                             process.env.NEXT_PUBLIC_GOOGLE_CLIENT_KEY as string
@@ -129,21 +149,23 @@ const SocialSignup = () => {
                         onReject={(err) => {
                             console.log(err);
                         }}
-                    >
+                    > */}
                         {!socialHover.google ? (
                             <img
                                 src="/images/icons/Google.svg"
                                 className="cursor-pointer"
                                 width={35}
+                                onClick={signInWithGoogle}
                             />
                         ) : (
                             <img
                                 src="/images/logo/google-logo.png"
                                 className="cursor-pointer"
                                 width={35}
+                                onClick={signInWithGoogle}
                             />
                         )}
-                    </LoginSocialGoogle>
+                    {/* </LoginSocialGoogle> */}
                 </div>
                 <Tooltip id="dtechtive-Google-btn-tooltip" title={"Google"} />
             </div>
