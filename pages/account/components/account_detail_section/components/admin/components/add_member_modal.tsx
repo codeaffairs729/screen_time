@@ -135,14 +135,15 @@ function AddMemberModal({
                                                             "Permissions is required",
                                                     },
                                                 }}
-                                            /> */}
+                                           /> */}
                                         </FormRow>
                                     </div>
                                 </div>
                                 <div className="text-center mt-2">
                                     <PrimaryBtn
-                                        className="bg-dtech-main-dark w-min whitespace-nowrap  !px-16  !py-2 !rounded-lg !text-sm mx-auto"
+                                        className="bg-dtech-new-main-light active:bg-dtech-dark-yellow hover:bg-dtech-main-dark active:border-b-2 border-black hover:border-0 active:text-black text-white w-min whitespace-nowrap  !px-16  !py-2 !rounded-lg !text-sm mx-auto"
                                         label="Invite"
+                                        isLoading={vm.isInvitingMember}
                                         onClick={vm.handleSubmit(
                                             async (data: any) => {
                                                 await vm.inviteMember({
