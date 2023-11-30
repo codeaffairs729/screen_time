@@ -33,7 +33,7 @@ const DatasetDownloadMetricsHead = () => {
         <Dropdown
             label={
                 <DatasetLabel
-                    labelPrefix="Download metrics"
+                    labelPrefix="Download Metrics"
                     label={selectedLabel}
                 />
             }

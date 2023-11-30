@@ -52,7 +52,7 @@ const Dropdown = ({
             <Menu.Button
                 onClick={onClick}
                 className={clsx(
-                    "cursor-pointer flex items-center ml-6 hover:text-dtech-main-dark select-none outline-none",
+                    "cursor-pointer flex items-center  hover:text-dtech-main-dark select-none outline-none",
                     className
                 )}
             >
@@ -81,7 +81,7 @@ const Dropdown = ({
                     />
                 ) : (
                     <VscTriangleDown
-                        className={`ml-2 text-2xl text-inherit transition-all ${
+                        className={`ml-1 text-2xl text-inherit transition-all ${
                             showMenu && "rotate-180"
                         } ${iconClass}`}
                     />
