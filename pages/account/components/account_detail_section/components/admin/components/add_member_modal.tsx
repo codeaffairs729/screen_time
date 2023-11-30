@@ -148,7 +148,7 @@ function AddMemberModal({
                                             async (data: any) => {
                                                 await vm.inviteMember({
                                                     ...data,
-                                                    roles: data["roles"].includes("organisation_administrator")?[data["roles"],"essential_subscriber"]:[data["roles"]],
+                                                    roles: data["roles"],
                                                 });
                                             }
                                         )}
