@@ -79,6 +79,7 @@ const SocialSignup = () => {
     firebase.initializeApp(firebaseConfig);
 
     const provider = new firebase.auth.OAuthProvider("microsoft.com");
+    provider.addScope("email")
     provider.setCustomParameters({
         prompt: "select_account",
     });
@@ -103,6 +104,7 @@ const SocialSignup = () => {
 
     const signInWithGoogle = () => {
         const googleProvider = new firebase.auth.GoogleAuthProvider();
+        googleProvider.addScope("email")
         firebase
             .auth()
             .signInWithPopup(googleProvider)
@@ -133,7 +135,7 @@ const SocialSignup = () => {
                         setSocialHover({ ...socialHover, google: false })
                     }
                 >
-                    <LoginSocialGoogle
+                    {/* <LoginSocialGoogle
                         scope="email"
                         client_id={
                             process.env.NEXT_PUBLIC_GOOGLE_CLIENT_KEY as string
@@ -149,23 +151,23 @@ const SocialSignup = () => {
                         onReject={(err) => {
                             console.log(err);
                         }}
-                    >
+                    > */}
                         {!socialHover.google ? (
                             <img
                                 src="/images/icons/Google.svg"
                                 className="cursor-pointer"
                                 width={35}
-                                // onClick={signInWithGoogle}
+                                onClick={signInWithGoogle}
                             />
                         ) : (
                             <img
                                 src="/images/logo/google-logo.png"
                                 className="cursor-pointer"
                                 width={35}
-                                // onClick={signInWithGoogle}
+                                onClick={signInWithGoogle}
                             />
                         )}
-                    </LoginSocialGoogle>
+                    {/* </LoginSocialGoogle> */}
                 </div>
                 <Tooltip id="dtechtive-Google-btn-tooltip" title={"Google"} />
             </div>
