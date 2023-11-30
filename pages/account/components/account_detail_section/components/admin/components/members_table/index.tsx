@@ -57,7 +57,7 @@ const MembersTable = ({ className = "" }: { className?: string }) => {
                                         >
                                             <TD>{user.name}</TD>
                                             <TD>{user.email}</TD>
-                                            <TD>{User.getRole(user)?.name}</TD>
+                                            <TD>{User.getRole(user)?.name ==='organisation_member'? "Member":"Admin"}</TD>
                                             <TD className="flex flex-col items-center">
                                                 <TextBtn
                                                     label={`${
