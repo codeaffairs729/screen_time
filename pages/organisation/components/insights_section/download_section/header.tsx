@@ -34,7 +34,7 @@ const DownloadHeader = () => {
             labelClasses="!text-lg"
             menuItems={menuItems}
             label={
-                <Label labelPrefix="Download metrics:" label={selectedLabel} />
+                <Label labelPrefix="Download Metrics" label={selectedLabel} />
             }
             iconClass="hover:text-dtech-dark-teal text-dtech-dark-teal"
             itemsClasses="rounded-[5px] shadow-none hover:!bg-dtech-light-teal hover:text-white"

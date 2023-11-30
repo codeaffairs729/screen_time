@@ -74,7 +74,7 @@ const DatasetDownloadMetricsBody = () => {
                 </Tab.Group>
             </div>
             <div className="sm:flex flex-row hidden my-6 mb-20 relative">
-                <div className=" w-[350px] text-dtech-main-dark absolute z-20">Insights &gt; Download Metrics &gt; {selectedLabel == 0 ? "By Region" : selectedLabel == 1 ? "By Time" : "By Role"}</div>
+                <div className=" w-[350px] text-dtech-main-dark absolute z-20 ml-8">Insights &gt; Download Metrics &gt; {selectedLabel == 0 ? "By Region" : selectedLabel == 1 ? "By Time" : "By Role"}</div>
             </div>
             {selectedLabel == 0 && <ByRegion isMobile={isMobile} />}
             {selectedLabel == 1 && <ByTime isMobile={isMobile} />}

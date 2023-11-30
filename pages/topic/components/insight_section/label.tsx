@@ -8,7 +8,7 @@ const Label = ({
     label: string;
 }) => {
     return (
-        <div className="flex select-none outline-none flex-col text-dtech-dark-teal text-left">
+        <div className="flex select-none outline-none flex-col text-dtech-dark-teal text-left sm:text-xl text-sm">
             <span>{labelPrefix}</span>
         </div>
     );
