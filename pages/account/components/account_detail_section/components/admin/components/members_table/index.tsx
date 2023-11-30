@@ -64,7 +64,7 @@ const MembersTable = ({ className = "" }: { className?: string }) => {
                                                         User.getRole(user)
                                                             ?.name ==
                                                         Role.ORGANIZATION_ADMIN
-                                                            ? "Make member"
+                                                            ? "Remove Admin"
                                                             : "Make admin"
                                                     }`}
                                                     className="text-sm underline text-blue-700"
