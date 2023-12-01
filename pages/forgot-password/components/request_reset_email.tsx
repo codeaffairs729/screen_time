@@ -53,7 +53,7 @@ const RequestResetEmail = () => {
                                 <InfoIcon
                                     tooltipClassName="!bg-dtech-dark-teal"
                                     iconClasses="text-[#333333]  -ml-32 sm:-ml-36"
-                                    title="Enter regular text in email id "
+                                    title="Enter your email ID. If logging in as an organisation admin, enter your organisation email ID "
                                 />
                             </FormRow>
                         </div>

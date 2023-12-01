@@ -144,7 +144,7 @@ const SecondStep = ({
                     <InfoIcon
                         tooltipClassName=" max-w-sm  !bg-dtech-dark-teal"
                         iconClasses="text-[#333333] -mt-[54px] ml-36 sm:ml-[118px]"
-                        title="Select Organisation only if you are signing up as an Admin"
+                        title="Enter the name of your organisation. This is optional if you have selected the Account Type as Individual"
                     />
                 </div>
 
@@ -173,7 +173,7 @@ const SecondStep = ({
                     <InfoIcon
                         tooltipClassName=" max-w-sm  !bg-dtech-dark-teal"
                         iconClasses="text-[#333333] -mt-[56px] ml-14 sm:ml-12"
-                        title="Select role "
+                        title="Select a role that you most identify with "
                     />
                 </div>
 
