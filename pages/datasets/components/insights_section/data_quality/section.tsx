@@ -50,7 +50,6 @@ const DatasetQualityInsightsBody = () => {
         );
     }
     const ratings = selectedLabel == 0 ? dataFileQuality : metaDataQuality;
-    console.log(selectedLabel)
     return (
         <div>
             <div className=" w-[350px] text-dtech-main-dark ml-4 my-8 hidden sm:block">Insights &gt; Dataset Quality &gt; {selectedLabel == 0 ? "Data file" : "Metadata"}</div>
@@ -118,7 +117,6 @@ const FileQuality = ({
     selectedLabel: any;
     quality: any;
 }) => {
-    console.log({ items }, { item })
     return (
         <div className="flex flex-row justify-between items-center mt-10 px-2">
             <div className=" flex flex-row">
@@ -144,14 +142,11 @@ const FileQuality = ({
                     title={items[item].tooltipTitle}
                     showToolTip={false}
                 />
-                {items[item].total === undefined ? (
-                    " "
-                ) : (
-                    <div className=" ml-8 text-[#333333]">
-                        <span className="mx-2">({items[item].total}</span>
-                        <span>{items[item].ratingLabel})</span>
-                    </div>
-                )}
+
+                <div className={` ml-8 text-[#333333]`}>
+                    <span className={`mr-2  ${(items[item].total === undefined) || (selectedLabel == 0 && items[item].label == "overallScore") ? "text-white" : ""}`}>({items[item].total}</span>
+                    <span className={`mr-2  ${(items[item].total === undefined) || (selectedLabel == 0 && items[item].label == "overallScore") ? "text-white" : ""}`}>{items[item].ratingLabel})</span>
+                </div>
             </div>
         </div>
     );
