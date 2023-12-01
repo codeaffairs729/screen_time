@@ -28,7 +28,10 @@ const SearchBar = ({
     const openAutoCompleteBtn = useRef(null);
     const [open, setOpen] = useState<boolean>(false);
     const protocol = window.location.protocol || "http:";
-    const host = window.location.hostname || "localhost:3000";
+    const host =
+    window.location.hostname !== "localhost"
+        ? window.location.hostname
+        : "localhost:3000";
     const fullUrl = `${protocol}//${host}`;
     const searchType = useSelector((state: RootState) => state.search.type);
     const {

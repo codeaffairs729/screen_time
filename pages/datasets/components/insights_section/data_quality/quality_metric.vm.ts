@@ -96,7 +96,8 @@ const jsonToQualityMetrics = (json: any): any => ({
     },
     dataFileQuality: {
         overallScore: getdataQualityScore(
-            json["datafile_quality"]["overall"],
+            calculateOverallScoreFordataFileQuality(json["datafile_quality"]),
+            // json["datafile_quality"]["overall"],
             "overallScore",
             "votes",
             json["datafile_quality"]["overall"]["total"],
@@ -162,3 +163,14 @@ const getdataQualityScore = (
     total: total,
     tooltipTitle: tooltipTitle,
 });
+
+const calculateOverallScoreFordataFileQuality = (datafile: any) => {
+    const newObj = Object.keys(datafile)?.map((item, index)=>{
+        return {rating: datafile[item].rating, total: datafile[item].total }
+    })
+    const filteredData = newObj.filter((item)=> item.total > 0)
+    const sumOfRatings = filteredData.reduce((sum, item) => sum + item.rating, 0);
+    const sumOftotal = filteredData.reduce((sum, item) => sum + item.total, 0);
+
+    return { rating: sumOfRatings/filteredData.length, total:sumOftotal}
+};

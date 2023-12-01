@@ -69,7 +69,10 @@ const OrganisationDetailVM = (
         fetchOrganisationDatasets();
     }, [pageNumber]);
     const protocol = window.location.protocol || "http:";
-    const host = window.location.hostname || "localhost:3000";
+        const host =
+        window.location.hostname !== "localhost"
+            ? window.location.hostname
+            : "localhost:3000";
     const fullUrl = `${protocol}//${host}`;
     const {
         execute: excuteFetchOrganisationDatasets,
@@ -175,7 +178,10 @@ const GetRankedData = ({
     orgUUID: string | undefined;
 }) => {
     const protocol = window.location.protocol || "http:";
-    const host = window.location.hostname || "localhost:3000";
+        const host =
+        window.location.hostname !== "localhost"
+            ? window.location.hostname
+            : "localhost:3000";
     const fullUrl = `${protocol}//${host}`;
     const { execute, data, isLoading, error } = useHttpCall<{
         [key: string]: any;

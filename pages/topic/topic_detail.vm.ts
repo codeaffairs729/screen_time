@@ -11,7 +11,10 @@ const TopicDetailVM = (initialTopicData: any, id: number | undefined) => {
     const [sortBy, setSortBy] = useState<any>("title");
     const [permittedPermissions, setPermittedPermissions] = useState();
     const protocol = window.location.protocol || "http:";
-    const host = window.location.hostname || "localhost:3000";
+        const host =
+        window.location.hostname !== "localhost"
+            ? window.location.hostname
+            : "localhost:3000";
     const fullUrl = `${protocol}//${host}`;
 
     useEffect(() => {

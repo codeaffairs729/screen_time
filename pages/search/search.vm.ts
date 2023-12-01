@@ -53,7 +53,10 @@ const SearchVM = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const [showMobileSidebar, setShowMobileSidebar] = useState<boolean>(false);
     const protocol = window.location.protocol || "http:";
-    const host = window.location.hostname || "localhost:3000";
+        const host =
+        window.location.hostname !== "localhost"
+            ? window.location.hostname
+            : "localhost:3000";
     const fullUrl = `${protocol}//${host}`;
     // const [isMobile, setIsMobile] = useState(false);
     // const [mobileFilter, setMobileFilter] = useState({

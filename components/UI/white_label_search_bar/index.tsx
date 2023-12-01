@@ -18,7 +18,6 @@ const NewSearchBar = ({
     onChange,
     onFocusSearchBar,
     onBlurSearchBar,
-
 }: {
     className?: string;
     onChange: (
@@ -30,11 +29,14 @@ const NewSearchBar = ({
 }) => {
     const [selected, setSelected] = useState<Option>();
     const [query, setQuery] = useState("");
-    const [open, setOpen] = useState(false)
+    const [open, setOpen] = useState(false);
     const [oldOptions, setOldOptions] = useState<Option[]>([]);
     const openAutoCompleteBtn = useRef(null);
-    const protocol = window.location.protocol || 'http:';
-    const host = window.location.hostname || 'localhost:3000';
+    const protocol = window.location.protocol || "http:";
+    const host =
+        window.location.hostname !== "localhost"
+            ? window.location.hostname
+            : "localhost:3000";
     const fullUrl = `${protocol}//${host}`;
     const searchType = useSelector((state: RootState) => state.search.type);
     const {
@@ -52,7 +54,7 @@ const NewSearchBar = ({
                     executeLodAutocomplete(
                         () =>
                             Http.get(`/api/autocomplete?query=${inputVal}`, {
-                                baseUrl: fullUrl
+                                baseUrl: fullUrl,
                             }),
                         {
                             postProcess: (res) =>
@@ -74,7 +76,7 @@ const NewSearchBar = ({
             function handleOutsideClick(event: any) {
                 if (ref.current && !ref.current.contains(event.target)) {
                     // setSelected(selected);
-                    setOpen(false)
+                    setOpen(false);
                 }
             }
             // Adding click event listener
@@ -109,43 +111,59 @@ const NewSearchBar = ({
         }
     }, [q]);
     const handleKeyDown = (event: any) => {
-        if (event.key === 'Enter' || event.key === 'NumpadEnter') {
+        if (event.key === "Enter" || event.key === "NumpadEnter") {
             onChange(searchType, { label: "User input", value: query });
-            handleOnBlur()
-            setOpen(false)
+            handleOnBlur();
+            setOpen(false);
         }
     };
     const handleDeleteOption = (id: number) => {
         // Remove the selected option from the search history
         if (id === 0) {
-            setQuery("")
+            setQuery("");
         }
-        setNewOptions((prevOptions) => prevOptions.filter((option) => option.id !== id));
+        setNewOptions((prevOptions) =>
+            prevOptions.filter((option) => option.id !== id)
+        );
     };
     const handleOnBlur = () => {
-        onBlurSearchBar()
-    }
+        onBlurSearchBar();
+    };
     const handleSubmit = (e: any) => {
-        e.stopPropagation()
-        setOpen(!open)
-    }
+        e.stopPropagation();
+        setOpen(!open);
+    };
     useEffect(() => {
-        setNewOptions(options)
-    }, [options])
+        setNewOptions(options);
+    }, [options]);
     return (
-        < div
+        <div
             onFocus={(e) => {
                 if (!e.currentTarget.contains(e.relatedTarget)) {
-                    onFocusSearchBar()
+                    onFocusSearchBar();
                 }
             }}
             onBlur={(e) => {
                 if (!e.currentTarget.contains(e.relatedTarget)) {
-                    handleOnBlur()
+                    handleOnBlur();
                 }
             }}
-            className={clsx("flex z-20", className, `${(((query.length > 0 && open && searchType == SearchTypes.DATASET.value) || (newOptions.length > 0 && open && searchType == SearchTypes.DATASET.value)) || (isLoading && searchType == SearchTypes.DATASET.value)) && " !rounded-b-none border-b-0 rounded-t-3xl"
-                }`)}>
+            className={clsx(
+                "flex z-20",
+                className,
+                `${
+                    ((query.length > 0 &&
+                        open &&
+                        searchType == SearchTypes.DATASET.value) ||
+                        (newOptions.length > 0 &&
+                            open &&
+                            searchType == SearchTypes.DATASET.value) ||
+                        (isLoading &&
+                            searchType == SearchTypes.DATASET.value)) &&
+                    " !rounded-b-none border-b-0 rounded-t-3xl"
+                }`
+            )}
+        >
             <Combobox value={selected} onChange={setSelected} nullable>
                 <div className="flex flex-row w-full h-full relative">
                     <div className="relative rounded-full sm:ml-4 flex items-center w-full h-full  cursor-default  text-left focus-within:outline-none sm:text-sm">
@@ -154,16 +172,15 @@ const NewSearchBar = ({
                             placeholder="Search"
                             className="w-full shadow-[0, 0, 0, 350px, #212121]  sm:ml-0 !rounded-l-full max-h-[99%] border-none px-1 pl-4 align-middle text-gray-900 h-full focus:ring-0 text-[19px] leading-[22px]"
                             onFocus={() => {
-                                (openAutoCompleteBtn.current as any)?.click()
-                            }
-                            }
+                                (openAutoCompleteBtn.current as any)?.click();
+                            }}
                             onKeyDown={handleKeyDown}
                             displayValue={(option: Option) => query}
                             value={query}
                             onChange={(event) => {
-                                setOpen(true)
+                                setOpen(true);
                                 setOldOptions(newOptions);
-                                setQuery(event.target.value)
+                                setQuery(event.target.value);
                             }}
                             onSubmit={(e) => handleSubmit(e)}
                         />
@@ -173,10 +190,21 @@ const NewSearchBar = ({
                         ></Combobox.Button>
                     </div>
                     <Transition
-                        show={open && searchType == SearchTypes.DATASET.value && (oldOptions.length > 0 || newOptions.length > 0)}
+                        show={
+                            open &&
+                            searchType == SearchTypes.DATASET.value &&
+                            (oldOptions.length > 0 || newOptions.length > 0)
+                        }
                         as={Fragment}
                     >
-                        <Combobox.Options className={`absolute mt-8 -ml-[0.4%] border-[3px] border-dtech-light-teal border-t-0 sm:mt-9 max-h-60 w-[100.7%] rounded-b-3xl scrollable-container overflow-auto bg-white  text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm z-20 ${oldOptions.length == 0 && newOptions.length == 0 && "hidden"}`} ref={myRef}>
+                        <Combobox.Options
+                            className={`absolute mt-8 -ml-[0.4%] border-[3px] border-dtech-light-teal border-t-0 sm:mt-9 max-h-60 w-[100.7%] rounded-b-3xl scrollable-container overflow-auto bg-white  text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm z-20 ${
+                                oldOptions.length == 0 &&
+                                newOptions.length == 0 &&
+                                "hidden"
+                            }`}
+                            ref={myRef}
+                        >
                             {query.length > 0 && (
                                 <ComboboxOption
                                     key={query.length}
@@ -189,37 +217,36 @@ const NewSearchBar = ({
                                     handleOnBlur={handleOnBlur}
                                 />
                             )}
-                            {options.length === 0 && query !== "" ? (
-                                oldOptions?.map((option) => (
-                                    <ComboboxOption
-                                        setOpen={setOpen}
-                                        key={option.id}
-                                        item={option}
-                                        onDelete={handleDeleteOption}
-                                        handleOnBlur={handleOnBlur}
-                                    />
-                                ))
-                            ) : (
-                                newOptions.map((option) => (
-                                    <ComboboxOption
-                                        setOpen={setOpen}
-                                        key={option.id}
-                                        item={option}
-                                        onDelete={handleDeleteOption}
-                                        handleOnBlur={handleOnBlur}
-                                    />
-                                ))
-                            )}
+                            {options.length === 0 && query !== ""
+                                ? oldOptions?.map((option) => (
+                                      <ComboboxOption
+                                          setOpen={setOpen}
+                                          key={option.id}
+                                          item={option}
+                                          onDelete={handleDeleteOption}
+                                          handleOnBlur={handleOnBlur}
+                                      />
+                                  ))
+                                : newOptions.map((option) => (
+                                      <ComboboxOption
+                                          setOpen={setOpen}
+                                          key={option.id}
+                                          item={option}
+                                          onDelete={handleDeleteOption}
+                                          handleOnBlur={handleOnBlur}
+                                      />
+                                  ))}
                         </Combobox.Options>
                     </Transition>
                     <div className="  text-dtech-main-dark flex flex-row sm:px-1">
-                        <div className="h-3/4 w-[1px] sm:mx-3 mr-3 my-[4px] bg-[#333333] ">&nbsp;</div>
+                        <div className="h-3/4 w-[1px] sm:mx-3 mr-3 my-[4px] bg-[#333333] ">
+                            &nbsp;
+                        </div>
                         <SearchTypeSelect />
                         {/* <SearchIcon isLoading={false} /> */}
                     </div>
                 </div>
             </Combobox>
-
         </div>
     );
 };
