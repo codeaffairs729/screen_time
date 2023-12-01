@@ -10,7 +10,7 @@ import SigninVM from "./signin.vm";
 import { useEffect, useState } from "react";
 import { RootState } from "store";
 import { useSelector } from "react-redux";
-import { useRouter } from "next/router";
+import { Router, useRouter } from "next/router";
 import NewGradientUI from "components/layouts/gradientLayout";
 import isEmail from "validator/lib/isEmail";
 import Popup from "components/UI/Popop";
@@ -19,6 +19,8 @@ import Cookies from "js-cookie";
 import dynamic from "next/dynamic";
 import NewLoader from "components/cookies/newloader";
 import Loader from "components/UI/loader";
+import NProgress from "nprogress";
+import "nprogress/nprogress.css";
 
 const SocialLogin = dynamic(() => import("components/UI/social/social_login"), {
     ssr: false,
@@ -42,14 +44,14 @@ const SigninPage = () => {
         }
     }, [router]);
 
+    if(vm.isSsoSigningIn){
+        NProgress.start();
+    }
+
     return (
         <div className="relative">
             {user && <Popup duration={2000} />}
-            {vm.isSsoSigningIn && (
-                            <div className="w-screen h-screen flex items-center justify-center">
-                                <Loader />
-                            </div>
-                        )}
+  
             <NewGradientUI>
                 <div className="grow flex flex-col items-left max-w-[30%px] justify-evenly sm:justify-center  sm:mx-[18%] sm:my-0 mx-[5%] my-[5%] ">
                     <div className="text-center">
