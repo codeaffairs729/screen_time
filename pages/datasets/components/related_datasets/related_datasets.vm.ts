@@ -12,7 +12,10 @@ const RelatedDatasetsVM = (dataset: any) => {
      * Fetch stats for datasets to highlight favourite status
      */
     const protocol = window.location.protocol || "http:";
-    const host = window.location.hostname || "localhost:3000";
+        const host =
+        window.location.hostname !== "localhost"
+            ? window.location.hostname
+            : "localhost:3000";
     const fullUrl = `${protocol}//${host}`;
     const { fectchStats, stats, isFetchingStats } = useFetchStats();
 
