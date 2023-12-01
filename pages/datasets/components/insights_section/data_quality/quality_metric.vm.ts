@@ -100,7 +100,7 @@ const jsonToQualityMetrics = (json: any): any => ({
             // json["datafile_quality"]["overall"],
             "overallScore",
             "votes",
-            json["datafile_quality"]["overall"]["total"],
+            calculateOverallScoreFordataFileQuality(json["datafile_quality"])["total"],
             "Average of all dimension listed"
         ),
         // feedbackSentiment: getdataQualityScore(

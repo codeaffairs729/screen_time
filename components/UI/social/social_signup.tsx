@@ -28,8 +28,8 @@ const firebaseConfig: any = {
         process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID || "G-HYVJP2M340",
 };
 
-const SocialSignup = () => {
-    const vm = SigninVM();
+const SocialSignup = ({vm}:{vm:any}) => {
+    // const vm = SigninVM();
     const [socialHover, setSocialHover] = useState({
         google: false,
         microsoft: false,
@@ -43,38 +43,38 @@ const SocialSignup = () => {
             : "localhost:3000";
     const fullUrl = `${protocol}//${host}`;
 
-    const LINKEDIN_CLIENT_SECRET =
-        process.env.NEXT_PUBLIC_LINKEDIN_CLIENT_SECRET_ID || "";
-    const LINKEDIN_CLIENT_ID = process.env.NEXT_PUBLIC_LINKEDIN_CLIENT_ID || "";
-    const LINKEDIN_CALLBACK_URL = `${fullUrl}/login`;
-    const linkedinOAuthURL = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${LINKEDIN_CLIENT_ID}&redirect_uri=${encodeURIComponent(
-        LINKEDIN_CALLBACK_URL
-    )}&scope=openid%20profile%20email`;
+    // const LINKEDIN_CLIENT_SECRET =
+    //     process.env.NEXT_PUBLIC_LINKEDIN_CLIENT_SECRET_ID || "";
+    // const LINKEDIN_CLIENT_ID = process.env.NEXT_PUBLIC_LINKEDIN_CLIENT_ID || "";
+    // const LINKEDIN_CALLBACK_URL = `${fullUrl}/login`;
+    // const linkedinOAuthURL = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${LINKEDIN_CLIENT_ID}&redirect_uri=${encodeURIComponent(
+    //     LINKEDIN_CALLBACK_URL
+    // )}&scope=openid%20profile%20email`;
 
-    console.log("LINKEDIN_CALLBACK_URL: ", LINKEDIN_CALLBACK_URL);
+    // console.log("LINKEDIN_CALLBACK_URL: ", LINKEDIN_CALLBACK_URL);
 
-    const handleLinkedInCallback = async () => {
-        const queryString = window.location.search;
-        const urlParams = new URLSearchParams(queryString);
-        const code = urlParams.get("code");
-        if (code) {
-            fetch(
-                `/api/linkedin-login?code=${code}&redirect_uri=${LINKEDIN_CALLBACK_URL}`
-            )
-                .then((res: any) => res.json())
-                .then((data: any) => {
-                    console.log("data :", data);
-                    vm.performSsoSignIn({
-                        provider: "linkedin",
-                        access_token: data?.accessToken,
-                    });
-                });
-        }
-    };
+    // const handleLinkedInCallback = async () => {
+    //     const queryString = window.location.search;
+    //     const urlParams = new URLSearchParams(queryString);
+    //     const code = urlParams.get("code");
+    //     if (code) {
+    //         fetch(
+    //             `/api/linkedin-login?code=${code}&redirect_uri=${LINKEDIN_CALLBACK_URL}`
+    //         )
+    //             .then((res: any) => res.json())
+    //             .then((data: any) => {
+    //                 console.log("data :", data);
+    //                 vm.performSsoSignIn({
+    //                     provider: "linkedin",
+    //                     access_token: data?.accessToken,
+    //                 });
+    //             });
+    //     }
+    // };
 
-    useEffect(() => {
-        handleLinkedInCallback();
-    }, []);
+    // useEffect(() => {
+    //     handleLinkedInCallback();
+    // }, []);
 
     firebase.initializeApp(firebaseConfig);
 
