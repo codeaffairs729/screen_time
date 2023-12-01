@@ -20,7 +20,8 @@ import SignupMessage from "./components/signup_message";
 import SigninVM from "pages/login/signin.vm";
 import NewLoader from "components/cookies/newloader";
 import Loader from "components/UI/loader";
-
+import NProgress from "nprogress";
+import "nprogress/nprogress.css";
 const SocialLogin = dynamic(() => import("components/UI/social/social_login"), {
     ssr: false,
 });
@@ -78,6 +79,14 @@ const SecondStep = ({
             } else vm.handleSignup(vm.form.getValues());
         })();
     };
+
+    if (vm.isSsoSigningIn) {
+        return (
+            <div>
+                <Loader />
+            </div>
+        );
+    }
 
     return (
         <div className="grow flex flex-col items-left max-w-[30%px] justify-evenly sm:justify-center mt-10  sm:mx-[20%] sm:my-0 mx-[5%] my-[5%] ">
@@ -210,7 +219,7 @@ const SecondStep = ({
                     I Accept Dtechtive’s{" "}
                     <a
                         // className=" text-[#0065BD] underline"
-                        className="items-center self-end underline text-[#0065BD] text-dtech-dark-blue hover:underline hover:decoration-dtech-light-blue hover:text-dtech-light-blue hover:bg-[#6DCDCB8C] active:bg-dtech-dark-yellow active:text-black"
+                        className="items-center self-end underline text-dtech-dark-blue hover:underline hover:decoration-dtech-light-blue hover:text-dtech-light-blue hover:bg-[#6DCDCB8C] active:bg-dtech-dark-yellow active:text-black"
                         href="https://dtechtive.com/data-privacy-policy"
                         target="_blank"
                         rel="noreferrer"
@@ -278,13 +287,18 @@ const SignupPage = () => {
             />
         );
     }
+
+    if (vmSignIn.isSsoSigningIn) {
+        NProgress.start();
+    }
+
     return (
         <>
-                    {vmSignIn.isSsoSigningIn && (
+            {/* {vmSignIn.isSsoSigningIn && (
                             <div className="w-screen h-screen flex items-center justify-center">
                                 <Loader />
                             </div>
-                        )}
+                        )} */}
             {/* {vmSignIn.isSsoSigningIn && <NewLoader duration={2000} />} */}
             <NewGradientUI>
                 {!step ? (

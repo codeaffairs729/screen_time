@@ -8,7 +8,7 @@ import { Toaster } from "react-hot-toast";
 import Loader from "components/UI/loader";
 import { useScript } from "common/hooks";
 import { useEffect, useRef, useState } from "react";
-import { useRouter } from "next/router";
+import { Router, useRouter } from "next/router";
 import posthog from "posthog-js";
 import { AUTH_TOKEN } from "common/constants/cookie.key";
 import {
@@ -19,7 +19,23 @@ import {
 import Head from "next/head";
 import IdleTimeoutModal from "./components/idle_timeout";
 import CookiePopover from "components/cookies/cookie_popover";
-import ForgotPasswordVM from "./forgot-password/forgot-password.vm";
+import "nprogress/nprogress.css";
+import NProgress from "nprogress";
+import '../styles/nprogress.css'
+
+NProgress.configure({ showSpinner: false });
+
+Router.events.on("routeChangeStart", () => {
+    NProgress.start();
+});
+
+Router.events.on("routeChangeComplete", () => {
+    NProgress.done();
+});
+
+Router.events.on("routeChangeError", () => {
+    NProgress.done();
+});
 
 function DtechtiveApp({ Component, pageProps }: AppProps) {
     const router = useRouter();
@@ -65,7 +81,7 @@ function DtechtiveApp({ Component, pageProps }: AppProps) {
                     if (pathParam) {
                         const pathValue = pathParam.split("&")[0];
                         setPreviousPath(pathValue as string);
-                    } 
+                    }
                 } else setPreviousPath(router.asPath);
             }
         };
@@ -154,11 +170,6 @@ function DtechtiveApp({ Component, pageProps }: AppProps) {
                     persistor={persistor}
                 >
                     <NotificationsVMContext.Provider value={vm}>
-                        {loader && (
-                            <div className="w-screen h-screen flex items-center justify-center">
-                                <Loader />
-                            </div>
-                        )}
                         <CookiePopover />
                         <Component {...pageProps} />
                     </NotificationsVMContext.Provider>
