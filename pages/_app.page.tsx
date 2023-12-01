@@ -26,7 +26,7 @@ function DtechtiveApp({ Component, pageProps }: AppProps) {
     const vm: any = NotificationsVM();
     // const context = NotificationsVMContext;
     const [previousPath, setPreviousPath] = useState("");
-
+    const [loader, setLoader] = useState(false);
     const store = useStore(pageProps.initialReduxState);
 
     const persistor = persistStore(store, {}, function () {
@@ -117,6 +117,23 @@ function DtechtiveApp({ Component, pageProps }: AppProps) {
         if (document.cookie.includes(AUTH_TOKEN) && user)
             vm.fetchNotifications(user);
     }, []);
+
+    useEffect(() => {
+        const handleRouteStart = (url: any) => {
+            setLoader(true);
+        };
+        const handleRouteComplete = (url: any) => {
+            setLoader(false);
+        };
+
+        router.events.on("routeChangeStart", handleRouteStart);
+        router.events.on("routeChangeComplete", handleRouteComplete);
+
+        return () => {
+            router.events.off("routeChangeStart", handleRouteStart);
+            router.events.off("routeChangeComplete", handleRouteComplete);
+        };
+    }, [router.events]);
     return (
         <>
             <Head>
@@ -136,10 +153,15 @@ function DtechtiveApp({ Component, pageProps }: AppProps) {
                     }
                     persistor={persistor}
                 >
-                        <NotificationsVMContext.Provider value={vm}>
-                            <CookiePopover />
-                            <Component {...pageProps} />
-                        </NotificationsVMContext.Provider>
+                    <NotificationsVMContext.Provider value={vm}>
+                        {loader && (
+                            <div className="w-screen h-screen flex items-center justify-center">
+                                <Loader />
+                            </div>
+                        )}
+                        <CookiePopover />
+                        <Component {...pageProps} />
+                    </NotificationsVMContext.Provider>
                     <Toaster
                         position="bottom-center"
                         reverseOrder={false}
