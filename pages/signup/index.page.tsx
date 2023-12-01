@@ -17,6 +17,8 @@ import Link from "next/link";
 import Cookies from "js-cookie";
 import dynamic from "next/dynamic";
 import SignupMessage from "./components/signup_message";
+import SigninVM from "pages/login/signin.vm";
+import NewLoader from "components/cookies/newloader";
 
 const SocialLogin = dynamic(() => import("components/UI/social/social_login"), {
     ssr: false,
@@ -245,6 +247,7 @@ const SecondStep = ({
 
 const SignupPage = () => {
     const vm = SignupVM();
+    const vmSignIn = SigninVM();
     const user = useSelector((state: RootState) => state.auth.user);
     const router = useRouter();
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -275,229 +278,242 @@ const SignupPage = () => {
         );
     }
     return (
-        <NewGradientUI>
-            {!step ? (
-                <div className="grow flex flex-col items-left max-w-[30%px] justify-evenly sm:justify-center  sm:mx-[20%] sm:my-0 mx-[5%] my-[5%] ">
-                    <div className="text-center">
-                        <h1 className="font-semibold text-[#333333] text-2xl mt-8 mb-2 sm:text-xl ">
-                            Create an Account
-                        </h1>
-                    </div>
-                    {
-                        <div
-                            className=" mb-10 mt-4 w-fit cursor-pointer"
-                            onClick={() => router.back()}
-                        >
-                            <img
-                                src="/images/icons/arrows/arrow_back.svg"
-                                className="hover:bg-gray-300 rounded-full"
-                            />
+        <>
+            {vmSignIn.isSsoSigningIn && <NewLoader duration={2000} />}
+            <NewGradientUI>
+                {!step ? (
+                    <div className="grow flex flex-col items-left max-w-[30%px] justify-evenly sm:justify-center  sm:mx-[20%] sm:my-0 mx-[5%] my-[5%] ">
+                        <div className="text-center">
+                            <h1 className="font-semibold text-[#333333] text-2xl mt-8 mb-2 sm:text-xl ">
+                                Create an Account
+                            </h1>
                         </div>
-                    }
-                    <div>
-                        <div className="mt-4">
-                            <FormRow
-                                label="Name"
-                                className=" !bg-transparent text-[#333333] !text-xl sm:mt-0 sm:!text-base"
+                        {
+                            <div
+                                className=" mb-10 mt-4 w-fit cursor-pointer"
+                                onClick={() => router.back()}
                             >
-                                {" "}
-                            </FormRow>
-                            <InfoIcon
-                                tooltipClassName=" max-w-sm  !bg-dtech-dark-teal"
-                                iconClasses="text-[#333333] -mt-[54px] ml-20 sm:ml-16"
-                                title="Enter your full name"
-                            />
-                        </div>
-                        <TextField
-                            className=" -mt-6 sm:-mt-8 rounded-xl !bg-transparent "
-                            textfieldClassName="!bg-white focus:!border-dtech-light-teal"
-                            formControl={{
-                                control: vm.form.control,
-                                name: "name",
-                                rules: {
-                                    required: "Required field",
-                                    pattern: {
-                                        value: /^[A-Za-z\s]+$/,
-                                        message: "Use only letters",
-                                    },
-                                },
-                            }}
-                            placeholder="E.g. Jane Doe"
-                            errorPosition={true}
-                        />
-                        <div className="mt-4">
-                            <FormRow
-                                label="Email"
-                                className=" !bg-transparent text-[#333333] !text-xl sm:mt-0 sm:!text-base"
-                            ></FormRow>
-                            <InfoIcon
-                                tooltipClassName=" max-w-sm  !bg-dtech-dark-teal"
-                                iconClasses="text-[#333333] -mt-[54px] ml-[72px] sm:ml-16"
-                                title="Enter your email ID. If signing up as an organisation admin, enter your organisation email ID."
-                            />
-                        </div>
-                        <TextField
-                            className=" -mt-6 sm:-mt-8 rounded-xl !bg-transparent "
-                            textfieldClassName="!bg-white focus:!border-dtech-light-teal"
-                            formControl={{
-                                control: vm.form.control,
-                                name: "email",
-                                rules: {
-                                    required: "Required field",
-                                    validate: (val: string) => {
-                                        if (!isEmail(val)) {
-                                            return "Please enter a valid e-mail address";
-                                        }
-                                    },
-                                },
-                            }}
-                            placeholder="E.g. jane.doe@abc.org"
-                            type="email"
-                            errorPosition={true}
-                        />
-                        <div className="mt-4">
-                            <FormRow
-                                label="Password"
-                                className=" !bg-transparent text-[#333333] !text-xl sm:!text-base"
-                            >
-                                {" "}
-                            </FormRow>
-                            <InfoIcon
-                                tooltipClassName="max-w-sm  !bg-dtech-dark-teal"
-                                iconClasses="text-[#333333] -mt-[54px] ml-28 sm:ml-24"
-                                title="Create a secure password using 8 characters with at least 1 uppercase character, 1 number and 1 special character[!@#$%^&*]"
-                            />
-                        </div>
-                        <div className="relative">
+                                <img
+                                    src="/images/icons/arrows/arrow_back.svg"
+                                    className="hover:bg-gray-300 rounded-full"
+                                />
+                            </div>
+                        }
+                        <div>
+                            <div className="mt-4">
+                                <FormRow
+                                    label="Name"
+                                    className=" !bg-transparent text-[#333333] !text-xl sm:mt-0 sm:!text-base"
+                                >
+                                    {" "}
+                                </FormRow>
+                                <InfoIcon
+                                    tooltipClassName=" max-w-sm  !bg-dtech-dark-teal"
+                                    iconClasses="text-[#333333] -mt-[54px] ml-20 sm:ml-16"
+                                    title="Enter your full name"
+                                />
+                            </div>
                             <TextField
                                 className=" -mt-6 sm:-mt-8 rounded-xl !bg-transparent "
                                 textfieldClassName="!bg-white focus:!border-dtech-light-teal"
                                 formControl={{
                                     control: vm.form.control,
-                                    name: "password",
+                                    name: "name",
                                     rules: {
-                                        validate: (val: string) => {
-                                            if (!val || val.length === 0) {
-                                                setValueErrorPosition(true);
-                                                return "Required field";
-                                            }
-                                            const prefix =
-                                                "Password should contain atleast,";
-                                            const specialChars = /[ !@#$%^&*]/;
-                                            const err_msgs = [];
-                                            if (val.length < 8) {
-                                                err_msgs.push("8 charachters");
-                                            }
-                                            if (val.search(/[A-Z]/) < 0) {
-                                                err_msgs.push(
-                                                    "1 uppercase character"
-                                                );
-                                            }
-                                            if (val.search(/[0-9]/) < 0) {
-                                                err_msgs.push("1 number");
-                                            }
-                                            if (!specialChars.test(val)) {
-                                                err_msgs.push(
-                                                    "1 special character[!@#$%^&*]"
-                                                );
-                                            }
-                                            if (err_msgs.length) {
-                                                let suffix =
-                                                    err_msgs[
-                                                        err_msgs.length - 1
-                                                    ];
-                                                if (err_msgs.length > 1) {
-                                                    suffix = `${err_msgs
-                                                        .slice(
-                                                            0,
-                                                            err_msgs.length - 1
-                                                        )
-                                                        .join(
-                                                            ", "
-                                                        )} , ${suffix}`;
-                                                }
-                                                setValueErrorPosition(false);
-                                                return `${prefix} ${suffix}`;
-                                            }
-
-                                            setValueErrorPosition(false);
-                                            return true;
+                                        required: "Required field",
+                                        pattern: {
+                                            value: /^[A-Za-z\s]+$/,
+                                            message: "Use only letters",
                                         },
                                     },
                                 }}
-                                placeholder="Enter password"
-                                type={isPasswordVisible ? "text" : "password"}
-                                errorPosition={valueErrorPosition}
+                                placeholder="E.g. Jane Doe"
+                                errorPosition={true}
                             />
-                            <img
-                                className={`ml-[90%] xl:ml-[88%] lg:ml-[85%] md:ml-[80%] absolute ${
-                                    valueErrorPosition ? "top-9" : "top-3"
-                                }`}
-                                onClick={() =>
-                                    setIsPasswordVisible(!isPasswordVisible)
-                                }
-                                src={
-                                    isPasswordVisible
-                                        ? "/images/icons/closed_eye.svg"
-                                        : "images/icons/open_eye.svg"
-                                }
+                            <div className="mt-4">
+                                <FormRow
+                                    label="Email"
+                                    className=" !bg-transparent text-[#333333] !text-xl sm:mt-0 sm:!text-base"
+                                ></FormRow>
+                                <InfoIcon
+                                    tooltipClassName=" max-w-sm  !bg-dtech-dark-teal"
+                                    iconClasses="text-[#333333] -mt-[54px] ml-[72px] sm:ml-16"
+                                    title="Enter your email ID. If signing up as an organisation admin, enter your organisation email ID."
+                                />
+                            </div>
+                            <TextField
+                                className=" -mt-6 sm:-mt-8 rounded-xl !bg-transparent "
+                                textfieldClassName="!bg-white focus:!border-dtech-light-teal"
+                                formControl={{
+                                    control: vm.form.control,
+                                    name: "email",
+                                    rules: {
+                                        required: "Required field",
+                                        validate: (val: string) => {
+                                            if (!isEmail(val)) {
+                                                return "Please enter a valid e-mail address";
+                                            }
+                                        },
+                                    },
+                                }}
+                                placeholder="E.g. jane.doe@abc.org"
+                                type="email"
+                                errorPosition={true}
                             />
-                        </div>
+                            <div className="mt-4">
+                                <FormRow
+                                    label="Password"
+                                    className=" !bg-transparent text-[#333333] !text-xl sm:!text-base"
+                                >
+                                    {" "}
+                                </FormRow>
+                                <InfoIcon
+                                    tooltipClassName="max-w-sm  !bg-dtech-dark-teal"
+                                    iconClasses="text-[#333333] -mt-[54px] ml-28 sm:ml-24"
+                                    title="Create a secure password using 8 characters with at least 1 uppercase character, 1 number and 1 special character[!@#$%^&*]"
+                                />
+                            </div>
+                            <div className="relative">
+                                <TextField
+                                    className=" -mt-6 sm:-mt-8 rounded-xl !bg-transparent "
+                                    textfieldClassName="!bg-white focus:!border-dtech-light-teal"
+                                    formControl={{
+                                        control: vm.form.control,
+                                        name: "password",
+                                        rules: {
+                                            validate: (val: string) => {
+                                                if (!val || val.length === 0) {
+                                                    setValueErrorPosition(true);
+                                                    return "Required field";
+                                                }
+                                                const prefix =
+                                                    "Password should contain atleast,";
+                                                const specialChars =
+                                                    /[ !@#$%^&*]/;
+                                                const err_msgs = [];
+                                                if (val.length < 8) {
+                                                    err_msgs.push(
+                                                        "8 charachters"
+                                                    );
+                                                }
+                                                if (val.search(/[A-Z]/) < 0) {
+                                                    err_msgs.push(
+                                                        "1 uppercase character"
+                                                    );
+                                                }
+                                                if (val.search(/[0-9]/) < 0) {
+                                                    err_msgs.push("1 number");
+                                                }
+                                                if (!specialChars.test(val)) {
+                                                    err_msgs.push(
+                                                        "1 special character[!@#$%^&*]"
+                                                    );
+                                                }
+                                                if (err_msgs.length) {
+                                                    let suffix =
+                                                        err_msgs[
+                                                            err_msgs.length - 1
+                                                        ];
+                                                    if (err_msgs.length > 1) {
+                                                        suffix = `${err_msgs
+                                                            .slice(
+                                                                0,
+                                                                err_msgs.length -
+                                                                    1
+                                                            )
+                                                            .join(
+                                                                ", "
+                                                            )} , ${suffix}`;
+                                                    }
+                                                    setValueErrorPosition(
+                                                        false
+                                                    );
+                                                    return `${prefix} ${suffix}`;
+                                                }
 
-                        <div className="flex justify-center !items-center space-x-4 my-10 sm:my-10">
-                            <PrimaryBtn
-                                dataSelector="next-button"
-                                className="  bg-dtech-new-main-light active:bg-dtech-dark-yellow hover:bg-dtech-main-dark active:border-b-2 border-black hover:border-0 active:text-black text-white text-base font-bold border-0 min-w-[150px] !justify-center !items-center !py-3 w-8 sm:w-full !rounded-[30px]"
-                                label="Next"
-                                onClick={vm.form.handleSubmit(() =>
-                                    setStep(!step)
-                                )}
-                            />
-                        </div>
-                        <div className="flex flex-row my-10 sm:my-8 mt- justify-center">
-                            <div className=" bg-[#727272] h-[1px] w-[25%] sm:w-[35%]"></div>
-                            <div className=" text-[#727272] -mt-3 mx-6">or</div>
-                            <div className=" bg-[#727272] h-[1px] w-[25%] sm:w-[35%]"></div>
-                        </div>
-                        <div className="my-8">
-                            <div className="flex flex-row justify-center text-[#333333]">
-                                Sign Up with
+                                                setValueErrorPosition(false);
+                                                return true;
+                                            },
+                                        },
+                                    }}
+                                    placeholder="Enter password"
+                                    type={
+                                        isPasswordVisible ? "text" : "password"
+                                    }
+                                    errorPosition={valueErrorPosition}
+                                />
+                                <img
+                                    className={`ml-[90%] xl:ml-[88%] lg:ml-[85%] md:ml-[80%] absolute ${
+                                        valueErrorPosition ? "top-9" : "top-3"
+                                    }`}
+                                    onClick={() =>
+                                        setIsPasswordVisible(!isPasswordVisible)
+                                    }
+                                    src={
+                                        isPasswordVisible
+                                            ? "/images/icons/closed_eye.svg"
+                                            : "images/icons/open_eye.svg"
+                                    }
+                                />
                             </div>
-                            <SocialSignup />
-                        </div>
-                        <div className="flex flex-row my-10 sm:my-8 justify-center">
-                            <div className=" bg-[#727272] h-[1px] w-[25%] sm:w-[35%]"></div>
-                            <div className=" text-[#727272] -mt-3  ">
-                                Step 1/2
+
+                            <div className="flex justify-center !items-center space-x-4 my-10 sm:my-10">
+                                <PrimaryBtn
+                                    dataSelector="next-button"
+                                    className="  bg-dtech-new-main-light active:bg-dtech-dark-yellow hover:bg-dtech-main-dark active:border-b-2 border-black hover:border-0 active:text-black text-white text-base font-bold border-0 min-w-[150px] !justify-center !items-center !py-3 w-8 sm:w-full !rounded-[30px]"
+                                    label="Next"
+                                    onClick={vm.form.handleSubmit(() =>
+                                        setStep(!step)
+                                    )}
+                                />
                             </div>
-                            <div className=" bg-[#727272] h-[1px] w-[25%] sm:w-[35%]"></div>
-                        </div>
-                        <div className="flex flex-row mt-4 mb-8 justify-center items-center">
-                            <div className="text-sm mx-2 text-[#333333]">
-                                Already have an account ?
+                            <div className="flex flex-row my-10 sm:my-8 mt- justify-center">
+                                <div className=" bg-[#727272] h-[1px] w-[25%] sm:w-[35%]"></div>
+                                <div className=" text-[#727272] -mt-3 mx-6">
+                                    or
+                                </div>
+                                <div className=" bg-[#727272] h-[1px] w-[25%] sm:w-[35%]"></div>
                             </div>
-                            <Link href={"/login"}>
-                                <a className="items-center self-end underline text-sm text-dtech-dark-blue hover:underline hover:decoration-dtech-light-blue hover:text-dtech-light-blue hover:bg-[#6DCDCB8C] active:bg-dtech-dark-yellow active:text-black px-1 rounded-sm">
-                                    <i className="items-center active:text-black">
-                                        Log in
-                                    </i>
-                                </a>
-                            </Link>
+                            <div className="my-8">
+                                <div className="flex flex-row justify-center text-[#333333]">
+                                    Sign Up with
+                                </div>
+                                <SocialSignup vm={vmSignIn} />
+                            </div>
+                            <div className="flex flex-row my-10 sm:my-8 justify-center">
+                                <div className=" bg-[#727272] h-[1px] w-[25%] sm:w-[35%]"></div>
+                                <div className=" text-[#727272] -mt-3  ">
+                                    Step 1/2
+                                </div>
+                                <div className=" bg-[#727272] h-[1px] w-[25%] sm:w-[35%]"></div>
+                            </div>
+                            <div className="flex flex-row mt-4 mb-8 justify-center items-center">
+                                <div className="text-sm mx-2 text-[#333333]">
+                                    Already have an account ?
+                                </div>
+                                <Link href={"/login"}>
+                                    <a className="items-center self-end underline text-sm text-dtech-dark-blue hover:underline hover:decoration-dtech-light-blue hover:text-dtech-light-blue hover:bg-[#6DCDCB8C] active:bg-dtech-dark-yellow active:text-black px-1 rounded-sm">
+                                        <i className="items-center active:text-black">
+                                            Log in
+                                        </i>
+                                    </a>
+                                </Link>
+                            </div>
                         </div>
                     </div>
-                </div>
-            ) : (
-                <SecondStep
-                    showError={showError}
-                    setShowError={setShowError}
-                    vm={vm}
-                    step={step}
-                    setStep={setStep}
-                    // organisationRequired={organisationRequired}
-                    // setOrganisationRequired={setOrganisationRequired}
-                />
-            )}
-        </NewGradientUI>
+                ) : (
+                    <SecondStep
+                        showError={showError}
+                        setShowError={setShowError}
+                        vm={vm}
+                        step={step}
+                        setStep={setStep}
+                        // organisationRequired={organisationRequired}
+                        // setOrganisationRequired={setOrganisationRequired}
+                    />
+                )}
+            </NewGradientUI>
+        </>
     );
 };
 
