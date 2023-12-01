@@ -19,6 +19,7 @@ import dynamic from "next/dynamic";
 import SignupMessage from "./components/signup_message";
 import SigninVM from "pages/login/signin.vm";
 import NewLoader from "components/cookies/newloader";
+import Loader from "components/UI/loader";
 
 const SocialLogin = dynamic(() => import("components/UI/social/social_login"), {
     ssr: false,
@@ -279,7 +280,12 @@ const SignupPage = () => {
     }
     return (
         <>
-            {vmSignIn.isSsoSigningIn && <NewLoader duration={2000} />}
+                    {vmSignIn.isSsoSigningIn && (
+                            <div className="w-screen h-screen flex items-center justify-center">
+                                <Loader />
+                            </div>
+                        )}
+            {/* {vmSignIn.isSsoSigningIn && <NewLoader duration={2000} />} */}
             <NewGradientUI>
                 {!step ? (
                     <div className="grow flex flex-col items-left max-w-[30%px] justify-evenly sm:justify-center  sm:mx-[20%] sm:my-0 mx-[5%] my-[5%] ">

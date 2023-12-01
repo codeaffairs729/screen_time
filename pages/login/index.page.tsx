@@ -18,6 +18,7 @@ import Cookies from "js-cookie";
 // import SocialLogin from "components/UI/social/social_login";
 import dynamic from "next/dynamic";
 import NewLoader from "components/cookies/newloader";
+import Loader from "components/UI/loader";
 
 const SocialLogin = dynamic(() => import("components/UI/social/social_login"), {
     ssr: false,
@@ -33,18 +34,22 @@ const SigninPage = () => {
     useEffect(() => {
         Cookies.remove("userData");
         if (user) {
-            const timer = setTimeout(() => {
+            // const timer = setTimeout(() => {
                 router.push("/");
-            }, 2000);
+            // }, 2000);
 
-            return () => clearTimeout(timer);
+            // return () => clearTimeout(timer);
         }
     }, [router]);
 
     return (
         <div className="relative">
             {user && <Popup duration={2000} />}
-            {vm.isSsoSigningIn && <NewLoader duration={2000} />}
+            {vm.isSsoSigningIn && (
+                            <div className="w-screen h-screen flex items-center justify-center">
+                                <Loader />
+                            </div>
+                        )}
             <NewGradientUI>
                 <div className="grow flex flex-col items-left max-w-[30%px] justify-evenly sm:justify-center  sm:mx-[18%] sm:my-0 mx-[5%] my-[5%] ">
                     <div className="text-center">
