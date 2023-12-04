@@ -282,6 +282,7 @@ const DatasetHead = ({ dataset }: any) => {
             </div>
             <div className=" bg-[#2D2D32] bg-opacity-10 sm:w-1 h-[1px] sm:h-auto sm:my-4 mx-4 mb-4 sm:mx-0 sm:mb-0"> </div>
             <NewResultCardAction
+                key={dataset?.id}
                 className="flex-row sm:flex-col items-center justify-center sm:py-8 w-full"
                 gridClass="md:!gap-16"
                 data={{ ...headDataset, url: headDataset?.dataProviders?.datasetSource }}
