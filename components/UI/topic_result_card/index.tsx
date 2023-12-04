@@ -28,7 +28,7 @@ const TopicCard = ({ data, isMobile, imgCss = "" }: TopicProps) => {
             className={` border border-gray-100 rounded-md md:rounded-xl shadow-card-shadow hover:shadow-hover-shadow  md:min-h-[100%]  md:max-h-[10%] md:min-w-[100%] min-h-[112px]  mr-4 `}
         >
             <div
-                className={`flex flex-col justify-center items-center  ${
+                className={`flex flex-col justify-center items-center md:h-[160px] ${
                     isMobile && showProvider && "!justify-end"
                 }`}
             >
@@ -128,7 +128,7 @@ const BackCard = ({ data, isMobile }: { data: Data; isMobile: boolean }) => {
 
     return (
         <div
-            className={` mx-3 md:mx-5 md:my-3  w-[95%] md:min-h-[138px] min-h-[136px] `}
+            className={` mx-3 md:mx-5 md:my-3  w-[95%] md:min-h-[138px] min-h-[114px] `}
         >
             <div
                 className={`text-[12px] md:text-[16px] md:font-normal leading-[18.75px] overflow-hidden over md:my-3 ${
@@ -164,7 +164,8 @@ const TopicMobileFrontStats = ({
 
     return (
         <div className={`w-full ${className}`}>
-            <div className="flex flex-row justify-evenly items-center">
+            {/* <div className="w-[182.5px] h-[24px]"></div> */}
+            {/* <div className="flex flex-row justify-evenly items-center">
                 <div className="flex flex-col justify-center items-center">
                     <div className="flex flex-row justify-center items-center ">
                         <Image
@@ -196,7 +197,7 @@ const TopicMobileFrontStats = ({
                         </span>
                     </div>
                 </div>
-            </div>
+            </div> */}
         </div>
     );
 };
