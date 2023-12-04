@@ -388,8 +388,12 @@ DatasetDetail.getInitialProps = async ({ query, req }: NextPageContext) => {
         const isServer = typeof window === 'undefined';
         if (!isServer && window.location) {
             // If on the client-side, use window.location
-            const protocol = window.location.protocol || 'http:';
-            const host = window.location.hostname || 'localhost:3000';
+
+            const protocol = window.location.protocol || "http:";
+            const host =
+                window.location.hostname !== "localhost"
+                    ? window.location.hostname
+                    : "localhost:3000";
             const fullUrl = `${protocol}//${host}`;
             const datasetData: any = await fetch(`${fullUrl}/api/datasets-by-ids?query=${datasetId}`);
             const datasetJson = await datasetData.json()
