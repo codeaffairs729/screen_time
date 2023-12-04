@@ -37,12 +37,12 @@ const FavouriteBtn = ({
             onFavouriteChange,
             recordType
         );
-
     return (
         <div
+            key={datasetStats.uuid}
             className="inline-block"
             data-tip
-            data-for="dtechtive-favourite-btn-tooltip"
+            data-for={`dtechtive-favourite-btn-tooltip-${datasetStats.id}`}
         >
             <button
                 aria-label="Favoruite dataset"
@@ -87,7 +87,7 @@ const FavouriteBtn = ({
                 )}
             </button>
             <ReactTooltip
-                id="dtechtive-favourite-btn-tooltip"
+                id={`dtechtive-favourite-btn-tooltip-${datasetStats.id}`}
                 textColor={"white"}
                 backgroundColor="#4CA7A5"
                 overridePosition={({ left, top }, _e, _t, node) => {
