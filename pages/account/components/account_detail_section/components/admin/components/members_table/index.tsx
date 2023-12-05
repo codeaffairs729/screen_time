@@ -49,7 +49,7 @@ const MembersTable = ({ className = "" }: { className?: string }) => {
                                 </tr>
                             </thead>
                             <tbody className="text-gray-600 text-sm font-light">
-                                {adminPanelVm.orgusers.map((user: User) => {
+                            {adminPanelVm.orgusers.map((user: User) => {
                                     return (
                                         <tr
                                             key={user.email}
@@ -57,22 +57,18 @@ const MembersTable = ({ className = "" }: { className?: string }) => {
                                         >
                                             <TD>{user.name}</TD>
                                             <TD>{user.email}</TD>
-                                            <TD>{User.getRole(user)?.name ==='organisation_member'? "Member":"Admin"}</TD>
+                                            <TD>{User.getAllRoles(user)?.includes(Role.ORGANIZATION_ADMIN) ? "Admin" :"Member"}</TD>
                                             <TD className="flex flex-col items-center">
                                                 <TextBtn
                                                     label={`${
-                                                        User.getRole(user)
-                                                            ?.name ==
-                                                        Role.ORGANIZATION_ADMIN
+                                                        User.getAllRoles(user)?.includes(Role.ORGANIZATION_ADMIN) 
                                                             ? "Remove Admin"
                                                             : "Make admin"
                                                     }`}
                                                     className="text-sm underline text-blue-700"
                                                     onClick={() => {
                                                         if (
-                                                            User.getRole(user)
-                                                                ?.name ==
-                                                            Role.ORGANIZATION_ADMIN
+                                                            User.getAllRoles(user)?.includes(Role.ORGANIZATION_ADMIN) 
                                                         ) {
                                                             adminPanelVm.makeOrgMember(
                                                                 user

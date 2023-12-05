@@ -148,7 +148,7 @@ function AddMemberModal({
                                             async (data: any) => {
                                                 await vm.inviteMember({
                                                     ...data,
-                                                    roles: data["roles"],
+                                                    roles: [data["roles"]],
                                                 });
                                             }
                                         )}
