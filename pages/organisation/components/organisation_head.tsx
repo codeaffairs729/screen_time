@@ -120,7 +120,7 @@ const OrganisationHead = () => {
                 className="flex-row sm:flex-col items-center justify-center sm:py-8 w-full"
                 data={cardActionData}
                 setData={setOrganisation}
-                href={`/organisations/${organisation?.uuid}`}
+                href={`/organisation/${organisation?.uuid}`}
             />
         </div>
     );

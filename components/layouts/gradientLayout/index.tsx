@@ -84,7 +84,7 @@ const NewGradientUI = ({
                     {imageObjects?.map((item:any,index:number) => {
                         return (
                             <div key={index} className=" hidden h-screen bg-gradient-to-b from-[rgba(181,_133,_183,_0.53)_-10.01%] to-[rgba(109,_205,_203,_0.22)_102.15%] text-center md:!flex flex-col items-center justify-center lg:p-8">
-                                <h2 className=" text-white font-bold hidden md:block text-xl lg:text-2xl border-2">
+                                <h2 className=" text-white font-bold hidden md:block text-xl lg:text-2xl">
                                     {item.text1}
                                 </h2>
                                 <h2 className="font-semibold text-dtech-main-dark mt-6 hidden md:block lg:text-2xl md:text-base">

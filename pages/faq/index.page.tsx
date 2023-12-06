@@ -20,7 +20,7 @@ const FAQPage = () => {
                     </div> */}
                 </div>
                 <div className=" my-10 w-full">
-                    <div className=" text-[#727272] font-normal text-[19px]">
+                    <div className=" text-[#727272] font-normal text-sm">
                         <span>Last updated:</span>
                         <span>15 October 2023</span>
                     </div>
