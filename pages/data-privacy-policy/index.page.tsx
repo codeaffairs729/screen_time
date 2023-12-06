@@ -17,7 +17,7 @@ const DataPrivacyPolicy = () => {
                     <Image src={PrivacyPolicyImage} width={500} height={400} />
                 </div>
                 <div className=" my-10">
-                    <div className=" text-[#727272] font-normal text-[19px]">
+                    <div className=" text-[#727272] font-normal text-sm">
                         <span>Last updated:</span>
                         <span>15 October 2023</span>
                     </div>
