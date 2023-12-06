@@ -51,9 +51,9 @@ const DataProviderCard = ({ data, isMobile, imgCss="" }: DataProviderCardProps) 
                 ) : (
                     <BackCard data={data} isMobile={isMobile} />
                 )}
-                {!showProvider && isMobile && stats && (
+                {/* {!showProvider && isMobile && stats && (
                     <DataproviderMobileFrontStats stats={stats} />
-                )}
+                )} */}
             </div>
 
 
