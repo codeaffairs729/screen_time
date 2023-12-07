@@ -592,7 +592,7 @@ const ReportVM = () => {
         rating: dataset["ratings"],
     });
 
-    const fetchData = (qualityMetrics: any) => {
+    const fetchData = (activeHeaders: any) => {
         let from: string = format(new Date(), "yyyy-MM-dd");
         let to: string = format(new Date(), "yyyy-MM-dd");
 
@@ -609,13 +609,18 @@ const ReportVM = () => {
         setFromDate(new Date(from));
         setToDate(new Date(to));
         //Check if option selected
-
-        const promise1 = fetchMetricDataByTime(from, to);
-        const promise2 = fetchMetricDataByRoles(from, to);
-        const promise3 = fetchMetricDataByLocation(from, to);
-        const promise4 = fetchSearchTerms();
-        const promise5 = fetchQualityMetrics();
-        const promise6 = fetchUseCases();
+    let promise1;
+    let promise2;
+    let promise3;
+    let promise4;
+    let promise5; 
+    let promise6; 
+    activeHeaders[0].isChecked==true&&(promise5 = fetchQualityMetrics());
+    activeHeaders[1].isChecked==true&&(promise4 = fetchSearchTerms());
+    activeHeaders[2].isChecked==true&&(promise1 = fetchMetricDataByTime(from, to));
+    activeHeaders[2].isChecked==true&&(promise2 = fetchMetricDataByRoles(from, to));
+    activeHeaders[2].isChecked==true&&(promise3 = fetchMetricDataByLocation(from, to));
+    activeHeaders[3].isChecked==true&&(promise6 = fetchUseCases());
 
         Promise.all([
             promise1,
