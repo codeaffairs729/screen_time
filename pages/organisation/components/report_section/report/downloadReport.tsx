@@ -1,7 +1,7 @@
 import Image from "next/image";
 import downloadIcon from "public/images/icons/download.svg";
 import { useContext, useState } from "react";
-import { downloadPdf, ReportVMContext } from "../report.vm";
+import { ReportVMContext } from "../report.vm";
 import html2pdf from "html2pdf.js";
 import { jsPDF } from "jspdf";
 
