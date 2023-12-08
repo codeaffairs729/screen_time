@@ -30,8 +30,8 @@ const ReportFilter = ({setIsReportGenerated}: {setIsReportGenerated:Function}) =
             !editorState.getCurrentContent().hasText() ||
             confirm(alert) == true
         ) {
-        fetchQualityMetrics && fetchQualityMetrics();
-            fetchData(qualityMetrics);
+        // fetchQualityMetrics && fetchQualityMetrics();
+            fetchData(activeHeaders);
             setIsReportGenerated(true);
         }
     };
