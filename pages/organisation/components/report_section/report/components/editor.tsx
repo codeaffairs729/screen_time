@@ -39,7 +39,6 @@ const RichTextEditor = () => {
     const { editorValue, setEditorValue } = useContext(ReportVMContext);
 
     const customStyles = {
-        // background: 'url("/vercel.svg")',
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
