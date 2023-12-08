@@ -1,4 +1,10 @@
-import React, { ReactNode, useContext, useEffect, useMemo, useState } from "react";
+import React, {
+    ReactNode,
+    useContext,
+    useEffect,
+    useMemo,
+    useState,
+} from "react";
 import Head from "./head";
 import dynamic from "next/dynamic";
 import { Tab } from "@headlessui/react";
@@ -6,9 +12,7 @@ import { DateTime } from "luxon";
 import Loader from "components/UI/loader";
 import { SearchTermType } from "../../insights_section/search_term_section/search_term.vm";
 import { getAge } from "pages/workspace/notification.vm";
-import {
-    ReportVMContext,
-} from "../report.vm";
+import { ReportVMContext } from "../report.vm";
 import { HiPencil } from "react-icons/hi";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import PreviewReport from "./components/new_preview";
@@ -21,6 +25,13 @@ const RichTextEditor = dynamic(() => import("./components/editor"), {
     ssr: false,
 });
 
+const names = [
+    "Dataset Quality",
+    "Search terms used",
+    "Download metrics",
+    "use cases",
+];
+
 const Report = ({
     isReportGenerated,
     setIsReportGenerated,
@@ -29,21 +40,46 @@ const Report = ({
     setIsReportGenerated: Function;
 }) => {
     const [edit, setEdit] = useState(false);
+    const { loading } = useContext(ReportVMContext);
+    const [index, setIndex] = useState(0);
 
-    const {
-        loading,
-    } = useContext(ReportVMContext);
-
+    // useEffect(() => {
+    //     const timer = () => {
+    //         setIndex((prevIndex) => {
+    //             if (prevIndex === names.length - 1) {
+    //                 return 0;
+    //             }
+    //             return prevIndex + 1;
+    //         });
+    //     };
+    //     const intervalId = setInterval(timer, 4000);
+    //     return () => clearInterval(intervalId);
+    // }, [names]);
 
     return (
         <div className="w-full relative">
             {loading && (
-                <div className="flex absolute mt-12 w-full h-[90%] bg-black bg-opacity-10 z-20 ">
+                <div className="flex absolute mt-12 w-full h-[656px] bg-white z-20 text-[19px]">
                     <div className="ml-auto mr-auto my-auto">
-                        <Loader sizeClass="h-10 w-10" />
+                        <h1 className="text-black">Generating cover page</h1>
+                        <div className="flex flex-row">
+                            <p className="text-dtech-light-grey3 mr-[2px]">
+                                Fetching
+                            </p>
+                            <p className="text-dtech-light-grey3 animate-pulse transition-all  ">
+                                {names[index]}
+                            </p>
+                            <div className="flex items-end pb-[6px] pr-[4px] justify-end space-x-2 animate-pulse">
+                                <div className="w-1 h-1 bg-gray-500 rounded-full"></div>
+                                <div className="w-1 h-1 bg-gray-500 rounded-full"></div>
+                                <div className="w-1 h-1 bg-gray-500 rounded-full"></div>
+                            </div>
+                        </div>
+                        <p className="text-dtech-light-grey3">Finalising</p>
                     </div>
                 </div>
             )}
+
             <ReportData />
             <div className={"hidden sm:block"}>
                 <Tab.Group>
@@ -74,43 +110,34 @@ const Report = ({
             <div className=" sm:hidden">
                 <Tab.Group>
                     <div className=" ">
-                        <Tab.List className={"flex w-full justify-between"}>
-                            <Tab
-                                className={
-                                    "flex justify-between items-center px-3 w-full"
-                                }
+                        <div className="flex justify-between items-center px-3 w-full">
+                            <button
+                                className=" cursor-pointer"
+                                onClick={() => setIsReportGenerated(false)}
                             >
-                                <button
-                                    className=" cursor-pointer"
-                                    onClick={() => setIsReportGenerated(false)}
-                                >
-                                    <AiOutlineArrowLeft />
-                                </button>
-                                <button onClick={() => setEdit(!edit)}>
-                                    {edit ? (
-                                        <div>Preview</div>
-                                    ) : (
-                                        <div className=" flex flex-row items-center">
-                                            <HiPencil className="mr-1" />
-                                            Edit
-                                        </div>
-                                    )}
-                                </button>
-                            </Tab>
-                        </Tab.List>
+                                <AiOutlineArrowLeft />
+                            </button>
+                            <button onClick={() => setEdit(!edit)}>
+                                {edit ? (
+                                    <div>Preview</div>
+                                ) : (
+                                    <div className=" flex flex-row items-center">
+                                        <HiPencil className="mr-1" />
+                                        Edit
+                                    </div>
+                                )}
+                            </button>
+                        </div>
+
+                        {!edit ? (
+                            <PreviewReport
+                                loading={loading}
+                                isReportGenerated={isReportGenerated}
+                            />
+                        ) : (
+                            <RichTextEditor />
+                        )}
                     </div>
-                    <Tab.Panels>
-                        <Tab.Panel>
-                            {!edit ? (
-                                <PreviewReport
-                                    loading={loading}
-                                    isReportGenerated={isReportGenerated}
-                                />
-                            ) : (
-                                <RichTextEditor />
-                            )}
-                        </Tab.Panel>
-                    </Tab.Panels>
                 </Tab.Group>
             </div>
             {isReportGenerated && !edit && (

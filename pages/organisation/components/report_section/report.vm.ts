@@ -1,11 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import {
-    ContentState,
-    convertFromHTML,
-    EditorState,
-    convertToRaw,
-} from "draft-js";
-import html2canvas from "html2canvas";
+
+// import html2canvas from "html2canvas";
 import { format } from "date-fns";
 
 import jsPDF from "jspdf";
@@ -13,8 +8,8 @@ import { useHttpCall } from "common/hooks";
 import Http from "common/http";
 import toast from "react-hot-toast";
 import { OrganisationDetailVMContext } from "pages/organisation/organisation_detail.vm";
-import draftToHtml from "draftjs-to-html";
 import { jsonToUseCaseMetrics } from "../insights_section/use_case_section/usecase.vm";
+import * as htmlToImage from 'html-to-image';
 type Header = {
     label: string;
     isChecked: boolean;
@@ -179,9 +174,9 @@ const ReportVM = () => {
     const [downloadRef, setDownloadRef] = useState<any>();
     const [selectedHeaders, setSelectedHeaders] = useState<string[]>([]);
     const [activeHeaders, setActiveHeaders] = useState<Header[]>(HEADER);
-    const [editorState, onEditorStateChange] = useState<EditorState>(
-        EditorState.createEmpty()
-    );
+    // const [editorState, onEditorStateChange] = useState<EditorState>(
+    //     EditorState.createEmpty()
+    // );
     const [editorValue, setEditorValue] = useState(``);
     // const [previewContent, setPreviewContent] = useState("");
     const [isGeneratingReport, setIsGeneratingReport] = useState(false);
@@ -294,9 +289,13 @@ const ReportVM = () => {
 
     const getImageDataURL = async (element: any) => {
         if (element) {
-            const canvas = await html2canvas(element);
-            canvas.getContext('2d', { willReadFrequently: true });
-            return canvas.toDataURL("image/png");
+            try {
+                const dataUrl = await htmlToImage.toPng(element);
+                return dataUrl;
+            } catch (error) {
+                console.error('Error converting HTML to image:', error);
+                return null;
+            }
         }
         return null;
     };
@@ -644,14 +643,14 @@ const ReportVM = () => {
 
     return {
         // generateReportContent,
-        onEditorStateChange,
+        // onEditorStateChange,
         setSelectedHeaders,
         setActiveHeaders,
         setDownloadRef,
         onHeaderSelect,
         selectedHeaders,
         activeHeaders,
-        editorState,
+        // editorState,
         downloadRef,
         // previewContent,
         loading,

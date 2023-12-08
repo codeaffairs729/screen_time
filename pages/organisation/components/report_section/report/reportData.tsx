@@ -1,13 +1,13 @@
 import { useContext, useMemo } from "react";
 import { ReportVMContext, getAge, getRegion, getRegionTableData, getTableData, getUseCaseData, getfilteredData, graphDataVal, sortAndAggregate } from "../report.vm";
 import BarChart from "./components/bar_graph";
-import TagCloud2 from "../../insights_section/search_term_section/tagCloud2";
 import Table from "../../table";
 import MapChartComponent from "./components/map_chart";
 import PieChartComponent from "./components/pie_Chart";
 import { useIsMobile } from "common/hooks";
 import { SearchTermType } from "../../insights_section/search_term_section/search_term.vm";
 import { DateTime } from "luxon";
+import ReportTagCloud from "./components/tag_cloud";
 
 
 interface RatingObject {
@@ -132,10 +132,11 @@ const ReportData = () =>{
         [useCases]
     );
     return(
-        <div className=" h-[56rem] overflow-y-scroll no-scrollbar whitespace-nowrap absolute">
+        <div className=" h-[56rem] overflow-y-scroll no-scrollbar whitespace-nowrap absolute ">
+            {searchTerms.length > 0  && <ReportTagCloud data={transformedData}  />}
         {items && (
             <div
-                className="flex fixed justify-center items-center flex-col z-[-10] w-full"
+                className="flex fixed justify-center items-center flex-col z-[-10] w-full top-0 left-0"
                 id="qualityMetrics"
             >
                 <BarChart
@@ -148,10 +149,10 @@ const ReportData = () =>{
         )}
         {searchTerms.length > 0 && (
             <div
-                className="flex fixed justify-center items-center flex-col z-[-10] w-full "
+                className="flex fixed justify-center items-center flex-col z-[-10] w-full top-0 left-0"
                 id="searchTerms"
             >
-                <TagCloud2 data={transformedData} />
+                <ReportTagCloud data={transformedData}  />
                 <div className="text-sm w-full overflow-scroll text-dtech-dark-grey my-8 ">
                     <Table
                         tableHeaders={SEARCH_TERM_HEADERS}
@@ -169,7 +170,7 @@ const ReportData = () =>{
         {downloadByLocation.length > 0 && (
             <div
                 id="map"
-                className="flex fixed justify-center items-center flex-col z-[-10] w-full my-10"
+                className="flex fixed justify-center items-center flex-col z-[-10] w-full my-10 top-0 left-0"
             >
                 <div className="mt-8">
                     <MapChartComponent
@@ -190,7 +191,7 @@ const ReportData = () =>{
         {downloadByTime.length > 0 && (
             <div
                 id="screenshot"
-                className="flex fixed justify-center items-center flex-col z-[-10] w-full my-10"
+                className="flex fixed justify-center items-center flex-col z-[-10] w-full my-10 top-0 left-0"
             >
                 <BarChart
                     data={graphData}
@@ -211,7 +212,7 @@ const ReportData = () =>{
         {downloadByRole.length > 0 && (
             <div
                 id="pie"
-                className="flex fixed justify-center items-center flex-col z-[-10] w-full my-10"
+                className="flex fixed justify-center items-center flex-col z-[-10] w-full my-10 top-0 left-0"
             >
                 <PieChartComponent
                     chartData={chartData}
@@ -233,7 +234,7 @@ const ReportData = () =>{
         {useCases.length > 0 && (
             <div
                 id="useCases"
-                className="flex fixed justify-center items-center flex-col z-[-10] w-full"
+                className="flex fixed justify-center items-center flex-col z-[-10] w-full top-0 left-0"
             >
                 <PieChartComponent
                     isMobile={isMobile}
