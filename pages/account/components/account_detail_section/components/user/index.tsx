@@ -7,13 +7,15 @@ import UserTabPanelVM from "./user_tab_panel.vm";
 import cameraImage from "public/images/icons/camera_filled.svg";
 import toast from "react-hot-toast";
 import { useController } from "react-hook-form";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "store";
 import { BiUserCircle } from "react-icons/bi";
+import GenerateApi from "components/UI/genrateapi_pop";
 
 const UserSection = () => {
     const user = useSelector((state: RootState) => state.auth.user);
+    const [pop,setPop] = useState(false)
     const fileInputRef = useRef<HTMLInputElement>(null);
     const vm = UserTabPanelVM();
     const { field: register } = useController({
@@ -185,7 +187,7 @@ const UserSection = () => {
             </div>
             {/* <div className="flex flex-row justify-end">
             </div> */}
-            <div className="flex flex-row justify-between items-center">
+            <div className="flex flex-col justify-between items-start">
                 <PrimaryBtn
                     className="bg-dtech-new-main-light active:bg-dtech-dark-yellow hover:bg-dtech-main-dark active:border-b-2 border-black hover:border-0 active:text-black text-white w-[120px] sm:w-[170px] !p-[10px] sm:!p-[16px] rounded-[30px] mt-5 mb-2 text-xs sm:text-[16px]"
                     label="Update"
@@ -225,10 +227,16 @@ const UserSection = () => {
                         }
                     }}
                 />
+                <PrimaryBtn
+                    className="bg-dtech-new-main-light active:bg-dtech-dark-yellow hover:bg-dtech-main-dark active:border-b-2 border-black hover:border-0 active:text-black text-white w-[120px] sm:w-[170px] !p-[10px] sm:!p-[16px] rounded-[30px] mt-5 mb-2 text-xs sm:text-[16px]"
+                    label="API keys"
+                    onClick={()=>{setPop(!pop)}}
+                />
                 {/* <span className="text-[#6E498E] border-[#6E498E] border-2 w-[120px] sm:w-[170px] !p-[10px] sm:!p-[16px] rounded-[30px] mt-5 mb-2 text-xs sm:text-[16px] text-center">
                     Cancel
                 </span> */}
             </div>
+            {pop && <GenerateApi/>}
         </div>
     );
 };
