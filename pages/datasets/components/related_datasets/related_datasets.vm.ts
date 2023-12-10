@@ -92,6 +92,7 @@ const RelatedDatasetsVM = (dataset: any) => {
                     return datasets;
                 },
                 onError: (e) => {
+                    console.error(e);
                     toast.error(
                         "Something went wrong while Fetching Datasets By Category datasets."
                     );

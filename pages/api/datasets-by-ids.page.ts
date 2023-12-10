@@ -15,6 +15,7 @@ export default async function datasetsByIds(req: any, res: any) {
         );
         res.status(200).json(response);
     } catch (error) {
+        console.error(error);
         res.status(500).json({ error: "Internal Server Error" });
     }
 }

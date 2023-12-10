@@ -9,10 +9,7 @@ import "leaflet/dist/leaflet.css";
 import {
     LatLngBoundsExpression,
     latLng,
-    latLngBounds,
-    LatLngBounds,
 } from "leaflet";
-import { FeatureCollection, GeoJsonObject } from "geojson";
 
 const DataFilePreviewMap = ({
     totalBounds,
@@ -23,26 +20,29 @@ const DataFilePreviewMap = ({
     mapData: any;
     className?: string;
 }) => {
-    console.log("totalBounds", totalBounds);
-    console.log("mapData", mapData);
-    const corner1 = latLng(totalBounds[1], totalBounds[0]);
-    const corner2 = latLng(totalBounds[4], totalBounds[3]);
+    const center = latLng(
+        (totalBounds[1] + totalBounds[0]) / 2,
+        (totalBounds[3] + totalBounds[2]) / 2
+    );
     const outerBounds: LatLngBoundsExpression = [
         [totalBounds[1], totalBounds[0]],
         [totalBounds[3], totalBounds[2]],
     ];
-    const bounds: LatLngBounds = latLngBounds(corner1, corner2);
-    console.log("bounds", bounds);
-    console.log("outerBounds", outerBounds);
+
     return (
         <div>
-            <MapContainer className={className} center={corner1} zoom={2} style={{height: 500}}>
+            <MapContainer
+                className={className}
+                center={center}
+                zoom={2}
+                style={{ height: 500 }}
+            >
                 <MapViewControl bounds={outerBounds} />
                 <TileLayer
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
-                <GeoJSON key="my-geojson" data={mapData} />
+                <GeoJSON data={mapData} />
                 <Rectangle
                     bounds={outerBounds}
                     pathOptions={{ color: "grey" }}
@@ -55,7 +55,14 @@ const DataFilePreviewMap = ({
 const MapViewControl = ({ bounds }: { bounds: any }) => {
     const map = useMap();
     map.fitBounds(bounds);
-    return null;
+    return (
+        <button
+            className="bg-white text-black font-bold z-[999999999] absolute left-2 bottom-2 p-2 shadow-md"
+            onClick={() => map.fitBounds(bounds)}
+        >
+            CENTER
+        </button>
+    );
 };
 
 export default DataFilePreviewMap;
