@@ -1,8 +1,8 @@
-import { PreviewData } from "../../data_file_preview.vm";
-import DataFilePreviewTable from "./data_file_preview_table";
+import { MapPreviewData, PreviewData } from "../data_file_preview.vm";
+import DataFilePreviewMap from "./components/data_file_preview_map";
+import DataFilePreviewTable from "./components/data_file_preview_table";
 
-// Layout of data file preview of xls and csv are similar
-const DataFilePreview = ({ data }: { data: PreviewData }) => {
+const MapDataFilePreview = ({ data }: { data: MapPreviewData }) => {
     return (
         <>
             <h4 className="font-semibold text-gray-700 text-lg mb-1.5">
@@ -23,8 +23,9 @@ const DataFilePreview = ({ data }: { data: PreviewData }) => {
                 columns={["", ...data?.describe?.columns]}
                 data={data?.describe?.data}
             />
+            <DataFilePreviewMap className="w-full" mapData={data.mapData} totalBounds={data.totalBounds}/>
         </>
     );
 };
 
-export default DataFilePreview;
+export default MapDataFilePreview;
