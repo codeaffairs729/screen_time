@@ -11,7 +11,7 @@ const HeaderPreview = ({ header }: { header: any }) => {
     )} ${currentDate.getFullYear()}`;
 
     return (
-        <div className=" border-2 border-dtech-light-teal border-opacity-30 p-4 bg-white">
+        <div className=" border-2 border-dtech-light-teal border-opacity-30 p-4 bg-white rounded-[10px] relative">
             <div
                 id="preview_logo"
                 className="flex flex-col justify-center items-center "
@@ -21,7 +21,7 @@ const HeaderPreview = ({ header }: { header: any }) => {
             />
             <div
                 id="preview_title"
-                className="flex flex-col justify-center items-center text-xl mt-5  mb-2 underline underline-offset-8 text-[#727272]"
+                className="flex flex-col justify-center items-center text-xl mt-5  mb-2 underline underline-offset-8 text-[#333333]"
                 dangerouslySetInnerHTML={{
                     __html: header[2],
                 }}

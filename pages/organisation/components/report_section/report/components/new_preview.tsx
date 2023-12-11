@@ -29,10 +29,11 @@ const PreviewReport = ({
     const { organisation } = useContext(OrganisationDetailVMContext);
     const { qualityMetrics } = useContext(ReportVMContext);
 
-    const splittedArray = editorValue.split(/<\/p>(?=<p>)/);
+    // const splittedArray = editorValue.trim().split(/<\/p>(?=<p>)/);
+    const splittedArray = editorValue.split(/<\/p>|<p[^>]*>/).filter(Boolean);
 
     useEffect(() => {
-        for (let i = 0; i < splittedArray.length; i++) {
+               for (let i = 0; i < splittedArray.length; i++) {
             if (splittedArray[i].includes(sections[0].label)) {
                 setUpdatedSections((prevSections) => {
                     const newSections = [...prevSections];
@@ -65,7 +66,8 @@ const PreviewReport = ({
         (section, index) => section.index !== null
     );
 
-    const header = splittedArray.slice(0, previewSection[0]?.index);
+    let header = splittedArray.slice(0, previewSection[0]?.index)
+    header = header.filter((item: string) => item.trim() !== '');
     // console.log({ header });
 
     const result = previewSection.map((section, index, array) => {
@@ -78,28 +80,32 @@ const PreviewReport = ({
     });
 
     const gradientStyle = {
-        background: 'radial-gradient(2196.08% 210.97% at 144.72% -36.42%, rgba(255, 255, 255, 0.75) 0%, rgba(206, 255, 254, 0.28) 27.7%, rgba(206, 176, 208, 0.20) 84.03%)',
+        background:
+            "radial-gradient(2196.08% 210.97% at 144.72% -36.42%, rgba(255, 255, 255, 0.75) 0%, rgba(206, 255, 254, 0.28) 27.7%, rgba(206, 176, 208, 0.20) 84.03%)",
         // Add other styles as needed
       };
-    const displayResult = result.map((subarray) => subarray.join(""));
+    const displayResult = result.map((subarray) => subarray.join("")).filter(Boolean);;
 
-    console.log();
     return (
         <div className="shadow-paper-shadow mt-4 h-[656px] border-none overflow-y-scroll !bg-[#EBEBEB]">
+
             {!loading && isReportGenerated && (
                 <div
                     className="editor_preview"
                     ref={(ref) => setDownloadRef(ref)}
                 >
-                    <div className="flex relative justify-end" style={gradientStyle}>
+                    <div
+                        className="flex relative justify-end"
+                        style={gradientStyle}
+                    >
                         <div
                             id={"header"}
                             className="w-[90%] section-preview flex flex-col justify-center items-center bg-[url('/images/GroupPreviewBackground.svg')] bg-cover bg-no-repeat bg-top"
                         >
-                            <div className="border p-1 mr-2 mt-40 w-[28rem]">
+                            <div className=" mr-2 mt-40 w-[28rem] rounded-[10px]">
                                 <HeaderPreview header={header} />
                             </div>
-                            <div className="border p-1 mt-16 mb-36 mr-2 w-[28rem] ">
+                            <div className=" p-1 mt-16 mb-36 mr-2 w-[28rem] rounded-[10px]">
                                 <Summary
                                     organisation={organisation}
                                     qualityMetrics={qualityMetrics}
@@ -126,7 +132,9 @@ const PreviewReport = ({
                                         __html: result,
                                     }}
                                 />
-                                <div className="text-center text-black">Page {index+1}/{displayResult.length}</div>
+                                <div className="text-center text-black">
+                                    Page {index + 1}/{displayResult.length}
+                                </div>
                             </div>
                         );
                     })}

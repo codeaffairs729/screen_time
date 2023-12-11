@@ -15,23 +15,29 @@ const DownloadReport = () => {
     //     html2pdf().from(downloadRef).save();
     // };
 
-
     const generatePDF = async () => {
-        const sectionIds = ["header", "dataset_quality", "search_terms_used", "download_metrics", "use_cases"];
+        const sectionIds = [
+            "header",
+            "dataset_quality",
+            "search_terms_used",
+            "download_metrics",
+            "use_cases",
+        ];
         const container = document.createElement("div");
 
         sectionIds.forEach((sectionId, index) => {
-          const section = downloadRef.querySelector(`#${sectionId}`);
-          if (section) {
-            if (index > 0) {
-              container.appendChild(document.createElement("div")).style.pageBreakBefore = "always";
+            const section = downloadRef.querySelector(`#${sectionId}`);
+            if (section) {
+                if (index > 0) {
+                    container.appendChild(
+                        document.createElement("div")
+                    ).style.pageBreakBefore = "always";
+                }
+                container.appendChild(section.cloneNode(true));
             }
-            container.appendChild(section.cloneNode(true));
-          }
         });
 
         html2pdf().from(container).save();
-
     };
 
     const pxToMm = (px: number) => {

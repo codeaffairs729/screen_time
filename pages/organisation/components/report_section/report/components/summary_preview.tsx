@@ -8,13 +8,17 @@ const Summary = ({
     qualityMetrics: any;
 }) => {
     return (
-        <div className=" border-2 border-dtech-light-teal bg-white border-opacity-30 p-4 flex flex-col justify-center items-center">
+        <div className="relative border-2 border-dtech-light-teal bg-white border-opacity-30 p-4 flex flex-col justify-center items-center rounded-[10px]">
             <div className="text-base font-medium">Summary</div>
-            <div className="w-full my-5 p-5 bg-[#D9EFFC]">
+            <div className="w-full my-5 p-5 bg-[#FAFAFA]">
                 <div className="flex flex-row justify-between items-center my-2">
                     <div className="flex flex-col justify-center items-center">
-                        <span className="text-[22px] font-bold">{organisation?.stats.datasetsCount}</span>
-                        <span className="text-[#727272] font-normal">Datasets</span>
+                        <span className="text-[22px] font-bold">
+                            {organisation?.stats.datasetsCount}
+                        </span>
+                        <span className="text-[#727272] font-normal">
+                            Datasets
+                        </span>
                     </div>
                     <div className="flex flex-col justify-center items-center">
                         <span className="text-[22px] font-bold">
@@ -26,22 +30,36 @@ const Summary = ({
                             )}
                             /5
                         </span>
-                        <span className="text-[#727272] font-normal">Avg metadata quality</span>
+                        <span className="text-[#727272] font-normal">
+                            Avg metadata quality
+                        </span>
                     </div>
                 </div>
 
                 <div className="flex flex-row justify-between items-center mt-5 my-2 mx-2">
                     <div className="flex flex-col justify-center items-center">
-                        <span className="text-[22px] font-bold">{organisation?.stats.favoritesCount}</span>
-                        <span className="text-[#727272] font-normal">Like</span>
+                        <span className="text-[22px] font-bold">
+                            {organisation?.stats.favoritesCount}
+                        </span>
+                        <span className="text-[#727272] font-normal">
+                            Likes
+                        </span>
                     </div>
                     <div className="flex flex-col justify-center items-center">
-                        <span className="text-[22px] font-bold">{organisation?.stats.viewCount}</span>
-                        <span className="text-[#727272] font-normal">views</span>
+                        <span className="text-[22px] font-bold">
+                            {organisation?.stats.viewCount}
+                        </span>
+                        <span className="text-[#727272] font-normal">
+                            views
+                        </span>
                     </div>
                     <div className="flex flex-col justify-center items-center">
-                        <span className="text-[22px] font-bold">{organisation?.stats.downloadCount}</span>
-                        <span className="text-[#727272] font-normal">download</span>
+                        <span className="text-[22px] font-bold">
+                            {organisation?.stats.downloadCount}
+                        </span>
+                        <span className="text-[#727272] font-normal">
+                            download
+                        </span>
                     </div>
                 </div>
             </div>
