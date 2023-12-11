@@ -9,11 +9,11 @@ const Summary = ({
 }) => {
     return (
         <div className="relative border-2 border-dtech-light-teal bg-white border-opacity-30 p-4 flex flex-col justify-center items-center rounded-[10px]">
-            <div className="text-base font-medium">Summary</div>
+            <div className="text-lg font-normal">Summary</div>
             <div className="w-full my-5 p-5 bg-[#FAFAFA]">
-                <div className="flex flex-row justify-between items-center my-2">
+                <div className="flex flex-row justify-between items-center my-2 ">
                     <div className="flex flex-col justify-center items-center">
-                        <span className="text-[22px] font-bold">
+                        <span className="text-[22px] font-bold text-[#727272]">
                             {organisation?.stats.datasetsCount}
                         </span>
                         <span className="text-[#727272] font-normal">
@@ -21,7 +21,7 @@ const Summary = ({
                         </span>
                     </div>
                     <div className="flex flex-col justify-center items-center">
-                        <span className="text-[22px] font-bold">
+                        <span className="text-[22px] font-bold text-[#727272]">
                             {roundRatings(
                                 calculateAverageStars(
                                     qualityMetrics?.metaFileQuality
@@ -38,7 +38,7 @@ const Summary = ({
 
                 <div className="flex flex-row justify-between items-center mt-5 my-2 mx-2">
                     <div className="flex flex-col justify-center items-center">
-                        <span className="text-[22px] font-bold">
+                        <span className="text-[22px] font-bold text-[#727272]">
                             {organisation?.stats.favoritesCount}
                         </span>
                         <span className="text-[#727272] font-normal">
@@ -46,7 +46,7 @@ const Summary = ({
                         </span>
                     </div>
                     <div className="flex flex-col justify-center items-center">
-                        <span className="text-[22px] font-bold">
+                        <span className="text-[22px] font-bold text-[#727272]">
                             {organisation?.stats.viewCount}
                         </span>
                         <span className="text-[#727272] font-normal">
@@ -54,7 +54,7 @@ const Summary = ({
                         </span>
                     </div>
                     <div className="flex flex-col justify-center items-center">
-                        <span className="text-[22px] font-bold">
+                        <span className="text-[22px] font-bold text-[#727272]">
                             {organisation?.stats.downloadCount}
                         </span>
                         <span className="text-[#727272] font-normal">
