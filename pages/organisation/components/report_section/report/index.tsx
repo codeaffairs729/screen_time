@@ -17,6 +17,9 @@ import { HiPencil } from "react-icons/hi";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import PreviewReport from "./components/new_preview";
 import ReportData from "./reportData";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const DownloadReport = dynamic(() => import("./downloadReport"), {
     ssr: false,
@@ -26,10 +29,10 @@ const RichTextEditor = dynamic(() => import("./components/editor"), {
 });
 
 const names = [
-    "Dataset Quality",
-    "Search terms used",
-    "Download metrics",
-    "use cases",
+    "Fetching Dataset Quality",
+    "Fetching Search terms used",
+    "Fetching Download metrics",
+    "Fetching Use cases",
 ];
 
 const Report = ({
@@ -41,8 +44,8 @@ const Report = ({
 }) => {
     const [edit, setEdit] = useState(false);
     const { loading } = useContext(ReportVMContext);
-    const [index, setIndex] = useState(0);
 
+    const [index, setIndex] = useState(0);
     // useEffect(() => {
     //     const timer = () => {
     //         setIndex((prevIndex) => {
@@ -54,32 +57,55 @@ const Report = ({
     //     };
     //     const intervalId = setInterval(timer, 4000);
     //     return () => clearInterval(intervalId);
-    // }, [names]);
+    // }, []);
+
+    const settings = {
+        dots: false,
+        infinite: true,
+        autoplay: true,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        autoplaySpeed: 3000,
+        arrows: false,
+        pauseOnHover: false,
+        vertical: true,
+    };
 
     return (
         <div className="w-full relative">
             {loading && (
                 <div className="flex absolute mt-12 w-full h-[656px] bg-white z-20 text-[19px]">
                     <div className="ml-auto mr-auto my-auto">
-                        <h1 className="text-black">Generating cover page</h1>
-                        <div className="flex flex-row">
-                            <p className="text-dtech-light-grey3 mr-[2px]">
+                        <div className="flex flex-col justify-center items-center">
+                            {/* <p className="text-dtech-light-grey3 mr-[2px]">
                                 Fetching
-                            </p>
-                            <p className="text-dtech-light-grey3 animate-pulse transition-all  ">
-                                {names[index]}
-                            </p>
-                            <div className="flex items-end pb-[6px] pr-[4px] justify-end space-x-2 animate-pulse">
-                                <div className="w-1 h-1 bg-gray-500 rounded-full"></div>
-                                <div className="w-1 h-1 bg-gray-500 rounded-full"></div>
-                                <div className="w-1 h-1 bg-gray-500 rounded-full"></div>
+                            </p> */}
+                            <div>
+                                <h1 className="text-black">
+                                    Generating cover page
+                                </h1>
                             </div>
+                            <Slider {...settings} className="text-center">
+                                {names?.map((item: any, index: number) => {
+                                    return (
+                                        <p key={index} className=" text-dtech-light-grey3 animate-pulse transition-all w-fit">
+                                            {item}
+                                        </p>
+                                    );
+                                })}
+                            </Slider>
+                            {/* </div> */}
+                            {/* <div className="flex items-end pb-[6px] pr-[4px] justify-end space-x-2 animate-pulse">
+                                <div className="w-1 h-1 bg-gray-500 rounded-full"></div>
+                                <div className="w-1 h-1 bg-gray-500 rounded-full"></div>
+                                <div className="w-1 h-1 bg-gray-500 rounded-full"></div>
+                            </div> */}
                         </div>
-                        <p className="text-dtech-light-grey3">Finalising</p>
+                        {/* <p className="text-dtech-light-grey3">Finalising</p> */}
                     </div>
                 </div>
             )}
-
             <ReportData />
             <div className={"hidden sm:block"}>
                 <Tab.Group>
