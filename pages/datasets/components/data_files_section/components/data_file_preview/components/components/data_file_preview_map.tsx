@@ -6,10 +6,16 @@ import {
     Rectangle,
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import {
-    LatLngBoundsExpression,
-    latLng,
-} from "leaflet";
+import L from "leaflet";
+import markerIcon2x from "leaflet/dist/images/marker-icon-2x.png";
+import markerIcon from "leaflet/dist/images/marker-icon.png";
+import markerShadow from "leaflet/dist/images/marker-shadow.png";
+
+L.Icon.Default.mergeOptions({
+    iconUrl: markerIcon.src,
+    iconRetinaUrl: markerIcon2x.src,
+    shadowUrl: markerShadow.src,
+});
 
 const DataFilePreviewMap = ({
     totalBounds,
@@ -20,11 +26,11 @@ const DataFilePreviewMap = ({
     mapData: any;
     className?: string;
 }) => {
-    const center = latLng(
+    const center = L.latLng(
         (totalBounds[1] + totalBounds[0]) / 2,
         (totalBounds[3] + totalBounds[2]) / 2
     );
-    const outerBounds: LatLngBoundsExpression = [
+    const outerBounds: L.LatLngBoundsExpression = [
         [totalBounds[1], totalBounds[0]],
         [totalBounds[3], totalBounds[2]],
     ];
