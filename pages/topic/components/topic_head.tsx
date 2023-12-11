@@ -99,7 +99,7 @@ const TopicHead = () => {
                 className="flex-row sm:flex-col items-center justify-center sm:py-8 w-full"
                 data={topicCardData}
                 setData={setTopic}
-                href={`/topic/${topic?.id}}`}
+                href={`/topic/${topic?.id}`}
             />
         </div>
     );

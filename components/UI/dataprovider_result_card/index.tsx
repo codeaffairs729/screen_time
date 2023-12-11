@@ -28,7 +28,7 @@ const DataProviderCard = ({ data, isMobile, imgCss="" }: DataProviderCardProps) 
 
     return (
         <div
-            className={` border border-gray-100 rounded-md md:rounded-xl shadow-card-shadow  hover:shadow-hover-shadow  min-h-[100%] max-w-[90%]  md:max-h-[10%] md:min-w-[100%] `}
+            className={` border border-gray-100 rounded-md md:rounded-xl shadow-card-shadow  hover:shadow-hover-shadow  md:min-h-[100%] max-w-[90%]  md:max-h-[10%] md:min-w-[100%] min-h-[112px]  mr-4 `}
         >
             <div
                 className={`flex flex-col justify-center  items-center  ${
@@ -36,11 +36,11 @@ const DataProviderCard = ({ data, isMobile, imgCss="" }: DataProviderCardProps) 
                 }`}
             >
                 <div
-                    className="w-full px-3 py-2 relative "
+                    className="w-full relative "
                     onClick={() => setShowProvider(!showProvider)}
                 >
                     <BsChevronDown
-                        className={`font-normal absolute right-2 h-6 w-6 p-1 cursor-pointer float-right text-gray-500 border border-none rounded-full hover:bg-[#6DCDCB] hover:bg-opacity-[55%] active:bg-[#512C71] active:bg-opacity-[80%] active:text-white ${
+                        className={`font-normal absolute right-2 top-2 h-6 w-6 p-1 cursor-pointer float-right text-gray-500 border border-none rounded-full hover:bg-[#6DCDCB] hover:bg-opacity-[55%] active:bg-[#512C71] active:bg-opacity-[80%] active:text-white ${
                             showProvider && "rotate-180"
                         } transition-all`}
                         strokeWidth="1.5"
@@ -51,9 +51,9 @@ const DataProviderCard = ({ data, isMobile, imgCss="" }: DataProviderCardProps) 
                 ) : (
                     <BackCard data={data} isMobile={isMobile} />
                 )}
-                {!showProvider && isMobile && stats && (
+                {/* {!showProvider && isMobile && stats && (
                     <DataproviderMobileFrontStats stats={stats} />
-                )}
+                )} */}
             </div>
 
 
@@ -92,7 +92,7 @@ const FrontCard = ({ data, isMobile,imgCss="" }: { data: Data; isMobile: boolean
         .map((item) => item[0].toUpperCase())
         .join("");
     return (
-        <div className="p-2 flex flex-col justify-center items-center overflow-hidden h-[77.94px] md:h-40 w-full cursor-auto">
+        <div className="p-2 flex flex-col justify-center items-center overflow-hidden h-[77.94px] md:h-40 md:min-h-[138px] min-h-[114px] w-full cursor-auto">
             {imgUrl ? (
                 <img
                     src={imgUrl}
@@ -116,7 +116,9 @@ const BackCard = ({ data, isMobile }: { data: Data; isMobile: boolean }) => {
     const descriptionWord = isMobile ? words.slice(0, 12) : words.slice(0, 15);
 
     return (
-        <div className={` mx-3 md:mx-5 md:my-3  w-[95%]`}>
+        <div
+            className={` mx-3 md:mx-5 md:my-3  w-[95%] md:min-h-[138px] min-h-[114px] `}
+        >
             <div className={`text-[12px] md:text-[16px] md:font-normal leading-[18.75px] overflow-hidden over md:my-3 ${isMobile && "min-h-[103px]"}`}>
                 {descriptionWord.join(" ")}...
             </div>

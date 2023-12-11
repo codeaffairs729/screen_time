@@ -83,17 +83,20 @@ const NewGradientUI = ({
                 <Slider {...settings} className="login-slickdots">
                     {imageObjects?.map((item:any,index:number) => {
                         return (
-                            <div key={index} className=" hidden h-screen bg-gradient-to-b from-[rgba(181,_133,_183,_0.53)_-10.01%] to-[rgba(109,_205,_203,_0.22)_102.15%] text-center md:!flex flex-col items-center justify-center p-8">
-                                <h2 className=" text-white font-bold hidden md:block lg:text-2xl md:text-xl lg:px-24 md:px-20">
+                            <div key={index} className=" hidden h-screen bg-gradient-to-b from-[rgba(181,_133,_183,_0.53)_-10.01%] to-[rgba(109,_205,_203,_0.22)_102.15%] text-center md:!flex flex-col items-center justify-center lg:p-8">
+                                <h2 className=" text-white font-bold hidden md:block text-xl lg:text-2xl">
                                     {item.text1}
                                 </h2>
-                                <h2 className="font-semibold text-dtech-main-dark mt-6 hidden md:block lg:text-2xl md:text-xl lg:px-24 md:px-20">
+                                <h2 className="font-semibold text-dtech-main-dark mt-6 hidden md:block lg:text-2xl md:text-base">
                                     {item.text2}
                                 </h2>
+                                {/* <div className="border-2 w-full">
+                                    <img src={item.src} className="m-auto w-[800px] md:w-[150px]"/>
+                                </div> */}
                                 <img
-                                    className=" hidden md:block"
+                                    className=" hidden md:block w-[150px] lg:w-[300px]"
                                     src={item.src}
-                                    width={550}
+                                    // width={550}
                                 ></img>
                             </div>
                         );

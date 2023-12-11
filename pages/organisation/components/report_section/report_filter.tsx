@@ -1,6 +1,6 @@
 import RangeSelector from "components/UI/range_selector";
 import { OrganisationDetailVMContext } from "pages/organisation/organisation_detail.vm";
-import { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { VscTriangleDown } from "react-icons/vsc";
 import { ReportVMContext } from "./report.vm";
 import { QualityMetricVMContext } from "../insights_section/quality_insights/quality_metric.vm"; 
@@ -15,23 +15,24 @@ const ReportFilter = ({setIsReportGenerated}: {setIsReportGenerated:Function}) =
         toDate,
         setFromDate,
         setToDate,
+        editorValue
     } = useContext(ReportVMContext);
-    const {
-        qualityMetrics,
-        fetchQualityMetrics,
-        isFetchingQualityMetrics,
-        error,
-        selectedQualityInsights: selectedLabel,
-    } = useContext(QualityMetricVMContext);
+    // const {
+    //     qualityMetrics,
+    //     fetchQualityMetrics,
+    //     isFetchingQualityMetrics,
+    //     error,
+    //     selectedQualityInsights: selectedLabel,
+    // } = useContext(QualityMetricVMContext);
 
     const handleGenerateReport = () => {
         const alert = "This will remove your previous Data";
         if (
-            !editorState.getCurrentContent().hasText() ||
+            !editorValue ||
             confirm(alert) == true
         ) {
-        fetchQualityMetrics && fetchQualityMetrics();
-            fetchData(qualityMetrics);
+        // fetchQualityMetrics && fetchQualityMetrics();
+            fetchData(activeHeaders);
             setIsReportGenerated(true);
         }
     };
@@ -115,4 +116,4 @@ const Input = ({
     );
 };
 
-export default ReportFilter;
+export default React.memo(ReportFilter);

@@ -7,7 +7,7 @@ const FAQPage = () => {
     return (
         <DefaultLayout className="!bg-[#EBEBEB]" wrapperClass="!max-w-none">
             <div className="py-5 px-4 w-full   flex items-center md:bg-white bg-[#EBEBEB]">
-                <span className="text-left text-xl md:text-[26px] font-semibold md:text-black">
+                <span className="text-left text-xl md:text-[26px] md:text-black">
                     Frequently asked questions
                 </span>
             </div>
@@ -15,12 +15,12 @@ const FAQPage = () => {
             <div className="mx-4 md:my-8 md:mx-20 border-t !bg-white flex flex-col justify-center items-center md:px-[10%] px-[5%]">
                 <div className="mt-10">
                     <Image src={faqImage} width={500} height={400} />
-                    <div className="text-[#727272] font-bold text-[22px]">
+                    {/* <div className="text-[#727272] font-bold text-[22px]">
                     Find answers to the most frequently asked questions 
-                    </div>
+                    </div> */}
                 </div>
                 <div className=" my-10 w-full">
-                    <div className=" text-[#727272] font-normal text-[19px]">
+                    <div className=" text-[#727272] font-normal text-sm">
                         <span>Last updated:</span>
                         <span>15 October 2023</span>
                     </div>
@@ -127,7 +127,7 @@ const FAQPage = () => {
                         labelClassName=" !text-dtech-new-main-light !font-bold text-[22px]"
                         arrowIconClass= "!text-dtech-new-main-light"
                     >
-                        <span className="px-4 py-2 w-full  leading-6 text-justify text-[#727272] text-text-sm mr-6  my-3">
+                        <span className="px-4 py-2 w-full  leading-6 text-justify text-[#727272] text-sm mr-6  my-3">
                             You can search for datasets (unlimited) and access
                             useful features (limited) as a guest user. However,
                             creating a free account will help you unlock a lot

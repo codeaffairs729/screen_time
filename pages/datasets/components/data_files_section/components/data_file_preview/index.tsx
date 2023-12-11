@@ -1,11 +1,18 @@
 import DataFilePreviewTable from "./components/components/data_file_preview_table";
-import DataFilePreviewVM from "./data_file_preview.vm";
+import DataFilePreviewVM, {
+    CSVPreviewData,
+    DataFileFormatType,
+    MapPreviewData,
+    XLSPreviewData,
+    DataFileFormat,
+} from "./data_file_preview.vm";
 import Loader from "components/UI/loader";
 import InfoAlert from "components/UI/alerts/info_alert";
 import { Transition } from "@headlessui/react";
 import React from "react";
 import CSVDataFilePreview from "./components/csv_data_file_preview";
 import XLSDataFilePreview from "./components/xls_data_file_preview";
+import MapDataFilePreview from "./components/map_data_file_preview";
 
 const DataFilePreview = ({ dataFileId }: { dataFileId: number }) => {
     const vm = DataFilePreviewVM(dataFileId);
@@ -33,19 +40,26 @@ const DataFilePreview = ({ dataFileId }: { dataFileId: number }) => {
             className="w-100 max-w-sm mx-auto my-5"
         />
     );
-    switch (vm.data?.type) {
-        case "csv":
-            previewBlock = <CSVDataFilePreview data={vm.data} />;
+    switch (true) {
+        case DataFileFormatType.CSV.includes((vm.data as CSVPreviewData)?.type):
+            previewBlock = (
+                <CSVDataFilePreview data={vm.data as CSVPreviewData} />
+            );
             break;
-        case "xls":
-            previewBlock = <XLSDataFilePreview data={vm.data} />;
+        case DataFileFormatType.EXCEL.includes(
+            (vm.data as XLSPreviewData)?.type
+        ):
+            previewBlock = (
+                <XLSDataFilePreview data={vm.data as XLSPreviewData} />
+            );
+            break;
+        case DataFileFormatType.MAP.includes((vm.data as MapPreviewData)?.type):
+            previewBlock = (
+                <MapDataFilePreview data={vm.data as MapPreviewData} />
+            );
             break;
     }
-    return (
-        <div className="m-5 overflow-x-auto px-2">
-            {previewBlock}
-        </div>
-    );
+    return <div className="m-5 overflow-x-auto px-2">{previewBlock}</div>;
 };
 
 export default React.memo(DataFilePreview);

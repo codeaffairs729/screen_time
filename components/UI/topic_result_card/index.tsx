@@ -130,7 +130,7 @@ const FrontCard = ({
                     <div>{dummyImg}</div>
                 </div>
             )}
-            <div className=" h-[14px]"></div>
+            {/* <div className=" h-[14px]"></div> */}
         </div>
     );
 };

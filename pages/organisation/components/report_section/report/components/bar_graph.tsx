@@ -1,4 +1,3 @@
-import React, { useEffect } from "react";
 import { create, color } from "@amcharts/amcharts4/core";
 import {
     XYChart,
@@ -6,6 +5,7 @@ import {
     ValueAxis,
     ColumnSeries,
 } from "@amcharts/amcharts4/charts";
+import { useEffect, useRef } from "react";
 
 function BarChart({
     data,
@@ -18,39 +18,45 @@ function BarChart({
     isMobile: boolean;
     divID: string;
 }) {
+    const chartRef = useRef<XYChart | null>(null);
 
-    const chart = create(`${divID}`, XYChart);
-    chart.showOnInit = true;
-    // Transform data to a format compatible with the chart
-    const chartData = data?.map((item: any) => {
-        const star = Object.keys(item)[0];
-        return { category: star, value: item[star] };
-    });
+    useEffect(() => {
+        // Create chart if it doesn't exist
+        if (!chartRef.current) {
+            chartRef.current = create(`${divID}`, XYChart);
+            chartRef.current.showOnInit = true;
 
-    // Add data
-    chart.data = chartData;
+            const categoryAxis = chartRef.current.xAxes.push(new CategoryAxis());
+            categoryAxis.dataFields.category = "category";
+            categoryAxis.title.text = titles.xAxis;
 
-    // Create axes
-    const categoryAxis = chart.xAxes.push(new CategoryAxis());
-    categoryAxis.dataFields.category = "category";
-    categoryAxis.title.text = titles.xAxis;
+            const valueAxis = chartRef.current.yAxes.push(new ValueAxis());
+            valueAxis.title.text = titles.yAxis;
 
-    const valueAxis = chart.yAxes.push(new ValueAxis());
-    valueAxis.title.text = titles.yAxis;
+            const series = chartRef.current.series.push(new ColumnSeries());
+            series.dataFields.valueY = "value";
+            series.dataFields.categoryX = "category";
+            series.name = "Values";
+            series.columns.template.tooltipText = "{categoryX}: [bold]{valueY}[/]";
+            series.columns.template.fill = color("#007BFF");
+        }
 
-    // Create series
-    const series = chart.series.push(new ColumnSeries());
-    series.dataFields.valueY = "value";
-    series.dataFields.categoryX = "category";
-    series.name = "Values";
-    series.columns.template.tooltipText = "{categoryX}: [bold]{valueY}[/]";
-    series.columns.template.fill = color("#007BFF");
+        // Update data
+        const chartData = data?.map((item: any) => {
+            const star = Object.keys(item)[0];
+            return { category: star, value: item[star] };
+        });
 
-    // Dispose the chart when the component is unmounted
-    //     return () => {
-    //         chart.dispose();
-    //     };
-    // }, [data]);
+        chartRef.current.data = chartData;
+
+        // Dispose the chart when the component is unmounted
+        return () => {
+            if (chartRef.current) {
+                chartRef.current.dispose();
+                chartRef.current = null;
+            }
+        };
+    }, [data, titles, divID]);
 
     return (
         <div

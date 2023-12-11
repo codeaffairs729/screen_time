@@ -11,7 +11,7 @@ import Http from "common/http";
 import { AUTH_TOKEN } from "common/constants/cookie.key";
 import { NextPageContext } from "next";
 import DatasetTabHeaders from "./components/dataset_tabs";
-import DataFilesSection from "./components/data_files_section";
+// import DataFilesSection from "./components/data_files_section";
 // import DatasetInsights from "./components/insights_section";
 // import DatasetFeedbackSection from "./components/user_feedback";
 // import RelatedDatasets from "./components/related_datasets";
@@ -29,6 +29,9 @@ import Script from 'next/script';
 // const DataFilesSection = dynamic(() => import("./components/1data_files_section"), {
 //     ssr: false,
 // });
+const DataFilesSection = dynamic(() => import("./components/data_files_section"), {
+    ssr: false,
+});
 const DatasetFeedbackSection = dynamic(() => import("./components/user_feedback"), {
     ssr: false,
 });
@@ -59,8 +62,8 @@ const DatasetDetail = ({ dataset, logoUrl }: { dataset: Dataset | undefined, log
     const [loading, setLoading] = useState<boolean>(false);
     const [scrollPosition, setScrollPosition] = useState(0);
     const [isMobile, setIsMobile] = useState<boolean>(false);
-    const [topicImage, setTopicImage] = useState(logoUrl.topic_image_url)
-    const [imgUrl, setImgUrl] = useState(logoUrl.logo_url)
+    const [topicImage, setTopicImage] = useState(logoUrl?.topic_image_url ?? "")
+    const [imgUrl, setImgUrl] = useState(logoUrl?.logo_url ?? "")
     const { asPath, query } = useRouter();
     const [scrollLeft, setScrollLeft] = useState(0);
     const [highlightedDot, setHighlightedDot] = useState(0);
@@ -422,6 +425,7 @@ DatasetDetail.getInitialProps = async ({ query, req }: NextPageContext) => {
             return { dataset, logoUrl };
         }
     } catch (error) {
+        console.error(error);
         return { dataset: undefined };
     }
 };

@@ -43,15 +43,15 @@ const ContactUs = () => {
                     <div className="mb-2">
                         <FormRow
                             label="Name"
-                            className="!bg-transparent text-[#333333] !text-base -m-2 sm:!text-[16px] sm:!font-[700]"
+                            className="!bg-transparent text-[#333333] !text-base sm:!text-[16px] sm:!font-[700]"
                         >
                             {" "}
                         </FormRow>
-                        <InfoIcon
+                        {/* <InfoIcon
                             tooltipClassName="w-60 !bg-dtech-dark-teal"
                             iconClasses="text-[#333333] -mt-[46px] !ml-14 sm:ml-16"
                             title="Enter your full name"
-                        />
+                        /> */}
                     </div>
                     <TextField
                         className=" -mt-6 !static w-[100%]  sm:-mt-8 rounded-xl !bg-transparent"
@@ -73,15 +73,15 @@ const ContactUs = () => {
                     <div className="my-4">
                         <FormRow
                             label="Email"
-                            className=" !bg-transparent text-[#333333] !text-base -m-2 sm:mt-0 sm:!text-[16px] sm:!font-[700]"
+                            className=" !bg-transparent text-[#333333] !text-base sm:mt-0 sm:!text-[16px] sm:!font-[700]"
                         >
 
                         </FormRow>
-                        <InfoIcon
+                        {/* <InfoIcon
                             tooltipClassName="w-60 !bg-dtech-dark-teal"
                             iconClasses="text-[#333333] -mt-[46px] !ml-[52px] sm:ml-16"
                             title="Enter your email ID. If signing up as an organisation admin, enter your organisation email ID."
-                        />
+                        /> */}
                     </div>
                     <TextField
                         className=" sm:-mt-2 !static w-[100%] rounded-xl !bg-transparent "
@@ -105,14 +105,14 @@ const ContactUs = () => {
                     <div className="my-4">
                         <FormRow
                             label="Message"
-                            className="!bg-transparent text-[#333333] !text-base -m-2 sm:!text-[16px] sm:!font-[700]"
+                            className="!bg-transparent text-[#333333] !text-base sm:!text-[16px] sm:!font-[700]"
                         >
                         </FormRow>
-                        <InfoIcon
+                        {/* <InfoIcon
                             tooltipClassName="w-60 !bg-dtech-dark-teal"
                             iconClasses="text-[#333333] -mt-[46px] !ml-18 !ml-[75px]"
                             title="Enter your message"
-                        />
+                        /> */}
                     </div>
                     <TextField
                         className=" !-mt-2 sm:-mt-8 !static w-[100%] rounded-xl !bg-transparent "
