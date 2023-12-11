@@ -95,11 +95,12 @@ const PreviewReport = ({
                     ref={(ref) => setDownloadRef(ref)}
                 >
                     <div
-                        className="flex relative justify-end"
+                        className="flex relative justify-end "
                         style={gradientStyle}
+                        id={"header"}
+
                     >
                         <div
-                            id={"header"}
                             className="w-[90%] section-preview flex flex-col justify-center items-center bg-[url('/images/GroupPreviewBackground.svg')] bg-cover bg-no-repeat bg-top"
                         >
                             <div className=" mr-2 mt-40 w-[28rem] rounded-[10px]">
@@ -127,12 +128,12 @@ const PreviewReport = ({
                                 <div
                                     key={index}
                                     id={findID(result)}
-                                    className="section-preview mx-5 my-5"
+                                    className="section-preview p-10 text-dtech-light-grey3 text-[19px]"
                                     dangerouslySetInnerHTML={{
                                         __html: result,
                                     }}
                                 />
-                                <div className="text-center text-black">
+                                <div className="text-center text-black mb-4">
                                     Page {index + 1}/{displayResult.length}
                                 </div>
                             </div>
