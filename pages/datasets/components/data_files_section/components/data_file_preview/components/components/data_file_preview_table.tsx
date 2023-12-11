@@ -1,10 +1,11 @@
 import clsx from "clsx";
+import { ReactChildren, ReactNode, useState } from "react";
 
 const DataFilePreviewTable = ({
     columns,
     data,
     index,
-    className
+    className,
 }: {
     columns: string[];
     data: string[][];
@@ -55,13 +56,16 @@ const TBody = ({ data, index }: { data: string[][]; index: string[] }) => {
                                 <td
                                     className={clsx(
                                         tdClass,
+                                        "line-clamp-3",
                                         column?.length < 20 && "min-w-[100px]",
-                                        (column?.length >= 10 && column?.length < 30) && "whitespace-nowrap",
+                                        column?.length >= 10 &&
+                                            column?.length < 30 &&
+                                            "whitespace-nowrap",
                                         column?.length >= 30 && "min-w-[350px]"
                                     )}
                                     key={i}
                                 >
-                                    {column}
+                                    <ReadMore>{column}</ReadMore>
                                 </td>
                             );
                         })}
@@ -70,6 +74,48 @@ const TBody = ({ data, index }: { data: string[][]; index: string[] }) => {
             })}
         </tbody>
     );
+};
+
+const ReadMore = ({
+    children,
+    maxLength = 150,
+}: {
+    children: string;
+    maxLength?: number;
+}) => {
+    const [isExpanded, setIsExpanded] = useState(false);
+    if (
+        !children ||
+        typeof children !== "string" ||
+        (children as string).length <= maxLength
+    ) {
+        return <>{children}</>;
+    }
+    if (!isExpanded) {
+        return (
+            <>
+                {(children as string)?.slice(0, maxLength) ?? ""}...
+                <button
+                    className="text-xs hover:text-dtech-secondary-dark text-dtech-main-dark"
+                    onClick={() => setIsExpanded(true)}
+                >
+                    read more
+                </button>
+            </>
+        );
+    } else {
+        return (
+            <>
+                {children}
+                <button
+                    className="text-xs ml-2 hover:text-dtech-secondary-dark text-dtech-main-dark"
+                    onClick={() => setIsExpanded(false)}
+                >
+                    read less
+                </button>
+            </>
+        );
+    }
 };
 
 export default DataFilePreviewTable;

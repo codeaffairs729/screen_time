@@ -1,9 +1,22 @@
-import { CSVPreviewData } from "../data_file_preview.vm";
+import { MapPreviewData, PreviewData } from "../data_file_preview.vm";
+import DataFilePreviewMap from "./components/data_file_preview_map";
 import DataFilePreviewTable from "./components/data_file_preview_table";
 
-const CSVDataFilePreview = ({ data }: { data: CSVPreviewData }) => {
+const MapDataFilePreview = ({ data }: { data: MapPreviewData }) => {
     return (
         <>
+            {data?.totalBounds && (
+                <>
+                    <h4 className="font-semibold text-gray-700 text-lg mb-1.5">
+                        Data File Map
+                    </h4>
+                    <DataFilePreviewMap
+                        className="w-full mb-10"
+                        mapData={data.mapData}
+                        totalBounds={data.totalBounds}
+                    />
+                </>
+            )}
             <h4 className="font-semibold text-gray-700 text-lg mb-1.5">
                 Data File Sample
             </h4>
@@ -26,4 +39,4 @@ const CSVDataFilePreview = ({ data }: { data: CSVPreviewData }) => {
     );
 };
 
-export default CSVDataFilePreview;
+export default MapDataFilePreview;

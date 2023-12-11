@@ -11,11 +11,6 @@ const DataFilesSection = ({
     dataset: Dataset;
     className?: string;
 }) => {
-    // const vm = useContext(DatasetDetailVMContext);
-    // const dataset = vm.dataset;
-    useEffect(() => {
-        console.log("dataset", dataset);
-    }, [dataset]);
 
     if (!dataset) {
         return <div />;
@@ -50,6 +45,7 @@ const DataFilesSection = ({
                     )}
                 </tbody>
             </table>
+            
         </div>
     );
 };

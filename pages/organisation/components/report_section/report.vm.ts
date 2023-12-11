@@ -1,11 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import {
-    ContentState,
-    convertFromHTML,
-    EditorState,
-    convertToRaw,
-} from "draft-js";
-import html2canvas from "html2canvas";
+
+// import html2canvas from "html2canvas";
 import { format } from "date-fns";
 
 import jsPDF from "jspdf";
@@ -13,8 +8,8 @@ import { useHttpCall } from "common/hooks";
 import Http from "common/http";
 import toast from "react-hot-toast";
 import { OrganisationDetailVMContext } from "pages/organisation/organisation_detail.vm";
-import draftToHtml from "draftjs-to-html";
 import { jsonToUseCaseMetrics } from "../insights_section/use_case_section/usecase.vm";
+import * as htmlToImage from 'html-to-image';
 type Header = {
     label: string;
     isChecked: boolean;
@@ -35,41 +30,41 @@ const A4_WIDTH_MM = 210;
 const PAGE_Y_MARGIN = 160;
 const PAGE_X_MARGIN = 20;
 
-export const downloadPdf = (
-    input: any,
-    inputHeightMm: any,
-    fileName: string = "download.pdf"
-) => {
-    html2canvas(input, { useCORS: true }).then((canvas) => {
-        const imgData = canvas.toDataURL("image/png");
-        const pdf =
-            inputHeightMm > A4_WIDTH_MM
-                ? new jsPDF("p", "mm", [
-                      inputHeightMm + PAGE_Y_MARGIN,
-                      A4_WIDTH_MM,
-                  ])
-                : new jsPDF();
-        const imgProps = pdf.getImageProperties(imgData);
-        const pdfWidth = pdf.internal.pageSize.getWidth();
-        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+// export const downloadPdf = (
+//     input: any,
+//     inputHeightMm: any,
+//     fileName: string = "download.pdf"
+// ) => {
+//     html2canvas(input, { useCORS: true }).then((canvas) => {
+//         const imgData = canvas.toDataURL("image/png");
+//         const pdf =
+//             inputHeightMm > A4_WIDTH_MM
+//                 ? new jsPDF("p", "mm", [
+//                       inputHeightMm + PAGE_Y_MARGIN,
+//                       A4_WIDTH_MM,
+//                   ])
+//                 : new jsPDF();
+//         const imgProps = pdf.getImageProperties(imgData);
+//         const pdfWidth = pdf.internal.pageSize.getWidth();
+//         const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
 
-        pdf.addImage(
-            imgData,
-            "png",
-            10,
-            4,
-            pdfWidth - PAGE_X_MARGIN,
-            pdfHeight
-        );
-        pdf.save(fileName);
-    });
-};
+//         pdf.addImage(
+//             imgData,
+//             "png",
+//             10,
+//             4,
+//             pdfWidth - PAGE_X_MARGIN,
+//             pdfHeight
+//         );
+//         pdf.save(fileName);
+//     });
+// };
 
-const imageTag = (src: string, index: any) => {
-    return `<img  style='margin-left: auto;margin-right: auto;${
-        index ? "width: 500px;" : "width: 300px;"
-    }' src='${src}' />`;
-};
+// const imageTag = (src: string, index: any) => {
+//     return `<img  style='margin-left: auto;margin-right: auto;${
+//         index ? "width: 500px;" : "width: 300px;"
+//     }' src='${src}' />`;
+// };
 
 const formatDate = (date: Date) =>
     `${date.getDate()} ${date.toLocaleString("default", {
@@ -172,22 +167,22 @@ const ReportVM = () => {
     const [toDate, setToDate] = useState(new Date());
     currentDate.setFullYear(currentDate.getFullYear() - 1);
     const [fromDate, setFromDate] = useState(currentDate);
-    const [from, setFrom] = useState(format(new Date(), "yyyy-MM-dd"));
-    const [to, setTo] = useState(format(new Date(), "yyyy-MM-dd"));
+    // const [from, setFrom] = useState(format(new Date(), "yyyy-MM-dd"));
+    // const [to, setTo] = useState(format(new Date(), "yyyy-MM-dd"));
     const { organisation } = useContext(OrganisationDetailVMContext);
     const { imgUrl } = organisation || {};
     const [downloadRef, setDownloadRef] = useState<any>();
     const [selectedHeaders, setSelectedHeaders] = useState<string[]>([]);
     const [activeHeaders, setActiveHeaders] = useState<Header[]>(HEADER);
-    const [editorState, onEditorStateChange] = useState<EditorState>(
-        EditorState.createEmpty()
-    );
+    // const [editorState, onEditorStateChange] = useState<EditorState>(
+    //     EditorState.createEmpty()
+    // );
     const [editorValue, setEditorValue] = useState(``);
-    const [previewContent, setPreviewContent] = useState("");
+    // const [previewContent, setPreviewContent] = useState("");
     const [isGeneratingReport, setIsGeneratingReport] = useState(false);
-    useEffect(() => {
-        setPreviewContent(formatPreviewData());
-    }, [editorState]);
+    // useEffect(() => {
+    //     setPreviewContent(formatPreviewData());
+    // }, [editorState]);
 
     const onHeaderSelect = (e: any) => {
         let updatedActiveHeaders: Header[] = [];
@@ -236,65 +231,77 @@ const ReportVM = () => {
             }
         );
 
-    const generateReportContent = async (qualityMetrics: any) => {
-        setIsGeneratingReport(true);
-        const newMetric: any = document.getElementById("newMetrics");
-        const metricByLocation: any = document.getElementById("map");
-        const metricByTime: any = document.getElementById("screenshot");
-        const metricByUseCase: any = document.getElementById("pie");
-        const useCases: any = document.getElementById("useCases");
-        const searchTerms: any = document.getElementById("searchTerms");
-        const qualityMetric: any = document.getElementById("qualityMetrics");
+    // const generateReportContent = async (qualityMetrics: any) => {
+    //     setIsGeneratingReport(true);
+    //     const newMetric: any = document.getElementById("newMetrics");
+    //     const metricByLocation: any = document.getElementById("map");
+    //     const metricByTime: any = document.getElementById("screenshot");
+    //     const metricByUseCase: any = document.getElementById("pie");
+    //     const useCases: any = document.getElementById("useCases");
+    //     const searchTerms: any = document.getElementById("searchTerms");
+    //     const qualityMetric: any = document.getElementById("qualityMetrics");
 
-        const byNewMetricCanvas =
-            newMetric && (await html2canvas(newMetric)).toDataURL("image/png");
-        const byQualityMetricCanvas =
-            qualityMetric &&
-            (await html2canvas(qualityMetric)).toDataURL("image/png");
-        const bySearchTermsCanvas =
-            searchTerms &&
-            (await html2canvas(searchTerms)).toDataURL("image/png");
-        const byLocationCanvas =
-            metricByLocation &&
-            (await html2canvas(metricByLocation)).toDataURL("image/png");
-        const byTimeCanvas =
-            metricByTime &&
-            (await html2canvas(metricByTime)).toDataURL("image/png");
-        const byUseCaseCanvas =
-            metricByUseCase &&
-            (await html2canvas(metricByUseCase)).toDataURL("image/png");
-        const byUseCasesCanvas =
-            useCases && (await html2canvas(useCases)).toDataURL("image/png");
-        const base64 = await fetchImage(imgUrl);
-        const data = `
-                <figure style='width:200px;margin-left:auto;margin-right:auto;'><img src='data:image/jpeg;base64,${base64}' /></figure>
+    //     const byNewMetricCanvas =
+    //         newMetric && (await html2canvas(newMetric)).toDataURL("image/png");
+    //     const byQualityMetricCanvas =
+    //         qualityMetric &&
+    //         (await html2canvas(qualityMetric)).toDataURL("image/png");
+    //     const bySearchTermsCanvas =
+    //         searchTerms &&
+    //         (await html2canvas(searchTerms)).toDataURL("image/png");
+    //     const byLocationCanvas =
+    //         metricByLocation &&
+    //         (await html2canvas(metricByLocation)).toDataURL("image/png");
+    //     const byTimeCanvas =
+    //         metricByTime &&
+    //         (await html2canvas(metricByTime)).toDataURL("image/png");
+    //     const byUseCaseCanvas =
+    //         metricByUseCase &&
+    //         (await html2canvas(metricByUseCase)).toDataURL("image/png");
+    //     const byUseCasesCanvas =
+    //         useCases && (await html2canvas(useCases)).toDataURL("image/png");
+    //     const base64 = await fetchImage(imgUrl);
+    //     const data = `
+    //             <figure style='width:200px;margin-left:auto;margin-right:auto;'><img src='data:image/jpeg;base64,${base64}' /></figure>
                 
-                ${getReportTitle(organisation?.title)}
-                ${getReportDate(fromDate, toDate)}
-                ${headerSelected(
-                    selectedHeaders,
-                    byTimeCanvas,
-                    byUseCaseCanvas,
-                    byLocationCanvas,
-                    byQualityMetricCanvas,
-                    bySearchTermsCanvas,
-                    byUseCasesCanvas
-                )}
-            `;
+    //             ${getReportTitle(organisation?.title)}
+    //             ${getReportDate(fromDate, toDate)}
+    //             ${headerSelected(
+    //                 selectedHeaders,
+    //                 byTimeCanvas,
+    //                 byUseCaseCanvas,
+    //                 byLocationCanvas,
+    //                 byQualityMetricCanvas,
+    //                 bySearchTermsCanvas,
+    //                 byUseCasesCanvas
+    //             )}
+    //         `;
 
-        onEditorStateChange(
-            EditorState.createWithContent(
-                ContentState.createFromBlockArray(
-                    convertFromHTML(`<p>${data}</p>`).contentBlocks
-                )
-            )
-        );
-        setIsGeneratingReport(false);
+    //     onEditorStateChange(
+    //         EditorState.createWithContent(
+    //             ContentState.createFromBlockArray(
+    //                 convertFromHTML(`<p>${data}</p>`).contentBlocks
+    //             )
+    //         )
+    //     );
+    //     setIsGeneratingReport(false);
+    // };
+
+    const getImageDataURL = async (element: any) => {
+        if (element) {
+            try {
+                const dataUrl = await htmlToImage.toPng(element);
+                return dataUrl;
+            } catch (error) {
+                console.error('Error converting HTML to image:', error);
+                return null;
+            }
+        }
+        return null;
     };
 
-    const generateNewReport = async (qualityMetrics: any) => {
+    const generateNewReport = async () => {
         setIsGeneratingReport(true);
-        const newMetric: any = document.getElementById("newMetrics");
         const qualityMetric: any = document.getElementById("qualityMetrics");
         const searchTerms: any = document.getElementById("searchTerms");
         const metricesByRegion: any = document.getElementById("map");
@@ -302,26 +309,12 @@ const ReportVM = () => {
         const metricByUseCase: any = document.getElementById("pie");
         const useCases: any = document.getElementById("useCases");
 
-        const byNewMetricCanvas =
-            newMetric && (await html2canvas(newMetric)).toDataURL("image/png");
-        const byQualityMetricCanvas =
-            qualityMetric &&
-            (await html2canvas(qualityMetric)).toDataURL("image/png");
-        const bySearchTermsCanvas =
-            searchTerms &&
-            (await html2canvas(searchTerms)).toDataURL("image/png");
-        const byLocationCanvas =
-            metricesByRegion &&
-            (await html2canvas(metricesByRegion)).toDataURL("image/png");
-        const byTimeCanvas =
-            metricByTime &&
-            (await html2canvas(metricByTime)).toDataURL("image/png");
-        const byUseCaseCanvas =
-            metricByUseCase &&
-            (await html2canvas(metricByUseCase)).toDataURL("image/png");
-        const byUseCasesCanvas =
-            useCases && (await html2canvas(useCases)).toDataURL("image/png");
-
+        const byQualityMetricCanvas = await getImageDataURL(qualityMetric);
+        const bySearchTermsCanvas = await getImageDataURL(searchTerms);
+        const byLocationCanvas = await getImageDataURL(metricesByRegion);
+        const byTimeCanvas = await getImageDataURL(metricByTime);
+        const byUseCaseCanvas = await getImageDataURL(metricByUseCase);
+        const byUseCasesCanvas = await getImageDataURL(useCases);
 
         const data = `
                 <p style="text-align: center;"><img src="${imgUrl}" width=200 height=150 style="text-align: center;" /></p>
@@ -342,19 +335,6 @@ const ReportVM = () => {
         setIsGeneratingReport(false);
     };
 
-    const formatPreviewData = () => {
-        let html = draftToHtml(convertToRaw(editorState.getCurrentContent()));
-        const images = convertToRaw(editorState.getCurrentContent()).entityMap;
-
-        Object.values(images).forEach((image, index) => {
-            html = html.replace(
-                "<figure>📷</figure>",
-                imageTag(image?.data?.src, index)
-            );
-        });
-
-        return html;
-    };
 
     const {
         execute: executeFetchQualityMetrics,
@@ -609,18 +589,22 @@ const ReportVM = () => {
         setFromDate(new Date(from));
         setToDate(new Date(to));
         //Check if option selected
-    let promise1;
-    let promise2;
-    let promise3;
-    let promise4;
-    let promise5; 
-    let promise6; 
-    activeHeaders[0].isChecked==true&&(promise5 = fetchQualityMetrics());
-    activeHeaders[1].isChecked==true&&(promise4 = fetchSearchTerms());
-    activeHeaders[2].isChecked==true&&(promise1 = fetchMetricDataByTime(from, to));
-    activeHeaders[2].isChecked==true&&(promise2 = fetchMetricDataByRoles(from, to));
-    activeHeaders[2].isChecked==true&&(promise3 = fetchMetricDataByLocation(from, to));
-    activeHeaders[3].isChecked==true&&(promise6 = fetchUseCases());
+        let promise1;
+        let promise2;
+        let promise3;
+        let promise4;
+        let promise5;
+        let promise6;
+        activeHeaders[0].isChecked == true &&
+            (promise5 = fetchQualityMetrics());
+        activeHeaders[1].isChecked == true && (promise4 = fetchSearchTerms());
+        activeHeaders[2].isChecked == true &&
+            (promise1 = fetchMetricDataByTime(from, to));
+        activeHeaders[2].isChecked == true &&
+            (promise2 = fetchMetricDataByRoles(from, to));
+        activeHeaders[2].isChecked == true &&
+            (promise3 = fetchMetricDataByLocation(from, to));
+        activeHeaders[3].isChecked == true && (promise6 = fetchUseCases());
 
         Promise.all([
             promise1,
@@ -630,10 +614,17 @@ const ReportVM = () => {
             promise5,
             promise6,
         ]).then(() => {
-            // generateReportContent(qualityMetrics);
-            generateNewReport(qualityMetrics);
+            generateNewReport();
         });
     };
+
+    const transformedData = searchTerms.map((item: any) => {
+        return {
+            tag: item.title.replace(/\+/g, " "),
+            count: item.count,
+        };
+    });
+
     const isFetching =
         isFetchingByTime ||
         isFetchingByRoles ||
@@ -651,17 +642,17 @@ const ReportVM = () => {
         isFetchingUseCases;
 
     return {
-        generateReportContent,
-        onEditorStateChange,
+        // generateReportContent,
+        // onEditorStateChange,
         setSelectedHeaders,
         setActiveHeaders,
         setDownloadRef,
         onHeaderSelect,
         selectedHeaders,
         activeHeaders,
-        editorState,
+        // editorState,
         downloadRef,
-        previewContent,
+        // previewContent,
         loading,
         fromDate,
         setFromDate,
@@ -676,6 +667,8 @@ const ReportVM = () => {
         useCases,
         editorValue,
         setEditorValue,
+        transformedData,
+        graphDataVal,
     };
 };
 
@@ -742,6 +735,167 @@ export const getDateRange = (fromDate: any, toDate: any, dates: any) => {
     }
 };
 
+export const graphDataVal = (
+    downloadByTime: any,
+    fromDate: any,
+    toDate: any
+) => {
+    const filteredDates = downloadByTime.filter(
+        (data: any) =>
+            new Date(data?.date) >= new Date(fromDate) &&
+            new Date(data?.date) <= new Date(toDate)
+    );
+
+    const dates = filteredDates.sort((a: any, b: any) => {
+        if (new Date(a.date) > new Date(b.date)) return 1;
+        if (new Date(a.date) < new Date(b.date)) return -1;
+        else return 0;
+    });
+    const lineChartData = getDateRange(fromDate, toDate, dates);
+
+    const graphData = [];
+    let dataAvailable = false;
+
+    for (const item of lineChartData) {
+        const dataPoint = {
+            [item.month ?? item.date]: item.download,
+        };
+
+        graphData.push(dataPoint);
+
+        if (item.download > 0) {
+            dataAvailable = true;
+        }
+    }
+
+    return graphData;
+};
+
+export const getTableData = (fromDate: any, toDate: any, dates: any) => {
+    const differenceInDays: number = getDifferenceInDays(fromDate, toDate);
+    if (differenceInDays >= 90) {
+        const tableDataByMonth = getDataByMonth(dates).map((data: any) => [
+            [data.month],
+            [data.count],
+        ]);
+        return tableDataByMonth;
+    } else {
+        const tableDataByTime = dates.map((data: DownloadByTime) => {
+            const date = new Date(data?.date);
+            const month = date.toLocaleString("en", { month: "short" });
+            const year = new Date(data?.date).getFullYear();
+            return [[`${month} ${year}`], [data.count]];
+        });
+
+        return tableDataByTime;
+    }
+};
+
+export const getRegion = (downloadByLocation: any) => {
+    return downloadByLocation?.map((region: any) => ({
+        name: region["name"],
+        location: region["locations"]?.map((location: any) => ({
+            lat: location["latitude"],
+            long: location["longitude"],
+        })),
+        count: region["count"],
+        date: region["date"],
+    }));
+};
+
+export const getAge = (date: string) => {
+    let seconds = Math.floor((+new Date() - +new Date(date)) / 1000);
+    let interval = seconds / 31536000;
+    if (interval > 1) {
+        return Math.floor(interval) + " years ago";
+    }
+    interval = seconds / 2592000;
+    if (interval > 1) {
+        return Math.floor(interval) + " months ago";
+    }
+    interval = seconds / 86400;
+    if (interval > 1) {
+        const daysAgo =
+            Math.floor(interval) +
+            (Math.floor(interval) === 1 ? " day" : " days") +
+            " ago";
+        return daysAgo;
+    }
+    interval = seconds / 3600;
+    if (interval > 1) {
+        return Math.floor(interval) + " hours ago";
+    }
+    interval = seconds / 60;
+    if (interval > 1) {
+        return Math.floor(interval) + " minutes ago";
+    }
+    return " just now";
+};
+
+export const getRegionTableData = (downloadByLocation: any) => {
+    const regions = getRegion(downloadByLocation);
+    const loc: any = [];
+    const downloadCounts: any = [];
+    regions?.map((region: any) => {
+        region["location"]?.map((location: any) => {
+            loc.push([location?.lat, location?.long]);
+            downloadCounts.push(1);
+        });
+    });
+    const tableData = regions?.map((region: any) => [
+        region?.name,
+        region?.count,
+        getAge(region.date),
+    ]);
+
+    return tableData;
+};
+
+export function sortAndAggregate(categories: any) {
+    const sortedCategories = categories
+        .slice()
+        .sort((a: any, b: any) => b.value - a.value);
+
+    if (sortedCategories.length > 10) {
+        const otherCategories = sortedCategories.slice(9);
+        const aggregatedValue = otherCategories.reduce(
+            (sum: any, category: any) => sum + category.value,
+            0
+        );
+        sortedCategories[9] = { category: "others", value: aggregatedValue };
+        return sortedCategories.slice(0, 10);
+    }
+
+    return sortedCategories;
+}
+
+export const getUseCaseData = (useCases: any) => {
+    return sortAndAggregate(useCases).map((data: any) => [
+        data.category.charAt(0).toUpperCase() + data.category.slice(1),
+        data.value,
+    ]);
+};
+
+export const getfilteredData = (
+    downloadByTime: any,
+    fromDate: any,
+    toDate: any
+) => {
+    const filteredDates = downloadByTime.filter(
+        (data: any) =>
+            new Date(data?.date) >= new Date(fromDate) &&
+            new Date(data?.date) <= new Date(toDate)
+    );
+
+    const dates = filteredDates.sort((a: any, b: any) => {
+        if (new Date(a.date) > new Date(b.date)) return 1;
+        if (new Date(a.date) < new Date(b.date)) return -1;
+        else return 0;
+    });
+
+    return dates;
+};
+
 interface IReportVMContext {
     generateReportContent: any;
     onEditorStateChange: any;
@@ -769,6 +923,8 @@ interface IReportVMContext {
     useCases: any;
     editorValue: any;
     setEditorValue: any;
+    transformedData: any;
+    graphDataVal: any;
 }
 
 export const ReportVMContext = createContext<IReportVMContext>(

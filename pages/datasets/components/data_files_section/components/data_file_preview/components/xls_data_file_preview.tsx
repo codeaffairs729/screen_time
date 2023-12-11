@@ -2,7 +2,7 @@ import { Tab } from "@headlessui/react";
 import { PreviewData, XLSPreviewData } from "../data_file_preview.vm";
 import { ReactNode } from "react";
 import clsx from "clsx";
-import DataFilePreview from "./components/data_file_preview";
+import DataFilePreviewTable from "./components/data_file_preview_table";
 
 const XLSDataFilePreview = ({ data }: { data: XLSPreviewData }) => {
     return (
@@ -44,7 +44,24 @@ const SheetTab = ({ children }: { children: ReactNode }) => {
 const SheetPanel = ({ data }: { data: PreviewData }) => {
     return (
         <Tab.Panel>
-            <DataFilePreview data={data} />
+            <h4 className="font-semibold text-gray-700 text-lg mb-1.5">
+                Data File Sample
+            </h4>
+            <DataFilePreviewTable
+                index={data?.head?.index}
+                className="mb-10"
+                columns={["", ...data?.head?.columns]}
+                data={data?.head?.data}
+            />
+            <h4 className="font-semibold text-gray-700 text-xl mb-1.5">
+                Data File Summary
+            </h4>
+            <DataFilePreviewTable
+                index={data?.describe?.index}
+                className="mb-2"
+                columns={["", ...data?.describe?.columns]}
+                data={data?.describe?.data}
+            />
         </Tab.Panel>
     );
 };

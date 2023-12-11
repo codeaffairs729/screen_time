@@ -14,10 +14,17 @@ import {
     usereventDatasetDownloadSearchTerms,
 } from "services/usermetrics.service";
 // import { DatasetDetailVMContext } from "pages/datasets/dataset_detail.vm";
+import { Disclosure } from "@headlessui/react";
 
-const Row = ({ dataFile, dataset }: { dataFile: DatasetUrl, dataset: Dataset }) => {
+const Row = ({
+    dataFile,
+    dataset,
+}: {
+    dataFile: DatasetUrl;
+    dataset: Dataset;
+}) => {
     // const vm = useContext(DatasetDetailVMContext) as any;
-    const [showPreview, setShowPreview] = useState(false);
+    // const [showPreview, setShowPreview] = useState(false);
 
     let description = "Unknown";
     if (
@@ -52,45 +59,53 @@ const Row = ({ dataFile, dataset }: { dataFile: DatasetUrl, dataset: Dataset }) 
     // Download dataset file end
 
     return (
-        <>
-            <tr
-                className={clsx(
-                    showPreview
-                        ? "bg-dtech-light-teal bg-opacity-50"
-                        : "bg-dtech-light-grey2"
-                )}
-            >
-                <TD>{description}</TD>
-                <TD>{dataFile?.format?.toLowerCase() ?? "-"}</TD>
-                <TD>{sizemb}</TD>
-                <TD>
-                    <a className="inline-block"
-                        onClick={onDataFileDownload}
-                        href={dataFile.url?.replace(/["']/g, "")}
-                        download
-                        target="_blank"
-                        rel="noreferrer"
-                    >
-                        <BiDownload size={24} className="text-dtech-light-grey3" />
-                    </a>
-                </TD>
-                <TD>
-                    <button onClick={() => setShowPreview(!showPreview)}>
-                        {showPreview ? (
-                            <AiFillEyeInvisible
-                                size={24}
-                                className="text-dtech-light-grey3"
-                            />
-                        ) : (
-                            <AiFillEye
-                                size={24}
-                                className="text-dtech-light-grey3"
-                            />
+        <Disclosure>
+            {({ open }) => (
+                <>
+                    <tr
+                        className={clsx(
+                            open
+                                ? "bg-dtech-light-teal bg-opacity-50"
+                                : "bg-dtech-light-grey2"
                         )}
-                    </button>
-                </TD>
-            </tr>
-            {showPreview && (
+                    >
+                        <TD>{description}</TD>
+                        <TD>{dataFile?.format?.toLowerCase() ?? "-"}</TD>
+                        <TD>{sizemb}</TD>
+                        <TD>
+                            <a
+                                className="inline-block"
+                                onClick={onDataFileDownload}
+                                href={dataFile.url?.replace(/["']/g, "")}
+                                download
+                                target="_blank"
+                                rel="noreferrer"
+                            >
+                                <BiDownload
+                                    size={24}
+                                    className="text-dtech-light-grey3"
+                                />
+                            </a>
+                        </TD>
+                        <TD>
+                            <Disclosure.Button className="py-2">
+                                {open ? (
+                                    <AiFillEyeInvisible
+                                        size={24}
+                                        className="text-dtech-light-grey3"
+                                    />
+                                ) : (
+                                    <AiFillEye
+                                        size={24}
+                                        className="text-dtech-light-grey3"
+                                    />
+                                )}
+                            </Disclosure.Button>
+                            {/* <button onClick={() => setShowPreview(!showPreview)}>
+                    </button> */}
+                        </TD>
+                    </tr>
+                    {/* {showPreview && (
                 <>
                     <tr className="relative -top-1">
                         <td
@@ -99,10 +114,22 @@ const Row = ({ dataFile, dataset }: { dataFile: DatasetUrl, dataset: Dataset }) 
                         ></td>
                     </tr>
                 </>
-            )}
-            <tr className="clear-both">
-                <td colSpan={5}>
+            )} */}
                     <Transition
+                        enter="transition duration-100 ease-out"
+                        enterFrom="transform scale-95 opacity-0"
+                        enterTo="transform scale-100 opacity-100"
+                        leave="transition duration-75 ease-out"
+                        leaveFrom="transform scale-100 opacity-100"
+                        leaveTo="transform scale-95 opacity-0"
+                        as="tr"
+                    >
+                        <Disclosure.Panel as="td" colSpan={5}>
+                            {/* Yes! You can purchase a license that you can share with your entire
+                team. */}
+                            {/* <tr>
+                                <td colSpan={5}> */}
+                                    {/* <Transition
                         enter="transition-[max-height] duration-700 overflow-hidden"
                         enterFrom="transform scale-75 max-h-0"
                         enterTo="transform scale-100 max-h-[99999px]"
@@ -111,17 +138,25 @@ const Row = ({ dataFile, dataset }: { dataFile: DatasetUrl, dataset: Dataset }) 
                         leaveFrom="transform scale-100 max-h-80"
                         leaveTo="transform max-h-0"
                         show={showPreview}
-                    >
-                        <DataFilePreview dataFileId={dataFile.id} />
+                    > */}
+                                    <DataFilePreview dataFileId={dataFile.id} />
+                                    {/* </Transition> */}
+                                {/* </td>
+                            </tr> */}
+                        </Disclosure.Panel>
                     </Transition>
-                </td>
-            </tr>
-        </>
+                </>
+            )}
+        </Disclosure>
     );
 };
 
 const TD = ({ children }: { children: ReactNode }) => {
-    return <td className={clsx("text-center p-2 text-dtech-dark-grey2")}>{children}</td>;
+    return (
+        <td className={clsx("text-center p-2 text-dtech-dark-grey2")}>
+            {children}
+        </td>
+    );
 };
 
 export default Row;
