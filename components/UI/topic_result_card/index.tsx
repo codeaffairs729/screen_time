@@ -102,14 +102,29 @@ const FrontCard = ({
         .split(".")
         .map((item) => item[0].toUpperCase())
         .join("");
+
+    const lowImage = "/calculatorBg_less.jpg";
     return (
         <div className=" flex flex-col justify-center items-center overflow-hidden h-[77.94px] md:h-40 w-full md:min-h-[138px] min-h-[114px] cursor-auto">
             {imgUrl ? (
-                <img
-                    src={imgUrl}
-                    alt=""
-                    className={`${imgCss}  rounded-t-xl`}
-                />
+                // <img
+                //     src={imgUrl}
+                //     alt="topic car"
+                //     className={`${imgCss}  rounded-t-xl`}
+
+                // />
+                <div className={`${imgCss} rounded-t-xl`}>
+                    <Image
+                        src={imgUrl}
+                        className={`rounded-t-xl`}
+                        alt=""
+                        width={343}
+                        height={148}
+                        quality={10}
+                        placeholder="blur"
+                        blurDataURL="/calculatorBg_less.jpg"
+                    />
+                </div>
             ) : (
                 <div className="object-contain md:h-40 md:w-full h-[77.94px] w-fit flex justify-center items-center text-3xl font-extrabold text-[#EBEBEB] ">
                     <div>{dummyImg}</div>
