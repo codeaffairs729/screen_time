@@ -83,8 +83,6 @@ const ReadMore = ({
     children: string;
     maxLength?: number;
 }) => {
-    console.log("children", children, typeof children === "string");
-
     const [isExpanded, setIsExpanded] = useState(false);
     if (
         !children ||
@@ -118,10 +116,6 @@ const ReadMore = ({
             </>
         );
     }
-
-    // const child = <div>{children}</div>;
-    // // console.log("child", child.);
-    // return child;
 };
 
 export default DataFilePreviewTable;
