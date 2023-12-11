@@ -9,7 +9,7 @@ const Summary = ({
 }) => {
     return (
         <div className="relative border-2 border-dtech-light-teal bg-white border-opacity-30 p-4 flex flex-col justify-center items-center rounded-[10px]">
-            <div className="text-base font-medium">Summary</div>
+            <div className="text-lg font-normal">Summary</div>
             <div className="w-full my-5 p-5 bg-[#FAFAFA]">
                 <div className="flex flex-row justify-between items-center my-2 ">
                     <div className="flex flex-col justify-center items-center">

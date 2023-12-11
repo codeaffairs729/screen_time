@@ -95,10 +95,9 @@ const PreviewReport = ({
                     ref={(ref) => setDownloadRef(ref)}
                 >
                     <div
-                        className="flex relative justify-end "
+                        className="flex relative justify-end h-[1100px]"
                         style={gradientStyle}
                         id={"header"}
-
                     >
                         <div
                             className="w-[90%] section-preview flex flex-col justify-center items-center bg-[url('/images/GroupPreviewBackground.svg')] bg-cover bg-no-repeat bg-top"
