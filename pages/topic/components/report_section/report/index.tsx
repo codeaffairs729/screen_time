@@ -37,9 +37,7 @@ const BarChart = dynamic(() => import("./components/bar_graph"), {
 const DownloadReport = dynamic(() => import("./downloadReport"), {
     ssr: false,
 });
-const EditReport = dynamic(() => import("./editReport"), {
-    ssr: false,
-});
+
 
 interface RatingObject {
     [key: number]: number;
@@ -420,7 +418,7 @@ const Report = ({
                                     isReportGenerated={isReportGenerated}
                                 />
                             ) : (
-                                <EditReport />
+                                <RichTextEditor />
                             )}
                         </Tab.Panel>
                     </Tab.Panels>
