@@ -11,6 +11,7 @@ import { RootState } from "store";
 import User from "models/user.model";
 import Catalogue from "./components/view_catalogue";
 import ViewCatalogueVM, { ViewCatalogueVMContext } from "./view_catalogue.vm";
+import { CiSearch } from "react-icons/ci";
 const RegisterDataSourceTabHeaders = dynamic(
     () => import("./components/register_data_source_tabs"),
     {
@@ -28,6 +29,7 @@ enum tabIndex {
 
 const RegisterDataSourcePage = () => {
     const [showAdvanced, setShowAdvanced] = useState(false);
+    const [searchValue, setSearchValue] = useState("");
     const { asPath } = useRouter();
     const [selectedIndex, setSelectedIndex] = useState<any>(
         tabIndex[asPath.split("#")[1]?.split("/")[0] as any] || 0
@@ -41,6 +43,10 @@ const RegisterDataSourcePage = () => {
         setSelectedIndex(tabIndex[hashParam as any]);
     }, [tabIndex[asPath.split("#")[1]?.split("/")[0] as any]]);
     const viewCatalogueVm = ViewCatalogueVM();
+
+    const handleSerch = (e: any) => {
+        setSearchValue(e.target.value);
+    };
     return (
         <DefaultLayout wrapperClass="!max-w-none">
             <div className="mx-4 md:my-8 md:mx-20 border-t !bg-white">
@@ -57,7 +63,21 @@ const RegisterDataSourcePage = () => {
                             <ViewCatalogueVMContext.Provider
                                 value={viewCatalogueVm}
                             >
-                                <Catalogue />
+                                <div className="flex">
+                                    <div className="relative w-1/3">
+                                        <input
+                                            type="search"
+                                            onChange={handleSerch}
+                                            className="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-lg border-s-gray-50 border-s-2 border border-gray-300 focus:ring-gray-700 focus:border-gray-700 dark:bg-gray-700 dark:border-s-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-gray-700"
+                                            placeholder="Search"
+                                            required
+                                        />
+                                        <div className="absolute top-0 right-0 p-2.5 text-sm font-medium h-full rounded-lg">
+                                            <CiSearch fontSize={"20px"} />
+                                        </div>
+                                    </div>
+                                </div>
+                                <Catalogue searchValue={searchValue} />
                             </ViewCatalogueVMContext.Provider>
                         </TabPanel>
                     </Tab.Panels>
