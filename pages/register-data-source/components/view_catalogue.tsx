@@ -2,8 +2,9 @@ import { useContext, useEffect, useState } from "react";
 import { ViewCatalogueVMContext } from "../view_catalogue.vm";
 import Pagination from "components/UI/pagination_for_datasets";
 
-const Catalogue = () => {
+const Catalogue = ({ searchValue }: { searchValue: any }) => {
     // const [currentSlide, setCurrentSlide] = useState(0);
+    const [currentCatalouge, setCurrentCatlouge] = useState([]);
 
     const {
         fetchCatalogue,
@@ -23,21 +24,21 @@ const Catalogue = () => {
     }
 
     return (
-        <div className="mt-20" >
+        <div className="mt-20">
             <div className="overflow-auto md:overflow-x-hidden ">
                 <table
                     className=" w-full h-full "
                     // style={{ transform: `translateX(-${currentSlide * 16}%)` }}
                 >
-                    <thead className="text-xs sm:text-sm md:text-[19px] text-[#333333]">
+                    <thead className="text-xs sm:text-sm md:text-[17px] text-[#333333]">
                         <tr className="">
-                            <th className="sm:w-[17%] p-2 border-r-[1px] sm:border-r-0  w-1/2 text-left  pb-4 min-w-[130px]">
+                            <th className="sm:w-[17%] p-2 text-xs sm:text-sm border-r-[1px] sm:border-r-0  w-1/2 text-left  pb-4 min-w-[130px]">
                                 Data Host Name
                             </th>
-                            <th className="sm:w-[17%] p-2  text-center pb-4">
+                            <th className="sm:w-[17%] p-2 text-xs sm:text-sm text-center pb-4">
                                 Data Host URL
                             </th>
-                            <th className="sm:w-[17%] p-2  text-center pb-4">
+                            <th className="sm:w-[17%] p-2 text-xs sm:text-sm  text-center pb-4">
                                 Data Management System
                                 {/* Data Host
                                 <br />
@@ -45,30 +46,46 @@ const Catalogue = () => {
                                     (own data and/or other&apos;s data)
                                 </span> */}
                             </th>
-                            <th className="sm:w-[17%] p-2  text-center pb-4">
+                            <th className="sm:w-[17%] p-2 text-xs sm:text-sm text-center pb-4">
                                 Available On Dtechtive?
                             </th>
                         </tr>
                     </thead>
                     <tbody className=" sm:border-t-[1px] border-black text-[#727272] sm:text-sm md:text-[19px]">
-                        {catalouge?.data_sources?.map((catalouge_item: any, index: number) => (
-                            <tr className=" border-b-[1px] h-14 hover:bg-dtech-light-grey" key={index}>
-                                <td className=" p-2  border-r-[1px] sm:border-r-0  w-1/2 min-w-[120px] sm:w-[17%]">
-                                    {catalouge_item.site_name}
-                                </td>
-                                <td className="underline underline-offset-2 sm:w-[17%] p-2   min-w-[100px] text-center">
-                                    <a href={catalouge_item.site_url} target="_blank" rel="noreferrer" className=" text-dtech-dark-blue hover:underline hover:decoration-dtech-light-blue hover:text-dtech-light-blue hover:bg-[#6DCDCB8C] active:bg-dtech-dark-yellow active:text-black">{catalouge_item.site_url}</a>
-                                </td>
-                                <td className="sm:w-[17%] p-2   text-center">
-                                    {catalouge_item.data_management_system}
-                                </td>
-                                <td className="sm:w-[17%] p-2   text-center">
-                                    {catalouge_item.scraper_id ? "Yes" : "No"}
-                                </td>
-                                {/* <td className="sm:w-[17%] p-2 text-xs sm:text-sm text-center">
+                        {catalouge?.data_sources
+                            ?.filter((el: { site_name: string }) =>
+                                el.site_name.includes(searchValue)
+                            )
+                            .map((catalouge_item: any, index: number) => (
+                                <tr
+                                    className="text-xs sm:text-sm border-b-[1px] h-14 hover:bg-dtech-light-grey"
+                                    key={index}
+                                >
+                                    <td className=" p-2  border-r-[1px] sm:border-r-0  w-1/2 min-w-[120px] sm:w-[17%]">
+                                        {catalouge_item.site_name}
+                                    </td>
+                                    <td className="underline underline-offset-2 sm:w-[17%] p-2   min-w-[100px] text-center">
+                                        <a
+                                            href={catalouge_item.site_url}
+                                            target="_blank"
+                                            rel="noreferrer"
+                                            className=" text-dtech-dark-blue hover:underline hover:decoration-dtech-light-blue hover:text-dtech-light-blue hover:bg-[#6DCDCB8C] active:bg-dtech-dark-yellow active:text-black"
+                                        >
+                                            {catalouge_item.site_url}
+                                        </a>
+                                    </td>
+                                    <td className="sm:w-[17%] p-2   text-center">
+                                        {catalouge_item.data_management_system}
+                                    </td>
+                                    <td className="sm:w-[17%] p-2   text-center">
+                                        {catalouge_item.scraper_id
+                                            ? "Yes"
+                                            : "No"}
+                                    </td>
+                                    {/* <td className="sm:w-[17%] p-2 text-xs sm:text-sm text-center">
                                 </td> */}
-                            </tr>
-                        ))}
+                                </tr>
+                            ))}
                     </tbody>
                 </table>
             </div>

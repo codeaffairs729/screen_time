@@ -79,6 +79,7 @@ const ResultCard = ({
             onMouseLeave={(e) =>
                 pageName === "workspace" && setCardHover(false)
             }
+            className="mx-8"
         >
             <div className="md:hidden ">
                 {pageName === "workspace" && (
