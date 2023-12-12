@@ -15,6 +15,7 @@ import GenerateApi from "components/UI/genrateapi_pop";
 
 const UserSection = () => {
     const user = useSelector((state: RootState) => state.auth.user);
+    const [viewAll, setViewAll] = useState(false)
     const fileInputRef = useRef<HTMLInputElement>(null);
     const apiPopupRef = useRef<HTMLDivElement>(null);
     const vm = UserTabPanelVM();
@@ -36,19 +37,22 @@ const UserSection = () => {
             fileInputRef.current.click();
         }
     };
-    const handleClickOutside = (event: MouseEvent) => {
-        if (apiPopupRef.current && !apiPopupRef.current.contains(event.target as Node)) {
-            vm.setApiPopup(false);
-        }
-    };
-    useEffect(() => {
-        // Attach the event listener when the component mounts
-        document.addEventListener("mousedown", handleClickOutside);
-        // Clean up the event listener when the component unmounts
-        return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
-        };
-    }, []);
+    const myRef = useRef(null);
+    useOutsideAlerter(myRef);
+    function useOutsideAlerter(ref: any) {
+        useEffect(() => {
+            // Function for click event
+            function handleOutsideClick(event: any) {
+                if (ref.current && !ref.current.contains(event.target)) {
+                    setViewAll(viewAll);
+                }
+            }
+            // Adding click event listener
+            document.addEventListener("click", handleOutsideClick);
+            return () =>
+                document.removeEventListener("click", handleOutsideClick);
+        }, [ref]);
+    }
     const nameInitial = user
         ? user?.name
             ?.split(" ")
@@ -58,7 +62,7 @@ const UserSection = () => {
     return (
         <UserTabPanelVMContext.Provider value={vm}>
 
-            <div className="pt-16 max-w-3xl md:mx-auto mx-2">
+            <div className="pt-16 max-w-3xl md:mx-auto mx-2" ref={myRef}>
                 <div className="flex flex-col justify-between items-center">
                     <div className="relative w-40 flex justify-center items-end">
                         <div
