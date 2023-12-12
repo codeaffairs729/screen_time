@@ -101,6 +101,7 @@ const headerSelected = (
             object === "Download metrics"
                 ? `
                 <p><strong id=label_${index}>${object}</strong>
+                <br/>
                 ${formatSubHeading("Downloads by region")}
                 ${
                     byRegion

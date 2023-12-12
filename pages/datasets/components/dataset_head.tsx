@@ -287,7 +287,7 @@ const DatasetHead = ({ dataset }: any) => {
                 gridClass="md:!gap-16"
                 data={{ ...headDataset, url: headDataset?.dataProviders?.datasetSource }}
                 setData={setHeadDataset}
-                href={`/dataset/${dataset?.id}`}
+                href={`/datasets/${dataset?.id}`}
                 owner={dataset.owner.organisation}
             />
         </div>

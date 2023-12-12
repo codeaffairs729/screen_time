@@ -69,7 +69,7 @@ const NewResultCardAction = ({
         <div className={clsx("flex", className)}>
             <div
                 className={clsx(
-                    "grid grid-flow-col md:grid-cols-2 md:grid-flow-row gap-8 md:gap-6",
+                    "grid grid-flow-col md:grid-cols-2 md:grid-flow-row gap-3 md:gap-6 lg:gap-8",
                     gridClass
                 )}
             >
