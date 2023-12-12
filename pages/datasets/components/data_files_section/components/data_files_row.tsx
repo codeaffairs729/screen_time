@@ -37,7 +37,7 @@ const Row = ({
     }
     let sizemb = "Unknown";
     if (dataFile?.sizemb && dataFile?.sizemb != "null") {
-        sizemb = dataFile?.sizemb + " KB";
+        sizemb = dataFile?.sizemb + " MB";
     }
 
     // Download dataset file start

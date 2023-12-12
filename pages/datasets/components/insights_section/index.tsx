@@ -50,7 +50,7 @@ const DatasetInsights = () => {
                 <UseCaseMetricsVMContext.Provider value={useCaseMetricVM}>
                     <DownloadMetricsVMContext.Provider value={downloadMetricVM}>
                         {!isMobile ? <div className="mb-6">
-                            <Tab.Group selectedIndex={selectedInsightTab}>
+                            <Tab.Group defaultIndex={selectedInsightTab}>
                                 <DatasetTabHeaders
                                     setSelectedInsightTab={
                                         setSelectedInsightTab
