@@ -1,76 +1,23 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useState } from "react";
+import { Fragment, useContext } from "react";
 import PrimaryBtn from "./form/primary_btn";
+import { UserTabPanelVMContext } from "pages/account/components/account_detail_section/components/user/user_tab_panel.vm";
+import Loader from "./loader";
+import Table from "pages/organisation/components/table";
+import TextField from "./form/text_field";
 
 const GenerateApi = () => {
-    let [isOpen, setIsOpen] = useState(true);
-    const [istable, setIstable] = useState(false);
-    const [apiData, setApiData] = useState([
-      {
-        name: "Dataset xydfsd",
-        key: "sdfsdf323fsdsdfsdff",
-        create: "123",
-        lastused: "123",
-    },
-    {
-        name: "Quality sdfsd",
-        key: "Dfsdfw4r23wdfw4",
-        create: "123",
-        lastused: "123",
-    },
-    {
-        name: "fdsdfs",
-        key: "dsf324dsf3466wer",
-        create: "123",
-        lastused: "123",
-    },
-    {
-        name: "sdgsdsd",
-        key: "435423sdfwef",
-        create: "123",
-        lastused: "123",
-    },
-  ]);
-
+    const UserTabPanelVM = useContext(UserTabPanelVMContext)
+   
     function closeModal() {
-        setIsOpen(false);
+        UserTabPanelVM.setApiPopup(false);
+        UserTabPanelVM.setIsApiCreated(false);
     }
-
-    function openModal() {
-        setIsOpen(true);
-    }
-
-    // const apiData = [
-    //     {
-    //         name: "Dataset xydfsd",
-    //         key: "sdfsdf323fsdsdfsdff",
-    //         create: "123",
-    //         lastused: "123",
-    //     },
-    //     {
-    //         name: "Quality sdfsd",
-    //         key: "Dfsdfw4r23wdfw4",
-    //         create: "123",
-    //         lastused: "123",
-    //     },
-    //     {
-    //         name: "fdsdfs",
-    //         key: "dsf324dsf3466wer",
-    //         create: "123",
-    //         lastused: "123",
-    //     },
-    //     {
-    //         name: "sdgsdsd",
-    //         key: "435423sdfwef",
-    //         create: "123",
-    //         lastused: "123",
-    //     },
-    // ];
 
     const handleCopyClick = () => {
         // Create a textarea element and set its value to the citation text
         const textArea = document.createElement("textarea");
-        textArea.value = apiData[0].key;
+        textArea.value = UserTabPanelVM.createdApiKey.key;
 
         // Append the textarea to the document
         document.body.appendChild(textArea);
@@ -87,15 +34,24 @@ const GenerateApi = () => {
         // Provide some visual feedback to the user (optional)
         alert("Api key is copied");
     };
+    const handleDeleteClick = (id: number) => {
+        UserTabPanelVM.deleteApiKeys(id)
+    };
+    function formatTimestamp(timestampStr: string) {
+        // Parse the original timestamp string
+        var timestamp = new Date(timestampStr);
+        var options: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'short', year: 'numeric' };
+        var formattedDate = timestamp.toLocaleDateString('en-US', options);
 
-    const handleDeleteClick = (index: number) => {
-      const updatedApiData = [...apiData];
-      updatedApiData.splice(index, 1);
-      setApiData(updatedApiData);
-  };
+        // Return the formatted date
+        return formattedDate;
+    }
+
+    const tableData = UserTabPanelVM.apiKeys?.map((item: any, index: any) => [item.name, formatTimestamp(item.created_at), item.created_at == item.updated_at ? "Never" : formatTimestamp(item.updated_at), <div className="flex" key={ index}> <button onClick={() => { handleDeleteClick(item.key_id) }}> <img src="/images/deletebtn.svg" alt="delbtn" height={24} width={24} /> </button> <p className="text-dtech-light-grey3 ml-2"> Delete </p> </div>])
+    const TABLE_HEADERS = ["NAME", "CREATED", "LAST USED"]
     return (
         <>
-            <Transition appear show={isOpen} as={Fragment}>
+            <Transition appear show={UserTabPanelVM.apiPopup} as={Fragment}>
                 <Dialog as="div" className="relative z-10" onClose={closeModal}>
                     <Transition.Child
                         as={Fragment}
@@ -121,7 +77,7 @@ const GenerateApi = () => {
                                 leaveTo="opacity-0 scale-95"
                             >
                                 <div
-                                    className="w-[60%] transform overflow-hidden border-[2px] border-dtech-light-teal rounded-[10px] bg-white p-14 text-left align-middle shadow-xl transition-all"
+                                    className="w-[751px] transform overflow-hidden border-[2px] border-dtech-light-teal rounded-[10px] bg-white p-14 text-left align-middle shadow-xl transition-all"
                                 >
                                     <div className="mt-2">
                                         <p className="text-19 font-normal text-[#2D2D32]">
@@ -142,88 +98,72 @@ const GenerateApi = () => {
                                         </p>
                                     </div>
 
-                                    {istable && (
-                                        <div>
-                                            <table className="p-1 w-full">
-                                                <thead>
-                                                    <tr className="text-sm">
-                                                        <th>NAME</th>
-                                                        <th>KEY</th>
-                                                        <th>CREATE</th>
-                                                        <th>LAST USED</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    {apiData?.map(
-                                                        (item, index) => {
-                                                            return (
-                                                                <tr
-                                                                    key={index}
-                                                                    className="text-sm text-dtech-light-grey3 border-t-2"
-                                                                >
-                                                                    <td>
-                                                                        {
-                                                                            item.name
-                                                                        }
-                                                                    </td>
-                                                                    <td>
-                                                                        {
-                                                                            item.key
-                                                                        }
-                                                                    </td>
-                                                                    <td>
-                                                                        {
-                                                                            item.create
-                                                                        }
-                                                                    </td>
-                                                                    <td>
-                                                                        {
-                                                                            item.lastused
-                                                                        }
-                                                                    </td>
-                                                                    <div className="flex">
-                                                                        <button onClick={()=>{handleDeleteClick(index)}}>
-                                                                            <img
-                                                                                src="/images/deletebtn.svg"
-                                                                                alt="delbtn"
-                                                                            />
-                                                                        </button>
+                                    {UserTabPanelVM.isFetchingApiKeys
+                                        ? <Loader /> : UserTabPanelVM.apiKeys.length > 0 && (
+                                            <div>
+                                                
+                                                <Table
+                                                    tableHeaders={TABLE_HEADERS}
+                                                    tableData={tableData}
+                                                    headerClass="sm:text-[17px] !py-2 sm:!py-4 !text-xs border-2 border-white sm:!px-10 !px-4  !text-white text-center sm:font-medium sm:bg-dtech-new-main-light bg-dtech-dark-teal "
+                                                    tableClass=" text-sm border-white  !px-10 text-white text-center sm:font-medium bg-[#EBEBEB]"
+                                                    cellPadding={20}
+                                                    tableRow="sm:text-[17px] text-black font-normal py-2 sm:!py-4  sm:!px-10 !px-4  border-2 border-white"
+                                                />
+                                            </div>
+                                        )}
 
-                                                                        <p className="text-dtech-light-grey3">
-                                                                            Delete
-                                                                        </p>
-                                                                    </div>
-                                                                </tr>
-                                                            );
-                                                        }
-                                                    )}
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    )}
+                                    <div className="mt-10 flex sm:flex-row flex-col items-center  justify-between space-x-4">
+                                        {/* <FormRow
+                                            label="Name"
+                                            className=" md:w-auto bg-white flex-row w-min sm:!mb-8"
+                                            labelClass="sm:text-[19px]"
+                                            iconClass="sm:h-[19px] sm:w-[19px] text-black"
+                                        > */}
+                                        {/* <div>
+                                            Name
+                                        </div> */}
+                                            <TextField
+                                                className="bg-gray-50  !w-[280px] sm:w-[170px] h-min"
+                                                formControl={{
+                                                    control: UserTabPanelVM.apiForm.control,
+                                                    name: "name",
+                                                    rules: {
+                                                        required: "Name is required",
+                                                        validate: (value:any) => value.trim().length > 0 || 'Name cannot be empty',
 
-                                    <div className="mt-4">
+                                                    },
+                                                }}
+                                                placeholder="Secret Key"
+                                                textfieldClassName="border-0 border-b border-[#C3C3C3] focus:ring-opacity-0 rounded-none sm:text-[19px]"
+                                            />
                                         <PrimaryBtn
-                                            className="bg-dtech-new-main-light active:bg-dtech-dark-yellow hover:bg-dtech-main-dark active:border-b-2 border-black hover:border-0 active:text-black text-white w-[120px] sm:w-[170px] !p-[10px] sm:!p-[16px] rounded-[30px] mt-5 mb-2 text-xs sm:text-[16px]"
+                                            className="bg-dtech-new-main-light active:bg-dtech-dark-yellow hover:bg-dtech-main-dark active:border-b-2 border-black hover:border-0 active:text-black text-white w-[120px] sm:w-[170px] !p-[10px] sm:!p-[16px] rounded-[30px] sm:mt-0 mt-3  text-xs sm:text-[16px]"
                                             label="Generate API key"
+                                            isLoading={UserTabPanelVM.isCreatingApiKeys}
                                             onClick={() => {
-                                                setIstable(true);
+                                                UserTabPanelVM.apiForm.handleSubmit((data:any) => {
+                                                    if (UserTabPanelVM.apiForm.getValues().name) {
+                                                        UserTabPanelVM.createApiKeys(data);
+                                                    }
+                                                })();
                                             }}
                                         />
+                                        {/* </FormRow> */}
                                     </div>
 
-                                    {istable && (
-                                        <div>
+                                    {UserTabPanelVM.isApiCreated && !UserTabPanelVM.isFetchingApiKeys && (
+                                        <div className=" mt-8">
                                             <div className="flex space-x-2">
                                                 <h1 className="text-dtech-new-main-light">
-                                                    {apiData[0].key}
+                                                    {UserTabPanelVM.createdApiKey.key}
                                                 </h1>
 
                                                 <div className="flex">
                                                     <img
                                                         src="/images/icons/copy.svg"
                                                         alt="copy"
-                                                        className="ml-20 cursor-pointer"
+                                                        className="ml-10 cursor-pointer"
                                                         onClick={
                                                             handleCopyClick
                                                         }
@@ -249,7 +189,9 @@ const GenerateApi = () => {
                                     <div className="top-2 right-5 absolute ">
                                         <button
                                             className="text-black"
-                                            onClick={closeModal}
+                                            onClick={
+                                                closeModal
+                                            }
                                         >
                                             <img
                                                 src="/images/crosslogo.png"
@@ -266,5 +208,4 @@ const GenerateApi = () => {
         </>
     );
 };
-
 export default GenerateApi;
