@@ -1,14 +1,13 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useContext } from "react";
-import PrimaryBtn from "./form/primary_btn";
 import { UserTabPanelVMContext } from "pages/account/components/account_detail_section/components/user/user_tab_panel.vm";
-import Loader from "./loader";
-import Table from "pages/organisation/components/table";
-import TextField from "./form/text_field";
+import TextField from "components/UI/form/text_field";
+import PrimaryBtn from "components/UI/form/primary_btn";
+import Loader from "components/UI/loader";
 
 const GenerateApi = () => {
     const UserTabPanelVM = useContext(UserTabPanelVMContext)
-   
+
     function closeModal() {
         UserTabPanelVM.setApiPopup(false);
         UserTabPanelVM.setIsApiCreated(false);
@@ -40,15 +39,12 @@ const GenerateApi = () => {
     function formatTimestamp(timestampStr: string) {
         // Parse the original timestamp string
         var timestamp = new Date(timestampStr);
-        var options: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'short', year: 'numeric' };
+        var options: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'numeric', year: 'numeric' };
         var formattedDate = timestamp.toLocaleDateString('en-US', options);
 
         // Return the formatted date
         return formattedDate;
     }
-
-    const tableData = UserTabPanelVM.apiKeys?.map((item: any, index: any) => [item.name, formatTimestamp(item.created_at), item.created_at == item.updated_at ? "Never" : formatTimestamp(item.updated_at), <div className="flex" key={ index}> <button onClick={() => { handleDeleteClick(item.key_id) }}> <img src="/images/deletebtn.svg" alt="delbtn" height={24} width={24} /> </button> <p className="text-dtech-light-grey3 ml-2"> Delete </p> </div>])
-    const TABLE_HEADERS = ["NAME", "CREATED", "LAST USED"]
     return (
         <>
             <Transition appear show={UserTabPanelVM.apiPopup} as={Fragment}>
@@ -77,16 +73,16 @@ const GenerateApi = () => {
                                 leaveTo="opacity-0 scale-95"
                             >
                                 <div
-                                    className="w-[751px] transform overflow-hidden border-[2px] border-dtech-light-teal rounded-[10px] bg-white p-14 text-left align-middle shadow-xl transition-all"
+                                    className="w-[751px] transform overflow-hidden border-[2px] border-dtech-light-teal rounded-[10px] bg-white sm:p-14 p-6 text-left align-middle shadow-xl transition-all"
                                 >
                                     <div className="mt-2">
-                                        <p className="text-19 font-normal text-[#2D2D32]">
+                                        <p className="text-sm font-normal text-[#2D2D32]">
                                             Your API keys are listed below.
                                             Please note that we do not display
                                             your secret API keys again after you
                                             generate them.
                                         </p>
-                                        <p className="text-19 font-normal text-[#2D2D32] mt-3">
+                                        <p className="text-sm font-normal mt-4 sm:mt-0 text-[#2D2D32]">
                                             Protecting your API key is important
                                             to ensure the security of your data.
                                             Never share your API key with anyone
@@ -97,84 +93,107 @@ const GenerateApi = () => {
                                             in public repositories
                                         </p>
                                     </div>
-
                                     {UserTabPanelVM.isFetchingApiKeys
                                         ? <Loader /> : UserTabPanelVM.apiKeys.length > 0 && (
-                                            <div>
-                                                
-                                                <Table
-                                                    tableHeaders={TABLE_HEADERS}
-                                                    tableData={tableData}
-                                                    headerClass="sm:text-[17px] !py-2 sm:!py-4 !text-xs border-2 border-white sm:!px-10 !px-4  !text-white text-center sm:font-medium sm:bg-dtech-new-main-light bg-dtech-dark-teal "
-                                                    tableClass=" text-sm border-white  !px-10 text-white text-center sm:font-medium bg-[#EBEBEB]"
-                                                    cellPadding={20}
-                                                    tableRow="sm:text-[17px] text-black font-normal py-2 sm:!py-4  sm:!px-10 !px-4  border-2 border-white"
-                                                />
+                                            <div className="mt-8 sm:overflow-x-hidden overflow-x-scroll">
+                                                <table
+                                                    className=" w-full h-full "
+                                                >
+                                                    <thead className="">
+                                                        <tr className="">
+                                                            <th className="sm:w-[32%] p-2 text-xs border-r-[1px] sm:border-r-0 sm:text-sm w-1/2 text-left  pb-4 min-w-[130px]">
+                                                                Name
+                                                            </th>
+                                                            <th className="sm:w-[17%] p-2 text-xs sm:text-sm min-w-[130px] text-center pb-4">
+                                                                Created
+                                                            </th>
+                                                            <th className="sm:w-[17%] p-2 text-xs sm:text-sm text-center pb-4">
+                                                                Last Used
+                                                            </th>
+                                                            <th className="sm:w-[17%] p-2 text-xs sm:text-sm text-center pb-4">
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody className=" sm:border-t-[1px] border-black">
+                                                        {UserTabPanelVM.apiKeys?.map(
+                                                            (item: any, index: any) => (
+                                                                <tr
+                                                                    className=" border-b-[1px] h-14 hover:bg-dtech-light-grey"
+                                                                    key={index}
+                                                                >
+                                                                    <td className="underline  p-2 text-xs border-r-[1px] sm:border-r-0 sm:text-sm w-1/2 min-w-[120px] sm:w-[32%] ">
+
+                                                                        {item.name}
+                                                                    </td>
+                                                                    <td className="sm:w-[17%] p-2 text-xs sm:text-sm min-w-[100px] text-center">
+                                                                        {formatTimestamp(item.created_at)}
+                                                                    </td>
+                                                                    <td className="sm:w-[17%] p-2 text-xs sm:text-sm text-center">
+                                                                        {item.created_at == item.updated_at ? "" : formatTimestamp(item.updated_at)}
+                                                                    </td>
+                                                                    <td className="sm:w-[17%] p-2 text-xs sm:text-sm text-center">
+                                                                        <div className="flex items-center justify-center" key={index}> <button onClick={() => { handleDeleteClick(item.key_id) }} className="h-6 w-6"> <img src="/images/deletebtn.svg" alt="delbtn" height={24} width={24}/> </button> <p className="text-dtech-light-grey3 ml-2"> Delete </p> </div>
+                                                                    </td>
+                                                                </tr>
+                                                            )
+                                                        )}
+                                                    </tbody>
+                                                </table>
                                             </div>
                                         )}
 
                                     <div className="mt-10 flex sm:flex-row flex-col items-center  justify-between space-x-4">
-                                        {/* <FormRow
-                                            label="Name"
-                                            className=" md:w-auto bg-white flex-row w-min sm:!mb-8"
-                                            labelClass="sm:text-[19px]"
-                                            iconClass="sm:h-[19px] sm:w-[19px] text-black"
-                                        > */}
-                                        {/* <div>
-                                            Name
-                                        </div> */}
-                                            <TextField
-                                                className="bg-gray-50  !w-[280px] sm:w-[170px] h-min"
-                                                formControl={{
-                                                    control: UserTabPanelVM.apiForm.control,
-                                                    name: "name",
-                                                    rules: {
-                                                        required: "Name is required",
-                                                        validate: (value:any) => value.trim().length > 0 || 'Name cannot be empty',
+                                        <TextField
+                                            className="bg-gray-50  !w-[280px] sm:w-[170px] h-min"
+                                            formControl={{
+                                                control: UserTabPanelVM.apiForm.control,
+                                                name: "name",
+                                                rules: {
+                                                    required: "Name is required",
+                                                    validate: (value: any) => value.trim().length > 0 || 'Name cannot be empty',
 
-                                                    },
-                                                }}
-                                                placeholder="Secret Key"
-                                                textfieldClassName="border-0 border-b border-[#C3C3C3] focus:ring-opacity-0 rounded-none sm:text-[19px]"
-                                            />
+                                                },
+                                            }}
+                                            placeholder="Enter a unique name for your new key"
+                                            textfieldClassName="border-0 border-b border-[#C3C3C3] focus:ring-opacity-0 rounded-none "
+                                        />
                                         <PrimaryBtn
                                             className="bg-dtech-new-main-light active:bg-dtech-dark-yellow hover:bg-dtech-main-dark active:border-b-2 border-black hover:border-0 active:text-black text-white w-[120px] sm:w-[170px] !p-[10px] sm:!p-[16px] rounded-[30px] sm:mt-0 mt-3  text-xs sm:text-[16px]"
                                             label="Generate API key"
                                             isLoading={UserTabPanelVM.isCreatingApiKeys}
                                             onClick={() => {
-                                                UserTabPanelVM.apiForm.handleSubmit((data:any) => {
+                                                UserTabPanelVM.apiForm.handleSubmit((data: any) => {
                                                     if (UserTabPanelVM.apiForm.getValues().name) {
                                                         UserTabPanelVM.createApiKeys(data);
                                                     }
                                                 })();
                                             }}
                                         />
-                                        {/* </FormRow> */}
                                     </div>
 
                                     {UserTabPanelVM.isApiCreated && !UserTabPanelVM.isFetchingApiKeys && (
                                         <div className=" mt-8">
-                                            <div className="flex space-x-2">
+                                            <div className="flex space-x-2 text-sm font-normal mt-4 sm:mt-0 text-[#2D2D32]">
                                                 <h1 className="text-dtech-new-main-light">
                                                     {UserTabPanelVM.createdApiKey.key}
                                                 </h1>
 
-                                                <div className="flex">
+                                                <div className="flex flex-col sm:flex-row">
                                                     <img
                                                         src="/images/icons/copy.svg"
                                                         alt="copy"
-                                                        className="ml-10 cursor-pointer"
+                                                        className="sm:ml-10 cursor-pointer h-5"
                                                         onClick={
                                                             handleCopyClick
                                                         }
                                                     />
-                                                    <p className="text-dtech-light-grey3 ml-2">
+                                                    <p className="text-dtech-light-grey3 sm:ml-2">
                                                         Copy
                                                     </p>
                                                 </div>
                                             </div>
 
-                                            <h1>
+                                            <h1 className="text-sm font-normal mt-4 sm:mt-0 text-[#2D2D32]">
                                                 Please save this secret key
                                                 somewhere safe and accessible.
                                                 For security reasons, you won&apos;t

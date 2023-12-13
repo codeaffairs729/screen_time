@@ -11,7 +11,7 @@ import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "store";
 import { BiUserCircle } from "react-icons/bi";
-import GenerateApi from "components/UI/genrateapi_pop";
+import GenerateApi from "./components/generateApiPopup";
 
 const UserSection = () => {
     const user = useSelector((state: RootState) => state.auth.user);
@@ -260,8 +260,8 @@ const UserSection = () => {
                 {vm.apiPopup &&
                     <div ref={apiPopupRef}>
                         <GenerateApi />
-</div>
-}
+                    </div>
+                }
             </div>
         </UserTabPanelVMContext.Provider>
     );
