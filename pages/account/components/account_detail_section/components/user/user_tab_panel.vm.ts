@@ -47,7 +47,7 @@ const UserTabPanelVM = () => {
                 {
                     const err = await getHttpErrorMsg(error)
                     if (err) toast.error(err)
-                    else toast.error("Key exists already with same name")
+                    else toast.error("A key with the same name already exists");
                 }
             }
         );
