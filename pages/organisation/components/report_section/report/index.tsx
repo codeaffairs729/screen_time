@@ -90,6 +90,7 @@ const Report = ({
                                 {names?.map((item: any, index: number) => {
                                     return (
                                         <p key={index} className=" text-dtech-light-grey3 animate-pulse transition-all w-fit">
+                                             <Loader className={'text-blue-900 mr-2'}/>
                                             {item}
                                         </p>
                                     );

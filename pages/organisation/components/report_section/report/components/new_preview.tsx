@@ -129,7 +129,8 @@ const PreviewReport = ({
                                     id={findID(result)}
                                     className="section-preview p-10 text-dtech-light-grey3 text-[19px]"
                                     dangerouslySetInnerHTML={{
-                                        __html: result,
+                                        // __html: result,
+                                        __html: result.replace(/<a/g, '<a style="color: blue; text-decoration: underline; margin-bottom:5px "'),
                                     }}
                                 />
                                 <div className="text-center text-black mb-4">

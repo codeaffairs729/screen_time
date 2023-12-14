@@ -11,7 +11,7 @@ const PieChartComponent = dynamic(() => import("../download_section/pie_componen
 });
 export const PIE_HEADER = ["Use case", "value"];
 const UseCaseSection = () => {
-    const { permittedPermissions } = useContext(OrganisationDetailVMContext)
+    const { permittedPermissions,insight_useCase_description } = useContext(OrganisationDetailVMContext)
     const useCaseMetricVM = UseCaseVM();
     const [isMobile, setIsMobile] = useState<boolean>(false)
     // const { useCases, fetchUseCases, isFetchingUseCases, error } = useContext(useCaseMetricVM)    
@@ -57,7 +57,7 @@ const UseCaseSection = () => {
 
     return (
         <div>
-            <div className=" text- text-[#727272] sm:text-sm text-xs text-center my-6 sm:my-10">{isMobile ? "Dataset downloads aggregated on the basis of user role for the whole organisation" : "Use cases of datasets gathered from user feedback aggregated on the data provider level."}.</div>
+            <div className=" text- text-[#727272] sm:text-sm text-xs text-center my-6 sm:my-10">{isMobile ? <p id="insight_usecase">{insight_useCase_description}</p> : <p id="insight_usecase">{insight_useCase_description}</p>}</div>
             <div className=" relative">
                 <div className="flex flex-col items-center justify-center">
                     <div className=" sm:ml-[50%] w-full">

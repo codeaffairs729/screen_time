@@ -37,7 +37,14 @@ const OrganisationDetailVM = (
     const [pageNumber, setPageNumber] = useState(1);
     const [relatedProviders, setRelatedProviders] = useState();
     const [permittedPermissions, setPermittedPermissions] = useState();
-
+    const insight_datasetQuality_description = [
+        {title:"The metadata quality of all datasets of this organisation has been algorithmically estimated based on the"},
+        {title:"The data quality of datasets of this organisation has been estimated based on user feedback (where available).Datasets rated based on overall data quality and individual dimensions are listed below."},
+    ];
+    const insight_searchTerm_description =
+        "Search terms used to discover the datasets of the data provider";
+    const insight_useCase_description =
+        "Use cases of datasets gathered from user feedback aggregated on the data provider level.";
     const {
         isLoading: isFetchingRelatedProviders,
         execute: executeRelatedProvidersQuery,
@@ -69,7 +76,7 @@ const OrganisationDetailVM = (
         fetchOrganisationDatasets();
     }, [pageNumber]);
     const protocol = window.location.protocol || "http:";
-        const host =
+    const host =
         window.location.hostname !== "localhost"
             ? window.location.hostname
             : "localhost:3000";
@@ -167,6 +174,9 @@ const OrganisationDetailVM = (
         incrementOrgDatasetsCount,
         fetchOrganisationRankedDatasets,
         isFetchingRelatedProviders,
+        insight_datasetQuality_description,
+        insight_searchTerm_description,
+        insight_useCase_description,
     };
 };
 
@@ -178,7 +188,7 @@ const GetRankedData = ({
     orgUUID: string | undefined;
 }) => {
     const protocol = window.location.protocol || "http:";
-        const host =
+    const host =
         window.location.hostname !== "localhost"
             ? window.location.hostname
             : "localhost:3000";
@@ -254,6 +264,9 @@ export interface IOrganisationDetailVMContext {
     isFetchingOrganisationRankedDatasets: boolean;
     permittedPermissions: any;
     setPermittedPermissions: Function;
+    insight_datasetQuality_description: any;
+    insight_searchTerm_description: any;
+    insight_useCase_description: any;
 }
 
 export const OrganisationDetailVMContext =

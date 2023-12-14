@@ -94,7 +94,8 @@ const headerSelected = (
     byRegion: any,
     byquality: any,
     bySearchTermsCanvas: any,
-    byUseCasesCanvas: any
+    byUseCasesCanvas: any,
+    repostHeardingDescription: any
 ) => {
     return selected
         .map((object: any, index: any) =>
@@ -106,7 +107,7 @@ const headerSelected = (
                 ${
                     byRegion
                         ? getImageCanvas(byRegion)
-                        : "<h4>No Data Presents for Location.</h4>"
+                        : "<h4>No insights available.</h4>"
                 }
                 </p>
                 <br/>
@@ -115,7 +116,7 @@ const headerSelected = (
                 ${
                     byTime
                         ? getImageCanvas(byTime)
-                        : "<h4>No Data Presents for Time.</h4>"
+                        : "<h4>No insights available.</h4>"
                 }
                 <p>
                 <br/>
@@ -123,32 +124,36 @@ const headerSelected = (
                 ${
                     byUseCase
                         ? getImageCanvas(byUseCase)
-                        : "<h4>No Data Presents for Role.</h4> "
+                        : "<h4>No insights available.</h4> "
                 }</p>
                 <br/>`
                 : object === "Dataset Quality"
-                ? `<p><strong id=label_${index}>${object}</strong>
+                ? `<br/><p><strong id=label_${index}>${object}</strong>  </p>
+                <br/> 
+                ${byquality ? `<h3 style="font-size:14px; font-weight:400; color: '#333' ">${repostHeardingDescription.insight_datasetQuality_description[1].title}</h3>`: ``}
                 ${
                     byquality
                         ? getImageCanvas(byquality)
-                        : `<h4>No Data Presents for ${object}.</h4> `
+                        : `<h4>No insights available.</h4> `
                 }
-                </p>
+               
                 <br/>`
                 : object == "Use Cases"
-                ? `<p><strong id=label_${index}>${object}</strong>
+                ? `<p><strong id=label_${index}>${object}</strong><br>
+                ${byUseCasesCanvas ? `<p style="font-size:14px; font-weight:400; color: '#333'">${repostHeardingDescription.insight_useCase_description}</p>` : `` }
                 ${
                     byUseCasesCanvas
                         ? getImageCanvas(byUseCasesCanvas)
-                        : `<h4>No Data Presents for ${object}.</h4> `
+                        : `<h4>No insights available.</h4> `
                 }
                 </p>
                 <br/>`
-                : `<p><strong id=label_${index}>${object}</strong>
+                : `<p><strong id=label_${index}>${object}</strong> <br>
+                <span style="font-size:14px; font-weight:400; color: '#333'">${repostHeardingDescription.insight_searchTerm_description}</span>
                 ${
                     bySearchTermsCanvas
                         ? getImageCanvas(bySearchTermsCanvas)
-                        : `<h4>No Data Presents for ${object}.</h4> `
+                        : `<h4>No insights available.</h4> `
                 }
                 </p>
                 <br/>`
@@ -301,7 +306,7 @@ const ReportVM = () => {
         return null;
     };
 
-    const generateNewReport = async () => {
+    const generateNewReport = async (repostHeardingDescription:any) => {
         setIsGeneratingReport(true);
         const qualityMetric: any = document.getElementById("qualityMetrics");
         const searchTerms: any = document.getElementById("searchTerms");
@@ -309,14 +314,15 @@ const ReportVM = () => {
         const metricByTime: any = document.getElementById("screenshot");
         const metricByUseCase: any = document.getElementById("pie");
         const useCases: any = document.getElementById("useCases");
-
+        const insightsHeading: any = document.getElementById("insight_description")
+     console.log("insight heading is ",insightsHeading)
+     console.log("useCase is ",useCases)
         const byQualityMetricCanvas = await getImageDataURL(qualityMetric);
         const bySearchTermsCanvas = await getImageDataURL(searchTerms);
         const byLocationCanvas = await getImageDataURL(metricesByRegion);
         const byTimeCanvas = await getImageDataURL(metricByTime);
         const byUseCaseCanvas = await getImageDataURL(metricByUseCase);
-        const byUseCasesCanvas = await getImageDataURL(useCases);
-
+        const byUseCasesCanvas = await getImageDataURL(useCases);  
         const data = `
                 <p style="text-align: center;"><img src="${imgUrl}" width=200 height=150 style="text-align: center;" /></p>
                 <p></p>
@@ -329,7 +335,9 @@ const ReportVM = () => {
                     byLocationCanvas,
                     byQualityMetricCanvas,
                     bySearchTermsCanvas,
-                    byUseCasesCanvas
+                    byUseCasesCanvas,
+                    // insightDescription
+                    repostHeardingDescription
                 )}
             `;
         setEditorValue(data);
@@ -573,7 +581,7 @@ const ReportVM = () => {
         rating: dataset["ratings"],
     });
 
-    const fetchData = (activeHeaders: any) => {
+    const fetchData = (activeHeaders: any,repostHeardingDescription:any) => {
         let from: string = format(new Date(), "yyyy-MM-dd");
         let to: string = format(new Date(), "yyyy-MM-dd");
 
@@ -615,7 +623,7 @@ const ReportVM = () => {
             promise5,
             promise6,
         ]).then(() => {
-            generateNewReport();
+            generateNewReport(repostHeardingDescription);
         });
     };
 

@@ -50,7 +50,7 @@ const Summary = ({
                             {organisation?.stats.viewCount}
                         </span>
                         <span className="text-[#727272] font-normal">
-                            views
+                            Views
                         </span>
                     </div>
                     <div className="flex flex-col justify-center items-center">
@@ -58,7 +58,7 @@ const Summary = ({
                             {organisation?.stats.downloadCount}
                         </span>
                         <span className="text-[#727272] font-normal">
-                            download
+                            Downloads
                         </span>
                     </div>
                 </div>

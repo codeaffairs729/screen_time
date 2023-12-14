@@ -31,6 +31,7 @@ const SearchTermSection = () => {
     const { permittedPermissions } = useContext(TopicDetailVMContext);
     const { searchTerms, fetchSearchTerms, isFetchingSearchTerms, error } =
         useContext(SearchTermVMContext);
+    const {insight_searchTerm_description} = useContext(OrganisationDetailVMContext)
 
     useEffect(() => {
         fetchSearchTerms();
@@ -66,7 +67,7 @@ const SearchTermSection = () => {
     return (
         <div>
             <div className="hidden sm:block text-sm text-center my-5 text-dtech-dark-grey">
-                Search terms used to discover the datasets of the data provider
+              {insight_searchTerm_description}
             </div>
             <div className="sm:hidden text-xs px-2 py-2 text-center">
                 Terms in the tag cloud below are gathered from the search
