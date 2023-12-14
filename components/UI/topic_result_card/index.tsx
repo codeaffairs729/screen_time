@@ -25,7 +25,7 @@ const TopicCard = ({ data, isMobile, imgCss = "" }: TopicProps) => {
 
     return (
         <div
-            className={` border border-gray-100 rounded-md md:rounded-xl shadow-card-shadow hover:shadow-hover-shadow  md:min-h-[100%]  md:max-h-[10%] md:min-w-[100%] min-h-[112px]  mr-4 `}
+            className={` border border-gray-100 rounded-md md:rounded-xl shadow-card-shadow hover:shadow-hover-shadow   md:min-h-[100%] md:w-full w-[90%] min-h-[112px]  mr-4 `}
         >
             <div
                 className={`flex flex-col justify-center items-center md:h-[160px] ${
@@ -71,7 +71,7 @@ const TopicCard = ({ data, isMobile, imgCss = "" }: TopicProps) => {
                 >
                     {/* <Link href={href}> */}
                     <span
-                        className={`font-bold md:text-base text-xs  leading-[10.75px] absolute  left-1 md:left-3  ${
+                        className={`font-bold md:text-base text-xs  leading-[10.75px] absolute left-3 md:left-3  ${
                             isHover &&
                             " underline underline-offset-2 text-dtech-main-dark"
                         }`}
@@ -125,14 +125,15 @@ const BackCard = ({ data, isMobile }: { data: Data; isMobile: boolean }) => {
     const { description, stats } = data ?? { description: "", stats: null };
     const words = (description || "No description present").split(/\s+/);
 
-    const descriptionWord = isMobile ? words.slice(0, 12) : words.slice(0, 15);
+    const descriptionWord = isMobile ? words.slice(0, 18) : words.slice(0,25);
 
     return (
         <div
-            className={` mx-3 md:mx-5 md:my-3  w-[95%] md:min-h-[138px] min-h-[114px] `}
+            className={`mx-3 md:mx-5 h-[77.94px] w-[100%] md:max-w-[90%] md:h-40 md:min-h-[138px] min-h-[114px] flex flex-col justify-between p-3 md:p-0`}
         >
             <div
-                className={`text-[12px] md:text-[16px] md:font-normal leading-[18.75px] overflow-hidden over md:my-3 ${
+                className={`text-[12px] md:font-normal tracking-tighter md:leading-[15.75px] leading-3 overflow-hidden over md:mt-6
+                ${
                     isMobile ? "min-h-[103px]" : "min-h-[50px]"
                 }`}
             >
