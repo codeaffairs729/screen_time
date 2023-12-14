@@ -28,7 +28,7 @@ const QualityMetricVM = () => {
         excuteFetchQualityMetrics(
             () => {
                 return Http.get(
-                    `/v1/data_sources/${organisation?.uuid}/quality_metrics?page_num=${pageNumber}&page_size=${datasetsCount}`
+                    `/v1/data_sources/${organisation?.uuid}/quality_metrics?page_num=${pageNumber}&page_size=${datasetsCount}&sorted_by=title`
                 );
             },
             {

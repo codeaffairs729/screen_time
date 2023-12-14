@@ -61,12 +61,12 @@ enum tabIndex {
 const DatasetDetail = ({ dataset, logoUrl }: { dataset: Dataset | undefined, logoUrl:any }) => {
     const [loading, setLoading] = useState<boolean>(false);
     const [scrollPosition, setScrollPosition] = useState(0);
-    const [isMobile, setIsMobile] = useState<boolean>(false);
+    // const [isMobile, setIsMobile] = useState<boolean>(false);
     const [topicImage, setTopicImage] = useState(logoUrl?.topic_image_url ?? "")
     const [imgUrl, setImgUrl] = useState(logoUrl?.logo_url ?? "")
     const { asPath, query } = useRouter();
-    const [scrollLeft, setScrollLeft] = useState(0);
-    const [highlightedDot, setHighlightedDot] = useState(0);
+    // const [scrollLeft, setScrollLeft] = useState(0);
+    // const [highlightedDot, setHighlightedDot] = useState(0);
     const [selectedIndex, setSelectedIndex] = useState<any>(
         tabIndex[asPath.split("#")[1]?.split("/")[0] as any] || 0
     );
@@ -120,22 +120,22 @@ const DatasetDetail = ({ dataset, logoUrl }: { dataset: Dataset | undefined, log
             window.removeEventListener('scroll', handleScroll);
         };
     }, []);
-    useEffect(() => {
-        const handleResize = () => {
-            setIsMobile(window.innerWidth < 640); // Adjust the breakpoint as needed
-        };
+    // useEffect(() => {
+    //     const handleResize = () => {
+    //         setIsMobile(window.innerWidth < 640); // Adjust the breakpoint as needed
+    //     };
 
-        // Call handleResize on initial component render
-        handleResize();
+    //     // Call handleResize on initial component render
+    //     handleResize();
 
-        // Add event listener to window resize
-        window.addEventListener("resize", handleResize);
+    //     // Add event listener to window resize
+    //     window.addEventListener("resize", handleResize);
 
-        // Clean up event listener on component unmount
-        return () => {
-            window.removeEventListener("resize", handleResize);
-        };
-    }, []);
+    //     // Clean up event listener on component unmount
+    //     return () => {
+    //         window.removeEventListener("resize", handleResize);
+    //     };
+    // }, []);
     const handleScroll = () => {
         setScrollPosition(-window.scrollY);
         setHeight(window.scrollY)
@@ -180,7 +180,7 @@ const DatasetDetail = ({ dataset, logoUrl }: { dataset: Dataset | undefined, log
             "name": dataset?.host.organisation,
             "identifier": dataset?.host.uuid,
             "url": dataset?.host.hostUrl,
-            "image": imgUrl,
+            // image: imgUrl,
             "description": null,
             "@ContactPoint": {
                 "@type": "ContactPoint",
