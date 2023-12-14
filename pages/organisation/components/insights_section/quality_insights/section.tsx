@@ -46,7 +46,7 @@ const QualityInsightsBody = () => {
     const { setSelectedQualityInsights: onChange } = useContext(
         QualityMetricVMContext
     );
-    const { permittedPermissions } = useContext(
+    const { permittedPermissions, insight_datasetQuality_description} = useContext(
         OrganisationDetailVMContext
     );
 
@@ -127,14 +127,15 @@ const QualityInsightsBody = () => {
             <div className="text-sm hidden sm:block text-dtech-dark-grey my-4">
                 {selectedLabel == 0 ? (
                     <div className="my-8 text-sm text-dtech-dark-grey text-center mx-[270px]">
-                        The data quality of datasets of this organisation has
+                        {insight_datasetQuality_description[0].title}
+                        {/* The data quality of datasets of this organisation has
                         been estimated based on user feedback (where available).
                         Datasets rated based on overall data quality and
-                        individual dimensions are listed below.
+                        individual dimensions are listed below. */}
                     </div>
                 ) : (
-                    <div className="my-8 text-sm text-dtech-dark-grey text-center mx-[180px]">
-                        The metadata quality of all datasets of this
+                    <div className="my-8 text-sm text-dtech-dark-grey text-center mx-[180px]" id='insight_description' >
+                        {/* The metadata quality of all datasets of this
                         organisation has been algorithmically estimated based on
                         the &nbsp;
                         <a
@@ -146,7 +147,8 @@ const QualityInsightsBody = () => {
                             EU Metadata Quality Assessment method
                         </a>
                         . Datasets rated based on overall metadata quality and
-                        individual dimensions are listed below.
+                        individual dimensions are listed below. */}
+                        <p>{insight_datasetQuality_description[1].title}</p>
                     </div>
                 )}
             </div>

@@ -17,6 +17,7 @@ const ReportFilter = ({setIsReportGenerated}: {setIsReportGenerated:Function}) =
         setToDate,
         editorValue
     } = useContext(ReportVMContext);
+    const { insight_datasetQuality_description,insight_searchTerm_description,insight_useCase_description} = useContext(OrganisationDetailVMContext);
     // const {
     //     qualityMetrics,
     //     fetchQualityMetrics,
@@ -32,7 +33,12 @@ const ReportFilter = ({setIsReportGenerated}: {setIsReportGenerated:Function}) =
             confirm(alert) == true
         ) {
         // fetchQualityMetrics && fetchQualityMetrics();
-            fetchData(activeHeaders);
+        const repostHeardingDescription = {
+            insight_datasetQuality_description,
+            insight_searchTerm_description,
+            insight_useCase_description
+        }
+            fetchData(activeHeaders,repostHeardingDescription);
             setIsReportGenerated(true);
         }
     };
