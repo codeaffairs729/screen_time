@@ -9,22 +9,18 @@ import { useEffect, useState } from "react";
 
 const firebaseConfig: any = {
     apiKey:
-        process.env.NEXT_PUBLIC_FIREBASE_API_KEY ||
-        "AIzaSyCWzVMbFxoaAg1B423N9OVgSiXhXDtiq8Y",
+        process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
     authDomain:
-        process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN ||
-        "dtechtivesso.firebaseapp.com",
-    projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || "dtechtivesso",
+        process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+    projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
     storageBucket:
-        process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET ||
-        "dtechtivesso.appspot.com",
+        process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
     messagingSenderId:
-        process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID || "270361505083",
+        process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
     appId:
-        process.env.NEXT_PUBLIC_FIREBASE_APP_ID ||
-        "1:270361505083:web:b4d49f4a30b1ecc77c9b1e",
+        process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
     measurementId:
-        process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID || "G-HYVJP2M340",
+        process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
 
 const SocialLogin = ({ vm }: { vm: any }) => {
@@ -146,21 +142,21 @@ const SocialLogin = ({ vm }: { vm: any }) => {
                             console.log(err);
                         }}
                     > */}
-                        {!socialHover.google ? (
-                            <img
-                                src="/images/icons/Google.svg"
-                                className="cursor-pointer"
-                                width={35}
-                                onClick={signInWithGoogle}
-                            />
-                        ) : (
-                            <img
-                                src="/images/logo/google-logo.png"
-                                className="cursor-pointer"
-                                width={35}
-                                onClick={signInWithGoogle}
-                            />
-                        )}
+                    {!socialHover.google ? (
+                        <img
+                            src="/images/icons/Google.svg"
+                            className="cursor-pointer"
+                            width={35}
+                            onClick={signInWithGoogle}
+                        />
+                    ) : (
+                        <img
+                            src="/images/logo/google-logo.png"
+                            className="cursor-pointer"
+                            width={35}
+                            onClick={signInWithGoogle}
+                        />
+                    )}
                     {/* </LoginSocialGoogle> */}
                 </div>
                 <Tooltip id="dtechtive-Google-btn-tooltip" title={"Google"} />
