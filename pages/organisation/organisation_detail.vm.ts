@@ -121,6 +121,8 @@ const OrganisationDetailVM = (
     } = GetRankedData({
         key: "download_count",
         orgUUID: organisation?.uuid,
+        pageNumber,
+        orgDatasetsCount,
     });
 
     const {
@@ -131,6 +133,8 @@ const OrganisationDetailVM = (
     } = GetRankedData({
         key: "view_count",
         orgUUID: organisation?.uuid,
+        pageNumber,
+        orgDatasetsCount,
     });
 
     const {
@@ -138,7 +142,12 @@ const OrganisationDetailVM = (
         isLoading: isFetchingTopFavourited,
         fetch: fetchTopFavourited,
         error: errorTopFavourited,
-    } = GetRankedData({ key: "favourite_count", orgUUID: organisation?.uuid });
+    } = GetRankedData({
+        key: "favourite_count",
+        orgUUID: organisation?.uuid,
+        pageNumber,
+        orgDatasetsCount,
+    });
 
     const isFetchingOrganisationRankedDatasets =
         isFetchingtopDownloaded ||
@@ -183,9 +192,13 @@ const OrganisationDetailVM = (
 const GetRankedData = ({
     key,
     orgUUID,
+    pageNumber,
+    orgDatasetsCount,
 }: {
     key: string;
     orgUUID: string | undefined;
+    pageNumber: number;
+    orgDatasetsCount: number;
 }) => {
     const protocol = window.location.protocol || "http:";
     const host =
@@ -200,9 +213,8 @@ const GetRankedData = ({
     const fetch = () => {
         execute(
             () => {
-                //TODO replace TempUUID with orgUUID when working with orginal providers related data instead of dummy data
                 return Http.get(
-                    `/api/datasets-ranked-by-factor?orgUUid=${orgUUID}&key=${key}`,
+                    `/api/datasets-ranked-by-factor?orgUUid=${orgUUID}&key=${key}&pageNumber=${pageNumber}&orgDatasetsCount=${orgDatasetsCount}`,
                     {
                         baseUrl: fullUrl,
                     }
@@ -217,9 +229,9 @@ const GetRankedData = ({
                     );
                 },
                 onError: (e) => {
-                    // toast.error(
-                    //     "Something went wrong while fetching organisation datasets."
-                    // );
+                    toast.error(
+                        "Something went wrong while fetching organisation datasets."
+                    );
                 },
             }
         );
@@ -275,10 +287,11 @@ export const OrganisationDetailVMContext =
     );
 
 const jsonToOrgDatasets = (jsons: any, isRanked = false, countKey = "views") =>
-    jsons.map((json: any) => {
+{
+    return jsons.map((json: any) => {
         const { dataset } = json || {};
         const { metrics } = dataset || {};
-        const { global } = metrics || {};
+        const { dataset:global } = metrics || {};
         const data: any = {
             id: json?.id,
             uuid: dataset?.uuid,
@@ -296,4 +309,4 @@ const jsonToOrgDatasets = (jsons: any, isRanked = false, countKey = "views") =>
         }
 
         return data;
-    });
+    })};

@@ -2,9 +2,9 @@ import Http from "common/http";
 
 export default async function rankedByFactors(req: any, res: any) {
     try {
-        const { orgUUID, key } = req.query;
+        const { orgUUid, key, pageNumber, orgDatasetsCount } = req.query;
         const response = await Http.get(
-            `/v5/datasets/${orgUUID}/ranked-by/${key}`,
+            `/v5/datasets/by-data-host/${orgUUid}/sorted-by/${key}?page_number=${pageNumber}&page_size=${orgDatasetsCount}`,
             {
                 baseUrl: process.env.NEXT_PUBLIC_PUBLIC_API_ROOT,
                 extraHeaders: {

@@ -239,16 +239,6 @@ const OrganisationDetailPage = ({
         </DefaultLayout>
     );
 };
-const convertToJson = (input_data: any) => {
-    const output_data = input_data.map((item: any) => ({
-        title: item.name,
-        subTitle: null,
-        imageUrl: item.logo_url || null,
-        recommended: false,
-        id: item.uuid
-    }));
-    return output_data
-}
 OrganisationDetailPage.getInitialProps = async ({
     query,
     req,

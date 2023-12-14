@@ -13,27 +13,6 @@ import ErrorAlert from "components/UI/alerts/error_alert";
 import Pagination from "components/UI/pagination_for_datasets";
 import UpgradeAccountModal from "../upgrade_modal";
 
-const DisplayDataset = ({
-    id,
-    title,
-    description,
-}: {
-    id: number;
-    title: string;
-    description: string;
-}) => (
-    <div>
-        <Link href={`/datasets/${id}`}>
-            <span className="text-sm font-medium text-dtech-dark-grey cursor-pointer underline underline-offset-2 break-all">
-                {title}
-            </span>
-        </Link>
-        <span className="text-sm text-dtech-dark-grey limit-line break-all">
-            {description}
-        </span>
-    </div>
-);
-
 const Datasets = () => {
     const [currentSlide, setCurrentSlide] = useState(0);
     const {
