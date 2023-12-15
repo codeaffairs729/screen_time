@@ -75,24 +75,12 @@ const GenerateApi = () => {
                                 <div
                                     className="w-[751px] transform overflow-hidden border-[2px] border-dtech-light-teal rounded-[10px] bg-white sm:p-14 p-6 text-left align-middle shadow-xl transition-all"
                                 >
-                                    <div className="mt-2">
-                                        <p className="text-sm font-normal text-[#2D2D32]">
+                                    {UserTabPanelVM.apiKeys.length > 0 &&<div className="mt-2">
+                                        <p className="sm:text-lg text-justify font-normal text-[#2D2D32]">
                                             Your API keys are listed below.
-                                            Please note that we do not display
-                                            your secret API keys again after you
-                                            generate them.
+                                            
                                         </p>
-                                        <p className="text-sm font-normal mt-4 sm:mt-0 text-[#2D2D32]">
-                                            Protecting your API key is important
-                                            to ensure the security of your data.
-                                            Never share your API key with anyone
-                                            unless absolutely necessary, and
-                                            make sure to transmit it securely
-                                            when required. Avoid hardcoding your
-                                            API key into your code or storing it
-                                            in public repositories
-                                        </p>
-                                    </div>
+                                    </div>}
                                     {UserTabPanelVM.isFetchingApiKeys
                                         ? <Loader /> : UserTabPanelVM.apiKeys.length > 0 && (
                                             <div className="mt-8 sm:overflow-x-hidden overflow-x-scroll">
@@ -142,9 +130,9 @@ const GenerateApi = () => {
                                             </div>
                                         )}
 
-                                    <div className="mt-10 flex sm:flex-row flex-col items-center  justify-between space-x-4">
+                                    <div className="sm:my-20 my-10 flex sm:flex-row flex-col items-center  justify-between space-x-4">
                                         <TextField
-                                            className="bg-gray-50  !w-[280px] sm:w-[170px] h-min"
+                                            className="!border-2 sm:!w-[380px] rounded-lg w-[280px] h-min"
                                             formControl={{
                                                 control: UserTabPanelVM.apiForm.control,
                                                 name: "name",
@@ -155,10 +143,10 @@ const GenerateApi = () => {
                                                 },
                                             }}
                                             placeholder="Enter a unique name for your new key"
-                                            textfieldClassName="border-0 border-b border-[#C3C3C3] focus:ring-opacity-0 rounded-none "
+                                            textfieldClassName="border-0 text-lg  border-[#C3C3C3] focus:ring-opacity-0 rounded-none "
                                         />
                                         <PrimaryBtn
-                                            className="bg-dtech-new-main-light active:bg-dtech-dark-yellow hover:bg-dtech-main-dark active:border-b-2 border-black hover:border-0 active:text-black text-white w-[120px] sm:w-[170px] !p-[10px] sm:!p-[16px] rounded-[30px] sm:mt-0 mt-3  text-xs sm:text-[16px]"
+                                            className="bg-dtech-new-main-light active:bg-dtech-dark-yellow hover:bg-dtech-main-dark active:border-b-2 border-black hover:border-0 active:text-black text-white w-[120px] sm:w-[170px] sm:!p-4 !p-2 rounded-[30px] sm:mt-0 mt-3  text-xs sm:text-[16px]"
                                             label="Generate API key"
                                             isLoading={UserTabPanelVM.isCreatingApiKeys}
                                             onClick={() => {
@@ -172,9 +160,9 @@ const GenerateApi = () => {
                                     </div>
 
                                     {UserTabPanelVM.isApiCreated && !UserTabPanelVM.isFetchingApiKeys && (
-                                        <div className=" mt-8">
-                                            <div className="flex space-x-2 text-sm font-normal mt-4 sm:mt-0 text-[#2D2D32]">
-                                                <h1 className="text-dtech-new-main-light">
+                                        <div className=" flex flex-col sm:space-y-8 space-y-2">
+                                            <div className="flex space-x-2 sm:text-lg  font-bold sm:my-4 sm:mt-0 text-[#2D2D32]">
+                                                <h1 className="text-dtech-new-main-light sm:mb-8 mb-2 break-words w-[80%]">
                                                     {UserTabPanelVM.createdApiKey.key}
                                                 </h1>
 
@@ -193,14 +181,11 @@ const GenerateApi = () => {
                                                 </div>
                                             </div>
 
-                                            <h1 className="text-sm font-normal mt-4 sm:mt-0 text-[#2D2D32]">
-                                                Please save this secret key
-                                                somewhere safe and accessible.
-                                                For security reasons, you won&apos;t
-                                                be able to view it again through
-                                                your account. If you lose this
-                                                secret key, you&apos;ll need to
-                                                generate a new one.
+                                            <h1 className="sm:text-lg sm:mt-0 text-[#2D2D32]">
+                                                Please save this secret key somewhere safe and accessible. For security reasons, you won&nbsp;t be able to view it again through your account. If you lose this secret key, you&nbsp;ll need to generate a new one.
+                                            </h1>
+                                            <h1 className="sm:text-lg sm:mt-0 text-[#2D2D32]">
+                                            Safeguarding your API key is crucial for data security. Share it only when necessary and ensure secure transmission. Avoid embedding or storing it publicly in code repositories.
                                             </h1>
                                         </div>
                                     )}
