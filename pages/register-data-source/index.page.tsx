@@ -64,11 +64,11 @@ const RegisterDataSourcePage = () => {
                                 value={viewCatalogueVm}
                             >
                                 <div className="flex">
-                                    <div className="relative w-1/3">
+                                    <div className="relative w-40 sm:mt-0 sm:ml-0 ml-2 mt-2 ">
                                         <input
-                                            type="search"
+                                            type="text"
                                             onChange={handleSerch}
-                                            className="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-lg border-s-gray-50 border-s-2 border border-gray-300 focus:ring-gray-700 focus:border-gray-700 dark:bg-gray-700 dark:border-s-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-gray-700"
+                                            className="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-[30px] border-none focus:!ring-none focus:!outline-none focus:bg-gray-200 focus:!border-none dark:bg-gray-700 dark:placeholder-gray-400 dark:text-white "
                                             placeholder="Search"
                                             required
                                         />
