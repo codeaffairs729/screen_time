@@ -13,11 +13,16 @@ const Catalogue = ({ searchValue }: { searchValue: any }) => {
         totalPages,
         pageNo,
         setPageNo,
+        setSearchQuery,
+        searchQuery
     } = useContext(ViewCatalogueVMContext);
 
     useEffect(() => {
         fetchCatalogue();
     }, [pageNo]);
+    useEffect(() => {
+        setSearchQuery(searchValue)
+    },[searchValue])
 
     if (isFetchingCatalouge) {
         return null;
@@ -52,11 +57,7 @@ const Catalogue = ({ searchValue }: { searchValue: any }) => {
                         </tr>
                     </thead>
                     <tbody className=" sm:border-t-[1px] border-black text-[#727272] sm:text-sm md:text-[19px]">
-                        {catalouge?.data_sources
-                            ?.filter((el: { site_name: string }) =>
-                                el.site_name.includes(searchValue)
-                            )
-                            .map((catalouge_item: any, index: number) => (
+                        {catalouge?.data_sources?.map((catalouge_item: any, index: number) => (
                                 <tr
                                     className="text-xs sm:text-sm border-b-[1px] h-14 hover:bg-dtech-light-grey"
                                     key={index}
