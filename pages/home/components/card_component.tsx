@@ -25,44 +25,25 @@ const CardComponent = ({
 }) => {
     const [slides, setSlides] = useState<number>(2);
     const discoverVM = DiscoverVM();
+    const [cards, setCards] = useState<Array<any>>([])
+    const [shuffleDone, setShuffleDone] = useState(false);
 
-    // useEffect(() => {
-    //     const handleResize = () => {
-    //         setIsMobile(window.innerWidth < 640); // Adjust the breakpoint as needed
-    //     };
-
-    //     // Call handleResize on initial component render
-    //     handleResize();
-
-    //     // Add event listener to window resize
-    //     window.addEventListener("resize", handleResize);
-
-    //     // Clean up event listener on component unmount
-    //     return () => {
-    //         window.removeEventListener("resize", handleResize);
-    //     };
-    // }, []);
     useEffect(() => {
         isMobile ? setSlides(2) : setSlides(3.5);
     }, [isMobile]);
-    function truncateString(str: string | undefined, maxLength: number) {
-        if (str && str.length > maxLength) {
-            return str?.slice(0, maxLength) + "...";
-        }
-        return str;
-    }
 
-    function shuffleArray(cardItems: any) {
+    function shuffleArray(cardItems: any[]): any[] {
         for (let i = cardItems.length - 1; i > 0; i--) {
-            // Generate a random index between 0 and i (inclusive)
             const j = Math.floor(Math.random() * (i + 1));
-
-            // Swap cardItems[i] and cardItems[j]
             [cardItems[i], cardItems[j]] = [cardItems[j], cardItems[i]];
         }
+        return cardItems;
     }
-    shuffleArray(dataObjects);
 
+    useEffect(() => {
+            !shuffleDone&&setCards(shuffleArray(dataObjects));
+            dataObjects.length>0&&setShuffleDone(true);
+    }, [dataObjects, shuffleDone]); 
     if (isLoading) {
         return (
             <div className="w-[100%]">
@@ -156,7 +137,7 @@ const CardComponent = ({
             infinite={false}
             responsive={true}
         >
-            {dataObjects.map((item: Data, index: any) => {
+            {cards.map((item: Data, index: any) => {
                 return (
                     <div
                         className="grid grid-col min-h-[100%] relative sm:p-4"
