@@ -7,7 +7,7 @@ const ViewCatalogueVM = () => {
     const [pageNo, setPageNo] = useState<number>(1);
     const [dataPerPage, setDataPerPage] = useState<number>(5);
     const [totalPages, setTotalPages] = useState<number>();
-    const [searchQuery, setSearchQuery] = useState<number>();
+    const [searchQuery, setSearchQuery] = useState<string>("");
     const {
         execute: executeCatalouge,
         data: catalouge,
