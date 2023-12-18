@@ -166,14 +166,15 @@ const GenerateApi = () => {
                                                     {UserTabPanelVM.createdApiKey.key}
                                                 </h1>
 
-                                                <div className="flex flex-col sm:flex-row">
+                                                <div className="flex flex-col sm:flex-row items-center justify-center h-fit">
                                                     <img
                                                         src="/images/icons/copy.svg"
                                                         alt="copy"
-                                                        className="sm:ml-10 cursor-pointer h-5"
+                                                        className="sm:ml-10 cursor-pointer"
                                                         onClick={
                                                             handleCopyClick
                                                         }
+                                                        height={18} width={18}
                                                     />
                                                     <p className="text-dtech-light-grey3 sm:ml-2">
                                                         Copy
