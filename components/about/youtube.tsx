@@ -1,5 +1,6 @@
 import clsx from "clsx";
 import YouTube from "react-youtube";
+
 const YoutubePlayer = ({
     videoId = "",
     width = "",
@@ -9,7 +10,7 @@ const YoutubePlayer = ({
 }: {
     videoId: string;
     width?: string;
-    height?: string|number;
+    height?: string | number;
     className?: string;
     iframeclassName?: string;
 }) => {
@@ -22,12 +23,20 @@ const YoutubePlayer = ({
         },
     };
     return (
-        <YouTube
-            videoId={videoId}
-            opts={opts}
-            className={clsx("", className)}
-            iframeClassName={clsx("", iframeclassName)}
-        />
+        // <YouTube
+        //     videoId={videoId}
+        //     opts={opts}
+        //     className={clsx("", className)}
+        //     iframeClassName={clsx("", iframeclassName)}
+        // />
+        <div className="responsive-video-wrapper">
+            <iframe
+                title="YouTube Video"
+                src={`https://www.youtube.com/embed/${videoId}`}
+                allowFullScreen
+                className={`w-full lg:w-[70%] lg:h-[70%] responsive-iframe ${iframeclassName}`}
+            ></iframe>
+        </div>
     );
 };
 export default YoutubePlayer;
