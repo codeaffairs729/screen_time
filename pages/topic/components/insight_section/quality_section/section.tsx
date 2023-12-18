@@ -300,9 +300,20 @@ const QualityInsightsBody = () => {
                 <div>
                     <GraphSection items={items} />
                 </div>
-                {((selectedLabel == 0 && !permittedPermissions.includes("topicInsights.dataQuality.view")) || (selectedLabel == 1 && !permittedPermissions.includes("providerInsights.metadataQuality.view"))) && <div className=" absolute top-0 left-0 w-full h-full">
-                    <div className="h-full"><UpgradeAccountModal /></div>
-                </div>}
+                {((selectedLabel == 0 &&
+                    !permittedPermissions.includes(
+                        "topicInsights.dataQuality.view"
+                    )) ||
+                    (selectedLabel == 1 &&
+                        !permittedPermissions.includes(
+                            "topicInsights.metadataQuality.view"
+                        ))) && (
+                        <div className=" absolute top-0 left-0 w-full h-full">
+                            <div className="h-full">
+                                <UpgradeAccountModal />
+                            </div>
+                        </div>
+                    )}
             </div>
 
         </div>
