@@ -13,97 +13,30 @@ import {
     discoverToResultCardData
 } from "./discover.vm";
 import { topicToResultCardData } from "pages/search/topics/topics.vm";
-// const recommendations: RecommendationItem[] = [{
-//     title: "fwefwef",
-//     subTitle: "SNH nature reserves (NR) are those SNH properties vwevewf ewfewfew ewfev cerferfewf   ewfewfewfewjmlkmlkmlkmlkmlkmwewfewf...",
-//     imageUrl: "/images/home.png",
-//     recommended: true,
-
-// }, {
-//     title: "fwefwef",
-//     subTitle: "SNH nature reserves (NR) are those SNH properties...",
-//     imageUrl: "/images/home.png",
-//     recommended: false,
-
-// }, {
-//     title: "fwefwef",
-//     subTitle: "SNH nature reserves (NR) are those SNH properties...",
-//     imageUrl: "/images/home.png",
-//     recommended: true,
-
-// }, {
-//     title: "fwefwef",
-//     subTitle: "SNH nature reserves (NR) are those SNH properties...",
-//     imageUrl: "/images/home.png",
-//     recommended: true,
-
-// }, {
-//     title: "fwefwef",
-//     subTitle: "SNH nature reserves (NR) are those SNH properties...",
-//     imageUrl: "/images/home.png",
-//     recommended: true,
-
-// }, {
-//     title: "fwefwef",
-//     subTitle: "SNH nature reserves (NR) are those SNH properties...",
-//     imageUrl: "/images/home.png",
-//     recommended: true,
-
-// }, {
-//     title: "fwefwef",
-//     subTitle: "SNH nature reserves (NR) are those SNH properties...",
-//     imageUrl: "/images/home.png",
-//     recommended: true,
-
-// }, {
-//     title: "fwefwef",
-//     subTitle: "SNH nature reserves (NR) are those SNH properties...",
-//     imageUrl: "/images/home.png",
-//     recommended: true,
-
-// }, {
-//     title: "fwefwef",
-//     subTitle: "SNH nature reserves (NR) are those SNH properties...",
-//     imageUrl: "/images/home.png",
-//     recommended: true,
-
-// }, {
-//     title: "fwefwef",
-//     subTitle: "SNH nature reserves (NR) are those SNH properties...",
-//     imageUrl: "/images/home.png",
-//     recommended: true,
-
-// }
-// ]
-const convertToJson = (input_data: any) => {
-    const output_data = input_data?.map((item: any) => ({
-        title: item.title,
-        subTitle: null,
-        imageUrl: item.imageUrl || null,
-        recommended: false,
-        id: item.id
-    }));
-    return output_data
-}
 const DiscoverByComponent = ({ isMobile }: { isMobile: boolean, }) => {
     const [providers, setProviders] = useState<any[]>()
     const [topics, setTopics] = useState<any[]>()
     const discoverVM = DiscoverVM()
 
     useEffect(() => {
-        setProviders(discoverVM.fetchedProviders)
+        setProviders(shuffleArray(discoverVM.fetchedProviders))
     }, [discoverVM.fetchedProviders])
 
     useEffect(() => {
-        setTopics(discoverVM.fetchedTopics)
+        setTopics(shuffleArray(discoverVM.fetchedTopics))
     }, [discoverVM.fetchedTopics])
-    console.log({topics})
 
     useEffect(() => {
         discoverVM.fetchProviders()
         discoverVM.fetchTopics()
     }, []);
-
+    function shuffleArray(cardItems: any[]): any[] {
+        for (let i = cardItems.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [cardItems[i], cardItems[j]] = [cardItems[j], cardItems[i]];
+        }
+        return cardItems;
+    }
     return (
         <div className="mb-5 sm:mb-20">
             {/* <RecommendedDatasets  isMobile={isMobile} recommendations={recommendations}/> */}

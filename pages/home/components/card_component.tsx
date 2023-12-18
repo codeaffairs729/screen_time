@@ -24,26 +24,11 @@ const CardComponent = ({
     discoverby?: string;
 }) => {
     const [slides, setSlides] = useState<number>(2);
-    const discoverVM = DiscoverVM();
-    const [cards, setCards] = useState<Array<any>>([])
-    const [shuffleDone, setShuffleDone] = useState(false);
 
     useEffect(() => {
         isMobile ? setSlides(2) : setSlides(3.5);
     }, [isMobile]);
 
-    function shuffleArray(cardItems: any[]): any[] {
-        for (let i = cardItems.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [cardItems[i], cardItems[j]] = [cardItems[j], cardItems[i]];
-        }
-        return cardItems;
-    }
-
-    useEffect(() => {
-            !shuffleDone&&setCards(shuffleArray(dataObjects));
-            dataObjects.length>0&&setShuffleDone(true);
-    }, [dataObjects, shuffleDone]); 
     if (isLoading) {
         return (
             <div className="w-[100%]">
@@ -137,7 +122,7 @@ const CardComponent = ({
             infinite={false}
             responsive={true}
         >
-            {cards.map((item: Data, index: any) => {
+            {dataObjects.map((item: Data, index: any) => {
                 return (
                     <div
                         className="grid grid-col min-h-[100%] relative sm:p-4"
