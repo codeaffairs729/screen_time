@@ -162,15 +162,16 @@ const DatasetDetail = ({ dataset, logoUrl }: { dataset: Dataset | undefined, log
     const schemaMarkup = {
         "@context": "https://schema.org",
         "@type": "Dataset",
-        "name": dataset?.detail.name,
-        "description": dataset?.detail.description,
-        "identifier": dataset?.id,
-        "url": dataset?.detail.datasetUrl,
-        "datePublished": dataset?.detail.createdAt,
-        "dateModified": dataset?.detail.lastUpdate,
-        "keywords": dataset?.detail.keywords,
-        "isAccessibleForFree": dataset?.detail.license.usageRights == "Closed" ? true : false,
-        "license": {
+        name: dataset?.detail.name,
+        description: dataset?.detail.description,
+        identifier: dataset?.id,
+        url: dataset?.detail.datasetUrl,
+        datePublished: dataset?.detail.createdAt,
+        dateModified: dataset?.detail.lastUpdate,
+        keywords: dataset?.detail.keywords,
+        isAccessibleForFree:
+            dataset?.detail.license.usageRights != "Closed" ? true : false,
+        license: {
             "@type": "CreativeWork",
             "name": dataset?.detail.license.type,
             "url": dataset?.detail.license.url,
@@ -215,14 +216,14 @@ const DatasetDetail = ({ dataset, logoUrl }: { dataset: Dataset | undefined, log
         },
         "distribution": dataset?.urls.map((item) => ({
             "@type": "DataDownload",
-            "name": item.description,
-            "encodingFormat": item.format,
-            "contentSize": item.sizemb,
-            "contentUrl": item.url,
-            "dateCreated": item.createdAt,
-            "dateModified": item.lastUpdated,
-        }))
-    }
+            name: item.description,
+            encodingFormat: item.format,
+            contentSize: `${item.sizemb} MB`,
+            contentUrl: item.url,
+            dateCreated: item.createdAt,
+            dateModified: item.lastUpdated,
+        })),
+    };
     if (!dataset) {
         return (
             <DefaultLayout>
