@@ -161,19 +161,20 @@ const GenerateApi = () => {
 
                                     {UserTabPanelVM.isApiCreated && !UserTabPanelVM.isFetchingApiKeys && (
                                         <div className=" flex flex-col sm:space-y-8 space-y-2">
-                                            <div className="flex space-x-2 sm:text-lg  font-bold sm:my-4 sm:mt-0 text-[#2D2D32]">
-                                                <h1 className="text-dtech-new-main-light sm:mb-8 mb-2 break-words w-[80%]">
+                                            <div className="flex space-x-2 sm:my-4 sm:mt-0 text-[#2D2D32]">
+                                                <h1 className="text-dtech-new-main-light sm:text-lg  font-bold  sm:mb-8 mb-2 break-words w-[80%]">
                                                     {UserTabPanelVM.createdApiKey.key}
                                                 </h1>
 
-                                                <div className="flex flex-col sm:flex-row items-center justify-center h-fit">
+                                                <div
+                                                    onClick={
+                                                        handleCopyClick
+                                                    }
+                                                    className="flex flex-col sm:flex-row items-center text-xs sm:text-sm justify-center h-fit cursor-pointer">
                                                     <img
                                                         src="/images/icons/copy.svg"
                                                         alt="copy"
                                                         className="sm:ml-10 cursor-pointer"
-                                                        onClick={
-                                                            handleCopyClick
-                                                        }
                                                         height={18} width={18}
                                                     />
                                                     <p className="text-dtech-light-grey3 sm:ml-2">
