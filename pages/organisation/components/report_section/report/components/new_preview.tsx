@@ -3,6 +3,7 @@ import { ReportVMContext } from "../../report.vm";
 import { OrganisationDetailVMContext } from "pages/organisation/organisation_detail.vm";
 import Summary from "./summary_preview";
 import HeaderPreview from "./header";
+import { head } from "lodash-es";
 
 interface Section {
     label: String;
@@ -23,6 +24,7 @@ const PreviewReport = ({
     isReportGenerated: any;
 }) => {
     const { editorValue, setDownloadRef } = useContext(ReportVMContext);
+    // console.log("editorValue is ",editorValue)
     const [updatedSections, setUpdatedSections] =
         useState<Array<Section>>(sections);
 
@@ -30,8 +32,21 @@ const PreviewReport = ({
     const { qualityMetrics } = useContext(ReportVMContext);
 
     // const splittedArray = editorValue.trim().split(/<\/p>(?=<p>)/);
-    const splittedArray = editorValue.split(/<\/p>|<p[^>]*>/).filter(Boolean);
+    // const splittedArray = editorValue.split(/<\/p>|<p[^>]*>/).filter(Boolean);
+    // let splittedArray = editorValue.split(/<\/p>|<p[^>]*>/)
+    // let splittedArray = editorValue.split(/<\/p>|<p[^>]*>|<\/div>|<div[^>]*>/);
+    console.log("editorValue is ",editorValue)
+    let splittedArray = editorValue.split("<div id='break'></div>");
+    // let splittedArray = editorValue.split('<div id=\'break\' style=\'display: none\'>break</div>');
+    // let splittedArray = editorValue.split('<br/>');
 
+
+
+      splittedArray = splittedArray.filter(item => item.trim() !== "" && item.trim() !== "\n" && item.trim() != ",");
+    //   splittedArray = splittedArray?.map((subarray) => subarray.join("")).filter(Boolean);
+//   .map((item:any) => item.trim());
+
+    console.log("splitedArray is",splittedArray)
     useEffect(() => {
                for (let i = 0; i < splittedArray.length; i++) {
             if (splittedArray[i].includes(sections[0].label)) {
@@ -63,29 +78,64 @@ const PreviewReport = ({
     }, [editorValue]);
 
     const previewSection = updatedSections.filter(
-        (section, index) => section.index !== null
+        (section, index) => section.index !== null 
     );
+   
+    console.log("preview ",previewSection)
 
     let header = splittedArray.slice(0, previewSection[0]?.index)
     header = header.filter((item: string) => item.trim() !== '');
-    // console.log({ header });
-
+    console.log("header is ",header);
+// console.log("section is after *****************",previewSection)
+let updataedList = [];
     const result = previewSection.map((section, index, array) => {
-        const startIndex = section.index;
-        const endIndex =
-            index < array.length - 1
-                ? array[index + 1].index
-                : splittedArray.length;
-        return splittedArray.slice(startIndex, endIndex);
-    });
+    //     console.log("array is ***************",array)
+    //     console.log("section is ",section)
+        let startIndex:any = section.index;
+    //     const endIndex =
+    //         index < array.length - 1
+    //             ? array[index + 1].index
+    //             : splittedArray.length;
+    //    return splittedArray.slice(startIndex, endIndex);
 
+        let endIndex:number;
+        if(section.label == "Download metrics"){
+            console.log("I am here...",splittedArray)
+            let loopLen = Math.floor(previewSection[2].index - previewSection[3].index)
+            for(let i=0; i<loopLen; i++){
+                console.log("startIndex is ",startIndex)
+                endIndex=  startIndex+3
+             updataedList = [...updataedList,splittedArray.slice(startIndex, endIndex)]
+             console.log(updataedList,'---updataedList ')
+             startIndex = endIndex
+                console.log("endIndex is ",endIndex)
+            }
+          
+        }
+        else{
+            if(endIndex && startIndex<endIndex){
+                startIndex = endIndex
+            }
+          endIndex = startIndex +2
+          updataedList = [...updataedList,splittedArray.slice(startIndex, endIndex)]
+
+        }
+                // console.log("startIndex is ",startIndex)
+                // console.log("endIndex is ",endIndex)
+                // updataedList = [...updataedList,splittedArray.slice(startIndex, endIndex)]
+        // return splittedArray.slice(startIndex, endIndex);
+    });
+    const newResult= 
+   console.log("result is ",result)
     const gradientStyle = {
         background:
             "radial-gradient(2196.08% 210.97% at 144.72% -36.42%, rgba(255, 255, 255, 0.75) 0%, rgba(206, 255, 254, 0.28) 27.7%, rgba(206, 176, 208, 0.20) 84.03%)",
         // Add other styles as needed
       };
-    const displayResult = result.map((subarray) => subarray.join("")).filter(Boolean);;
-
+    //   console.log("updated array is ",updataedList)
+    // const displayResult = updataedList.map((subarray) => subarray.join("")).filter(Boolean);
+    const displayResult = splittedArray.slice(1)
+    // const displayResult = result.map((subarray) => subarray.join("")).filter(Boolean);
     return (
         <div className="shadow-paper-shadow mt-4 h-[656px] border-none overflow-y-scroll !bg-[#EBEBEB]">
 
@@ -130,11 +180,11 @@ const PreviewReport = ({
                                     className="section-preview p-10 text-dtech-light-grey3 text-[19px]"
                                     dangerouslySetInnerHTML={{
                                         // __html: result,
-                                        __html: result.replace(/<a/g, '<a style="color: blue; text-decoration: underline; margin-bottom:5px "'),
+                                        __html: result.replace(/<a/g, '<a style="color: blue; text-decoration: underline; margin-bottom:5px "')
                                     }}
                                 />
                                 <div className="text-center text-black mb-4">
-                                    Page {index + 1}/{displayResult.length}
+                                    Page {index + 1}/{splittedArray.length}
                                 </div>
                             </div>
                         );

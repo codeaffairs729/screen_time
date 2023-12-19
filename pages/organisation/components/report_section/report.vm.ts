@@ -75,21 +75,23 @@ const getReportDate = (fromDate: Date, toDate: Date) => {
     return format(fromDate, "dd-MM-yyyy") === format(toDate, "dd-MM-yyyy")
         ? `<p><strong style="padding-left: 100px;">${formatDate(
               fromDate
-          )}</strong></p>`
+          )}</strong></p> <div id='break'></div>`
         : `<p><strong>${formatDate(fromDate)}</strong> - <strong>${formatDate(
               toDate
-          )}</strong></p>`;
+          )}</strong></p> <div id='break'></div>`;
 };
 const getReportTitle = (title: any) => {
     return `<p><strong>Dataset Insights Report</strong></p><p><strong>${title}</strong></p>`;
 };
 const getImageCanvas = (src: any) => `<img src="${src}"/>`;
+// const getAllImageCanvas = (elem:any) => elem.map(image=>`<img src=${image}/> <br/>`)
 
 const formatSubHeading = (text: string) => `<p> ${text}</p>`;
 
 const headerSelected = (
     selected: Array<Object>,
     byTime: any,
+    byTimeGraph:any,
     byUseCase: any,
     byRegion: any,
     byquality: any,
@@ -107,24 +109,29 @@ const headerSelected = (
                 ${
                     byRegion
                         ? getImageCanvas(byRegion)
-                        : "<h4>No insights available.</h4>"
+                        : "<h4>No insights available.</h4> <div id='break'></div>"
                 }
                 </p>
                 <br/>
                 <p>
+                <div id='break'></div>
                 ${formatSubHeading("Downloads by time")}
                 ${
+                   
                     byTime
-                        ? getImageCanvas(byTime)
-                        : "<h4>No insights available.</h4>"
+                        // ? getImageCanvas(byTime) +"<br>" + getImageCanvas(byTimeGraph)
+                        ? getImageCanvas(byTime) +"<br>" +"<div id='break'></div>" 
+                        +"<br/>"+ byTimeGraph.map(el=>`<div>${getImageCanvas(el)}</div> <div id='break'></div>`).join(" <div id='break'></div>")
+                        
+                        : "<h4>No insights available.</h4> <div id='break'></div>"
                 }
                 <p>
                 <br/>
                 ${formatSubHeading("Downloads by role")}
                 ${
                     byUseCase
-                        ? getImageCanvas(byUseCase)
-                        : "<h4>No insights available.</h4> "
+                        ? getImageCanvas(byUseCase) + `<div id='break'></div>`
+                        : "<h4>No insights available.</h4> <div id='break'></div> "
                 }</p>
                 <br/>`
                 : object === "Dataset Quality"
@@ -133,8 +140,8 @@ const headerSelected = (
                 ${byquality ? `<h3 style="font-size:14px; font-weight:400; color: '#333' ">${repostHeardingDescription.insight_datasetQuality_description[1].title}</h3>`: ``}
                 ${
                     byquality
-                        ? getImageCanvas(byquality)
-                        : `<h4>No insights available.</h4> `
+                        ? getImageCanvas(byquality) +`<div id='break'></div>`
+                        : `<h4>No insights available.</h4> [break]`
                 }
                
                 <br/>`
@@ -143,20 +150,18 @@ const headerSelected = (
                 ${byUseCasesCanvas ? `<p style="font-size:14px; font-weight:400; color: '#333'">${repostHeardingDescription.insight_useCase_description}</p>` : `` }
                 ${
                     byUseCasesCanvas
-                        ? getImageCanvas(byUseCasesCanvas)
-                        : `<h4>No insights available.</h4> `
+                        ? getImageCanvas(byUseCasesCanvas) +`<div id='break'></div>`
+                        : `<h4>No insights available.</h4> <div id='break'></div>`
                 }
                 </p>
                 <br/>`
-                : `<p><strong id=label_${index}>${object}</strong> <br>
+                : `<strong id=label_${index}>${object}</strong> <br>
                 <span style="font-size:14px; font-weight:400; color: '#333'">${repostHeardingDescription.insight_searchTerm_description}</span>
                 ${
                     bySearchTermsCanvas
-                        ? getImageCanvas(bySearchTermsCanvas)
-                        : `<h4>No insights available.</h4> `
-                }
-                </p>
-                <br/>`
+                        ? getImageCanvas(bySearchTermsCanvas) + "<div id='break'></div>"
+                        : `<h4>No insights available.</h4> <div id='break'></div>`
+                }`
         )
         .join("");
 };
@@ -296,7 +301,7 @@ const ReportVM = () => {
     const getImageDataURL = async (element: any) => {
         if (element) {
             try {
-                const dataUrl = await htmlToImage.toPng(element);
+                const dataUrl = await htmlToImage.toPng(element,{height:700});
                 return dataUrl;
             } catch (error) {
                 console.error('Error converting HTML to image:', error);
@@ -314,15 +319,29 @@ const ReportVM = () => {
         const metricByTime: any = document.getElementById("screenshot");
         const metricByUseCase: any = document.getElementById("pie");
         const useCases: any = document.getElementById("useCases");
-        const insightsHeading: any = document.getElementById("insight_description")
-     console.log("insight heading is ",insightsHeading)
-     console.log("useCase is ",useCases)
+        const time_test: any = document.getElementById("time_test");
+        const elementsWithTestId = document.querySelectorAll('[id*="time_test"]');
+        console.log("multiple Ids are************",elementsWithTestId)
+// const dynamicIds = Array.from(elementsWithTestId).map(element => element.id);
+
         const byQualityMetricCanvas = await getImageDataURL(qualityMetric);
         const bySearchTermsCanvas = await getImageDataURL(searchTerms);
         const byLocationCanvas = await getImageDataURL(metricesByRegion);
         const byTimeCanvas = await getImageDataURL(metricByTime);
         const byUseCaseCanvas = await getImageDataURL(metricByUseCase);
         const byUseCasesCanvas = await getImageDataURL(useCases);  
+        // const byTimeGraph = await getImageDataURL(time_test); 
+    //    const byTimeGraph =await dynamicIds.map(async(el)=> await getImageDataURL(el)) 
+    // console.log("bySeach is ********************* ",bySearchTermsCanvas)
+    let res=  await getImageDataURL(elementsWithTestId[0])
+    // console.log("response for image is ******************",res)
+    let byTimeGraph:any=[];
+    for(let i=0; i<elementsWithTestId.length/2; i++){
+       let res=  await getImageDataURL(elementsWithTestId[i])
+    //    console.log("response for image is ******************",res)
+       byTimeGraph.push(res)
+    }
+    //    console.log("byTime graph image is ",byTimeGraph)
         const data = `
                 <p style="text-align: center;"><img src="${imgUrl}" width=200 height=150 style="text-align: center;" /></p>
                 <p></p>
@@ -331,6 +350,7 @@ const ReportVM = () => {
                 ${headerSelected(
                     selectedHeaders,
                     byTimeCanvas,
+                    byTimeGraph,
                     byUseCaseCanvas,
                     byLocationCanvas,
                     byQualityMetricCanvas,

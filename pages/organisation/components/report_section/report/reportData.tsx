@@ -1,4 +1,4 @@
-import { useContext, useMemo } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import {
     ReportVMContext,
     getAge,
@@ -53,7 +53,22 @@ const ReportData = () => {
         useCases,
         transformedData,
     } = useContext(ReportVMContext);
+    const [updatedData, setUpdatedData] = useState([]);
 
+    const downloadByTimeData = () => {
+        let newData = [];
+        let dataLength = tableDataByTime.length;
+
+        for (let i = 0; i < dataLength; i += 20) {
+            newData.push(tableDataByTime.slice(i, i + 20));
+        }
+
+        setUpdatedData(newData);
+    };
+
+    useEffect(() => {
+        downloadByTimeData();
+    }, [downloadByTime]);
     const {
         // qualityMetrics,
         selectedQualityInsights: selectedLabel,
@@ -220,14 +235,49 @@ const ReportData = () => {
                         titles={byTimetitles}
                         divID="downloadByTimeID"
                     />
-                    <Table
+                    {/* <Table
                         tableHeaders={TIME_HEADERS}
                         tableData={tableDataByTime}
                         headerClass="sm:text-[17px] !py-2 sm:!py-4 !text-xs border-2 border-white !w-full sm:!px-10 !px-4  !text-white text-center sm:font-medium sm:bg-dtech-new-main-light bg-dtech-dark-teal "
                         tableClass=" text-sm border-white w-full min-w-[180%] sm:min-w-fit !px-10 text-white text-center sm:font-medium bg-[#EBEBEB] table-fixed"
                         cellPadding={20}
                         tableRow="sm:text-[17px] text-black font-normal w-full py-2 sm:!py-4  sm:!px-10 !px-4 w-full border-2 border-white"
-                    />
+                    /> */}
+                </div>
+            )}
+
+            {downloadByTime.length > 0 && (
+                <div
+                    className="flex fixed justify-center items-center flex-col z-[-10] w-full my-10 top-0 left-0"
+                >
+                    {/* <BarChart
+                        data={graphData}
+                        isMobile={isMobile}
+                        titles={byTimetitles}
+                        divID="downloadByTimeID"
+                    /> */}
+
+                    {updatedData.map((el, index) => (
+                        <div key={index}  id={`time_test${index}`}>
+                            <Table
+                                tableHeaders={TIME_HEADERS}
+                                tableData={el}
+                                headerClass="sm:text-[17px] !py-2 sm:!py-4 !text-xs border-2 border-white !w-full sm:!px-10 !px-4  !text-white text-center sm:font-medium sm:bg-dtech-new-main-light bg-dtech-dark-teal "
+                                tableClass="text-sm border-white w-full min-w-[180%] sm:min-w-fit !px-10 text-white text-center sm:font-medium bg-[#EBEBEB] table-fixed"
+                                cellPadding={20}
+                                tableRow="sm:text-[17px] text-black font-normal w-full py-2 sm:!py-4  sm:!px-10 !px-4 w-full border-2 border-white"
+                            />
+                        </div>
+                    ))}
+
+                    {/* <Table
+                        tableHeaders={TIME_HEADERS}
+                        tableData={tableDataByTime}
+                        headerClass="sm:text-[17px] !py-2 sm:!py-4 !text-xs border-2 border-white !w-full sm:!px-10 !px-4  !text-white text-center sm:font-medium sm:bg-dtech-new-main-light bg-dtech-dark-teal "
+                        tableClass=" text-sm border-white w-full min-w-[180%] sm:min-w-fit !px-10 text-white text-center sm:font-medium bg-[#EBEBEB] table-fixed"
+                        cellPadding={20}
+                        tableRow="sm:text-[17px] text-black font-normal w-full py-2 sm:!py-4  sm:!px-10 !px-4 w-full border-2 border-white"
+                    /> */}
                 </div>
             )}
             {downloadByRole.length > 0 && (
