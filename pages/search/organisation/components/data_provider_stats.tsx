@@ -12,7 +12,7 @@ const DataproviderStats = ({ stats,className }: { stats: DataStats, className?: 
 
     return (
         <div className={`w-full ${className}`}>
-            <div className="flex flex-row justify-start xl:space-x-10 md:space-x-4 items-center">
+            <div className="flex flex-row justify-start xl:space-x-6 md:space-x-1 items-center">
                 <div className="md:flex flex-col justify-center hidden ">
                     <div className="flex flex-row items-center ">
                         {/* <Image

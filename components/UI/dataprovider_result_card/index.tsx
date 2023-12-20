@@ -32,7 +32,7 @@ const DataProviderCard = ({ data, isMobile, imgCss="" }: DataProviderCardProps) 
         >
             <div
                 className={`flex flex-col justify-center  items-center  ${
-                    isMobile && showProvider ? "!justify-end":""
+                    (isMobile && showProvider) ? "!justify-end":""
                 }`}
             >
                 <div
@@ -49,7 +49,7 @@ const DataProviderCard = ({ data, isMobile, imgCss="" }: DataProviderCardProps) 
                 {!showProvider ? (
                     <FrontCard data={data} isMobile={isMobile} imgCss={imgCss} />
                 ) : (
-                    <BackCard data={data} isMobile={isMobile} />
+                            <BackCard data={data} isMobile={isMobile} />
                 )}
                 {/* {!showProvider && isMobile && stats && (
                     <DataproviderMobileFrontStats stats={stats} />
@@ -133,56 +133,3 @@ const BackCard = ({ data, isMobile }: { data: Data; isMobile: boolean }) => {
 };
 
 export default DataProviderCard;
-
-const DataproviderMobileFrontStats = ({
-    stats,
-    className,
-}: {
-    stats: DataStats;
-    className?: string;
-}) => {
-    const {
-        datasetsCount = 0,
-        favoritesCount = 0,
-        viewCount = 0,
-        downloadCount = 0,
-    } = stats || {};
-
-    return (
-        <div className={`w-full ${className}`}>
-            <div className="flex flex-row justify-evenly items-center">
-                <div className="flex flex-col justify-center items-center">
-                    <div className="flex flex-row justify-center items-center ">
-                        <Image
-                            src="/images/provider-detail-page/new_mobile_dataset.svg"
-                            alt=""
-                            height={20}
-                            width={10}
-                        />
-                        <span className="ml-1 font-normal text-base text-[#727272]">
-                            {datasetsCount}
-                        </span>
-                    </div>
-                </div>
-
-                <div className="flex flex-col justify-center items-center">
-                    <div className="flex flex-row justify-center items-center ">
-                        <BsEyeFill className=" w-4 h-4 text-[#727272] " />
-                        <span className="ml-1 font-normal text-base text-[#727272] ">
-                            {viewCount}
-                        </span>
-                    </div>
-                </div>
-
-                <div className="flex flex-col justify-center items-center">
-                    <div className="flex flex-row justify-center items-center ">
-                        <BsHeartFill className=" w-4 h-4 text-[#727272] " />
-                        <span className="ml-1 font-normal text-base text-[#727272] ">
-                            {favoritesCount}
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    );
-};
