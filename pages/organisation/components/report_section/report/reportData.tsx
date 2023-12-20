@@ -56,7 +56,7 @@ const ReportData = () => {
     const [updatedData, setUpdatedData] = useState([]);
 
     const downloadByTimeData = () => {
-        let newData = [];
+        let newData:any = [];
         let dataLength = tableDataByTime.length;
 
         for (let i = 0; i < dataLength; i += 20) {
@@ -74,14 +74,12 @@ const ReportData = () => {
         selectedQualityInsights: selectedLabel,
     } = useContext(QualityMetricVMContext);
 
-    // const items = qualityMetrics?.dataFileQuality;
     const {
         dataFileQuality = {},
         metaFileQuality = {},
         totalMatches,
     } = qualityMetrics || {};
     const items = selectedLabel == 0 ? dataFileQuality : metaFileQuality;
-    // console.log(items['overallScore'].rating)
 
     const dates = useMemo(
         () => getfilteredData(downloadByTime, fromDate, toDate),

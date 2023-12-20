@@ -33,19 +33,12 @@ const PreviewReport = ({
 
     // const splittedArray = editorValue.trim().split(/<\/p>(?=<p>)/);
     // const splittedArray = editorValue.split(/<\/p>|<p[^>]*>/).filter(Boolean);
-    // let splittedArray = editorValue.split(/<\/p>|<p[^>]*>/)
-    // let splittedArray = editorValue.split(/<\/p>|<p[^>]*>|<\/div>|<div[^>]*>/);
     console.log("editorValue is ",editorValue)
-    let splittedArray = editorValue.split("<div id='break'></div>");
-    // let splittedArray = editorValue.split('<div id=\'break\' style=\'display: none\'>break</div>');
-    // let splittedArray = editorValue.split('<br/>');
+    let splittedArray:any = editorValue.split(/<p class='break'>&nbsp;<\/p>|&nbsp;<\/p>/);
+    // let splittedArray = editorValue.split(/&nbsp;|&nbsp;/);
 
-
-
-      splittedArray = splittedArray.filter(item => item.trim() !== "" && item.trim() !== "\n" && item.trim() != ",");
-    //   splittedArray = splittedArray?.map((subarray) => subarray.join("")).filter(Boolean);
-//   .map((item:any) => item.trim());
-
+      splittedArray = splittedArray.filter((item:{item:string}) => item.trim() !== "" && item.trim() !== "\n" && item.trim() != ",");
+   
     console.log("splitedArray is",splittedArray)
     useEffect(() => {
                for (let i = 0; i < splittedArray.length; i++) {
@@ -85,48 +78,46 @@ const PreviewReport = ({
 
     let header = splittedArray.slice(0, previewSection[0]?.index)
     header = header.filter((item: string) => item.trim() !== '');
-    console.log("header is ",header);
 // console.log("section is after *****************",previewSection)
-let updataedList = [];
-    const result = previewSection.map((section, index, array) => {
+// let updataedList:any = [];
+    // const result = previewSection.map((section, index, array) => {
     //     console.log("array is ***************",array)
     //     console.log("section is ",section)
-        let startIndex:any = section.index;
+        // let startIndex:any = section.index;
     //     const endIndex =
     //         index < array.length - 1
     //             ? array[index + 1].index
     //             : splittedArray.length;
     //    return splittedArray.slice(startIndex, endIndex);
 
-        let endIndex:number;
-        if(section.label == "Download metrics"){
-            console.log("I am here...",splittedArray)
-            let loopLen = Math.floor(previewSection[2].index - previewSection[3].index)
-            for(let i=0; i<loopLen; i++){
-                console.log("startIndex is ",startIndex)
-                endIndex=  startIndex+3
-             updataedList = [...updataedList,splittedArray.slice(startIndex, endIndex)]
-             console.log(updataedList,'---updataedList ')
-             startIndex = endIndex
-                console.log("endIndex is ",endIndex)
-            }
-          
-        }
-        else{
-            if(endIndex && startIndex<endIndex){
-                startIndex = endIndex
-            }
-          endIndex = startIndex +2
-          updataedList = [...updataedList,splittedArray.slice(startIndex, endIndex)]
 
-        }
-                // console.log("startIndex is ",startIndex)
-                // console.log("endIndex is ",endIndex)
-                // updataedList = [...updataedList,splittedArray.slice(startIndex, endIndex)]
-        // return splittedArray.slice(startIndex, endIndex);
-    });
-    const newResult= 
-   console.log("result is ",result)
+
+
+        // let endIndex:number;
+        // if(section.label == "Download metrics"){
+        //     console.log("I am here...",splittedArray)
+        //     let loopLen = Math.floor(previewSection[2].index - previewSection[3].index)
+        //     for(let i=0; i<loopLen; i++){
+        //         console.log("startIndex is ",startIndex)
+        //         endIndex=  startIndex+3
+        //      updataedList = [...updataedList,splittedArray.slice(startIndex, endIndex)]
+        //      console.log(updataedList,'---updataedList ')
+        //      startIndex = endIndex
+        //         console.log("endIndex is ",endIndex)
+        //     }
+          
+        // }
+        // else{
+        //     if(endIndex && startIndex<endIndex){
+        //         startIndex = endIndex
+        //     }
+        //   endIndex = startIndex +2
+        //   updataedList = [...updataedList,splittedArray.slice(startIndex, endIndex)]
+
+        // }
+    // });
+//     const newResult= 
+//    console.log("result is ",result)
     const gradientStyle = {
         background:
             "radial-gradient(2196.08% 210.97% at 144.72% -36.42%, rgba(255, 255, 255, 0.75) 0%, rgba(206, 255, 254, 0.28) 27.7%, rgba(206, 176, 208, 0.20) 84.03%)",
@@ -168,7 +159,7 @@ let updataedList = [];
                             <div className="bg-[#EBEBEB] w-4 ml-2 fixed md:relative"></div>
                         </div>
                     </div>
-                    {displayResult?.map((result, index) => {
+                    {displayResult?.map((result:any, index:any) => {
                         return (
                             <div
                                 key={index}

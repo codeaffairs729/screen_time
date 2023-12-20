@@ -75,16 +75,15 @@ const getReportDate = (fromDate: Date, toDate: Date) => {
     return format(fromDate, "dd-MM-yyyy") === format(toDate, "dd-MM-yyyy")
         ? `<p><strong style="padding-left: 100px;">${formatDate(
               fromDate
-          )}</strong></p> <div id='break'></div>`
+          )}</strong></p> <p class='break'>&nbsp;</p>`
         : `<p><strong>${formatDate(fromDate)}</strong> - <strong>${formatDate(
               toDate
-          )}</strong></p> <div id='break'></div>`;
+          )}</strong></p> <p class='break'>&nbsp;</p>`;
 };
 const getReportTitle = (title: any) => {
     return `<p><strong>Dataset Insights Report</strong></p><p><strong>${title}</strong></p>`;
 };
 const getImageCanvas = (src: any) => `<img src="${src}"/>`;
-// const getAllImageCanvas = (elem:any) => elem.map(image=>`<img src=${image}/> <br/>`)
 
 const formatSubHeading = (text: string) => `<p> ${text}</p>`;
 
@@ -103,45 +102,46 @@ const headerSelected = (
         .map((object: any, index: any) =>
             object === "Download metrics"
                 ? `
-                <p><strong id=label_${index}>${object}</strong>
+                <p><strong id=label_${index}>${object}</strong></p>
                 <br/>
                 ${formatSubHeading("Downloads by region")}
                 ${
                     byRegion
                         ? getImageCanvas(byRegion)
-                        : "<h4>No insights available.</h4> <div id='break'></div>"
+                        : "<h4>No insights available.</h4> <p class='break'>&nbsp;</p>"
                 }
-                </p>
+            
                 <br/>
                 <p>
-                <div id='break'></div>
+                <p class='break'>&nbsp;</p>
                 ${formatSubHeading("Downloads by time")}
                 ${
                    
                     byTime
                         // ? getImageCanvas(byTime) +"<br>" + getImageCanvas(byTimeGraph)
-                        ? getImageCanvas(byTime) +"<br>" +"<div id='break'></div>" 
-                        +"<br/>"+ byTimeGraph.map(el=>`<div>${getImageCanvas(el)}</div> <div id='break'></div>`).join(" <div id='break'></div>")
+                        ? getImageCanvas(byTime) +"<br>" +"<p class='break'>&nbsp;</p>" 
+                        +"<br/>"+ byTimeGraph.map((el:{el:any})=>`<div>${getImageCanvas(el)}</div> <p class='break'>&nbsp;</p>`).join(" ")
                         
-                        : "<h4>No insights available.</h4> <div id='break'></div>"
+                        : "<h4>No insights available.</h4> <p class='break'>&nbsp;</p>"
                 }
                 <p>
                 <br/>
                 ${formatSubHeading("Downloads by role")}
                 ${
                     byUseCase
-                        ? getImageCanvas(byUseCase) + `<div id='break'></div>`
-                        : "<h4>No insights available.</h4> <div id='break'></div> "
+                        ? getImageCanvas(byUseCase) 
+                        : "<h4>No insights available.</h4>"
                 }</p>
+                <p class='break'>&nbsp;</p>
                 <br/>`
                 : object === "Dataset Quality"
-                ? `<br/><p><strong id=label_${index}>${object}</strong>  </p>
+                ? `<br/><p><strong id=label_${index}>${object}</strong></p>
                 <br/> 
                 ${byquality ? `<h3 style="font-size:14px; font-weight:400; color: '#333' ">${repostHeardingDescription.insight_datasetQuality_description[1].title}</h3>`: ``}
                 ${
                     byquality
-                        ? getImageCanvas(byquality) +`<div id='break'></div>`
-                        : `<h4>No insights available.</h4> [break]`
+                        ? getImageCanvas(byquality) +`<p class='break'>&nbsp;</p>`
+                        : `<h4>No insights available.</h4>`
                 }
                
                 <br/>`
@@ -150,17 +150,17 @@ const headerSelected = (
                 ${byUseCasesCanvas ? `<p style="font-size:14px; font-weight:400; color: '#333'">${repostHeardingDescription.insight_useCase_description}</p>` : `` }
                 ${
                     byUseCasesCanvas
-                        ? getImageCanvas(byUseCasesCanvas) +`<div id='break'></div>`
-                        : `<h4>No insights available.</h4> <div id='break'></div>`
+                        ? getImageCanvas(byUseCasesCanvas)
+                        : `<h4>No insights available.</h4>`
                 }
                 </p>
-                <br/>`
+                <p class='break'>&nbsp;</p>`
                 : `<strong id=label_${index}>${object}</strong> <br>
                 <span style="font-size:14px; font-weight:400; color: '#333'">${repostHeardingDescription.insight_searchTerm_description}</span>
                 ${
                     bySearchTermsCanvas
-                        ? getImageCanvas(bySearchTermsCanvas) + "<div id='break'></div>"
-                        : `<h4>No insights available.</h4> <div id='break'></div>`
+                        ? getImageCanvas(bySearchTermsCanvas) + "<p class='break'>&nbsp;</p>"
+                        : `<h4>No insights available.</h4> <p class='break'>&nbsp;</p>`
                 }`
         )
         .join("");

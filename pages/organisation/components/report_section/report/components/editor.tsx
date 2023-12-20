@@ -44,53 +44,21 @@ const RichTextEditor = () => {
         backgroundPosition: "center",
     };
 
-    const handleChange = (value, delta, source, editor) => {
-       
-        console.log("value is",value)
-        console.log("delta is",delta)
-        console.log("source is",source)
-        console.log("editor is",editor)
-        if (source === "user") {
-            console.log("I am running")
-
-            const hasHtmlInsert = delta.ops.some((op) => op.insert && typeof op.insert === "string" && op.insert.includes("<div id=\"break\"></div>"));
-
-            // If HTML insert operations contain the specific element, update the editor content
-            if (hasHtmlInsert) {
-              editor.updateContents(delta);
-        
-              // Update the context state with the modified editor content
-              setEditorValue(editor.getContents());
-            }
-            
-          }
-          
-          else if (source === "api") {
-            // If the change is initiated by API, prevent the update
-            // You can add your custom logic here or leave it empty to ignore the change
-            return;
-          }
-        
-        setEditorValue(value);
-      };
-    
-
     return (
         <div id="report-editor">
+            {console.log("log from editor", editorValue)}
             <ReactQuill
                 theme="snow"
                 modules={modules}
                 formats={formats}
                 style={customStyles}
                 value={editorValue}
-                onChange={handleChange}
+                onChange={(value) => setEditorValue(value)}
                 // preserveWhitespace
                 className={"!h-[615px]"}
             />
         </div>
     );
-
-
 };
 
 export default RichTextEditor;
