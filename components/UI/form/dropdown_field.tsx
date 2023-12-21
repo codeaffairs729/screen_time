@@ -10,6 +10,7 @@ import {
 import { BsCheck } from "react-icons/bs";
 import { useController } from "react-hook-form";
 import ReactTooltip from "react-tooltip";
+import { useRouter } from "next/router";
 export type Option = {
     value: any;
     label: string;
@@ -80,7 +81,7 @@ const TOOLTIP_VALUE = [
         value: "Dataset updated once every 12 months.",
     },
 ];
-const  DropdownField = ({
+const DropdownField = ({
     newDropdown,
     options,
     className = "",
@@ -120,6 +121,10 @@ const  DropdownField = ({
                 ? ""
                 : formControl["defaultValue"],
     });
+
+    const router = useRouter();
+    const path = router.asPath;
+
     const myRef = useRef(null);
     useOutsideAlerter(myRef);
     function useOutsideAlerter(ref: any) {
@@ -187,7 +192,11 @@ const  DropdownField = ({
                         {isOpen && newOptionclass ? (
                             <Combobox.Input
                                 className={clsx(
-                                    "w-full sm:ml-0 rounded-t-[30px] max-h-[99%] border-[3px] border-dtech-light-teal border-b-0 text-gray-900 h-full focus:!ring-0 focus:!outline-none focus:!border-dtech-light-teal",
+                                    `w-full sm:ml-0 ${
+                                        path === "/signup"
+                                            ? "rounded-t-[23px]"
+                                            : "rounded-t-[30px]"
+                                    } max-h-[99%] border-[3px] border-dtech-light-teal border-b-0 text-gray-900 h-full focus:!ring-0 focus:!outline-none focus:!border-dtech-light-teal`,
                                     inputClass,
                                     newDropdown &&
                                         isOpen &&
@@ -238,7 +247,11 @@ const  DropdownField = ({
                         ) : newDropdownIcon ? (
                             <HiOutlineChevronUp className="w-5 h-5" />
                         ) : (
-                            <HiOutlineChevronDown className={`w-5 h-5 transition-all ${isOpen && " rotate-180"}`} />
+                            <HiOutlineChevronDown
+                                className={`w-5 h-5 transition-all ${
+                                    isOpen && " rotate-180"
+                                }`}
+                            />
                         )}
                     </Combobox.Button>
                     <Transition

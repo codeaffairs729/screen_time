@@ -68,7 +68,7 @@ const RegisterDataSourcePage = () => {
                                         <input
                                             type="text"
                                             onChange={handleSerch}
-                                            className="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-[30px] border-none focus:!ring-none focus:!outline-none focus:bg-gray-200 focus:!border-none dark:bg-gray-700 dark:placeholder-gray-400 dark:text-white "
+                                            className="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-[30px] border-none focus:!ring-none focus:!outline-none focus:bg-gray-200 focus:!border-none "
                                             placeholder="Search"
                                             required
                                         />
