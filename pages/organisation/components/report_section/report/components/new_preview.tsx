@@ -37,7 +37,7 @@ const PreviewReport = ({
     let splittedArray:any = editorValue.split(/<p class='break'>&nbsp;<\/p>|&nbsp;<\/p>/);
     // let splittedArray = editorValue.split(/&nbsp;|&nbsp;/);
 
-      splittedArray = splittedArray.filter((item:{item:string}) => item.trim() !== "" && item.trim() !== "\n" && item.trim() != ",");
+      splittedArray = splittedArray.filter((item:any) => item.trim() !== "" && item.trim() !== "\n" && item.trim() != ",");
    
     console.log("splitedArray is",splittedArray)
     useEffect(() => {
