@@ -25,8 +25,11 @@ function BarChart({
         if (!chartRef.current) {
             chartRef.current = create(`${divID}`, XYChart);
             chartRef.current.showOnInit = true;
+            // chartRef.current.animated = false;
 
-            const categoryAxis = chartRef.current.xAxes.push(new CategoryAxis());
+            const categoryAxis = chartRef.current.xAxes.push(
+                new CategoryAxis()
+            );
             categoryAxis.dataFields.category = "category";
             categoryAxis.title.text = titles.xAxis;
 
@@ -37,32 +40,43 @@ function BarChart({
             series.dataFields.valueY = "value";
             series.dataFields.categoryX = "category";
             series.name = "Values";
-            series.columns.template.tooltipText = "{categoryX}: [bold]{valueY}[/]";
+            series.columns.template.tooltipText =
+                "{categoryX}: [bold]{valueY}[/]";
             series.columns.template.fill = color("#007BFF");
+            series.showOnInit = false;
         }
 
         // Update data
-        const chartData = data?.map((item: any) => {
-            const star = Object.keys(item)[0];
-            return { category: star, value: item[star] };
-        });
+        // const chartData = data?.map((item: any) => {
+        //     const star = Object.keys(item)[0];
+        //     return { category: star, value: item[star] };
+        // });
+        // chartRef.current.data = chartData;
 
-        chartRef.current.data = chartData;
+        const chartData = data?.map((item: any) => ({
+            category: Object.keys(item)[0],
+            value: item[Object.keys(item)[0]],
+        }));
+
+        if (chartData) {
+            chartRef.current.data = chartData;
+        }
 
         // Dispose the chart when the component is unmounted
-        return () => {
-            if (chartRef.current) {
-                chartRef.current.dispose();
-                chartRef.current = null;
-            }
-        };
+        // return () => {
+        //     if (chartRef.current) {
+        //         chartRef.current.dispose();
+        //         chartRef.current = null;
+        //     }
+        // };
     }, [data, titles, divID]);
 
     return (
         <div
             id={divID}
             style={{ width: "100%", height: isMobile ? "200px" : "400px" }}
-        ></div>
+        >
+        </div>
     );
 }
 
