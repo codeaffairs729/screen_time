@@ -93,6 +93,7 @@ const headerSelected = (
     byTimeGraph:any,
     byUseCase: any,
     byRegion: any,
+    byRegionTable:any,
     byquality: any,
     bySearchTermsCanvas: any,
     byUseCasesCanvas: any,
@@ -117,13 +118,10 @@ const headerSelected = (
                 ${formatSubHeading("Downloads by region")}
                 ${
                     byRegion
-                        ? getImageCanvas(byRegion)
-                        : "<h4>No insights available.</h4> <p class='break'>&nbsp;</p>"
+                        ? getImageCanvas(byRegion) + "<p class='break'>&nbsp;</p>"+
+                        "<h3>Downloads by region</h3>"+ getImageCanvas(byRegionTable)+"<p class='break'>&nbsp;</p>"
+                        : "<h4>No insights available.</h4>"+"<p class='break'>&nbsp;</p>"
                 }
-            
-                <br/>
-                <p>
-                <p class='break'>&nbsp;</p>
                 ${formatSubHeading("Downloads by time")}
                 ${
                    
@@ -346,7 +344,8 @@ const ReportVM = () => {
         const qualityMetrics_interoperability:any = document.getElementById("qualityMetrics_interoperability");
         const qualityMetrics_reusability:any =  document.getElementById("qualityMetrics_reusability");
         const searchTerms: any = document.getElementById("searchTerms");
-        const metricesByRegion: any = document.getElementById("map");
+        const metricesByRegionMap: any = document.getElementById("map");
+        const metricesByRegionTable: any = document.getElementById("location");
         const metricByTime: any = document.getElementById("screenshot");
         const metricByUseCase: any = document.getElementById("pie");
         const useCases: any = document.getElementById("useCases");
@@ -371,10 +370,13 @@ const ReportVM = () => {
         }, 3000); 
 
         // const bySearchTermsCanvas = await getImageDataURL(searchTerms);
-        const byLocationCanvas = await getImageDataURL(metricesByRegion);
+        const byLocationCanvas = await getImageDataURL(metricesByRegionMap);
+        // console.log("hello I am here**********",byLocationCanvas)
+        const byLocationTableCanvas = await getImageDataURL(metricesByRegionTable);
         const byTimeCanvas = await getImageDataURL(metricByTime);
         const byUseCaseCanvas = await getImageDataURL(metricByUseCase);
         const byUseCasesCanvas = await getImageDataURL(useCases);
+        // console.log("useCases************-------------",byUseCasesCanvas)
         byqualityMetricsAccessibilityCanvas = await getImageDataURL(qualityMetrics_accessibility,250);
         byqualityMetricsContextualityCanvas = await getImageDataURL(qualityMetrics_contextuality,250);  
         byqualityMetricsFindabilityCanvas = await getImageDataURL(qualityMetrics_findability,250);
@@ -404,6 +406,7 @@ const ReportVM = () => {
                     byTimeGraph,
                     byUseCaseCanvas,
                     byLocationCanvas,
+                    byLocationTableCanvas,
                     byQualityMetricCanvas,
                     bySearchTermsCanvas,
                     byUseCasesCanvas,
