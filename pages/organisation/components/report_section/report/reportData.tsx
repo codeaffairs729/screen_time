@@ -56,7 +56,7 @@ const ReportData = () => {
     const [updatedData, setUpdatedData] = useState([]);
 
     const downloadByTimeData = () => {
-        let newData:any = [];
+        let newData: any = [];
         let dataLength = tableDataByTime.length;
 
         for (let i = 0; i < dataLength; i += 20) {
@@ -172,95 +172,94 @@ const ReportData = () => {
                 <div>
                     {/* overall */}
                     <div
-                    className="flex fixed justify-center items-center flex-col z-[-10] w-full top-0 left-0"
-                    id="qualityMetrics"
-                >
-                    <BarChart
-                        data={calculateRatingPercentages(
-                            items["overallScore"]?.rating
-                        )}
-                        isMobile={isMobile}
-                        titles={titles}
-                        divID="qualityMetricsDiv"
-                    />
-                </div>
+                        className="flex fixed justify-center items-center flex-col z-[-10] w-full top-0 left-0"
+                        id="qualityMetrics"
+                    >
+                        <BarChart
+                            data={calculateRatingPercentages(
+                                items["overallScore"]?.rating
+                            )}
+                            isMobile={isMobile}
+                            titles={titles}
+                            divID="qualityMetricsDiv"
+                        />
+                    </div>
 
-                {/* qualityMetrics_accessibility */}
-                <div
-                    className="flex fixed justify-center items-center flex-col z-[-10] w-full top-0 left-0"
-                    id="qualityMetrics_accessibility"
-                >
-                    <BarChart
-                        data={calculateRatingPercentages(
-                            items["accessibility"]?.rating
-                        )}
-                        isMobile={isMobile}
-                        titles={titles}
-                        divID="qualityMetricsDiv_accessibility"
-                    />
-                </div>
-              
-                {/* qualityMetrics_contextuality */}
-                <div
-                    className="flex fixed justify-center items-center flex-col z-[-10] w-full top-0 left-0"
-                    id="qualityMetrics_contextuality"
-                >
-                    <BarChart
-                        data={calculateRatingPercentages(
-                            items["contextuality"]?.rating
-                        )}
-                        isMobile={isMobile}
-                        titles={titles}
-                        divID="qualityMetricsDiv_contextuality"
-                    />
-                </div>
+                    {/* qualityMetrics_accessibility */}
+                    <div
+                        className="flex fixed justify-center items-center flex-col z-[-10] w-full top-0 left-0"
+                        id="qualityMetrics_accessibility"
+                    >
+                        <BarChart
+                            data={calculateRatingPercentages(
+                                items["accessibility"]?.rating
+                            )}
+                            isMobile={isMobile}
+                            titles={titles}
+                            divID="qualityMetricsDiv_accessibility"
+                        />
+                    </div>
 
-                 {/* qualityMetricsDiv_findability */}
-                <div
-                    className="flex fixed justify-center items-center flex-col z-[-10] w-full top-0 left-0"
-                    id="qualityMetrics_findability"
-                >
-                    <BarChart
-                        data={calculateRatingPercentages(
-                            items["findability"]?.rating
-                        )}
-                        isMobile={isMobile}
-                        titles={titles}
-                        divID="qualityMetricsDiv_findability"
-                    />
-                </div>
+                    {/* qualityMetrics_contextuality */}
+                    <div
+                        className="flex fixed justify-center items-center flex-col z-[-10] w-full top-0 left-0"
+                        id="qualityMetrics_contextuality"
+                    >
+                        <BarChart
+                            data={calculateRatingPercentages(
+                                items["contextuality"]?.rating
+                            )}
+                            isMobile={isMobile}
+                            titles={titles}
+                            divID="qualityMetricsDiv_contextuality"
+                        />
+                    </div>
 
-                 {/* qualityMetrics_interoperability */}
-                <div
-                    className="flex fixed justify-center items-center flex-col z-[-10] w-full top-0 left-0"
-                    id="qualityMetrics_interoperability"
-                >
-                    <BarChart
-                        data={calculateRatingPercentages(
-                            items["interoperability"]?.rating
-                        )}
-                        isMobile={isMobile}
-                        titles={titles}
-                        divID="qualityMetricsDiv_interoperability"
-                    />
-                </div>
-                
-                  {/* qualityMetrics_reusability */}
-                <div
-                    className="flex fixed justify-center items-center flex-col z-[-10] w-full top-0 left-0"
-                    id="qualityMetrics_reusability"
-                >
-                    <BarChart
-                        data={calculateRatingPercentages(
-                            items["reusability"]?.rating
-                        )}
-                        isMobile={isMobile}
-                        titles={titles}
-                        divID="qualityMetricsDiv_reusability"
-                    />
-                </div>
+                    {/* qualityMetricsDiv_findability */}
+                    <div
+                        className="flex fixed justify-center items-center flex-col z-[-10] w-full top-0 left-0"
+                        id="qualityMetrics_findability"
+                    >
+                        <BarChart
+                            data={calculateRatingPercentages(
+                                items["findability"]?.rating
+                            )}
+                            isMobile={isMobile}
+                            titles={titles}
+                            divID="qualityMetricsDiv_findability"
+                        />
+                    </div>
 
-                </div>    
+                    {/* qualityMetrics_interoperability */}
+                    <div
+                        className="flex fixed justify-center items-center flex-col z-[-10] w-full top-0 left-0"
+                        id="qualityMetrics_interoperability"
+                    >
+                        <BarChart
+                            data={calculateRatingPercentages(
+                                items["interoperability"]?.rating
+                            )}
+                            isMobile={isMobile}
+                            titles={titles}
+                            divID="qualityMetricsDiv_interoperability"
+                        />
+                    </div>
+
+                    {/* qualityMetrics_reusability */}
+                    <div
+                        className="flex fixed justify-center items-center flex-col z-[-10] w-full top-0 left-0"
+                        id="qualityMetrics_reusability"
+                    >
+                        <BarChart
+                            data={calculateRatingPercentages(
+                                items["reusability"]?.rating
+                            )}
+                            isMobile={isMobile}
+                            titles={titles}
+                            divID="qualityMetricsDiv_reusability"
+                        />
+                    </div>
+                </div>
             )}
             {searchTerms.length > 0 && (
                 <div
@@ -282,14 +281,22 @@ const ReportData = () => {
             )}
             {downloadByLocation.length > 0 && (
                 <div
-                    id="map"
-                    className="flex fixed justify-center items-center flex-col z-[-10] w-full my-10 top-0 left-0"
+                // id="map"
+                // className="flex fixed justify-center items-center flex-col z-[-10] w-full my-10 top-0 left-0"
                 >
-                    <div className="mt-8">
+                    <div
+                        className="flex fixed justify-center items-center flex-col z-[-10] w-full my-10 top-0 left-0"
+                        id="map"
+                    >
                         <MapChartComponent
                             regions={regions}
                             isMobile={isMobile}
                         />
+                    </div>
+                    <div
+                        className="flex fixed justify-center items-center flex-col z-[-10] w-full my-10 top-0 left-0"
+                        id="location"
+                    >
                         <Table
                             tableHeaders={LOCATION_HEADERS}
                             tableData={tableData}
@@ -324,11 +331,9 @@ const ReportData = () => {
             )}
 
             {downloadByTime.length > 0 && (
-                <div
-                    className="flex fixed justify-center items-center flex-col z-[-10] w-full my-10 top-0 left-0"
-                >
+                <div className="flex fixed justify-center items-center flex-col z-[-10] w-full my-10 top-0 left-0">
                     {updatedData.map((el, index) => (
-                        <div key={index}  id={`time_test${index}`}>
+                        <div key={index} id={`time_test${index}`}>
                             <Table
                                 tableHeaders={TIME_HEADERS}
                                 tableData={el}
