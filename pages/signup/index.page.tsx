@@ -136,14 +136,14 @@ const SecondStep = ({
                 />
                 <div className="mt-4">
                     <FormRow
-                        label="Organisation"
+                        label="Organisation Admin"
                         className=" !bg-transparent text-[#333333] !text-xl sm:!text-base"
                     >
                         {" "}
                     </FormRow>
                     <InfoIcon
                         tooltipClassName=" max-w-sm  !bg-dtech-dark-teal"
-                        iconClasses="text-[#333333] -mt-[54px] ml-36 sm:ml-[118px]"
+                        iconClasses="text-[#333333] -mt-[54px] ml-20 sm:ml-[168px]"
                         title="Enter the name of your organisation. This is optional if you have selected the Account Type as Individual"
                     />
                 </div>

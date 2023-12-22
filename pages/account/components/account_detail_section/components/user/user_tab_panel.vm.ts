@@ -10,8 +10,9 @@ import { createContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "store";
-import { updateUser } from "store/auth/auth.action";
+import UserService from "services/user.service";
+import { RootState, initializeStore } from "store";
+import { logoutUser, updateUser } from "store/auth/auth.action";
 
 const UserTabPanelVM = () => {
     const user = useSelector((state: RootState) => state.auth.user);
@@ -73,11 +74,15 @@ const UserTabPanelVM = () => {
         executeDeleteUser(() => Http.delete(`/v1/users/delete-user`), {
             postProcess: (res: any) => {
                 toast.success("User is Deleted successfully");
+                const store = initializeStore();
+                store.dispatch(logoutUser());
+                UserService.clear();
                 router.push("/signup");
             },
             onError: async (error) => toast.error(await getHttpErrorMsg(error)),
         });
     };
+
 
     const { isLoading: isDeletingApiKeys, execute: executeDeleteApiKeys } =
         useHttpCall();
