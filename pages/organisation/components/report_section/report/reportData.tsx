@@ -371,7 +371,7 @@ const ReportData = () => {
             {useCases.length > 0 && (
                 <div
                     id="useCases"
-                    className="flex fixed justify-center items-center flex-col z-[-10] w-full top-0 left-0"
+                    className="flex fixed justify-center items-center z-[-10] w-full top-0 left-0"
                 >
                     <PieChartComponent
                         isMobile={isMobile}
