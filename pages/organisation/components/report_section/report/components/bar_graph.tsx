@@ -26,8 +26,10 @@ function BarChart({
             chartRef.current = create(`${divID}`, XYChart);
             chartRef.current.showOnInit = true;
             // chartRef.current.animated = false;
-            
-            const categoryAxis = chartRef.current.xAxes.push(new CategoryAxis());
+
+            const categoryAxis = chartRef.current.xAxes.push(
+                new CategoryAxis()
+            );
             categoryAxis.dataFields.category = "category";
             categoryAxis.title.text = titles.xAxis;
 
@@ -35,25 +37,20 @@ function BarChart({
             valueAxis.title.text = titles.yAxis;
 
             const series = chartRef.current.series.push(new ColumnSeries());
-            // console.log("bargraph is ",series)
             series.dataFields.valueY = "value";
             series.dataFields.categoryX = "category";
             series.name = "Values";
-            series.columns.template.tooltipText = "{categoryX}: [bold]{valueY}[/]";
+            series.columns.template.tooltipText =
+                "{categoryX}: [bold]{valueY}[/]";
             series.columns.template.fill = color("#007BFF");
-            // series.animated = false;
+            series.showOnInit = false;
         }
 
         // Update data
-        // console.log("data is ",data)
         // const chartData = data?.map((item: any) => {
-        //     console.log("checking ****************",item)
         //     const star = Object.keys(item)[0];
-        //     console.log("star is ",star)
         //     return { category: star, value: item[star] };
         // });
-        // console.log("chartData is ",chartData)
-
         // chartRef.current.data = chartData;
 
         const chartData = data?.map((item: any) => ({
@@ -79,7 +76,6 @@ function BarChart({
             id={divID}
             style={{ width: "100%", height: isMobile ? "200px" : "400px" }}
         >
-             {console.log("current is",chartRef)}
         </div>
     );
 }
