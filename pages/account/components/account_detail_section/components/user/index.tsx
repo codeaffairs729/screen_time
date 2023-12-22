@@ -4,6 +4,9 @@ import PrimaryBtn from "components/UI/form/primary_btn";
 import TextField from "components/UI/form/text_field";
 import Image from "next/image";
 import UserTabPanelVM, { UserTabPanelVMContext } from "./user_tab_panel.vm";
+import AdminTabPanelVM, {
+    AdminTabPanelVMContext,
+} from "../admin/admin_tab_panel.vm";
 import cameraImage from "public/images/icons/camera_filled.svg";
 import toast from "react-hot-toast";
 import { useController } from "react-hook-form";
@@ -12,13 +15,17 @@ import { useSelector } from "react-redux";
 import { RootState } from "store";
 import { BiUserCircle } from "react-icons/bi";
 import GenerateApi from "./components/generateApiPopup";
+import ReactTooltip from "react-tooltip";
+import DeletePopup from "./components/deletePopup";
 
 const UserSection = () => {
     const user = useSelector((state: RootState) => state.auth.user);
-    const [viewAll, setViewAll] = useState(false)
+    const [viewAll, setViewAll] = useState(false);
     const fileInputRef = useRef<HTMLInputElement>(null);
     const apiPopupRef = useRef<HTMLDivElement>(null);
+    const [isOpen, setIsOpen] = useState(false);
     const vm = UserTabPanelVM();
+    const adminvm = AdminTabPanelVM();
     const { field: register } = useController({
         control: vm.form.control,
         name: "image",
@@ -37,6 +44,7 @@ const UserSection = () => {
             fileInputRef.current.click();
         }
     };
+
     const myRef = useRef(null);
     useOutsideAlerter(myRef);
     function useOutsideAlerter(ref: any) {
@@ -55,13 +63,33 @@ const UserSection = () => {
     }
     const nameInitial = user
         ? user?.name
-            ?.split(" ")
-            .map((word) => word[0])
-            .join("")
+              ?.split(" ")
+              .map((word) => word[0])
+              .join("")
         : "G";
+
+    const handleDeletePopup = () => {
+        setIsOpen(!isOpen);
+    };
+
+    const membersRoles = adminvm?.orgusers?.map((item) =>
+        item?.roles?.map((role) => role?.name)
+    );
+    const combinedRoles = membersRoles?.flat();
+
+    const includesOrganisationAdmin = combinedRoles.includes(
+        "organisation_administrator"
+    );
+
+    const canDeleteUser =
+        adminvm?.orgusers?.length == 0 ||
+        (adminvm?.orgusers?.length > 0 && includesOrganisationAdmin);
+
+    const deltooltip =
+        "Please assign at least one other admin for your organisation to be able to delete your account";
+
     return (
         <UserTabPanelVMContext.Provider value={vm}>
-
             <div className="pt-16 max-w-3xl md:mx-auto mx-2" ref={myRef}>
                 <div className="flex flex-col justify-between items-center">
                     <div className="relative w-40 flex justify-center items-end">
@@ -154,7 +182,9 @@ const UserSection = () => {
                                 formControl={{
                                     control: vm.form.control,
                                     name: "organisation",
-                                    rules: { required: "Organisation is required" },
+                                    rules: {
+                                        required: "Organisation is required",
+                                    },
                                 }}
                                 placeholder="Enter Organisation"
                                 textfieldClassName="border-0 border-b border-[#C3C3C3] focus:ring-opacity-0 rounded-none sm:text-[19px]"
@@ -240,7 +270,9 @@ const UserSection = () => {
                                     });
                                 })();
                             } else {
-                                toast.error("There is not any change in the form");
+                                toast.error(
+                                    "There is not any change in the form"
+                                );
                             }
                         }}
                     />
@@ -249,19 +281,46 @@ const UserSection = () => {
                         label="API keys"
                         isLoading={vm.isFetchingApiKeys}
                         onClick={() => {
-                            vm.fetchApiKeys()
+                            vm.fetchApiKeys();
                             // setApiPopup(!apiPopup)
                         }}
                     />
+                    {canDeleteUser ? (
+                        <PrimaryBtn
+                            className="bg-[#D32205] active:bg-dtech-dark-yellow hover:bg-[#9F061F] active:border-b-2 border-black hover:border-0 active:text-black text-white w-[120px] sm:w-[170px] !p-[10px] sm:!p-[16px] rounded-[30px] mt-5 mb-2 text-xs sm:text-[16px]"
+                            label="Delete user"
+                            // isLoading={vm.isFetchingApiKeys}
+                            onClick={handleDeletePopup}
+                        />
+                    ) : (
+                        <div
+                            data-tip="Please assign at least one other admin for your organisation to be able to delete your account"
+                            data-for={deltooltip}
+                        >
+                            <ReactTooltip
+                                id={deltooltip}
+                                className="!bg-dtech-dark-teal"
+                                textColor={"white"}
+                                backgroundColor="#4CA7A5"
+                            />
+                            <PrimaryBtn
+                                className="bg-[#D32205] hover:bg-gray-500 text-white w-[120px] sm:w-[170px] !p-[10px] sm:!p-[16px] rounded-[30px] mt-5 mb-2 text-xs sm:text-[16px]"
+                                label="Delete user"
+                            />
+                        </div>
+                    )}
                     {/* <span className="text-[#6E498E] border-[#6E498E] border-2 w-[120px] sm:w-[170px] !p-[10px] sm:!p-[16px] rounded-[30px] mt-5 mb-2 text-xs sm:text-[16px] text-center">
                     Cancel
                 </span> */}
                 </div>
-                {vm.apiPopup &&
+                {vm.apiPopup && (
                     <div ref={apiPopupRef}>
                         <GenerateApi />
                     </div>
-                }
+                )}
+                {isOpen && (
+                    <DeletePopup handleDeletePopup={handleDeletePopup} />
+                )}
             </div>
         </UserTabPanelVMContext.Provider>
     );
