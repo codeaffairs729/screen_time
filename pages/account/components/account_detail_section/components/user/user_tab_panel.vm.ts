@@ -1,8 +1,11 @@
+import { AUTH_TOKEN } from "common/constants/cookie.key";
 import { useHttpCall } from "common/hooks";
 import Http from "common/http";
 import { getHttpErrorMsg } from "common/util";
+import { getCookieFromServer } from "common/utils/cookie.util";
 import { Option } from "components/UI/form/dropdown_field";
 import User, { UserRole } from "models/user.model";
+import { useRouter } from "next/router";
 import { createContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -21,6 +24,7 @@ const UserTabPanelVM = () => {
     const dispatch = useDispatch();
     const form = useForm();
     const apiForm = useForm();
+    const router = useRouter();
     const roleOptions: Option[] = Object.keys(UserRole ?? {}).map((k) => ({
         value: UserRole[k as keyof typeof UserRole],
         label: k,
@@ -29,7 +33,6 @@ const UserTabPanelVM = () => {
     useEffect(() => {
         form.reset({ ...user, role_other: user?.roleOther } ?? {});
     }, [user]);
-   
 
     const { isLoading: isCreatingApiKeys, execute: executeCreateApiKeys } =
         useHttpCall();
@@ -41,14 +44,13 @@ const UserTabPanelVM = () => {
                     setCreatedApiKey(res);
                     fetchApiKeys();
                     setIsApiCreated(true);
-                    apiForm.reset()
+                    apiForm.reset();
                 },
-                onError: async (error) =>
-                {
-                    const err = await getHttpErrorMsg(error)
-                    if (err) toast.error(err)
+                onError: async (error) => {
+                    const err = await getHttpErrorMsg(error);
+                    if (err) toast.error(err);
                     else toast.error("A key with the same name already exists");
-                }
+                },
             }
         );
     };
@@ -65,6 +67,18 @@ const UserTabPanelVM = () => {
         });
     };
 
+    const { isLoading: isDeletingUser, execute: executeDeleteUser } =
+        useHttpCall();
+    const deleteUser = () => {
+        executeDeleteUser(() => Http.delete(`/v1/users/delete-user`), {
+            postProcess: (res: any) => {
+                toast.success("User is Deleted successfully");
+                router.push("/signup");
+            },
+            onError: async (error) => toast.error(await getHttpErrorMsg(error)),
+        });
+    };
+
     const { isLoading: isDeletingApiKeys, execute: executeDeleteApiKeys } =
         useHttpCall();
     const deleteApiKeys = (apiKeyId: any) => {
@@ -74,7 +88,7 @@ const UserTabPanelVM = () => {
                 postProcess: (res: any) => {
                     setIsDeleted(true);
                     setIsApiCreated(false);
-                    fetchApiKeys()
+                    fetchApiKeys();
                 },
                 onError: async (error) =>
                     toast.error(await getHttpErrorMsg(error)),
@@ -104,7 +118,6 @@ const UserTabPanelVM = () => {
             }
         );
     };
-
     return {
         roleOptions,
         saveUserDetails,
@@ -127,6 +140,8 @@ const UserTabPanelVM = () => {
         isApiCreated,
         setIsApiCreated,
         apiForm,
+        deleteUser,
+        isDeletingUser,
     };
 };
 
