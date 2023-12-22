@@ -3,6 +3,7 @@ import { ReportVMContext } from "../../report.vm";
 import { OrganisationDetailVMContext } from "pages/organisation/organisation_detail.vm";
 import Summary from "./summary_preview";
 import HeaderPreview from "./header";
+import { head } from "lodash-es";
 
 interface Section {
     label: String;
@@ -30,10 +31,20 @@ const PreviewReport = ({
     const { qualityMetrics } = useContext(ReportVMContext);
 
     // const splittedArray = editorValue.trim().split(/<\/p>(?=<p>)/);
-    const splittedArray = editorValue.split(/<\/p>|<p[^>]*>/).filter(Boolean);
+    // const splittedArray = editorValue.split(/<\/p>|<p[^>]*>/).filter(Boolean);
+    let splittedArray: any = editorValue.split(
+        /<p class='break'>&nbsp;<\/p>|&nbsp;<\/p>/
+    );
+    // let splittedArray = editorValue.split(/&nbsp;|&nbsp;/);
 
+    splittedArray = splittedArray.filter(
+        (item: any) =>
+            item.trim() !== "" && item.trim() !== "\n" && item.trim() != ","
+    );
+
+    // console.log("splitedArray is",splittedArray)
     useEffect(() => {
-               for (let i = 0; i < splittedArray.length; i++) {
+        for (let i = 0; i < splittedArray.length; i++) {
             if (splittedArray[i].includes(sections[0].label)) {
                 setUpdatedSections((prevSections) => {
                     const newSections = [...prevSections];
@@ -65,30 +76,55 @@ const PreviewReport = ({
     const previewSection = updatedSections.filter(
         (section, index) => section.index !== null
     );
+    // let header = splittedArray.slice(0, previewSection[0]?.index)
+    let header = splittedArray[0]?.split(/<\/?p>/);
+    header = header?.filter((item: string) => item.trim() !== "");
 
-    let header = splittedArray.slice(0, previewSection[0]?.index)
-    header = header.filter((item: string) => item.trim() !== '');
-    // console.log({ header });
+    // let updataedList:any = [];
+    // const result = previewSection.map((section, index, array) => {
+    //     console.log("array is ***************",array)
+    //     console.log("section is ",section)
+    // let startIndex:any = section.index;
+    //     const endIndex =
+    //         index < array.length - 1
+    //             ? array[index + 1].index
+    //             : splittedArray.length;
+    //    return splittedArray.slice(startIndex, endIndex);
 
-    const result = previewSection.map((section, index, array) => {
-        const startIndex = section.index;
-        const endIndex =
-            index < array.length - 1
-                ? array[index + 1].index
-                : splittedArray.length;
-        return splittedArray.slice(startIndex, endIndex);
-    });
+    // let endIndex:number;
+    // if(section.label == "Download metrics"){
+    //     console.log("I am here...",splittedArray)
+    //     let loopLen = Math.floor(previewSection[2].index - previewSection[3].index)
+    //     for(let i=0; i<loopLen; i++){
+    //         console.log("startIndex is ",startIndex)
+    //         endIndex=  startIndex+3
+    //      updataedList = [...updataedList,splittedArray.slice(startIndex, endIndex)]
+    //      console.log(updataedList,'---updataedList ')
+    //      startIndex = endIndex
+    //         console.log("endIndex is ",endIndex)
+    //     }
 
+    // }
+    // else{
+    //     if(endIndex && startIndex<endIndex){
+    //         startIndex = endIndex
+    //     }
+    //   endIndex = startIndex +2
+    //   updataedList = [...updataedList,splittedArray.slice(startIndex, endIndex)]
+
+    // }
+    // });
+    //     const newResult=
+    //    console.log("result is ",result)
     const gradientStyle = {
         background:
             "radial-gradient(2196.08% 210.97% at 144.72% -36.42%, rgba(255, 255, 255, 0.75) 0%, rgba(206, 255, 254, 0.28) 27.7%, rgba(206, 176, 208, 0.20) 84.03%)",
         // Add other styles as needed
-      };
-    const displayResult = result.map((subarray) => subarray.join("")).filter(Boolean);;
-
+    };
+    // const displayResult = updataedList.map((subarray) => subarray.join("")).filter(Boolean);
+    const displayResult = splittedArray.slice(1);
     return (
         <div className="shadow-paper-shadow mt-4 h-[656px] border-none overflow-y-scroll !bg-[#EBEBEB]">
-
             {!loading && isReportGenerated && (
                 <div
                     className="editor_preview"
@@ -99,11 +135,9 @@ const PreviewReport = ({
                         style={gradientStyle}
                         id={"header"}
                     >
-                        <div
-                            className="w-[90%] section-preview flex flex-col justify-center items-center bg-[url('/images/GroupPreviewBackground.svg')] bg-cover bg-no-repeat bg-top"
-                        >
+                        <div className="w-[90%] section-preview flex flex-col justify-center items-center bg-[url('/images/GroupPreviewBackground.svg')] bg-cover bg-no-repeat bg-top">
                             <div className=" mr-2 mt-40 w-[28rem] rounded-[10px]">
-                                <HeaderPreview header={header} />
+                                {header && <HeaderPreview header={header} />}
                             </div>
                             <div className=" p-1 mt-16 mb-36 mr-2 w-[28rem] rounded-[10px]">
                                 <Summary
@@ -118,27 +152,32 @@ const PreviewReport = ({
                             <div className="bg-[#EBEBEB] w-4 ml-2 fixed md:relative"></div>
                         </div>
                     </div>
-                    {displayResult?.map((result, index) => {
-                        return (
-                            <div
-                                key={index}
-                                className="section-preview mx-7 my-8 border-[0.5px] border-grey rounded-[5px] bg-white"
-                            >
+                    <div className="quillCss">
+                        {displayResult?.map((result: any, index: any) => {
+                            return (
                                 <div
                                     key={index}
-                                    id={findID(result)}
-                                    className="section-preview p-10 text-dtech-light-grey3 text-[19px]"
-                                    dangerouslySetInnerHTML={{
-                                        // __html: result,
-                                        __html: result.replace(/<a/g, '<a style="color: blue; text-decoration: underline; margin-bottom:5px "'),
-                                    }}
-                                />
-                                <div className="text-center text-black mb-4">
-                                    Page {index + 1}/{displayResult.length}
+                                    className="section-preview mx-7 my-8 border-[0.5px] border-grey rounded-[5px] bg-white"
+                                >
+                                    <div
+                                        key={index}
+                                        id={findID(result)}
+                                        className="section-preview p-10 text-dtech-light-grey3 text-[19px]"
+                                        dangerouslySetInnerHTML={{
+                                            // __html: result,
+                                            __html: result.replace(
+                                                /<a/g,
+                                                '<a style="color: blue; text-decoration: underline; margin-bottom:5px "'
+                                            ),
+                                        }}
+                                    />
+                                    <div className="text-center text-black mb-4">
+                                        Page {index + 1}/{displayResult.length}
+                                    </div>
                                 </div>
-                            </div>
-                        );
-                    })}
+                            );
+                        })}
+                    </div>
                 </div>
             )}
             {/* <div
@@ -157,6 +196,7 @@ const findID = (result: string) => {
     else if (result.includes("Search terms used")) return "search_terms_used";
     else if (result.includes("Download metrics")) return "download_metrics";
     else if (result.includes("Use Cases")) return "use_cases";
+    // else return result
 };
 
 function calculateAverageStars(data: any) {
