@@ -67,7 +67,10 @@ const SigninVM = () => {
                     const res = error.response.clone();
                     const errorMsg = await getHttpErrorMsg(error);
                     setSigninErrorMsg(errorMsg);
-                    errorMsg?.includes("password you entered is wrong") && toast.error(errorMsg);
+                    errorMsg?.includes("password you entered is wrong") &&
+                        toast.error(
+                            "Incorrect email or password. Please retry."
+                        );
                     const body = await res.json();
                     if (body["action"] == "redirect_verify_email") {
                         toast.error(
