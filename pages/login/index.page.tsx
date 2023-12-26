@@ -85,14 +85,6 @@ const SigninPage = () => {
                                     />
                                 </FormRow>
                             </div>
-
-                            {vm.signinErrorMsg?.includes(
-                                "password you entered is wrong"
-                            ) && (
-                                <div className="text-xs mb-7 sm:mb-10 -mt-10 text-red-800 ml">
-                                    {vm.signinErrorMsg}
-                                </div>
-                            )}
                         </div>
                         <TextField
                             className=" -mt-6 sm:-mt-8 rounded-xl !bg-transparent "
