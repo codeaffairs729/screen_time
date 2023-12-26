@@ -24,7 +24,7 @@ const HeaderPreview = ({ header }: { header: any }) => {
                 id="preview_title"
                 className="flex flex-col justify-center items-center text-xl mt-5  mb-2 underline underline-offset-8 text-[#333333]"
                 dangerouslySetInnerHTML={{
-                    __html: header[2],
+                    __html: header[1],
                 }}
             />
 
@@ -32,7 +32,7 @@ const HeaderPreview = ({ header }: { header: any }) => {
                 id="preview_report"
                 className="flex flex-col justify-center items-center text-[#727272]"
                 dangerouslySetInnerHTML={{
-                    __html: header[1],
+                    __html: header[2],
                 }}
             />
             <div className="flex justify-between items-center my-5">
