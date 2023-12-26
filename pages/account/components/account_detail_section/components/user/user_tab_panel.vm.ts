@@ -71,16 +71,16 @@ const UserTabPanelVM = () => {
     const { isLoading: isDeletingUser, execute: executeDeleteUser } =
         useHttpCall();
     const deleteUser = () => {
-        executeDeleteUser(() => Http.delete(`/v1/users/delete-user`), {
-            postProcess: (res: any) => {
-                toast.success("User is Deleted successfully");
-                const store = initializeStore();
-                store.dispatch(logoutUser());
-                UserService.clear();
-                router.push("/signup");
-            },
-            onError: async (error) => toast.error(await getHttpErrorMsg(error)),
-        });
+        executeDeleteUser(
+            () => Http.get(`/v1/users/send-account-delete-email`),
+            {
+                postProcess: (res: any) => {
+                    toast.success("Account delete confirmation email sent");
+                },
+                onError: async (error) =>
+                    toast.error(await getHttpErrorMsg(error)),
+            }
+        );
     };
 
 
