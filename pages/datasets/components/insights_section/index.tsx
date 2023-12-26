@@ -19,13 +19,15 @@ import Accordian from "pages/organisation/components/insights_section/accordian"
 const DatasetInsights = () => {
     const [selectedInsightTab, setSelectedInsightTab] = useState<number>(0);
     const [loading, Setloading] = useState(true);
-    const [isMobile, setIsMobile] = useState(false)
+    const [isMobile, setIsMobile] = useState(false);
     const qualityMetricVM = QualityMetricsVM();
     const useCaseMetricVM = UseCaseMetricsVM();
     const downloadMetricVM = DownloadMetricsVM();
     useEffect(() => {
         Setloading(false);
-        return () => { Setloading(true); }
+        return () => {
+            Setloading(true);
+        };
     }, []);
     useEffect(() => {
         const handleResize = () => {
@@ -46,45 +48,64 @@ const DatasetInsights = () => {
     }
     return (
         <div>
-            {!loading && <QualityMetricsVMContext.Provider value={qualityMetricVM}>
-                <UseCaseMetricsVMContext.Provider value={useCaseMetricVM}>
-                    <DownloadMetricsVMContext.Provider value={downloadMetricVM}>
-                        {!isMobile ? <div className="mb-6">
-                            <Tab.Group defaultIndex={selectedInsightTab}>
-                                <DatasetTabHeaders
-                                    setSelectedInsightTab={
-                                        setSelectedInsightTab
-                                    }
-                                    selectedInsightTab={selectedInsightTab}
-                                />
-                                <Tab.Panels>
-                                    <Tab.Panel>
+            {!loading && (
+                <QualityMetricsVMContext.Provider value={qualityMetricVM}>
+                    <UseCaseMetricsVMContext.Provider value={useCaseMetricVM}>
+                        <DownloadMetricsVMContext.Provider
+                            value={downloadMetricVM}
+                        >
+                            {!isMobile ? (
+                                <div className="mb-6">
+                                    <Tab.Group
+                                        defaultIndex={selectedInsightTab}
+                                    >
+                                        <DatasetTabHeaders
+                                            setSelectedInsightTab={
+                                                setSelectedInsightTab
+                                            }
+                                            selectedInsightTab={
+                                                selectedInsightTab
+                                            }
+                                        />
+                                        <Tab.Panels>
+                                            {selectedInsightTab == 0 && (
+                                                <DatasetQualityInsightsBody />
+                                            )}
+
+                                            {selectedInsightTab == 1 && (
+                                                <DatasetUseCasesBody />
+                                            )}
+
+                                            {selectedInsightTab == 2 && (
+                                                <DatasetDownloadMetricsBody />
+                                            )}
+                                        </Tab.Panels>
+                                    </Tab.Group>
+                                </div>
+                            ) : (
+                                <div className="">
+                                    <Accordian
+                                        className=" "
+                                        label={"Dataset Quality"}
+                                        key="Dataset Quality"
+                                    >
                                         <DatasetQualityInsightsBody />
-                                    </Tab.Panel>
-                                    <Tab.Panel>
+                                    </Accordian>
+                                    <Accordian label={"Use Cases"}>
                                         <DatasetUseCasesBody />
-                                    </Tab.Panel>
-                                    <Tab.Panel>
+                                    </Accordian>
+                                    <Accordian
+                                        label={"Download Metrics"}
+                                        key={"Download Metrics"}
+                                    >
                                         <DatasetDownloadMetricsBody />
-                                    </Tab.Panel>
-                                </Tab.Panels>
-                            </Tab.Group>
-                        </div>
-                            :
-                            <div className="" >
-                                <Accordian className=" " label={"Dataset Quality"} key="Dataset Quality">
-                                    <DatasetQualityInsightsBody />
-                                </Accordian>
-                                <Accordian label={"Use Cases"}>
-                                    <DatasetUseCasesBody />
-                                </Accordian>
-                                <Accordian label={"Download Metrics"} key={"Download Metrics"}>
-                                    <DatasetDownloadMetricsBody />
-                                </Accordian>
-                            </div>}
-                    </DownloadMetricsVMContext.Provider>
-                </UseCaseMetricsVMContext.Provider>
-            </QualityMetricsVMContext.Provider>}
+                                    </Accordian>
+                                </div>
+                            )}
+                        </DownloadMetricsVMContext.Provider>
+                    </UseCaseMetricsVMContext.Provider>
+                </QualityMetricsVMContext.Provider>
+            )}
         </div>
     );
 };
