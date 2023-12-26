@@ -43,9 +43,10 @@ const Report = ({
     setIsReportGenerated: Function;
 }) => {
     const [edit, setEdit] = useState(false);
-    const { loading } = useContext(ReportVMContext);
+    const { loading, isDataFetch } = useContext(ReportVMContext);
 
     const [index, setIndex] = useState(0);
+
     // useEffect(() => {
     //     const timer = () => {
     //         setIndex((prevIndex) => {
@@ -78,32 +79,16 @@ const Report = ({
                 <div className="flex absolute mt-12 w-full h-[656px] bg-white z-20 text-[19px]">
                     <div className="ml-auto mr-auto my-auto">
                         <div className="flex flex-col justify-center items-center">
-                            {/* <p className="text-dtech-light-grey3 mr-[2px]">
-                                Fetching
-                            </p> */}
                             <div>
-                                <h1 className="text-black">
-                                    Generating cover page
-                                </h1>
+                                <p
+                                    key={index}
+                                    className=" text-dtech-light-grey3 animate-pulse transition-all w-fit"
+                                >
+                                    <Loader className={"text-blue-900 mr-2"} />
+                                    {isDataFetch}
+                                </p>
                             </div>
-                            <Slider {...settings} className="text-center">
-                                {names?.map((item: any, index: number) => {
-                                    return (
-                                        <p key={index} className=" text-dtech-light-grey3 animate-pulse transition-all w-fit">
-                                             <Loader className={'text-blue-900 mr-2'}/>
-                                            {item}
-                                        </p>
-                                    );
-                                })}
-                            </Slider>
-                            {/* </div> */}
-                            {/* <div className="flex items-end pb-[6px] pr-[4px] justify-end space-x-2 animate-pulse">
-                                <div className="w-1 h-1 bg-gray-500 rounded-full"></div>
-                                <div className="w-1 h-1 bg-gray-500 rounded-full"></div>
-                                <div className="w-1 h-1 bg-gray-500 rounded-full"></div>
-                            </div> */}
                         </div>
-                        {/* <p className="text-dtech-light-grey3">Finalising</p> */}
                     </div>
                 </div>
             )}

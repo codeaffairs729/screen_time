@@ -241,6 +241,7 @@ const ReportVM = () => {
     const [editorValue, setEditorValue] = useState(``);
     // const [previewContent, setPreviewContent] = useState("");
     const [isGeneratingReport, setIsGeneratingReport] = useState(false);
+    const [isDataFetch, setIsDataFetch] = useState("Generating cover page");
     // useEffect(() => {
     //     setPreviewContent(formatPreviewData());
     // }, [editorState]);
@@ -410,54 +411,52 @@ const ReportVM = () => {
         let byqualityMetricsReusabilityCanvas;
         let bySearchTermsCanvas;
         setTimeout(async () => {
+         // Capture other screenshots here for Quality matrics...
             // Capture other screenshots here for Quality matrics...
             byQualityMetricCanvas = await getImageDataURL(qualityMetric);
+            byQualityMetricCanvas &&
+                activeHeaders[0].isChecked == true &&
+                setIsDataFetch("Fetching Dataset Quality");
             bySearchTermsCanvas = await getImageDataURL(searchTerms);
+            bySearchTermsCanvas &&
+                activeHeaders[1].isChecked == true &&
+                setIsDataFetch("Fetching Search Terms Used");
         }, 3000);
 
         // const bySearchTermsCanvas = await getImageDataURL(searchTerms);
         const byLocationCanvas = await getImageDataURL(metricesByRegionMap);
         // console.log("hello I am here**********",byLocationCanvas)
-        const byLocationTableCanvas = await getImageDataURL(
-            metricesByRegionTable
-        );
+        const byLocationTableCanvas = await getImageDataURL(metricesByRegionTable);
+        byLocationCanvas &&
+            activeHeaders[2].isChecked == true &&
+            setIsDataFetch("Fetching Download Metric");
         const byTimeCanvas = await getImageDataURL(metricByTime);
         const byUseCaseCanvas = await getImageDataURL(metricByUseCase);
+        byUseCaseCanvas &&
+            activeHeaders[3].isChecked == true &&
+            setIsDataFetch("Fetching Use Cases");
+        // console.log(activeHeaders[3].isChecked == true)
         const byUseCasesCanvas = await getImageDataURL(useCases);
         // console.log("useCases************-------------",byUseCasesCanvas)
-        byqualityMetricsAccessibilityCanvas = await getImageDataURL(
-            qualityMetrics_accessibility,
-            250
-        );
-        byqualityMetricsContextualityCanvas = await getImageDataURL(
-            qualityMetrics_contextuality,
-            250
-        );
-        byqualityMetricsFindabilityCanvas = await getImageDataURL(
-            qualityMetrics_findability,
-            250
-        );
-        byqualityMetricInteroperabilityCanvas = await getImageDataURL(
-            qualityMetrics_interoperability,
-            250
-        );
-        byqualityMetricsReusabilityCanvas = await getImageDataURL(
-            qualityMetrics_reusability,
-            250
-        );
-        let byTimeGraph: any = [];
-        for (let i = 0; i < elementsWithTestId.length / 2; i++) {
-            let res = await getImageDataURL(elementsWithTestId[i]);
-            byTimeGraph.push(res);
-        }
-        let qualityMatricImages = {
-            byQualityMetricCanvas,
-            byqualityMetricsAccessibilityCanvas,
-            byqualityMetricsContextualityCanvas,
-            byqualityMetricsFindabilityCanvas,
-            byqualityMetricInteroperabilityCanvas,
-            byqualityMetricsReusabilityCanvas,
-        };
+        byqualityMetricsAccessibilityCanvas = await getImageDataURL(qualityMetrics_accessibility,250);
+        byqualityMetricsContextualityCanvas = await getImageDataURL(qualityMetrics_contextuality,250);  
+        byqualityMetricsFindabilityCanvas = await getImageDataURL(qualityMetrics_findability,250);
+        byqualityMetricInteroperabilityCanvas = await getImageDataURL(qualityMetrics_interoperability,250);
+        byqualityMetricsReusabilityCanvas = await getImageDataURL(qualityMetrics_reusability,250);
+    let byTimeGraph:any=[];
+    for(let i=0; i<elementsWithTestId.length/2; i++){
+       let res=  await getImageDataURL(elementsWithTestId[i])
+       byTimeGraph.push(res)
+    }
+    let qualityMatricImages = {
+         byQualityMetricCanvas,
+         byqualityMetricsAccessibilityCanvas,
+         byqualityMetricsContextualityCanvas,
+         byqualityMetricsFindabilityCanvas,
+         byqualityMetricInteroperabilityCanvas,
+         byqualityMetricsReusabilityCanvas   
+    }
+        setIsDataFetch("Finalising report");
         const data = `
                 <p style="text-align: center;"><img src="${imgUrl}" width=200 height=150 style="text-align: center;" /></p>
                 <p></p>
@@ -479,6 +478,7 @@ const ReportVM = () => {
             `;
         setEditorValue(data);
         setIsGeneratingReport(false);
+        setIsDataFetch("Generating cover page");
     };
 
     const {
@@ -814,6 +814,7 @@ const ReportVM = () => {
         setEditorValue,
         transformedData,
         graphDataVal,
+        isDataFetch,
     };
 };
 
@@ -1070,6 +1071,7 @@ interface IReportVMContext {
     setEditorValue: any;
     transformedData: any;
     graphDataVal: any;
+    isDataFetch: string;
 }
 
 export const ReportVMContext = createContext<IReportVMContext>(
