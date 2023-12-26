@@ -9,10 +9,13 @@ const DownloadSection = dynamic(() => import("./download_section/section"), {
     loading: () => <p>A map is loading</p>,
     ssr: false, // This line is important. It's what prevents server-side render
 });
-const SearchTermSection = dynamic(() => import("./search_term_section/section"), {
-    loading: () => <p>A map is loading</p>,
-    ssr: false, // This line is important. It's what prevents server-side render
-});
+const SearchTermSection = dynamic(
+    () => import("./search_term_section/section"),
+    {
+        loading: () => <p>A map is loading</p>,
+        ssr: false, // This line is important. It's what prevents server-side render
+    }
+);
 // const TagCloud2 = dynamic(() => import("./tagCloud2"), {
 //     loading: () => <p>A map is loading</p>,
 //     ssr: false, // This line is important. It's what prevents server-side render
@@ -33,7 +36,7 @@ import UseCaseSection from "./use_case_section/section";
 const Insights = () => {
     const [selectedInsightTab, setSelectedInsightTab] = useState<number>(0);
     const [loading, Setloading] = useState(true);
-    const [isMobile, setIsMobile] = useState(false)
+    const [isMobile, setIsMobile] = useState(false);
     useEffect(() => {
         const handleResize = () => {
             setIsMobile(window.innerWidth < 640); // Adjust the breakpoint as needed
@@ -56,7 +59,9 @@ const Insights = () => {
 
     useEffect(() => {
         Setloading(false);
-        return () => { Setloading(true); }
+        return () => {
+            Setloading(true);
+        };
     }, []);
 
     if (loading) {
@@ -75,44 +80,61 @@ const Insights = () => {
                         <DownloadMetricVMContext.Provider
                             value={downloadMetricVm}
                         >
-                            {!isMobile ? <div className="mb-6 " key={1234}>
-                                <Tab.Group selectedIndex={selectedInsightTab}>
-                                    <TabHeaders
-                                        setSelectedInsightTab={
-                                            setSelectedInsightTab
-                                        }
-                                        selectedInsightTab={selectedInsightTab}
-                                    />
-                                    <Tab.Panels>
-                                        <Tab.Panel>
-                                            <QualityInsightsSection />
-                                        </Tab.Panel>
-                                        <Tab.Panel>
-                                            <UseCaseSection />
-                                        </Tab.Panel>
-                                        <Tab.Panel>
-                                            <SearchTermSection />
-                                        </Tab.Panel>
-                                        <Tab.Panel>
-                                            <DownloadSection />
-                                        </Tab.Panel>
-                                    </Tab.Panels>
-                                </Tab.Group>
-                            </div> :
-                                <div className="" >
-                                    <Accordian className=" " label={"Dataset Quality"} key="Dataset Quality">
+                            {!isMobile ? (
+                                <div className="mb-6 ">
+                                    <Tab.Group
+                                        selectedIndex={selectedInsightTab}
+                                    >
+                                        <TabHeaders
+                                            setSelectedInsightTab={
+                                                setSelectedInsightTab
+                                            }
+                                            selectedInsightTab={
+                                                selectedInsightTab
+                                            }
+                                        />
+                                        <Tab.Panels>
+                                            {selectedInsightTab == 0 && (
+                                                <QualityInsightsSection />
+                                            )}
+                                            {selectedInsightTab == 1 && (
+                                                <UseCaseSection />
+                                            )}
+                                            {selectedInsightTab == 2 && (
+                                                <SearchTermSection />
+                                            )}
+                                            {selectedInsightTab == 3 && (
+                                                <DownloadSection />
+                                            )}
+                                        </Tab.Panels>
+                                    </Tab.Group>
+                                </div>
+                            ) : (
+                                <div className="">
+                                    <Accordian
+                                        className=" "
+                                        label={"Dataset Quality"}
+                                        key="Dataset Quality"
+                                    >
                                         <QualityInsightsSection />
                                     </Accordian>
                                     <Accordian label={"Use Cases"}>
                                         <UseCaseSection />
                                     </Accordian>
-                                    <Accordian label={"Search Term"} key={"Search Term"}>
+                                    <Accordian
+                                        label={"Search Term"}
+                                        key={"Search Term"}
+                                    >
                                         <SearchTermSection />
                                     </Accordian>
-                                    <Accordian label={"Download Metrics"} key={"Download Metrics"}>
+                                    <Accordian
+                                        label={"Download Metrics"}
+                                        key={"Download Metrics"}
+                                    >
                                         <DownloadSection />
                                     </Accordian>
-                                </div>}
+                                </div>
+                            )}
                         </DownloadMetricVMContext.Provider>
                     </SearchTermVMContext.Provider>
                 </QualityMetricVMContext.Provider>
