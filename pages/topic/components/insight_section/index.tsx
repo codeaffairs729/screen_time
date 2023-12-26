@@ -21,11 +21,15 @@ import { useIsMobile } from "common/hooks";
 import QualityBody from "./quality_section/section";
 import UseCaseBody from "./usecase_section/section";
 
-
-
-import QualityMetricVM, { QualityMetricVMContext } from "./quality_section/quality_metric.vm";
-import SearchTermVM, { SearchTermVMContext } from "./search_term_section/search_term.vm";
-import DownloadMetricVM, { DownloadMetricVMContext } from "./download_section/download_metric.vm";
+import QualityMetricVM, {
+    QualityMetricVMContext,
+} from "./quality_section/quality_metric.vm";
+import SearchTermVM, {
+    SearchTermVMContext,
+} from "./search_term_section/search_term.vm";
+import DownloadMetricVM, {
+    DownloadMetricVMContext,
+} from "./download_section/download_metric.vm";
 import TabHeaders from "./tabs";
 
 const InsightSection = () => {
@@ -74,18 +78,19 @@ const InsightSection = () => {
                                             }
                                         />
                                         <Tab.Panels>
-                                            <Tab.Panel>
+                                            {selectedInsightTab == 0 && (
                                                 <QualityBody />
-                                            </Tab.Panel>
-                                            <Tab.Panel>
+                                            )}
+                                            {selectedInsightTab == 1 && (
                                                 <UseCaseBody />
-                                            </Tab.Panel>
-                                            <Tab.Panel>
+                                            )}
+
+                                            {selectedInsightTab == 2 && (
                                                 <SearchTermSection />
-                                            </Tab.Panel>
-                                            <Tab.Panel>
+                                            )}
+                                            {selectedInsightTab == 3 && (
                                                 <DownloadSection />
-                                            </Tab.Panel>
+                                            )}
                                         </Tab.Panels>
                                     </Tab.Group>
                                 </div>
