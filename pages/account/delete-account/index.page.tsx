@@ -2,15 +2,21 @@ import { useContext, useEffect } from "react";
 import DeleteAccountVM, {
     DeleteAccountVMContext,
 } from "./deleteAccount.vm";
+import {useRouter} from "next/router"
 import ErrorAlert from "components/UI/alerts/error_alert";
 import SuccessAlert from "components/UI/alerts/success_alert";
 import Loader from "components/UI/loader";
 
 const DeleteAccountPage = () => {
     const vm = DeleteAccountVM();
+    const router = useRouter();
+
     useEffect(() => {
-       vm.deleteAccount() 
-    },[])
+        const token = router.query.token;
+        if (token) {
+            vm.deleteAccount(token);
+        }
+    }, [router.query.token]);
     return (
         <div className="grow flex flex-col items-center justify-center max-w-lg mx-auto">
             {vm.errorMessage && (

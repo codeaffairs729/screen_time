@@ -12,7 +12,7 @@ import AccountDetails from "./components/account_detail_section";
 import AccountTabHeaders from "./components/account_tabs";
 import SubscriptionSection from "./components/subscription_section";
 import { fetchPermissions } from "common/util";
-import { AccountContext } from "./account.vm";
+import AccountVM, { AccountContext } from "./account.vm";
 
 enum tabIndex {
     account,
@@ -28,7 +28,7 @@ const WorkspacePage = () => {
     );
     const [permissions, setPermissions] = useState([])
     const { asPath } = useRouter();
-    // const accountContext = useContext(AccountContext)
+    const accountVM = AccountVM()
     useEffect(() => {
         const hashParam: string = asPath.split("#")[1];
         setSelectedIndex(tabIndex[hashParam as any]);
@@ -49,7 +49,7 @@ const WorkspacePage = () => {
 
     return (
         <DefaultLayout wrapperClass=" !max-w-none">
-            <AccountContext.Provider value={{ permissions }}>
+            <AccountContext.Provider value={{ permissions, orgusers:accountVM.orgusers }}>
                 <div className="py-5 px-4 w-full   flex items-center md:bg-white bg-[#EBEBEB]">
                     <span className="text-left text-xl md:text-[26px] font-semibold md:text-[#727272]">
                         My Account

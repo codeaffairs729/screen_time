@@ -121,9 +121,9 @@ const AdminSection = () => {
                             <RadioButtonField
                                 formControl={{
                                     control: vm.form.control,
-                                    defaultValue:
-                                        User.getOrganisation(admin_user)
-                                            ?.sector,
+                                    // defaultValue:
+                                    //     User.getOrganisation(admin_user)
+                                    //         ?.sector,
                                     name: "sector",
                                     rules: {
                                         required: "Sector is required",
@@ -243,7 +243,7 @@ const AdminSection = () => {
                                     })();
                                 } else {
                                     toast.error(
-                                        "There is not any change in the form"
+                                        "There is no change in this form"
                                     );
                                 }
                             }}
