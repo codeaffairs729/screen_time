@@ -17,6 +17,8 @@ import { BiUserCircle } from "react-icons/bi";
 import GenerateApi from "./components/generateApiPopup";
 import ReactTooltip from "react-tooltip";
 import DeletePopup from "./components/deletePopup";
+import User, { Role } from "models/user.model";
+import AccountVM from "pages/account/account.vm";
 
 const UserSection = () => {
     const user = useSelector((state: RootState) => state.auth.user);
@@ -24,8 +26,14 @@ const UserSection = () => {
     const fileInputRef = useRef<HTMLInputElement>(null);
     const apiPopupRef = useRef<HTMLDivElement>(null);
     const [isOpen, setIsOpen] = useState(false);
+    const currentUserRoles = User.getAllRoles(user)
     const vm = UserTabPanelVM();
-    const adminvm = AdminTabPanelVM();
+    const isAdmin = currentUserRoles?.includes(Role.ORGANIZATION_ADMIN)
+    const AccountVm = AccountVM();
+    useEffect(() => {
+        isAdmin && AccountVm.fetchOrgUsers() 
+        
+    },[])
     const { field: register } = useController({
         control: vm.form.control,
         name: "image",
@@ -63,27 +71,26 @@ const UserSection = () => {
     }
     const nameInitial = user
         ? user?.name
-              ?.split(" ")
-              .map((word) => word[0])
-              .join("")
+            ?.split(" ")
+            .map((word) => word[0])
+            .join("")
         : "G";
 
     const handleDeletePopup = () => {
         setIsOpen(!isOpen);
     };
 
-    const membersRoles = adminvm?.orgusers?.map((item) =>
-        item?.roles?.map((role) => role?.name)
+    const membersRoles = AccountVm?.orgusers?.map((item: any) =>
+        item?.roles?.map((role: any) => role?.name)
     );
     const combinedRoles = membersRoles?.flat();
 
-    const includesOrganisationAdmin = combinedRoles.includes(
-        "organisation_administrator"
+    const membersIncludeOrganisationAdmin = combinedRoles?.includes(
+        Role.ORGANIZATION_ADMIN
     );
-
     const canDeleteUser =
-        adminvm?.orgusers?.length == 0 ||
-        (adminvm?.orgusers?.length > 0 && includesOrganisationAdmin);
+        (!isAdmin || (isAdmin && AccountVm?.orgusers?.length == 0 )||
+            (isAdmin && AccountVm?.orgusers?.length > 0 && membersIncludeOrganisationAdmin));
 
     const deltooltip =
         "Please assign at least one other admin for your organisation to be able to delete your account";
@@ -174,7 +181,7 @@ const UserSection = () => {
                             className=" md:w-auto bg-white flex-col sm:!mb-8"
                             labelClass="sm:text-[19px]"
                             iconClass="sm:h-[19px] sm:w-[19px] text-black"
-                            required
+                            // required
                         >
                             <TextField
                                 className=""
@@ -271,7 +278,7 @@ const UserSection = () => {
                                 })();
                             } else {
                                 toast.error(
-                                    "There is not any change in the form"
+                                    "There is no change in this form"
                                 );
                             }
                         }}

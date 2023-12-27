@@ -91,7 +91,7 @@ const SignupVM = () => {
 
     const accountTypeOptions: Option[] = [
         { value: "individual", label: "Individual" },
-        { value: "org_admin", label: "Organisation" },
+        { value: "org_admin", label: "Organisation Admin" },
     ];
 
     const dataOwnerOptions: Option[] = [
