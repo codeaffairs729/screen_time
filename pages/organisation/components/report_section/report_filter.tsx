@@ -3,9 +3,16 @@ import { OrganisationDetailVMContext } from "pages/organisation/organisation_det
 import React, { useContext, useEffect, useState } from "react";
 import { VscTriangleDown } from "react-icons/vsc";
 import { ReportVMContext } from "./report.vm";
-import { QualityMetricVMContext } from "../insights_section/quality_insights/quality_metric.vm"; 
-const ReportFilter = ({setIsReportGenerated}: {setIsReportGenerated:Function}) => {
+import { QualityMetricVMContext } from "../insights_section/quality_insights/quality_metric.vm";
+const ReportFilter = ({
+    setIsReportGenerated,
+}: {
+    setIsReportGenerated: Function;
+}) => {
     const [showFilter, setShowFilter] = useState<boolean>(true);
+    const [warningMsg, setWarningMsg] = useState<boolean>(false);
+    const [isHeaderSelected, setIsHeaderSelected] = useState<boolean>(false);
+
     const {
         fetchData,
         activeHeaders,
@@ -15,9 +22,14 @@ const ReportFilter = ({setIsReportGenerated}: {setIsReportGenerated:Function}) =
         toDate,
         setFromDate,
         setToDate,
-        editorValue
+        editorValue,
+        isDateSelected,
     } = useContext(ReportVMContext);
-    const { insight_datasetQuality_description,insight_searchTerm_description,insight_useCase_description} = useContext(OrganisationDetailVMContext);
+    const {
+        insight_datasetQuality_description,
+        insight_searchTerm_description,
+        insight_useCase_description,
+    } = useContext(OrganisationDetailVMContext);
     // const {
     //     qualityMetrics,
     //     fetchQualityMetrics,
@@ -26,31 +38,44 @@ const ReportFilter = ({setIsReportGenerated}: {setIsReportGenerated:Function}) =
     //     selectedQualityInsights: selectedLabel,
     // } = useContext(QualityMetricVMContext);
 
+    const selectedDates = isDateSelected.from && isDateSelected.to;
     const handleGenerateReport = () => {
-        const alert = "This will remove your previous Data";
-        if (
-            !editorValue ||
-            confirm(alert) == true
-        ) {
+        const isAnyHeaderSelected = activeHeaders.some(
+            (header) => header.isChecked
+        );
+        setIsHeaderSelected(isAnyHeaderSelected);
+
+        const alertMessage = "This will remove your previous Data";
+
+        if (!selectedDates) {
+            setWarningMsg(true);
+        } else if (!isAnyHeaderSelected) {
+            setWarningMsg(true);
+        } else {
+            if (confirm(alertMessage)) {
+                setWarningMsg(false);
+                const repostHeardingDescription = {
+                    insight_datasetQuality_description,
+                    insight_searchTerm_description,
+                    insight_useCase_description,
+                };
+                fetchData(activeHeaders, repostHeardingDescription);
+                setIsReportGenerated(true);
+            }
+        }
         // fetchQualityMetrics && fetchQualityMetrics();
-        const repostHeardingDescription = {
-            insight_datasetQuality_description,
-            insight_searchTerm_description,
-            insight_useCase_description
-        }
-            fetchData(activeHeaders,repostHeardingDescription);
-            setIsReportGenerated(true);
-        }
     };
 
     return (
-        <div className="sm:w-1/3 w-full py-4 sm:m-12 flex flex-col items-center justify-center sm:items-start  sm:mt-12  sm:mb-96  ">
-            
-            {/* <div className="px-4"> */}
-                {/* <div className="px-3 w-[244px] py-1 mb-4 flex justify-between bg-dtech-main-light cursor-pointer"> */}
-                    <span className=" w-full sm:text-left text-center font-semibold">Select period</span>
-                {/* </div> */}
-            {/* </div> */}
+        <div className="sm:w-1/3 w-full py-4 sm:m-12 flex flex-col items-center justify-center sm:items-start sm:mt-12 sm:mb-96 ">
+            {warningMsg && !selectedDates && (
+                <div className="text-red-500 ">
+                    <h1>Requried</h1>
+                </div>
+            )}
+            <span className={`w-full sm:text-left text-center font-semibold`}>
+                Select period *
+            </span>
             <div className=" sm:w-full w-3/4">
                 <RangeSelector
                     fromDate={fromDate}
@@ -70,7 +95,15 @@ const ReportFilter = ({setIsReportGenerated}: {setIsReportGenerated:Function}) =
                             }`}
                     />
                 </div> */}
-                <span className=" w-full text-center flex sm:justify-start justify-center font-semibold sm:mb-8">Select header</span>
+                {warningMsg && !isHeaderSelected && (
+                    <div className="text-red-500 ">
+                        <h1>Requried</h1>
+                    </div>
+                )}
+                <span className="w-full text-center flex sm:justify-start justify-center font-semibold sm:mb-8">
+                    Select header *
+                </span>
+
                 <div
                     className={` w-fit max-h-[100vh] overflow-hidden transition-all duration-300 my-4`}
                 >
@@ -88,11 +121,10 @@ const ReportFilter = ({setIsReportGenerated}: {setIsReportGenerated:Function}) =
                         data-selector="back-btn"
                         className="text-sm mt-8 p-2 py-3 whitespace-nowrap w-full bg-dtech-new-main-light active:bg-dtech-dark-yellow hover:bg-dtech-main-dark active:border-b-2 border-black hover:border-0 active:text-black text-white flex items-center justify-center rounded-full px-6"
                     >
-                            Autogenerate report
+                        Autogenerate report
                     </button>
                 </div>
             </div>
-            
         </div>
     );
 };

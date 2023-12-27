@@ -28,13 +28,6 @@ const RichTextEditor = dynamic(() => import("./components/editor"), {
     ssr: false,
 });
 
-const names = [
-    "Fetching Dataset Quality",
-    "Fetching Search terms used",
-    "Fetching Download metrics",
-    "Fetching Use cases",
-];
-
 const Report = ({
     isReportGenerated,
     setIsReportGenerated,
@@ -45,34 +38,6 @@ const Report = ({
     const [edit, setEdit] = useState(false);
     const { loading, isDataFetch } = useContext(ReportVMContext);
 
-    const [index, setIndex] = useState(0);
-
-    // useEffect(() => {
-    //     const timer = () => {
-    //         setIndex((prevIndex) => {
-    //             if (prevIndex === names.length - 1) {
-    //                 return 0;
-    //             }
-    //             return prevIndex + 1;
-    //         });
-    //     };
-    //     const intervalId = setInterval(timer, 4000);
-    //     return () => clearInterval(intervalId);
-    // }, []);
-
-    const settings = {
-        dots: false,
-        infinite: true,
-        autoplay: true,
-        speed: 500,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        autoplaySpeed: 3000,
-        arrows: false,
-        pauseOnHover: false,
-        vertical: true,
-    };
-
     return (
         <div className="w-full relative">
             {loading && (
@@ -80,10 +45,7 @@ const Report = ({
                     <div className="ml-auto mr-auto my-auto">
                         <div className="flex flex-col justify-center items-center">
                             <div>
-                                <p
-                                    key={index}
-                                    className=" text-dtech-light-grey3 animate-pulse transition-all w-fit"
-                                >
+                                <p className=" text-dtech-light-grey3 animate-pulse transition-all w-fit">
                                     <Loader className={"text-blue-900 mr-2"} />
                                     {isDataFetch}
                                 </p>

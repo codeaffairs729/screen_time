@@ -19,8 +19,14 @@ const DownloadReport = () => {
         const sectionIds = [
             "header",
             "dataset_quality",
+            "qualityMetrics_accessibility",
+            "qualityMetrics_findability",
+            "qualityMetrics_reusability",
             "search_terms_used",
             "download_metrics",
+            "downloads_by_region",
+            "downloads_by_time",
+            "time_graph",
             "use_cases",
         ];
         const container = document.createElement("div");
