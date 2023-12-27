@@ -190,7 +190,7 @@ const UserSection = () => {
                                     control: vm.form.control,
                                     name: "organisation",
                                     rules: {
-                                        required: "Organisation is required",
+                                        // required: "Organisation is required",
                                     },
                                 }}
                                 placeholder="Enter Organisation"

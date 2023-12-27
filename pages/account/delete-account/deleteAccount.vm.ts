@@ -16,11 +16,11 @@ export const enum DeleteAccountActions {
 const DeleteAccountVM = () => {
     const router = useRouter();
     const [errorMessage, setErrorMessage] = useState<string>();
+    const [deleteAccountData, setDeleteAccountData] = useState<{ user?: string }>({});
     const {
         execute: executeDeleteAccount,
         isLoading: isDeletingAccount,
         error: deleteAccountError,
-        data: deleteAccountData,
     } = useHttpCall();
 
     const deleteAccount = (token: any) =>
@@ -31,12 +31,12 @@ const DeleteAccountVM = () => {
                 );
             },
             {
-                onSuccess: () => {
+                onSuccess: (res) => {
                     toast.success("Account deleted successfully");
                     const store = initializeStore();
                     store.dispatch(logoutUser());
                     UserService.clear();
-                    router.push("/signup");
+                    setDeleteAccountData(res);
                 },
                 onError: async (err) => {
                     const msg = await getHttpErrorMsg(err);

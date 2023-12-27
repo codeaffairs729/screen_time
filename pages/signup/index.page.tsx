@@ -112,7 +112,7 @@ const SecondStep = ({
                     <InfoIcon
                         tooltipClassName=" max- max-w-sm  !bg-dtech-dark-teal"
                         iconClasses="text-[#333333] ml-36 -mt-[54px] sm:!ml-[118px]"
-                        title="Select Organisation only if you are signing up as an Admin"
+                        title="Select Organisation Admin only if you are signing up as the admin of your organisation. For all other cases select Individual."
                     />
                 </div>
 
@@ -136,7 +136,7 @@ const SecondStep = ({
                 />
                 <div className="mt-4">
                     <FormRow
-                        label="Organisation name"
+                        label="Organisation Admin"
                         className=" !bg-transparent text-[#333333] !text-xl sm:!text-base"
                     >
                         {" "}
@@ -144,7 +144,7 @@ const SecondStep = ({
                     <InfoIcon
                         tooltipClassName=" max-w-sm  !bg-dtech-dark-teal"
                         iconClasses="text-[#333333] -mt-[54px] ml-20 sm:ml-[168px]"
-                        title="Select Organisation Admin only if you are signing up as the admin of your organisation. For all other cases select Individual."
+                        title="Enter the name of your organisation. This is optional if you have selected the Account Type as Individual"
                     />
                 </div>
 
