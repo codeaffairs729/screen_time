@@ -23,13 +23,12 @@ const DeleteAccountVM = () => {
         data: deleteAccountData,
     } = useHttpCall();
 
-    const deleteAccount = () =>
+    const deleteAccount = (token: any) =>
         executeDeleteAccount(
             () => {
-                const token = router.query.token;
-                 return Http.delete(
-                     `/v1/users/delete-account/${token}`
-                 );
+                return Http.delete(
+                    `/v1/users/delete-account/${token}`
+                );
             },
             {
                 onSuccess: () => {
@@ -46,7 +45,7 @@ const DeleteAccountVM = () => {
                 },
             }
         );
-    
+
     return {
         deleteAccount,
         isDeletingAccount,

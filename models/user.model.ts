@@ -52,6 +52,7 @@ export class Role {
     static REGISTERED_USER = "Registered User";
     static ORGANIZATION_ADMIN = "organisation_administrator";
     static ORGANIZATION_MEMBER = "Organisation Member";
+    static ESSENTIAL_SUBSCRIBER = "essential_subscriber";
 
     constructor({ role_id, name }: { role_id: number; name: string }) {
         this.role_id = role_id;
