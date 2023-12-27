@@ -1,10 +1,11 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { VscTriangleDown } from "react-icons/vsc";
 import "react-datepicker/dist/react-datepicker.css";
 import { format } from "date-fns";
 import Calander from "./calander";
 import toast from "react-hot-toast";
 import { BsChevronDown } from "react-icons/bs";
+import { ReportVMContext } from "pages/organisation/components/report_section/report.vm";
 const CalendarSelect = ({
     label = "Select",
     fromDate,
@@ -19,6 +20,7 @@ const CalendarSelect = ({
     setToDate?: any;
 }) => {
     // const [startDate, setStartDate] = useState(new Date());
+    const { isDateSelected, SetIsDateSelected } = useContext(ReportVMContext);
     const [dateSelect, setDateSelect] = useState(false);
     const [select, setSelected] = useState(false);
     const myRef = useRef(null);
@@ -42,6 +44,10 @@ const CalendarSelect = ({
         if (label == "From") {
             if ((toDate.getTime() - e.getTime()) / (1000 * 3600 * 24) >= 0) {
                 setFromDate(e);
+                SetIsDateSelected({
+                    ...isDateSelected,
+                    from: true,
+                });
             } else {
                 setFromDate(toDate);
                 toast.error("Please select correct From Date");
@@ -49,6 +55,10 @@ const CalendarSelect = ({
         } else {
             if ((e.getTime() - fromDate.getTime()) / (1000 * 3600 * 24) >= 0) {
                 setToDate(e);
+                SetIsDateSelected({
+                    ...isDateSelected,
+                    to: true,
+                });
             } else {
                 setToDate(fromDate);
                 toast.error("Please select correct To Date");
@@ -57,17 +67,14 @@ const CalendarSelect = ({
     };
 
     return (
-        <div className="flex  " ref={myRef}>
-            <div className="flex flex-row w-full "
+        <div className="flex" ref={myRef}>
+            <div
+                className="flex flex-row w-full "
                 onClick={() => {
                     setSelected(!select);
                 }}
             >
-
-                <div
-                    className="flex items-center border-[2px] border-[#333333] w-full p-2 cursor-pointer rounded-full"
-
-                >
+                <div className="flex items-center border-[2px] border-[#333333] w-full p-2 cursor-pointer rounded-full">
                     {dateSelect ? (
                         <div className=" flex w-full justify-between">
                             <span className="text-sm">
@@ -76,21 +83,22 @@ const CalendarSelect = ({
                                     : format(toDate, "dd-MM-yyyy")}
                             </span>
                             <BsChevronDown
-                                className={`${select && "rotate-180"
-                                    } text-xl   transition-all `}
+                                className={`${
+                                    select && "rotate-180"
+                                } text-xl   transition-all `}
                             />
                         </div>
                     ) : (
                         <div className=" flex w-full justify-between">
-                            <span className="text-sm">dd/mm/yyyy
-                            </span>
+                            <span className="text-sm">dd/mm/yyyy</span>
+
                             <BsChevronDown
-                                className={`${select && "rotate-180"
-                                    } text-xl    transition-all `}
+                                className={`${
+                                    select && "rotate-180"
+                                } text-xl    transition-all `}
                             />
                         </div>
                     )}
-
                 </div>
             </div>
             {select && (

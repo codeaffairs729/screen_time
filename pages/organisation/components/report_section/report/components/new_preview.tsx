@@ -42,7 +42,6 @@ const PreviewReport = ({
             item.trim() !== "" && item.trim() !== "\n" && item.trim() != ","
     );
 
-    // console.log("splitedArray is",splittedArray)
     useEffect(() => {
         for (let i = 0; i < splittedArray.length; i++) {
             if (splittedArray[i].includes(sections[0].label)) {
@@ -115,7 +114,6 @@ const PreviewReport = ({
     // }
     // });
     //     const newResult=
-    //    console.log("result is ",result)
     const gradientStyle = {
         background:
             "radial-gradient(2196.08% 210.97% at 144.72% -36.42%, rgba(255, 255, 255, 0.75) 0%, rgba(206, 255, 254, 0.28) 27.7%, rgba(206, 176, 208, 0.20) 84.03%)",
@@ -171,7 +169,7 @@ const PreviewReport = ({
                                             ),
                                         }}
                                     />
-                                    <div className="text-center text-black mb-4">
+                                    <div className="text-center text-[8px] text-dtech-light-grey3 mb-4">
                                         Page {index + 1}/{displayResult.length}
                                     </div>
                                 </div>
@@ -180,25 +178,23 @@ const PreviewReport = ({
                     </div>
                 </div>
             )}
-            {/* <div
-                className="editor_preview "
-                dangerouslySetInnerHTML={{
-                    __html: editorValue.replaceAll("", ""),
-                }}
-            /> */}
         </div>
     );
 };
 export default PreviewReport;
 
 const findID = (result: string) => {
-    if (result.includes("Dataset Quality")) return "dataset_quality";
+    if (result.includes("Overall Quality")) return "dataset_quality";
+    else if (result.includes("Accessibility")) return "qualityMetrics_accessibility";
+    else if (result.includes("Findability")) return "qualityMetrics_findability";
+    else if (result.includes("reusability")) return "qualityMetrics_reusability";
     else if (result.includes("Search terms used")) return "search_terms_used";
     else if (result.includes("Download metrics")) return "download_metrics";
+    else if (result.includes("Downloads by region")) return "downloads_by_region";
+    else if (result.includes("Downloads by time")) return "downloads_by_time";
+    else if (result.includes("Time Graph")) return "time_graph";
     else if (result.includes("Use Cases")) return "use_cases";
-    // else return result
 };
-
 function calculateAverageStars(data: any) {
     const totalStars = data?.reduce((acc: any, obj: any) => {
         const star: any = Object.keys(obj)[0];
