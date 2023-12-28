@@ -121,9 +121,9 @@ const AdminSection = () => {
                             <RadioButtonField
                                 formControl={{
                                     control: vm.form.control,
-                                    // defaultValue:
-                                    //     User.getOrganisation(admin_user)
-                                    //         ?.sector,
+                                    defaultValue:
+                                        User.getOrganisation(admin_user)
+                                            ?.sector,
                                     name: "sector",
                                     rules: {
                                         // required: "Sector is required",
