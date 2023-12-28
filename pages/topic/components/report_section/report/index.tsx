@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Head from "./head";
 import dynamic from "next/dynamic";
 import { Tab } from "@headlessui/react";
@@ -37,7 +37,6 @@ const BarChart = dynamic(() => import("./components/bar_graph"), {
 const DownloadReport = dynamic(() => import("./downloadReport"), {
     ssr: false,
 });
-
 
 interface RatingObject {
     [key: number]: number;
@@ -99,9 +98,10 @@ const Report = ({
         useCases,
     } = useContext(ReportVMContext);
 
-    const items = qualityMetrics?.dataFileQuality;
+    const items = qualityMetrics?.data_file_quality;
+    const meta_items = qualityMetrics?.meta_file_quality;
+    // console.log("downloadbyTimeData is *************",downloadByTime)
     //------------------------------------------------------------------
-
     const transformedData = searchTerms.map((item: any) => {
         return {
             tag: item.title.replace(/\+/g, " "), // Replace '+' with space in the title
@@ -173,10 +173,27 @@ const Report = ({
     ]);
 
     const useCaseData = sortAndAggregate(useCases).map((data: any) => [
-        data.category.charAt(0).toUpperCase() + data.category.slice(1),
+        data.category?.charAt(0).toUpperCase() + data.category?.slice(1),
         data.value,
     ]);
+    const [updatedData, setUpdatedData] = useState([]);
+
+    const downloadByTimeData = () => {
+        let newData: any = [];
+        let dataLength = tableDataByTime.length;
+
+        for (let i = 0; i < dataLength; i += 20) {
+            newData.push(tableDataByTime.slice(i, i + 20));
+        }
+
+        setUpdatedData(newData);
+    };
+
+    useEffect(() => {
+        downloadByTimeData();
+    }, [downloadByTime]);
     // console.log(items[`overallScore`]?.rating)
+
     return (
         <div className="w-full relative">
             {loading && (
@@ -187,7 +204,7 @@ const Report = ({
                 </div>
             )}
             <div className=" h-[56rem] overflow-y-scroll no-scrollbar whitespace-nowrap absolute">
-                {items && (
+                {/* {items && (
                     <div
                         className="flex fixed justify-center items-center flex-col z-[-10] w-full"
                         id="qualityMetrics"
@@ -233,10 +250,101 @@ const Report = ({
                             divID="qualityMetricsDiv"
                         />
                     </div>
+                )} */}
+                {items && (
+                    <div>
+                        {/* overall */}
+                        <div
+                            className="flex fixed justify-center items-center flex-col z-[-10] w-full top-0 left-0"
+                            id="qualityMetrics"
+                        >
+                            {/* {console.log("items are*************** ",items)} */}
+                            <BarChart
+                                data={calculateRatingPercentages(
+                                    items["overall"]?.rating
+                                )}
+                                isMobile={isMobile}
+                                titles={titles}
+                                divID="qualityMetricsDiv"
+                            />
+                        </div>
+
+                        {/* qualityMetrics_accuracy */}
+                        <div
+                            className="flex fixed justify-center items-center flex-col z-[-10] w-full top-0 left-0"
+                            id="qualityMetrics_accuracy"
+                        >
+                            {/* {console.log("items are*************** ",items)} */}
+                            <BarChart
+                                data={calculateRatingPercentages(
+                                    items["accuracy"]?.rating
+                                )}
+                                isMobile={isMobile}
+                                titles={titles}
+                                divID="qualityMetricsDiv_accuracy"
+                            />
+                        </div>
+
+                        {/* qualityMetrics_clarity */}
+                        <div
+                            className="flex fixed justify-center items-center flex-col z-[-10] w-full top-0 left-0"
+                            id="qualityMetrics_clarity"
+                        >
+                            <BarChart
+                                data={calculateRatingPercentages(
+                                    items["clarity"]?.rating
+                                )}
+                                isMobile={isMobile}
+                                titles={titles}
+                                divID="qualityMetricsDiv_clarity"
+                            />
+                        </div>
+
+                        {/* qualityMetricsDiv_consistency */}
+                        <div
+                            className="flex fixed justify-center items-center flex-col z-[-10] w-full top-0 left-0"
+                            id="qualityMetrics_consistency"
+                        >
+                            {/* {console.log("items are*************** ",items)} */}
+                            <BarChart
+                                data={calculateRatingPercentages(
+                                    items["consistency"]?.rating
+                                )}
+                                isMobile={isMobile}
+                                titles={titles}
+                                divID="qualityMetricsDiv_consistency"
+                            />
+                        </div>
+
+                        {/* qualityMetrics_readiness */}
+                        <div
+                            className="flex fixed justify-center items-center flex-col z-[-10] w-full top-0 left-0"
+                            id="qualityMetrics_readiness"
+                        >
+                            {/* {console.log("items are*************** ",items)} */}
+                            <BarChart
+                                data={calculateRatingPercentages(
+                                    items["readiness"]?.rating
+                                )}
+                                isMobile={isMobile}
+                                titles={titles}
+                                divID="qualityMetricsDiv_readiness"
+                            />
+                        </div>
+                    </div>
                 )}
+
+                {meta_items && (
+                    <Meta_items
+                        items={meta_items}
+                        titles={titles}
+                        isMobile={isMobile}
+                    />
+                )}
+
                 {searchTerms.length > 0 && (
                     <div
-                        className="flex fixed  justify-center items-center flex-col z-[-10] w-full "
+                        className="flex fixed  justify-center items-center  flex-col z-[-10] w-full top-0 "
                         id="searchTerms"
                     >
                         <TagCloud2 data={transformedData} />
@@ -255,15 +363,40 @@ const Report = ({
                     </div>
                 )}
                 {downloadByLocation.length > 0 && (
-                    <div
-                        id="map"
-                        className="flex fixed justify-center items-center flex-col z-[-10] w-full my-10"
-                    >
-                        <div className="mt-8">
+                    // <div
+                    //     id="map"
+                    //     className="flex fixed justify-center items-center flex-col top-0 z-[-10] w-fit my-10 mb-5"
+                    // >
+                    //     <div className="mt-8">
+                    //         <MapChartComponent
+                    //             regions={regions}
+                    //             isMobile={isMobile}
+                    //         />
+                    //         <Table
+                    //             tableHeaders={LOCATION_HEADERS}
+                    //             tableData={tableData}
+                    //             headerClass="sm:text-[17px] !py-2 sm:!py-4 !text-xs border-2 border-white !w-full sm:!px-10 !px-4  !text-white text-center sm:font-medium sm:bg-dtech-new-main-light bg-dtech-dark-teal "
+                    //             tableClass=" text-sm border-white w-full min-w-[180%] sm:min-w-fit !px-10 text-white text-center sm:font-medium bg-[#EBEBEB] table-fixed"
+                    //             cellPadding={20}
+                    //             tableRow="sm:text-[17px] text-black font-normal w-full py-2 sm:!py-4  sm:!px-10 !px-4 w-full border-2 border-white"
+                    //         />
+                    //     </div>
+                    // </div>
+
+                    <div>
+                        <div
+                            className="flex fixed justify-center items-center flex-col z-[-10] w-full my-10 top-0 left-0"
+                            id="map"
+                        >
                             <MapChartComponent
                                 regions={regions}
                                 isMobile={isMobile}
                             />
+                        </div>
+                        <div
+                            className="flex fixed justify-center items-center flex-col z-[-10] w-full my-10 top-0 left-0"
+                            id="location"
+                        >
                             <Table
                                 tableHeaders={LOCATION_HEADERS}
                                 tableData={tableData}
@@ -275,10 +408,10 @@ const Report = ({
                         </div>
                     </div>
                 )}
-                {downloadByTime.length > 0 && (
+                {/* {downloadByTime.length > 0 && (
                     <div
                         id="screenshot"
-                        className="flex fixed justify-center items-center flex-col z-[-10] w-full my-10"
+                        className="flex fixed justify-center items-center flex-col z-[-10] w-full my-10 mb-5"
                     >
                         <BarChart
                             data={graphData}
@@ -295,11 +428,51 @@ const Report = ({
                             tableRow="sm:text-[17px] text-black font-normal w-full py-2 sm:!py-4  sm:!px-10 !px-4 w-full border-2 border-white"
                         />
                     </div>
+                )} */}
+
+                {downloadByTime.length > 0 && (
+                    <div
+                        id="screenshot"
+                        className="flex fixed justify-center items-center flex-col z-[-10] w-full my-10 top-0 left-0"
+                    >
+                        <BarChart
+                            data={graphData}
+                            isMobile={isMobile}
+                            titles={byTimetitles}
+                            divID="downloadByTimeID"
+                        />
+                        {/* <Table
+                        tableHeaders={TIME_HEADERS}
+                        tableData={tableDataByTime}
+                        headerClass="sm:text-[17px] !py-2 sm:!py-4 !text-xs border-2 border-white !w-full sm:!px-10 !px-4  !text-white text-center sm:font-medium sm:bg-dtech-new-main-light bg-dtech-dark-teal "
+                        tableClass=" text-sm border-white w-full min-w-[180%] sm:min-w-fit !px-10 text-white text-center sm:font-medium bg-[#EBEBEB] table-fixed"
+                        cellPadding={20}
+                        tableRow="sm:text-[17px] text-black font-normal w-full py-2 sm:!py-4  sm:!px-10 !px-4 w-full border-2 border-white"
+                    /> */}
+                    </div>
                 )}
+
+                {downloadByTime.length > 0 && (
+                    <div className="flex fixed justify-center items-center flex-col z-[-10] w-full my-10 top-0 left-0">
+                        {updatedData.map((el, index) => (
+                            <div key={index} id={`time_test${index}`}>
+                                <Table
+                                    tableHeaders={TIME_HEADERS}
+                                    tableData={el}
+                                    headerClass="sm:text-[17px] !py-2 sm:!py-4 !text-xs border-2 border-white !w-full sm:!px-10 !px-4  !text-white text-center sm:font-medium sm:bg-dtech-new-main-light bg-dtech-dark-teal "
+                                    tableClass="text-sm border-white w-full min-w-[180%] sm:min-w-fit !px-10 text-white text-center sm:font-medium bg-[#EBEBEB] table-fixed"
+                                    cellPadding={20}
+                                    tableRow="sm:text-[17px] text-black font-normal w-full py-2 sm:!py-4  sm:!px-10 !px-4 w-full border-2 border-white"
+                                />
+                            </div>
+                        ))}
+                    </div>
+                )}
+
                 {downloadByRole.length > 0 && (
                     <div
                         id="pie"
-                        className="flex fixed justify-center items-center flex-col z-[-10] w-full my-10"
+                        className="flex fixed justify-center items-center flex-col z-[-10] w-full my-10 top-0 left-0"
                     >
                         <PieChartComponent
                             chartData={chartData}
@@ -319,26 +492,54 @@ const Report = ({
                     </div>
                 )}
                 {useCases.length > 0 && (
-                    <div
-                        id="useCases"
-                        className="flex fixed justify-center items-center flex-col z-[-10] w-full"
-                    >
-                        <PieChartComponent
-                            isMobile={isMobile}
-                            chartData={sortAndAggregate(useCases)}
-                            divID={"useCasesId"}
-                        />
+                    <div>
+                        <div
+                            id="useCases"
+                            className="flex fixed items-center w-1/2 top-0 z-[-10] left-10"
+                        >
+                            <PieChartComponent
+                                isMobile={isMobile}
+                                chartData={sortAndAggregate(useCases)}
+                                divID={"useCasesId"}
+                            />
+                        </div>
 
-                        <Table
-                            tableHeaders={["Use case", "value"]}
-                            tableData={useCaseData}
-                            headerClass="sm:text-[17px] !py-2 sm:!py-4 !text-xs border-2 border-white !w-full sm:!px-10 !px-4  !text-white text-center sm:font-medium sm:bg-dtech-new-main-light bg-dtech-dark-teal "
-                            tableClass=" text-sm border-white w-full !px-10 text-white text-center sm:font-medium bg-[#EBEBEB]"
-                            cellPadding={20}
-                            showDots={false}
-                            tableRow="sm:text-[17px] text-black font-normal w-full py-2 sm:!py-4  sm:!px-10 !px-4 w-full border-2 border-white"
-                        />
+                        <div
+                            id="useCasesTable"
+                            className="flex fixed items-center w-1/3 top-[20px] z-[-10] left-10"
+                        >
+                            <Table
+                                tableHeaders={["Use case", "value"]}
+                                tableData={useCaseData}
+                                headerClass="sm:text-[17px] !py-2 sm:!py-4 !text-xs border-2 border-white !w-full sm:!px-10 !px-4  !text-white text-center sm:font-medium sm:bg-dtech-new-main-light bg-dtech-dark-teal "
+                                tableClass=" text-sm border-white w-full !px-10 text-white text-center sm:font-medium bg-[#EBEBEB]"
+                                cellPadding={20}
+                                showDots={false}
+                                tableRow="sm:text-[17px] text-black font-normal w-full py-2 sm:!py-4  sm:!px-10 !px-4 w-full border-2 border-white"
+                            />
+                        </div>
                     </div>
+                    // <div
+                    //     id="useCases"
+                    //     className="flex items-center flex-col w-1/4"
+                    // >
+                    //     {console.log("inside *****", useCases, useCaseData)}
+                    //     <PieChartComponent
+                    //         isMobile={isMobile}
+                    //         chartData={sortAndAggregate(useCases)}
+                    //         divID={"useCasesId"}
+                    //     />
+
+                    //     <Table
+                    //         tableHeaders={["Use case", "value"]}
+                    //         tableData={useCaseData}
+                    //         headerClass="sm:text-[17px] !py-2 sm:!py-4 !text-xs border-2 border-white !w-full sm:!px-10 !px-4  !text-white text-center sm:font-medium sm:bg-dtech-new-main-light bg-dtech-dark-teal "
+                    //         tableClass=" text-sm border-white w-full !px-10 text-white text-center sm:font-medium bg-[#EBEBEB]"
+                    //         cellPadding={20}
+                    //         showDots={false}
+                    //         tableRow="sm:text-[17px] text-black font-normal w-full py-2 sm:!py-4  sm:!px-10 !px-4 w-full border-2 border-white"
+                    //     />
+                    // </div>
                 )}
             </div>
 
@@ -424,7 +625,7 @@ const Report = ({
                     </Tab.Panels>
                 </Tab.Group>
             </div>
-            {isReportGenerated && !edit &&(
+            {isReportGenerated && !edit && (
                 <div className=" mt-4">
                     <DownloadReport />
                 </div>
@@ -444,3 +645,117 @@ const getTableDataForSearchTerms = (searchTerms: SearchTermType[]) =>
             getAge(date.ts),
         ];
     });
+
+const Meta_items = ({
+    items,
+    isMobile,
+    titles,
+}: {
+    items: any;
+    isMobile: boolean;
+    titles: any;
+}) => {
+    return (
+        <div>
+            {items && (
+                <div>
+                    {/* overall */}
+                    <div
+                        className="flex fixed justify-center items-center flex-col w-full z-[-10] top-0 left-0"
+                        id="qualityMetrics_meta"
+                    >
+                        {/* {console.log("items are*************** ",items)} */}
+                        <BarChart
+                            data={calculateRatingPercentages(
+                                items["overall"]?.rating
+                            )}
+                            isMobile={isMobile}
+                            titles={titles}
+                            divID="qualityMetrics_meta_Div"
+                        />
+                    </div>
+
+                    {/* qualityMetrics_accessibility*/}
+                    <div
+                        className="flex fixed justify-center items-center flex-col z-[-10] w-full top-0 left-0"
+                        id="qualityMetrics_meta_accessibility"
+                    >
+                        {/* {console.log("items are*************** ",items)} */}
+                        <BarChart
+                            data={calculateRatingPercentages(
+                                items["accessibility"]?.rating
+                            )}
+                            isMobile={isMobile}
+                            titles={titles}
+                            divID="qualityMetrics_metaDiv_accessibility"
+                        />
+                    </div>
+
+                    {/* qualityMetrics_contextuality */}
+                    <div
+                        className="flex fixed justify-center items-center flex-col z-[-10] w-full top-0 left-0"
+                        id="qualityMetrics_meta_contextuality"
+                    >
+                        {/* {console.log("items are*************** ",items)} */}
+                        <BarChart
+                            data={calculateRatingPercentages(
+                                items["contextuality"]?.rating
+                            )}
+                            isMobile={isMobile}
+                            titles={titles}
+                            divID="qualityMetrics_metaDiv_contextuality"
+                        />
+                    </div>
+
+                    {/* qualityMetricsDiv_findability */}
+                    <div
+                        className="flex fixed justify-center items-center flex-col z-[-10] w-full top-0 left-0"
+                        id="qualityMetrics_meta_findability"
+                    >
+                        {/* {console.log("items are*************** ",items)} */}
+                        <BarChart
+                            data={calculateRatingPercentages(
+                                items["findability"]?.rating
+                            )}
+                            isMobile={isMobile}
+                            titles={titles}
+                            divID="qualityMetrics_metaDiv_findability"
+                        />
+                    </div>
+
+                    {/* qualityMetrics_reusability */}
+                    <div
+                        className="flex fixed justify-center items-center flex-col z-[-10] w-full top-0 left-0"
+                        id="qualityMetrics_meta_reusability"
+                    >
+                        {/* {console.log("items are*************** ",items)} */}
+                        <BarChart
+                            data={calculateRatingPercentages(
+                                items["reusability"]?.rating
+                            )}
+                            isMobile={isMobile}
+                            titles={titles}
+                            divID="qualityMetrics_metaDiv_reusability"
+                        />
+                    </div>
+
+                    {/* qualityMetrics_interoperability */}
+                    <div
+                        className="flex fixed justify-center items-center flex-col z-[-10] w-full top-0 left-0"
+                        id="qualityMetrics_meta_interoperability"
+                    >
+                        {/* {console.log("items are*************** ",items)} */}
+                        <BarChart
+                            data={calculateRatingPercentages(
+                                items["interoperability"]?.rating
+                            )}
+                            isMobile={isMobile}
+                            titles={titles}
+                            divID="qualityMetrics_metaDiv_interoperability"
+                        />
+                    </div>
+                </div>
+            )}
+        </div>
+    );
+};
