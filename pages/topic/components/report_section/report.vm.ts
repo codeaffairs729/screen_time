@@ -16,7 +16,7 @@ import { OrganisationDetailVMContext } from "pages/organisation/organisation_det
 import draftToHtml from "draftjs-to-html";
 import { jsonToUseCaseMetrics } from "../insight_section/usecase_section/usecase.vm";
 import { TopicDetailVMContext } from "pages/topic/topic_detail.vm";
-
+import * as htmlToImage from "html-to-image";
 type Header = {
     label: string;
     isChecked: boolean;
@@ -42,7 +42,7 @@ export const downloadPdf = (
     inputHeightMm: any,
     fileName: string = "download.pdf"
 ) => {
-    html2canvas(input, { useCORS: true }).then((canvas) => {
+    html2canvas(input, { useCORS: true }).then((canvas: any) => {
         const imgData = canvas.toDataURL("image/png");
         const pdf =
             inputHeightMm > A4_WIDTH_MM
@@ -82,10 +82,10 @@ const getReportDate = (fromDate: Date, toDate: Date) => {
     return format(fromDate, "dd-MM-yyyy") === format(toDate, "dd-MM-yyyy")
         ? `<p><strong style="padding-left: 100px;">${formatDate(
               fromDate
-          )}</strong></p>`
+          )}</strong></p> <p class='break'>&nbsp;</p>`
         : `<p><strong>${formatDate(fromDate)}</strong> - <strong>${formatDate(
               toDate
-          )}</strong></p>`;
+          )}</strong></p> <p class='break'>&nbsp;</p>`;
 };
 const getReportTitle = (title: any) => {
     return `<p><strong>Dataset Insights Report</strong></p><p><strong>${title}</strong></p>`;
@@ -94,74 +94,231 @@ const getImageCanvas = (src: any) => `<img src="${src}"/>`;
 
 const formatSubHeading = (text: string) => `<p> ${text}</p>`;
 
+// const headerSelected = (
+//     selected: Array<Object>,
+//     byTime: any,
+//     byUseCase: any,
+//     byRegion: any,
+//     byquality: any,
+//     bySearchTermsCanvas: any,
+//     byUseCasesCanvas: any
+// ) => {
+//     return selected
+//         .map((object: any, index: any) =>
+//             object === "Download metrics"
+//                 ? `
+//                 <p><strong id=label_${index}>${object}</strong>
+//                 ${formatSubHeading("Downloads by region")}
+//                 ${
+//                     byRegion
+//                         ? getImageCanvas(byRegion)
+//                         : "<h4>No Data Presents for Location.</h4>"
+//                 }
+//                 </p>
+//                 <br/>
+//                 <p>
+//                 ${formatSubHeading("Downloads by time")}
+//                 ${
+//                     byTime
+//                         ? getImageCanvas(byTime)
+//                         : "<h4>No Data Presents for Time.</h4>"
+//                 }
+//                 <p>
+//                 <br/>
+//                 ${formatSubHeading("Downloads by role")}
+//                 ${
+//                     byUseCase
+//                         ? getImageCanvas(byUseCase)
+//                         : "<h4>No Data Presents for Role.</h4> "
+//                 }</p>
+//                 <br/>`
+//                 : object === "Dataset Quality"
+//                 ? `<p><strong id=label_${index}>${object}</strong>
+//                 ${
+//                     byquality
+//                         ? getImageCanvas(byquality)
+//                         : `<h4>No Data Presents for ${object}.</h4> `
+//                 }
+//                 </p>
+//                 <br/>`
+//                 : object == "Use Cases"
+//                 ? `<p><strong id=label_${index}>${object}</strong>
+//                 ${
+//                     byUseCasesCanvas
+//                         ? getImageCanvas(byUseCasesCanvas)
+//                         : `<h4>No Data Presents for ${object}.</h4> `
+//                 }
+//                 </p>
+//                 <br/>`
+//                 : `<p><strong id=label_${index}>${object}</strong>
+//                 ${
+//                     bySearchTermsCanvas
+//                         ? getImageCanvas(bySearchTermsCanvas)
+//                         : `<h4>No Data Presents for ${object}.</h4> `
+//                 }
+//                 </p>
+//                 <br/>`
+//         )
+//         .join("");
+// };
+
 const headerSelected = (
     selected: Array<Object>,
     byTime: any,
+    byTimeGraph: any,
     byUseCase: any,
     byRegion: any,
+    byLocationTableCanvas: any,
     byquality: any,
     bySearchTermsCanvas: any,
-    byUseCasesCanvas: any
+    byUseCasesCanvas: any,
+    byUseCaseTableCanvas: any,
+    repostHeardingDescription: any,
+    qualityMatricImages: any
 ) => {
+    const {
+        byQualityMetricCanvas,
+        byqualityMetricsAccessibilityCanvas,
+        byqualityMetricsContextualityCanvas,
+        byqualityMetricsFindabilityCanvas,
+        byqualityMetricInteroperabilityCanvas,
+        byqualityMetricsReusabilityCanvas,
+        byqualityMetricMetaCanvas,
+        byqualityMetricsMetaAccessibilityCanvas,
+        byqualityMetricsMetaContextualityCanvas,
+        byqualityMetricsMetaFindabilityCanvas,
+        byqualityMetricsMetaReusabilityCanvas,
+        byqualityMetricMetaInteroperabilityCanvas,
+    } = qualityMatricImages;
     return selected
         .map((object: any, index: any) =>
             object === "Download metrics"
                 ? `
-                <p><strong id=label_${index}>${object}</strong>
+                <p><strong id=label_${index}>${object}</strong></p>
+                <br/>
                 ${formatSubHeading("Downloads by region")}
                 ${
                     byRegion
-                        ? getImageCanvas(byRegion)
-                        : "<h4>No Data Presents for Location.</h4>"
+                        ? getImageCanvas(byRegion) +
+                          getImageCanvas(byLocationTableCanvas)
+                        : "<h4>No insights available.</h4> <p class='break'>&nbsp;</p>"
                 }
-                </p>
-                <br/>
-                <p>
+            
+                <p class='break'>&nbsp;</p>
                 ${formatSubHeading("Downloads by time")}
                 ${
                     byTime
-                        ? getImageCanvas(byTime)
-                        : "<h4>No Data Presents for Time.</h4>"
+                        ? getImageCanvas(byTime) +
+                          "<br>" +
+                          "<br/>" +
+                          byTimeGraph
+                              ?.map(
+                                  (el: { el: any }) =>
+                                      `<div>${getImageCanvas(
+                                          el
+                                      )}</div> <p class='break'>&nbsp;</p>`
+                              )
+                              .join(" ")
+                        : "<h4>No insights available.</h4> <p class='break'>&nbsp;</p>"
                 }
-                <p>
-                <br/>
                 ${formatSubHeading("Downloads by role")}
                 ${
                     byUseCase
                         ? getImageCanvas(byUseCase)
-                        : "<h4>No Data Presents for Role.</h4> "
+                        : "<h4>No insights available.</h4>"
                 }</p>
-                <br/>`
+                <p class='break'>&nbsp;</p>`
                 : object === "Dataset Quality"
-                ? `<p><strong id=label_${index}>${object}</strong>
+                ? `<br/><p><strong id=label_${index}>${object}</strong></p>  <p>Datafile</p>
+                <br/> 
+                <h3>Overall Quality</h3>
+               ${
+                   byquality
+                       ? `<p style="font-size:14px; font-weight:400; color: '#333' ">${repostHeardingDescription.insight_datasetQuality_description[1].title}</p>`
+                       : ``
+               }
                 ${
                     byquality
-                        ? getImageCanvas(byquality)
-                        : `<h4>No Data Presents for ${object}.</h4> `
-                }
-                </p>
-                <br/>`
+                        ? getImageCanvas(byQualityMetricCanvas) +
+                          "<p class='break'>&nbsp;</p>" +
+                          `<p><strong>${object}</strong></p <br/>` +
+                          "<h3>Accuracy</h3>" +
+                          getImageCanvas(byqualityMetricsAccessibilityCanvas) +
+                          "<br/>" +
+                          "<h3>Clarity</h3>" +
+                          getImageCanvas(byqualityMetricsContextualityCanvas) +
+                          "<p class='break'>&nbsp;</p>" +
+                          `<p><strong>${object}</strong></p <br/>` +
+                          "<h3>Consistency</h3>" +
+                          getImageCanvas(byqualityMetricsFindabilityCanvas) +
+                          "<h3>Readiness</h3>" +
+                          getImageCanvas(
+                              byqualityMetricInteroperabilityCanvas
+                          ) +
+                          "<p class='break'>&nbsp;</p>" +
+                          `<p><strong>${object}</strong></p <br/>` +
+                          ` <p>Metadata</p>` +
+                          `<p>${repostHeardingDescription.insight_datasetQuality_description[0].title}<p/>` +
+                          "<h3>Overall Quality</h3>" +
+                          getImageCanvas(byqualityMetricMetaCanvas) +
+                          "<p class='break'>&nbsp;</p>" +
+                          "<h3>Accessibility</h3>" +
+                          getImageCanvas(
+                              byqualityMetricsMetaAccessibilityCanvas
+                          ) +
+                          "<br/>" +
+                          "<h3>Contextuality</h3>" +
+                          getImageCanvas(
+                              byqualityMetricsMetaContextualityCanvas
+                          ) +
+                          "<p class='break'>&nbsp;</p>" +
+                          `<p><strong>${object}</strong></p <br/>` +
+                          "<h3>Findability</h3>" +
+                          getImageCanvas(
+                              byqualityMetricsMetaFindabilityCanvas
+                          ) +
+                          "<h3>Interoperability</h3>" +
+                          getImageCanvas(
+                              byqualityMetricMetaInteroperabilityCanvas
+                          ) +
+                          "<p class='break'>&nbsp;</p>" +
+                          `<p><strong>${object}</strong></p <br/>` +
+                          "<h3>Reusability</h3>" +
+                          getImageCanvas(
+                              byqualityMetricsMetaReusabilityCanvas
+                          ) +
+                          "<p class='break'>&nbsp;</p>"
+                        : `<h4>No insights available.</h4>` +
+                          "<p class='break'>&nbsp;</p>"
+                }`
                 : object == "Use Cases"
-                ? `<p><strong id=label_${index}>${object}</strong>
+                ? `<p><strong id=label_${index}>${object}</strong><br>
                 ${
                     byUseCasesCanvas
-                        ? getImageCanvas(byUseCasesCanvas)
-                        : `<h4>No Data Presents for ${object}.</h4> `
+                        ? `<p style="font-size:14px; font-weight:400; color: '#333'">${repostHeardingDescription.insight_useCase_description}</p>`
+                        : ``
+                }
+                ${
+                    byUseCasesCanvas
+                        ? getImageCanvas(byUseCasesCanvas) +
+                          getImageCanvas(byUseCaseTableCanvas)
+                        : `<h4>No insights available.</h4>`
                 }
                 </p>
-                <br/>`
-                : `<p><strong id=label_${index}>${object}</strong>
+                <p class='break'>&nbsp;</p>`
+                : `<strong id=label_${index}>${object}</strong> <br>
+                <p style="font-size:14px; font-weight:400; color: '#333'">${
+                    repostHeardingDescription.insight_searchTerm_description
+                }</p>
                 ${
                     bySearchTermsCanvas
-                        ? getImageCanvas(bySearchTermsCanvas)
-                        : `<h4>No Data Presents for ${object}.</h4> `
-                }
-                </p>
-                <br/>`
+                        ? getImageCanvas(bySearchTermsCanvas) +
+                          "<p class='break'>&nbsp;</p>"
+                        : `<h4>No insights available.</h4> <p class='break'>&nbsp;</p>`
+                }`
         )
         .join("");
 };
-
 const checkIfDateExists = (downloadDate: any, currDate: any) => {
     const downloadDateString = new Date(downloadDate.date).toDateString();
     const currDateString = new Date(currDate).toDateString();
@@ -214,33 +371,353 @@ const ReportVM = () => {
         setActiveHeaders(updatedActiveHeaders);
     };
 
+    // const generateNewReport = async (qualityMetrics: any) => {
+    //     setIsGeneratingReport(true);
+    //     const qualityMetric: any = document.getElementById("qualityMetrics");
+    //     const searchTerms: any = document.getElementById("searchTerms");
+    //     const metricesByRegion: any = document.getElementById("map");
+    //     const metricByTime: any = document.getElementById("screenshot");
+    //     const metricByUseCase: any = document.getElementById("pie");
+    //     const useCases: any = document.getElementById("useCases");
 
-    const generateNewReport = async (qualityMetrics: any) => {
+    //     const byQualityMetricCanvas =
+    //         qualityMetric &&
+    //         (await html2canvas(qualityMetric)).toDataURL("image/png");
+    //     const bySearchTermsCanvas =
+    //         searchTerms &&
+    //         (await html2canvas(searchTerms)).toDataURL("image/png");
+    //     const byLocationCanvas =
+    //         metricesByRegion &&
+    //         (await html2canvas(metricesByRegion)).toDataURL("image/png");
+    //     const byTimeCanvas =
+    //         metricByTime &&
+    //         (await html2canvas(metricByTime)).toDataURL("image/png");
+    //     const byUseCaseCanvas =
+    //         metricByUseCase &&
+    //         (await html2canvas(metricByUseCase)).toDataURL("image/png");
+    //     const byUseCasesCanvas =
+    //         useCases && (await html2canvas(useCases)).toDataURL("image/png");
+
+    //     const data = `
+    //             <p style="text-align: center;"><img src="${imgUrl}" width=200 height=150 style="text-align: center;" /></p>
+    //             <p></p>
+    //             ${getReportTitle(topic?.title)}
+    //             ${getReportDate(fromDate, toDate)}
+    //             ${headerSelected(
+    //                 selectedHeaders,
+    //                 byTimeCanvas,
+    //                 byUseCaseCanvas,
+    //                 byLocationCanvas,
+    //                 byQualityMetricCanvas,
+    //                 bySearchTermsCanvas,
+    //                 byUseCasesCanvas
+    //             )}
+    //         `;
+
+    //     setEditorValue(data);
+    //     setIsGeneratingReport(false);
+    // };
+
+    const getImageDataURL = async (element: any, height: number = 500) => {
+        if (element) {
+            try {
+                // const dataUrl = await htmlToImage.toPng(element);
+                const dataUrl = await htmlToImage.toPng(element, { height });
+                return dataUrl;
+            } catch (error) {
+                console.error("Error converting HTML to image:", error);
+                return null;
+            }
+        }
+        return null;
+    };
+
+    const generateNewReport = async (repostHeardingDescription: any) => {
         setIsGeneratingReport(true);
+
         const qualityMetric: any = document.getElementById("qualityMetrics");
+        const qualityMetrics_accessibility: any = document.getElementById(
+            "qualityMetrics_accuracy"
+        );
+        const qualityMetrics_contextuality: any = document.getElementById(
+            "qualityMetrics_clarity"
+        );
+        const qualityMetrics_findability: any = document.getElementById(
+            "qualityMetrics_consistency"
+        );
+        const qualityMetrics_interoperability: any = document.getElementById(
+            "qualityMetrics_readiness"
+        );
+        // const qualityMetrics_reusability:any =  document.getElementById("qualityMetrics_reusability");
+
+        const qualityMetricMeta: any = document.getElementById(
+            "qualityMetrics_meta"
+        );
+        const qualityMetricsMeta_accessibility: any = document.getElementById(
+            "qualityMetrics_meta_accessibility"
+        );
+        const qualityMetricsMeta_contextuality: any = document.getElementById(
+            "qualityMetrics_meta_contextuality"
+        );
+        const qualityMetricsMeta_findability: any = document.getElementById(
+            "qualityMetrics_meta_findability"
+        );
+        const qualityMetricsMeta_interoperability: any =
+            document.getElementById("qualityMetrics_meta_interoperability");
+        const qualityMetricsMeta_reusability: any = document.getElementById(
+            "qualityMetrics_meta_reusability"
+        );
+
         const searchTerms: any = document.getElementById("searchTerms");
         const metricesByRegion: any = document.getElementById("map");
+        const metricesByRegionTable: any = document.getElementById("location");
         const metricByTime: any = document.getElementById("screenshot");
         const metricByUseCase: any = document.getElementById("pie");
         const useCases: any = document.getElementById("useCases");
+        const useCasesTable: any = document.getElementById("useCasesTable");
+        const elementsWithTestId =
+            document.querySelectorAll('[id*="time_test"]');
 
-        const byQualityMetricCanvas =
-            qualityMetric &&
-            (await html2canvas(qualityMetric)).toDataURL("image/png");
-        const bySearchTermsCanvas =
-            searchTerms &&
-            (await html2canvas(searchTerms)).toDataURL("image/png");
-        const byLocationCanvas =
-            metricesByRegion &&
-            (await html2canvas(metricesByRegion)).toDataURL("image/png");
-        const byTimeCanvas =
-            metricByTime &&
-            (await html2canvas(metricByTime)).toDataURL("image/png");
-        const byUseCaseCanvas =
-            metricByUseCase &&
-            (await html2canvas(metricByUseCase)).toDataURL("image/png");
-        const byUseCasesCanvas =
-            useCases && (await html2canvas(useCases)).toDataURL("image/png");
+        // const byQualityMetricCanvas = await getImageDataURL(qualityMetric);
+        // chartRef.current?.events.on("ready", async () => {
+        //     byQualityMetricCanvas = await getImageDataURL(qualityMetric);
+        //     // Capture other screenshots here...
+        // });
+        let byQualityMetricCanvas: any;
+        let byqualityMetricsAccessibilityCanvas: any;
+        let byqualityMetricsContextualityCanvas: any;
+        let byqualityMetricsFindabilityCanvas: any;
+        let byqualityMetricInteroperabilityCanvas: any;
+        let bySearchTermsCanvas: any;
+        let byUsecaseCanvas: any;
+        let byTimeGraph: any = [];
+        for (let i = 0; i < elementsWithTestId.length / 2; i++) {
+            let res = await getImageDataURL(elementsWithTestId[i]);
+            byTimeGraph.push(res);
+        }
+
+        let qualityMatricImages: any = {};
+
+        let byQualityMetricPromise;
+        let byqualityMetricsAccessibilityPromise;
+        let byqualityMetricsContextualityPromise;
+        let byqualityMetricsFindabilityPromise;
+        let byqualityMetricInteroperabilityPromise;
+
+        let byQualityMetricMetaPromise;
+        let byqualityMetricsMetaAccessibilityPromise;
+        let byqualityMetricsMetaContextualityPromise;
+        let byqualityMetricsMetaFindabilityPromise;
+        let byqualityMetricMetaInteroperabilityPromise;
+        let byqualityMetricMetaReusabilityPromise;
+        let bySearchTermsPromise;
+        let byUseCasePromise;
+
+        byQualityMetricPromise = new Promise<void>((resolve) => {
+            setTimeout(async () => {
+                byQualityMetricCanvas = await getImageDataURL(qualityMetric);
+                qualityMatricImages.byQualityMetricCanvas =
+                    byQualityMetricCanvas;
+                resolve();
+            }, 3000);
+        });
+
+        byqualityMetricsAccessibilityPromise = new Promise<void>((resolve) => {
+            setTimeout(async () => {
+                byqualityMetricsAccessibilityCanvas = await getImageDataURL(
+                    qualityMetrics_accessibility,
+                    350
+                );
+                qualityMatricImages.byqualityMetricsAccessibilityCanvas =
+                    byqualityMetricsAccessibilityCanvas;
+                resolve();
+            }, 3000);
+        });
+
+        byqualityMetricsContextualityPromise = new Promise<void>((resolve) => {
+            setTimeout(async () => {
+                byqualityMetricsContextualityCanvas = await getImageDataURL(
+                    qualityMetrics_contextuality,
+                    350
+                );
+                qualityMatricImages.byqualityMetricsContextualityCanvas =
+                    byqualityMetricsContextualityCanvas;
+                resolve();
+            }, 3000);
+        });
+
+        byqualityMetricsFindabilityPromise = new Promise<void>((resolve) => {
+            setTimeout(async () => {
+                byqualityMetricsFindabilityCanvas = await getImageDataURL(
+                    qualityMetrics_findability,
+                    350
+                );
+                qualityMatricImages.byqualityMetricsFindabilityCanvas =
+                    byqualityMetricsFindabilityCanvas;
+                resolve();
+            }, 3000);
+        });
+
+        byqualityMetricInteroperabilityPromise = new Promise<void>(
+            (resolve) => {
+                setTimeout(async () => {
+                    byqualityMetricInteroperabilityCanvas =
+                        await getImageDataURL(
+                            qualityMetrics_interoperability,
+                            350
+                        );
+                    qualityMatricImages.byqualityMetricInteroperabilityCanvas =
+                        byqualityMetricInteroperabilityCanvas;
+                    resolve();
+                }, 3000);
+            }
+        );
+
+        // meta promises
+        byQualityMetricMetaPromise = new Promise<void>((resolve) => {
+            setTimeout(async () => {
+                const byqualityMetricMetaCanvas = await getImageDataURL(
+                    qualityMetricMeta,
+                    350
+                );
+                qualityMatricImages.byqualityMetricMetaCanvas =
+                    byqualityMetricMetaCanvas;
+                resolve();
+            }, 3000);
+        });
+
+        byqualityMetricsMetaAccessibilityPromise = new Promise<void>(
+            (resolve) => {
+                setTimeout(async () => {
+                    const byqualityMetricsMetaAccessibilityCanvas =
+                        await getImageDataURL(
+                            qualityMetricsMeta_accessibility,
+                            350
+                        );
+                    qualityMatricImages.byqualityMetricsMetaAccessibilityCanvas =
+                        byqualityMetricsMetaAccessibilityCanvas;
+                    resolve();
+                }, 3000);
+            }
+        );
+
+        byqualityMetricsMetaContextualityPromise = new Promise<void>(
+            (resolve) => {
+                setTimeout(async () => {
+                    const byqualityMetricsMetaContextualityCanvas =
+                        await getImageDataURL(
+                            qualityMetricsMeta_contextuality,
+                            350
+                        );
+                    qualityMatricImages.byqualityMetricsMetaContextualityCanvas =
+                        byqualityMetricsMetaContextualityCanvas;
+                    resolve();
+                }, 3000);
+            }
+        );
+
+        byqualityMetricsMetaContextualityPromise = new Promise<void>(
+            (resolve) => {
+                setTimeout(async () => {
+                    const byqualityMetricsMetaContextualityCanvas =
+                        await getImageDataURL(
+                            qualityMetricsMeta_contextuality,
+                            350
+                        );
+                    qualityMatricImages.byqualityMetricsMetaContextualityCanvas =
+                        byqualityMetricsMetaContextualityCanvas;
+                    resolve();
+                }, 3000);
+            }
+        );
+
+        byqualityMetricsMetaFindabilityPromise = new Promise<void>(
+            (resolve) => {
+                setTimeout(async () => {
+                    const byqualityMetricsMetaFindabilityCanvas =
+                        await getImageDataURL(
+                            qualityMetricsMeta_findability,
+                            350
+                        );
+                    qualityMatricImages.byqualityMetricsMetaFindabilityCanvas =
+                        byqualityMetricsMetaFindabilityCanvas;
+                    resolve();
+                }, 3000);
+            }
+        );
+
+        byqualityMetricMetaInteroperabilityPromise = new Promise<void>(
+            (resolve) => {
+                setTimeout(async () => {
+                    const byqualityMetricMetaInteroperabilityCanvas =
+                        await getImageDataURL(
+                            qualityMetricsMeta_interoperability,
+                            350
+                        );
+                    qualityMatricImages.byqualityMetricMetaInteroperabilityCanvas =
+                        byqualityMetricMetaInteroperabilityCanvas;
+                    resolve();
+                }, 3000);
+            }
+        );
+
+        byqualityMetricMetaReusabilityPromise = new Promise<void>((resolve) => {
+            setTimeout(async () => {
+                const byqualityMetricsMetaReusabilityCanvas =
+                    await getImageDataURL(qualityMetricsMeta_reusability, 350);
+                qualityMatricImages.byqualityMetricsMetaReusabilityCanvas =
+                    byqualityMetricsMetaReusabilityCanvas;
+                resolve();
+            }, 3000);
+        });
+
+        bySearchTermsPromise = new Promise<void>((resolve) => {
+            setTimeout(async () => {
+                const byqualityMetricSearchTermsCanvas = await getImageDataURL(
+                    searchTerms,
+                    350
+                );
+                bySearchTermsCanvas = byqualityMetricSearchTermsCanvas;
+                resolve();
+            }, 3000);
+        });
+
+        byUseCasePromise = new Promise<void>((resolve) => {
+            setTimeout(async () => {
+                byUsecaseCanvas = await getImageDataURL(useCases, 350);
+                //    bySearchTermsCanvas = byqualityMetricSearchTermsCanvas
+                resolve();
+            }, 3000);
+        });
+
+        await Promise.all([
+            byQualityMetricPromise,
+            byqualityMetricsAccessibilityPromise,
+            byqualityMetricsContextualityPromise,
+            byqualityMetricsFindabilityPromise,
+            byqualityMetricInteroperabilityPromise,
+
+            byQualityMetricMetaPromise,
+            byqualityMetricsMetaAccessibilityPromise,
+            byqualityMetricsMetaContextualityPromise,
+            byqualityMetricsMetaFindabilityPromise,
+            byqualityMetricMetaInteroperabilityPromise,
+            byqualityMetricMetaReusabilityPromise,
+            bySearchTermsPromise,
+            byUseCasePromise,
+            //     // ... (other promises)
+        ]);
+
+        const byLocationCanvas = await getImageDataURL(metricesByRegion);
+        const byLocationTableCanvas = await getImageDataURL(
+            metricesByRegionTable
+        );
+        const byTimeCanvas = await getImageDataURL(metricByTime);
+        const byUseCaseCanvas = await getImageDataURL(metricByUseCase);
+        const byUseCaseTableCanvas = await getImageDataURL(useCasesTable);
+        // const byUseCasesCanvas = await getImageDataURL(useCases);
+        // console.log("byUsecase screenshot is ",byUseCasesCanvas)
+        // console.log("metricByTime screenshot is ",byUseCasesCanvas)
 
         const data = `
                 <p style="text-align: center;"><img src="${imgUrl}" width=200 height=150 style="text-align: center;" /></p>
@@ -250,14 +727,18 @@ const ReportVM = () => {
                 ${headerSelected(
                     selectedHeaders,
                     byTimeCanvas,
+                    byTimeGraph,
                     byUseCaseCanvas,
                     byLocationCanvas,
+                    byLocationTableCanvas,
                     byQualityMetricCanvas,
                     bySearchTermsCanvas,
-                    byUseCasesCanvas
+                    byUsecaseCanvas,
+                    byUseCaseTableCanvas,
+                    repostHeardingDescription,
+                    qualityMatricImages
                 )}
             `;
-
         setEditorValue(data);
         setIsGeneratingReport(false);
     };
@@ -286,7 +767,9 @@ const ReportVM = () => {
         executeFetchQualityMetrics(
             () => {
                 return Http.get(
-                    `/v1/topics/quality_metrics?topic_id=${topic?.id}&sort_by=title&page_size=${7}&page_num=${1}`
+                    `/v1/topics/quality_metrics?topic_id=${
+                        topic?.id
+                    }&sort_by=title&page_size=${7}&page_num=${1}`
                 );
             },
             {
@@ -310,9 +793,7 @@ const ReportVM = () => {
     const fetchSearchTerms = () =>
         executeFetchSearchTerms(
             () => {
-                return Http.get(
-                    `/v1/metrics/${topic?.id}/10`
-                );
+                return Http.get(`/v1/metrics/${topic?.id}/10`);
             },
             {
                 postProcess: (res: any) => {
@@ -361,9 +842,7 @@ const ReportVM = () => {
         executeFetchByTime(
             () => {
                 return Http.get(
-                    `/v1/metrics/${
-                        topic?.id
-                    }/by_time?from=${format(
+                    `/v1/metrics/${topic?.id}/by_time?from=${format(
                         fromDate,
                         "yyyy-MM-dd"
                     )}&to=${format(toDate, "yyyy-MM-dd")}`
@@ -414,9 +893,7 @@ const ReportVM = () => {
     const fetchUseCases = () =>
         excuteFetchUseCases(
             () => {
-                return Http.get(
-                    `/v1/topics/use_cases/${topic?.id}`
-                );
+                return Http.get(`/v1/topics/use_cases/${topic?.id}`);
             },
             {
                 postProcess: (res) => {
@@ -512,7 +989,7 @@ const ReportVM = () => {
         rating: dataset["ratings"],
     });
 
-    const fetchData = (qualityMetrics: any) => {
+    const fetchData = async (insight_topic_description: any) => {
         let from: string = format(new Date(), "yyyy-MM-dd");
         let to: string = format(new Date(), "yyyy-MM-dd");
 
@@ -537,16 +1014,30 @@ const ReportVM = () => {
         const promise5 = fetchQualityMetrics();
         const promise6 = fetchUseCases();
 
-        Promise.all([
+        await Promise.all([
             promise1,
             promise2,
             promise3,
             promise4,
             promise5,
             promise6,
-        ]).then(() => {
-            // generateReportContent(qualityMetrics);
-            generateNewReport(qualityMetrics);
+        ]);
+        setIsGeneratingReport(true);
+        // .then(() => {
+        //     // generateReportContent(qualityMetrics);
+
+        // // generateNewReport(qualityMetrics);
+        // setTimeout(() => {
+        //     generateNewReport(qualityMetrics);
+        //     return true
+        // }, 5000);
+        // });
+
+        return new Promise<void>((resolve) => {
+            setTimeout(() => {
+                generateNewReport(insight_topic_description);
+                resolve();
+            }, 5000);
         });
     };
     const isFetching =
