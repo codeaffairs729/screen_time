@@ -407,11 +407,6 @@ const ReportVM = () => {
         const elementsWithTestId =
             document.querySelectorAll('[id*="time_test"]');
 
-        // const byQualityMetricCanvas = await getImageDataURL(qualityMetric);
-        // chartRef.current?.events.on("ready", async () => {
-        //     byQualityMetricCanvas = await getImageDataURL(qualityMetric);
-        //     // Capture other screenshots here...
-        // });
         let byQualityMetricCanvas;
         let byqualityMetricsAccessibilityCanvas;
         let byqualityMetricsContextualityCanvas;
@@ -421,34 +416,12 @@ const ReportVM = () => {
         let bySearchTermsCanvas;
         setTimeout(async () => {
             // Capture other screenshots here for Quality matrics...
-            // Capture other screenshots here for Quality matrics...
-            byQualityMetricCanvas = await getImageDataURL(qualityMetric);
-            byQualityMetricCanvas &&
+            qualityMetric &&
                 activeHeaders[0].isChecked == true &&
                 setIsDataFetch("Fetching Dataset Quality");
-            bySearchTermsCanvas = await getImageDataURL(searchTerms);
-            bySearchTermsCanvas &&
-                activeHeaders[1].isChecked == true &&
-                setIsDataFetch("Fetching Search Terms Used");
-        }, 3000);
+            byQualityMetricCanvas = await getImageDataURL(qualityMetric);
+        }, 1000);
 
-        // const bySearchTermsCanvas = await getImageDataURL(searchTerms);
-        const byLocationCanvas = await getImageDataURL(metricesByRegionMap);
-        // console.log("hello I am here**********",byLocationCanvas)
-        const byLocationTableCanvas = await getImageDataURL(
-            metricesByRegionTable
-        );
-        byLocationCanvas &&
-            activeHeaders[2].isChecked == true &&
-            setIsDataFetch("Fetching Download Metric");
-        const byTimeCanvas = await getImageDataURL(metricByTime);
-        const byUseCaseCanvas = await getImageDataURL(metricByUseCase);
-        byUseCaseCanvas &&
-            activeHeaders[3].isChecked == true &&
-            setIsDataFetch("Fetching Use Cases");
-        // console.log(activeHeaders[3].isChecked == true)
-        const byUseCasesCanvas = await getImageDataURL(useCases);
-        // console.log("useCases************-------------",byUseCasesCanvas)
         byqualityMetricsAccessibilityCanvas = await getImageDataURL(
             qualityMetrics_accessibility,
             365
@@ -469,6 +442,29 @@ const ReportVM = () => {
             qualityMetrics_reusability,
             365
         );
+
+        setTimeout(async () => {
+            bySearchTermsCanvas = await getImageDataURL(searchTerms);
+            bySearchTermsCanvas &&
+                activeHeaders[1].isChecked == true &&
+                setIsDataFetch("Fetching Search Terms Used");
+        }, 3000);
+
+        const byLocationCanvas = await getImageDataURL(metricesByRegionMap);
+        // console.log("hello I am here**********",byLocationCanvas)
+        const byLocationTableCanvas = await getImageDataURL(
+            metricesByRegionTable
+        );
+        byLocationCanvas &&
+            activeHeaders[2].isChecked == true &&
+            setIsDataFetch("Fetching Download Metric");
+        const byTimeCanvas = await getImageDataURL(metricByTime);
+        const byUseCaseCanvas = await getImageDataURL(metricByUseCase);
+        byUseCaseCanvas &&
+            activeHeaders[3].isChecked == true &&
+            setIsDataFetch("Fetching Use Cases");
+        // console.log(activeHeaders[3].isChecked == true)
+        const byUseCasesCanvas = await getImageDataURL(useCases);
         let byTimeGraph: any = [];
         for (let i = 0; i < elementsWithTestId.length / 2; i++) {
             let res = await getImageDataURL(elementsWithTestId[i]);
@@ -482,7 +478,11 @@ const ReportVM = () => {
             byqualityMetricInteroperabilityCanvas,
             byqualityMetricsReusabilityCanvas,
         };
-        setIsDataFetch("Finalising report");
+
+        setTimeout(() => {
+            setIsDataFetch("Finalising report");
+        }, 2000);
+
         const data = `
                 <p style="text-align: center;"><img src="${imgUrl}" width=200 height=150 style="text-align: center;" /></p>
                 <p></p>
@@ -503,8 +503,12 @@ const ReportVM = () => {
                 )}
             `;
         setEditorValue(data);
-        setIsGeneratingReport(false);
-        setIsDataFetch("Generating cover page");
+        setTimeout(() => {
+            setIsGeneratingReport(false);
+        }, 3000);
+        setTimeout(() => {
+            setIsDataFetch("Generating cover page");
+        }, 3000);
     };
 
     const {
@@ -841,6 +845,7 @@ const ReportVM = () => {
         transformedData,
         graphDataVal,
         isDataFetch,
+        setIsDataFetch,
         isDateSelected,
         SetIsDateSelected,
     };
@@ -1100,6 +1105,7 @@ interface IReportVMContext {
     transformedData: any;
     graphDataVal: any;
     isDataFetch: string;
+    setIsDataFetch: Function;
     isDateSelected: any;
     SetIsDateSelected: Function;
 }

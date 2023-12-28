@@ -36,7 +36,16 @@ const Report = ({
     setIsReportGenerated: Function;
 }) => {
     const [edit, setEdit] = useState(false);
-    const { loading, isDataFetch } = useContext(ReportVMContext);
+    const [displayData,setDisplayData] = useState("")
+    const {
+        loading,
+        isDataFetch,
+    } = useContext(ReportVMContext);
+
+    useEffect(() => {
+        setDisplayData(isDataFetch);
+    }, [isDataFetch]);
+
 
     return (
         <div className="w-full relative">
@@ -47,7 +56,9 @@ const Report = ({
                             <div>
                                 <p className=" text-dtech-light-grey3 animate-pulse transition-all w-fit">
                                     <Loader className={"text-blue-900 mr-2"} />
-                                    {isDataFetch}
+                                    {/* {selected == 1 && 'Generating cover page' }
+                                    {selected == 2 && (!show ? isDataFetch : finalising) } */}
+                                    {displayData}
                                 </p>
                             </div>
                         </div>
