@@ -70,7 +70,7 @@ const ReportFilter = ({
         <div className="sm:w-1/3 w-full py-4 sm:m-12 flex flex-col items-center justify-center sm:items-start sm:mt-12 sm:mb-96 ">
             {warningMsg && !selectedDates && (
                 <div className="text-red-500 ">
-                    <h1>Requried</h1>
+                    <h1>Required</h1>
                 </div>
             )}
             <span className={`w-full sm:text-left text-center font-semibold`}>
@@ -97,7 +97,7 @@ const ReportFilter = ({
                 </div> */}
                 {warningMsg && !isHeaderSelected && (
                     <div className="text-red-500 ">
-                        <h1>Requried</h1>
+                        <h1>Required</h1>
                     </div>
                 )}
                 <span className="w-full text-center flex sm:justify-start justify-center font-semibold sm:mb-8">
