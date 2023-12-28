@@ -4,6 +4,7 @@ import { OrganisationDetailVMContext } from "pages/organisation/organisation_det
 import Summary from "./summary_preview";
 import HeaderPreview from "./header";
 import { head } from "lodash-es";
+import { useRef } from "react";
 
 interface Section {
     label: String;
@@ -42,6 +43,7 @@ const PreviewReport = ({
             item.trim() !== "" && item.trim() !== "\n" && item.trim() != ","
     );
 
+    // console.log("splitedArray is",splittedArray)
     useEffect(() => {
         for (let i = 0; i < splittedArray.length; i++) {
             if (splittedArray[i].includes(sections[0].label)) {
@@ -114,6 +116,7 @@ const PreviewReport = ({
     // }
     // });
     //     const newResult=
+    //    console.log("result is ",result)
     const gradientStyle = {
         background:
             "radial-gradient(2196.08% 210.97% at 144.72% -36.42%, rgba(255, 255, 255, 0.75) 0%, rgba(206, 255, 254, 0.28) 27.7%, rgba(206, 176, 208, 0.20) 84.03%)",
@@ -121,6 +124,9 @@ const PreviewReport = ({
     };
     // const displayResult = updataedList.map((subarray) => subarray.join("")).filter(Boolean);
     const displayResult = splittedArray.slice(1);
+    // console.log("displayResult is", displayResult);
+    const containerRef = useRef(null);
+
     return (
         <div className="shadow-paper-shadow mt-4 h-[656px] border-none overflow-y-scroll !bg-[#EBEBEB]">
             {!loading && isReportGenerated && (
@@ -151,50 +157,61 @@ const PreviewReport = ({
                         </div>
                     </div>
                     <div className="quillCss">
-                        {displayResult?.map((result: any, index: any) => {
-                            return (
-                                <div
-                                    key={index}
-                                    className="section-preview mx-7 my-8 border-[0.5px] border-grey rounded-[5px] bg-white"
-                                >
+                        <div ref={containerRef}>
+                            {displayResult?.map((result: any, index: any) => {
+                                return (
                                     <div
                                         key={index}
-                                        id={findID(result)}
-                                        className="section-preview p-10 text-dtech-light-grey3 text-[19px]"
-                                        dangerouslySetInnerHTML={{
-                                            // __html: result,
-                                            __html: result.replace(
-                                                /<a/g,
-                                                '<a style="color: blue; text-decoration: underline; margin-bottom:5px "'
-                                            ),
-                                        }}
-                                    />
-                                    <div className="text-center text-[8px] text-dtech-light-grey3 mb-4">
-                                        Page {index + 1}/{displayResult.length}
+                                        className="section-preview mx-7 my-8 border-[0.5px] border-grey rounded-[5px] bg-white"
+                                    >
+                                        <div
+                                            key={index}
+                                            id={findID(result)}
+                                            className="section-preview p-10 text-dtech-light-grey3 text-[19px] section-preview-height"
+                                            dangerouslySetInnerHTML={{
+                                                // __html: result,
+                                                __html: result.replace(
+                                                    /<a/g,
+                                                    '<a style="color: blue; text-decoration: underline; margin-bottom:5px "'
+                                                ),
+                                            }}
+                                        />
+                                        <div className="text-center text-dtech-light-grey3 text-[] mb-4">
+                                            Page {index + 1}/
+                                            {displayResult.length}
+                                        </div>
                                     </div>
-                                </div>
-                            );
-                        })}
+                                );
+                            })}
+                        </div>
                     </div>
                 </div>
             )}
+            {/* <div
+                className="editor_preview "
+                dangerouslySetInnerHTML={{
+                    __html: editorValue.replaceAll("", ""),
+                }}
+            /> */}
         </div>
     );
 };
 export default PreviewReport;
 
 const findID = (result: string) => {
-    if (result.includes("Overall Quality")) return "dataset_quality";
-    else if (result.includes("Accessibility")) return "qualityMetrics_accessibility";
-    else if (result.includes("Findability")) return "qualityMetrics_findability";
-    else if (result.includes("reusability")) return "qualityMetrics_reusability";
+    if (result.includes("Accessibility")) return "accessibility";
+    else if (result.includes("Reusability")) return "reusability";
+    else if (result.includes("Findability")) return "findability";
+    else if (result.includes("Dataset Quality")) return "dataset_quality";
     else if (result.includes("Search terms used")) return "search_terms_used";
     else if (result.includes("Download metrics")) return "download_metrics";
-    else if (result.includes("Downloads by region")) return "downloads_by_region";
-    else if (result.includes("Downloads by time")) return "downloads_by_time";
-    else if (result.includes("Time Graph")) return "time_graph";
     else if (result.includes("Use Cases")) return "use_cases";
+    else if (result.includes("Downloads by time")) return "downloads_by_time";
+    else if (result.includes("Downloads by role")) return "downloads_by_role";
+
+    // else return result
 };
+
 function calculateAverageStars(data: any) {
     const totalStars = data?.reduce((acc: any, obj: any) => {
         const star: any = Object.keys(obj)[0];

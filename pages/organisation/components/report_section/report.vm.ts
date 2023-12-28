@@ -81,7 +81,7 @@ const getReportDate = (fromDate: Date, toDate: Date) => {
           )}</strong></p> <p class='break'>&nbsp;</p>`;
 };
 const getReportTitle = (title: any) => {
-    return `<p><strong>Dataset Insights Report</strong></p><p><strong>${title}</strong></p>`;
+    return `<p><strong>${title}</strong></p><p><strong>Dataset Insights Report</strong></p>`;
 };
 const getImageCanvas = (src: any) => `<img src="${src}"/>`;
 
@@ -113,18 +113,20 @@ const headerSelected = (
     return selected
         .map((object: any, index: any) =>
             object === "Download metrics"
-                ? `
+                ? "<div class='preview-flex'><div class='preview-left'>" +
+                  `
                 <p><strong id=label_${index}>${object}</strong></p>
                 <br/>
                 ${formatSubHeading("Downloads by region")}
                 ${
                     byRegion
                         ? getImageCanvas(byRegion) +
-                          "<p class='break'>&nbsp;</p>" +
-                          "<h3>Downloads by region</h3>" +
+                          "<br/>" +
+                          "</div><div class='preview-right'><h3>Downloads by region</h3>" +
                           getImageCanvas(byRegionTable) +
+                          "</div></div>" +
                           "<p class='break'>&nbsp;</p>"
-                        : "<h4>No insights available.</h4>" +
+                        : "<p class='small-text'>No insights available.</p>" +
                           "<p class='break'>&nbsp;</p>"
                 }
                 ${formatSubHeading("Downloads by time")}
@@ -133,8 +135,8 @@ const headerSelected = (
                         ? // ? getImageCanvas(byTime) +"<br>" + getImageCanvas(byTimeGraph)
                           getImageCanvas(byTime) +
                           "<br>" +
-                          "<p class='break'>&nbsp;</p>" +
-                          "<br/> <h3>Time Graph</h3>" +
+                          "<br/>" +
+                          "<br/>" +
                           byTimeGraph
                               .map(
                                   (el: { el: any }) =>
@@ -143,50 +145,52 @@ const headerSelected = (
                                       )}</div> <p class='break'>&nbsp;</p>`
                               )
                               .join(" ")
-                        : "<h4>No insights available.</h4> <p class='break'>&nbsp;</p>"
+                        : "<p class='small-text'>No insights available.</p> <p class='break'>&nbsp;</p>"
                 }
                 <p>
                 ${formatSubHeading("Downloads by role")}
                 ${
                     byUseCase
                         ? getImageCanvas(byUseCase)
-                        : "<h4>No insights available.</h4>"
+                        : "<p class='small-text'>No insights available.</p>"
                 }</p>
                 <p class='break'>&nbsp;</p>`
                 : object === "Dataset Quality"
-                ? `<br/><p><strong id=label_${index}>${object}</strong></p>
-                <br/> 
+                ? `<div class='preview-flex'><div class='preview-left'><p><strong id=label_${index}>${object}</strong></p>
+                <br/>
                 <h3>Overall Quality</h3>
                 ${
                     byquality
-                        ? `<p style="font-size:14px; font-weight:400; color: '#333' ">${repostHeardingDescription.insight_datasetQuality_description[1].title}</p>`
+                        ? `<p style="font-size:14px; font-weight:400; color: '#333' ">${repostHeardingDescription.insight_datasetQuality_description[1].title}</p></div>`
                         : ``
                 }
                 ${
                     byquality
-                        ? getImageCanvas(byQualityMetricCanvas) +
-                          "<p class='break'>&nbsp;</p>" +
-                          `<p><strong>${object}</strong></p <br/>` +
+                        ? "<div class='preview-right'>" +
+                          getImageCanvas(byQualityMetricCanvas) +
+                          "</div></div><p class='break'>&nbsp;</p>" +
+                          `<div class='preview-flex'><div class='preview-left'><p><strong>${object}</strong></p <br/><br/>` +
                           "<h3>Accessibility</h3>" +
                           getImageCanvas(byqualityMetricsAccessibilityCanvas) +
                           "<br/>" +
-                          "<h3>Contextuality</h3>" +
+                          "</div><div class='preview-left'><h3>Contextuality</h3>" +
                           getImageCanvas(byqualityMetricsContextualityCanvas) +
-                          "<p class='break'>&nbsp;</p>" +
-                          `<p><strong>${object}</strong></p <br/>` +
+                          "</div></div><p class='break'>&nbsp;</p>" +
+                          `<div class='preview-flex'><div class='preview-left'><p><strong>${object}</strong></p <br/><br/>` +
                           "<h3>Findability</h3>" +
                           getImageCanvas(byqualityMetricsFindabilityCanvas) +
-                          "<h3>Interoperability</h3>" +
+                          "</div><div class='preview-right'><h3>Interoperability</h3>" +
                           getImageCanvas(
                               byqualityMetricInteroperabilityCanvas
                           ) +
-                          "<p class='break'>&nbsp;</p>" +
-                          `<p><strong>${object}</strong></p <br/>` +
+                          "</div></div><p class='break'>&nbsp;</p>" +
+                          `<div class='preview-flex'><div class='preview-left'><p><strong>${object}</strong></p <br/><br/>` +
                           "<h3>Reusability</h3>" +
                           getImageCanvas(byqualityMetricsReusabilityCanvas) +
-                          "<p class='break'>&nbsp;</p>"
-                        : `<h4>No insights available.</h4>` +
-                          "<p class='break'>&nbsp;</p>"
+                          "</div>" +
+                          "<br/>"
+                        : `<p class='small-text'>No insights available.</p>` +
+                          "<<p class='break'>&nbsp;</p>>"
                 }`
                 : object == "Use Cases"
                 ? `<p><strong id=label_${index}>${object}</strong><br>
@@ -198,19 +202,20 @@ const headerSelected = (
                 ${
                     byUseCasesCanvas
                         ? getImageCanvas(byUseCasesCanvas)
-                        : `<h4>No insights available.</h4>`
+                        : `<p class='small-text'>No insights available.</p>`
                 }
                 </p>
                 <p class='break'>&nbsp;</p>`
-                : `<strong id=label_${index}>${object}</strong> <br>
+                : `<div class='preview-left'><strong id=label_${index}>${object}</strong> <br>
                 <p style="font-size:14px; font-weight:400; color: '#333'">${
                     repostHeardingDescription.insight_searchTerm_description
                 }</p>
                 ${
                     bySearchTermsCanvas
                         ? getImageCanvas(bySearchTermsCanvas) +
+                          "</div></div>" +
                           "<p class='break'>&nbsp;</p>"
-                        : `<h4>No insights available.</h4> <p class='break'>&nbsp;</p>`
+                        : `<p class='small-text'>No insights available.</p> <p class='break'>&nbsp;</p>`
                 }`
         )
         .join("");
@@ -228,10 +233,6 @@ const ReportVM = () => {
     const [toDate, setToDate] = useState(new Date());
     currentDate.setFullYear(currentDate.getFullYear() - 1);
     const [fromDate, setFromDate] = useState(currentDate);
-    const [isDateSelected, SetIsDateSelected] = useState({
-        from: false,
-        to: false,
-    });
     // const [from, setFrom] = useState(format(new Date(), "yyyy-MM-dd"));
     // const [to, setTo] = useState(format(new Date(), "yyyy-MM-dd"));
     const { organisation } = useContext(OrganisationDetailVMContext);
@@ -246,6 +247,10 @@ const ReportVM = () => {
     // const [previewContent, setPreviewContent] = useState("");
     const [isGeneratingReport, setIsGeneratingReport] = useState(false);
     const [isDataFetch, setIsDataFetch] = useState("Generating cover page");
+    const [isDateSelected, SetIsDateSelected] = useState({
+        from: false,
+        to: false,
+    });
     // useEffect(() => {
     //     setPreviewContent(formatPreviewData());
     // }, [editorState]);
@@ -353,6 +358,7 @@ const ReportVM = () => {
     //     );
     //     setIsGeneratingReport(false);
     // };
+
     const getImageDataURL = async (
         element: any,
         height: number = 500,
@@ -413,60 +419,56 @@ const ReportVM = () => {
         let byqualityMetricInteroperabilityCanvas;
         let byqualityMetricsReusabilityCanvas;
         let bySearchTermsCanvas;
-
         setTimeout(async () => {
+            // Capture other screenshots here for Quality matrics...
             // Capture other screenshots here for Quality matrics...
             byQualityMetricCanvas = await getImageDataURL(qualityMetric);
             byQualityMetricCanvas &&
                 activeHeaders[0].isChecked == true &&
                 setIsDataFetch("Fetching Dataset Quality");
-        }, 1000);
-
-        setTimeout(async () => {
             bySearchTermsCanvas = await getImageDataURL(searchTerms);
             bySearchTermsCanvas &&
                 activeHeaders[1].isChecked == true &&
                 setIsDataFetch("Fetching Search Terms Used");
-        }, 1000);
+        }, 3000);
 
         // const bySearchTermsCanvas = await getImageDataURL(searchTerms);
         const byLocationCanvas = await getImageDataURL(metricesByRegionMap);
-        byLocationCanvas &&
-            activeHeaders[2].isChecked == true &&
-            setIsDataFetch("Fetching Download Metric");
-
+        // console.log("hello I am here**********",byLocationCanvas)
         const byLocationTableCanvas = await getImageDataURL(
             metricesByRegionTable
         );
+        byLocationCanvas &&
+            activeHeaders[2].isChecked == true &&
+            setIsDataFetch("Fetching Download Metric");
         const byTimeCanvas = await getImageDataURL(metricByTime);
         const byUseCaseCanvas = await getImageDataURL(metricByUseCase);
         byUseCaseCanvas &&
             activeHeaders[3].isChecked == true &&
             setIsDataFetch("Fetching Use Cases");
-
+        // console.log(activeHeaders[3].isChecked == true)
         const byUseCasesCanvas = await getImageDataURL(useCases);
-        setIsDataFetch("Finalising report");
+        // console.log("useCases************-------------",byUseCasesCanvas)
         byqualityMetricsAccessibilityCanvas = await getImageDataURL(
             qualityMetrics_accessibility,
-            350
+            365
         );
         byqualityMetricsContextualityCanvas = await getImageDataURL(
             qualityMetrics_contextuality,
-            350
+            365
         );
         byqualityMetricsFindabilityCanvas = await getImageDataURL(
             qualityMetrics_findability,
-            350
+            365
         );
         byqualityMetricInteroperabilityCanvas = await getImageDataURL(
             qualityMetrics_interoperability,
-            350
+            365
         );
         byqualityMetricsReusabilityCanvas = await getImageDataURL(
             qualityMetrics_reusability,
-            350
+            365
         );
-
         let byTimeGraph: any = [];
         for (let i = 0; i < elementsWithTestId.length / 2; i++) {
             let res = await getImageDataURL(elementsWithTestId[i]);
@@ -480,6 +482,7 @@ const ReportVM = () => {
             byqualityMetricInteroperabilityCanvas,
             byqualityMetricsReusabilityCanvas,
         };
+        setIsDataFetch("Finalising report");
         const data = `
                 <p style="text-align: center;"><img src="${imgUrl}" width=200 height=150 style="text-align: center;" /></p>
                 <p></p>

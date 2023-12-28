@@ -137,3 +137,55 @@ figure {
     left: 50%;
     transform: translate(-50%, -0%);
 }
+
+/* Target toolbar buttons */
+.ql-toolbar button {
+    position: relative; /* Enable positioning for tooltip */
+}
+
+/* Create tooltip on hover */
+.ql-toolbar button.tooltip-active::after {
+    content: attr(aria-label); /* Use aria-label for content */
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    color: #333;
+    z-index: 999;
+}
+
+.small-text {
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+.section-preview {
+    /* height: 1200px; */
+    /* background: antiquewhite; */
+    /* border: 1px solid red; */
+    padding-inline: 42px;
+}
+
+.section-preview-height {
+    height: 900px;
+}
+
+.preview-flex {
+    display: flex;
+    height: 734px;
+    flex-direction: column;
+    justify-content: space-evenly;
+    /* border: 1px solid red; */
+}
+
+.preview-left {
+    /* border: 1px solid blue; */
+}
+
+.preview-right {
+    /* border: 1px solid green; */
+}
