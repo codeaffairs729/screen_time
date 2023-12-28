@@ -19,20 +19,19 @@ const DownloadReport = () => {
         const sectionIds = [
             "header",
             "dataset_quality",
-            "qualityMetrics_accessibility",
-            "qualityMetrics_findability",
-            "qualityMetrics_reusability",
+            "accessibility",
+            "findability",
+            "reusability",
             "search_terms_used",
             "download_metrics",
-            "downloads_by_region",
             "downloads_by_time",
-            "time_graph",
+            "downloads_by_role",
             "use_cases",
         ];
         const container = document.createElement("div");
-
         sectionIds.forEach((sectionId, index) => {
             const section = downloadRef.querySelector(`#${sectionId}`);
+
             if (section) {
                 if (index > 0) {
                     container.appendChild(
@@ -42,7 +41,6 @@ const DownloadReport = () => {
                 container.appendChild(section.cloneNode(true));
             }
         });
-
         html2pdf().from(container).save();
     };
 
