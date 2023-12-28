@@ -126,7 +126,7 @@ const AdminSection = () => {
                                     //         ?.sector,
                                     name: "sector",
                                     rules: {
-                                        required: "Sector is required",
+                                        // required: "Sector is required",
                                     },
                                 }}
                                 options={[

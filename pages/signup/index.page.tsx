@@ -136,7 +136,7 @@ const SecondStep = ({
                 />
                 <div className="mt-4">
                     <FormRow
-                        label="Organisation Admin"
+                        label="Organisation name"
                         className=" !bg-transparent text-[#333333] !text-xl sm:!text-base"
                     >
                         {" "}
