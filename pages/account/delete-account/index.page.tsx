@@ -24,11 +24,8 @@ const DeleteAccountPage = () => {
                 <ErrorAlert message={vm.errorMessage || "Something went wrong, please try again later"} />
             )}
         <div className="grow flex flex-col items-center justify-center max-w-lg h-screen mx-auto">
-            {vm.deleteAccountData && (
-                <div>
-                    Success <br/>
-                    The account for {vm?.deleteAccountData?.user} on Dtechtive (or find.data.gov.scot) has been deleted. You do not need to take any further action. We will miss you!  
-                </div>
+                {vm.deleteAccountData && (
+                    <SuccessAlert message={`Success! The account for ${vm?.deleteAccountData?.user} on Dtechtive (or find.data.gov.scot) has been deleted. You do not need to take any further action. We will miss you!`} />
             )}
             </div>
             {vm.isDeletingAccount && (
