@@ -185,7 +185,7 @@ const UserSection = () => {
                         >
                             <TextField
                                 className=""
-                                disabled={true}
+                                // disabled={true}
                                 formControl={{
                                     control: vm.form.control,
                                     name: "organisation",
@@ -193,7 +193,7 @@ const UserSection = () => {
                                         // required: "Organisation is required",
                                     },
                                 }}
-                                placeholder="Enter Organisation"
+                                placeholder="Enter organisation name"
                                 textfieldClassName="border-0 border-b border-[#C3C3C3] focus:ring-opacity-0 rounded-none sm:text-[19px]"
                             />
                         </FormRow>
@@ -250,6 +250,7 @@ const UserSection = () => {
                             if (
                                 vm.form.getValues().name !== user?.name ||
                                 vm.form.getValues().role !== user?.role ||
+                                vm.form.getValues().organisation !== user?.organisation ||
                                 vm.file != user?.user_image_url
                             ) {
                                 vm.form.handleSubmit(() => {

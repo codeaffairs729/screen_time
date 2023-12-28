@@ -189,3 +189,18 @@ figure {
 .preview-right {
     /* border: 1px solid green; */
 }
+
+.quillCss p{
+    font-size:14px;
+    font-weight:400;
+    color: '#333'
+}
+
+.quillCss h3{
+ font-size: 14px;
+ font-weight: 500;
+}
+
+.quillCss img{
+    margin-bottom: 20px;
+}

@@ -4,8 +4,12 @@ import { useContext, useEffect, useState } from "react";
 import { VscTriangleDown } from "react-icons/vsc";
 import { ReportVMContext } from "./report.vm";
 import { QualityMetricVMContext } from "../insight_section/quality_section/quality_metric.vm";
-
-const ReportFilter = ({setIsReportGenerated}: {setIsReportGenerated:Function}) => {
+import { TopicDetailVMContext } from "pages/topic/topic_detail.vm";
+const ReportFilter = ({
+    setIsReportGenerated,
+}: {
+    setIsReportGenerated: Function;
+}) => {
     const [showFilter, setShowFilter] = useState<boolean>(true);
     const {
         fetchData,
@@ -25,25 +29,38 @@ const ReportFilter = ({setIsReportGenerated}: {setIsReportGenerated:Function}) =
         selectedQualityInsights: selectedLabel,
     } = useContext(QualityMetricVMContext);
 
-    const handleGenerateReport = () => {
+    const {
+        insight_datasetQuality_description,
+        insight_searchTerm_description,
+        insight_useCase_description,
+    } = useContext(TopicDetailVMContext);
+    const handleGenerateReport = async () => {
         const alert = "This will remove your previous Data";
         if (
             !editorState.getCurrentContent().hasText() ||
             confirm(alert) == true
         ) {
-        fetchQualityMetrics && fetchQualityMetrics();
-            fetchData(qualityMetrics);
+            let insightDescription = {
+                insight_datasetQuality_description,
+                insight_searchTerm_description,
+                insight_useCase_description,
+            };
+            fetchQualityMetrics && fetchQualityMetrics();
+            await fetchData(insightDescription);
+            //    .then(()=> setIsReportGenerated(true))
+
             setIsReportGenerated(true);
         }
     };
 
     return (
         <div className="sm:w-1/3 w-full py-4 sm:m-12 flex flex-col items-center justify-center sm:items-start  sm:mt-12  sm:mb-96  ">
-            
             {/* <div className="px-4"> */}
-                {/* <div className="px-3 w-[244px] py-1 mb-4 flex justify-between bg-dtech-main-light cursor-pointer"> */}
-                    <span className=" w-full sm:text-left text-center font-semibold">Select period</span>
-                {/* </div> */}
+            {/* <div className="px-3 w-[244px] py-1 mb-4 flex justify-between bg-dtech-main-light cursor-pointer"> */}
+            <span className=" w-full sm:text-left text-center font-semibold">
+                Select period
+            </span>
+            {/* </div> */}
             {/* </div> */}
             <div className=" sm:w-full w-3/4">
                 <RangeSelector
@@ -64,7 +81,9 @@ const ReportFilter = ({setIsReportGenerated}: {setIsReportGenerated:Function}) =
                             }`}
                     />
                 </div> */}
-                <span className=" w-full text-center flex sm:justify-start justify-center font-semibold sm:mb-8">Select header</span>
+                <span className=" w-full text-center flex sm:justify-start justify-center font-semibold sm:mb-8">
+                    Select header
+                </span>
                 <div
                     className={` w-fit max-h-[100vh] overflow-hidden transition-all duration-300 my-4`}
                 >
@@ -82,11 +101,10 @@ const ReportFilter = ({setIsReportGenerated}: {setIsReportGenerated:Function}) =
                         data-selector="back-btn"
                         className="text-sm mt-8 p-2 py-3 whitespace-nowrap w-full bg-dtech-new-main-light active:bg-dtech-dark-yellow hover:bg-dtech-main-dark active:border-b-2 border-black hover:border-0 active:text-black text-white  flex items-center justify-center rounded-full px-6"
                     >
-                            Autogenerate report
+                        Autogenerate report
                     </button>
                 </div>
             </div>
-            
         </div>
     );
 };

@@ -53,9 +53,8 @@ const QualityInsightsBody = () => {
     } = useContext(QualityMetricVMContext);
     const { permittedPermissions } = useContext(TopicDetailVMContext)
     /**  Adding metaQuality same as overscore for metaFileQuality */
-    const { dataFileQuality = {}, metaFileQuality = {}, totalMatches } = qualityMetrics || {};
-    const items = selectedLabel == 0 ? dataFileQuality : metaFileQuality;
-
+    const { data_file_quality = {}, meta_file_quality = {}, totalMatches } = qualityMetrics || {};
+    const items = selectedLabel == 0 ? data_file_quality : meta_file_quality;
     useEffect(() => {
         setCurrentSlide(0)
     }, [items])
@@ -86,7 +85,7 @@ const QualityInsightsBody = () => {
             </div>
         );
     }
-    if (!items["overallScore"]?.datasets.length) {
+    if (!items["overall"]?.datasets.length) {
         return <div className=" flex flex-col-reverse sm:flex-col sm:mx-40 sm:mt-8 items-center justify-center">
             <div>
                 <img src="/images/no_data_logo.svg" width={250} />
@@ -168,7 +167,7 @@ const QualityInsightsBody = () => {
                                                 <InfoIcon
                                                     tooltipClassName=" max- max-w-sm  !bg-dtech-dark-teal"
                                                     iconClasses="text-dtech-dark-teal ml-1"
-                                                    title={`${items['overallScore'].tooltipTitle}`}
+                                                    title={`${items['overall'].tooltipTitle}`}
                                                 /></th>
                                                 <th className="sm:w-[15%] p-2 text-xs sm:text-sm text-center pb-4">Accuracy
                                                     <InfoIcon
@@ -199,7 +198,7 @@ const QualityInsightsBody = () => {
                                                 <InfoIcon
                                                     tooltipClassName=" max-w-2xl !bg-dtech-dark-teal"
                                                     iconClasses="text-dtech-dark-teal ml-1"
-                                                    title={`${items['overallScore'].tooltipTitle}`}
+                                                    title={`${items['overall'].tooltipTitle}`}
                                                 /></th>
                                                 <th className="sm:w-[15%] p-2 text-xs sm:text-sm text-center pb-4">Accessibility
                                                     <InfoIcon
